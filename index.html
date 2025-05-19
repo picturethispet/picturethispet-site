@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PictureThisPet - Session Builder</title>
+  <title>PictureThisPet Booking</title>
   <style>
     :root {
       --primary: #0070f3;
@@ -33,7 +33,7 @@
       border-radius: 12px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       text-align: center;
       animation: fadeIn 0.4s ease-out;
     }
@@ -87,6 +87,15 @@
       font-size: 0.95rem;
     }
 
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -99,210 +108,239 @@
     <button class="btn" onclick="selectSessionType('Mini')">Mini ($50)</button>
     <button class="btn" onclick="selectSessionType('Full')">Full ($100)</button>
   </div>
-
   <script>
-    const sessionData = {};
-    const basePrices = { Mini: 50, Full: 100 };
+  const sessionData = {};
+  const basePrices = { Mini: 50, Full: 100 };
 
-    function selectSessionType(type) {
-      sessionData.sessionType = type;
-      localStorage.setItem('sessionType', type);
-      showLocationStep();
+  function selectSessionType(type) {
+    sessionData.sessionType = type;
+    localStorage.setItem('sessionType', type);
+    showLocationStep();
+  }
+
+  function showLocationStep() {
+    document.getElementById('card').innerHTML = `
+      <h1>Which park?</h1>
+      <button class="btn" onclick="selectLocation('Cheesman Park')">Cheesman Park (Denver)</button>
+      <button class="btn" onclick="selectLocation('City Park')">City Park (Denver)</button>
+    `;
+  }
+
+  function selectLocation(location) {
+    sessionData.location = location;
+    localStorage.setItem('location', location);
+    showPetStep();
+  }
+
+  function showPetStep() {
+    document.getElementById('card').innerHTML = `
+      <h1>How many pets?</h1>
+      <button class="btn" onclick="selectPets(1)">1 Pet (Included)</button>
+      <button class="btn" onclick="selectPets(2)">2 Pets (+$40)</button>
+    `;
+  }
+
+  function selectPets(num) {
+    sessionData.pets = num;
+    localStorage.setItem('pets', num);
+    showPeopleStep();
+  }
+
+  function showPeopleStep() {
+    document.getElementById('card').innerHTML = `
+      <h1>How many people in the photos?</h1>
+      <button class="btn" onclick="selectPeople(1)">1 Person (Included)</button>
+      <button class="btn" onclick="selectPeople(2)">2 People (+$20)</button>
+    `;
+  }
+
+  function selectPeople(num) {
+    sessionData.people = num;
+    localStorage.setItem('people', num);
+    showSummary();
+  }
+
+  function showSummary() {
+    const type = localStorage.getItem('sessionType');
+    const loc = localStorage.getItem('location');
+    const pets = parseInt(localStorage.getItem('pets'));
+    const people = parseInt(localStorage.getItem('people'));
+    const base = basePrices[type];
+    const petExtra = pets === 2 ? 40 : 0;
+    const personExtra = people === 2 ? 20 : 0;
+    const total = base + petExtra + personExtra;
+
+    localStorage.setItem('sessionTotal', total);
+
+    document.getElementById('card').innerHTML = `
+      <h1>Session Summary</h1>
+      <div class="summary">
+        <h2>Details</h2>
+        <ul>
+          <li><strong>Type:</strong><span>${type}</span></li>
+          <li><strong>Location:</strong><span>${loc}</span></li>
+          <li><strong>Pets:</strong><span>${pets}</span></li>
+          <li><strong>People:</strong><span>${people}</span></li>
+        </ul>
+        <h2>Pricing</h2>
+        <ul>
+          <li><span>${type} Session</span><span>$${base}</span></li>
+          ${petExtra ? `<li><span>Extra Pet</span><span>$40</span></li>` : ''}
+          ${personExtra ? `<li><span>Extra Person</span><span>$20</span></li>` : ''}
+          <li><strong>Total</strong><strong>$${total}</strong></li>
+        </ul>
+      </div>
+      <button class="btn" onclick="showAgreements()">Continue</button>
+    `;
+  }
+
+  function showAgreements() {
+    document.getElementById('card').innerHTML = `
+      <h1>Service Agreements</h1>
+      <div class="checkbox-label">
+        <input type="checkbox" id="agree1" onclick="revealAgreement(1)">
+        <label for="agree1">I agree to the Behavior Policy</label>
+      </div>
+      <div class="agreement" id="agreement1" style="display:none;">
+        <h2>Behavior Policy</h2>
+        <p>All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet’s behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved.</p>
+      </div>
+      <div class="checkbox-label">
+        <input type="checkbox" id="agree2" disabled onclick="revealAgreement(2)">
+        <label for="agree2">I agree to the Photography Service Agreement</label>
+      </div>
+      <div class="agreement" id="agreement2" style="display:none;">
+        <h2>Photography Service Agreement</h2>
+        <p>By participating in this photo session, you agree that all photographs taken by PictureThisPet are the intellectual property of the photographer. You are purchasing high-resolution digital files for personal use, but the photographer retains full ownership and the right to use images for marketing, portfolio, and promotional purposes. You may not alter, edit, or sell the images without written permission. You are granted a perpetual license to share and print the images for personal use, but PictureThisPet reserves all commercial rights.</p>
+      </div>
+      <div class="checkbox-label">
+        <input type="checkbox" id="agree3" disabled onclick="revealAgreement(3)">
+        <label for="agree3">I agree to the Cancellation & Refund Policy</label>
+      </div>
+      <div class="agreement" id="agreement3" style="display:none;">
+        <h2>Cancellation & Refund Policy</h2>
+        <p>All session payments are non-refundable. However, sessions may be rescheduled with at least 48 hours’ notice. In cases of severe weather or emergencies, we will work with you to find a new session date. Missed appointments or cancellations with less than 48 hours’ notice are not eligible for rescheduling or refund. Your session is not guaranteed until full payment is received.</p>
+      </div>
+      <button class="btn" id="intakeNext" style="display:none;">Continue</button>
+    `;
+
+    setTimeout(() => {
+      document.getElementById('intakeNext').onclick = startIntake;
+    }, 0);
+  }
+
+  function revealAgreement(num) {
+    document.getElementById(`agreement${num}`).style.display = 'block';
+    if (num === 1) document.getElementById('agree2').disabled = false;
+    if (num === 2) document.getElementById('agree3').disabled = false;
+    if (num === 3) document.getElementById('intakeNext').style.display = 'block';
+  }
+</script>
+<script>
+  function startIntake() {
+    showCard(0);
+  }
+
+  const intakeQuestions = [
+    {
+      key: 'firstName',
+      label: "What is your first name?",
+      required: true,
+      type: 'text',
+      placeholder: 'First Name'
+    },
+    {
+      key: 'lastName',
+      label: "What is your last name?",
+      required: true,
+      type: 'text',
+      placeholder: 'Last Name'
+    },
+    {
+      key: 'dob',
+      label: "What is your birthday?",
+      required: true,
+      type: 'date',
+      placeholder: 'MM/DD/YYYY'
+    },
+    {
+      key: 'email',
+      label: "What is your email address?",
+      required: true,
+      type: 'email',
+      placeholder: 'you@example.com'
+    },
+    {
+      key: 'phone',
+      label: "What is your phone number?",
+      required: true,
+      type: 'tel',
+      placeholder: '555-555-5555'
+    },
+    {
+      key: 'address',
+      label: "What is your address?",
+      required: true,
+      type: 'text',
+      placeholder: '123 Main St, Denver, CO'
     }
+  ];
 
-    function showLocationStep() {
-      document.getElementById('card').innerHTML = `
-        <h1>Which park?</h1>
-        <button class="btn" onclick="selectLocation('Cheesman Park')">Cheesman Park (Denver)</button>
-        <button class="btn" onclick="selectLocation('City Park')">City Park (Denver)</button>
-      `;
-    }
+  let currentIndex = 0;
 
-    function selectLocation(location) {
-      sessionData.location = location;
-      localStorage.setItem('location', location);
-      showPetStep();
-    }
+  function showCard(index) {
+    const question = intakeQuestions[index];
+    currentIndex = index;
 
-    function showPetStep() {
-      document.getElementById('card').innerHTML = `
-        <h1>How many pets?</h1>
-        <button class="btn" onclick="selectPets(1)">1 Pet (Included)</button>
-        <button class="btn" onclick="selectPets(2)">2 Pets (+$40)</button>
-      `;
-    }
+    const value = localStorage.getItem(question.key) || '';
+    const inputType = question.type;
 
-    function selectPets(num) {
-      sessionData.pets = num;
-      localStorage.setItem('pets', num);
-      showPeopleStep();
-    }
-
-    function showPeopleStep() {
-      document.getElementById('card').innerHTML = `
-        <h1>How many people in the photos?</h1>
-        <button class="btn" onclick="selectPeople(1)">1 Person (Included)</button>
-        <button class="btn" onclick="selectPeople(2)">2 People (+$20)</button>
-      `;
-    }
-
-    function selectPeople(num) {
-      sessionData.people = num;
-      localStorage.setItem('people', num);
-      showSummary();
-    }
-
-    function showSummary() {
-      const { sessionType, location, pets, people } = sessionData;
-      const base = basePrices[sessionType];
-      const petExtra = pets === 2 ? 40 : 0;
-      const personExtra = people === 2 ? 20 : 0;
-      const total = base + petExtra + personExtra;
-
-      sessionData.total = total;
-      localStorage.setItem('sessionTotal', total);
-
-      document.getElementById('card').innerHTML = `
-        <h1>Session Summary</h1>
-        <div class="summary">
-          <h2>Details</h2>
-          <ul>
-            <li><strong>Type:</strong><span>${sessionType}</span></li>
-            <li><strong>Location:</strong><span>${location}</span></li>
-            <li><strong>Pets:</strong><span>${pets}</span></li>
-            <li><strong>People:</strong><span>${people}</span></li>
-          </ul>
-          <h2>Pricing</h2>
-          <ul>
-            <li><span>${sessionType} Session</span><span>$${base}</span></li>
-            ${petExtra ? `<li><span>Extra Pet</span><span>$40</span></li>` : ''}
-            ${personExtra ? `<li><span>Extra Person</span><span>$20</span></li>` : ''}
-            <li><strong>Total</strong><strong>$${total}</strong></li>
-          </ul>
+    document.getElementById('card').innerHTML = `
+      <div class="intake-form">
+        <h1>${question.label}</h1>
+        <input 
+          id="intakeInput" 
+          type="${inputType}" 
+          placeholder="${question.placeholder}" 
+          value="${value}" 
+          autofocus
+        />
+        <div style="display:flex;justify-content:space-between;margin-top:1.5rem;">
+          <button class="btn" onclick="prevCard()">Back</button>
+          <button class="btn" onclick="saveAndNext()">Next</button>
         </div>
-        <button class="btn" onclick="showAgreements()">Continue</button>
-      `;
+      </div>
+    `;
+  }
+
+  function saveAndNext() {
+    const input = document.getElementById('intakeInput');
+    const value = input.value.trim();
+    const question = intakeQuestions[currentIndex];
+
+    if (question.required && !value) {
+      input.style.border = '2px solid red';
+      return;
     }
-  </script>
-    Fix agreement "Continue" button not advancing to intake form
-    <script>
-    function startIntake() {
-      showCard(0);
-    }
 
-    const intakeQuestions = [
-      {
-        key: 'firstName',
-        label: "What is your first name?",
-        required: true,
-        type: 'text',
-        placeholder: 'First Name'
-      },
-      {
-        key: 'lastName',
-        label: "What is your last name?",
-        required: true,
-        type: 'text',
-        placeholder: 'Last Name'
-      },
-      {
-        key: 'dob',
-        label: "What is your birthday?",
-        required: true,
-        type: 'date',
-        placeholder: 'MM/DD/YYYY'
-      },
-      {
-        key: 'email',
-        label: "What is your email address?",
-        required: true,
-        type: 'email',
-        placeholder: 'you@example.com'
-      },
-      {
-        key: 'phone',
-        label: "What is your phone number?",
-        required: true,
-        type: 'tel',
-        placeholder: '555-555-5555'
-      },
-      {
-        key: 'address',
-        label: "What is your address?",
-        required: true,
-        type: 'text',
-        placeholder: '123 Main St, Denver, CO'
-      },
-      {
-        key: 'vetName',
-        label: "What is your vet's name or clinic?",
-        required: true,
-        type: 'text',
-        placeholder: 'Vet or Clinic Name'
-      },
-      {
-        key: 'vetPhone',
-        label: "What is your vet's phone number?",
-        required: true,
-        type: 'tel',
-        placeholder: '555-555-5555'
-      }
-    ];
+    localStorage.setItem(question.key, value);
 
-    let currentIndex = 0;
-
-    function showCard(index) {
-      const question = intakeQuestions[index];
-      currentIndex = index;
-
-      const value = localStorage.getItem(question.key) || '';
-      const inputType = question.type;
-
+    if (currentIndex + 1 < intakeQuestions.length) {
+      showCard(currentIndex + 1);
+    } else {
       document.getElementById('card').innerHTML = `
-        <div class="intake-form">
-          <h1>${question.label}</h1>
-          <input 
-            id="intakeInput" 
-            type="${inputType}" 
-            placeholder="${question.placeholder}" 
-            value="${value}" 
-            style="width:100%;padding:1rem;margin-top:1rem;font-size:1rem;border-radius:8px;border:1px solid #ccc;" 
-            autofocus
-          />
-          <div style="display:flex;justify-content:space-between;margin-top:1.5rem;">
-            <button class="btn" onclick="prevCard()">Back</button>
-            <button class="btn" onclick="saveAndNext()">Next</button>
-          </div>
-        </div>
+        <h1>You're all set!</h1>
+        <p>Your session info has been saved. Next: payment & booking.</p>
       `;
     }
+  }
 
-    function saveAndNext() {
-      const input = document.getElementById('intakeInput');
-      const value = input.value.trim();
-      const question = intakeQuestions[currentIndex];
-
-      if (question.required && !value) {
-        input.style.border = '2px solid red';
-        return;
-      }
-
-      localStorage.setItem(question.key, value);
-
-      if (currentIndex + 1 < intakeQuestions.length) {
-        showCard(currentIndex + 1);
-      } else {
-        document.getElementById('card').innerHTML = `<h1>Thanks! You're ready to proceed to payment 🔐</h1>`;
-      }
+  function prevCard() {
+    if (currentIndex > 0) {
+      showCard(currentIndex - 1);
     }
+  }
 
-    function prevCard() {
-      if (currentIndex > 0) {
-        showCard(currentIndex - 1);
-      }
-    }
-  </script>
-  <script>
   window.onload = function () {
     const sessionType = localStorage.getItem('sessionType');
     const location = localStorage.getItem('location');
@@ -310,14 +348,12 @@
     const people = localStorage.getItem('people');
 
     if (sessionType && location && pets && people) {
-      // Restore summary with Resume option
-      const card = document.getElementById('card');
       const base = basePrices[sessionType];
       const petExtra = parseInt(pets) === 2 ? 40 : 0;
       const personExtra = parseInt(people) === 2 ? 20 : 0;
       const total = base + petExtra + personExtra;
 
-      card.innerHTML = `
+      document.getElementById('card').innerHTML = `
         <h1>Session Summary (Resume)</h1>
         <div class="summary">
           <h2>Details</h2>
