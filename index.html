@@ -39,19 +39,17 @@
   100% { background-position: 0% 50%; }
 }
 
-    header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 10;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
+    <header class="site-header">
+  <img src="assets/images/header_logo_desktop.png" alt="PictureThisPet Logo" class="logo desktop-logo" />
+  <img src="assets/images/header_logo_mobile.png" alt="PictureThisPet Mobile Logo" class="logo mobile-logo" />
+  <nav class="site-nav">
+    <a href="#">Home</a>
+    <a href="#">Locations</a>
+    <a href="#">Pricing</a>
+    <a href="#">Contact</a>
+    <a href="#" class="book-btn">Book Now</a>
+  </nav>
+</header>
 
     header img {
       height: 40px;
@@ -130,6 +128,85 @@
       margin: 0 1rem;
       filter: brightness(0) invert(1);
     }
+    .site-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  height: 280px;
+  object-fit: contain;
+}
+
+.desktop-logo {
+  display: block;
+}
+
+.mobile-logo {
+  display: none;
+  margin: 0 auto;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+}
+
+.site-nav a {
+  color: white;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.book-btn {
+  background-color: var(--dark-brown);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+
+/* MOBILE VIEW */
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .desktop-logo {
+    display: none;
+  }
+
+  .mobile-logo {
+    display: block;
+    height: 140px;
+  }
+
+  .site-nav {
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  .site-nav a {
+    margin: 0.3rem 0;
+  }
+
+  .book-btn {
+    margin-top: 0.5rem;
+  }
+}
   </style>
 </head>
 <body>
