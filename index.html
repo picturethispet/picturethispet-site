@@ -184,49 +184,7 @@
       `;
     }
   </script>
-    <script>
-    function showAgreements() {
-      document.getElementById('card').innerHTML = `
-        <h1>Service Agreements</h1>
-
-        <div class="checkbox-label">
-          <input type="checkbox" id="agree1" onclick="revealAgreement(1)">
-          <label for="agree1">I agree to the Behavior Policy</label>
-        </div>
-        <div class="agreement" id="agreement1" style="display:none;">
-          <h2>Behavior Policy</h2>
-          <p>All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet’s behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved.</p>
-        </div>
-
-        <div class="checkbox-label">
-          <input type="checkbox" id="agree2" disabled onclick="revealAgreement(2)">
-          <label for="agree2">I agree to the Photography Service Agreement</label>
-        </div>
-        <div class="agreement" id="agreement2" style="display:none;">
-          <h2>Photography Service Agreement</h2>
-          <p>By participating in this photo session, you agree that all photographs taken by PictureThisPet are the intellectual property of the photographer. You are purchasing high-resolution digital files for personal use, but the photographer retains full ownership and the right to use images for marketing, portfolio, and promotional purposes. You may not alter, edit, or sell the images without written permission. You are granted a perpetual license to share and print the images for personal use, but PictureThisPet reserves all commercial rights.</p>
-        </div>
-
-        <div class="checkbox-label">
-          <input type="checkbox" id="agree3" disabled onclick="revealAgreement(3)">
-          <label for="agree3">I agree to the Cancellation & Refund Policy</label>
-        </div>
-        <div class="agreement" id="agreement3" style="display:none;">
-          <h2>Cancellation & Refund Policy</h2>
-          <p>All session payments are non-refundable. However, sessions may be rescheduled with at least 48 hours’ notice. In cases of severe weather or emergencies, we will work with you to find a new session date. Missed appointments or cancellations with less than 48 hours’ notice are not eligible for rescheduling or refund. Your session is not guaranteed until full payment is received.</p>
-        </div>
-
-        <button class="btn" id="intakeNext" style="display:none;" onclick="startIntake()">Continue</button>
-      `;
-    }
-
-    function revealAgreement(num) {
-      document.getElementById(`agreement${num}`).style.display = 'block';
-      if (num === 1) document.getElementById('agree2').disabled = false;
-      if (num === 2) document.getElementById('agree3').disabled = false;
-      if (num === 3) document.getElementById('intakeNext').style.display = 'block';
-    }
-  </script>
+    Fix agreement "Continue" button not advancing to intake form
     <script>
     function startIntake() {
       showCard(0);
