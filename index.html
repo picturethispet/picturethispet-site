@@ -21,22 +21,20 @@
     }
 
     body {
-  margin: 0;
-  padding: 0;
-  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, #f47c2c, #fbb040, #fdb75e, #9b4e21, #4b2e1e);
-  background-size: 600% 600%;
-  animation: animatedBackground 8s ease-in-out infinite;
-}
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #f47c2c, #fbb040, #fdb75e, #9b4e21, #4b2e1e);
+      background-size: 600% 600%;
+      animation: animatedBackground 8s ease-in-out infinite;
+      color: white;
+    }
 
-/* Animate the background movement */
-@keyframes animatedBackground {
-  0%   { background-position: 0% 50%; }
-  25%  { background-position: 50% 0%; }
-  50%  { background-position: 100% 50%; }
-  75%  { background-position: 50% 100%; }
-  100% { background-position: 0% 50%; }
-}
+    @keyframes animatedBackground {
+      0%   { background-position: 0% 50%; }
+      25%  { background-position: 50% 0%; }
+      50%  { background-position: 100% 50%; }
+      75%  { background-position: 50% 100%; }
+      100% { background-position: 0% 50%; }
+    }
 
     header {
       display: flex;
@@ -70,6 +68,12 @@
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
       margin-bottom: 2rem;
     }
 
@@ -113,8 +117,7 @@
 </head>
 <body>
   <header>
-    <<header>
-  <img src="/assets/images/logo.png" alt="PictureThisPet Logo" height="40">>
+    <img src="assets/images/logo.png" alt="PictureThisPet Logo" height="40" />
     <nav>
       <a href="#">Home</a>
       <a href="#">Locations</a>
@@ -125,12 +128,9 @@
   </header>
 
   <main class="hero">
-    <h1>Adventures end.<br/>Memories last.</h1>
-    <<img 
-  src="assets/images/2I4A4374.jpeg" 
-  alt="Golden retriever portrait in Cheesman Park"
-  class="hero-image"
-/>>
+    <h1>Adventures end.</h1>
+    <h2>Memories last.</h2>
+    <img src="assets/images/2I4A4374.jpeg" alt="Golden retriever portrait in Cheesman Park" />
     <p>Capture your pet’s unique personality with a professional photoshoot at a beautiful Denver park.</p>
     <button class="cta">Book a Session</button>
   </main>
