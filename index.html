@@ -3,64 +3,196 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PictureThisPet</title>
+  <title>PictureThisPet - Session Builder</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #fafafa;
+      background: #f4f4f4;
+      padding: 2rem;
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      align-items: flex-start;
+      min-height: 100vh;
     }
+
     .card {
       background: white;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 480px;
       text-align: center;
-      animation: fadeIn 0.6s ease-out;
+      animation: fadeIn 0.4s ease-out;
     }
-    h1 {
-      margin-top: 0;
-      color: #333;
-    }
-    p {
-      color: #666;
-    }
+
     .btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
       background-color: #0070f3;
       color: white;
       border: none;
-      padding: 0.75rem 1.25rem;
       border-radius: 8px;
       cursor: pointer;
       font-size: 1rem;
-      margin-top: 1rem;
-      transition: background-color 0.3s ease;
     }
+
     .btn:hover {
       background-color: #005ad6;
     }
+
+    .summary {
+      text-align: left;
+      margin-top: 1.5rem;
+    }
+
+    .summary h2 {
+      font-size: 1.2rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+
+    .summary ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .summary ul li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.3rem 0;
+    }
+
+    .agreement {
+      display: none;
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>PictureThisPet</h1>
-    <p>Booking flow coming soon. Get ready to build your session like never before!</p>
-    <button class="btn">Get Notified</button>
+  <div class="card" id="step1">
+    <h1>What type of session?</h1>
+    <button class="btn" onclick="selectOption('sessionType','Mini')">Mini ($50)</button>
+    <button class="btn" onclick="selectOption('sessionType','Full')">Full ($100)</button>
   </div>
+
+  <script>
+    const basePrices = { Mini: 50, Full: 100 };
+    let sessionData = {};
+
+    function selectOption(key, value) {
+      sessionData[key] = value;
+      localStorage.setItem(key, value);
+
+      if (key === 'sessionType') {
+        document.getElementById('step1').innerHTML = `
+          <h1>Which park?</h1>
+          <button class="btn" onclick="selectOption('location','Cheesman Park')">Cheesman Park (Denver)</button>
+          <button class="btn" onclick="selectOption('location','City Park')">City Park (Denver)</button>
+        `;
+      } else if (key === 'location') {
+        document.getElementById('step1').innerHTML = `
+          <h1>How many pets?</h1>
+          <button class="btn" onclick="selectOption('pets','1')">1 Pet (Included)</button>
+          <button class="btn" onclick="selectOption('pets','2')">2 Pets (+$40)</button>
+        `;
+      } else if (key === 'pets') {
+        document.getElementById('step1').innerHTML = `
+          <h1>How many people?</h1>
+          <button class="btn" onclick="selectOption('people','1')">1 Person (Included)</button>
+          <button class="btn" onclick="selectOption('people','2')">2 People (+$20)</button>
+        `;
+      } else if (key === 'people') {
+        showSummary();
+      }
+    }
+
+    function showSummary() {
+      const sessionType = sessionData.sessionType;
+      const location = sessionData.location;
+      const pets = parseInt(sessionData.pets);
+      const people = parseInt(sessionData.people);
+
+      const base = basePrices[sessionType];
+      const extraPet = pets > 1 ? 40 : 0;
+      const extraPerson = people > 1 ? 20 : 0;
+      const total = base + extraPet + extraPerson;
+
+      localStorage.setItem('sessionTotal', total);
+
+      document.getElementById('step1').innerHTML = `
+        <h1>Session Summary</h1>
+        <div class="summary">
+          <h2>Details</h2>
+          <ul>
+            <li><strong>Type:</strong><span>${sessionType}</span></li>
+            <li><strong>Location:</strong><span>${location}</span></li>
+            <li><strong>Pets:</strong><span>${pets}</span></li>
+            <li><strong>People:</strong><span>${people}</span></li>
+          </ul>
+          <h2>Pricing</h2>
+          <ul>
+            <li><span>${sessionType} Session</span><span>$${base}</span></li>
+            ${extraPet ? `<li><span>Extra Pet</span><span>$40</span></li>` : ''}
+            ${extraPerson ? `<li><span>Extra Person</span><span>$20</span></li>` : ''}
+            <li><strong>Total</strong><strong>$${total}</strong></li>
+          </ul>
+        </div>
+        <button class="btn" onclick="loadAgreements()">Continue</button>
+      `;
+    }
+
+    function loadAgreements() {
+      document.getElementById('step1').innerHTML = `
+        <h1>Service Agreements</h1>
+        <div class="checkbox-label">
+          <input type="checkbox" id="agree1" onchange="showAgreement(1)">
+          <label for="agree1">I agree to the Behavior Policy</label>
+        </div>
+        <div class="agreement" id="agreement1">
+          <p>[Behavior policy content goes here...]</p>
+        </div>
+        <div class="checkbox-label">
+          <input type="checkbox" id="agree2" disabled onchange="showAgreement(2)">
+          <label for="agree2">I agree to the Photography Service Agreement</label>
+        </div>
+        <div class="agreement" id="agreement2">
+          <p>[Service agreement content goes here...]</p>
+        </div>
+        <div class="checkbox-label">
+          <input type="checkbox" id="agree3" disabled onchange="showAgreement(3)">
+          <label for="agree3">I agree to the Cancellation & Refund Policy</label>
+        </div>
+        <div class="agreement" id="agreement3">
+          <p>[Cancellation and refund policy content goes here...]</p>
+        </div>
+        <button class="btn" id="continueBtn" style="display:none;">Continue</button>
+      `;
+    }
+
+    function showAgreement(num) {
+      document.getElementById(`agreement${num}`).style.display = 'block';
+      if (num === 1) document.getElementById('agree2').disabled = false;
+      if (num === 2) document.getElementById('agree3').disabled = false;
+      if (num === 3) document.getElementById('continueBtn').style.display = 'block';
+    }
+  </script>
 </body>
 </html>
