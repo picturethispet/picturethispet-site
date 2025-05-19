@@ -3,378 +3,137 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PictureThisPet Booking</title>
+  <title>PictureThisPet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #0070f3;
-      --bg: #f4f4f4;
-      --text: #333;
-      --accent: #fff;
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
     }
 
     * {
       box-sizing: border-box;
-    }
-
-    body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--bg);
-      padding: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
-
-    .card {
-      background: var(--accent);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
-      text-align: center;
-      animation: fadeIn 0.4s ease-out;
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 1rem;
-      margin-top: 1rem;
-      background-color: var(--primary);
-      color: var(--accent);
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: #005ad6;
-    }
-
-    .summary, .agreement, .intake-form {
-      text-align: left;
-      margin-top: 1.5rem;
-    }
-
-    .summary h2,
-    .agreement h2 {
-      font-size: 1.2rem;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 0.5rem;
-    }
-
-    .summary ul {
-      list-style: none;
       padding: 0;
     }
 
-    .summary ul li {
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #F47C2C, #FDB75E, #9B4E21);
+      background-size: 300% 300%;
+      animation: bgMotion 30s ease infinite;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    @keyframes bgMotion {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
       display: flex;
       justify-content: space-between;
-      padding: 0.3rem 0;
-    }
-
-    .checkbox-label {
-      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      font-size: 0.95rem;
+      padding: 1.5rem 2rem;
+      background-color: rgba(0, 0, 0, 0.05);
     }
 
-    input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
-      width: 100%;
-      padding: 1rem;
-      margin-top: 1rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: 600;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .book-btn {
+      background-color: var(--dark-brown);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .hero {
+      text-align: center;
+      margin: 4rem 2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero img {
+      max-width: 500px;
+      width: 90%;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta {
+      background-color: var(--gold);
+      color: white;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 4rem;
+    }
+
+    .payments img {
+      height: 30px;
+      margin: 0 1rem;
+      filter: brightness(0) invert(1);
     }
   </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <h1>What type of session?</h1>
-    <button class="btn" onclick="selectSessionType('Mini')">Mini ($50)</button>
-    <button class="btn" onclick="selectSessionType('Full')">Full ($100)</button>
-  </div>
-  <script>
-  const sessionData = {};
-  const basePrices = { Mini: 50, Full: 100 };
+  <header>
+    <img src="/assets/images/logo.png" alt="PictureThisPet Logo" height="40" />
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="book-btn">Book Now</a>
+    </nav>
+  </header>
 
-  function selectSessionType(type) {
-    sessionData.sessionType = type;
-    localStorage.setItem('sessionType', type);
-    showLocationStep();
-  }
+  <main class="hero">
+    <h1>Adventures end.<br/>Memories last.</h1>
+    <img src="/assets/images/sample-dog.jpg" alt="Happy dog in park" />
+    <p>Capture your pet’s unique personality with a professional photoshoot at a beautiful Denver park.</p>
+    <button class="cta">Book a Session</button>
+  </main>
 
-  function showLocationStep() {
-    document.getElementById('card').innerHTML = `
-      <h1>Which park?</h1>
-      <button class="btn" onclick="selectLocation('Cheesman Park')">Cheesman Park (Denver)</button>
-      <button class="btn" onclick="selectLocation('City Park')">City Park (Denver)</button>
-    `;
-  }
-
-  function selectLocation(location) {
-    sessionData.location = location;
-    localStorage.setItem('location', location);
-    showPetStep();
-  }
-
-  function showPetStep() {
-    document.getElementById('card').innerHTML = `
-      <h1>How many pets?</h1>
-      <button class="btn" onclick="selectPets(1)">1 Pet (Included)</button>
-      <button class="btn" onclick="selectPets(2)">2 Pets (+$40)</button>
-    `;
-  }
-
-  function selectPets(num) {
-    sessionData.pets = num;
-    localStorage.setItem('pets', num);
-    showPeopleStep();
-  }
-
-  function showPeopleStep() {
-    document.getElementById('card').innerHTML = `
-      <h1>How many people in the photos?</h1>
-      <button class="btn" onclick="selectPeople(1)">1 Person (Included)</button>
-      <button class="btn" onclick="selectPeople(2)">2 People (+$20)</button>
-    `;
-  }
-
-  function selectPeople(num) {
-    sessionData.people = num;
-    localStorage.setItem('people', num);
-    showSummary();
-  }
-
-  function showSummary() {
-    const type = localStorage.getItem('sessionType');
-    const loc = localStorage.getItem('location');
-    const pets = parseInt(localStorage.getItem('pets'));
-    const people = parseInt(localStorage.getItem('people'));
-    const base = basePrices[type];
-    const petExtra = pets === 2 ? 40 : 0;
-    const personExtra = people === 2 ? 20 : 0;
-    const total = base + petExtra + personExtra;
-
-    localStorage.setItem('sessionTotal', total);
-
-    document.getElementById('card').innerHTML = `
-      <h1>Session Summary</h1>
-      <div class="summary">
-        <h2>Details</h2>
-        <ul>
-          <li><strong>Type:</strong><span>${type}</span></li>
-          <li><strong>Location:</strong><span>${loc}</span></li>
-          <li><strong>Pets:</strong><span>${pets}</span></li>
-          <li><strong>People:</strong><span>${people}</span></li>
-        </ul>
-        <h2>Pricing</h2>
-        <ul>
-          <li><span>${type} Session</span><span>$${base}</span></li>
-          ${petExtra ? `<li><span>Extra Pet</span><span>$40</span></li>` : ''}
-          ${personExtra ? `<li><span>Extra Person</span><span>$20</span></li>` : ''}
-          <li><strong>Total</strong><strong>$${total}</strong></li>
-        </ul>
-      </div>
-      <button class="btn" onclick="showAgreements()">Continue</button>
-    `;
-  }
-
-  function showAgreements() {
-    document.getElementById('card').innerHTML = `
-      <h1>Service Agreements</h1>
-      <div class="checkbox-label">
-        <input type="checkbox" id="agree1" onclick="revealAgreement(1)">
-        <label for="agree1">I agree to the Behavior Policy</label>
-      </div>
-      <div class="agreement" id="agreement1" style="display:none;">
-        <h2>Behavior Policy</h2>
-        <p>All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet’s behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved.</p>
-      </div>
-      <div class="checkbox-label">
-        <input type="checkbox" id="agree2" disabled onclick="revealAgreement(2)">
-        <label for="agree2">I agree to the Photography Service Agreement</label>
-      </div>
-      <div class="agreement" id="agreement2" style="display:none;">
-        <h2>Photography Service Agreement</h2>
-        <p>By participating in this photo session, you agree that all photographs taken by PictureThisPet are the intellectual property of the photographer. You are purchasing high-resolution digital files for personal use, but the photographer retains full ownership and the right to use images for marketing, portfolio, and promotional purposes. You may not alter, edit, or sell the images without written permission. You are granted a perpetual license to share and print the images for personal use, but PictureThisPet reserves all commercial rights.</p>
-      </div>
-      <div class="checkbox-label">
-        <input type="checkbox" id="agree3" disabled onclick="revealAgreement(3)">
-        <label for="agree3">I agree to the Cancellation & Refund Policy</label>
-      </div>
-      <div class="agreement" id="agreement3" style="display:none;">
-        <h2>Cancellation & Refund Policy</h2>
-        <p>All session payments are non-refundable. However, sessions may be rescheduled with at least 48 hours’ notice. In cases of severe weather or emergencies, we will work with you to find a new session date. Missed appointments or cancellations with less than 48 hours’ notice are not eligible for rescheduling or refund. Your session is not guaranteed until full payment is received.</p>
-      </div>
-      <button class="btn" id="intakeNext" style="display:none;">Continue</button>
-    `;
-
-    setTimeout(() => {
-      document.getElementById('intakeNext').onclick = startIntake;
-    }, 0);
-  }
-
-  function revealAgreement(num) {
-    document.getElementById(`agreement${num}`).style.display = 'block';
-    if (num === 1) document.getElementById('agree2').disabled = false;
-    if (num === 2) document.getElementById('agree3').disabled = false;
-    if (num === 3) document.getElementById('intakeNext').style.display = 'block';
-  }
-</script>
-<script>
-  function startIntake() {
-    showCard(0);
-  }
-
-  const intakeQuestions = [
-    {
-      key: 'firstName',
-      label: "What is your first name?",
-      required: true,
-      type: 'text',
-      placeholder: 'First Name'
-    },
-    {
-      key: 'lastName',
-      label: "What is your last name?",
-      required: true,
-      type: 'text',
-      placeholder: 'Last Name'
-    },
-    {
-      key: 'dob',
-      label: "What is your birthday?",
-      required: true,
-      type: 'date',
-      placeholder: 'MM/DD/YYYY'
-    },
-    {
-      key: 'email',
-      label: "What is your email address?",
-      required: true,
-      type: 'email',
-      placeholder: 'you@example.com'
-    },
-    {
-      key: 'phone',
-      label: "What is your phone number?",
-      required: true,
-      type: 'tel',
-      placeholder: '555-555-5555'
-    },
-    {
-      key: 'address',
-      label: "What is your address?",
-      required: true,
-      type: 'text',
-      placeholder: '123 Main St, Denver, CO'
-    }
-  ];
-
-  let currentIndex = 0;
-
-  function showCard(index) {
-    const question = intakeQuestions[index];
-    currentIndex = index;
-
-    const value = localStorage.getItem(question.key) || '';
-    const inputType = question.type;
-
-    document.getElementById('card').innerHTML = `
-      <div class="intake-form">
-        <h1>${question.label}</h1>
-        <input 
-          id="intakeInput" 
-          type="${inputType}" 
-          placeholder="${question.placeholder}" 
-          value="${value}" 
-          autofocus
-        />
-        <div style="display:flex;justify-content:space-between;margin-top:1.5rem;">
-          <button class="btn" onclick="prevCard()">Back</button>
-          <button class="btn" onclick="saveAndNext()">Next</button>
-        </div>
-      </div>
-    `;
-  }
-
-  function saveAndNext() {
-    const input = document.getElementById('intakeInput');
-    const value = input.value.trim();
-    const question = intakeQuestions[currentIndex];
-
-    if (question.required && !value) {
-      input.style.border = '2px solid red';
-      return;
-    }
-
-    localStorage.setItem(question.key, value);
-
-    if (currentIndex + 1 < intakeQuestions.length) {
-      showCard(currentIndex + 1);
-    } else {
-      document.getElementById('card').innerHTML = `
-        <h1>You're all set!</h1>
-        <p>Your session info has been saved. Next: payment & booking.</p>
-      `;
-    }
-  }
-
-  function prevCard() {
-    if (currentIndex > 0) {
-      showCard(currentIndex - 1);
-    }
-  }
-
-  window.onload = function () {
-    const sessionType = localStorage.getItem('sessionType');
-    const location = localStorage.getItem('location');
-    const pets = localStorage.getItem('pets');
-    const people = localStorage.getItem('people');
-
-    if (sessionType && location && pets && people) {
-      const base = basePrices[sessionType];
-      const petExtra = parseInt(pets) === 2 ? 40 : 0;
-      const personExtra = parseInt(people) === 2 ? 20 : 0;
-      const total = base + petExtra + personExtra;
-
-      document.getElementById('card').innerHTML = `
-        <h1>Session Summary (Resume)</h1>
-        <div class="summary">
-          <h2>Details</h2>
-          <ul>
-            <li><strong>Type:</strong><span>${sessionType}</span></li>
-            <li><strong>Location:</strong><span>${location}</span></li>
-            <li><strong>Pets:</strong><span>${pets}</span></li>
-            <li><strong>People:</strong><span>${people}</span></li>
-          </ul>
-          <h2>Pricing</h2>
-          <ul>
-            <li><span>${sessionType} Session</span><span>$${base}</span></li>
-            ${petExtra ? `<li><span>Extra Pet</span><span>$40</span></li>` : ''}
-            ${personExtra ? `<li><span>Extra Person</span><span>$20</span></li>` : ''}
-            <li><strong>Total</strong><strong>$${total}</strong></li>
-          </ul>
-        </div>
-        <button class="btn" onclick="showAgreements()">Resume Booking</button>
-      `;
-    }
-  };
-</script>
+  <footer>
+    <div class="payments">
+      <img src="/assets/images/paypal.png" alt="PayPal">
+      <img src="/assets/images/visa.png" alt="Visa">
+      <img src="/assets/images/mastercard.png" alt="MasterCard">
+      <img src="/assets/images/stripe.png" alt="Stripe">
+    </div>
+  </footer>
 </body>
 </html>
