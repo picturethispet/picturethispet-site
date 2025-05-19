@@ -20,42 +20,54 @@
       padding: 0;
     }
 
-   body {
-  margin: 0;
-  padding: 0;
-  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-image: url("assets/images/main_background_allsystem.png");
-  background-size: 200% 200%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  animation: moveBackground 5s ease-in-out infinite;
-  color: white;
-}
-
-@keyframes moveBackground {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-    <header class="site-header">
-  <img src="assets/images/header_logo_desktop.png" alt="PictureThisPet Logo" class="logo desktop-logo" />
-  <img src="assets/images/header_logo_mobile.png" alt="PictureThisPet Mobile Logo" class="logo mobile-logo" />
-  <nav class="site-nav">
-    <a href="#">Home</a>
-    <a href="#">Locations</a>
-    <a href="#">Pricing</a>
-    <a href="#">Contact</a>
-    <a href="#" class="book-btn">Book Now</a>
-  </nav>
-</header>
-
-    header img {
-      height: 40px;
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 200% 200%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      animation: moveBackground 5s ease-in-out infinite;
+      color: white;
     }
 
-    nav a {
+    @keyframes moveBackground {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .site-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo.desktop {
+      height: 280px;
+      object-fit: contain;
+    }
+
+    .logo.mobile {
+      display: none;
+      margin: 0 auto;
+      height: 120px;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .site-nav a {
       color: white;
       margin-left: 1rem;
       text-decoration: none;
@@ -70,6 +82,25 @@
       font-weight: bold;
       text-decoration: none;
       margin-left: 1rem;
+    }
+
+    .mobile-header {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 10;
+    }
+
+    .hamburger {
+      width: 30px;
+      height: 3px;
+      background-color: white;
+      margin: 6px 0;
     }
 
     .hero {
@@ -114,112 +145,56 @@
     }
 
     footer {
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  padding: 2rem 1rem;
-  margin-top: 4rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
     .payments img {
       height: 30px;
       margin: 0 1rem;
       filter: brightness(0) invert(1);
     }
-    .site-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  z-index: 10;
-}
 
-.logo {
-  height: 280px;
-  object-fit: contain;
-}
+    @media (max-width: 768px) {
+      .site-header {
+        display: none;
+      }
 
-.desktop-logo {
-  display: block;
-}
+      .mobile-header {
+        display: flex;
+      }
 
-.mobile-logo {
-  display: none;
-  margin: 0 auto;
-}
-
-.site-nav {
-  display: flex;
-  align-items: center;
-}
-
-.site-nav a {
-  color: white;
-  margin-left: 1rem;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.book-btn {
-  background-color: var(--dark-brown);
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 999px;
-  font-weight: bold;
-  text-decoration: none;
-  margin-left: 1rem;
-}
-
-/* MOBILE VIEW */
-@media (max-width: 768px) {
-  .site-header {
-    flex-direction: column;
-    padding: 1rem;
-  }
-
-  .desktop-logo {
-    display: none;
-  }
-
-  .mobile-logo {
-    display: block;
-    height: 140px;
-  }
-
-  .site-nav {
-    flex-direction: column;
-    margin-top: 1rem;
-  }
-
-  .site-nav a {
-    margin: 0.3rem 0;
-  }
-
-  .book-btn {
-    margin-top: 0.5rem;
-  }
-}
+      .logo.mobile {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-  <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" style="height: 56px; object-fit: contain;" />
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Locations</a>
-    <a href="#">Pricing</a>
-    <a href="#">Contact</a>
-    <a href="#" class="book-btn">Book Now</a>
-  </nav>
-</header>
+  <!-- Desktop Header -->
+  <header class="site-header">
+    <img src="assets/images/header_logo_desktop.png" alt="PictureThisPet Logo" class="logo desktop" />
+    <nav class="site-nav">
+      <a href="#">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="book-btn">Book Now</a>
+    </nav>
+  </header>
+
+  <!-- Mobile Header -->
+  <div class="mobile-header">
+    <div class="hamburger"></div>
+    <div class="hamburger"></div>
+    <div class="hamburger"></div>
+  </div>
+  <img src="assets/images/header_logo_mobile.png" alt="PictureThisPet Mobile Logo" class="logo mobile" />
 
   <main class="hero">
     <h1>Adventures End.</h1>
