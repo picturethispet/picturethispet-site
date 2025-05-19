@@ -302,5 +302,43 @@
       }
     }
   </script>
+  <script>
+  window.onload = function () {
+    const sessionType = localStorage.getItem('sessionType');
+    const location = localStorage.getItem('location');
+    const pets = localStorage.getItem('pets');
+    const people = localStorage.getItem('people');
+
+    if (sessionType && location && pets && people) {
+      // Restore summary with Resume option
+      const card = document.getElementById('card');
+      const base = basePrices[sessionType];
+      const petExtra = parseInt(pets) === 2 ? 40 : 0;
+      const personExtra = parseInt(people) === 2 ? 20 : 0;
+      const total = base + petExtra + personExtra;
+
+      card.innerHTML = `
+        <h1>Session Summary (Resume)</h1>
+        <div class="summary">
+          <h2>Details</h2>
+          <ul>
+            <li><strong>Type:</strong><span>${sessionType}</span></li>
+            <li><strong>Location:</strong><span>${location}</span></li>
+            <li><strong>Pets:</strong><span>${pets}</span></li>
+            <li><strong>People:</strong><span>${people}</span></li>
+          </ul>
+          <h2>Pricing</h2>
+          <ul>
+            <li><span>${sessionType} Session</span><span>$${base}</span></li>
+            ${petExtra ? `<li><span>Extra Pet</span><span>$40</span></li>` : ''}
+            ${personExtra ? `<li><span>Extra Person</span><span>$20</span></li>` : ''}
+            <li><strong>Total</strong><strong>$${total}</strong></li>
+          </ul>
+        </div>
+        <button class="btn" onclick="showAgreements()">Resume Booking</button>
+      `;
+    }
+  };
+</script>
 </body>
 </html>
