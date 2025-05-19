@@ -21,19 +21,22 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #F47C2C, #FDB75E, #9B4E21);
-      background-size: 300% 300%;
-      animation: bgMotion 30s ease infinite;
-      color: white;
-      overflow-x: hidden;
-    }
+  margin: 0;
+  padding: 0;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #f47c2c, #fbb040, #fdb75e, #9b4e21, #4b2e1e);
+  background-size: 600% 600%;
+  animation: animatedBackground 12s ease-in-out infinite;
+}
 
-    @keyframes bgMotion {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+/* Animate the background movement */
+@keyframes animatedBackground {
+  0%   { background-position: 0% 50%; }
+  25%  { background-position: 50% 0%; }
+  50%  { background-position: 100% 50%; }
+  75%  { background-position: 50% 100%; }
+  100% { background-position: 0% 50%; }
+}
 
     header {
       display: flex;
