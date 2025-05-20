@@ -89,10 +89,32 @@
       height: auto;
     }
 
-    .hero-section img {
-      width: 100vw;
-      height: auto;
-      display: block;
+.hero-section img {
+  width: 100vw;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.gradient-text {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 3rem;
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 10;
+  background: url("assets/images/bkgd_ani_cool.png");
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerText 12s linear infinite;
+  text-align: right;
+  max-width: 300px;
+  pointer-events: none; /* just in case */
+}
     }
 
     .section-placeholder {
