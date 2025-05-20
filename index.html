@@ -27,8 +27,8 @@
     }
 
     @keyframes moveBackground {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
@@ -93,6 +93,8 @@
       width: 100vw;
       height: auto;
       display: block;
+      position: relative;
+      z-index: 1;
     }
 
     .gradient-text {
@@ -171,14 +173,6 @@
         cursor: pointer;
         margin-top: 0;
       }
-
-      .hero-section {
-        margin-top: 100px;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
     }
 
     @media (min-width: 769px) {
@@ -203,10 +197,10 @@
 
   <main>
     <section class="hero-section">
-      <img src="assets/images/index_section1photo.jpg" alt="Golden Retriever in Cheesman Park" />
       <div class="gradient-text">
         Capture the Adventure<br>Before It’s Just a Memory
       </div>
+      <img src="assets/images/index_section1photo.jpg" alt="Golden Retriever in Cheesman Park" />
     </section>
 
     <section class="section-placeholder">
