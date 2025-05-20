@@ -7,40 +7,27 @@
   <meta name="description" content="Professional pet photography that captures timeless moments. Book your session today.">
   <meta name="robots" content="noarchive, noodp, noimageindex">
   <link rel="canonical" href="https://picturethispet.co/" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
   <style>
     :root {
       --orange: #F47C2C;
       --gold: #FDB75E;
       --dark-brown: #4B2E1E;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      overflow-x: hidden;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; }
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
     }
-
     @keyframes moveBackground {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     header, footer {
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
@@ -49,41 +36,22 @@
       background-attachment: fixed;
       animation: moveBackground 8s ease-in-out infinite;
     }
-
     header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.01rem 1.5rem;
-      background-color: rgba(255, 255, 255, 0.05);
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      padding: 0.01rem 1.5rem; background-color: rgba(255,255,255,0.05);
       backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-      height: 110px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: fixed; top: 0; left: 0; z-index: 1000; height: 110px;
     }
-
-    .desktop-logo {
-      height: 100px;
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      margin-left: auto;
-    }
-
+    .desktop-logo { height: 100px; }
+    .site-nav { display: flex; align-items: center; margin-left: auto; }
     .site-nav a {
       color: white;
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
     }
-
     .book-btn {
       background-color: var(--dark-brown);
       color: white;
@@ -93,18 +61,8 @@
       text-decoration: none;
       margin-left: 1rem;
     }
-
-    .hero-section {
-      margin-top: 100px;
-      position: relative;
-    }
-
-    .hero-section img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
+    .hero-section { margin-top: 100px; position: relative; }
+    .hero-section img { width: 100%; height: auto; display: block; }
     .gradient-text {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
@@ -122,7 +80,6 @@
       max-width: 320px;
       pointer-events: none;
     }
-
     .section-split {
       display: flex;
       justify-content: space-between;
@@ -133,12 +90,7 @@
       padding: 2rem 2rem 3rem;
       animation: moveBackground 8s ease-in-out infinite;
     }
-
-    .side-a, .side-b {
-      flex: 1;
-      padding: 2rem;
-    }
-
+    .side-a, .side-b { flex: 1; padding: 2rem; }
     .side-a h1 {
       font-family: 'Inter', sans-serif;
       font-weight: 900;
@@ -152,44 +104,32 @@
       color: transparent;
       text-align: left;
     }
-
     .side-b h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
       font-size: 2rem;
       margin-bottom: 1rem;
     }
-
     .side-b p {
       font-family: 'Inter', sans-serif;
       font-size: 1.1rem;
       line-height: 1.7;
     }
-
     footer {
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: rgba(255,255,255,0.05);
       backdrop-filter: blur(8px);
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
       text-align: center;
       padding: 2rem 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
-
     .payments img {
       height: 30px;
       margin: 0 1rem;
       filter: brightness(0) invert(1);
     }
-
-    /* MOBILE */
     @media (max-width: 768px) {
-      header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: 80px;
-        padding: 0.5rem 1rem;
-      }
+      header { flex-direction: row; justify-content: space-between; align-items: center; height: 80px; padding: 0.5rem 1rem; }
       .desktop-logo { height: 48px; }
       .site-nav { display: none; flex-direction: column; background: rgba(0,0,0,0.9); position: absolute; top: 80px; right: 0; width: 100%; text-align: right; padding: 1rem; z-index: 999; }
       .site-nav a { display: block; margin: 0.5rem 0; font-size: 1.2rem; }
@@ -217,13 +157,11 @@
     </nav>
     <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
   </header>
-
   <main>
     <section class="hero-section">
       <div class="gradient-text">Capture the Adventure<br />Before It’s Just a Memory</div>
       <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
     </section>
-
     <section class="section-split">
       <div class="side-a">
         <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
@@ -233,22 +171,25 @@
         <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
       </div>
     </section>
-
-    <section id="session-builder-section" style="padding: 4rem 1rem; background: url('assets/images/ani_bkgd_cool.png'); background-size: 400% 400%; animation: moveBackground 20s ease-in-out infinite;">
-  <div id="ptp-session-builder" class="ptp-flow-step" style="max-width: 900px; margin: 0 auto;">
-    <div class="progress-bar-container">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-    <div class="question-card">
-      <div class="card-header">Build Your Pet Session</div>
-      <div class="card-body" id="qBody"></div>
-      <div class="card-footer" id="qFooter"></div>
-    </div>
-    <div id="session-summary" style="display:none; margin-top: 40px;"></div>
-  </div>
-</section>
+    <!-- START OF SECTION 3 -->
+    <section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 400% 400%; animation: moveBackground 20s ease-in-out infinite;">
+      <div class="session-card-stack">
+        <div class="session-card active" id="sessionCard">
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+          <div class="session-card-body">
+            <h2 id="questionText">What type of session?</h2>
+            <div id="optionsContainer"></div>
+          </div>
+          <div class="session-card-footer">
+            <button id="prevBtn" style="display:none">← Back</button>
+            <button id="resetBtn" style="display:none">Start Over</button>
+          </div>
+        </div>
+        <div class="session-card shadow-card"></div>
+        <div class="session-card shadow-card"></div>
+      </div>
+    </section>
   </main>
-
   <footer>
     <div class="payments">
       <img src="assets/images/paypal.png" alt="PayPal" />
@@ -257,7 +198,6 @@
       <img src="assets/images/stripe.png" alt="Stripe" />
     </div>
   </footer>
-
   <script>
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
@@ -268,99 +208,70 @@
     };
   </script>
   <script>
-  const questions = [
-    { label: "What type of session are you itching for?", name: "session", options: ["Mini", "Full"] },
-    { label: "Which park's calling your name?", name: "park", options: ["Cheesman Park", "City Park"] },
-    { label: "How many tails are joining? (Up to 2 pets)", name: "petCount", options: ["1", "2"] },
-    { label: "How many people will be in the photos? (Up to 2 people)", name: "people", options: ["1", "2"] }
-  ];
-
-  const pricing = {
-    base: { Mini: 50, Full: 100 },
-    pet: { 1: 0, 2: 40 },
-    people: { 1: 0, 2: 20 }
-  };
-
-  const answers = {};
-  let currentQ = 0;
-
-  function showQuestion() {
-    const q = questions[currentQ];
-    const body = document.getElementById('qBody');
-    const footer = document.getElementById('qFooter');
-    const progress = document.getElementById('progressBar');
-
-    body.innerHTML = `<p style='font-size:16px;'>${q.label}</p>`;
-
-    body.innerHTML += q.options.map(opt => {
-      let label = opt;
-      if (q.name === 'petCount') label = opt === '1' ? '1 (included)' : '2 (add $40)';
-      if (q.name === 'people') label = opt === '1' ? '1 (included)' : '2 (add $20)';
-      return `<button class='answer-button' onclick="selectAnswer('${q.name}', '${opt}')">${label}</button>`;
-    }).join('<br><br>');
-
-    footer.innerHTML = '';
-    if (currentQ > 0) footer.innerHTML += `<button onclick='prevQuestion()'>← Back</button>`;
-    if (currentQ > 0) footer.innerHTML += `<button onclick='confirmReset()'>Start Over</button>`;
-
-    progress.style.width = `${((currentQ + 1) / questions.length) * 100}%`;
-  }
-
-  function selectAnswer(name, value) {
-    answers[name] = value;
-    if (currentQ < questions.length - 1) {
-      currentQ++;
-      showQuestion();
-    } else {
-      showSummary();
+    const questions = [
+      { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
+      { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
+      { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
+      { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] }
+    ];
+    let answers = JSON.parse(localStorage.getItem("ptpSessionData")) || {};
+    let qIndex = 0;
+    const questionText = document.getElementById("questionText");
+    const optionsContainer = document.getElementById("optionsContainer");
+    const prevBtn = document.getElementById("prevBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    function loadQuestion() {
+      const q = questions[qIndex];
+      questionText.textContent = q.label;
+      optionsContainer.innerHTML = "";
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "answer-button";
+        btn.textContent = opt;
+        btn.onclick = () => {
+          answers[q.name] = opt;
+          localStorage.setItem("ptpSessionData", JSON.stringify(answers));
+          animateCardOff(() => {
+            if (qIndex < questions.length - 1) {
+              qIndex++;
+              loadQuestion();
+            } else {
+              window.location.href = "/ptp-agreements-complete-step-2";
+            }
+          });
+        };
+        optionsContainer.appendChild(btn);
+      });
+      prevBtn.style.display = qIndex > 0 ? "inline-block" : "none";
+      resetBtn.style.display = qIndex > 0 ? "inline-block" : "none";
     }
-  }
-
-  function prevQuestion() {
-    if (currentQ > 0) {
-      currentQ--;
-      showQuestion();
+    prevBtn.onclick = () => {
+      if (qIndex > 0) {
+        qIndex--;
+        loadQuestion();
+      }
+    };
+    resetBtn.onclick = () => {
+      if (confirm("Are you sure you want to start over?")) {
+        localStorage.removeItem("ptpSessionData");
+        answers = {};
+        qIndex = 0;
+        loadQuestion();
+      }
+    };
+    function animateCardOff(callback) {
+      const card = document.querySelector(".session-card.active");
+      card.style.transform = "translateY(100px) rotateZ(5deg)";
+      card.style.opacity = 0;
+      setTimeout(() => {
+        card.style.transform = "none";
+        card.style.opacity = 1;
+        callback();
+      }, 400);
     }
-  }
-
-  function confirmReset() {
-    if (confirm("Are you sure you want to start over? All progress will be lost.")) {
-      resetForm();
-    }
-  }
-
-  function resetForm() {
-    currentQ = 0;
-    Object.keys(answers).forEach(k => delete answers[k]);
-    showQuestion();
-  }
-
-  function showSummary() {
-    const total = pricing.base[answers.session] + pricing.pet[answers.petCount] + pricing.people[answers.people];
-    const summary = document.getElementById('session-summary');
-    summary.innerHTML = `
-      <div class="summary-card">
-        <h3>Your Session Summary</h3>
-        <div class="summary-line"><span>Session Type:</span><span>${answers.session} Session – $${pricing.base[answers.session]}</span></div>
-        <div class="summary-line"><span>Location:</span><span>${answers.park}</span></div>
-        <div class="summary-line"><span>Number of Pets:</span><span>${answers.petCount} – $${pricing.pet[answers.petCount]}</span></div>
-        <div class="summary-line"><span>People in Photos:</span><span>${answers.people} – $${pricing.people[answers.people]}</span></div>
-        <div class="summary-total">Total: $${total}</div>
-        <button onclick="proceedToAgreements()">Continue</button>
-      </div>`;
-    summary.style.display = 'block';
-    document.querySelector('.question-card').style.display = 'none';
-    document.querySelector('.progress-bar-container').style.display = 'none';
-  }
-
-  function proceedToAgreements() {
-    localStorage.setItem("sessionDetails", JSON.stringify(answers));
-    window.location.href = "/ptp-agreements-complete-step-2";
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    showQuestion();
-  });
-</script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadQuestion();
+    });
+  </script>
 </body>
 </html>
