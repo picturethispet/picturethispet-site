@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PictureThisPet</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #F47C2C;
@@ -22,18 +22,17 @@
 
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 0;
       color: white;
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 200% 200%;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      animation: moveBackground 5s ease-in-out infinite;
+      background: linear-gradient(135deg, #f47c2c, #fbb040, #fdb75e, #9b4e21, #4b2e1e);
+      background-size: 600% 600%;
+      animation: animatedBackground 16s ease-in-out infinite;
     }
 
-    @keyframes moveBackground {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
+    @keyframes animatedBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
@@ -42,17 +41,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 2rem;
+      padding: 0.8rem 1.5rem;
       background-color: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
       z-index: 10;
     }
 
-    header img {
-      height: 112px;
+    .logo {
+      height: 80px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
     }
 
     nav a {
@@ -74,19 +77,39 @@
 
     .hero-image {
       width: 100%;
-      background-image: url("assets/images/2I4A4374.jpg");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      aspect-ratio: 3/2;
-      position: relative;
-      z-index: 1;
+      height: auto;
+      display: block;
     }
 
-    .main-content {
-      padding: 4rem 2rem;
-      position: relative;
-      z-index: 2;
+    .content-section {
+      padding: 3rem 2rem;
+      text-align: center;
+      background: linear-gradient(135deg, #f47c2c, #fbb040, #fdb75e, #9b4e21, #4b2e1e);
+      background-size: 600% 600%;
+      animation: animatedBackground 16s ease-in-out infinite;
+    }
+
+    .content-section h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .content-section p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+    }
+
+    .cta {
+      background-color: var(--gold);
+      color: white;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
     }
 
     footer {
@@ -95,7 +118,6 @@
       box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
       padding: 2rem 1rem;
-      margin-top: 4rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -105,28 +127,41 @@
       filter: brightness(0) invert(1);
     }
 
+    /* Responsive layout for mobile */
     @media (max-width: 768px) {
       header {
         flex-direction: column;
         padding: 1rem;
       }
 
-      header img {
-        height: 72px;
+      .logo {
+        height: 100px;
         margin-bottom: 1rem;
       }
 
       nav {
-        display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .book-btn {
+        margin-top: 0.5rem;
+      }
+
+      .content-section h1 {
+        font-size: 2rem;
+      }
+
+      .content-section p {
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" />
+    <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" class="logo" />
     <nav>
       <a href="#">Home</a>
       <a href="#">Locations</a>
@@ -136,14 +171,15 @@
     </nav>
   </header>
 
-  <section class="hero-image"></section>
+  <main>
+    <img src="assets/images/2I4A4374.jpg" alt="Golden retriever portrait in Cheesman Park" class="hero-image" />
 
-  <section class="main-content">
-    <h1>Adventures End.</h1>
-    <h2>Memories Last.</h2>
-    <p>Capture your pet’s unique personality with a professional photoshoot at a beautiful Denver park.</p>
-    <button class="cta">Book a Session</button>
-  </section>
+    <section class="content-section">
+      <h1>Adventures End.<br />Memories Last.</h1>
+      <p>Capture your pet’s unique personality with a professional photoshoot at a beautiful Denver park.</p>
+      <button class="cta">Book a Session</button>
+    </section>
+  </main>
 
   <footer>
     <div class="payments">
