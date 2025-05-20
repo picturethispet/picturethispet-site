@@ -37,24 +37,16 @@
       100% { background-position: 0% 50%; }
     }
 
-    header, footer {
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      animation: moveBackground 5s ease-in-out infinite;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
     header {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
+      padding: 0.6rem 2rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
@@ -62,12 +54,13 @@
     }
 
     .desktop-logo {
-      height: 150px;
+      height: 120px;
     }
 
     .site-nav {
       display: flex;
       align-items: center;
+      margin-left: auto;
     }
 
     .site-nav a {
@@ -88,9 +81,8 @@
     }
 
     .hero-section {
-      margin-top: 180px;
+      margin-top: 130px;
       position: relative;
-      height: auto;
     }
 
     .hero-section img {
@@ -104,6 +96,9 @@
     }
 
     footer {
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
       padding: 2rem 1rem;
       margin-top: 4rem;
@@ -120,21 +115,21 @@
     @media (max-width: 768px) {
       header {
         flex-direction: column;
-        padding: 1rem;
         align-items: center;
-      }
-
-      .site-nav {
-        display: none;
+        padding: 0.6rem 1rem;
       }
 
       .desktop-logo {
         height: 80px;
       }
 
+      .site-nav {
+        display: none;
+      }
+
       .mobile-menu-btn {
         display: block;
-        margin-top: 0.5rem;
+        margin-top: 0.3rem;
         background: none;
         border: none;
         color: white;
