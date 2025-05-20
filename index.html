@@ -158,6 +158,29 @@
         display: none;
       }
     }
+    .gradient-text {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 3rem;
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 10;
+  background: url("assets/images/bkgd_ani_cool.png");
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerText 12s linear infinite;
+  text-align: right;
+  max-width: 300px;
+}
+
+@keyframes shimmerText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
   </style>
 </head>
 <body>
@@ -175,6 +198,9 @@
 
   <main>
     <section class="hero-section">
+      <div class="gradient-text">
+  Capture the Adventure<br>Before It’s Just a Memory
+</div>
       <img src="assets/images/index_section1photo.jpg" alt="Golden Retriever in Cheesman Park" />
     </section>
 
