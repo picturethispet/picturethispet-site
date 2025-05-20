@@ -37,16 +37,24 @@
       100% { background-position: 0% 50%; }
     }
 
+    header, footer {
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      animation: moveBackground 5s ease-in-out infinite;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
     header {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
@@ -96,9 +104,6 @@
     }
 
     footer {
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
       padding: 2rem 1rem;
       margin-top: 4rem;
