@@ -20,6 +20,10 @@
       padding: 0;
     }
 
+    html, body {
+      overflow-x: hidden;
+    }
+
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
@@ -95,18 +99,14 @@
       height: auto;
     }
 
-    html, body {
-  overflow-x: hidden;
-}
-
-.hero-section img {
-  width: 100%;
-  max-width: 100vw;
-  height: auto;
-  display: block;
-  position: relative;
-  z-index: 1;
-}
+    .hero-section img {
+      width: 100%;
+      max-width: 100vw;
+      height: auto;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
 
     .gradient-text {
       font-family: 'Playfair Display', serif;
@@ -137,6 +137,24 @@
       animation: moveBackground 5s ease-in-out infinite;
     }
 
+    .gradient-text-cool {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      line-height: 1.4;
+      background: url("assets/images/bkgd_ani_cool.png");
+      background-size: cover;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerText 14s linear infinite;
+      text-align: center;
+      max-width: 90%;
+      margin: 0 auto;
+      padding: 2rem 0;
+      pointer-events: none;
+    }
+
     footer {
       background-color: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
@@ -152,7 +170,6 @@
       filter: brightness(0) invert(1);
     }
 
-    /* MOBILE ONLY */
     @media (max-width: 768px) {
       header {
         flex-direction: row;
@@ -220,8 +237,10 @@
     </section>
 
     <section class="section-placeholder">
-      <h2>Section 2</h2>
-      <p>Placeholder content here...</p>
+      <p class="gradient-text-cool">
+        One day, they won’t be by your side.<br>
+        But these moments? They’ll last forever.
+      </p>
     </section>
 
     <section class="section-placeholder">
