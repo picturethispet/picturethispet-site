@@ -36,12 +36,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    @keyframes shimmerText {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
     header, footer {
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
@@ -139,39 +133,21 @@
       animation: moveBackground 5s ease-in-out infinite;
     }
 
-    .section2-animated-text {
+    .svg-text-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 2rem;
+    }
+
+    svg text {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
-      font-size: 2.5rem;
-      line-height: 1.4;
-      text-align: center;
-      background: url("assets/images/bkgd_ani_cool.png");
-      background-size: 200%;
-      background-position: 0% 50%;
-      background-repeat: no-repeat;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      animation: shimmerText 12s ease-in-out infinite;
-      padding: 3rem 1rem;
-      max-width: 90%;
-      margin: 0 auto;
-      pointer-events: none;
-    }
-
-    footer {
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      padding: 2rem 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .payments img {
-      height: 30px;
-      margin: 0 1rem;
-      filter: brightness(0) invert(1);
+      font-size: 48px;
+      fill: url(#animated-fill);
     }
 
     @media (max-width: 768px) {
@@ -211,9 +187,8 @@
         right: 20px;
       }
 
-      .section2-animated-text {
-        font-size: 1.8rem;
-        padding: 2rem 1rem;
+      svg text {
+        font-size: 32px;
       }
     }
 
@@ -246,9 +221,18 @@
     </section>
 
     <section class="section-placeholder" style="position: relative;">
-      <div class="section2-animated-text">
-        One day, they won’t be by your side.<br>
-        But these moments? They’ll last forever.
+      <div class="svg-text-container">
+        <svg viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <pattern id="animated-fill" patternUnits="userSpaceOnUse" width="1000" height="200">
+              <image xlink:href="assets/images/ani_bkgd_cool.png" x="0" y="0" width="1000" height="200">
+                <animate attributeName="x" values="0;-100;0" dur="10s" repeatCount="indefinite" />
+              </image>
+            </pattern>
+          </defs>
+          <text x="1000" y="80" text-anchor="end">One day, they won’t be by your side.</text>
+          <text x="1000" y="160" text-anchor="end">But these moments? They’ll last forever.</text>
+        </svg>
       </div>
     </section>
 
