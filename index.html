@@ -52,7 +52,7 @@
     }
 
     .logo {
-      height: 112px; /* 2x the previous size */
+      height: 112px;
       object-fit: contain;
     }
 
@@ -78,7 +78,7 @@
     }
 
     .hamburger {
-      display: none; /* Hidden on desktop */
+      display: none;
       flex-direction: column;
       cursor: pointer;
       gap: 5px;
@@ -98,10 +98,17 @@
       margin-top: 1rem;
     }
 
+    .mobile-nav a {
+      margin: 0.3rem 0;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
     .mobile-logo {
       display: none;
       height: 80px;
-      margin-top: 1rem;
+      margin: 1rem auto 0;
     }
 
     .hero {
@@ -174,25 +181,10 @@
 
       .hamburger {
         display: flex;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
       }
 
       .mobile-nav {
-        display: flex;
-      }
-
-      .mobile-nav a {
-        margin: 0.3rem 0;
-        color: white;
-        text-decoration: none;
-        font-weight: 600;
-      }
-
-      .book-btn {
-        margin-top: 0.5rem;
-      }
-
-      .logo {
         display: none;
       }
 
@@ -203,8 +195,8 @@
   </style>
   <script>
     function toggleMenu() {
-      const menu = document.getElementById('mobile-nav');
-      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+      const nav = document.getElementById("mobile-nav");
+      nav.style.display = nav.style.display === "flex" ? "none" : "flex";
     }
   </script>
 </head>
