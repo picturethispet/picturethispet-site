@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PictureThisPet</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #F47C2C;
@@ -20,8 +20,9 @@
       padding: 0;
     }
 
-    body {
+    html, body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      height: 100%;
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
       background-position: center;
@@ -32,8 +33,8 @@
     }
 
     @keyframes moveBackground {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
@@ -42,7 +43,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.6rem 2rem;
+      padding: 0.5rem 2rem;
       background-color: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -54,13 +55,12 @@
     }
 
     .desktop-logo {
-      height: 120px;
+      height: 150px;
     }
 
     .site-nav {
       display: flex;
       align-items: center;
-      margin-left: auto;
     }
 
     .site-nav a {
@@ -81,8 +81,9 @@
     }
 
     .hero-section {
-      margin-top: 130px;
+      margin-top: 160px;
       position: relative;
+      height: auto;
     }
 
     .hero-section img {
@@ -116,7 +117,7 @@
       header {
         flex-direction: column;
         align-items: center;
-        padding: 0.6rem 1rem;
+        padding: 0.25rem 1rem;
       }
 
       .desktop-logo {
@@ -129,7 +130,7 @@
 
       .mobile-menu-btn {
         display: block;
-        margin-top: 0.3rem;
+        margin-top: 0.25rem;
         background: none;
         border: none;
         color: white;
@@ -137,11 +138,18 @@
         cursor: pointer;
       }
     }
+
+    /* DESKTOP ONLY: Hide hamburger */
+    @media (min-width: 769px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo_mobile.png" alt="PictureThisPet Logo" class="desktop-logo">
+    <img src="assets/images/header_logo_mobile.png" alt="PictureThisPet Logo" class="desktop-logo" />
     <nav class="site-nav">
       <a href="#">Home</a>
       <a href="#">Locations</a>
