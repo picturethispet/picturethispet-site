@@ -36,6 +36,12 @@
       100% { background-position: 0% 50%; }
     }
 
+    @keyframes shimmerText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     header, footer {
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
@@ -111,13 +117,15 @@
       right: 40px;
       z-index: 10;
       background: url("assets/images/bkgd_ani_cool.png");
-      background-size: cover;
-      background-position: center;
+      background-size: 200%;
+      background-position: 0% 50%;
+      background-repeat: no-repeat;
       -webkit-background-clip: text;
-      -webkit-text-fill-color: white;
-      animation: shimmerText 12s linear infinite;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      animation: shimmerText 12s ease-in-out infinite;
       text-align: right;
-      max-width: 300px;
+      max-width: 320px;
       pointer-events: none;
     }
 
@@ -131,21 +139,23 @@
       animation: moveBackground 5s ease-in-out infinite;
     }
 
-    .gradient-text-cool {
+    .section2-animated-text {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
       font-size: 2.5rem;
       line-height: 1.4;
+      text-align: center;
       background: url("assets/images/bkgd_ani_cool.png");
-      background-size: cover;
-      background-position: center;
+      background-size: 200%;
+      background-position: 0% 50%;
+      background-repeat: no-repeat;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: shimmerText 14s linear infinite;
-      text-align: center;
+      color: transparent;
+      animation: shimmerText 12s ease-in-out infinite;
+      padding: 3rem 1rem;
       max-width: 90%;
       margin: 0 auto;
-      padding: 2rem 0;
       pointer-events: none;
     }
 
@@ -200,6 +210,11 @@
         top: 10px;
         right: 20px;
       }
+
+      .section2-animated-text {
+        font-size: 1.8rem;
+        padding: 2rem 1rem;
+      }
     }
 
     @media (min-width: 769px) {
@@ -207,23 +222,6 @@
         display: none;
       }
     }
-
-  .section2-animated-text {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 2.5rem;
-  line-height: 1.4;
-  text-align: center;
-  background: url("assets/images/bkgd_ani_cool.png");
-  background-size: cover;
-  background-position: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmerText 12s linear infinite;
-  padding: 3rem 1rem;
-  max-width: 90%;
-  margin: 0 auto;
-}
   </style>
 </head>
 <body>
@@ -247,12 +245,12 @@
       <img src="assets/images/index_sec1_imgcopy.png" alt="Golden Retriever in Cheesman Park" />
     </section>
 
-   <section class="section-placeholder" style="position: relative;">
-  <div class="section2-animated-text">
-    One day, they won’t be by your side.<br>
-    But these moments? They’ll last forever.
-  </div>
-</section>
+    <section class="section-placeholder" style="position: relative;">
+      <div class="section2-animated-text">
+        One day, they won’t be by your side.<br>
+        But these moments? They’ll last forever.
+      </div>
+    </section>
 
     <section class="section-placeholder">
       <h2>Section 3</h2>
