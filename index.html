@@ -21,6 +21,8 @@
     }
 
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 200% 200%;
@@ -37,33 +39,33 @@
       100% { background-position: 0% 50%; }
     }
 
-    header.site-header {
+    .site-header {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.75rem 1.5rem;
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.8rem 1.2rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       position: relative;
       z-index: 10;
     }
 
-    .site-header .logo {
-      height: 120px;
+    .logo {
+      height: 80px;
       object-fit: contain;
     }
 
-    nav.site-nav {
+    .site-nav {
       display: flex;
       align-items: center;
     }
 
     .site-nav a {
       color: white;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
       text-decoration: none;
       font-weight: 600;
     }
@@ -75,40 +77,18 @@
       border-radius: 999px;
       font-weight: bold;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
     }
 
-    .hero-image-section {
+    .hero {
       text-align: center;
-      margin: 0;
+      margin-top: -60px;
     }
 
-    .hero-image-section img {
+    .hero img.hero-img {
       width: 100%;
       height: auto;
       display: block;
-    }
-
-    .hero-content {
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-
-    .hero-content h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .hero-content h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero-content p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
     }
 
     .cta {
@@ -120,6 +100,7 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
+      margin-top: 2rem;
     }
 
     footer {
@@ -128,7 +109,6 @@
       box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
       padding: 2rem 1rem;
-      margin-top: 4rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -138,31 +118,42 @@
       filter: brightness(0) invert(1);
     }
 
-    .hamburger {
+    .mobile-header-logo {
       display: none;
-      flex-direction: column;
-      align-items: center;
-      margin: 1rem auto 0;
-      cursor: pointer;
     }
 
-    .hamburger span {
-      height: 3px;
-      width: 30px;
-      background: white;
-      margin: 4px 0;
-      border-radius: 3px;
+    .hamburger {
+      display: none;
     }
 
     @media (max-width: 768px) {
       .site-header {
         justify-content: center;
+        flex-direction: column;
+        padding: 1rem 1rem 0.5rem;
       }
+
+      .logo {
+        height: 60px;
+      }
+
       .site-nav {
         display: none;
       }
+
+      .mobile-header-logo {
+        display: block;
+        margin: 1rem auto 0;
+        height: 100px;
+      }
+
       .hamburger {
-        display: flex;
+        display: block;
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 1rem;
+        cursor: pointer;
+        color: white;
       }
     }
   </style>
@@ -170,28 +161,12 @@
 <body>
   <header class="site-header">
     <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" class="logo" />
-    <nav class="site-nav">
-      <a href="#">Home</a>
-      <a href="#">Locations</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
-      <a href="#" class="book-btn">Book Now</a>
-    </nav>
   </header>
 
-  <div class="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <div class="hamburger">☰</div>
+  <img src="assets/images/2I4A4374.jpg?v=3" alt="Hero Dog" class="hero-img" />
 
-  <section class="hero-image-section">
-    <img src="assets/images/2I4A4374.jpg?v=2" alt="Golden retriever portrait" />
-  </section>
-
-  <main class="hero-content">
-    <h1>Adventures End.</h1>
-    <h2>Memories Last.</h2>
+  <main class="hero">
     <p>Capture your pet’s unique personality with a professional photoshoot at a beautiful Denver park.</p>
     <button class="cta">Book a Session</button>
   </main>
