@@ -10,11 +10,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/session3-styles.css">
+  <script defer src="/assets/js/session3-logic.js"></script>
   <style>
     :root {
       --orange: #F47C2C;
       --gold: #FDB75E;
       --dark-brown: #4B2E1E;
+      --warm-gradient: linear-gradient(135deg, #f47c2c, #fbb040, #fdb75e);
     }
     * {
       box-sizing: border-box;
@@ -97,7 +100,7 @@
       position: absolute;
       top: 20px;
       right: 40px;
-      background: url("assets/images/bkgd_ani_cool.png");
+      background: url("assets/images/ani_bkgd_cool.png");
       background-size: 200%;
       background-position: center;
       -webkit-background-clip: text;
@@ -143,167 +146,63 @@
       font-size: 1.1rem;
       line-height: 1.7;
     }
-    /* SECTION 3 STYLE INSERTED BELOW */
-    .session-card-stack {
-      max-width: 600px;
-      margin: 0 auto;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .session-card {
-      background: url("assets/images/ani_bkgd_cool.png");
-      background-size: 400% 400%;
-      animation: moveBackground 20s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
-      width: 100%;
-      position: absolute;
-      color: white;
-      font-family: 'SF Pro Display', sans-serif;
-      transition: transform 0.6s ease, opacity 0.6s ease;
-    }
-    .session-card.shadow-card {
-      top: 20px;
-      transform: scale(0.96);
-      opacity: 0.5;
-      z-index: 0;
-    }
-    .session-card.active {
-      position: relative;
-      z-index: 2;
-    }
-    .session-card-logo {
-      display: block;
-      max-width: 180px;
-      margin: 0 auto 1rem;
-    }
-    .session-card-body {
+    footer {
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .session-card-body h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
+    .payments img {
+      height: 30px;
+      margin: 0 1rem;
+      filter: brightness(0) invert(1);
     }
-    .session-card-footer {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .session-card-footer button,
-    .answer-button {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      border: 2px solid white;
-      border-radius: 12px;
-      padding: 0.6rem 1.4rem;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .answer-button:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-    /* FOOTER STYLES REMAIN UNCHANGED */
   </style>
+  <script>
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+    };
+  </script>
 </head>
 <body>
-  <!-- REST OF BODY CONTENT UNCHANGED EXCEPT SECTION 3 -->
-  <section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 400% 400%; animation: moveBackground 20s ease-in-out infinite;">
-    <div class="session-card-stack">
-      <div class="session-card active" id="sessionCard">
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
-        <div class="session-card-body">
-          <h2 id="questionText">What type of session?</h2>
-          <div id="optionsContainer"></div>
-        </div>
-        <div class="session-card-footer">
-          <button id="prevBtn" style="display:none">← Back</button>
-          <button id="resetBtn" style="display:none">Start Over</button>
-        </div>
+  <header>
+    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <nav class="site-nav">
+      <a href="#">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="book-btn">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+  </header>
+  <main>
+    <section class="hero-section">
+      <div class="gradient-text">Capture the Adventure<br />Before It’s Just a Memory</div>
+      <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
+    </section>
+    <section class="section-split">
+      <div class="side-a">
+        <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
       </div>
-      <div class="session-card shadow-card"></div>
-      <div class="session-card shadow-card"></div>
+      <div class="side-b">
+        <h2>But these moments?<br />They’ll last forever.</h2>
+        <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
+      </div>
+    </section>
+
+    <!-- Section 3 now lives in external CSS and JS for easier updates -->
+    <section id="session-builder-section"></section>
+  </main>
+  <footer>
+    <div class="payments">
+      <img src="assets/images/paypal.png" alt="PayPal" />
+      <img src="assets/images/visa.png" alt="Visa" />
+      <img src="assets/images/mastercard.png" alt="MasterCard" />
+      <img src="assets/images/stripe.png" alt="Stripe" />
     </div>
-  </section>
-  <!-- SESSION BUILDER LOGIC SCRIPT -->
-  <script>
-    const questions = [
-      { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
-      { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
-      { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
-      { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] },
-    ];
-
-    let answers = JSON.parse(localStorage.getItem("ptpSessionData")) || {};
-    let qIndex = 0;
-
-    const questionText = document.getElementById("questionText");
-    const optionsContainer = document.getElementById("optionsContainer");
-    const prevBtn = document.getElementById("prevBtn");
-    const resetBtn = document.getElementById("resetBtn");
-
-    function loadQuestion() {
-      const q = questions[qIndex];
-      questionText.textContent = q.label;
-      optionsContainer.innerHTML = "";
-
-      q.options.forEach(opt => {
-        const btn = document.createElement("button");
-        btn.className = "answer-button";
-        btn.textContent = opt;
-        btn.onclick = () => {
-          answers[q.name] = opt;
-          localStorage.setItem("ptpSessionData", JSON.stringify(answers));
-          animateCardOff(() => {
-            if (qIndex < questions.length - 1) {
-              qIndex++;
-              loadQuestion();
-            } else {
-              window.location.href = "/ptp-select-date";
-            }
-          });
-        };
-        optionsContainer.appendChild(btn);
-      });
-
-      prevBtn.style.display = qIndex > 0 ? "inline-block" : "none";
-      resetBtn.style.display = qIndex > 0 ? "inline-block" : "none";
-    }
-
-    prevBtn.onclick = () => {
-      if (qIndex > 0) {
-        qIndex--;
-        loadQuestion();
-      }
-    };
-
-    resetBtn.onclick = () => {
-      if (confirm("Are you sure you want to start over?")) {
-        localStorage.removeItem("ptpSessionData");
-        answers = {};
-        qIndex = 0;
-        loadQuestion();
-      }
-    };
-
-    function animateCardOff(callback) {
-      const card = document.querySelector(".session-card.active");
-      card.style.transform = "translateY(100px) rotateZ(5deg)";
-      card.style.opacity = 0;
-      setTimeout(() => {
-        card.style.transform = "none";
-        card.style.opacity = 1;
-        callback();
-      }, 400);
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      loadQuestion();
-    });
-  </script>
+  </footer>
 </body>
 </html>
