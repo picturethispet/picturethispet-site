@@ -20,39 +20,42 @@
       padding: 0;
     }
 
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-      margin: 0;
-      padding: 0;
+      background: url("assets/images/main_background_allsystem.png") no-repeat center center fixed;
+      background-size: cover;
+      animation: moveBackground 12s ease-in-out infinite;
       color: white;
-      background: linear-gradient(135deg, #f47c2c, #fbb040, #fdb75e, #9b4e21, #4b2e1e);
-      background-size: 600% 600%;
-      animation: moveBackground 8s ease-in-out infinite;
     }
 
     @keyframes moveBackground {
-      0% { background-position: 0% 50%; }
-      25% { background-position: 50% 0%; }
-      50% { background-position: 100% 50%; }
-      75% { background-position: 50% 100%; }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
+    header, footer {
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 10;
+      position: relative;
+    }
+
     header {
-      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      position: fixed;
-      top: 0;
-      z-index: 1000;
+      padding: 1.2rem 2rem;
     }
 
-    .logo {
+    header img {
       height: 80px;
     }
 
@@ -74,50 +77,28 @@
     }
 
     main {
-      margin-top: 100px;
-    }
-
-    .section {
       padding: 4rem 2rem;
       text-align: center;
     }
 
-    .hero-image {
+    .hero-img {
       width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
       max-height: 90vh;
       object-fit: cover;
-      display: block;
     }
 
     footer {
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
       text-align: center;
       padding: 2rem 1rem;
-      margin-top: 4rem;
-    }
-
-    .payments img {
-      height: 30px;
-      margin: 0 1rem;
-      filter: brightness(0) invert(1);
-    }
-
-    @media (max-width: 768px) {
-      .logo {
-        height: 60px;
-      }
-
-      nav {
-        display: none;
-      }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" class="logo">
+    <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" />
     <nav>
       <a href="#">Home</a>
       <a href="#">Locations</a>
@@ -128,19 +109,14 @@
   </header>
 
   <main>
-    <section class="section">
-      <!-- Section 1: Hero Image -->
-      <img src="assets/images/2I4A4374__cropped.jpg" alt="Hero Pet Image" class="hero-image" />
+    <section>
+      <img class="hero-img" src="assets/images/2I4A4374__cropped.jpg" alt="Hero Dog" />
     </section>
-
-    <section class="section">
-      <!-- Section 2 -->
-      <h2>Section 2 Placeholder</h2>
+    <section>
+      <p>Section 2 placeholder</p>
     </section>
-
-    <section class="section">
-      <!-- Section 3 -->
-      <h2>Section 3 Placeholder</h2>
+    <section>
+      <p>Section 3 placeholder</p>
     </section>
   </main>
 
