@@ -125,63 +125,57 @@
 
     .section2-container {
       display: flex;
-      flex-direction: row;
+      flex-wrap: wrap;
       justify-content: space-between;
-      padding: 6rem 3rem;
+      align-items: center;
+      padding: 5rem 2rem 3rem;
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      flex-wrap: wrap;
+      background-attachment: fixed;
+      animation: moveBackground 5s ease-in-out infinite;
     }
 
-    .section2-sideA, .section2-sideB {
-      flex: 1 1 100%;
-    }
-
-    @media (min-width: 768px) {
-      .section2-sideA, .section2-sideB {
-        flex: 1;
-      }
-    }
-
-    .section2-sideA {
+    .section2-left {
+      flex: 1 1 50%;
+      max-width: 50%;
       padding-right: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
-    .section2-sideA h1 {
-      font-family: 'SF Pro Display', -apple-system, sans-serif;
-      font-size: 3.5rem;
-      line-height: 1.2;
+    .section2-left h1 {
+      font-family: 'Inter', sans-serif;
       font-weight: 800;
-      background: url("assets/images/ani_bkgd_cool.png");
-      background-size: cover;
-      background-position: center;
+      font-size: 3rem;
+      line-height: 1.2;
+      background: url("assets/images/bkgd_ani_cool.png") center/cover;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 0;
-      white-space: pre-line;
+      color: transparent;
     }
 
-    .section2-sideB {
-      padding-left: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .section2-right {
+      flex: 1 1 50%;
+      max-width: 50%;
+      text-align: left;
     }
 
-    .section2-sideB h2 {
+    .section2-right h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
       font-weight: 700;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
     }
 
-    .section2-sideB p {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 400;
+    .section2-right p {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 1.1rem;
       line-height: 1.6;
+      color: white;
     }
 
     footer {
@@ -197,6 +191,34 @@
       height: 30px;
       margin: 0 1rem;
       filter: brightness(0) invert(1);
+    }
+
+    @media (max-width: 768px) {
+      .section2-container {
+        flex-direction: column;
+        padding: 3rem 1rem;
+      }
+
+      .section2-left,
+      .section2-right {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      .section2-left h1 {
+        font-size: 2.2rem;
+        line-height: 1.3;
+      }
+
+      .section2-right h2 {
+        font-size: 2rem;
+        text-align: center;
+      }
+
+      .section2-right p {
+        text-align: center;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -222,20 +244,17 @@
     </section>
 
     <section class="section2-container">
-      <div class="section2-sideA">
+      <div class="section2-left">
         <h1>
-          ONE DAY,
-          THEY WON’T
-          BE BY YOU
+          ONE DAY,<br>
+          THEY WON’T<br>
+          BE BY YOU<br>
           YOUR SIDE
         </h1>
       </div>
-      <div class="section2-sideB">
+      <div class="section2-right">
         <h2>But these moments?<br>They’ll last forever.</h2>
-        <p>
-          Photographs capture your pet's personality, their quirks, the joy they bring into your life. 
-          Years from now, you'll cherish those memories.
-        </p>
+        <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
       </div>
     </section>
 
