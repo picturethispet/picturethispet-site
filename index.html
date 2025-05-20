@@ -20,16 +20,14 @@
       padding: 0;
     }
 
-    html, body {
-      height: 100%;
-      width: 100%;
-    }
-
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: url("assets/images/main_background_allsystem.png") no-repeat center center fixed;
+      background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
-      animation: moveBackground 12s ease-in-out infinite;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      animation: moveBackground 5s ease-in-out infinite;
       color: white;
     }
 
@@ -39,67 +37,91 @@
       100% { background-position: 0% 50%; }
     }
 
-    header, footer {
+    header {
+      width: 100%;
+      text-align: center;
       background-color: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 0;
       position: relative;
+      z-index: 10;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 2rem;
+    .header-logo {
+      height: 60px; /* 50% larger than previous 40px */
     }
 
-    header img {
-      height: 80px;
-    }
-
-    nav a {
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 2rem;
       color: white;
-      margin-left: 1rem;
+      cursor: pointer;
+      margin-top: 0.3rem;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .mobile-menu a {
+      color: white;
       text-decoration: none;
+      padding: 0.5rem;
       font-weight: 600;
     }
 
-    .book-btn {
-      background-color: var(--dark-brown);
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border-radius: 999px;
-      font-weight: bold;
-      text-decoration: none;
-      margin-left: 1rem;
-    }
-
-    main {
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-
-    .hero-img {
+    .hero-image {
       width: 100%;
-      height: auto;
       display: block;
-      margin: 0 auto;
-      max-height: 90vh;
       object-fit: cover;
     }
 
+    section {
+      padding: 2rem;
+      text-align: center;
+    }
+
     footer {
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
       padding: 2rem 1rem;
+      margin-top: 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .payments img {
+      height: 30px;
+      margin: 0 1rem;
+      filter: brightness(0) invert(1);
+    }
+
+    @media (max-width: 768px) {
+      .header-logo {
+        height: 56px;
+      }
+      .hamburger {
+        display: block;
+      }
+      .mobile-menu.show {
+        display: flex;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" />
-    <nav>
+    <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" class="header-logo" />
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <nav id="mobileMenu" class="mobile-menu">
       <a href="#">Home</a>
       <a href="#">Locations</a>
       <a href="#">Pricing</a>
@@ -109,14 +131,18 @@
   </header>
 
   <main>
-    <section>
-      <img class="hero-img" src="assets/images/2I4A4374__cropped.jpg" alt="Hero Dog" />
+    <section id="section-1">
+      <img src="assets/images/2I4A4374__cropped.jpg" alt="Hero" class="hero-image" />
     </section>
-    <section>
-      <p>Section 2 placeholder</p>
+
+    <section id="section-2">
+      <h1>Section 2</h1>
+      <p>Placeholder content for second section of the homepage.</p>
     </section>
-    <section>
-      <p>Section 3 placeholder</p>
+
+    <section id="section-3">
+      <h1>Section 3</h1>
+      <p>Placeholder content for third section of the homepage.</p>
     </section>
   </main>
 
@@ -128,5 +154,12 @@
       <img src="assets/images/stripe.png" alt="Stripe">
     </div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.classList.toggle("show");
+    }
+  </script>
 </body>
 </html>
