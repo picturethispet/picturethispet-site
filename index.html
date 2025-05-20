@@ -234,9 +234,19 @@
       </div>
     </section>
 
-    <section id="session-builder-section">
-      <!-- Section 3 Session Builder goes here (already injected in previous update) -->
-    </section>
+    <section id="session-builder-section" style="padding: 4rem 1rem; background: url('assets/images/ani_bkgd_cool.png'); background-size: 400% 400%; animation: moveBackground 20s ease-in-out infinite;">
+  <div id="ptp-session-builder" class="ptp-flow-step" style="max-width: 900px; margin: 0 auto;">
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="question-card">
+      <div class="card-header">Build Your Pet Session</div>
+      <div class="card-body" id="qBody"></div>
+      <div class="card-footer" id="qFooter"></div>
+    </div>
+    <div id="session-summary" style="display:none; margin-top: 40px;"></div>
+  </div>
+</section>
   </main>
 
   <footer>
@@ -257,6 +267,100 @@
       window.scrollTo(0, 0);
     };
   </script>
-  <!-- Session Builder Script is included in Section 3 injection -->
+  <script>
+  const questions = [
+    { label: "What type of session are you itching for?", name: "session", options: ["Mini", "Full"] },
+    { label: "Which park's calling your name?", name: "park", options: ["Cheesman Park", "City Park"] },
+    { label: "How many tails are joining? (Up to 2 pets)", name: "petCount", options: ["1", "2"] },
+    { label: "How many people will be in the photos? (Up to 2 people)", name: "people", options: ["1", "2"] }
+  ];
+
+  const pricing = {
+    base: { Mini: 50, Full: 100 },
+    pet: { 1: 0, 2: 40 },
+    people: { 1: 0, 2: 20 }
+  };
+
+  const answers = {};
+  let currentQ = 0;
+
+  function showQuestion() {
+    const q = questions[currentQ];
+    const body = document.getElementById('qBody');
+    const footer = document.getElementById('qFooter');
+    const progress = document.getElementById('progressBar');
+
+    body.innerHTML = `<p style='font-size:16px;'>${q.label}</p>`;
+
+    body.innerHTML += q.options.map(opt => {
+      let label = opt;
+      if (q.name === 'petCount') label = opt === '1' ? '1 (included)' : '2 (add $40)';
+      if (q.name === 'people') label = opt === '1' ? '1 (included)' : '2 (add $20)';
+      return `<button class='answer-button' onclick="selectAnswer('${q.name}', '${opt}')">${label}</button>`;
+    }).join('<br><br>');
+
+    footer.innerHTML = '';
+    if (currentQ > 0) footer.innerHTML += `<button onclick='prevQuestion()'>← Back</button>`;
+    if (currentQ > 0) footer.innerHTML += `<button onclick='confirmReset()'>Start Over</button>`;
+
+    progress.style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+  }
+
+  function selectAnswer(name, value) {
+    answers[name] = value;
+    if (currentQ < questions.length - 1) {
+      currentQ++;
+      showQuestion();
+    } else {
+      showSummary();
+    }
+  }
+
+  function prevQuestion() {
+    if (currentQ > 0) {
+      currentQ--;
+      showQuestion();
+    }
+  }
+
+  function confirmReset() {
+    if (confirm("Are you sure you want to start over? All progress will be lost.")) {
+      resetForm();
+    }
+  }
+
+  function resetForm() {
+    currentQ = 0;
+    Object.keys(answers).forEach(k => delete answers[k]);
+    showQuestion();
+  }
+
+  function showSummary() {
+    const total = pricing.base[answers.session] + pricing.pet[answers.petCount] + pricing.people[answers.people];
+    const summary = document.getElementById('session-summary');
+    summary.innerHTML = `
+      <div class="summary-card">
+        <h3>Your Session Summary</h3>
+        <div class="summary-line"><span>Session Type:</span><span>${answers.session} Session – $${pricing.base[answers.session]}</span></div>
+        <div class="summary-line"><span>Location:</span><span>${answers.park}</span></div>
+        <div class="summary-line"><span>Number of Pets:</span><span>${answers.petCount} – $${pricing.pet[answers.petCount]}</span></div>
+        <div class="summary-line"><span>People in Photos:</span><span>${answers.people} – $${pricing.people[answers.people]}</span></div>
+        <div class="summary-total">Total: $${total}</div>
+        <button onclick="proceedToAgreements()">Continue</button>
+      </div>`;
+    summary.style.display = 'block';
+    document.querySelector('.question-card').style.display = 'none';
+    document.querySelector('.progress-bar-container').style.display = 'none';
+  }
+
+  function proceedToAgreements() {
+    localStorage.setItem("sessionDetails", JSON.stringify(answers));
+    window.location.href = "/ptp-agreements-complete-step-2";
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    showQuestion();
+  });
+</script>
 </body>
 </html>
