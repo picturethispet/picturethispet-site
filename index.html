@@ -42,24 +42,24 @@
     }
 
     header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.01rem 1.5rem; /* tighter vertical padding */
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
 
-   .desktop-logo {
-  height: 100px; /* was 150px */
-}
+    .desktop-logo {
+      height: 100px;
+    }
 
     .site-nav {
       display: flex;
@@ -89,32 +89,37 @@
       height: auto;
     }
 
-.hero-section img {
-  width: 100vw;
-  height: auto;
-  display: block;
-  position: relative;
-  z-index: 1;
-}
+    .hero-section img {
+      width: 100vw;
+      height: auto;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
 
-.gradient-text {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 3rem;
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  z-index: 10;
-  background: url("assets/images/bkgd_ani_cool.png");
-  background-size: cover;
-  background-position: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmerText 12s linear infinite;
-  text-align: right;
-  max-width: 300px;
-  pointer-events: none; /* just in case */
-}
+    .gradient-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 3rem;
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      z-index: 10;
+      background: url("assets/images/bkgd_ani_cool.png");
+      background-size: cover;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerText 12s linear infinite;
+      text-align: right;
+      max-width: 300px;
+      pointer-events: none;
+    }
+
+    @keyframes shimmerText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .section-placeholder {
@@ -169,72 +174,20 @@
         margin-top: 0;
       }
 
-     .hero-section {
-  margin-top: 100px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: auto;
-}
-
-.hero-section img {
-  width: 100vw;
-  height: auto;
-  display: block;
-  position: relative;
-  z-index: 1;
-}
-
-.gradient-text {
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  z-index: 10;
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 3rem;
-  background: url("assets/images/bkgd_ani_cool.png");
-  background-size: cover;
-  background-position: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmerText 12s linear infinite;
-  text-align: right;
-  max-width: 300px;
-  pointer-events: none;
-}
-      
-}
+      .hero-section {
+        margin-top: 100px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
 
     @media (min-width: 769px) {
       .mobile-menu-btn {
         display: none;
       }
     }
-    .gradient-text {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 3rem;
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  z-index: 10;
-  background: url("assets/images/bkgd_ani_cool.png");
-  background-size: cover;
-  background-position: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmerText 12s linear infinite;
-  text-align: right;
-  max-width: 300px;
-}
-
-@keyframes shimmerText {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
   </style>
 </head>
 <body>
@@ -253,8 +206,8 @@
   <main>
     <section class="hero-section">
       <div class="gradient-text">
-  Capture the Adventure<br>Before It’s Just a Memory
-</div>
+        Capture the Adventure<br>Before It’s Just a Memory
+      </div>
       <img src="assets/images/index_section1photo.jpg" alt="Golden Retriever in Cheesman Park" />
     </section>
 
