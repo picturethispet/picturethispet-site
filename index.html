@@ -27,8 +27,8 @@
     }
 
     @keyframes moveBackground {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
@@ -46,7 +46,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.5rem 2rem;
+      padding: 0.75rem 2rem;
       background-color: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
@@ -64,7 +64,6 @@
     .site-nav {
       display: flex;
       align-items: center;
-      margin-left: auto;
     }
 
     .site-nav a {
@@ -87,6 +86,7 @@
     .hero-section {
       margin-top: 150px;
       position: relative;
+      height: auto;
     }
 
     .hero-section img {
@@ -120,17 +120,17 @@
       filter: brightness(0) invert(1);
     }
 
-    /* MOBILE */
+    /* MOBILE ONLY */
     @media (max-width: 768px) {
       header {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
         padding: 0.4rem 1rem;
       }
 
       .desktop-logo {
-        height: 80px;
-        margin-bottom: 0.3rem;
+        height: 60px;
       }
 
       .site-nav {
@@ -148,7 +148,7 @@
       }
 
       .hero-section {
-        margin-top: 120px;
+        margin-top: 100px !important;
       }
     }
 
@@ -161,7 +161,7 @@
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo_mobile.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <img src="assets/images/header_logo_mobile.png" alt="PictureThisPet Logo" class="desktop-logo">
     <nav class="site-nav">
       <a href="#">Home</a>
       <a href="#">Locations</a>
