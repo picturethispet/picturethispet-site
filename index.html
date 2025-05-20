@@ -32,35 +32,38 @@
     }
 
     @keyframes moveBackground {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    .site-header {
+    header.site-header {
       width: 100%;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+      flex-direction: column;
       padding: 1rem 2rem;
-      background-color: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
       z-index: 10;
     }
 
-    .site-header img.logo {
-      height: 120px;
-    }
-
-    .site-nav {
+    .desktop-nav {
+      width: 100%;
       display: flex;
+      justify-content: space-between;
       align-items: center;
     }
 
-    .site-nav a {
+    .logo.desktop {
+      height: 120px;
+    }
+
+    nav.desktop-menu a {
       color: white;
       margin-left: 1rem;
       text-decoration: none;
@@ -78,36 +81,38 @@
     }
 
     .hero {
-      text-align: center;
-      padding: 3rem 2rem 0;
+      position: relative;
+      z-index: 1;
     }
 
     .hero img {
+      display: block;
       width: 100%;
-      max-width: 1000px;
-      border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+      height: auto;
     }
 
-    .next-section {
+    .section {
       padding: 4rem 2rem;
-      background-color: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(6px);
-      margin-top: -4px;
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 200% 200%;
+      background-attachment: fixed;
+      animation: moveBackground 5s ease-in-out infinite;
     }
 
-    .next-section h2 {
+    .section h2 {
+      text-align: center;
       font-size: 2rem;
+      font-family: 'Playfair Display', serif;
       margin-bottom: 1rem;
     }
 
     footer {
-      background-color: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
       text-align: center;
       padding: 2rem 1rem;
-      margin-top: 4rem;
+      margin-top: 2rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -117,56 +122,78 @@
       filter: brightness(0) invert(1);
     }
 
+    /* MOBILE VIEW */
     @media (max-width: 768px) {
-      .site-header {
-        flex-direction: column;
-        align-items: center;
-        padding: 0.8rem 1rem;
-        box-shadow: none;
-      }
-
-      .site-header img.logo {
-        height: 80px;
-      }
-
-      .site-nav {
+      .desktop-nav {
         display: none;
       }
 
+      .mobile-logo {
+        height: 90px;
+        margin-bottom: 1rem;
+      }
+
       .hamburger {
-        margin-top: 1rem;
-        display: block;
         background: none;
         border: none;
-        font-size: 2rem;
         color: white;
+        font-size: 2rem;
         cursor: pointer;
+        margin-top: -1rem;
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .mobile-menu a {
+        color: white;
+        padding: 0.5rem;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .mobile-menu.show {
+        display: flex;
       }
     }
   </style>
 </head>
 <body>
   <header class="site-header">
-    <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" class="logo" />
-    <nav class="site-nav">
+    <div class="desktop-nav">
+      <img src="assets/images/header_logo.png" alt="PictureThisPet Logo" class="logo desktop" />
+      <nav class="desktop-menu">
+        <a href="#">Home</a>
+        <a href="#">Locations</a>
+        <a href="#">Pricing</a>
+        <a href="#">Contact</a>
+        <a href="#" class="book-btn">Book Now</a>
+      </nav>
+    </div>
+
+    <img src="assets/images/header_logo_mobile.png" alt="PictureThisPet Mobile Logo" class="mobile-logo" />
+    <button class="hamburger" onclick="toggleMenu()">≡</button>
+    <div class="mobile-menu" id="mobileMenu">
       <a href="#">Home</a>
       <a href="#">Locations</a>
       <a href="#">Pricing</a>
       <a href="#">Contact</a>
       <a href="#" class="book-btn">Book Now</a>
-    </nav>
+    </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <img src="assets/images/2I4A4374.jpg" alt="Golden retriever portrait" />
-    </section>
-
-    <section class="next-section">
-      <h2>Capture Their Character</h2>
-      <p>Explore our pet photography sessions to showcase your pet's true personality in vibrant, professional images.</p>
-    </section>
+  <main class="hero">
+    <img src="assets/images/2I4A4374_cropped.jpg" alt="Golden retriever hero image" />
   </main>
+
+  <section class="section">
+    <h2>Capture your pet’s personality, naturally</h2>
+    <p style="text-align:center; max-width: 600px; margin: 0 auto;">From tail wags to zoomies, our sessions are relaxed, candid, and custom-tailored to showcase your pet in their happiest moments.</p>
+  </section>
 
   <footer>
     <div class="payments">
@@ -176,5 +203,12 @@
       <img src="assets/images/stripe.png" alt="Stripe">
     </div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('show');
+    }
+  </script>
 </body>
 </html>
