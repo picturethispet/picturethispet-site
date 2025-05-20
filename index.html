@@ -169,8 +169,40 @@
         margin-top: 0;
       }
 
-     .hero-section {
-  margin-top: 40px !important;
+     ..hero-section {
+  margin-top: 100px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+}
+
+.hero-section img {
+  width: 100vw;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.gradient-text {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 10;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 3rem;
+  background: url("assets/images/bkgd_ani_cool.png");
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerText 12s linear infinite;
+  text-align: right;
+  max-width: 300px;
+  pointer-events: none;
 }
       
 }
