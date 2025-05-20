@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PictureThisPet</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #F47C2C;
@@ -36,7 +36,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* HEADER SECTION */
+    /* HEADER */
     header, footer {
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
@@ -60,6 +60,7 @@
       top: 0;
       left: 0;
       z-index: 1000;
+      height: 110px;
     }
 
     .desktop-logo {
@@ -89,20 +90,16 @@
       margin-left: 1rem;
     }
 
-    /* SECTION 1: HERO IMAGE */
+    /* HERO SECTION */
     .hero-section {
-      margin-top: 100px; /* changed from previous value */
+      margin-top: 100px;
       position: relative;
-      height: auto;
     }
 
     .hero-section img {
       width: 100%;
-      max-width: 100vw;
       height: auto;
       display: block;
-      position: relative;
-      z-index: 1;
     }
 
     .gradient-text {
@@ -112,7 +109,6 @@
       position: absolute;
       top: 20px;
       right: 40px;
-      z-index: 10;
       background: url("assets/images/bkgd_ani_cool.png");
       background-size: 200%;
       background-position: center;
@@ -124,7 +120,7 @@
       pointer-events: none;
     }
 
-    /* SECTION 2 SPLIT LAYOUT */
+    /* SECTION 2 */
     .section-split {
       display: flex;
       justify-content: space-between;
@@ -132,9 +128,8 @@
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
       background-position: center;
-      padding: 4rem 2rem;
+      padding: 2rem 2rem 3rem;
       animation: moveBackground 8s ease-in-out infinite;
-      min-height: 500px;
     }
 
     .side-a, .side-b {
@@ -169,17 +164,6 @@
       line-height: 1.7;
     }
 
-    /* SECTION 3 */
-    .section-placeholder {
-      padding: 4rem 2rem;
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      animation: moveBackground 5s ease-in-out infinite;
-    }
-
     /* FOOTER */
     footer {
       background-color: rgba(255, 255, 255, 0.05);
@@ -202,22 +186,31 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 0.02rem 1rem;
+        height: 80px;
+        padding: 0.5rem 1rem;
       }
 
       .desktop-logo {
-        height: 48px; /* updated size */
-      }
-
-      /* Mobile-specific hero section styling */
-      .hero-section {
-        margin-top: 20px; /* newly added */
-        padding: 0 1rem;
-        position: relative;
+        height: 48px;
       }
 
       .site-nav {
         display: none;
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+      }
+
+      .site-nav a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
       }
 
       .mobile-menu-btn {
@@ -227,40 +220,45 @@
         color: white;
         font-size: 2rem;
         cursor: pointer;
-        margin-top: 0;
       }
 
-      .gradient-text {
-        font-size: 2rem;
-        top: 10px;
-        right: 20px;
+      .hero-section {
+        margin-top: 20px;
       }
 
       .section-split {
         flex-direction: column;
-        text-align: center;
-        padding: 3rem 1.5rem;
+        padding: 2rem 1.5rem 2rem;
       }
 
       .side-a h1 {
         font-size: 2.25rem;
         line-height: 1.3;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
       }
 
       .side-b h2 {
         font-size: 1.75rem;
+        text-align: center;
       }
 
       .side-b p {
         font-size: 1rem;
+        text-align: center;
       }
     }
   </style>
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo">
+    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
     <nav class="site-nav">
       <a href="#">Home</a>
       <a href="#">Locations</a>
@@ -268,13 +266,13 @@
       <a href="#">Contact</a>
       <a href="#" class="book-btn">Book Now</a>
     </nav>
-    <button class="mobile-menu-btn">☰</button>
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
     <section class="hero-section">
       <div class="gradient-text">
-        Capture the Adventure<br>Before It’s Just a Memory
+        Capture the Adventure<br />Before It’s Just a Memory
       </div>
       <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
     </section>
@@ -282,13 +280,12 @@
     <section class="section-split">
       <div class="side-a">
         <h1>
-          ONE DAY,<br>
-          THEY WON’T BE THERE<br>
-          BY YOUR SIDE
+          ONE DAY, THEY WON’T<br />
+          BE THERE BY YOUR SIDE
         </h1>
       </div>
       <div class="side-b">
-        <h2>But these moments?<br>They’ll last forever.</h2>
+        <h2>But these moments?<br />They’ll last forever.</h2>
         <p>
           Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.
         </p>
@@ -303,10 +300,10 @@
 
   <footer>
     <div class="payments">
-      <img src="assets/images/paypal.png" alt="PayPal">
-      <img src="assets/images/visa.png" alt="Visa">
-      <img src="assets/images/mastercard.png" alt="MasterCard">
-      <img src="assets/images/stripe.png" alt="Stripe">
+      <img src="assets/images/paypal.png" alt="PayPal" />
+      <img src="assets/images/visa.png" alt="Visa" />
+      <img src="assets/images/mastercard.png" alt="MasterCard" />
+      <img src="assets/images/stripe.png" alt="Stripe" />
     </div>
   </footer>
 </body>
