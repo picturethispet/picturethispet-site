@@ -1,3 +1,5 @@
+<!-- ✅ CHUNK 1: HEADER + SECTION 1 + SECTION 2 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,15 +46,15 @@
       background-size: 100% 100%;
     }
     .section-breaker-shadow {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 80px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.4));
-  z-index: 2;
-  pointer-events: none;
-}
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.4));
+      z-index: 2;
+      pointer-events: none;
+    }
     header {
       width: 100%;
       display: flex;
@@ -118,73 +120,40 @@
       pointer-events: none;
     }
     .section-split {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem 2rem 3rem;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.section-split {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-image: url("assets/images/main_background_allsystem.png");
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  animation: moveBackground 30s ease-in-out infinite;
-  padding: 2rem 2rem 3rem;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-  z-index: 1;
-}
-
-.section-split::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-image: url("assets/images/main_background_allsystem.png");
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: -1;
-  animation: moveBackground 30s ease-in-out infinite;
-  opacity: 0.5;
-}
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 2rem 3rem;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .section-split::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+      animation: moveBackground 30s ease-in-out infinite;
+      opacity: 0.5;
+    }
+    .side-a, .side-b {
+      flex: 1;
+      padding: 2rem;
+    }
     .side-a {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 2rem;
-  text-align: right;
-}
-
-.side-a h1 {
-  max-width: 420px;
-  margin-left: auto;
-}
-
-.side-b {
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 2rem;
-}
-
-.side-b-inner {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  max-width: 420px;
-}
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: right;
+    }
     .side-a h1 {
+      max-width: 420px;
+      margin-left: auto;
       font-family: 'Inter', sans-serif;
       font-weight: 900;
       font-size: 3.8rem;
@@ -196,170 +165,27 @@
       -webkit-text-fill-color: transparent;
       text-align: left;
     }
+    .side-b-inner {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      max-width: 420px;
+    }
     .side-b h2 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 2.3rem;
-  line-height: 1.3;
-  margin-bottom: 1rem;
-}
-
-.side-b p {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.35rem;
-  line-height: 1.75;
-  max-width: 480px;
-  margin: 0 auto;
-}
-    footer {
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      padding: 2rem 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.3rem;
+      line-height: 1.3;
+      margin-bottom: 1rem;
     }
-    .payments img {
-      height: 30px;
-      margin: 0 1rem;
-      filter: brightness(0) invert(1);
+    .side-b p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.35rem;
+      line-height: 1.75;
+      max-width: 480px;
+      margin: 0 auto;
     }
-    @media (max-width: 768px) {
-      header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: 80px;
-        padding: 0.5rem 1rem;
-      }
- 
-      .session-layout-wrapper {
-  flex-direction: column;
-  align-items: center;
-}
-      
-.session-box {
-  transform: none;
-  margin: 1rem 0;
-}
-  @media (min-width: 769px) {
-  .session-layout-wrapper {
-    justify-content: center;
-    align-items: flex-end;
-    gap: 2rem;
-    position: relative;
-  }
-
-  .mini-box {
-    margin-right: -60px;
-    transform: translateY(40px);
-    z-index: 1;
-  }
-
-  .full-box {
-    margin-left: -60px;
-    transform: translateY(40px);
-    z-index: 1;
-  }
-
-  .session-card-stack {
-    transform: translateY(-60px);
-    z-index: 2;
-  }
-}    
-
-.session-card-stack {
-  transform: translateY(0);
-  margin: 2rem 0;
-}
-
-.session-card-stack {
-  transform: translateY(0); /* no overlap on mobile */
-  margin: 2rem 0;
-  z-index: 2;
-}
-
-.session-box {
-  transform: none;
-  margin: 1rem 0;
-  max-width: 90%;
-  z-index: 1;
-}
-      .desktop-logo { height: 48px; }
-      .site-nav {
-        display: none;
-        flex-direction: column;
-        background: rgba(0,0,0,0.9);
-        position: absolute;
-        top: 80px;
-        right: 0;
-        width: 100%;
-        text-align: right;
-        padding: 1rem;
-        z-index: 999;
-      }
-      .site-nav a {
-        display: block;
-        margin: 0.5rem 0;
-        font-size: 1.2rem;
-      }
-      .mobile-menu-btn {
-        display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
-      }
-      .hero-section {
-        margin-top: 80px;
-      }
-      .section-split {
-        flex-direction: column;
-        text-align: center;
-        padding: 1.5rem 1rem;
-        gap: 0.5rem;
-      }
-      .side-a h1, .side-b h2, .side-b p {
-        text-align: center;
-      }
-    }
-    @media (min-width: 769px) {
-      .mobile-menu-btn { display: none !important; }
-      .side-a { padding-left: 6rem; }
-      .side-b { padding-right: 2rem; }
-    }
-    @media (max-width: 768px) {
-  .session-layout-wrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .session-card-stack {
-    transform: translateY(0);
-    margin: 0;
-    z-index: 2;
-    position: relative;
-  }
-
-  .session-box {
-    transform: none;
-    margin: 0;
-    max-width: 90%;
-    z-index: 1;
-  }
-}
   </style>
-  <script>
-    window.onbeforeunload = function () {
-      window.scrollTo(0, 0);
-    };
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-    }
-  </script>
 </head>
 <body>
   <header>
@@ -375,437 +201,18 @@
   </header>
   <main>
     <section class="hero-section">
-  <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
-  <div class="section-breaker-shadow"></div>
-</section>
+      <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
+      <div class="section-breaker-shadow"></div>
+    </section>
     <section class="section-split">
-  <div class="side-a">
-    <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
-  </div>
-  
-  <div class="side-b">
-    <div class="side-b-inner">
-      <h2>But these moments?<br />They’ll last forever.</h2>
-      <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
-    </div>
-  </div>
-</section>
-    <section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 30s ease-in-out infinite;">
-  <div class="session-builder-header">
-    <h2 class="session-heading">Let’s Find Your Perfect Session</h2>
-    <p class="session-subtext">We take a unique approach to help you discover the perfect session type for you and your pet. Just answer a few quick questions to get started.</p>
-  </div>
-
-  <div class="session-layout-wrapper">
-    <div class="session-box mini-box">
-      <h3>Mini Session</h3>
-      <ul>
-        <li>Up to 60 minutes</li>
-        <li>5 edited photos</li>
-        <li>1 person + 1 pet included</li>
-        <li>Access to downloads & print shop</li>
-      </ul>
-    </div>
-
-    <div class="session-card-stack">
-  <div class="session-card active" id="sessionCard">
-    <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
-        <div class="session-card-body">
-      <h2 id="questionText">What type of session?</h2>
-      <div id="optionsContainer"></div>
-    </div>
-    <div class="session-card-footer">
-      <button id="prevBtn" style="display:none">← Back</button>
-      <button id="resetBtn" style="display:none">Start Over</button>
-    </div>
-  </div> <!-- ✅ this closes the sessionCard -->
-
-  <!-- Shadow cards remain -->
-   
-  <!-- Shadow cards remain -->
-  <div class="session-card shadow-card"></div>
-  <div class="session-card shadow-card"></div>
-
-  <!-- ADD this: Session Summary card inside the stack -->
-  <div class="session-card session-summary">
-    <h3>Your Session Summary</h3>
-    <ul id="summaryList">
-      <li><strong>Session:</strong> <span id="summarySession">—</span></li>
-      <li><strong>Location:</strong> <span id="summaryPark">—</span></li>
-      <li><strong>Pets:</strong> <span id="summaryPets">—</span></li>
-      <li><strong>People:</strong> <span id="summaryPeople">—</span></li>
-      <li class="total"><strong>Total:</strong> <span id="summaryTotal">$0</span></li>
-    </ul>
-    <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
-  </div>
-</div>
-
-    <div class="session-box full-box">
-<h3><span>Full</span><br><span>Session</span></h3>      <ul>
-        <li>Up to 90 minutes</li>
-        <li>10 edited photos</li>
-        <li>1 person + 1 pet included</li>
-        <li>Access to downloads & print shop</li>
-      </ul>
-    </div>
- 
-<style>
-  .session-card-stack {
-    max-width: 600px;
-    margin: 0 auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  /* Shared Desktop + Mobile */
-.session-layout-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 2rem;
-  position: relative;
-  z-index: 1;
-  margin-top: 3rem;
-}
-
-/* Mini and Full cards pushed down slightly */
-.session-box {
-  transform: translateY(40px);
-  z-index: 1;
-  max-width: 260px;
-  flex: 1 1 250px;
-}
-
-/* Builder card pulled up to overlap */
-.session-card-stack {
-  z-index: 2;
-  transform: translateY(-40px);
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-  .session-builder-header {
-  text-align: center;
-  margin-bottom: 2.5rem;
-}
-
-.session-heading {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: 3.8rem;
-  line-height: 1.25;
-  background: url("assets/images/ani_bkgd_cool.png");
-  background-size: cover;
-  background-position: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-  margin-bottom: 1rem;
-}
-
-.session-subtext {
-  color: white;
-  font-size: 1.1rem;
-  font-family: 'SF Pro Display', sans-serif;
-  max-width: 600px;
-  margin: 0 auto;
-  opacity: 0.85;
-}
-
-.session-breakdown {
-  display: flex;
-  justify-content: space-around;
-  gap: 2rem;
-  margin-bottom: 3rem;
-  flex-wrap: wrap;
-}
-
-.session-box {
-  background-color: rgba(255, 255, 255, 0.07);
-  border-radius: 16px;
-  padding: 1.5rem 2rem;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  max-width: 260px;
-  flex: 1 1 250px;
-}
-
-.session-box h3 {
-  font-family: 'Inter', sans-serif;
-  font-size: 2rem;
-  font-weight: 900;
-  line-height: 1.25;
-  background: url("assets/images/ani_bkgd_cool.png");
-  background-size: cover;
-  background-position: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.session-box ul {
-  list-style: none;
-  padding-left: 0;
-  font-size: 1rem;
-  font-weight: 400;
-  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.6;
-  color: white;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-}
-
-.session-box ul li::before {
-  content: "• ";
-  color: var(--gold);
-}
- .session-card {
-  background-image: url("assets/images/ani_bkgd_cool.png");
-  background-size: 100% 100%;
-  background-position: center;
-  animation: moveBackground 30s ease-in-out infinite;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  padding: 2rem;
-  width: 100%;
-  position: absolute;
-  color: white;
-  font-family: 'SF Pro Display', sans-serif;
-  transition: transform 0.6s ease, opacity 0.6s ease;
-}
-  .session-card.shadow-card {
-    top: 20px;
-    transform: scale(0.96);
-    opacity: 0.5;
-    z-index: 0;
-  }
-  .session-card.active {
-    position: relative;
-    z-index: 2;
-  }
-  .session-card-logo {
-    display: block;
-    max-width: 180px;
-    margin: 0 auto 1rem;
-  }
-  .session-card-body {
-    text-align: center;
-  }
-  .session-card-body h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-  }
-  .session-card-footer {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-  .session-card-footer button,
-  .answer-button {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 2px solid white;
-    border-radius: 12px;
-    padding: 0.6rem 1.4rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
- .answer-button {
-  background-image: url("assets/images/main_background_allsystem.png");
-  background-size: 325% 325%;
-  animation: moveBackground 30s ease-in-out infinite;
-  color: white;
-  border: 2px solid white;
-  border-radius: 6px;
-  padding: 0.3rem 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  display: block;
-  width: auto;
-  min-width: 120px;
-  margin: 0.4rem auto;
-  text-align: center;
-}
-  .session-summary {
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 18px;
-  padding: 2rem;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-  text-align: center;
-  margin: 3rem auto 2rem;
-  max-width: 420px;
-  color: white;
-  font-family: 'Inter', sans-serif;
-}
-
-.session-summary h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  font-weight: 800;
-  background: url("assets/images/ani_bkgd_cool.png");
-  background-size: 200%;
-  background-position: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-}
-
-.session-summary ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 auto 1.5rem;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  text-align: left;
-  max-width: 320px;
-}
-
-.session-summary li {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.25rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.session-summary li.total {
-  font-weight: 700;
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  border-top: 2px solid rgba(255,255,255,0.2);
-}
-
-.continue-btn {
-  background-color: var(--dark-brown);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.continue-btn:hover {
-  background-color: #3a1f14;
-}
-</style>
-<script>
-  const questions = [
-    { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
-    { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
-    { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
-    { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] },
-  ];
-
-  let answers = JSON.parse(localStorage.getItem("ptpSessionData")) || {};
-  let qIndex = 0;
-
-  const questionText = document.getElementById("questionText");
-  const optionsContainer = document.getElementById("optionsContainer");
-  const prevBtn = document.getElementById("prevBtn");
-  const resetBtn = document.getElementById("resetBtn");
-
-  function loadQuestion() {
-    const q = questions[qIndex];
-    questionText.textContent = q.label;
-    optionsContainer.innerHTML = "";
-
-    q.options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.className = "answer-button";
-      btn.textContent = opt;
-      btn.onclick = () => {
-        answers[q.name] = opt;
-        localStorage.setItem("ptpSessionData", JSON.stringify(answers));
-        animateCardOff(() => {
-          if (qIndex < questions.length - 1) {
-            qIndex++;
-            loadQuestion();
-          } else {
-            window.location.href = "/ptp-select-date";
-          }
-        });
-      };
-      optionsContainer.appendChild(btn);
-    });
-
-    prevBtn.style.display = qIndex > 0 ? "inline-block" : "none";
-    resetBtn.style.display = qIndex > 0 ? "inline-block" : "none";
-  }
-
-  prevBtn.onclick = () => {
-    if (qIndex > 0) {
-      qIndex--;
-      loadQuestion();
-    }
-  };
-
-  resetBtn.onclick = () => {
-    if (confirm("Are you sure you want to start over?")) {
-      localStorage.removeItem("ptpSessionData");
-      answers = {};
-      qIndex = 0;
-      loadQuestion();
-    }
-  };
-
-  function animateCardOff(callback) {
-    const card = document.querySelector(".session-card.active");
-    card.style.transform = "translateY(100px) rotateZ(5deg)";
-    card.style.opacity = 0;
-    setTimeout(() => {
-      card.style.transform = "none";
-      card.style.opacity = 1;
-      callback();
-    }, 400);
-  }
-
-   document.addEventListener("DOMContentLoaded", () => {
-  loadQuestion();
-
-  const data = JSON.parse(localStorage.getItem("ptpSessionData") || "{}");
-
-  const summaryMap = {
-    session: data.session || "—",
-    park: data.park || "—",
-    petCount: data.petCount || "—",
-    peopleCount: data.peopleCount || "—",
-  };
-
-  let total = 0;
-  if (summaryMap.session === "Mini") total += 50;
-  if (summaryMap.session === "Full") total += 100;
-  if (summaryMap.petCount === "2") total += 40;
-  if (summaryMap.peopleCount === "2") total += 20;
-
-  document.getElementById("summarySession").textContent = summaryMap.session;
-  document.getElementById("summaryPark").textContent = summaryMap.park;
-  document.getElementById("summaryPets").textContent = summaryMap.petCount;
-  document.getElementById("summaryPeople").textContent = summaryMap.peopleCount;
-  document.getElementById("summaryTotal").textContent = `$${total}`;
-});
-
-</script>
-  </main>
-  <footer>
-    <div class="payments">
-      <img src="assets/images/paypal.png" alt="PayPal" />
-      <img src="assets/images/visa.png" alt="Visa" />
-      <img src="assets/images/mastercard.png" alt="MasterCard" />
-      <img src="assets/images/stripe.png" alt="Stripe" />
-    </div>
-  </footer>
-</body>
-</html>
+      <div class="side-a">
+        <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
+      </div>
+      <div class="side-b">
+        <div class="side-b-inner">
+          <h2>But these moments?<br />They’ll last forever.</h2>
+          <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
+        </div>
+      </div>
+    </section>
+<!-- ✅ ENTER CHUNK 2 HERE -->
