@@ -1,4 +1,4 @@
-<!-- ✅ CHUNK 1: HEADER + SECTION 1 + SECTION 2 -->
+<!-- ✅ CHUNK 1: HEADER + SECTION 1 + SECTION 2 (STATIC ONLY) -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,7 @@
   <link rel="canonical" href="https://picturethispet.co/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #F47C2C;
@@ -44,16 +44,6 @@
       background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       background-size: 100% 100%;
-    }
-    .section-breaker-shadow {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 80px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.4));
-      z-index: 2;
-      pointer-events: none;
     }
     header {
       width: 100%;
@@ -94,6 +84,9 @@
       text-decoration: none;
       margin-left: 1rem;
     }
+    .mobile-menu-btn {
+      display: none;
+    }
     .hero-section {
       margin-top: 100px;
       position: relative;
@@ -103,20 +96,14 @@
       height: auto;
       display: block;
     }
-    .gradient-text {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 3rem;
+    .section-breaker-shadow {
       position: absolute;
-      top: 20px;
-      right: 40px;
-      background: url("assets/images/ani_bkgd_cool.png");
-      background-size: 200%;
-      background-position: center;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-align: right;
-      max-width: 320px;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.4));
+      z-index: 2;
       pointer-events: none;
     }
     .section-split {
@@ -125,7 +112,13 @@
       align-items: center;
       padding: 2rem 2rem 3rem;
       position: relative;
-      overflow: hidden;
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      animation: moveBackground 30s ease-in-out infinite;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
       z-index: 1;
     }
     .section-split::before {
@@ -179,7 +172,7 @@
       margin-bottom: 1rem;
     }
     .side-b p {
-      font-family: 'Inter', sans-serif;
+      font-family: 'SF Pro Display', sans-serif;
       font-size: 1.35rem;
       line-height: 1.75;
       max-width: 480px;
@@ -204,6 +197,7 @@
       <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
       <div class="section-breaker-shadow"></div>
     </section>
+
     <section class="section-split">
       <div class="side-a">
         <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
@@ -215,349 +209,5 @@
         </div>
       </div>
     </section>
-<!-- ✅ ENTER CHUNK 2 HERE -->
-<!-- ✅ CHUNK 2: SECTION 3 - Session Builder Properly Styled with Stack -->
-<section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 30s ease-in-out infinite;">
-  <div class="session-layout-wrapper">
-    <div class="session-box mini-box">
-      <h3>Mini Session</h3>
-      <ul>
-        <li>Up to 60 minutes</li>
-        <li>5 edited photos</li>
-        <li>1 person + 1 pet included</li>
-        <li>Access to downloads & print shop</li>
-      </ul>
-    </div>
 
-    <div class="session-card-stack">
-
-      <!-- CARD 1: TITLE CARD -->
-      <div class="session-card active" id="introCard">
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
-        <div class="session-card-body">
-          <h2 class="session-heading">Let’s Find Your Perfect Session</h2>
-          <p class="session-subtext">We take a unique approach<br />to help you discover the perfect session type for you and your pet.</p>
-        </div>
-        <div class="session-card-footer">
-          <button id="introNextBtn">Start →</button>
-        </div>
-      </div>
-
-      <!-- CARD 2: MINI SESSION DETAILS -->
-      <div class="session-card" id="miniInfoCard">
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
-        <div class="session-card-body">
-          <h2 class="session-info-heading">Mini Session</h2>
-          <ul class="session-info-list">
-            <li>✔ Up to 60 minutes</li>
-            <li>✔ 5 edited photos</li>
-            <li>✔ 1 person + 1 pet included</li>
-            <li>✔ Access to downloads & print shop</li>
-          </ul>
-        </div>
-        <div class="session-card-footer">
-          <button id="miniNextBtn">Next →</button>
-        </div>
-      </div>
-
-      <!-- CARD 3: FULL SESSION DETAILS -->
-      <div class="session-card" id="fullInfoCard">
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
-        <div class="session-card-body">
-          <h2 class="session-info-heading">Full Session</h2>
-          <ul class="session-info-list">
-            <li>✔ Up to 90 minutes</li>
-            <li>✔ 10 edited photos</li>
-            <li>✔ 1 person + 1 pet included</li>
-            <li>✔ Access to downloads & print shop</li>
-          </ul>
-        </div>
-        <div class="session-card-footer">
-          <button id="fullNextBtn">Next →</button>
-        </div>
-      </div>
-
-      <!-- CARD 4–7: Question placeholders -->
-      <div class="session-card" id="card4"><div class="session-card-body"><h2>Question 1</h2></div></div>
-      <div class="session-card" id="card5"><div class="session-card-body"><h2>Question 2</h2></div></div>
-      <div class="session-card" id="card6"><div class="session-card-body"><h2>Question 3</h2></div></div>
-      <div class="session-card" id="card7"><div class="session-card-body"><h2>Question 4</h2></div></div>
-
-      <!-- CARD 8: SESSION SUMMARY -->
-      <div class="session-card session-summary" id="summaryCard">
-        <h3>Your Session Summary</h3>
-        <ul id="summaryList">
-          <li><strong>Session:</strong> <span id="summarySession">—</span></li>
-          <li><strong>Location:</strong> <span id="summaryPark">—</span></li>
-          <li><strong>Pets:</strong> <span id="summaryPets">—</span></li>
-          <li><strong>People:</strong> <span id="summaryPeople">—</span></li>
-          <li class="total"><strong>Total:</strong> <span id="summaryTotal">$0</span></li>
-        </ul>
-        <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
-      </div>
-
-      <!-- SHADOW CARDS FOR DEPTH -->
-      <div class="session-card shadow-card"></div>
-      <div class="session-card shadow-card"></div>
-
-    </div>
-
-    <div class="session-box full-box">
-      <h3><span>Full</span><br /><span>Session</span></h3>
-      <ul>
-        <li>Up to 90 minutes</li>
-        <li>10 edited photos</li>
-        <li>1 person + 1 pet included</li>
-        <li>Access to downloads & print shop</li>
-      </ul>
-    </div>
-  </div>
-</section>
-<!-- ✅ ENTER CHUNK 3 HERE -->
-    <!-- ✅ CHUNK 3: Section 3 Styles + Script Logic -->
-
-<style>
-  .session-builder-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .session-heading {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 3.8rem;
-    line-height: 1.25;
-    background: url("assets/images/ani_bkgd_cool.png");
-    background-size: cover;
-    background-position: center;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  .session-subtext {
-    color: white;
-    font-size: 1.3rem;
-    font-family: 'SF Pro Display', sans-serif;
-    max-width: 600px;
-    margin: 0 auto;
-    opacity: 0.85;
-    text-align: center;
-    line-height: 1.6;
-  }
-
-  .session-card-stack {
-    max-width: 600px;
-    margin: 4rem auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .session-card {
-    background-image: url("assets/images/ani_bkgd_cool.png");
-    background-size: 200% 200%;
-    animation: moveBackground 30s ease-in-out infinite;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    padding: 2rem;
-    width: 100%;
-    color: white;
-    font-family: 'SF Pro Display', sans-serif;
-    transition: transform 0.6s ease, opacity 0.6s ease;
-    position: absolute;
-    opacity: 0;
-    transform: scale(0.98);
-  }
-
-  .session-card.active {
-    position: relative;
-    opacity: 1;
-    transform: scale(1);
-    z-index: 2;
-  }
-
-  .session-card-logo {
-    display: block;
-    max-width: 180px;
-    margin: 0 auto 1rem;
-  }
-
-  .session-card-body h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  .session-card-body p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    text-align: center;
-    max-width: 420px;
-    margin: 0 auto;
-  }
-
-  .session-card-footer {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-  }
-
-  .session-card-footer button {
-    background-color: var(--dark-brown);
-    color: white;
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-
-  .session-info-list {
-    list-style: none;
-    padding: 0;
-    font-size: 1rem;
-    line-height: 1.8;
-    margin-top: 1rem;
-    text-align: center;
-  }
-
-  .session-info-list li::before {
-    content: '✔ ';
-    color: var(--gold);
-  }
-
-  .session-summary ul {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-    max-width: 320px;
-    margin: 0 auto;
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-
-  .session-summary li {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding: 0.25rem 0;
-  }
-
-  .session-summary li.total {
-    font-weight: bold;
-    border-top: 2px solid rgba(255,255,255,0.2);
-    margin-top: 1rem;
-  }
-</style>
-
-<script>
-  const questions = [
-    { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
-    { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
-    { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
-    { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] },
-  ];
-
-  let answers = JSON.parse(localStorage.getItem("ptpSessionData")) || {};
-  let qIndex = 0;
-
-  const introNextBtn = document.getElementById("introNextBtn");
-  const miniNextBtn = document.getElementById("miniNextBtn");
-  const fullNextBtn = document.getElementById("fullNextBtn");
-  const introCard = document.getElementById("introCard");
-  const miniInfoCard = document.getElementById("miniInfoCard");
-  const fullInfoCard = document.getElementById("fullInfoCard");
-  const questionCard = document.getElementById("sessionCard");
-  const summaryCard = document.getElementById("summaryCard");
-  const questionText = document.getElementById("questionText");
-  const optionsContainer = document.getElementById("optionsContainer");
-  const prevBtn = document.getElementById("prevBtn");
-  const resetBtn = document.getElementById("resetBtn");
-
-  function showCard(card) {
-    document.querySelectorAll(".session-card").forEach(c => c.classList.remove("active"));
-    card.classList.add("active");
-  }
-
-  introNextBtn.onclick = () => showCard(miniInfoCard);
-  miniNextBtn.onclick = () => showCard(fullInfoCard);
-  fullNextBtn.onclick = () => {
-    showCard(questionCard);
-    loadQuestion();
-  };
-
-  function loadQuestion() {
-    const q = questions[qIndex];
-    questionText.textContent = q.label;
-    optionsContainer.innerHTML = "";
-
-    q.options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.className = "answer-button";
-      btn.textContent = opt;
-      btn.onclick = () => {
-        answers[q.name] = opt;
-        localStorage.setItem("ptpSessionData", JSON.stringify(answers));
-        if (qIndex < questions.length - 1) {
-          qIndex++;
-          loadQuestion();
-        } else {
-          buildSummary();
-          showCard(summaryCard);
-        }
-      };
-      optionsContainer.appendChild(btn);
-    });
-
-    prevBtn.style.display = qIndex > 0 ? "inline-block" : "none";
-    resetBtn.style.display = qIndex > 0 ? "inline-block" : "none";
-  }
-
-  prevBtn.onclick = () => {
-    if (qIndex > 0) {
-      qIndex--;
-      loadQuestion();
-    }
-  };
-
-  resetBtn.onclick = () => {
-    if (confirm("Are you sure you want to start over?")) {
-      localStorage.removeItem("ptpSessionData");
-      answers = {};
-      qIndex = 0;
-      showCard(introCard);
-    }
-  };
-
-  function buildSummary() {
-    const data = JSON.parse(localStorage.getItem("ptpSessionData") || "{}");
-    const summaryMap = {
-      session: data.session || "—",
-      park: data.park || "—",
-      petCount: data.petCount || "—",
-      peopleCount: data.peopleCount || "—"
-    };
-
-    let total = 0;
-    if (summaryMap.session === "Mini") total += 50;
-    if (summaryMap.session === "Full") total += 100;
-    if (summaryMap.petCount === "2") total += 40;
-    if (summaryMap.peopleCount === "2") total += 20;
-
-    document.getElementById("summarySession").textContent = summaryMap.session;
-    document.getElementById("summaryPark").textContent = summaryMap.park;
-    document.getElementById("summaryPets").textContent = summaryMap.petCount;
-    document.getElementById("summaryPeople").textContent = summaryMap.peopleCount;
-    document.getElementById("summaryTotal").textContent = `$${total}`;
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    showCard(introCard);
-  });
-</script>
+    <!-- ✅ ENTER CHUNK 2 HERE -->
