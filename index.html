@@ -232,6 +232,15 @@
         height: 80px;
         padding: 0.5rem 1rem;
       }
+      .session-layout-wrapper {
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.session-box {
+  max-width: 90%;
+}
       .desktop-logo { height: 48px; }
       .site-nav {
         display: none;
@@ -318,43 +327,46 @@
 </section>
     <section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 30s ease-in-out infinite;">
   <div class="session-builder-header">
-  <h2 class="session-heading">Let’s Find Your Perfect Session</h2>
-  <p class="session-subtext">We take a unique approach to help you discover the perfect session type for you and your pet. Just answer a few quick questions to get started.</p>
-</div>
-<div class="session-breakdown">
-  <div class="session-box mini-box">
-    <h3>Mini Session</h3>
-    <ul>
-      <li>Up to 60 minutes</li>
-      <li>5 edited photos</li>
-      <li>1 person + 1 pet included</li>
-      <li>Access to downloads & print shop</li>
-    </ul>
+    <h2 class="session-heading">Let’s Find Your Perfect Session</h2>
+    <p class="session-subtext">We take a unique approach to help you discover the perfect session type for you and your pet. Just answer a few quick questions to get started.</p>
   </div>
-  <div class="session-box full-box">
-    <h3>Full Session</h3>
-    <ul>
-      <li>Up to 90 minutes</li>
-      <li>10 edited photos</li>
-      <li>1 person + 1 pet included</li>
-      <li>Access to downloads & print shop</li>
-    </ul>
-  </div>
-</div>
-  <div class="session-card-stack">
-    <div class="session-card active" id="sessionCard">
-      <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
-      <div class="session-card-body">
-        <h2 id="questionText">What type of session?</h2>
-        <div id="optionsContainer"></div>
-      </div>
-      <div class="session-card-footer">
-        <button id="prevBtn" style="display:none">← Back</button>
-        <button id="resetBtn" style="display:none">Start Over</button>
-      </div>
+
+  <div class="session-layout-wrapper">
+    <div class="session-box mini-box">
+      <h3>Mini Session</h3>
+      <ul>
+        <li>Up to 60 minutes</li>
+        <li>5 edited photos</li>
+        <li>1 person + 1 pet included</li>
+        <li>Access to downloads & print shop</li>
+      </ul>
     </div>
-    <div class="session-card shadow-card"></div>
-    <div class="session-card shadow-card"></div>
+
+    <div class="session-card-stack">
+      <div class="session-card active" id="sessionCard">
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+        <div class="session-card-body">
+          <h2 id="questionText">What type of session?</h2>
+          <div id="optionsContainer"></div>
+        </div>
+        <div class="session-card-footer">
+          <button id="prevBtn" style="display:none">← Back</button>
+          <button id="resetBtn" style="display:none">Start Over</button>
+        </div>
+      </div>
+      <div class="session-card shadow-card"></div>
+      <div class="session-card shadow-card"></div>
+    </div>
+
+    <div class="session-box full-box">
+      <h3>Full Session</h3>
+      <ul>
+        <li>Up to 90 minutes</li>
+        <li>10 edited photos</li>
+        <li>1 person + 1 pet included</li>
+        <li>Access to downloads & print shop</li>
+      </ul>
+    </div>
   </div>
 </section>
 <style>
@@ -366,6 +378,14 @@
     flex-direction: column;
     align-items: center;
   }
+  .session-layout-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 3rem;
+}
   .session-builder-header {
   text-align: center;
   margin-bottom: 2.5rem;
@@ -413,18 +433,34 @@
 }
 
 .session-box h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1.25;
+  background: url("assets/images/ani_bkgd_cool.png");
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
   margin-bottom: 1rem;
-  color: white;
+  text-align: center;
 }
 
 .session-box ul {
   list-style: none;
   padding-left: 0;
   font-size: 1rem;
-  color: white;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
   line-height: 1.6;
+  background: url("assets/images/ani_bkgd_cool.png");
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  text-align: center;
 }
 
 .session-box ul li::before {
