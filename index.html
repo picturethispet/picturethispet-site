@@ -317,7 +317,30 @@
   </div>
 </section>
     <section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 30s ease-in-out infinite;">
+  <div class="session-builder-header">
   <h2 class="session-heading">Let’s Find Your Perfect Session</h2>
+  <p class="session-subtext">We take a unique approach to help you discover the perfect session type for you and your pet. Just answer a few quick questions to get started.</p>
+</div>
+<div class="session-breakdown">
+  <div class="session-box mini-box">
+    <h3>Mini Session</h3>
+    <ul>
+      <li>Up to 60 minutes</li>
+      <li>5 edited photos</li>
+      <li>1 person + 1 pet included</li>
+      <li>Access to downloads & print shop</li>
+    </ul>
+  </div>
+  <div class="session-box full-box">
+    <h3>Full Session</h3>
+    <ul>
+      <li>Up to 90 minutes</li>
+      <li>10 edited photos</li>
+      <li>1 person + 1 pet included</li>
+      <li>Access to downloads & print shop</li>
+    </ul>
+  </div>
+</div>
   <div class="session-card-stack">
     <div class="session-card active" id="sessionCard">
       <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
@@ -343,19 +366,70 @@
     flex-direction: column;
     align-items: center;
   }
-  .session-heading {
+  .session-builder-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.session-heading {
   font-family: 'Inter', sans-serif;
   font-weight: 900;
-  font-size: 2.75rem;
+  font-size: 3.8rem;
   line-height: 1.25;
-  text-align: center;
   background: url("assets/images/ani_bkgd_cool.png");
   background-size: cover;
   background-position: center;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.session-subtext {
+  color: white;
+  font-size: 1.1rem;
+  font-family: 'SF Pro Display', sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.85;
+}
+
+.session-breakdown {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
   margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.session-box {
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  max-width: 260px;
+  flex: 1 1 250px;
+}
+
+.session-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.session-box ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 1rem;
+  color: white;
+  line-height: 1.6;
+}
+
+.session-box ul li::before {
+  content: "• ";
+  color: var(--gold);
 }
  .session-card {
   background-image: url("assets/images/ani_bkgd_cool.png");
