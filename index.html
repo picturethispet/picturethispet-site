@@ -232,14 +232,24 @@
         height: 80px;
         padding: 0.5rem 1rem;
       }
+ 
       .session-layout-wrapper {
   flex-direction: column;
   align-items: center;
   gap: 2rem;
 }
 
+.session-card-stack {
+  transform: translateY(0); /* no overlap on mobile */
+  margin: 2rem 0;
+  z-index: 2;
+}
+
 .session-box {
+  transform: none;
+  margin: 1rem 0;
   max-width: 90%;
+  z-index: 1;
 }
       .desktop-logo { height: 48px; }
       .site-nav {
@@ -359,8 +369,7 @@
     </div>
 
     <div class="session-box full-box">
-      <h3>Full Session</h3>
-      <ul>
+<h3><span>Full</span><br><span>Session</span></h3>      <ul>
         <li>Up to 90 minutes</li>
         <li>10 edited photos</li>
         <li>1 person + 1 pet included</li>
@@ -455,12 +464,13 @@
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
   background: url("assets/images/ani_bkgd_cool.png");
-  background-size: cover;
+  background-size: 200%;
   background-position: center;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
   text-align: center;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.35); /* ADD THIS FOR READABILITY */
 }
 
 .session-box ul li::before {
