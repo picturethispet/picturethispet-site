@@ -1,5 +1,3 @@
-<!-- ✅ CHUNK 1: HEADER + SECTION 1 + SECTION 2 (STATIC ONLY) -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +9,7 @@
   <link rel="canonical" href="https://picturethispet.co/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #F47C2C;
@@ -84,9 +82,6 @@
       text-decoration: none;
       margin-left: 1rem;
     }
-    .mobile-menu-btn {
-      display: none;
-    }
     .hero-section {
       margin-top: 100px;
       position: relative;
@@ -96,14 +91,20 @@
       height: auto;
       display: block;
     }
-    .section-breaker-shadow {
+    .gradient-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 3rem;
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 80px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.4));
-      z-index: 2;
+      top: 20px;
+      right: 40px;
+      background: url("assets/images/ani_bkgd_cool.png");
+      background-size: 200%;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: right;
+      max-width: 320px;
       pointer-events: none;
     }
     .section-split {
@@ -112,6 +113,8 @@
       align-items: center;
       padding: 2rem 2rem 3rem;
       position: relative;
+      overflow: hidden;
+      z-index: 1;
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
       background-position: center;
@@ -119,7 +122,6 @@
       background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-      z-index: 1;
     }
     .section-split::before {
       content: "";
@@ -172,13 +174,35 @@
       margin-bottom: 1rem;
     }
     .side-b p {
-      font-family: 'SF Pro Display', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.35rem;
       line-height: 1.75;
       max-width: 480px;
       margin: 0 auto;
     }
+    footer {
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .payments img {
+      height: 30px;
+      margin: 0 1rem;
+      filter: brightness(0) invert(1);
+    }
   </style>
+  <script>
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+    };
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
 </head>
 <body>
   <header>
@@ -197,7 +221,6 @@
       <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
       <div class="section-breaker-shadow"></div>
     </section>
-
     <section class="section-split">
       <div class="side-a">
         <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
@@ -210,217 +233,18 @@
       </div>
     </section>
 
-    <!-- ✅ ENTER CHUNK 2 HERE -->
-    <!-- ✅ CHUNK 2: SECTION 3 - Fully Corrected Session Builder with Title/Subheader + Stacked Cards -->
-<section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 30s ease-in-out infinite;">
-  <!-- Section 3 Heading / Subheading Outside Cards -->
-  <div class="section-split" style="flex-direction: column; text-align: center;">
-    <h1 class="section3-heading" style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 3.8rem; line-height: 1.25; background: url('assets/images/ani_bkgd_cool.png'); background-size: cover; background-position: center; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Let’s Find Your Perfect Session</h1>
-    <p class="section3-subtext" style="color: white; font-size: 1.3rem; font-family: 'SF Pro Display', sans-serif; margin-top: 1rem; max-width: 520px; line-height: 1.7;">We take a unique approach to help you discover the perfect session type for you and your pet.<br />Just answer a few quick questions to get started.</p>
-  </div>
-
-  <!-- Card Stack -->
-  <div class="session-card-stack">
-
-    <!-- CARD 1: TITLE -->
-    <div class="session-card active" id="introCard">
-      <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
-      <div class="session-card-body">
-        <h2 class="intro-heading">Let’s go over what’s included</h2>
-        <p class="intro-subtext">In just a few quick steps, we’ll help you pick the perfect session, and show you what’s included with each option.</p>
-      </div>
-      <div class="session-card-footer">
-        <button id="introNextBtn">Start →</button>
-      </div>
+    <!-- ✅ SECTION 3 WIPED CLEAN -->
+    <section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 30s ease-in-out infinite;">
+      <!-- Section 3 placeholder for injected cue cards -->
+    </section>
+  </main>
+  <footer>
+    <div class="payments">
+      <img src="assets/images/paypal.png" alt="PayPal" />
+      <img src="assets/images/visa.png" alt="Visa" />
+      <img src="assets/images/mastercard.png" alt="MasterCard" />
+      <img src="assets/images/stripe.png" alt="Stripe" />
     </div>
-
-    <!-- CARD 2: MINI SESSION -->
-    <div class="session-card" id="miniInfoCard">
-      <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
-      <div class="session-card-body">
-        <h2 class="session-info-heading">Mini Session</h2>
-        <ul class="session-info-list">
-          <li>✔ Up to 60 minutes</li>
-          <li>✔ 5 edited photos</li>
-          <li>✔ 1 person + 1 pet included</li>
-          <li>✔ Access to downloads & print shop</li>
-        </ul>
-      </div>
-      <div class="session-card-footer">
-        <button id="miniNextBtn">Next →</button>
-      </div>
-    </div>
-
-    <!-- CARD 3: FULL SESSION -->
-    <div class="session-card" id="fullInfoCard">
-      <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
-      <div class="session-card-body">
-        <h2 class="session-info-heading">Full Session</h2>
-        <ul class="session-info-list">
-          <li>✔ Up to 90 minutes</li>
-          <li>✔ 10 edited photos</li>
-          <li>✔ 1 person + 1 pet included</li>
-          <li>✔ Access to downloads & print shop</li>
-        </ul>
-      </div>
-      <div class="session-card-footer">
-        <button id="fullNextBtn">Next →</button>
-      </div>
-    </div>
-
-    <!-- CARD 4–7: DYNAMIC QUESTIONS WILL LOAD HERE -->
-    <div class="session-card" id="card4"><div class="session-card-body"><h2>Question 1</h2></div></div>
-    <div class="session-card" id="card5"><div class="session-card-body"><h2>Question 2</h2></div></div>
-    <div class="session-card" id="card6"><div class="session-card-body"><h2>Question 3</h2></div></div>
-    <div class="session-card" id="card7"><div class="session-card-body"><h2>Question 4</h2></div></div>
-
-    <!-- CARD 8: SUMMARY -->
-    <div class="session-card session-summary" id="summaryCard">
-      <h3>Your Session Summary</h3>
-      <ul id="summaryList">
-        <li><strong>Session:</strong> <span id="summarySession">—</span></li>
-        <li><strong>Location:</strong> <span id="summaryPark">—</span></li>
-        <li><strong>Pets:</strong> <span id="summaryPets">—</span></li>
-        <li><strong>People:</strong> <span id="summaryPeople">—</span></li>
-        <li class="total"><strong>Total:</strong> <span id="summaryTotal">$0</span></li>
-      </ul>
-      <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
-    </div>
-
-    <!-- SHADOW CARDS FOR DEPTH -->
-    <div class="session-card shadow-card"></div>
-    <div class="session-card shadow-card"></div>
-  </div>
-</section>
-<!-- ✅ ENTER CHUNK 3 HERE -->
-    <!-- ✅ CHUNK 3: Session Builder Logic + Footer -->
-
-<script>
-  const questions = [
-    { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
-    { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
-    { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
-    { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] },
-  ];
-
-  let answers = JSON.parse(localStorage.getItem("ptpSessionData")) || {};
-  let qIndex = 0;
-
-  const questionText = document.getElementById("questionText");
-  const optionsContainer = document.getElementById("optionsContainer");
-  const prevBtn = document.getElementById("prevBtn");
-  const resetBtn = document.getElementById("resetBtn");
-  const introNextBtn = document.getElementById("introNextBtn");
-  const miniNextBtn = document.getElementById("miniNextBtn");
-  const fullNextBtn = document.getElementById("fullNextBtn");
-  const introCard = document.getElementById("introCard");
-  const miniInfoCard = document.getElementById("miniInfoCard");
-  const fullInfoCard = document.getElementById("fullInfoCard");
-  const questionCard = document.getElementById("sessionCard");
-  const summaryCard = document.getElementById("summaryCard");
-
-  function showCard(card) {
-    document.querySelectorAll(".session-card").forEach(c => c.classList.remove("active"));
-    card.classList.add("active");
-  }
-
-  introNextBtn.onclick = () => showCard(miniInfoCard);
-  miniNextBtn.onclick = () => showCard(fullInfoCard);
-  fullNextBtn.onclick = () => {
-    showCard(questionCard);
-    loadQuestion();
-  };
-
-  function loadQuestion() {
-    const q = questions[qIndex];
-    questionText.textContent = q.label;
-    optionsContainer.innerHTML = "";
-
-    q.options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.className = "answer-button";
-      btn.textContent = opt;
-      btn.onclick = () => {
-        answers[q.name] = opt;
-        localStorage.setItem("ptpSessionData", JSON.stringify(answers));
-        animateCardOff(() => {
-          if (qIndex < questions.length - 1) {
-            qIndex++;
-            loadQuestion();
-          } else {
-            buildSummary();
-            showCard(summaryCard);
-          }
-        });
-      };
-      optionsContainer.appendChild(btn);
-    });
-
-    prevBtn.style.display = qIndex > 0 ? "inline-block" : "none";
-    resetBtn.style.display = qIndex > 0 ? "inline-block" : "none";
-  }
-
-  prevBtn.onclick = () => {
-    if (qIndex > 0) {
-      qIndex--;
-      loadQuestion();
-    }
-  };
-
-  resetBtn.onclick = () => {
-    if (confirm("Are you sure you want to start over?")) {
-      localStorage.removeItem("ptpSessionData");
-      answers = {};
-      qIndex = 0;
-      showCard(introCard);
-    }
-  };
-
-  function animateCardOff(callback) {
-    const card = document.querySelector(".session-card.active");
-    card.style.transform = "translateY(100px) rotateZ(5deg)";
-    card.style.opacity = 0;
-    setTimeout(() => {
-      card.style.transform = "none";
-      card.style.opacity = 1;
-      callback();
-    }, 400);
-  }
-
-  function buildSummary() {
-    const data = JSON.parse(localStorage.getItem("ptpSessionData") || "{}");
-    const summaryMap = {
-      session: data.session || "—",
-      park: data.park || "—",
-      petCount: data.petCount || "—",
-      peopleCount: data.peopleCount || "—"
-    };
-
-    let total = 0;
-    if (summaryMap.session === "Mini") total += 50;
-    if (summaryMap.session === "Full") total += 100;
-    if (summaryMap.petCount === "2") total += 40;
-    if (summaryMap.peopleCount === "2") total += 20;
-
-    document.getElementById("summarySession").textContent = summaryMap.session;
-    document.getElementById("summaryPark").textContent = summaryMap.park;
-    document.getElementById("summaryPets").textContent = summaryMap.petCount;
-    document.getElementById("summaryPeople").textContent = summaryMap.peopleCount;
-    document.getElementById("summaryTotal").textContent = `$${total}`;
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    showCard(introCard);
-  });
-</script>
-
-<footer>
-  <div class="payments">
-    <img src="assets/images/paypal.png" alt="PayPal" />
-    <img src="assets/images/visa.png" alt="Visa" />
-    <img src="assets/images/mastercard.png" alt="MasterCard" />
-    <img src="assets/images/stripe.png" alt="Stripe" />
-  </div>
-</footer>
+  </footer>
 </body>
 </html>
