@@ -292,7 +292,150 @@
         </div>
       </div>
     </section>
-    <section id="session-builder-section"></section>
+    <!-- ✅ SECTION 3: SESSION BUILDER INJECTION START -->
+<section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 30s ease-in-out infinite;">
+  <!-- HEADER + SUBHEADER -->
+  <div class="session-builder-header">
+    <h2 class="session-heading" style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 3.8rem; line-height: 1.25; background: url('assets/images/ani_bkgd_cool.png'); background-size: cover; background-position: center; -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center;">Let’s Find Your Perfect Session</h2>
+    <p class="session-subtext" style="color: white; font-size: 1.2rem; font-family: 'SF Pro Display', sans-serif; max-width: 600px; margin: 1rem auto 3rem auto; text-align: center; opacity: 0.9;">We take a unique approach to help you discover the perfect session type<br />for you and your pet. Just answer a few quick questions to get started.</p>
+  </div>
+
+  <!-- SESSION CARD STACK -->
+  <div class="session-card-stack" id="sessionCardStack">
+    <!-- Will be dynamically injected -->
+  </div>
+</section>
+<!-- ✅ SECTION 3: SESSION BUILDER INJECTION END -->
+
+<!-- ✅ SESSION BUILDER SCRIPT INJECTION START -->
+<script>
+  const questions = [
+    { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
+    { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
+    { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
+    { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] }
+  ];
+
+  let answers = JSON.parse(localStorage.getItem("ptpSessionData")) || {};
+  let qIndex = 0;
+
+  const sessionCardStack = document.getElementById("sessionCardStack");
+
+  function createCard(content, id = "", isActive = false) {
+    const card = document.createElement("div");
+    card.className = `session-card${isActive ? ' active' : ''}`;
+    if (id) card.id = id;
+    card.innerHTML = content;
+    sessionCardStack.appendChild(card);
+  }
+
+  function renderInitialCards() {
+    createCard(`
+      <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+      <div class="session-card-body">
+        <h2 class="intro-heading">Let’s go over what’s included</h2>
+        <p class="intro-subtext">In just a few quick steps, we’ll help you pick the perfect session, and show you what’s included with each option.</p>
+      </div>
+      <div class="session-card-footer">
+        <button onclick="advanceTo(1)">Start →</button>
+      </div>
+    `, "card0", true);
+
+    createCard(`
+      <div class="session-card-body">
+        <h2 class="session-info-heading">Mini Session</h2>
+        <ul class="session-info-list">
+          <li>✔ Up to 60 minutes</li>
+          <li>✔ 5 edited photos</li>
+          <li>✔ 1 person + 1 pet included</li>
+          <li>✔ Access to downloads & print shop</li>
+        </ul>
+      </div>
+      <div class="session-card-footer">
+        <button onclick="advanceTo(2)">Next →</button>
+      </div>
+    `, "card1");
+
+    createCard(`
+      <div class="session-card-body">
+        <h2 class="session-info-heading">Full Session</h2>
+        <ul class="session-info-list">
+          <li>✔ Up to 90 minutes</li>
+          <li>✔ 10 edited photos</li>
+          <li>✔ 1 person + 1 pet included</li>
+          <li>✔ Access to downloads & print shop</li>
+        </ul>
+      </div>
+      <div class="session-card-footer">
+        <button onclick="advanceTo(3)">Next →</button>
+      </div>
+    `, "card2");
+
+    createCard(`<div class="session-card-body" id="questionCard"></div>`, "card3");
+    createCard(`<div class="session-card-body" id="summaryCard" style="display:none;"></div>`, "card4");
+  }
+
+  function advanceTo(index) {
+    document.querySelectorAll(".session-card").forEach((card, i) => {
+      card.classList.remove("active");
+      if (i === index) card.classList.add("active");
+    });
+    if (index === 3) loadQuestion();
+  }
+
+  function loadQuestion() {
+    const q = questions[qIndex];
+    const container = document.getElementById("questionCard");
+    container.innerHTML = `<h2>${q.label}</h2>`;
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "answer-button";
+      btn.textContent = opt;
+      btn.onclick = () => {
+        answers[q.name] = opt;
+        localStorage.setItem("ptpSessionData", JSON.stringify(answers));
+        if (qIndex < questions.length - 1) {
+          qIndex++;
+          loadQuestion();
+        } else {
+          renderSummary();
+          advanceTo(4);
+        }
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  function renderSummary() {
+    const data = answers;
+    let total = 0;
+    if (data.session === "Mini") total += 50;
+    if (data.session === "Full") total += 100;
+    if (data.petCount === "2") total += 40;
+    if (data.peopleCount === "2") total += 20;
+
+    const summaryHTML = `
+      <h3>Your Session Summary</h3>
+      <ul>
+        <li><strong>Session:</strong> ${data.session || "—"}</li>
+        <li><strong>Location:</strong> ${data.park || "—"}</li>
+        <li><strong>Pets:</strong> ${data.petCount || "—"}</li>
+        <li><strong>People:</strong> ${data.peopleCount || "—"}</li>
+        <li class="total"><strong>Total:</strong> $${total}</li>
+      </ul>
+      <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
+    `;
+
+    const summaryCard = document.getElementById("summaryCard");
+    summaryCard.innerHTML = summaryHTML;
+    summaryCard.style.display = "block";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderInitialCards();
+  });
+</script>
+<!-- ✅ SESSION BUILDER SCRIPT INJECTION END --><section id="session-builder-section"></section>
   </main>
   <footer>
     <div class="payments">
