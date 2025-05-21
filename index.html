@@ -67,21 +67,25 @@
 }
 
 .session-card-body {
-  text-align: center;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
 
 .session-card-footer {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
 
-.answer-button,
+.answer-button {
+    padding: 0.6rem 1.2rem; /* matched to start/next buttons */
+    min-width: 120px;
+  }
 .session-card-footer button,
 .continue-btn {
   background: rgba(255, 255, 255, 0.1);
@@ -439,7 +443,7 @@
 
   function renderInitialCards() {
     createCard(`
-      <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+      <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" class="session-card-logo" />
       <div class="session-card-body">
         <h2 class="intro-heading">Let’s go over what’s included</h2>
         <p class="intro-subtext">In just a few quick steps, we’ll help you pick the perfect session, and show you what’s included with each option.</p>
@@ -449,35 +453,9 @@
       </div>
     `, "card0", true);
 
-    createCard(`
-      <div class="session-card-body">
-        <h2 class="session-info-heading">Mini Session</h2>
-        <ul class="session-info-list">
-          <li>✔ Up to 60 minutes</li>
-          <li>✔ 5 edited photos</li>
-          <li>✔ 1 person + 1 pet included</li>
-          <li>✔ Access to downloads & print shop</li>
-        </ul>
-      </div>
-      <div class="session-card-footer">
-        <button onclick="advanceTo(2)">Next →</button>
-      </div>
-    `, "card1");
+    createCard(`<div class="session-card-body"><h2 class="session-info-heading">Mini Session</h2><ul class="session-info-list"><li>✔ Up to 60 minutes</li><li>✔ 5 edited photos</li><li>✔ 1 person + 1 pet included</li><li>✔ Access to downloads & print shop</li></ul></div><div class="session-card-footer"><button onclick="advanceTo(2)">Next →</button></div>`, "card1");
 
-    createCard(`
-      <div class="session-card-body">
-        <h2 class="session-info-heading">Full Session</h2>
-        <ul class="session-info-list">
-          <li>✔ Up to 90 minutes</li>
-          <li>✔ 10 edited photos</li>
-          <li>✔ 1 person + 1 pet included</li>
-          <li>✔ Access to downloads & print shop</li>
-        </ul>
-      </div>
-      <div class="session-card-footer">
-        <button onclick="advanceTo(3)">Next →</button>
-      </div>
-    `, "card2");
+    createCard(`<div class="session-card-body"><h2 class="session-info-heading">Full Session</h2><ul class="session-info-list"><li>✔ Up to 90 minutes</li><li>✔ 10 edited photos</li><li>✔ 1 person + 1 pet included</li><li>✔ Access to downloads & print shop</li></ul></div><div class="session-card-footer"><button onclick="advanceTo(3)">Next →</button></div>`, "card2");
 
     createCard(`<div class="session-card-body" id="questionCard"></div>`, "card3");
     createCard(`<div class="session-card-body session-summary" id="summaryCard" style="display:none;"></div>`, "card4");
@@ -494,8 +472,10 @@
   function loadQuestion() {
     const q = questions[qIndex];
     const container = document.getElementById("questionCard");
-
     container.innerHTML = `<h2>${q.label}</h2>`;
+    const footer = document.createElement("div");
+    footer.className = "session-card-footer";
+
     q.options.forEach(opt => {
       const btn = document.createElement("button");
       btn.className = "answer-button";
@@ -511,12 +491,8 @@
           advanceTo(4);
         }
       };
-      container.appendChild(btn);
+      footer.appendChild(btn);
     });
-
-    // Add back/restart buttons
-    const footer = document.createElement("div");
-    footer.className = "session-card-footer";
 
     if (qIndex > 0) {
       const backBtn = document.createElement("button");
@@ -526,20 +502,20 @@
         loadQuestion();
       };
       footer.appendChild(backBtn);
+
+      const restartBtn = document.createElement("button");
+      restartBtn.textContent = "Start Over";
+      restartBtn.onclick = () => {
+        if (confirm("Are you sure you want to start over?")) {
+          localStorage.removeItem("ptpSessionData");
+          qIndex = 0;
+          answers = {};
+          advanceTo(3);
+        }
+      };
+      footer.appendChild(restartBtn);
     }
 
-    const restartBtn = document.createElement("button");
-    restartBtn.textContent = "Start Over";
-    restartBtn.onclick = () => {
-      if (confirm("Are you sure you want to restart? All answers will be cleared.")) {
-        localStorage.removeItem("ptpSessionData");
-        answers = {};
-        qIndex = 0;
-        renderInitialCards();
-        advanceTo(3);
-      }
-    };
-    footer.appendChild(restartBtn);
     container.appendChild(footer);
   }
 
@@ -562,6 +538,7 @@
       </ul>
       <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
     `;
+
     const summaryCard = document.getElementById("summaryCard");
     summaryCard.innerHTML = summaryHTML;
     summaryCard.style.display = "block";
