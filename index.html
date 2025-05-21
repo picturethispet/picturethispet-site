@@ -117,21 +117,46 @@
   z-index: 1;
 }
 
-.section-split::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+.section-split {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-image: url("assets/images/main_background_allsystem.png");
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   animation: moveBackground 15s ease-in-out infinite;
-  z-index: -1;
+  padding: 2rem 2rem 3rem;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  z-index: 1;
 }
-    .side-a, .side-b {
-      flex: 1;
-      padding: 2rem;
-    }
+
+.section-split::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: url("assets/images/main_background_allsystem.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+  animation: moveBackground 15s ease-in-out infinite;
+  opacity: 0.5;
+}
+    .side-a {
+  flex: 1;
+  padding-left: 3rem;
+  padding-right: 1rem;
+}
+
+.side-b {
+  flex: 1;
+  padding-left: 1rem;
+  padding-right: 3rem;
+}
     .side-a h1 {
       font-family: 'Inter', sans-serif;
       font-weight: 900;
@@ -284,7 +309,7 @@
     align-items: center;
   }
   .session-heading {
-  font-size: 2rem;
+  font-size: 2.4rem;
   text-align: center;
   margin-bottom: 3rem;
   font-family: 'Playfair Display', serif;
@@ -295,6 +320,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
+  filter: drop-shadow(0 3px 6px rgba(255, 255, 255, 0.6));
 }
  .session-card {
   background-image: url("assets/images/ani_bkgd_cool.png");
@@ -351,7 +377,7 @@
   }
  .answer-button {
   background-image: url("assets/images/main_background_allsystem.png");
-  background-size: 100% 100%;
+  background-size: 200% 200%;
   animation: moveBackground 15s ease-in-out infinite;
   color: white;
   border: 2px solid white;
