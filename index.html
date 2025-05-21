@@ -386,6 +386,17 @@
       </ul>
     </div>
   </div>
+      <div class="session-summary">
+  <h3>Your Session Summary</h3>
+  <ul id="summaryList">
+    <li><strong>Session:</strong> <span id="summarySession">—</span></li>
+    <li><strong>Location:</strong> <span id="summaryPark">—</span></li>
+    <li><strong>Pets:</strong> <span id="summaryPets">—</span></li>
+    <li><strong>People:</strong> <span id="summaryPeople">—</span></li>
+    <li class="total"><strong>Total:</strong> <span id="summaryTotal">$0</span></li>
+  </ul>
+  <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
+</div>
 </section>
 <style>
   .session-card-stack {
@@ -574,6 +585,70 @@
   margin: 0.4rem auto;
   text-align: center;
 }
+  .session-summary {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 2rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  text-align: center;
+  margin: 3rem auto 2rem;
+  max-width: 420px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.session-summary h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  background: url("assets/images/ani_bkgd_cool.png");
+  background-size: 200%;
+  background-position: center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+
+.session-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: left;
+  max-width: 320px;
+}
+
+.session-summary li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.session-summary li.total {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  border-top: 2px solid rgba(255,255,255,0.2);
+}
+
+.continue-btn {
+  background-color: var(--dark-brown);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.continue-btn:hover {
+  background-color: #3a1f14;
+}
 </style>
 <script>
   const questions = [
@@ -646,9 +721,31 @@
     }, 400);
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    loadQuestion();
-  });
+   document.addEventListener("DOMContentLoaded", () => {
+  loadQuestion();
+
+  const data = JSON.parse(localStorage.getItem("ptpSessionData") || "{}");
+
+  const summaryMap = {
+    session: data.session || "—",
+    park: data.park || "—",
+    petCount: data.petCount || "—",
+    peopleCount: data.peopleCount || "—",
+  };
+
+  let total = 0;
+  if (summaryMap.session === "Mini") total += 50;
+  if (summaryMap.session === "Full") total += 100;
+  if (summaryMap.petCount === "2") total += 40;
+  if (summaryMap.peopleCount === "2") total += 20;
+
+  document.getElementById("summarySession").textContent = summaryMap.session;
+  document.getElementById("summaryPark").textContent = summaryMap.park;
+  document.getElementById("summaryPets").textContent = summaryMap.petCount;
+  document.getElementById("summaryPeople").textContent = summaryMap.peopleCount;
+  document.getElementById("summaryTotal").textContent = `$${total}`;
+});
+
 </script>
   </main>
   <footer>
