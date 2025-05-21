@@ -156,14 +156,33 @@
   animation: moveBackground 15s ease-in-out infinite;
   opacity: 0.5;
 }
-    .side-a,
+    .side-a {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 2rem;
+  text-align: right;
+}
+
+.side-a h1 {
+  max-width: 420px;
+  margin-left: auto;
+}
+
 .side-b {
   flex: 1;
-  padding: 2rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.side-b-inner {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  max-width: 420px;
 }
     .side-a h1 {
       font-family: 'Inter', sans-serif;
@@ -282,14 +301,17 @@
   <div class="section-breaker-shadow"></div>
 </section>
     <section class="section-split">
-      <div class="side-a">
-        <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
-      </div>
-      <div class="side-b">
-        <h2>But these moments?<br />They’ll last forever.</h2>
-        <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
-      </div>
-    </section>
+  <div class="side-a">
+    <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
+  </div>
+  
+  <div class="side-b">
+    <div class="side-b-inner">
+      <h2>But these moments?<br />They’ll last forever.</h2>
+      <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
+    </div>
+  </div>
+</section>
     <section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 15s ease-in-out infinite;">
   <h2 class="session-heading">Let’s Find Your Perfect Session</h2>
   <div class="session-card-stack">
