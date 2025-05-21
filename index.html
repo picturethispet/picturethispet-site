@@ -237,11 +237,36 @@
   flex-direction: column;
   align-items: center;
 }
-
+      
 .session-box {
   transform: none;
   margin: 1rem 0;
 }
+  @media (min-width: 769px) {
+  .session-layout-wrapper {
+    justify-content: center;
+    align-items: flex-end;
+    gap: 2rem;
+    position: relative;
+  }
+
+  .mini-box {
+    margin-right: -60px;
+    transform: translateY(40px);
+    z-index: 1;
+  }
+
+  .full-box {
+    margin-left: -60px;
+    transform: translateY(40px);
+    z-index: 1;
+  }
+
+  .session-card-stack {
+    transform: translateY(-60px);
+    z-index: 2;
+  }
+}    
 
 .session-card-stack {
   transform: translateY(0);
@@ -304,6 +329,27 @@
       .side-a { padding-left: 6rem; }
       .side-b { padding-right: 2rem; }
     }
+    @media (max-width: 768px) {
+  .session-layout-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .session-card-stack {
+    transform: translateY(0);
+    margin: 0;
+    z-index: 2;
+    position: relative;
+  }
+
+  .session-box {
+    transform: none;
+    margin: 0;
+    max-width: 90%;
+    z-index: 1;
+  }
+}
   </style>
   <script>
     window.onbeforeunload = function () {
@@ -362,20 +408,37 @@
     </div>
 
     <div class="session-card-stack">
-      <div class="session-card active" id="sessionCard">
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+  <div class="session-card active" id="sessionCard">
+    <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
-          <h2 id="questionText">What type of session?</h2>
-          <div id="optionsContainer"></div>
-        </div>
-        <div class="session-card-footer">
-          <button id="prevBtn" style="display:none">← Back</button>
-          <button id="resetBtn" style="display:none">Start Over</button>
-        </div>
-      </div>
-      <div class="session-card shadow-card"></div>
-      <div class="session-card shadow-card"></div>
+      <h2 id="questionText">What type of session?</h2>
+      <div id="optionsContainer"></div>
     </div>
+    <div class="session-card-footer">
+      <button id="prevBtn" style="display:none">← Back</button>
+      <button id="resetBtn" style="display:none">Start Over</button>
+    </div>
+  </div> <!-- ✅ this closes the sessionCard -->
+
+  <!-- Shadow cards remain -->
+   
+  <!-- Shadow cards remain -->
+  <div class="session-card shadow-card"></div>
+  <div class="session-card shadow-card"></div>
+
+  <!-- ADD this: Session Summary card inside the stack -->
+  <div class="session-card session-summary">
+    <h3>Your Session Summary</h3>
+    <ul id="summaryList">
+      <li><strong>Session:</strong> <span id="summarySession">—</span></li>
+      <li><strong>Location:</strong> <span id="summaryPark">—</span></li>
+      <li><strong>Pets:</strong> <span id="summaryPets">—</span></li>
+      <li><strong>People:</strong> <span id="summaryPeople">—</span></li>
+      <li class="total"><strong>Total:</strong> <span id="summaryTotal">$0</span></li>
+    </ul>
+    <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
+  </div>
+</div>
 
     <div class="session-box full-box">
 <h3><span>Full</span><br><span>Session</span></h3>      <ul>
@@ -385,19 +448,7 @@
         <li>Access to downloads & print shop</li>
       </ul>
     </div>
-  </div>
-      <div class="session-summary">
-  <h3>Your Session Summary</h3>
-  <ul id="summaryList">
-    <li><strong>Session:</strong> <span id="summarySession">—</span></li>
-    <li><strong>Location:</strong> <span id="summaryPark">—</span></li>
-    <li><strong>Pets:</strong> <span id="summaryPets">—</span></li>
-    <li><strong>People:</strong> <span id="summaryPeople">—</span></li>
-    <li class="total"><strong>Total:</strong> <span id="summaryTotal">$0</span></li>
-  </ul>
-  <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
-</div>
-</section>
+ 
 <style>
   .session-card-stack {
     max-width: 600px;
