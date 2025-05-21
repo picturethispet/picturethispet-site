@@ -236,7 +236,16 @@
       .session-layout-wrapper {
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+}
+
+.session-box {
+  transform: none;
+  margin: 1rem 0;
+}
+
+.session-card-stack {
+  transform: translateY(0);
+  margin: 2rem 0;
 }
 
 .session-card-stack {
@@ -387,13 +396,36 @@
     flex-direction: column;
     align-items: center;
   }
-  .session-layout-wrapper {
+  /* Shared Desktop + Mobile */
+.session-layout-wrapper {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-end;
   flex-wrap: wrap;
   gap: 2rem;
+  position: relative;
+  z-index: 1;
   margin-top: 3rem;
+}
+
+/* Mini and Full cards pushed down slightly */
+.session-box {
+  transform: translateY(40px);
+  z-index: 1;
+  max-width: 260px;
+  flex: 1 1 250px;
+}
+
+/* Builder card pulled up to overlap */
+.session-card-stack {
+  z-index: 2;
+  transform: translateY(-40px);
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
   .session-builder-header {
   text-align: center;
@@ -460,17 +492,12 @@
   list-style: none;
   padding-left: 0;
   font-size: 1rem;
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
-  background: url("assets/images/ani_bkgd_cool.png");
-  background-size: 200%;
-  background-position: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
+  color: white;
   text-align: center;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.35); /* ADD THIS FOR READABILITY */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .session-box ul li::before {
