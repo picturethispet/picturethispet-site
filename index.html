@@ -293,3 +293,134 @@
   </div>
 </section>
 <!-- ✅ ENTER CHUNK 3 HERE -->
+    <!-- ✅ CHUNK 3: Session Builder Logic + Footer -->
+
+<script>
+  const questions = [
+    { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
+    { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
+    { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
+    { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] },
+  ];
+
+  let answers = JSON.parse(localStorage.getItem("ptpSessionData")) || {};
+  let qIndex = 0;
+
+  const questionText = document.getElementById("questionText");
+  const optionsContainer = document.getElementById("optionsContainer");
+  const prevBtn = document.getElementById("prevBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const introNextBtn = document.getElementById("introNextBtn");
+  const miniNextBtn = document.getElementById("miniNextBtn");
+  const fullNextBtn = document.getElementById("fullNextBtn");
+  const introCard = document.getElementById("introCard");
+  const miniInfoCard = document.getElementById("miniInfoCard");
+  const fullInfoCard = document.getElementById("fullInfoCard");
+  const questionCard = document.getElementById("sessionCard");
+  const summaryCard = document.getElementById("summaryCard");
+
+  function showCard(card) {
+    document.querySelectorAll(".session-card").forEach(c => c.classList.remove("active"));
+    card.classList.add("active");
+  }
+
+  introNextBtn.onclick = () => showCard(miniInfoCard);
+  miniNextBtn.onclick = () => showCard(fullInfoCard);
+  fullNextBtn.onclick = () => {
+    showCard(questionCard);
+    loadQuestion();
+  };
+
+  function loadQuestion() {
+    const q = questions[qIndex];
+    questionText.textContent = q.label;
+    optionsContainer.innerHTML = "";
+
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "answer-button";
+      btn.textContent = opt;
+      btn.onclick = () => {
+        answers[q.name] = opt;
+        localStorage.setItem("ptpSessionData", JSON.stringify(answers));
+        animateCardOff(() => {
+          if (qIndex < questions.length - 1) {
+            qIndex++;
+            loadQuestion();
+          } else {
+            buildSummary();
+            showCard(summaryCard);
+          }
+        });
+      };
+      optionsContainer.appendChild(btn);
+    });
+
+    prevBtn.style.display = qIndex > 0 ? "inline-block" : "none";
+    resetBtn.style.display = qIndex > 0 ? "inline-block" : "none";
+  }
+
+  prevBtn.onclick = () => {
+    if (qIndex > 0) {
+      qIndex--;
+      loadQuestion();
+    }
+  };
+
+  resetBtn.onclick = () => {
+    if (confirm("Are you sure you want to start over?")) {
+      localStorage.removeItem("ptpSessionData");
+      answers = {};
+      qIndex = 0;
+      showCard(introCard);
+    }
+  };
+
+  function animateCardOff(callback) {
+    const card = document.querySelector(".session-card.active");
+    card.style.transform = "translateY(100px) rotateZ(5deg)";
+    card.style.opacity = 0;
+    setTimeout(() => {
+      card.style.transform = "none";
+      card.style.opacity = 1;
+      callback();
+    }, 400);
+  }
+
+  function buildSummary() {
+    const data = JSON.parse(localStorage.getItem("ptpSessionData") || "{}");
+    const summaryMap = {
+      session: data.session || "—",
+      park: data.park || "—",
+      petCount: data.petCount || "—",
+      peopleCount: data.peopleCount || "—"
+    };
+
+    let total = 0;
+    if (summaryMap.session === "Mini") total += 50;
+    if (summaryMap.session === "Full") total += 100;
+    if (summaryMap.petCount === "2") total += 40;
+    if (summaryMap.peopleCount === "2") total += 20;
+
+    document.getElementById("summarySession").textContent = summaryMap.session;
+    document.getElementById("summaryPark").textContent = summaryMap.park;
+    document.getElementById("summaryPets").textContent = summaryMap.petCount;
+    document.getElementById("summaryPeople").textContent = summaryMap.peopleCount;
+    document.getElementById("summaryTotal").textContent = `$${total}`;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    showCard(introCard);
+  });
+</script>
+
+<footer>
+  <div class="payments">
+    <img src="assets/images/paypal.png" alt="PayPal" />
+    <img src="assets/images/visa.png" alt="Visa" />
+    <img src="assets/images/mastercard.png" alt="MasterCard" />
+    <img src="assets/images/stripe.png" alt="Stripe" />
+  </div>
+</footer>
+</body>
+</html>
