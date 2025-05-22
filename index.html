@@ -730,7 +730,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.3.1</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.3.2</p>
   </footer>
 
   <script>
@@ -1085,9 +1085,15 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('Page loaded, initializing...'); // Debug line
       loadSessionData();
       initializeSessionBuilder();
-      createPolicyModal();
+      
+      // Make sure modal is created
+      setTimeout(() => {
+        createPolicyModal();
+        console.log('Policy modal created'); // Debug line
+      }, 1000);
     });
 
     // Create policy modal
@@ -1119,12 +1125,24 @@
 
     // Open policy modal
     function openPolicyModal(policyType) {
+      console.log('Opening modal for:', policyType); // Debug line
+      
       const modal = document.getElementById('policyModal');
+      if (!modal) {
+        console.error('Modal not found, creating it now...');
+        createPolicyModal();
+      }
+      
       const title = document.getElementById('modalTitle');
       const text = document.getElementById('modalText');
       const agreeBtn = document.getElementById('modalAgreeBtn');
       
       const policy = policyContent[policyType];
+      if (!policy) {
+        console.error('Policy not found for type:', policyType);
+        return;
+      }
+      
       title.textContent = policy.title;
       text.textContent = policy.text;
       
@@ -1133,6 +1151,8 @@
       
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
+      
+      console.log('Modal should be visible now'); // Debug line
     }
 
     // Scroll to top function
