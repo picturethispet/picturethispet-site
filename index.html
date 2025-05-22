@@ -730,7 +730,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.3.0</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.3.1</p>
   </footer>
 
   <script>
@@ -970,10 +970,10 @@
       const card5 = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
-          <h2>🐕 Pet Behavior Policy</h2>
+          <h2>🐕 Behavior Policy</h2>
           <div class="agreement-summary">
-            <p>You agree to abide by the pet behavior policy.</p>
-            <a href="#" class="policy-link" onclick="openPolicyModal('behavior')">Click here to view full policy and agree</a>
+            <p>You agree to abide by the behavior policy for all parties involved.</p>
+            <a href="#" class="policy-link" onclick="event.preventDefault(); openPolicyModal('behavior');">Click here to view full policy and agree</a>
           </div>
         </div>
       `);
@@ -985,7 +985,7 @@
           <h2>📸 Photography Service Agreement</h2>
           <div class="agreement-summary">
             <p>You agree to the photography service terms and usage rights.</p>
-            <a href="#" class="policy-link" onclick="openPolicyModal('photography')">Click here to view full policy and agree</a>
+            <a href="#" class="policy-link" onclick="event.preventDefault(); openPolicyModal('photography');">Click here to view full policy and agree</a>
           </div>
         </div>
       `);
@@ -997,7 +997,7 @@
           <h2>📅 Cancellation & Refund Policy</h2>
           <div class="agreement-summary">
             <p>You agree to the cancellation and refund policy terms.</p>
-            <a href="#" class="policy-link" onclick="openPolicyModal('cancellation')">Click here to view full policy and agree</a>
+            <a href="#" class="policy-link" onclick="event.preventDefault(); openPolicyModal('cancellation');">Click here to view full policy and agree</a>
           </div>
         </div>
       `);
@@ -1070,7 +1070,7 @@
     // Policy content
     const policyContent = {
       behavior: {
-        title: "🐕 Pet Behavior Policy",
+        title: "🐕 Behavior Policy",
         text: "All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet's behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved."
       },
       photography: {
