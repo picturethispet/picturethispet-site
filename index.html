@@ -271,7 +271,7 @@
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: 500px; /* Fixed height for all cards */
+      height: 500px; /* Default height for most cards */
       width: 100%;
       max-width: 600px;
       animation: moveBackground 30s ease-in-out infinite;
@@ -286,6 +286,10 @@
       display: none;
       position: relative;
       overflow: hidden;
+    }
+
+    .session-card.agreement-card {
+      height: 650px; /* Taller for agreement cards */
     }
 
     .session-card.active {
@@ -615,12 +619,22 @@
       }
 
       .session-card-stack {
-        height: 450px; /* Match mobile card height */
+        height: 550px; /* Adjust for mobile agreement cards */
       }
 
       .session-card {
         height: 450px; /* Slightly smaller for mobile */
         padding: 1.5rem;
+      }
+
+      .session-card.agreement-card {
+        height: 550px; /* Taller for mobile agreement cards */
+        padding: 1.2rem;
+      }
+
+      .agreement-text {
+        font-size: 0.9rem;
+        padding: 1.2rem;
       }
 
       .session-card-body h2,
@@ -730,7 +744,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.3.2</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.4.0</p>
   </footer>
 
   <script>
@@ -971,36 +985,63 @@
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
           <h2>🐕 Behavior Policy</h2>
-          <div class="agreement-summary">
-            <p>You agree to abide by the behavior policy for all parties involved.</p>
-            <a href="#" class="policy-link" onclick="event.preventDefault(); openPolicyModal('behavior');">Click here to view full policy and agree</a>
+          <div class="agreement-text">
+            <p>All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet's behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved.</p>
+          </div>
+          <div class="agreement-checkbox">
+            <label>
+              <input type="checkbox" id="behaviorAgreement" onchange="checkAgreement('behavior')">
+              <span>I acknowledge and agree to the Behavior Policy</span>
+            </label>
           </div>
         </div>
+        <div class="session-card-footer">
+          <button id="behaviorContinue" class="continue-btn disabled" onclick="advanceCard()">Agree & Continue →</button>
+        </div>
       `);
+      card5.classList.add('agreement-card');
 
       // Card 6 - Photography Agreement
       const card6 = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
           <h2>📸 Photography Service Agreement</h2>
-          <div class="agreement-summary">
-            <p>You agree to the photography service terms and usage rights.</p>
-            <a href="#" class="policy-link" onclick="event.preventDefault(); openPolicyModal('photography');">Click here to view full policy and agree</a>
+          <div class="agreement-text">
+            <p>By participating in this photo session, you agree that all photographs taken by PictureThisPet are the intellectual property of the photographer. You are purchasing high-resolution digital files for personal use, but the photographer retains full ownership and the right to use images for marketing, portfolio, and promotional purposes. You may not alter, edit, or sell the images without written permission. You are granted a perpetual license to share and print the images for personal use, but PictureThisPet reserves all commercial rights.</p>
+          </div>
+          <div class="agreement-checkbox">
+            <label>
+              <input type="checkbox" id="photographyAgreement" onchange="checkAgreement('photography')">
+              <span>I acknowledge and agree to the Photography Service Agreement</span>
+            </label>
           </div>
         </div>
+        <div class="session-card-footer">
+          <button id="photographyContinue" class="continue-btn disabled" onclick="advanceCard()">Agree & Continue →</button>
+        </div>
       `);
+      card6.classList.add('agreement-card');
 
       // Card 7 - Cancellation Policy Agreement
       const card7 = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
           <h2>📅 Cancellation & Refund Policy</h2>
-          <div class="agreement-summary">
-            <p>You agree to the cancellation and refund policy terms.</p>
-            <a href="#" class="policy-link" onclick="event.preventDefault(); openPolicyModal('cancellation');">Click here to view full policy and agree</a>
+          <div class="agreement-text">
+            <p>All session payments are non-refundable. However, sessions may be rescheduled with at least 48 hours' notice. In cases of severe weather or emergencies, we will work with you to find a new session date. Missed appointments or cancellations with less than 48 hours' notice are not eligible for rescheduling or refund. Your session is not guaranteed until full payment is received.</p>
+          </div>
+          <div class="agreement-checkbox">
+            <label>
+              <input type="checkbox" id="cancellationAgreement" onchange="checkAgreement('cancellation')">
+              <span>I acknowledge and agree to the Cancellation & Refund Policy</span>
+            </label>
           </div>
         </div>
+        <div class="session-card-footer">
+          <button id="cancellationContinue" class="continue-btn disabled" onclick="proceedToCalendar()">Agree & Continue to Date Selection →</button>
+        </div>
       `);
+      card7.classList.add('agreement-card');
 
       // Add all cards to container
       container.appendChild(card0);
