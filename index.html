@@ -1087,6 +1087,13 @@
       // Update card position
       currentCard = index;
       
+      // If we're showing the question card (card 3), make sure the question is rendered
+      if (index === 3) {
+        setTimeout(() => {
+          renderCurrentQuestion();
+        }, 100);
+      }
+      
       // Update progress bar
       updateProgressBar();
     }
@@ -1249,7 +1256,12 @@
       `);
 
       // Card 3 - Questions (All questions will be rendered in this one card)
-      const card3 = createCard(`<div class="session-card-body" id="questionCard"></div>`);
+      const card3 = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+        <div class="session-card-body" id="questionCard">
+          <!-- Question content will be populated here -->
+        </div>
+      `);
 
       // REMOVED: Card 4 - Summary (this card has been completely removed)
 
@@ -1319,8 +1331,13 @@
       container.appendChild(card5);
       container.appendChild(card6);
 
-      // Setup first question
-      renderCurrentQuestion();
+      // Reset question index and setup first question
+      currentQuestion = 0;
+      
+      // Make sure the question card will be properly rendered when it becomes active
+      setTimeout(() => {
+        renderCurrentQuestion();
+      }, 100);
     }
 
     // Initialize on page load
