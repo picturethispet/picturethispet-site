@@ -175,21 +175,22 @@
 
     /* === INTAKE FORM SECTION === */
     .intake-section {
-      max-width: 600px;
+      max-width: 800px;
       margin: 0 auto;
       position: relative;
       height: auto;
       z-index: 2;
-      min-height: 1100px;
+      min-height: 600px;
     }
 
     .intake-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: 1100px;
+      height: auto;
+      min-height: 500px;
       width: 100%;
-      max-width: 600px;
+      max-width: 800px;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -202,6 +203,23 @@
       display: none;
       position: relative;
       overflow: visible;
+      margin-bottom: 2rem;
+    }
+
+    /* Card size variations */
+    .intake-card.small-card {
+      min-height: 400px;
+      max-height: 500px;
+    }
+
+    .intake-card.medium-card {
+      min-height: 600px;
+      max-height: 750px;
+    }
+
+    .intake-card.large-card {
+      min-height: 800px;
+      max-height: 1000px;
     }
 
     .intake-card.active {
@@ -231,11 +249,21 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
       width: 100%;
       min-height: 0;
-      padding-bottom: 4rem;
+      padding-bottom: 2rem;
       overflow: visible;
+    }
+
+    .intake-card-body.form-content {
+      justify-content: flex-start;
+      padding-top: 1rem;
+    }
+
+    .intake-card-body.centered-content {
+      justify-content: center;
+      align-items: center;
     }
 
     .intake-card-body h2 {
@@ -258,13 +286,24 @@
 
     /* === FORM STYLES === */
     .form-group {
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
       text-align: left;
       width: 100%;
-      max-width: 450px;
+      max-width: 500px;
       margin-left: auto;
       margin-right: auto;
       position: relative;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 1.75rem;
     }
 
     .form-group label {
@@ -336,6 +375,7 @@
       gap: 1rem;
       justify-content: center;
       margin-top: 1rem;
+      margin-bottom: 2rem;
     }
 
     .choice-btn {
@@ -438,14 +478,15 @@
 
     /* === BUTTON STYLES === */
     .intake-card-footer {
-      margin-top: auto;
+      margin-top: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
       width: 100%;
       flex-shrink: 0;
-      padding-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .button-group-left {
@@ -778,10 +819,10 @@
       input.value = formattedValue;
     }
 
-    // Create card element
-    function createCard(content, isActive = false) {
+    // Create card element with size class
+    function createCard(content, isActive = false, sizeClass = 'medium-card') {
       const card = document.createElement("div");
-      card.className = `intake-card${isActive ? ' active' : ''}`;
+      card.className = `intake-card ${sizeClass}${isActive ? ' active' : ''}`;
       card.innerHTML = content;
       return card;
     }
@@ -934,7 +975,7 @@
       // Card 0 - Welcome
       const welcomeCard = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body" style="justify-content: center; align-items: center; text-align: center;">
+        <div class="intake-card-body centered-content">
           <div>
             <h2>Almost There!</h2>
             <p>Just a few details about you and your pet(s) to complete your booking. This will help us provide the best possible session experience.</p>
@@ -945,19 +986,21 @@
           <div class="button-group-left"></div>
           <div></div>
         </div>
-      `, true);
+      `, true, 'small-card');
       container.appendChild(welcomeCard);
       cardIndex++;
 
       // Card 1 - Vaccination Requirement
       const vaccinationCard = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
-          <h2>Vaccination Requirement</h2>
-          <p>Is your pet fully vaccinated?</p>
-          <div class="choice-buttons" data-required="true">
-            <button class="choice-btn ${intakeData.vaccination === 'Yes' ? 'selected' : ''}" onclick="selectChoice(this, 'Yes', 'vaccination')">Yes</button>
-            <button class="choice-btn no-btn ${intakeData.vaccination === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', 'vaccination')">No</button>
+        <div class="intake-card-body centered-content">
+          <div>
+            <h2>Vaccination Requirement</h2>
+            <p>Is your pet fully vaccinated?</p>
+            <div class="choice-buttons" data-required="true">
+              <button class="choice-btn ${intakeData.vaccination === 'Yes' ? 'selected' : ''}" onclick="selectChoice(this, 'Yes', 'vaccination')">Yes</button>
+              <button class="choice-btn no-btn ${intakeData.vaccination === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', 'vaccination')">No</button>
+            </div>
           </div>
         </div>
         <div class="intake-card-footer">
@@ -966,7 +1009,7 @@
           </div>
           <div></div>
         </div>
-      `);
+      `, false, 'small-card');
       container.appendChild(vaccinationCard);
       cardIndex++;
 
@@ -976,22 +1019,24 @@
         const petPrefix = i === 1 ? 'pet' : `pet${i}`;
         const petCard = createCard(`
           <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body">
+          <div class="intake-card-body form-content">
             <h2>Tell Us About ${petCount > 1 ? `Pet ${i}` : 'Your Pet'}</h2>
-            <div class="form-group required">
-              <label for="${petPrefix}Name">Pet's Name</label>
-              <input type="text" id="${petPrefix}Name" name="${petPrefix}Name" required placeholder="Enter your pet's name" value="${intakeData[petPrefix + 'Name'] || ''}" onkeypress="handleEnterKey(event)">
-              <div class="form-error">Please enter your pet's name</div>
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="${petPrefix}Name">Pet's Name</label>
+                <input type="text" id="${petPrefix}Name" name="${petPrefix}Name" required placeholder="Enter your pet's name" value="${intakeData[petPrefix + 'Name'] || ''}" onkeypress="handleEnterKey(event)">
+                <div class="form-error">Please enter your pet's name</div>
+              </div>
+              <div class="form-group required">
+                <label for="${petPrefix}Age">Pet's Age</label>
+                <input type="text" id="${petPrefix}Age" name="${petPrefix}Age" required placeholder="e.g., 2 years" value="${intakeData[petPrefix + 'Age'] || ''}" onkeypress="handleEnterKey(event)">
+                <div class="form-error">Please enter your pet's age</div>
+              </div>
             </div>
             <div class="form-group required">
               <label for="${petPrefix}Birthdate">Pet's Birthdate</label>
               <input type="text" id="${petPrefix}Birthdate" name="${petPrefix}Birthdate" required placeholder="MM/DD/YYYY" value="${intakeData[petPrefix + 'Birthdate'] || ''}" oninput="formatDate(this)" onkeypress="handleEnterKey(event)" maxlength="10">
               <div class="form-error">Please enter your pet's birthdate</div>
-            </div>
-            <div class="form-group required">
-              <label for="${petPrefix}Age">Pet's Age</label>
-              <input type="text" id="${petPrefix}Age" name="${petPrefix}Age" required placeholder="e.g., 2 years" value="${intakeData[petPrefix + 'Age'] || ''}" onkeypress="handleEnterKey(event)">
-              <div class="form-error">Please enter your pet's age</div>
             </div>
             <div class="form-group required">
               <label>Pet's Gender</label>
@@ -1008,25 +1053,27 @@
             </div>
             <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
           </div>
-        `);
+        `, false, 'medium-card');
         container.appendChild(petCard);
         cardIndex++;
 
         // Additional pet details card
         const petDetailsCard = createCard(`
           <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body">
+          <div class="intake-card-body form-content">
             <h2>More About ${petCount > 1 ? `Pet ${i}` : 'Your Pet'}</h2>
-            <div class="form-group required">
-              <label for="${petPrefix}FavoriteToy">Favorite Toy</label>
-              <input type="text" id="${petPrefix}FavoriteToy" name="${petPrefix}FavoriteToy" required placeholder="What's their favorite toy?" value="${intakeData[petPrefix + 'FavoriteToy'] || ''}" onkeypress="handleEnterKey(event)">
-              <div class="form-error">Please enter your pet's favorite toy</div>
-            </div>
-            <div class="form-group required">
-              <label>Is your pet good off leash?</label>
-              <div class="choice-buttons" data-required="true">
-                <button class="choice-btn ${intakeData[petPrefix + 'OffLeash'] === 'Yes' ? 'selected' : ''}" onclick="selectChoice(this, 'Yes', '${petPrefix}OffLeash')">Yes</button>
-                <button class="choice-btn ${intakeData[petPrefix + 'OffLeash'] === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', '${petPrefix}OffLeash')">No</button>
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="${petPrefix}FavoriteToy">Favorite Toy</label>
+                <input type="text" id="${petPrefix}FavoriteToy" name="${petPrefix}FavoriteToy" required placeholder="What's their favorite toy?" value="${intakeData[petPrefix + 'FavoriteToy'] || ''}" onkeypress="handleEnterKey(event)">
+                <div class="form-error">Please enter your pet's favorite toy</div>
+              </div>
+              <div class="form-group required">
+                <label>Good off leash?</label>
+                <div class="choice-buttons" data-required="true">
+                  <button class="choice-btn ${intakeData[petPrefix + 'OffLeash'] === 'Yes' ? 'selected' : ''}" onclick="selectChoice(this, 'Yes', '${petPrefix}OffLeash')">Yes</button>
+                  <button class="choice-btn ${intakeData[petPrefix + 'OffLeash'] === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', '${petPrefix}OffLeash')">No</button>
+                </div>
               </div>
             </div>
             <div class="form-group required">
@@ -1046,7 +1093,7 @@
             </div>
             <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
           </div>
-        `);
+        `, false, 'large-card');
         container.appendChild(petDetailsCard);
         cardIndex++;
       }
