@@ -992,11 +992,16 @@
         
         saveIntakeData();
         
-        // Check if we need to regenerate cards for Instagram handles
-        if (intakeData.socialTagging === 'Yes' && currentCard === totalCards - 2) {
-          // We're on the social tagging card and user selected Yes
-          generateIntakeCards(); // Regenerate to include Instagram card
-          showCard(currentCard + 1); // Go to Instagram handles
+        // Special handling for social tagging card
+        const isSocialCard = activeCard.querySelector('[name="socialTagging"]') || 
+                           activeCard.querySelector('.choice-buttons[data-field="socialTagging"]');
+        
+        if (isSocialCard && intakeData.socialTagging === 'Yes') {
+          // User selected Yes on social tagging, need to show Instagram handles
+          setTimeout(() => {
+            generateIntakeCards(); // Regenerate all cards to include Instagram
+            showCard(currentCard + 1); // Advance to Instagram handles card
+          }, 100);
         } else {
           advanceCard();
         }
@@ -1217,12 +1222,14 @@
       // Social Media Tagging Card
       const socialCard = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
-          <h2>Social Media Tagging</h2>
-          <p>Would you or your pet like to be tagged on Instagram?</p>
-          <div class="choice-buttons" data-required="true">
-            <button class="choice-btn ${intakeData.socialTagging === 'Yes' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'Yes')">Yes</button>
-            <button class="choice-btn ${intakeData.socialTagging === 'No' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'No')">No</button>
+        <div class="intake-card-body centered-content">
+          <div>
+            <h2>Social Media Tagging</h2>
+            <p>Would you or your pet like to be tagged on Instagram?</p>
+            <div class="choice-buttons" data-required="true" data-field="socialTagging">
+              <button class="choice-btn ${intakeData.socialTagging === 'Yes' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'Yes')">Yes</button>
+              <button class="choice-btn ${intakeData.socialTagging === 'No' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'No')">No</button>
+            </div>
           </div>
         </div>
         <div class="intake-card-footer">
@@ -1230,9 +1237,9 @@
             <button class="back-btn" onclick="goBack()">← Back</button>
             <button class="restart-btn" onclick="restartForm()">Start Over</button>
           </div>
-          <div></div>
+          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
         </div>
-      `);
+      `, false, 'small-card');
       container.appendChild(socialCard);
       cardIndex++;
 
@@ -1266,10 +1273,12 @@
 
         const instagramCard = createCard(`
           <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body">
+          <div class="intake-card-body form-content">
             <h2>Instagram Handles</h2>
             <p>Please provide the Instagram handles you'd like us to tag (optional):</p>
-            ${instagramFields}
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+              ${instagramFields}
+            </div>
           </div>
           <div class="intake-card-footer">
             <div class="button-group-left">
@@ -1278,7 +1287,7 @@
             </div>
             <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
           </div>
-        `);
+        `, false, 'large-card');
         container.appendChild(instagramCard);
         cardIndex++;
       }
@@ -1340,8 +1349,10 @@
       intakeData.socialTagging = value;
       saveIntakeData();
       
-      // Don't auto-advance, let user click Continue to proceed
+      // Update validation to enable continue button
       validateCurrentCard();
+      
+      console.log('Social choice selected:', value); // Debug log
     }
 
     // Calculate total price
