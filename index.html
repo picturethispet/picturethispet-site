@@ -26,7 +26,6 @@
     
     html, body {
       overflow-x: hidden;
-      overflow-y: auto; /* Allow vertical scrolling */
     }
     
     body {
@@ -252,7 +251,7 @@
       color: white;
       font-size: 1.2rem;
       font-family: 'SF Pro Display', sans-serif;
-      max-width: 650px; /* Wider to prevent "type" on separate line */
+      max-width: 600px;
       margin: 0 auto;
       text-align: center;
       opacity: 0.9;
@@ -264,9 +263,8 @@
       max-width: 600px;
       margin: 0 auto;
       position: relative;
-      height: auto; /* Allow natural height instead of fixed */
+      height: 500px; /* Fixed height container */
       z-index: 2;
-      min-height: 500px; /* Minimum height but can grow */
     }
 
     .session-card {
@@ -286,13 +284,12 @@
       opacity: 0;
       transform: scale(0.9);
       display: none;
-      position: relative; /* Changed from absolute to relative for stack flow */
+      position: relative;
       overflow: hidden;
     }
 
     .session-card.agreement-card {
-      height: 750px; /* Even taller for better spacing */
-      padding: 2.5rem 2rem; /* More top/bottom padding for spacing */
+      height: 650px; /* Taller for agreement cards */
     }
 
     .session-card.active {
@@ -302,16 +299,11 @@
       align-items: center;
       opacity: 1;
       transform: scale(1);
-      position: relative; /* Keep relative when active */
     }
 
     .session-card.exiting {
       opacity: 0;
       transform: scale(0.8);
-      position: absolute; /* Allows it to animate out without affecting layout */
-      top: 0;
-      left: 0;
-      width: 100%;
     }
 
     .session-card-logo {
@@ -359,34 +351,6 @@
       max-width: 400px;
       margin-left: auto;
       margin-right: auto;
-    }
-    
-    .agreement-text { /* Added for agreement cards */
-        font-size: 1rem;
-        line-height: 1.5;
-        max-height: 300px; /* Or adjust as needed */
-        overflow-y: auto;
-        padding: 0 1rem;
-        margin-bottom: 1.5rem;
-        text-align: left;
-        border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 8px;
-        background: rgba(0,0,0,0.1);
-    }
-
-    .agreement-checkbox { /* Added for agreement cards */
-        margin-top: 1rem;
-        margin-bottom: 1.5rem;
-    }
-    .agreement-checkbox label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.9rem;
-    }
-    .agreement-checkbox input[type="checkbox"] {
-        margin-right: 0.5rem;
-        transform: scale(1.2);
     }
 
     .session-info-list {
@@ -447,14 +411,12 @@
     }
 
     .session-card-footer {
-      margin-top: auto; /* Pushes footer to bottom */
-      padding-top: 1rem; /* Space above footer */
+      margin-top: 2rem;
       display: flex;
       justify-content: center;
       gap: 1rem;
       width: 100%;
     }
-
 
     .session-card-footer button,
     .continue-btn,
@@ -481,13 +443,6 @@
       border-color: rgba(255, 255, 255, 0.5);
       transform: translateY(-2px);
     }
-    
-    .continue-btn.disabled, /* Added for disabled state */
-    .primary-btn.disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
 
     .navigation-buttons {
       display: flex;
@@ -595,11 +550,11 @@
       }
       
       .site-nav {
-        display: none; /* Initially hidden for toggle */
+        display: none;
         flex-direction: column;
         background: rgba(0,0,0,0.9);
         position: absolute;
-        top: 80px; /* Height of header */
+        top: 80px;
         right: 0;
         width: 100%;
         text-align: right;
@@ -607,10 +562,6 @@
         z-index: 999;
       }
       
-      .site-nav.active { /* Added for JS toggle */
-         display: flex;
-      }
-
       .site-nav a {
         display: block;
         margin: 0.5rem 0;
@@ -668,47 +619,22 @@
       }
 
       .session-card-stack {
-        height: auto; /* Allow natural height on mobile */
-        min-height: 400px;
+        height: 550px; /* Adjust for mobile agreement cards */
       }
 
       .session-card {
-        height: auto; /* Auto height for content */
-        min-height: 450px; /* Slightly smaller for mobile */
+        height: 450px; /* Slightly smaller for mobile */
         padding: 1.5rem;
       }
 
       .session-card.agreement-card {
-        height: auto; /* Auto height for content */
-        min-height: 600px; /* Taller for mobile agreement cards */
-        padding: 1.5rem 1.2rem;
+        height: 550px; /* Taller for mobile agreement cards */
+        padding: 1.2rem;
       }
-      
+
       .agreement-text {
         font-size: 0.9rem;
-        padding: 0.5rem; /* Adjust padding for mobile */
-        max-height: 200px; /* Adjust max height for mobile */
-      }
-
-
-      .session-card-body h2 {
-        font-size: 1.6rem; /* Smaller on mobile */
-      }
-
-      .agreement-text { /* CSS rule for agreement text scrolling */
-        font-size: 0.9rem;
         padding: 1.2rem;
-        max-height: 250px; /* Or your desired height */
-        overflow-y: auto; /* Enables vertical scrollbar if content exceeds max-height */
-        text-align: left;
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 5px;
-        margin-bottom: 1rem; /* Space below text box */
-      }
-
-      .session-subtext {
-        max-width: 90%; /* More responsive on mobile */
-        font-size: 1.1rem;
       }
 
       .session-card-body h2,
@@ -746,17 +672,6 @@
       .mobile-menu-btn { 
         display: none !important; 
       }
-      .site-nav {
-          display: flex !important; /* Ensure desktop nav is always flex */
-          position: static;
-          flex-direction: row;
-          background: none;
-          width: auto;
-          padding: 0;
-      }
-      .site-nav a {
-          margin-left: 1rem; /* Restore desktop margin */
-      }
       
       .side-a { 
         padding-left: 6rem; 
@@ -775,14 +690,13 @@
     
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('active'); // Toggle active class for display
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
     }
   </script>
 </head>
 <body>
   <header>
-    <a href="#" class="logo-link"> <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
-    </a>
+    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
     <nav class="site-nav">
       <a href="#">Home</a>
       <a href="#">Locations</a>
@@ -811,6 +725,7 @@
       </div>
     </section>
 
+    <!-- SESSION BUILDER SECTION -->
     <section id="session-builder-section">
       <div class="session-builder-header">
         <h2 class="session-heading">Let's Find Your Perfect Session</h2>
@@ -818,7 +733,8 @@
       </div>
 
       <div class="session-card-stack" id="sessionCardStack">
-        </div>
+        <!-- Cards will be dynamically generated -->
+      </div>
     </section>
   </main>
 
@@ -828,7 +744,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.4.1</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.4.0</p>
   </footer>
 
   <script>
@@ -847,8 +763,8 @@
       { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] }
     ];
 
-    let currentCard = 0; // Index of the currently visible card
-    let currentQuestion = 0; // Index for the questions array
+    let currentCard = 0;
+    let currentQuestion = 0;
 
     // Load existing data from localStorage
     function loadSessionData() {
@@ -884,167 +800,117 @@
     // Show specific card with simple transition
     function showCard(index) {
       const cards = document.querySelectorAll('.session-card');
-      const cardStack = document.getElementById('sessionCardStack');
       
       cards.forEach((card, i) => {
         if (i === index) {
-          card.classList.remove('exiting'); // Ensure not exiting if it's the target
           card.classList.add('active');
         } else {
           card.classList.remove('active');
         }
       });
+      
       currentCard = index;
-
-      // Adjust stack height
-      const activeCardElement = cards[index];
-      if (activeCardElement && cardStack) {
-          // cardStack.style.height = activeCardElement.offsetHeight + 'px';
-      }
     }
-    
+
     // Advance to next card with poof animation
     function advanceCard() {
-      const cards = document.querySelectorAll('.session-card');
-      const currentCardEl = cards[currentCard]; // Use currentCard index
-
+      const currentCardEl = document.querySelector('.session-card.active');
       if (currentCardEl) {
         currentCardEl.classList.add('exiting');
         
         setTimeout(() => {
           currentCardEl.classList.remove('active', 'exiting');
-          if (currentCard < cards.length - 1) {
-            showCard(currentCard + 1);
-          } else {
-            console.log("End of cards.");
-          }
-        }, 300); // Match transition duration
-      } else if (currentCard < cards.length - 1) {
+          showCard(currentCard + 1);
+        }, 300);
+      } else {
         showCard(currentCard + 1);
       }
     }
 
-
     // Go back to previous card
     function goBack() {
-        const cards = document.querySelectorAll('.session-card');
-        const currentActiveCard = cards[currentCard];
-
-        if (currentActiveCard) {
-            currentActiveCard.classList.add('exiting'); // Animate out current
-             setTimeout(() => {
-                currentActiveCard.classList.remove('active', 'exiting');
-                if (currentCard > 0) {
-                    // Determine if backing out of question sequence or general cards
-                    if (currentCard === 3 && currentQuestion > 0) { // If on question card (index 3) and not first question
-                        currentQuestion--;
-                        renderCurrentQuestion(); // Re-render previous question on the same card
-                        showCard(3); // Stay on question card
-                    } else if (currentCard === 4 && questions.length > 0) { // If on summary (card 4), go back to last question
-                        currentQuestion = questions.length -1;
-                        renderCurrentQuestion();
-                        showCard(3); // Go to question card
-                    }
-                    else {
-                         showCard(currentCard - 1); // General previous card
-                    }
-                }
-            }, 300);
-        } else if (currentCard > 0) { // Fallback if no current active card somehow
-            showCard(currentCard - 1);
-        }
+      if (currentCard > 3) {
+        currentQuestion--;
+        showCard(currentCard - 1);
+      } else if (currentCard > 0) {
+        showCard(currentCard - 1);
+      }
     }
-
 
     // Restart session
     function restartSession() {
       if (confirm("Are you sure you want to start over? This will clear all your selections.")) {
+        // Clear data
         Object.keys(sessionData).forEach(key => sessionData[key] = '');
         localStorage.removeItem("ptpSessionData");
         currentCard = 0;
         currentQuestion = 0;
-        initializeSessionBuilder(); // Re-render all cards from scratch
+        
+        // Reinitialize
+        initializeSessionBuilder();
       }
     }
-    
-    // Handle question answer (called by renderCurrentQuestion's buttons)
-    function handleQuestionAnswer(questionName, answer) {
-        selectAnswer(questionName, answer);
-    }
 
-    // Select answer logic
+    // Handle question answer
     function selectAnswer(questionName, answer) {
       sessionData[questionName] = answer;
       saveSessionData();
       
-      const currentCardEl = document.querySelector('.session-card.active');
-
-      if (currentCardEl) {
-        currentCardEl.classList.add('exiting');
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        setTimeout(() => {
+          advanceCard();
+          renderQuestion();
+        }, 300);
+      } else {
+        setTimeout(() => {
+          advanceCard();
+          renderSummary();
+        }, 300);
       }
-
-      setTimeout(() => {
-        if (currentCardEl) {
-            currentCardEl.classList.remove('active', 'exiting');
-        }
-        if (currentQuestion < questions.length - 1) {
-          currentQuestion++;
-          renderCurrentQuestion(); // Update content of question card (card 3)
-          showCard(3); // Ensure question card (index 3) is shown
-        } else {
-          // All questions answered, move to summary
-          renderSummary(); // Update content of summary card (card 4)
-          showCard(4); // Show summary card (index 4)
-        }
-      }, 300); // Delay matches animation
     }
 
-
     // Render current question
-    function renderCurrentQuestion() {
-      const questionCardContainer = document.getElementById('questionCard'); // This is the body of card 3
-      if (!questionCardContainer) return;
-      
+    function renderQuestion() {
       const question = questions[currentQuestion];
-      if (!question) return;
+      const questionCard = document.getElementById('questionCard');
+      
+      if (questionCard) {
+        const buttonsHtml = currentCard > 3 ? `
+          <div class="navigation-buttons">
+            <button class="back-btn" onclick="goBack()">🔙 Back</button>
+            <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+          </div>
+        ` : '';
 
-      let backButtonLogic = `goBack()`; // Default back logic
-      // If it's the first question, 'Back' should go to card 2 (Full Session Info)
-      if (currentCard === 3 && currentQuestion === 0) {
-          backButtonLogic = `showCard(2); currentCard=2;`; // Explicitly go to card 2
+        questionCard.innerHTML = `
+          <div class="question-prompt">${question.label}</div>
+          <div class="answer-options">
+            ${question.options.map(option => 
+              `<button class="answer-button" onclick="selectAnswer('${question.name}', '${option}')">
+                ${option}
+              </button>`
+            ).join('')}
+          </div>
+          ${buttonsHtml}
+        `;
       }
-
-
-      questionCardContainer.innerHTML = `
-        <div class="question-prompt">${question.label}</div>
-        <div class="answer-options">
-          ${question.options.map(option => 
-            `<button class="answer-button" onclick="handleQuestionAnswer('${question.name}', '${option}')">
-              ${option}
-            </button>`
-          ).join('')}
-        </div>
-        <div class="navigation-buttons">
-          <button class="back-btn" onclick="${backButtonLogic}">🔙 Back</button>
-          <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
-        </div>
-      `;
     }
 
     // Render summary
     function renderSummary() {
-      const summaryCardContainer = document.getElementById('summaryCard'); // This is the body of card 4
+      const summaryCard = document.getElementById('summaryCard');
       const total = calculateTotal();
       
-      if (summaryCardContainer) {
-        summaryCardContainer.innerHTML = `
+      if (summaryCard) {
+        summaryCard.innerHTML = `
           <h3>Your Session Summary</h3>
           <ul class="session-summary-list">
             <li><span class="label">Session:</span> <span class="value">${sessionData.session || "—"}</span></li>
             <li><span class="label">Location:</span> <span class="value">${sessionData.park || "—"}</span></li>
             <li><span class="label">Pets:</span> <span class="value">${sessionData.petCount || "—"}</span></li>
             <li><span class="label">People:</span> <span class="value">${sessionData.peopleCount || "—"}</span></li>
-            <li class="total"><span class="label">Total:</span> <span class="value">$${total}</span></li>
+            <li class="total"><span class="label">Total:</span> <span class="value">${total}</span></li>
           </ul>
           <div class="session-card-footer">
             <button class="continue-btn" onclick="advanceCard()">Continue to Agreements →</button>
@@ -1057,58 +923,10 @@
       }
     }
 
-    // ---- AGREEMENT FUNCTIONS ----
-    function checkAgreement(agreementType) {
-      let checkboxId, buttonId;
-
-      if (agreementType === 'behavior') {
-        checkboxId = 'behaviorAgreement';
-        buttonId = 'behaviorContinue';
-      } else if (agreementType === 'photography') {
-        checkboxId = 'photographyAgreement';
-        buttonId = 'photographyContinue';
-      } else if (agreementType === 'cancellation') {
-        checkboxId = 'cancellationAgreement';
-        buttonId = 'cancellationContinue';
-      } else {
-        console.error('Unknown agreement type:', agreementType);
-        return;
-      }
-
-      const checkbox = document.getElementById(checkboxId);
-      const continueButton = document.getElementById(buttonId);
-
-      if (checkbox && continueButton) {
-        if (checkbox.checked) {
-          continueButton.classList.remove('disabled');
-          continueButton.disabled = false;
-        } else {
-          continueButton.classList.add('disabled');
-          continueButton.disabled = true;
-        }
-      } else {
-        console.error('Checkbox or button not found for agreement type:', agreementType, checkboxId, buttonId);
-      }
-    }
-
-    function proceedToCalendar() {
-      const cancellationCheckbox = document.getElementById('cancellationAgreement');
-      if (cancellationCheckbox && !cancellationCheckbox.checked) {
-        alert("Please read and agree to the Cancellation & Refund Policy to continue.");
-        return;
-      }
-      alert("Thank you for agreeing to the policies! You will now be redirected to select a date and time. (Placeholder - Implement actual redirect)");
-      // Example redirect:
-      // window.location.href = '/select-date-page.html';
-      console.log("Final session data before redirecting:", sessionData);
-    }
-    // ---- END AGREEMENT FUNCTIONS ----
-
-
     // Initialize all cards
     function initializeSessionBuilder() {
       const container = document.getElementById('sessionCardStack');
-      container.innerHTML = ''; // Clear previous cards
+      container.innerHTML = '';
 
       // Card 0 - Intro
       const card0 = createCard(`
@@ -1120,7 +938,7 @@
         <div class="session-card-footer">
           <button onclick="advanceCard()">Start →</button>
         </div>
-      `, true); // Start with this card active
+      `, true);
 
       // Card 1 - Mini Session Info
       const card1 = createCard(`
@@ -1152,15 +970,14 @@
           </ul>
         </div>
         <div class="session-card-footer">
-          <button onclick="advanceCard()">Next →</button> </div>
+          <button onclick="advanceCard()">Next →</button>
+        </div>
       `);
 
-      // Card 3 - Questions (Container for questions)
-      // The content for this card's body will be rendered by renderCurrentQuestion()
+      // Card 3 - Questions (All questions will be rendered in this one card)
       const card3 = createCard(`<div class="session-card-body" id="questionCard"></div>`);
-      
-      // Card 4 - Summary (Container for summary)
-      // The content for this card's body will be rendered by renderSummary()
+
+      // Card 4 - Summary
       const card4 = createCard(`<div class="session-card-body" id="summaryCard"></div>`);
 
       // Card 5 - Behavior Policy Agreement
@@ -1230,56 +1047,193 @@
       container.appendChild(card0);
       container.appendChild(card1);
       container.appendChild(card2);
-      container.appendChild(card3); // Question card placeholder
-      container.appendChild(card4); // Summary card placeholder
+      container.appendChild(card3);
+      container.appendChild(card4);
       container.appendChild(card5);
       container.appendChild(card6);
       container.appendChild(card7);
 
-      // Initial setup for first question if needed, or rely on advanceCard logic
-      // When card2's "Next" is clicked, it advances. If currentCard becomes 3 (question card index),
-      // then renderCurrentQuestion should be called.
-      // Let's refine advanceCard slightly or ensure the first question is ready
-      // if the flow lands on card 3.
+      // Set up question cards
+      setupQuestionCards();
+    }
 
-      // If advancing from card2 to card3, render the first question
-      // This logic is now handled within selectAnswer for advancing questions
-      // and the initial "Next" from card 2 will call advanceCard().
-      // When showCard(3) is hit after card2's "Next", we need to ensure first question is rendered.
-      // One way is to check in advanceCard or showCard:
-      if (currentCard === 0) { // Starting fresh
-         showCard(0); // Make sure first card is active
-      } else {
-         showCard(currentCard); // Restore if re-initializing an existing state
-      }
+    // Setup individual question cards
+    function setupQuestionCards() {
+      // Initial setup for first question card
+      renderCurrentQuestion();
+    }
+
+    // Render the current question
+    function renderCurrentQuestion() {
+      const questionCard = document.getElementById('questionCard');
+      if (!questionCard) return;
       
-      // If a session was previously started and questions were answered,
-      // and user reloads, we need to jump to the correct question or summary.
-      // For simplicity now, restart begins fresh. A more advanced resume would
-      // check localStorage and set currentQuestion and currentCard accordingly.
-      if (currentCard === 3) { // If re-initializing and we should be on a question
+      const question = questions[currentQuestion];
+      if (!question) return;
+
+      questionCard.innerHTML = `
+        <div class="question-prompt">${question.label}</div>
+        <div class="answer-options">
+          ${question.options.map(option => 
+            `<button class="answer-button" onclick="handleQuestionAnswer('${question.name}', '${option}')">
+              ${option}
+            </button>`
+          ).join('')}
+        </div>
+        <div class="navigation-buttons">
+          <button class="back-btn" onclick="goBack()">🔙 Back</button>
+          <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+        </div>
+      `;
+    }
+
+    // Handle question answers
+    function handleQuestionAnswer(questionName, answer) {
+      sessionData[questionName] = answer;
+      saveSessionData();
+      
+      currentQuestion++;
+      
+      if (currentQuestion < questions.length) {
+        // More questions - render next question
+        setTimeout(() => {
           renderCurrentQuestion();
-      } else if (currentCard === 4) { // If re-initializing and we should be on summary
+        }, 300);
+      } else {
+        // All questions answered - advance to summary
+        setTimeout(() => {
+          advanceCard();
           renderSummary();
+        }, 300);
       }
+    }
 
+    // Policy content
+    const policyContent = {
+      behavior: {
+        title: "🐕 Behavior Policy",
+        text: "All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet's behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved."
+      },
+      photography: {
+        title: "📸 Photography Service Agreement",
+        text: "By participating in this photo session, you agree that all photographs taken by PictureThisPet are the intellectual property of the photographer. You are purchasing high-resolution digital files for personal use, but the photographer retains full ownership and the right to use images for marketing, portfolio, and promotional purposes. You may not alter, edit, or sell the images without written permission. You are granted a perpetual license to share and print the images for personal use, but PictureThisPet reserves all commercial rights."
+      },
+      cancellation: {
+        title: "📅 Cancellation & Refund Policy", 
+        text: "All session payments are non-refundable. However, sessions may be rescheduled with at least 48 hours' notice. In cases of severe weather or emergencies, we will work with you to find a new session date. Missed appointments or cancellations with less than 48 hours' notice are not eligible for rescheduling or refund. Your session is not guaranteed until full payment is received."
+      }
+    };
 
-      // Explicitly disable agreement buttons initially after they are in the DOM
-      ['behaviorContinue', 'photographyContinue', 'cancellationContinue'].forEach(buttonId => {
-        const button = document.getElementById(buttonId);
-        if (button) {
-            button.disabled = true;
-            // The class 'disabled' should already be on the button from the template
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Page loaded, initializing...'); // Debug line
+      loadSessionData();
+      initializeSessionBuilder();
+      
+      // Make sure modal is created
+      setTimeout(() => {
+        createPolicyModal();
+        console.log('Policy modal created'); // Debug line
+      }, 1000);
+    });
+
+    // Create policy modal
+    function createPolicyModal() {
+      const modal = document.createElement('div');
+      modal.className = 'policy-modal';
+      modal.id = 'policyModal';
+      modal.innerHTML = `
+        <div class="policy-modal-content">
+          <div class="policy-modal-header">
+            <h3 class="policy-modal-title" id="modalTitle"></h3>
+            <button class="close-modal-btn" onclick="closePolicyModal()">✕</button>
+          </div>
+          <div class="policy-modal-text" id="modalText"></div>
+          <div class="policy-modal-footer">
+            <button class="modal-agree-btn" id="modalAgreeBtn">Agree</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Close on background click
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closePolicyModal();
         }
       });
     }
-    
-    // DOMContentLoaded to ensure HTML is loaded before scripts run
-    document.addEventListener('DOMContentLoaded', () => {
-      loadSessionData();
-      initializeSessionBuilder();
-    });
 
+    // Open policy modal
+    function openPolicyModal(policyType) {
+      console.log('Opening modal for:', policyType); // Debug line
+      
+      const modal = document.getElementById('policyModal');
+      if (!modal) {
+        console.error('Modal not found, creating it now...');
+        createPolicyModal();
+      }
+      
+      const title = document.getElementById('modalTitle');
+      const text = document.getElementById('modalText');
+      const agreeBtn = document.getElementById('modalAgreeBtn');
+      
+      const policy = policyContent[policyType];
+      if (!policy) {
+        console.error('Policy not found for type:', policyType);
+        return;
+      }
+      
+      title.textContent = policy.title;
+      text.textContent = policy.text;
+      
+      // Set up agree button
+      agreeBtn.onclick = () => agreeToPolicy(policyType);
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      console.log('Modal should be visible now'); // Debug line
+    }
+
+    // Scroll to top function
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // Close policy modal
+    function closePolicyModal() {
+      const modal = document.getElementById('policyModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Agree to policy and advance
+    function agreeToPolicy(policyType) {
+      // Close modal first
+      closePolicyModal();
+      
+      // Save agreement to sessionData
+      sessionData[`${policyType}Agreement`] = true;
+      saveSessionData();
+      
+      // If it's the last policy, redirect to calendar
+      if (policyType === 'cancellation') {
+        sessionData.agreementsCompleted = true;
+        saveSessionData();
+        setTimeout(() => {
+          window.location.href = '/ptp-pick-date-step-3.html';
+        }, 300);
+      } else {
+        // Advance to next card
+        setTimeout(() => {
+          advanceCard();
+        }, 300);
+      }
+    }
   </script>
 </body>
 </html>
