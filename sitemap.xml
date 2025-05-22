@@ -1,8 +1,540 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://picturethispet.co/</loc>
-    <lastmod>2025-05-20</lastmod>
-    <priority>1.00</priority>
-  </url>
-</urlset>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Picture This Pet | Capture Timeless Memories</title>
+  <meta name="description" content="Professional pet photography that captures timeless moments. Book your session today.">
+  <meta name="robots" content="noarchive, noodp, noimageindex">
+  <link rel="canonical" href="https://picturethispet.co/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+    }
+
+    /* === SESSION BUILDER CARDS === */
+.session-card-stack {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.session-card {
+  background-image: url("assets/images/ani_bkgd_cool.png");
+  background-size: 100% 100%;
+  background-position: center;
+  min-height: 360px;
+  animation: moveBackground 30s ease-in-out infinite;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  width: 100%;
+  margin-bottom: 2rem;
+  color: white;
+  font-family: 'SF Pro Display', sans-serif;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  opacity: 0;
+  transform: scale(0.98);
+  display: none;
+}
+
+.session-card.active {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.session-card-logo {
+  display: block;
+  max-width: 180px;
+  margin: 0 auto 1rem;
+}
+
+.session-card-body {
+  text-align: center;
+}
+
+.session-card-footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.answer-button,
+.session-card-footer button,
+.continue-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid white;
+  border-radius: 12px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.answer-button:hover,
+.session-card-footer button:hover,
+.continue-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.session-summary ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1rem;
+  text-align: left;
+  max-width: 320px;
+  margin: 1rem auto;
+}
+
+.session-summary ul li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 0.5rem 0;
+}
+
+.session-summary ul li.total {
+  font-weight: bold;
+  border-top: 2px solid rgba(255,255,255,0.2);
+  margin-top: 1rem;
+}
+
+.session-summary ul li.total {
+  font-weight: bold;
+  border-top: 2px solid rgba(255,255,255,0.2);
+  margin-top: 1rem;
+}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      overflow-x: hidden;
+    }
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+    }
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    header, footer {
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      animation: moveBackground 30s ease-in-out infinite;
+      background-size: 100% 100%;
+    }
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    .desktop-logo {
+      height: 100px;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    .site-nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .book-btn {
+      background-color: var(--dark-brown);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+    .mobile-menu-btn {
+      display: none;
+    }
+    .hero-section {
+      margin-top: 100px;
+      position: relative;
+    }
+    .hero-section img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .gradient-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 3rem;
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      background: url("assets/images/ani_bkgd_cool.png");
+      background-size: 200%;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: right;
+      max-width: 320px;
+      pointer-events: none;
+    }
+    .section-split {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 2rem 3rem;
+      position: relative;
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      animation: moveBackground 30s ease-in-out infinite;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+      z-index: 1;
+    }
+    .section-split::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+      animation: moveBackground 30s ease-in-out infinite;
+      opacity: 0.5;
+    }
+    .side-a, .side-b {
+      flex: 1;
+      padding: 2rem;
+    }
+    .side-a {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: right;
+    }
+    .side-a h1 {
+      max-width: 420px;
+      margin-left: auto;
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 3.8rem;
+      line-height: 1.25;
+      background: url("assets/images/ani_bkgd_cool.png");
+      background-size: cover;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: left;
+    }
+    .side-b-inner {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      max-width: 420px;
+    }
+    .side-b h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.3rem;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    .side-b p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.35rem;
+      line-height: 1.75;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    footer {
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .payments img {
+      height: 30px;
+      margin: 0 1rem;
+      filter: brightness(0) invert(1);
+    }
+    section#session-builder-section {
+      padding: 6rem 1rem;
+      background: url('assets/images/main_background_allsystem.png');
+      background-size: 100% 100%;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+    @media (max-width: 768px) {
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      .desktop-logo { height: 48px; }
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+      }
+      .site-nav a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+      }
+      .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+      .hero-section {
+        margin-top: 80px;
+      }
+      .section-split {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem 1rem;
+        gap: 0.5rem;
+      }
+      .side-a h1, .side-b h2, .side-b p {
+        text-align: center;
+      }
+    }
+    @media (min-width: 769px) {
+      .mobile-menu-btn { display: none !important; }
+      .side-a { padding-left: 6rem; }
+      .side-b { padding-right: 2rem; }
+    }
+  </style>
+  <script>
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+    };
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <nav class="site-nav">
+      <a href="#">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="book-btn">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+  </header>
+  <main>
+    <section class="hero-section">
+      <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
+      <div class="section-breaker-shadow"></div>
+    </section>
+    <section class="section-split">
+      <div class="side-a">
+        <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
+      </div>
+      <div class="side-b">
+        <div class="side-b-inner">
+          <h2>But these moments?<br />They’ll last forever.</h2>
+          <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
+        </div>
+      </div>
+    </section>
+    
+
+<!-- ✅ SECTION 3: SESSION BUILDER START -->
+<section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 30s ease-in-out infinite;">
+  <!-- Section Heading -->
+  <div class="session-builder-header" style="text-align: center; margin-bottom: 3rem;">
+    <h2 class="session-heading" style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 3.8rem; line-height: 1.25; background: url('assets/images/ani_bkgd_cool.png'); background-size: cover; background-position: center; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Let’s Find Your Perfect Session</h2>
+    <p class="session-subtext" style="color: white; font-size: 1.2rem; font-family: 'SF Pro Display', sans-serif; max-width: 600px; margin: 1rem auto 3rem auto; text-align: center; opacity: 0.9;">We take a unique approach to help you discover the perfect session type<br />for you and your pet. Just answer a few quick questions to get started.</p>
+  </div>
+
+  <!-- Card Stack -->
+  <div class="session-card-stack" id="sessionCardStack">
+    <!-- Cards will be dynamically injected -->
+  </div>
+</section> 
+    <script>
+  const questions = [
+    { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
+    { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
+    { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
+    { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] }
+  ];
+
+  let answers = JSON.parse(localStorage.getItem("ptpSessionData")) || {};
+  let qIndex = 0;
+
+  function createCard(content, id = "", isActive = false) {
+    const card = document.createElement("div");
+    card.className = `session-card${isActive ? ' active' : ''}`;
+    if (id) card.id = id;
+    card.innerHTML = content;
+    document.getElementById("sessionCardStack").appendChild(card);
+  }
+
+  function renderInitialCards() {
+    createCard(`
+      <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+      <div class="session-card-body">
+        <h2 class="intro-heading">Let’s go over what’s included</h2>
+        <p class="intro-subtext">In just a few quick steps, we’ll help you pick the perfect session, and show you what’s included with each option.</p>
+      </div>
+      <div class="session-card-footer">
+        <button onclick="advanceTo(1)">Start →</button>
+      </div>
+    `, "card0", true);
+
+    createCard(`
+      <div class="session-card-body">
+        <h2 class="session-info-heading">Mini Session</h2>
+        <ul class="session-info-list">
+          <li>✔ Up to 60 minutes</li>
+          <li>✔ 5 edited photos</li>
+          <li>✔ 1 person + 1 pet included</li>
+          <li>✔ Access to downloads & print shop</li>
+        </ul>
+      </div>
+      <div class="session-card-footer">
+        <button onclick="advanceTo(2)">Next →</button>
+      </div>
+    `, "card1");
+
+    createCard(`
+      <div class="session-card-body">
+        <h2 class="session-info-heading">Full Session</h2>
+        <ul class="session-info-list">
+          <li>✔ Up to 90 minutes</li>
+          <li>✔ 10 edited photos</li>
+          <li>✔ 1 person + 1 pet included</li>
+          <li>✔ Access to downloads & print shop</li>
+        </ul>
+      </div>
+      <div class="session-card-footer">
+        <button onclick="advanceTo(3)">Next →</button>
+      </div>
+    `, "card2");
+
+    createCard(`<div class="session-card-body" id="questionCard"></div>`, "card3");
+    createCard(`<div class="session-card-body session-summary" id="summaryCard" style="display:none;"></div>`, "card4");
+  }
+
+  function advanceTo(index) {
+    document.querySelectorAll(".session-card").forEach((card, i) => {
+      card.classList.remove("active");
+      if (i === index) card.classList.add("active");
+    });
+    if (index === 3) loadQuestion();
+  }
+
+  function loadQuestion() {
+    const q = questions[qIndex];
+    const container = document.getElementById("questionCard");
+    container.innerHTML = `<h2>${q.label}</h2>`;
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "answer-button";
+      btn.textContent = opt;
+      btn.onclick = () => {
+        answers[q.name] = opt;
+        localStorage.setItem("ptpSessionData", JSON.stringify(answers));
+        if (qIndex < questions.length - 1) {
+          qIndex++;
+          loadQuestion();
+        } else {
+          renderSummary();
+          advanceTo(4);
+        }
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  function renderSummary() {
+    const data = answers;
+    let total = 0;
+    if (data.session === "Mini") total += 50;
+    if (data.session === "Full") total += 100;
+    if (data.petCount === "2") total += 40;
+    if (data.peopleCount === "2") total += 20;
+
+    const summaryHTML = `
+      <h3>Your Session Summary</h3>
+      <ul>
+        <li><strong>Session:</strong> ${data.session || "—"}</li>
+        <li><strong>Location:</strong> ${data.park || "—"}</li>
+        <li><strong>Pets:</strong> ${data.petCount || "—"}</li>
+        <li><strong>People:</strong> ${data.peopleCount || "—"}</li>
+        <li class="total"><strong>Total:</strong> $${total}</li>
+      </ul>
+      <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
+    `;
+
+    const summaryCard = document.getElementById("summaryCard");
+    summaryCard.innerHTML = summaryHTML;
+    summaryCard.style.display = "block";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderInitialCards();
+  });
+</script>
+
+<!-- ✅ SECTION 3: SESSION BUILDER END -->
+</body>
+</html>
