@@ -757,7 +757,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.0.2</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.0.3</p>
   </footer>
 
   <script>
@@ -1003,14 +1003,11 @@
         </div>
       `);
 
-      // Card 3-6 - Question Cards
+      // Card 3 - Questions (All questions will be rendered in this one card)
       const card3 = createCard(`<div class="session-card-body" id="questionCard"></div>`);
-      const card4 = createCard(`<div class="session-card-body" id="questionCard2"></div>`);
-      const card5 = createCard(`<div class="session-card-body" id="questionCard3"></div>`);
-      const card6 = createCard(`<div class="session-card-body" id="questionCard4"></div>`);
 
-      // Card 7 - Summary
-      const card7 = createCard(`<div class="session-card-body" id="summaryCard"></div>`);
+      // Card 4 - Summary
+      const card4 = createCard(`<div class="session-card-body" id="summaryCard"></div>`);
 
       // Add all cards to container
       container.appendChild(card0);
@@ -1018,9 +1015,6 @@
       container.appendChild(card2);
       container.appendChild(card3);
       container.appendChild(card4);
-      container.appendChild(card5);
-      container.appendChild(card6);
-      container.appendChild(card7);
 
       // Set up question cards
       setupQuestionCards();
@@ -1028,44 +1022,48 @@
 
     // Setup individual question cards
     function setupQuestionCards() {
-      const questionCards = [
-        document.getElementById('questionCard'),
-        document.getElementById('questionCard2'),
-        document.getElementById('questionCard3'),
-        document.getElementById('questionCard4')
-      ];
+      // Initial setup for first question card
+      renderCurrentQuestion();
+    }
 
-      questions.forEach((question, index) => {
-        const card = questionCards[index];
-        if (card) {
-          card.innerHTML = `
-            <div class="question-prompt">${question.label}</div>
-            <div class="answer-options">
-              ${question.options.map(option => 
-                `<button class="answer-button" onclick="handleQuestionAnswer(${index}, '${question.name}', '${option}')">
-                  ${option}
-                </button>`
-              ).join('')}
-            </div>
-            <div class="navigation-buttons">
-              <button class="back-btn" onclick="goBack()">🔙 Back</button>
-              <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
-            </div>
-          `;
-        }
-      });
+    // Render the current question
+    function renderCurrentQuestion() {
+      const questionCard = document.getElementById('questionCard');
+      if (!questionCard) return;
+      
+      const question = questions[currentQuestion];
+      if (!question) return;
+
+      questionCard.innerHTML = `
+        <div class="question-prompt">${question.label}</div>
+        <div class="answer-options">
+          ${question.options.map(option => 
+            `<button class="answer-button" onclick="handleQuestionAnswer('${question.name}', '${option}')">
+              ${option}
+            </button>`
+          ).join('')}
+        </div>
+        <div class="navigation-buttons">
+          <button class="back-btn" onclick="goBack()">🔙 Back</button>
+          <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+        </div>
+      `;
     }
 
     // Handle question answers
-    function handleQuestionAnswer(questionIndex, questionName, answer) {
+    function handleQuestionAnswer(questionName, answer) {
       sessionData[questionName] = answer;
       saveSessionData();
       
-      if (questionIndex < questions.length - 1) {
+      currentQuestion++;
+      
+      if (currentQuestion < questions.length) {
+        // More questions - render next question
         setTimeout(() => {
-          advanceCard();
+          renderCurrentQuestion();
         }, 300);
       } else {
+        // All questions answered - advance to summary
         setTimeout(() => {
           advanceCard();
           renderSummary();
