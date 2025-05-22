@@ -26,7 +26,7 @@
     
     html, body {
       overflow-x: hidden;
-      overflow-y: auto; /* Allow vertical scrolling */
+      overflow-y: auto;
     }
     
     body {
@@ -253,7 +253,7 @@
       color: white;
       font-size: 1.2rem;
       font-family: 'SF Pro Display', sans-serif;
-      max-width: 650px; /* Wider to prevent "type" on separate line */
+      max-width: 650px;
       margin: 0 auto;
       text-align: center;
       opacity: 0.9;
@@ -265,22 +265,22 @@
       max-width: 600px;
       margin: 0 auto;
       position: relative;
-      height: auto; /* Allow natural height instead of fixed */
+      height: auto;
       z-index: 2;
-      min-height: 500px; /* Minimum height but can grow */
+      min-height: 500px;
     }
 
     .session-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: 500px; /* Default height for most cards */
+      height: 580px;
       width: 100%;
       max-width: 600px;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
+      padding: 2.5rem;
       color: white;
       font-family: 'SF Pro Display', sans-serif;
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -292,14 +292,14 @@
     }
 
     .session-card.agreement-card {
-      height: 750px; /* Even taller for better spacing */
-      padding: 2.5rem 2rem; /* More top/bottom padding for spacing */
+      height: 800px;
+      padding: 3rem 2.5rem;
     }
 
     .session-card.active {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       opacity: 1;
       transform: scale(1);
@@ -313,8 +313,9 @@
     .session-card-logo {
       display: block;
       max-width: 180px;
-      margin: 0 auto 1.5rem;
+      margin: 0 auto 2.5rem;
       height: auto;
+      flex-shrink: 0;
     }
 
     .session-card-logo[src=""], 
@@ -330,20 +331,21 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      min-height: 0; /* Allows flex to shrink */
+      min-height: 0;
+      padding-bottom: 2rem;
     }
 
     .session-card-body h2 {
       font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       color: white;
     }
 
     .session-card-body h3 {
       font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       color: white;
     }
 
@@ -351,8 +353,22 @@
       font-size: 1.1rem;
       line-height: 1.6;
       opacity: 0.9;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .agreement-text {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+      line-height: 1.6;
+      font-size: 1rem;
+      max-width: 500px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -360,7 +376,7 @@
     .session-info-list {
       list-style: none;
       padding: 0;
-      margin: 1.5rem 0;
+      margin: 2rem 0;
       text-align: left;
       max-width: 320px;
       margin-left: auto;
@@ -369,7 +385,7 @@
 
     .session-info-list li {
       font-size: 1.1rem;
-      padding: 0.5rem 0;
+      padding: 0.75rem 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
@@ -377,19 +393,20 @@
 
     .session-info-list li:last-child {
       border-bottom: none;
+      padding-bottom: 1.5rem;
     }
 
     .question-prompt {
       font-size: 2rem;
       font-weight: 600;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       color: white;
     }
 
     .answer-options {
       display: flex;
       gap: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -415,11 +432,13 @@
     }
 
     .session-card-footer {
-      margin-top: 2rem;
+      margin-top: auto;
       display: flex;
       justify-content: center;
       gap: 1rem;
       width: 100%;
+      flex-shrink: 0;
+      padding-top: 2rem;
     }
 
     .session-card-footer button,
@@ -451,9 +470,12 @@
     .navigation-buttons {
       display: flex;
       gap: 1rem;
-      margin-top: 2rem;
+      margin-top: 2.5rem;
       justify-content: center;
       width: 100%;
+      flex-shrink: 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .back-btn,
@@ -620,65 +642,102 @@
       .session-subtext {
         font-size: 1rem;
         padding: 0 1rem;
+        max-width: 90%;
       }
 
       .session-card-stack {
-        height: auto; /* Allow natural height on mobile */
+        height: auto;
         min-height: 400px;
       }
 
       .session-card {
-        height: 450px; /* Slightly smaller for mobile */
-        padding: 1.5rem;
+        height: 600px;
+        padding: 2rem 1.5rem;
       }
 
       .session-card.agreement-card {
-        height: 650px; /* Taller for mobile agreement cards */
-        padding: 1.5rem 1.2rem;
+        height: 800px;
+        padding: 2.5rem 1.5rem;
       }
 
-      .session-card-body h2 {
-        font-size: 1.6rem; /* Smaller on mobile */
+      .session-card-logo {
+        margin-bottom: 2rem;
+        max-width: 150px;
       }
 
-      .agreement-text {
-        font-size: 0.9rem;
-        padding: 1.2rem;
-      }
-
-      .session-subtext {
-        max-width: 90%; /* More responsive on mobile */
-        font-size: 1.1rem;
+      .session-card-body {
+        padding-bottom: 2.5rem;
       }
 
       .session-card-body h2,
       .session-card-body h3 {
         font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .agreement-text {
+        font-size: 0.95rem;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        line-height: 1.7;
+      }
+
+      .session-info-list {
+        margin: 1.5rem 0 2.5rem 0;
+      }
+
+      .session-info-list li {
+        padding: 0.8rem 0;
+        font-size: 1rem;
+      }
+
+      .session-info-list li:last-child {
+        padding-bottom: 2rem;
       }
 
       .question-prompt {
         font-size: 1.6rem;
+        margin-bottom: 2rem;
       }
 
       .answer-options {
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
       }
 
       .answer-button {
         width: 100%;
         max-width: 280px;
+        padding: 1.2rem 1.5rem;
       }
 
       .navigation-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 0.75rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
       }
 
       .back-btn,
       .restart-btn {
         width: 100%;
         max-width: 200px;
+        padding: 1rem 1.5rem;
+      }
+
+      .session-card-footer {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+      }
+
+      .session-card-footer button,
+      .continue-btn {
+        width: 100%;
+        max-width: 300px;
+        padding: 1.2rem 1.5rem;
       }
     }
 
@@ -710,7 +769,9 @@
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <a href="/" class="logo-link">
+      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
     <nav class="site-nav">
       <a href="#">Home</a>
       <a href="#">Locations</a>
@@ -758,7 +819,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.6.0</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v2.0.0</p>
   </footer>
 
   <script>
@@ -779,6 +840,7 @@
 
     let currentCard = 0;
     let currentQuestion = 0;
+    let cardHistory = []; // Track card navigation history
 
     // Load existing data from localStorage
     function loadSessionData() {
@@ -811,7 +873,7 @@
       return card;
     }
 
-    // Show specific card
+    // Show specific card and track history
     function showCard(index) {
       const cards = document.querySelectorAll('.session-card');
       cards.forEach((card, i) => {
@@ -821,6 +883,12 @@
           card.classList.remove('active');
         }
       });
+      
+      // Update history only when moving forward
+      if (index > currentCard) {
+        cardHistory.push(currentCard);
+      }
+      
       currentCard = index;
     }
 
@@ -838,12 +906,20 @@
       }
     }
 
-    // Go back to previous card
+    // FIXED: Go back to actual previous card using history
     function goBack() {
-      if (currentCard > 3) {
-        currentQuestion--;
-        showCard(currentCard - 1);
+      if (cardHistory.length > 0) {
+        const previousCard = cardHistory.pop(); // Get and remove last visited card
+        
+        // If we're in questions section, also adjust question index
+        if (currentCard === 3 && currentQuestion > 0) {
+          currentQuestion--;
+          renderCurrentQuestion();
+        }
+        
+        showCard(previousCard);
       } else if (currentCard > 0) {
+        // Fallback if no history
         showCard(currentCard - 1);
       }
     }
@@ -851,11 +927,12 @@
     // Restart session
     function restartSession() {
       if (confirm("Are you sure you want to start over? This will clear all your selections.")) {
-        // Clear data
+        // Clear data and history
         Object.keys(sessionData).forEach(key => sessionData[key] = '');
         localStorage.removeItem("ptpSessionData");
         currentCard = 0;
         currentQuestion = 0;
+        cardHistory = [];
         
         // Reinitialize
         initializeSessionBuilder();
@@ -863,17 +940,19 @@
     }
 
     // Handle question answer
-    function selectAnswer(questionName, answer) {
+    function handleQuestionAnswer(questionName, answer) {
       sessionData[questionName] = answer;
       saveSessionData();
       
-      if (currentQuestion < questions.length - 1) {
-        currentQuestion++;
+      currentQuestion++;
+      
+      if (currentQuestion < questions.length) {
+        // More questions - render next question
         setTimeout(() => {
-          advanceCard();
-          renderQuestion();
+          renderCurrentQuestion();
         }, 300);
       } else {
+        // All questions answered - advance to summary
         setTimeout(() => {
           advanceCard();
           renderSummary();
@@ -882,30 +961,27 @@
     }
 
     // Render current question
-    function renderQuestion() {
-      const question = questions[currentQuestion];
+    function renderCurrentQuestion() {
       const questionCard = document.getElementById('questionCard');
+      if (!questionCard) return;
       
-      if (questionCard) {
-        const buttonsHtml = currentCard > 3 ? `
-          <div class="navigation-buttons">
-            <button class="back-btn" onclick="goBack()">🔙 Back</button>
-            <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
-          </div>
-        ` : '';
+      const question = questions[currentQuestion];
+      if (!question) return;
 
-        questionCard.innerHTML = `
-          <div class="question-prompt">${question.label}</div>
-          <div class="answer-options">
-            ${question.options.map(option => 
-              `<button class="answer-button" onclick="selectAnswer('${question.name}', '${option}')">
-                ${option}
-              </button>`
-            ).join('')}
-          </div>
-          ${buttonsHtml}
-        `;
-      }
+      questionCard.innerHTML = `
+        <div class="question-prompt">${question.label}</div>
+        <div class="answer-options">
+          ${question.options.map(option => 
+            `<button class="answer-button" onclick="handleQuestionAnswer('${question.name}', '${option}')">
+              ${option}
+            </button>`
+          ).join('')}
+        </div>
+        <div class="navigation-buttons">
+          <button class="back-btn" onclick="goBack()">🔙 Back</button>
+          <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+        </div>
+      `;
     }
 
     // Render summary
@@ -1003,6 +1079,10 @@
         <div class="session-card-footer">
           <button onclick="advanceCard()">Agree & Continue →</button>
         </div>
+        <div class="navigation-buttons">
+          <button class="back-btn" onclick="goBack()">🔙 Back</button>
+          <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+        </div>
       `);
       card5.classList.add('agreement-card');
 
@@ -1017,6 +1097,10 @@
         </div>
         <div class="session-card-footer">
           <button onclick="advanceCard()">Agree & Continue →</button>
+        </div>
+        <div class="navigation-buttons">
+          <button class="back-btn" onclick="goBack()">🔙 Back</button>
+          <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
         </div>
       `);
       card6.classList.add('agreement-card');
@@ -1033,6 +1117,10 @@
         <div class="session-card-footer">
           <button onclick="window.location.href='/ptp-pick-date-step-3.html'">Agree & Continue to Pick a Date →</button>
         </div>
+        <div class="navigation-buttons">
+          <button class="back-btn" onclick="goBack()">🔙 Back</button>
+          <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+        </div>
       `);
       card7.classList.add('agreement-card');
 
@@ -1046,186 +1134,897 @@
       container.appendChild(card6);
       container.appendChild(card7);
 
-      // Set up question cards
-      setupQuestionCards();
-    }
-
-    // Setup individual question cards
-    function setupQuestionCards() {
-      // Initial setup for first question card
+      // Setup first question
       renderCurrentQuestion();
     }
 
-    // Render the current question
-    function renderCurrentQuestion() {
-      const questionCard = document.getElementById('questionCard');
-      if (!questionCard) return;
-      
-      const question = questions[currentQuestion];
-      if (!question) return;
-
-      questionCard.innerHTML = `
-        <div class="question-prompt">${question.label}</div>
-        <div class="answer-options">
-          ${question.options.map(option => 
-            `<button class="answer-button" onclick="handleQuestionAnswer('${question.name}', '${option}')">
-              ${option}
-            </button>`
-          ).join('')}
-        </div>
-        <div class="navigation-buttons">
-          <button class="back-btn" onclick="goBack()">🔙 Back</button>
-          <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
-        </div>
-      `;
-    }
-
-    // Handle question answers
-    function handleQuestionAnswer(questionName, answer) {
-      sessionData[questionName] = answer;
-      saveSessionData();
-      
-      currentQuestion++;
-      
-      if (currentQuestion < questions.length) {
-        // More questions - render next question
-        setTimeout(() => {
-          renderCurrentQuestion();
-        }, 300);
-      } else {
-        // All questions answered - advance to summary
-        setTimeout(() => {
-          advanceCard();
-          renderSummary();
-        }, 300);
-      }
-    }
-
-    // Policy content
-    const policyContent = {
-      behavior: {
-        title: "🐕 Behavior Policy",
-        text: "All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet's behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved."
-      },
-      photography: {
-        title: "📸 Photography Service Agreement",
-        text: "By participating in this photo session, you agree that all photographs taken by PictureThisPet are the intellectual property of the photographer. You are purchasing high-resolution digital files for personal use, but the photographer retains full ownership and the right to use images for marketing, portfolio, and promotional purposes. You may not alter, edit, or sell the images without written permission. You are granted a perpetual license to share and print the images for personal use, but PictureThisPet reserves all commercial rights."
-      },
-      cancellation: {
-        title: "📅 Cancellation & Refund Policy", 
-        text: "All session payments are non-refundable. However, sessions may be rescheduled with at least 48 hours' notice. In cases of severe weather or emergencies, we will work with you to find a new session date. Missed appointments or cancellations with less than 48 hours' notice are not eligible for rescheduling or refund. Your session is not guaranteed until full payment is received."
-      }
-    };
-
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Page loaded, initializing...'); // Debug line
       loadSessionData();
       initializeSessionBuilder();
-      
-      // Make sure modal is created
-      setTimeout(() => {
-        createPolicyModal();
-        console.log('Policy modal created'); // Debug line
-      }, 1000);
     });
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pick Your Date | Picture This Pet</title>
+  <meta name="description" content="Select your preferred date for your pet photography session.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
-    // Create policy modal
-    function createPolicyModal() {
-      const modal = document.createElement('div');
-      modal.className = 'policy-modal';
-      modal.id = 'policyModal';
-      modal.innerHTML = `
-        <div class="policy-modal-content">
-          <div class="policy-modal-header">
-            <h3 class="policy-modal-title" id="modalTitle"></h3>
-            <button class="close-modal-btn" onclick="closePolicyModal()">✕</button>
-          </div>
-          <div class="policy-modal-text" id="modalText"></div>
-          <div class="policy-modal-footer">
-            <button class="modal-agree-btn" id="modalAgreeBtn">Agree</button>
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      overflow-x: hidden;
+    }
+    
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* === HEADER === */
+    header {
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .book-btn {
+      background-color: var(--dark-brown);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      min-height: calc(100vh - 110px);
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      padding: 4rem 1rem;
+      position: relative;
+    }
+
+    /* === PROGRESS INDICATOR === */
+    .progress-section {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.completed {
+      background: var(--available-green);
+      border-color: var(--available-green);
+      color: white;
+    }
+
+    .progress-step.active {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .progress-line {
+      width: 60px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .progress-line.completed {
+      background: var(--available-green);
+    }
+
+    .progress-text {
+      color: white;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* === CALENDAR SECTION === */
+    .calendar-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .calendar-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .calendar-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    /* === CALENDAR GRID === */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .calendar-day-header {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .calendar-day {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .calendar-day:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .calendar-day.other-month {
+      color: rgba(255, 255, 255, 0.3);
+      cursor: not-allowed;
+    }
+
+    .calendar-day.past {
+      color: rgba(255, 255, 255, 0.3);
+      cursor: not-allowed;
+    }
+
+    .calendar-day.available {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      color: white;
+    }
+
+    .calendar-day.available:hover {
+      background: rgba(16, 185, 129, 0.3);
+      transform: scale(1.05);
+    }
+
+    .calendar-day.booked {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: rgba(255, 255, 255, 0.7);
+      cursor: not-allowed;
+    }
+
+    .calendar-day.selected {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border: 2px solid var(--gold);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .calendar-legend {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .legend-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.available {
+      background: rgba(16, 185, 129, 0.7);
+    }
+
+    .legend-dot.booked {
+      background: rgba(239, 68, 68, 0.7);
+    }
+
+    .legend-dot.selected {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+    }
+
+    /* === BOOKING SUMMARY === */
+    .booking-summary {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: fit-content;
+    }
+
+    .summary-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .summary-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .summary-section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .summary-item .label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .summary-item .value {
+      color: white;
+      font-weight: 600;
+    }
+
+    .time-selection {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .time-slot {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .time-slot.selected {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+    }
+
+    .date-selection {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .selected-date {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .continue-section {
+      text-align: center;
+    }
+
+    .continue-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .continue-btn.enabled {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    .continue-btn.enabled:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 1rem;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo {
+        height: 48px;
+      }
+      
+      .site-nav {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      main {
+        margin-top: 80px;
+        padding: 2rem 1rem;
+      }
+
+      .calendar-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .calendar-card,
+      .booking-summary {
+        padding: 1.5rem;
+      }
+
+      .calendar-day {
+        min-height: 40px;
+        font-size: 0.9rem;
+      }
+
+      .calendar-day-header {
+        padding: 0.8rem 0.3rem;
+        font-size: 0.8rem;
+      }
+
+      .progress-steps {
+        gap: 0.5rem;
+      }
+
+      .progress-step {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+
+      .progress-line {
+        width: 40px;
+      }
+    }
+
+    /* === ANIMATIONS === */
+    .calendar-card {
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    .booking-summary {
+      animation: slideInRight 0.8s ease-out;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  </style>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link">
+      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="book-btn">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Progress Indicator -->
+    <div class="progress-section">
+      <div class="progress-steps">
+        <div class="progress-step completed">1</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">2</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step active">3</div>
+        <div class="progress-line"></div>
+        <div class="progress-step">4</div>
+        <div class="progress-line"></div>
+        <div class="progress-step">5</div>
+      </div>
+      <p class="progress-text">Pick Your Date</p>
+    </div>
+
+    <!-- Calendar Section -->
+    <div class="calendar-section">
+      <!-- Calendar Card -->
+      <div class="calendar-card">
+        <div class="calendar-header">
+          <h2 class="calendar-title" id="calendarTitle">December 2024</h2>
+          <div class="calendar-nav">
+            <button class="nav-button" onclick="previousMonth()">‹</button>
+            <button class="nav-button" onclick="nextMonth()">›</button>
           </div>
         </div>
+
+        <div class="calendar-grid" id="calendarGrid">
+          <!-- Calendar will be generated by JavaScript -->
+        </div>
+
+        <div class="calendar-legend">
+          <div class="legend-item">
+            <div class="legend-dot available"></div>
+            <span>Available</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot booked"></div>
+            <span>Booked</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot selected"></div>
+            <span>Selected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Summary Card -->
+      <div class="booking-summary">
+        <h2 class="summary-title">Booking Summary</h2>
+
+        <!-- Session Details -->
+        <div class="summary-section">
+          <h3>Session Details</h3>
+          <div id="sessionDetails">
+            <!-- Will be populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Date Selection -->
+        <div class="summary-section">
+          <h3>Selected Date</h3>
+          <div class="date-selection">
+            <div class="selected-date" id="selectedDate">Please select a date</div>
+          </div>
+        </div>
+
+        <!-- Time Selection -->
+        <div class="summary-section">
+          <h3>Session Time</h3>
+          <div class="time-selection">
+            <div class="time-slot selected" id="timeSlot">6:00 PM</div>
+          </div>
+        </div>
+
+        <!-- Total Price -->
+        <div class="summary-section">
+          <div class="summary-item">
+            <span class="label">Total Price:</span>
+            <span class="value" id="totalPrice">$0</span>
+          </div>
+        </div>
+
+        <!-- Continue Button -->
+        <div class="continue-section">
+          <a href="/" class="back-btn">← Back</a>
+          <a href="#" class="continue-btn" id="continueBtn">Continue to Intake →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Version Footer -->
+  <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v2.0.0</p>
+  </footer>
+
+  <script>
+    // Session Data Management
+    let sessionData = {};
+    let selectedDate = null;
+    let selectedTime = "6:00 PM";
+    let currentMonth = new Date();
+
+    // Calendar Data (placeholder - will be replaced with real data)
+    const bookedDates = [
+      "2024-12-15",
+      "2024-12-22",
+      "2024-12-29",
+      "2025-01-05",
+      "2025-01-12"
+    ];
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSessionData();
+      updateSessionSummary();
+      generateCalendar();
+    });
+
+    // Load session data from localStorage
+    function loadSessionData() {
+      const saved = localStorage.getItem("ptpSessionData");
+      if (saved) {
+        sessionData = JSON.parse(saved);
+      }
+    }
+
+    // Save session data to localStorage
+    function saveSessionData() {
+      localStorage.setItem("ptpSessionData", JSON.stringify(sessionData));
+    }
+
+    // Update session summary display
+    function updateSessionSummary() {
+      const details = document.getElementById('sessionDetails');
+      const totalPrice = document.getElementById('totalPrice');
+      
+      let total = 0;
+      if (sessionData.session === "Mini") total += 50;
+      if (sessionData.session === "Full") total += 100;
+      if (sessionData.petCount === "2") total += 40;
+      if (sessionData.peopleCount === "2") total += 20;
+
+      details.innerHTML = `
+        <div class="summary-item">
+          <span class="label">Session Type:</span>
+          <span class="value">${sessionData.session || "—"}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Location:</span>
+          <span class="value">${sessionData.park || "—"}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Pets:</span>
+          <span class="value">${sessionData.petCount || "—"}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">People:</span>
+          <span class="value">${sessionData.peopleCount || "—"}</span>
+        </div>
       `;
-      document.body.appendChild(modal);
 
-      // Close on background click
-      modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-          closePolicyModal();
+      totalPrice.textContent = `$${total}`;
+    }
+
+    // Generate calendar
+    function generateCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      const title = document.getElementById('calendarTitle');
+      
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      
+      title.textContent = new Intl.DateTimeFormat('en-US', { 
+        month: 'long', 
+        year: 'numeric' 
+      }).format(currentMonth);
+
+      // Clear grid
+      grid.innerHTML = '';
+
+      // Add day headers
+      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayHeaders.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day-header';
+        header.textContent = day;
+        grid.appendChild(header);
+      });
+
+      // Calculate first day of month and number of days
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+      const startingDayOfWeek = firstDay.getDay();
+
+      // Add empty cells for days before month starts
+      for (let i = 0; i < startingDayOfWeek; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day other-month';
+        grid.appendChild(emptyDay);
+      }
+
+      // Add days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.textContent = day;
+        
+        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayDate = new Date(year, month, day);
+        
+        // Mark past dates
+        if (dayDate < new Date()) {
+          dayElement.classList.add('past');
         }
-      });
-    }
-
-    // Open policy modal
-    function openPolicyModal(policyType) {
-      console.log('Opening modal for:', policyType); // Debug line
-      
-      const modal = document.getElementById('policyModal');
-      if (!modal) {
-        console.error('Modal not found, creating it now...');
-        createPolicyModal();
+        // Mark booked dates
+        else if (bookedDates.includes(dateString)) {
+          dayElement.classList.add('booked');
+        }
+        // Mark available dates (not Sunday, not booked, not past)
+        else if (dayDate.getDay() !== 0) {
+          dayElement.classList.add('available');
+          dayElement.onclick = () => selectDate(dateString, dayElement);
+        }
+        
+        grid.appendChild(dayElement);
       }
-      
-      const title = document.getElementById('modalTitle');
-      const text = document.getElementById('modalText');
-      const agreeBtn = document.getElementById('modalAgreeBtn');
-      
-      const policy = policyContent[policyType];
-      if (!policy) {
-        console.error('Policy not found for type:', policyType);
-        return;
-      }
-      
-      title.textContent = policy.title;
-      text.textContent = policy.text;
-      
-      // Set up agree button
-      agreeBtn.onclick = () => agreeToPolicy(policyType);
-      
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      
-      console.log('Modal should be visible now'); // Debug line
     }
 
-    // Scroll to top function
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    // Select date - FIXED VERSION
+    function selectDate(dateString, element) {
+      // Remove previous selection
+      document.querySelectorAll('.calendar-day.selected').forEach(el => {
+        el.classList.remove('selected');
       });
-    }
-
-    // Close policy modal
-    function closePolicyModal() {
-      const modal = document.getElementById('policyModal');
-      modal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    // Agree to policy and advance
-    function agreeToPolicy(policyType) {
-      // Close modal first
-      closePolicyModal();
       
-      // Save agreement to sessionData
-      sessionData[`${policyType}Agreement`] = true;
+      // Add selection to clicked date
+      element.classList.add('selected');
+      
+      selectedDate = dateString;
+      
+      // FIXED: Create date object correctly to avoid timezone issues
+      const dateParts = dateString.split('-');
+      const year = parseInt(dateParts[0]);
+      const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed
+      const day = parseInt(dateParts[2]);
+      const date = new Date(year, month, day);
+      
+      // Format the date properly
+      const formattedDate = new Intl.DateTimeFormat('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(date);
+      
+      console.log('Selected date string:', dateString);
+      console.log('Formatted date:', formattedDate);
+      
+      document.getElementById('selectedDate').textContent = formattedDate;
+      
+      // Save to session data
+      sessionData.selectedDate = dateString;
+      sessionData.selectedTime = selectedTime;
+      sessionData.selectedDateTime = `${formattedDate} at ${selectedTime}`;
       saveSessionData();
       
-      // If it's the last policy, redirect to calendar
-      if (policyType === 'cancellation') {
-        sessionData.agreementsCompleted = true;
-        saveSessionData();
-        setTimeout(() => {
-          window.location.href = '/ptp-pick-date-step-3.html';
-        }, 300);
-      } else {
-        // Advance to next card
-        setTimeout(() => {
-          advanceCard();
-        }, 300);
-      }
+      // Enable continue button
+      const continueBtn = document.getElementById('continueBtn');
+      continueBtn.classList.add('enabled');
+      continueBtn.href = '/intake-form.html';
+    }
+
+    // Navigation functions
+    function previousMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() - 1);
+      generateCalendar();
+    }
+
+    function nextMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() + 1);
+      generateCalendar();
     }
   </script>
 </body>
