@@ -292,7 +292,7 @@
     }
 
     .session-card.agreement-card {
-      height: 800px;
+      height: 960px; /* Increased by 20% from 800px */
       padding: 3rem 2.5rem;
     }
 
@@ -508,7 +508,7 @@
     .session-summary-list {
       list-style: none;
       padding: 0;
-      margin: 2rem 0;
+      margin: 1.5rem 0; /* Reduced from 2rem */
       text-align: left;
       max-width: 400px;
       margin-left: auto;
@@ -520,7 +520,7 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 1rem 0;
+      padding: 0.75rem 0; /* Reduced from 1rem */
       font-size: 1.1rem;
     }
 
@@ -656,7 +656,7 @@
       }
 
       .session-card.agreement-card {
-        height: 800px;
+        height: 960px; /* Increased proportionally by 20% from 800px */
         padding: 2.5rem 1.5rem;
       }
 
@@ -683,16 +683,16 @@
       }
 
       .session-info-list {
-        margin: 1.5rem 0 2.5rem 0;
+        margin: 1rem 0 2rem 0; /* Reduced top margin */
       }
 
       .session-info-list li {
-        padding: 0.8rem 0;
+        padding: 0.6rem 0; /* Reduced from 0.8rem */
         font-size: 1rem;
       }
 
       .session-info-list li:last-child {
-        padding-bottom: 2rem;
+        padding-bottom: 1.5rem; /* Reduced from 2rem */
       }
 
       .question-prompt {
@@ -873,7 +873,7 @@
       return card;
     }
 
-    // Show specific card and track history
+    // Show specific card and track history properly
     function showCard(index) {
       const cards = document.querySelectorAll('.session-card');
       cards.forEach((card, i) => {
@@ -884,17 +884,17 @@
         }
       });
       
-      // Update history only when moving forward
-      if (index > currentCard) {
-        cardHistory.push(currentCard);
-      }
-      
+      // Update card position
       currentCard = index;
     }
 
-    // Advance to next card with animation
+    // Advance to next card with animation and track history
     function advanceCard() {
       const currentCardEl = document.querySelector('.session-card.active');
+      
+      // Add current card to history before advancing
+      cardHistory.push(currentCard);
+      
       if (currentCardEl) {
         currentCardEl.classList.add('exiting');
         setTimeout(() => {
@@ -911,15 +911,26 @@
       if (cardHistory.length > 0) {
         const previousCard = cardHistory.pop(); // Get and remove last visited card
         
-        // If we're in questions section, also adjust question index
+        // If we're going back from questions, adjust question index
         if (currentCard === 3 && currentQuestion > 0) {
           currentQuestion--;
           renderCurrentQuestion();
+          return; // Stay on question card but show previous question
+        }
+        
+        // If we're going back TO questions card, set up the last question
+        if (previousCard === 3 && currentQuestion > 0) {
+          currentQuestion--;
         }
         
         showCard(previousCard);
+        
+        // If we landed on questions card, render the current question
+        if (previousCard === 3) {
+          renderCurrentQuestion();
+        }
       } else if (currentCard > 0) {
-        // Fallback if no history
+        // Fallback: simple previous card
         showCard(currentCard - 1);
       }
     }
