@@ -1,1 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pick Your Date | Picture This Pet</title>
+  <meta name="description" content="Select your preferred date for your pet photography session.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      overflow-x: hidden;
+    }
+    
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* === HEADER === */
+    header {
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .book-btn {
+      background-color: var(--dark-brown);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      min-height: calc(100vh - 110px);
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      padding: 4rem 1rem;
+      position: relative;
+    }
+
+    /* === PROGRESS INDICATOR === */
+    .progress-section {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.completed {
+      background: var(--available-green);
+      border-color: var(--available-green);
+      color: white;
+    }
+
+    .progress-step.active {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .progress-line {
+      width: 60px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .progress-line.completed {
+      background: var(--available-green);
+    }
+
+    .progress-text {
+      color: white;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* === CALENDAR SECTION === */
+    .calendar-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .calendar-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .calendar-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    /* === CALENDAR GRID === */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .calendar-day-header {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .calendar-day {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .calendar-day:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .calendar-day.other-month {
+      color: rgba(255, 255, 255, 0.3);
+      cursor: not-allowed;
+    }
+
+    .calendar-day.past {
+      color: rgba(255, 255, 255, 0.3);
+      cursor: not-allowed;
+    }
+
+    .calendar-day.available {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      color: white;
+    }
+
+    .calendar-day.available:hover {
+      background: rgba(16, 185, 129, 0.3);
+      transform: scale(1.05);
+    }
+
+    .calendar-day.booked {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: rgba(255, 255, 255, 0.7);
+      cursor: not-allowed;
+    }
+
+    .calendar-day.selected {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border: 2px solid var(--gold);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .calendar-legend {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .legend-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.available {
+      background: rgba(16, 185, 129, 0.7);
+    }
+
+    .legend-dot.booked {
+      background: rgba(239, 68, 68, 0.7);
+    }
+
+    .legend-dot.selected {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+    }
+
+    /* === BOOKING SUMMARY === */
+    .booking-summary {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: fit-content;
+    }
+
+    .summary-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .summary-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .summary-section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .summary-item .label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .summary-item .value {
+      color: white;
+      font-weight: 600;
+    }
+
+    .time-selection {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .time-slot {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .time-slot.selected {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+    }
+
+    .date-selection {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .selected-date {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .continue-section {
+      text-align: center;
+    }
+
+    .continue-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .continue-btn.enabled {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    .continue-btn.enabled:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 1rem;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo {
+        height: 48px;
+      }
+      
+      .site-nav {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      main {
+        margin-top: 80px;
+        padding: 2rem 1rem;
+      }
+
+      .calendar-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .calendar-card,
+      .booking-summary {
+        padding: 1.5rem;
+      }
+
+      .calendar-day {
+        min-height: 40px;
+        font-size: 0.9rem;
+      }
+
+      .calendar-day-header {
+        padding: 0.8rem 0.3rem;
+        font-size: 0.8rem;
+      }
+
+      .progress-steps {
+        gap: 0.5rem;
+      }
+
+      .progress-step {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+
+      .progress-line {
+        width: 40px;
+      }
+    }
+
+    /* === ANIMATIONS === */
+    .calendar-card {
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    .booking-summary {
+      animation: slideInRight 0.8s ease-out;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  </style>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="book-btn">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Progress Indicator -->
+    <div class="progress-section">
+      <div class="progress-steps">
+        <div class="progress-step completed">1</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">2</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step active">3</div>
+        <div class="progress-line"></div>
+        <div class="progress-step">4</div>
+      </div>
+      <p class="progress-text">Step 3 of 4 - Pick Your Date</p>
+    </div>
+
+    <!-- Calendar Section -->
+    <div class="calendar-section">
+      <!-- Calendar Card -->
+      <div class="calendar-card">
+        <div class="calendar-header">
+          <h2 class="calendar-title" id="calendarTitle">December 2024</h2>
+          <div class="calendar-nav">
+            <button class="nav-button" onclick="previousMonth()">‹</button>
+            <button class="nav-button" onclick="nextMonth()">›</button>
+          </div>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid">
+          <!-- Calendar will be generated by JavaScript -->
+        </div>
+
+        <div class="calendar-legend">
+          <div class="legend-item">
+            <div class="legend-dot available"></div>
+            <span>Available</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot booked"></div>
+            <span>Booked</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot selected"></div>
+            <span>Selected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Summary Card -->
+      <div class="booking-summary">
+        <h2 class="summary-title">Booking Summary</h2>
+
+        <!-- Session Details -->
+        <div class="summary-section">
+          <h3>Session Details</h3>
+          <div id="sessionDetails">
+            <!-- Will be populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Date Selection -->
+        <div class="summary-section">
+          <h3>Selected Date</h3>
+          <div class="date-selection">
+            <div class="selected-date" id="selectedDate">Please select a date</div>
+          </div>
+        </div>
+
+        <!-- Time Selection -->
+        <div class="summary-section">
+          <h3>Session Time</h3>
+          <div class="time-selection">
+            <div class="time-slot selected" id="timeSlot">6:00 PM</div>
+          </div>
+        </div>
+
+        <!-- Total Price -->
+        <div class="summary-section">
+          <div class="summary-item">
+            <span class="label">Total Price:</span>
+            <span class="value" id="totalPrice">$0</span>
+          </div>
+        </div>
+
+        <!-- Continue Button -->
+        <div class="continue-section">
+          <a href="/" class="back-btn">← Back</a>
+          <a href="#" class="continue-btn" id="continueBtn">Continue to Intake →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Session Data Management
+    let sessionData = {};
+    let selectedDate = null;
+    let selectedTime = "6:00 PM";
+    let currentMonth = new Date();
+
+    // Calendar Data (placeholder - will be replaced with real data)
+    const bookedDates = [
+      "2024-12-15",
+      "2024-12-22",
+      "2024-12-29",
+      "2025-01-05",
+      "2025-01-12"
+    ];
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSessionData();
+      updateSessionSummary();
+      generateCalendar();
+    });
+
+    // Load session data from localStorage
+    function loadSessionData() {
+      const saved = localStorage.getItem("ptpSessionData");
+      if (saved) {
+        sessionData = JSON.parse(saved);
+      }
+    }
+
+    // Save session data to localStorage
+    function saveSessionData() {
+      localStorage.setItem("ptpSessionData", JSON.stringify(sessionData));
+    }
+
+    // Update session summary display
+    function updateSessionSummary() {
+      const details = document.getElementById('sessionDetails');
+      const totalPrice = document.getElementById('totalPrice');
+      
+      let total = 0;
+      if (sessionData.session === "Mini") total += 50;
+      if (sessionData.session === "Full") total += 100;
+      if (sessionData.petCount === "2") total += 40;
+      if (sessionData.peopleCount === "2") total += 20;
+
+      details.innerHTML = `
+        <div class="summary-item">
+          <span class="label">Session Type:</span>
+          <span class="value">${sessionData.session || "—"}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Location:</span>
+          <span class="value">${sessionData.park || "—"}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Pets:</span>
+          <span class="value">${sessionData.petCount || "—"}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">People:</span>
+          <span class="value">${sessionData.peopleCount || "—"}</span>
+        </div>
+      `;
+
+      totalPrice.textContent = `$${total}`;
+    }
+
+    // Generate calendar
+    function generateCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      const title = document.getElementById('calendarTitle');
+      
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      
+      title.textContent = new Intl.DateTimeFormat('en-US', { 
+        month: 'long', 
+        year: 'numeric' 
+      }).format(currentMonth);
+
+      // Clear grid
+      grid.innerHTML = '';
+
+      // Add day headers
+      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayHeaders.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day-header';
+        header.textContent = day;
+        grid.appendChild(header);
+      });
+
+      // Calculate first day of month and number of days
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+      const startingDayOfWeek = firstDay.getDay();
+
+      // Add empty cells for days before month starts
+      for (let i = 0; i < startingDayOfWeek; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day other-month';
+        grid.appendChild(emptyDay);
+      }
+
+      // Add days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.textContent = day;
+        
+        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayDate = new Date(year, month, day);
+        
+        // Mark past dates
+        if (dayDate < new Date()) {
+          dayElement.classList.add('past');
+        }
+        // Mark booked dates
+        else if (bookedDates.includes(dateString)) {
+          dayElement.classList.add('booked');
+        }
+        // Mark available dates (not Sunday, not booked, not past)
+        else if (dayDate.getDay() !== 0) {
+          dayElement.classList.add('available');
+          dayElement.onclick = () => selectDate(dateString, dayElement);
+        }
+        
+        grid.appendChild(dayElement);
+      }
+    }
+
+    // Select date
+    function selectDate(dateString, element) {
+      // Remove previous selection
+      document.querySelectorAll('.calendar-day.selected').forEach(el => {
+        el.classList.remove('selected');
+      });
+      
+      // Add selection to clicked date
+      element.classList.add('selected');
+      
+      selectedDate = dateString;
+      
+      // Update display
+      const date = new Date(dateString);
+      const formattedDate = new Intl.DateTimeFormat('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(date);
+      
+      document.getElementById('selectedDate').textContent = formattedDate;
+      
+      // Save to session data
+      sessionData.selectedDate = dateString;
+      sessionData.selectedTime = selectedTime;
+      sessionData.selectedDateTime = `${formattedDate} at ${selectedTime}`;
+      saveSessionData();
+      
+      // Enable continue button
+      const continueBtn = document.getElementById('continueBtn');
+      continueBtn.classList.add('enabled');
+      continueBtn.href = '/ptp-intake-form-step-4';
+    }
+
+    // Navigation functions
+    function previousMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() - 1);
+      generateCalendar();
+    }
+
+    function nextMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() + 1);
+      generateCalendar();
+    }
+  </script>
+</body>
+</html>
