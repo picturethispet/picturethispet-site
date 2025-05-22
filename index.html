@@ -1020,12 +1020,8 @@
     }
 
     // Go back to actual previous card using history
-    function goBack(event) {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      
+    function goBack() {
+      console.log('*** GOING BACK ***');
       if (cardHistory.length > 0) {
         const previousCard = cardHistory.pop(); // Get and remove last visited card
         
@@ -1051,17 +1047,11 @@
         // Fallback: simple previous card
         showCard(currentCard - 1);
       }
-      
-      return false;
     }
 
     // Restart session
-    function restartSession(event) {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      
+    function restartSession() {
+      console.log('*** RESTARTING SESSION ***');
       if (confirm("Are you sure you want to start over? This will clear all your selections.")) {
         // Clear data and history
         Object.keys(sessionData).forEach(key => sessionData[key] = '');
@@ -1073,17 +1063,11 @@
         // Reinitialize
         initializeSessionBuilder();
       }
-      
-      return false;
     }
 
     // Handle question answer
-    function handleQuestionAnswer(questionName, answer, event) {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      
+    function handleQuestionAnswer(questionName, answer) {
+      console.log('*** QUESTION ANSWERED:', questionName, '=', answer);
       sessionData[questionName] = answer;
       saveSessionData();
       
@@ -1100,8 +1084,6 @@
           advanceCard();
         }, 300);
       }
-      
-      return false;
     }
 
     // Render current question
@@ -1115,23 +1097,37 @@
       questionCard.innerHTML = `
         <div class="question-prompt">${question.label}</div>
         <div class="answer-options">
-          ${question.options.map(option => 
-            `<button type="button" class="answer-button" onclick="handleQuestionAnswer('${question.name}', '${option}', event); return false;">
+          ${question.options.map((option, index) => 
+            `<button type="button" class="answer-button" data-question="${question.name}" data-answer="${option}">
               ${option}
             </button>`
           ).join('')}
         </div>
         <div class="navigation-buttons">
-          <button type="button" class="back-btn" onclick="goBack(event); return false;">🔙 Back</button>
-          <button type="button" class="restart-btn" onclick="restartSession(event); return false;">🔄 Start Over</button>
+          <button type="button" class="back-btn" data-action="back">🔙 Back</button>
+          <button type="button" class="restart-btn" data-action="restart">🔄 Start Over</button>
         </div>
       `;
+
+      // Add listeners for answer buttons
+      const answerBtns = questionCard.querySelectorAll('[data-question]');
+      answerBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const questionName = btn.dataset.question;
+          const answer = btn.dataset.answer;
+          handleQuestionAnswer(questionName, answer);
+          return false;
+        });
+      });
+
+      // Re-add listeners for back/restart buttons in questions
+      addButtonListeners();
     }
 
     // Initialize all cards
     function initializeSessionBuilder() {
-        currentCard = 0;
-        cardHistory = [];
       const container = document.getElementById('sessionCardStack');
       container.innerHTML = '';
 
@@ -1143,7 +1139,7 @@
           <p>In just a few quick steps, we'll help you pick the perfect session, and show you what's included with each option.</p>
         </div>
         <div class="session-card-footer">
-          <button type="button" onclick="advanceCard(event); return false;">Start →</button>
+          <button type="button" data-action="start">Start →</button>
         </div>
       `, true);
 
@@ -1160,7 +1156,7 @@
           </ul>
         </div>
         <div class="session-card-footer">
-          <button type="button" onclick="advanceCard(event); return false;">Next →</button>
+          <button type="button" data-action="next">Next →</button>
         </div>
       `);
 
@@ -1177,7 +1173,7 @@
           </ul>
         </div>
         <div class="session-card-footer">
-          <button type="button" onclick="advanceCard(event); return false;">Next →</button>
+          <button type="button" data-action="next">Next →</button>
         </div>
       `);
 
