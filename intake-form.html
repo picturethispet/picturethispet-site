@@ -180,20 +180,20 @@
       position: relative;
       height: auto;
       z-index: 2;
-      min-height: 600px;
+      min-height: 750px;
     }
 
     .intake-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: 600px;
+      height: 750px;
       width: 100%;
       max-width: 600px;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
+      padding: 2.5rem;
       color: white;
       font-family: 'SF Pro Display', sans-serif;
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -221,7 +221,7 @@
     .intake-card-logo {
       display: block;
       max-width: 180px;
-      margin: 0 auto 2rem;
+      margin: 0 auto 1.5rem;
       height: auto;
       flex-shrink: 0;
     }
@@ -231,44 +231,46 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       width: 100%;
       min-height: 0;
+      padding-bottom: 3rem;
     }
 
     .intake-card-body h2 {
       font-size: 1.9rem;
       font-weight: 700;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       color: white;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
 
     .intake-card-body p {
       font-size: 1.1rem;
       line-height: 1.6;
       opacity: 0.9;
-      margin-bottom: 2rem;
-      max-width: 400px;
+      margin-bottom: 2.5rem;
+      max-width: 450px;
       margin-left: auto;
       margin-right: auto;
     }
 
     /* === FORM STYLES === */
     .form-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
       text-align: left;
       width: 100%;
-      max-width: 400px;
+      max-width: 450px;
       margin-left: auto;
       margin-right: auto;
+      position: relative;
     }
 
     .form-group label {
       display: block;
       font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       color: white;
     }
 
@@ -276,7 +278,7 @@
     .form-group select,
     .form-group textarea {
       width: 100%;
-      padding: 1rem;
+      padding: 1.2rem;
       border-radius: 12px;
       border: 2px solid rgba(255, 255, 255, 0.3);
       background: rgba(255, 255, 255, 0.1);
@@ -326,14 +328,127 @@
       display: block;
     }
 
+    /* === CHOICE BUTTONS === */
+    .choice-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .choice-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      min-width: 120px;
+    }
+
+    .choice-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .choice-btn.selected {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .choice-btn.no-btn {
+      border-color: rgba(239, 68, 68, 0.5);
+      color: rgba(239, 68, 68, 0.9);
+    }
+
+    .choice-btn.no-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.7);
+    }
+
+    .choice-btn.no-btn.selected {
+      background: var(--error-red);
+      border-color: var(--error-red);
+      color: white;
+    }
+
+    /* === VACCINATION BLOCK MODAL === */
+    .vaccination-block {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .vaccination-block-content {
+      background: rgba(239, 68, 68, 0.95);
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+      max-width: 500px;
+      margin: 1rem;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .vaccination-block h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .vaccination-block p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: white;
+      opacity: 0.95;
+    }
+
+    .vaccination-block button {
+      background: white;
+      color: var(--error-red);
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .vaccination-block button:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+    }
+
     /* === BUTTON STYLES === */
     .intake-card-footer {
       margin-top: auto;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
       gap: 1rem;
       width: 100%;
       flex-shrink: 0;
+      padding-top: 2rem;
+    }
+
+    .button-group-left {
+      display: flex;
+      gap: 0.75rem;
     }
 
     .continue-btn {
@@ -364,7 +479,7 @@
       pointer-events: none;
     }
 
-    .back-btn {
+    .back-btn, .restart-btn {
       background: rgba(255, 255, 255, 0.05);
       color: rgba(255, 255, 255, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -375,48 +490,21 @@
       transition: all 0.3s ease;
     }
 
-    .back-btn:hover {
+    .back-btn:hover, .restart-btn:hover {
       background: rgba(255, 255, 255, 0.1);
       color: white;
       border-color: rgba(255, 255, 255, 0.3);
     }
 
-    /* === SUMMARY STYLES === */
-    .booking-summary {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin: 1rem 0;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      text-align: left;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
+    .restart-btn {
+      color: rgba(255, 204, 102, 0.8);
+      border-color: rgba(255, 204, 102, 0.3);
     }
 
-    .summary-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
-    }
-
-    .summary-item .label {
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    .summary-item .value {
-      color: white;
-      font-weight: 600;
-    }
-
-    .summary-item.total {
-      border-top: 1px solid rgba(255, 255, 255, 0.3);
-      margin-top: 1rem;
-      padding-top: 1rem;
-      font-weight: bold;
-      font-size: 1.1rem;
+    .restart-btn:hover {
+      color: rgb(255, 204, 102);
+      border-color: rgba(255, 204, 102, 0.5);
+      background: rgba(255, 204, 102, 0.1);
     }
 
     /* === RESPONSIVE === */
@@ -449,8 +537,8 @@
       }
 
       .intake-card {
-        height: 550px;
-        padding: 1.5rem;
+        height: 700px;
+        padding: 2rem;
       }
 
       .intake-card-body h2 {
@@ -473,6 +561,33 @@
 
       .form-group {
         max-width: 100%;
+      }
+
+      .choice-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .choice-btn {
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .intake-card-footer {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .button-group-left {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .continue-btn {
+        order: 1;
+        width: 100%;
+        max-width: 300px;
       }
     }
 
@@ -536,11 +651,20 @@
         <!-- Cards will be dynamically generated -->
       </div>
     </div>
+
+    <!-- Vaccination Block Modal -->
+    <div class="vaccination-block" id="vaccinationBlock">
+      <div class="vaccination-block-content">
+        <h3>Vaccination Required</h3>
+        <p>Sorry! We require pets to be fully vaccinated before participating in a session. Please come back and book with us when your pet is up-to-date.</p>
+        <button onclick="goToHomePage()">Return to Homepage</button>
+      </div>
+    </div>
   </main>
 
   <!-- Version Footer -->
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v1.0.0</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v2.0.0</p>
   </footer>
 
   <script>
@@ -548,12 +672,14 @@
     let sessionData = {};
     let intakeData = {};
     let currentCard = 0;
+    let totalCards = 0;
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
       loadSessionData();
       loadIntakeData();
       generateIntakeCards();
+      setupKeyboardNavigation();
     });
 
     // Load session data from localStorage
@@ -561,6 +687,15 @@
       const saved = localStorage.getItem("ptpSessionData");
       if (saved) {
         sessionData = JSON.parse(saved);
+      } else {
+        // Fallback data for testing
+        sessionData = {
+          session: "Mini",
+          petCount: "1",
+          peopleCount: "1",
+          park: "Test Park",
+          selectedDateTime: "Test Date"
+        };
       }
     }
 
@@ -575,6 +710,56 @@
     // Save intake data to localStorage
     function saveIntakeData() {
       localStorage.setItem("ptpIntakeData", JSON.stringify(intakeData));
+    }
+
+    // Keyboard navigation setup
+    function setupKeyboardNavigation() {
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const activeCard = document.querySelector('.intake-card.active');
+          const continueBtn = activeCard.querySelector('.continue-btn');
+          if (continueBtn && !continueBtn.classList.contains('disabled')) {
+            continueBtn.click();
+          }
+        }
+      });
+    }
+
+    // Phone number formatting
+    function formatPhoneNumber(input) {
+      const value = input.value.replace(/\D/g, '');
+      let formattedValue = '';
+      
+      if (value.length > 0) {
+        if (value.length <= 3) {
+          formattedValue = value;
+        } else if (value.length <= 6) {
+          formattedValue = `${value.slice(0, 3)}-${value.slice(3)}`;
+        } else {
+          formattedValue = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
+        }
+      }
+      
+      input.value = formattedValue;
+    }
+
+    // Date formatting (MM/DD/YYYY)
+    function formatDate(input) {
+      const value = input.value.replace(/\D/g, '');
+      let formattedValue = '';
+      
+      if (value.length > 0) {
+        if (value.length <= 2) {
+          formattedValue = value;
+        } else if (value.length <= 4) {
+          formattedValue = `${value.slice(0, 2)}/${value.slice(2)}`;
+        } else {
+          formattedValue = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4, 8)}`;
+        }
+      }
+      
+      input.value = formattedValue;
     }
 
     // Create card element
@@ -600,15 +785,17 @@
 
     // Advance to next card
     function advanceCard() {
-      const currentCardEl = document.querySelector('.intake-card.active');
-      if (currentCardEl) {
-        currentCardEl.classList.add('exiting');
-        setTimeout(() => {
-          currentCardEl.classList.remove('active', 'exiting');
+      if (currentCard < totalCards - 1) {
+        const currentCardEl = document.querySelector('.intake-card.active');
+        if (currentCardEl) {
+          currentCardEl.classList.add('exiting');
+          setTimeout(() => {
+            currentCardEl.classList.remove('active', 'exiting');
+            showCard(currentCard + 1);
+          }, 300);
+        } else {
           showCard(currentCard + 1);
-        }, 300);
-      } else {
-        showCard(currentCard + 1);
+        }
       }
     }
 
@@ -619,19 +806,66 @@
       }
     }
 
+    // Restart form
+    function restartForm() {
+      if (confirm('Are you sure you want to start over? This will clear all your answers.')) {
+        intakeData = {};
+        saveIntakeData();
+        location.reload();
+      }
+    }
+
+    // Go to home page (vaccination block)
+    function goToHomePage() {
+      window.location.href = '/';
+    }
+
+    // Handle choice button selection
+    function selectChoice(button, value, fieldName) {
+      const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
+      choiceButtons.forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
+      
+      intakeData[fieldName] = value;
+      saveIntakeData();
+      
+      // Handle vaccination logic
+      if (fieldName === 'vaccination' && value === 'No') {
+        setTimeout(() => {
+          document.getElementById('vaccinationBlock').style.display = 'flex';
+        }, 500);
+        return;
+      }
+      
+      // Auto-advance for choice questions after a short delay
+      setTimeout(() => {
+        advanceCard();
+      }, 800);
+    }
+
     // Validate current card
     function validateCurrentCard() {
       const activeCard = document.querySelector('.intake-card.active');
-      const inputs = activeCard.querySelectorAll('input[required], select[required], textarea[required]');
+      const requiredInputs = activeCard.querySelectorAll('input[required], select[required], textarea[required]');
+      const requiredChoices = activeCard.querySelectorAll('[data-required="true"]');
       let isValid = true;
 
-      inputs.forEach(input => {
+      // Validate required inputs
+      requiredInputs.forEach(input => {
         const formGroup = input.closest('.form-group');
         if (!input.value.trim()) {
           formGroup.classList.add('error');
           isValid = false;
         } else {
           formGroup.classList.remove('error');
+        }
+      });
+
+      // Validate required choices
+      requiredChoices.forEach(choiceGroup => {
+        const selected = choiceGroup.querySelector('.choice-btn.selected');
+        if (!selected) {
+          isValid = false;
         }
       });
 
@@ -646,13 +880,336 @@
         const inputs = activeCard.querySelectorAll('input, select, textarea');
         
         inputs.forEach(input => {
-          if (input.name) {
+          if (input.name && input.value) {
             intakeData[input.name] = input.value;
           }
         });
         
         saveIntakeData();
         advanceCard();
+      }
+    }
+
+    // Generate all intake cards based on session data
+    function generateIntakeCards() {
+      const container = document.getElementById('intakeCardStack');
+      container.innerHTML = '';
+      let cardIndex = 0;
+
+      // Card 0 - Welcome
+      const welcomeCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>Almost There!</h2>
+          <p>Just a few details about you and your pet(s) to complete your booking. This will help us provide the best possible session experience.</p>
+        </div>
+        <div class="intake-card-footer">
+          <div class="button-group-left"></div>
+          <button class="continue-btn" onclick="advanceCard()">Let's Get Started →</button>
+        </div>
+      `, true);
+      container.appendChild(welcomeCard);
+      cardIndex++;
+
+      // Card 1 - Vaccination Requirement
+      const vaccinationCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>Vaccination Requirement</h2>
+          <p>Is your pet fully vaccinated?</p>
+          <div class="choice-buttons" data-required="true">
+            <button class="choice-btn ${intakeData.vaccination === 'Yes' ? 'selected' : ''}" onclick="selectChoice(this, 'Yes', 'vaccination')">Yes</button>
+            <button class="choice-btn no-btn ${intakeData.vaccination === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', 'vaccination')">No</button>
+          </div>
+        </div>
+        <div class="intake-card-footer">
+          <div class="button-group-left">
+            <button class="restart-btn" onclick="restartForm()">Start Over</button>
+          </div>
+          <div></div>
+        </div>
+      `);
+      container.appendChild(vaccinationCard);
+      cardIndex++;
+
+      // Pet Information Cards
+      const petCount = parseInt(sessionData.petCount) || 1;
+      for (let i = 1; i <= petCount; i++) {
+        const petPrefix = i === 1 ? 'pet' : `pet${i}`;
+        const petCard = createCard(`
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+          <div class="intake-card-body">
+            <h2>Tell Us About ${petCount > 1 ? `Pet ${i}` : 'Your Pet'}</h2>
+            <div class="form-group required">
+              <label for="${petPrefix}Name">Pet's Name</label>
+              <input type="text" id="${petPrefix}Name" name="${petPrefix}Name" required placeholder="Enter your pet's name" value="${intakeData[petPrefix + 'Name'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-error">Please enter your pet's name</div>
+            </div>
+            <div class="form-group required">
+              <label for="${petPrefix}Birthdate">Pet's Birthdate</label>
+              <input type="text" id="${petPrefix}Birthdate" name="${petPrefix}Birthdate" required placeholder="MM/DD/YYYY" value="${intakeData[petPrefix + 'Birthdate'] || ''}" oninput="formatDate(this)" onkeypress="handleEnterKey(event)" maxlength="10">
+              <div class="form-error">Please enter your pet's birthdate</div>
+            </div>
+            <div class="form-group required">
+              <label for="${petPrefix}Age">Pet's Age</label>
+              <input type="text" id="${petPrefix}Age" name="${petPrefix}Age" required placeholder="e.g., 2 years" value="${intakeData[petPrefix + 'Age'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-error">Please enter your pet's age</div>
+            </div>
+            <div class="form-group required">
+              <label>Pet's Gender</label>
+              <div class="choice-buttons" data-required="true">
+                <button class="choice-btn ${intakeData[petPrefix + 'Gender'] === 'Male' ? 'selected' : ''}" onclick="selectChoice(this, 'Male', '${petPrefix}Gender')">Male</button>
+                <button class="choice-btn ${intakeData[petPrefix + 'Gender'] === 'Female' ? 'selected' : ''}" onclick="selectChoice(this, 'Female', '${petPrefix}Gender')">Female</button>
+              </div>
+            </div>
+          </div>
+          <div class="intake-card-footer">
+            <div class="button-group-left">
+              <button class="back-btn" onclick="goBack()">← Back</button>
+              <button class="restart-btn" onclick="restartForm()">Start Over</button>
+            </div>
+            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+          </div>
+        `);
+        container.appendChild(petCard);
+        cardIndex++;
+
+        // Additional pet details card
+        const petDetailsCard = createCard(`
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+          <div class="intake-card-body">
+            <h2>More About ${petCount > 1 ? `Pet ${i}` : 'Your Pet'}</h2>
+            <div class="form-group">
+              <label for="${petPrefix}FavoriteToy">Favorite Toy</label>
+              <input type="text" id="${petPrefix}FavoriteToy" name="${petPrefix}FavoriteToy" placeholder="What's their favorite toy?" value="${intakeData[petPrefix + 'FavoriteToy'] || ''}" onkeypress="handleEnterKey(event)">
+            </div>
+            <div class="form-group required">
+              <label>Is your pet good off leash?</label>
+              <div class="choice-buttons" data-required="true">
+                <button class="choice-btn ${intakeData[petPrefix + 'OffLeash'] === 'Yes' ? 'selected' : ''}" onclick="selectChoice(this, 'Yes', '${petPrefix}OffLeash')">Yes</button>
+                <button class="choice-btn ${intakeData[petPrefix + 'OffLeash'] === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', '${petPrefix}OffLeash')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="${petPrefix}Behavior">Describe your pet's general behavior</label>
+              <textarea id="${petPrefix}Behavior" name="${petPrefix}Behavior" placeholder="Tell us about their personality, energy level, etc...">${intakeData[petPrefix + 'Behavior'] || ''}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="${petPrefix}Notes">Anything else you'd like us to know?</label>
+              <textarea id="${petPrefix}Notes" name="${petPrefix}Notes" placeholder="Special needs, quirks, commands they know, etc...">${intakeData[petPrefix + 'Notes'] || ''}</textarea>
+            </div>
+          </div>
+          <div class="intake-card-footer">
+            <div class="button-group-left">
+              <button class="back-btn" onclick="goBack()">← Back</button>
+              <button class="restart-btn" onclick="restartForm()">Start Over</button>
+            </div>
+            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+          </div>
+        `);
+        container.appendChild(petDetailsCard);
+        cardIndex++;
+      }
+
+      // Client Information Cards
+      const peopleCount = parseInt(sessionData.peopleCount) || 1;
+      for (let i = 1; i <= peopleCount; i++) {
+        const personPrefix = i === 1 ? 'client' : `client${i}`;
+        const clientCard = createCard(`
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+          <div class="intake-card-body">
+            <h2>${peopleCount > 1 ? `Person ${i} Information` : 'Your Information'}</h2>
+            <div class="form-group required">
+              <label for="${personPrefix}FirstName">First Name</label>
+              <input type="text" id="${personPrefix}FirstName" name="${personPrefix}FirstName" required placeholder="Enter first name" value="${intakeData[personPrefix + 'FirstName'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-error">Please enter first name</div>
+            </div>
+            <div class="form-group required">
+              <label for="${personPrefix}LastName">Last Name</label>
+              <input type="text" id="${personPrefix}LastName" name="${personPrefix}LastName" required placeholder="Enter last name" value="${intakeData[personPrefix + 'LastName'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-error">Please enter last name</div>
+            </div>
+            <div class="form-group required">
+              <label for="${personPrefix}Email">Email</label>
+              <input type="email" id="${personPrefix}Email" name="${personPrefix}Email" required placeholder="Enter email address" value="${intakeData[personPrefix + 'Email'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-error">Please enter a valid email address</div>
+            </div>
+            <div class="form-group required">
+              <label for="${personPrefix}Phone">Phone Number</label>
+              <input type="tel" id="${personPrefix}Phone" name="${personPrefix}Phone" required placeholder="555-555-5555" value="${intakeData[personPrefix + 'Phone'] || ''}" oninput="formatPhoneNumber(this)" onkeypress="handleEnterKey(event)" maxlength="12">
+              <div class="form-error">Please enter phone number</div>
+            </div>
+            <div class="form-group required">
+              <label for="${personPrefix}ZipCode">Zip Code</label>
+              <input type="text" id="${personPrefix}ZipCode" name="${personPrefix}ZipCode" required placeholder="Enter zip code" value="${intakeData[personPrefix + 'ZipCode'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-error">Please enter zip code</div>
+            </div>
+          </div>
+          <div class="intake-card-footer">
+            <div class="button-group-left">
+              <button class="back-btn" onclick="goBack()">← Back</button>
+              <button class="restart-btn" onclick="restartForm()">Start Over</button>
+            </div>
+            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+          </div>
+        `);
+        container.appendChild(clientCard);
+        cardIndex++;
+      }
+
+      // Referral Source Card
+      const referralCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>How did you hear about us?</h2>
+          <div class="form-group required">
+            <label for="referralSource">Referral Source</label>
+            <select id="referralSource" name="referralSource" required onchange="handleSelectChange(this)">
+              <option value="">Please select...</option>
+              <option value="Instagram" ${intakeData.referralSource === 'Instagram' ? 'selected' : ''}>Instagram</option>
+              <option value="Google" ${intakeData.referralSource === 'Google' ? 'selected' : ''}>Google</option>
+              <option value="Flyer" ${intakeData.referralSource === 'Flyer' ? 'selected' : ''}>Flyer</option>
+              <option value="Friend" ${intakeData.referralSource === 'Friend' ? 'selected' : ''}>Friend</option>
+              <option value="Other" ${intakeData.referralSource === 'Other' ? 'selected' : ''}>Other</option>
+            </select>
+            <div class="form-error">Please select how you heard about us</div>
+          </div>
+        </div>
+        <div class="intake-card-footer">
+          <div class="button-group-left">
+            <button class="back-btn" onclick="goBack()">← Back</button>
+            <button class="restart-btn" onclick="restartForm()">Start Over</button>
+          </div>
+          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+        </div>
+      `);
+      container.appendChild(referralCard);
+      cardIndex++;
+
+      // Social Media Tagging Card
+      const socialCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>Social Media Tagging</h2>
+          <p>Would you or your pet like to be tagged on Instagram?</p>
+          <div class="choice-buttons" data-required="true">
+            <button class="choice-btn ${intakeData.socialTagging === 'Yes' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'Yes')">Yes</button>
+            <button class="choice-btn ${intakeData.socialTagging === 'No' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'No')">No</button>
+          </div>
+        </div>
+        <div class="intake-card-footer">
+          <div class="button-group-left">
+            <button class="back-btn" onclick="goBack()">← Back</button>
+            <button class="restart-btn" onclick="restartForm()">Start Over</button>
+          </div>
+          <div></div>
+        </div>
+      `);
+      container.appendChild(socialCard);
+      cardIndex++;
+
+      // Instagram Handles Card (conditional)
+      if (intakeData.socialTagging === 'Yes') {
+        let instagramFields = '';
+        
+        // Pet handles
+        for (let i = 1; i <= petCount; i++) {
+          const petPrefix = i === 1 ? 'pet' : `pet${i}`;
+          const petName = intakeData[petPrefix + 'Name'] || `Pet ${i}`;
+          instagramFields += `
+            <div class="form-group">
+              <label for="${petPrefix}Instagram">${petName}'s Instagram Handle</label>
+              <input type="text" id="${petPrefix}Instagram" name="${petPrefix}Instagram" placeholder="@username (optional)" value="${intakeData[petPrefix + 'Instagram'] || ''}" onkeypress="handleEnterKey(event)">
+            </div>
+          `;
+        }
+        
+        // People handles
+        for (let i = 1; i <= peopleCount; i++) {
+          const personPrefix = i === 1 ? 'client' : `client${i}`;
+          const personName = intakeData[personPrefix + 'FirstName'] || `Person ${i}`;
+          instagramFields += `
+            <div class="form-group">
+              <label for="${personPrefix}Instagram">${personName}'s Instagram Handle</label>
+              <input type="text" id="${personPrefix}Instagram" name="${personPrefix}Instagram" placeholder="@username (optional)" value="${intakeData[personPrefix + 'Instagram'] || ''}" onkeypress="handleEnterKey(event)">
+            </div>
+          `;
+        }
+
+        const instagramCard = createCard(`
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+          <div class="intake-card-body">
+            <h2>Instagram Handles</h2>
+            <p>Please provide the Instagram handles you'd like us to tag (optional):</p>
+            ${instagramFields}
+          </div>
+          <div class="intake-card-footer">
+            <div class="button-group-left">
+              <button class="back-btn" onclick="goBack()">← Back</button>
+              <button class="restart-btn" onclick="restartForm()">Start Over</button>
+            </div>
+            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+          </div>
+        `);
+        container.appendChild(instagramCard);
+        cardIndex++;
+      }
+
+      // Final Submission Card
+      const submissionCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>Ready to Proceed!</h2>
+          <p>All your information has been collected. Click below to proceed to payment and complete your booking.</p>
+          <div class="booking-summary" id="finalSummary">
+            <!-- Summary will be populated by JavaScript -->
+          </div>
+        </div>
+        <div class="intake-card-footer">
+          <div class="button-group-left">
+            <button class="back-btn" onclick="goBack()">← Back</button>
+            <button class="restart-btn" onclick="restartForm()">Start Over</button>
+          </div>
+          <button class="continue-btn" onclick="proceedToPayment()">Proceed to Payment →</button>
+        </div>
+      `);
+      container.appendChild(submissionCard);
+      cardIndex++;
+
+      totalCards = cardIndex;
+      populateFinalSummary();
+    }
+
+    // Handle Enter key press
+    function handleEnterKey(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const continueBtn = event.target.closest('.intake-card').querySelector('.continue-btn');
+        if (continueBtn && !continueBtn.classList.contains('disabled')) {
+          saveAndContinue();
+        }
+      }
+    }
+
+    // Handle select change
+    function handleSelectChange(select) {
+      if (select.value) {
+        intakeData[select.name] = select.value;
+        saveIntakeData();
+      }
+    }
+
+    // Handle social media choice
+    function handleSocialChoice(button, value) {
+      selectChoice(button, value, 'socialTagging');
+      
+      if (value === 'No') {
+        // Skip Instagram handles and go to final submission
+        setTimeout(() => {
+          // Regenerate cards to skip Instagram handles
+          generateIntakeCards();
+          showCard(totalCards - 1); // Go to last card (submission)
+        }, 800);
       }
     }
 
@@ -666,197 +1223,21 @@
       return total;
     }
 
-    // Generate all intake cards
-    function generateIntakeCards() {
-      const container = document.getElementById('intakeCardStack');
-      container.innerHTML = '';
-
-      // Card 0 - Welcome
-      const card0 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
-          <h2>Almost There!</h2>
-          <p>Just a few details about you and your pet(s) to complete your booking. This will help us provide the best possible session experience.</p>
-        </div>
-        <div class="intake-card-footer">
-          <button class="continue-btn" onclick="advanceCard()">Let's Get Started →</button>
-        </div>
-      `, true);
-
-      // Card 1 - Primary Pet Info
-      const card1 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
-          <h2>Tell Us About Your Pet</h2>
-          <div class="form-group required">
-            <label for="petName">Pet's Name</label>
-            <input type="text" id="petName" name="petName" required placeholder="Enter your pet's name" value="${intakeData.petName || ''}">
-            <div class="form-error">Please enter your pet's name</div>
-          </div>
-          <div class="form-group required">
-            <label for="petBreed">Breed</label>
-            <input type="text" id="petBreed" name="petBreed" required placeholder="e.g., Golden Retriever, Mixed Breed" value="${intakeData.petBreed || ''}">
-            <div class="form-error">Please enter your pet's breed</div>
-          </div>
-          <div class="form-group required">
-            <label for="petAge">Age</label>
-            <select id="petAge" name="petAge" required>
-              <option value="">Select age range</option>
-              <option value="Puppy (under 1 year)" ${intakeData.petAge === 'Puppy (under 1 year)' ? 'selected' : ''}>Puppy (under 1 year)</option>
-              <option value="Young (1-3 years)" ${intakeData.petAge === 'Young (1-3 years)' ? 'selected' : ''}>Young (1-3 years)</option>
-              <option value="Adult (4-7 years)" ${intakeData.petAge === 'Adult (4-7 years)' ? 'selected' : ''}>Adult (4-7 years)</option>
-              <option value="Senior (8+ years)" ${intakeData.petAge === 'Senior (8+ years)' ? 'selected' : ''}>Senior (8+ years)</option>
-            </select>
-            <div class="form-error">Please select your pet's age range</div>
-          </div>
-        </div>
-        <div class="intake-card-footer">
-          <button class="back-btn" onclick="goBack()">← Back</button>
-          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
-        </div>
-      `);
-
-      // Add cards to container
-      container.appendChild(card0);
-      container.appendChild(card1);
-
-      // Add second pet card if needed
-      if (sessionData.petCount === "2") {
-        const card2 = createCard(`
-          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body">
-            <h2>Tell Us About Your Second Pet</h2>
-            <div class="form-group required">
-              <label for="pet2Name">Pet's Name</label>
-              <input type="text" id="pet2Name" name="pet2Name" required placeholder="Enter your second pet's name" value="${intakeData.pet2Name || ''}">
-              <div class="form-error">Please enter your pet's name</div>
-            </div>
-            <div class="form-group required">
-              <label for="pet2Breed">Breed</label>
-              <input type="text" id="pet2Breed" name="pet2Breed" required placeholder="e.g., Golden Retriever, Mixed Breed" value="${intakeData.pet2Breed || ''}">
-              <div class="form-error">Please enter your pet's breed</div>
-            </div>
-            <div class="form-group required">
-              <label for="pet2Age">Age</label>
-              <select id="pet2Age" name="pet2Age" required>
-                <option value="">Select age range</option>
-                <option value="Puppy (under 1 year)" ${intakeData.pet2Age === 'Puppy (under 1 year)' ? 'selected' : ''}>Puppy (under 1 year)</option>
-                <option value="Young (1-3 years)" ${intakeData.pet2Age === 'Young (1-3 years)' ? 'selected' : ''}>Young (1-3 years)</option>
-                <option value="Adult (4-7 years)" ${intakeData.pet2Age === 'Adult (4-7 years)' ? 'selected' : ''}>Adult (4-7 years)</option>
-                <option value="Senior (8+ years)" ${intakeData.pet2Age === 'Senior (8+ years)' ? 'selected' : ''}>Senior (8+ years)</option>
-              </select>
-              <div class="form-error">Please select your pet's age range</div>
-            </div>
-          </div>
-          <div class="intake-card-footer">
-            <button class="back-btn" onclick="goBack()">← Back</button>
-            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
-          </div>
-        `);
-        container.appendChild(card2);
-      }
-
-      // Contact Info Card
-      const contactCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
-          <h2>Your Contact Information</h2>
-          <div class="form-group required">
-            <label for="ownerName">Full Name</label>
-            <input type="text" id="ownerName" name="ownerName" required placeholder="Enter your full name" value="${intakeData.ownerName || ''}">
-            <div class="form-error">Please enter your full name</div>
-          </div>
-          <div class="form-group required">
-            <label for="ownerEmail">Email Address</label>
-            <input type="email" id="ownerEmail" name="ownerEmail" required placeholder="Enter your email address" value="${intakeData.ownerEmail || ''}">
-            <div class="form-error">Please enter a valid email address</div>
-          </div>
-          <div class="form-group required">
-            <label for="ownerPhone">Phone Number</label>
-            <input type="tel" id="ownerPhone" name="ownerPhone" required placeholder="Enter your phone number" value="${intakeData.ownerPhone || ''}">
-            <div class="form-error">Please enter your phone number</div>
-          </div>
-        </div>
-        <div class="intake-card-footer">
-          <button class="back-btn" onclick="goBack()">← Back</button>
-          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
-        </div>
-      `);
-      container.appendChild(contactCard);
-
-      // Add second person card if needed
-      if (sessionData.peopleCount === "2") {
-        const person2Card = createCard(`
-          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body">
-            <h2>Second Person Information</h2>
-            <div class="form-group">
-              <label for="person2Name">Full Name</label>
-              <input type="text" id="person2Name" name="person2Name" placeholder="Enter second person's name" value="${intakeData.person2Name || ''}">
-            </div>
-            <div class="form-group">
-              <label for="person2Relation">Relationship</label>
-              <select id="person2Relation" name="person2Relation">
-                <option value="">Select relationship</option>
-                <option value="Spouse/Partner" ${intakeData.person2Relation === 'Spouse/Partner' ? 'selected' : ''}>Spouse/Partner</option>
-                <option value="Family Member" ${intakeData.person2Relation === 'Family Member' ? 'selected' : ''}>Family Member</option>
-                <option value="Friend" ${intakeData.person2Relation === 'Friend' ? 'selected' : ''}>Friend</option>
-                <option value="Other" ${intakeData.person2Relation === 'Other' ? 'selected' : ''}>Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="intake-card-footer">
-            <button class="back-btn" onclick="goBack()">← Back</button>
-            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
-          </div>
-        `);
-        container.appendChild(person2Card);
-      }
-
-      // Special Requests Card
-      const requestsCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
-          <h2>Special Requests & Notes</h2>
-          <div class="form-group">
-            <label for="specialRequests">Any special requests or things we should know?</label>
-            <textarea id="specialRequests" name="specialRequests" placeholder="Let us know about any special needs, behavior notes, or specific shots you'd like...">${intakeData.specialRequests || ''}</textarea>
-          </div>
-        </div>
-        <div class="intake-card-footer">
-          <button class="back-btn" onclick="goBack()">← Back</button>
-          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
-        </div>
-      `);
-      container.appendChild(requestsCard);
-
-      // Final Review Card
-      const reviewCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
-          <h2>Ready to Book!</h2>
-          <div class="booking-summary" id="finalSummary">
-            <!-- Summary will be populated by JavaScript -->
-          </div>
-        </div>
-        <div class="intake-card-footer">
-          <button class="back-btn" onclick="goBack()">← Back</button>
-          <button class="continue-btn" onclick="proceedToPayment()">Proceed to Payment →</button>
-        </div>
-      `);
-      container.appendChild(reviewCard);
-
-      // Populate final summary when last card is reached
-      populateFinalSummary();
-    }
-
     // Populate final summary
     function populateFinalSummary() {
-      // This will be called when the review card is shown
       setTimeout(() => {
         const summary = document.getElementById('finalSummary');
         if (summary) {
           const total = calculateTotal();
+          const petNames = [];
+          const petCount = parseInt(sessionData.petCount) || 1;
+          
+          for (let i = 1; i <= petCount; i++) {
+            const petPrefix = i === 1 ? 'pet' : `pet${i}`;
+            const petName = intakeData[petPrefix + 'Name'];
+            if (petName) petNames.push(petName);
+          }
+          
           summary.innerHTML = `
             <div class="summary-item">
               <span class="label">Session:</span>
@@ -872,38 +1253,38 @@
             </div>
             <div class="summary-item">
               <span class="label">Pet(s):</span>
-              <span class="value">${intakeData.petName || "—"}${sessionData.petCount === "2" ? ` & ${intakeData.pet2Name || "Pet 2"}` : ""}</span>
+              <span class="value">${petNames.join(' & ') || "—"}</span>
             </div>
             <div class="summary-item">
               <span class="label">Contact:</span>
-              <span class="value">${intakeData.ownerName || "—"}</span>
+              <span class="value">${intakeData.clientFirstName || "—"} ${intakeData.clientLastName || ""}</span>
             </div>
             <div class="summary-item total">
               <span class="label">Total:</span>
-              <span class="value">$${total}</span>
+              <span class="value">${total}</span>
             </div>
           `;
         }
       }, 100);
     }
 
-    // Proceed to payment (placeholder for now)
+    // Proceed to payment
     function proceedToPayment() {
-      // Save all data
+      // Save all final data
       saveIntakeData();
       
       // Combine all data for payment
       const finalData = {
         ...sessionData,
         ...intakeData,
-        totalPrice: calculateTotal()
+        totalPrice: calculateTotal(),
+        submissionTimestamp: new Date().toISOString()
       };
       
       localStorage.setItem("ptpFinalBookingData", JSON.stringify(finalData));
       
-      // TODO: Integrate with Stripe payment
-      alert("Payment integration coming soon! All your data has been saved.");
-      console.log("Final booking data:", finalData);
+      // Redirect to payment page
+      window.location.href = 'payment.html';
     }
   </script>
 </body>
