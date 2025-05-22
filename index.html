@@ -730,7 +730,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.2.0</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.3.0</p>
   </footer>
 
   <script>
@@ -973,11 +973,8 @@
           <h2>🐕 Pet Behavior Policy</h2>
           <div class="agreement-summary">
             <p>You agree to abide by the pet behavior policy.</p>
-            <button class="view-policy-btn" onclick="openPolicyModal('behavior')">Click here to view full policy →</button>
+            <a href="#" class="policy-link" onclick="openPolicyModal('behavior')">Click here to view full policy and agree</a>
           </div>
-        </div>
-        <div class="session-card-footer">
-          <button class="agree-btn" onclick="agreeToPolicy('behavior')">Agree</button>
         </div>
       `);
 
@@ -988,11 +985,8 @@
           <h2>📸 Photography Service Agreement</h2>
           <div class="agreement-summary">
             <p>You agree to the photography service terms and usage rights.</p>
-            <button class="view-policy-btn" onclick="openPolicyModal('photography')">Click here to view full policy →</button>
+            <a href="#" class="policy-link" onclick="openPolicyModal('photography')">Click here to view full policy and agree</a>
           </div>
-        </div>
-        <div class="session-card-footer">
-          <button class="agree-btn" onclick="agreeToPolicy('photography')">Agree</button>
         </div>
       `);
 
@@ -1003,11 +997,8 @@
           <h2>📅 Cancellation & Refund Policy</h2>
           <div class="agreement-summary">
             <p>You agree to the cancellation and refund policy terms.</p>
-            <button class="view-policy-btn" onclick="openPolicyModal('cancellation')">Click here to view full policy →</button>
+            <a href="#" class="policy-link" onclick="openPolicyModal('cancellation')">Click here to view full policy and agree</a>
           </div>
-        </div>
-        <div class="session-card-footer">
-          <button class="agree-btn" onclick="agreeToPolicy('cancellation')">Continue to Date Selection</button>
         </div>
       `);
 
@@ -1111,6 +1102,9 @@
             <button class="close-modal-btn" onclick="closePolicyModal()">✕</button>
           </div>
           <div class="policy-modal-text" id="modalText"></div>
+          <div class="policy-modal-footer">
+            <button class="modal-agree-btn" id="modalAgreeBtn">Agree</button>
+          </div>
         </div>
       `;
       document.body.appendChild(modal);
@@ -1128,13 +1122,25 @@
       const modal = document.getElementById('policyModal');
       const title = document.getElementById('modalTitle');
       const text = document.getElementById('modalText');
+      const agreeBtn = document.getElementById('modalAgreeBtn');
       
       const policy = policyContent[policyType];
       title.textContent = policy.title;
       text.textContent = policy.text;
       
+      // Set up agree button
+      agreeBtn.onclick = () => agreeToPolicy(policyType);
+      
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
+    }
+
+    // Scroll to top function
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
     // Close policy modal
@@ -1146,6 +1152,9 @@
 
     // Agree to policy and advance
     function agreeToPolicy(policyType) {
+      // Close modal first
+      closePolicyModal();
+      
       // Save agreement to sessionData
       sessionData[`${policyType}Agreement`] = true;
       saveSessionData();
@@ -1154,10 +1163,14 @@
       if (policyType === 'cancellation') {
         sessionData.agreementsCompleted = true;
         saveSessionData();
-        window.location.href = '/ptp-pick-date-step-3.html';
+        setTimeout(() => {
+          window.location.href = '/ptp-pick-date-step-3.html';
+        }, 300);
       } else {
         // Advance to next card
-        advanceCard();
+        setTimeout(() => {
+          advanceCard();
+        }, 300);
       }
     }
   </script>
