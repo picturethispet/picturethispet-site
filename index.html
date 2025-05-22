@@ -77,6 +77,7 @@
       display: flex;
       align-items: center;
       transition: opacity 0.3s ease;
+      text-decoration: none;
     }
 
     .logo-link:hover {
@@ -757,7 +758,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.5.0</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.5.1</p>
   </footer>
 
   <script>
@@ -815,28 +816,32 @@
       const cards = document.querySelectorAll('.session-card');
       
       cards.forEach((card, i) => {
+        card.classList.remove('active');
         if (i === index) {
           card.classList.add('active');
-        } else {
-          card.classList.remove('active');
         }
       });
       
       currentCard = index;
+      console.log('Showing card:', index); // Debug line
     }
 
     // Advance to next card with poof animation
     function advanceCard() {
       const currentCardEl = document.querySelector('.session-card.active');
+      const nextCardIndex = currentCard + 1;
+      
+      console.log('Advancing from card', currentCard, 'to card', nextCardIndex); // Debug line
+      
       if (currentCardEl) {
         currentCardEl.classList.add('exiting');
         
         setTimeout(() => {
           currentCardEl.classList.remove('active', 'exiting');
-          showCard(currentCard + 1);
+          showCard(nextCardIndex);
         }, 300);
       } else {
-        showCard(currentCard + 1);
+        showCard(nextCardIndex);
       }
     }
 
