@@ -356,7 +356,7 @@
     }
 
     .session-card.agreement-card {
-      height: 960px; /* Increased by 20% from 800px */
+      height: 1152px; /* Increased by another 20% from 960px (total 44% increase) */
       padding: 3rem 2.5rem;
     }
 
@@ -719,8 +719,13 @@
         padding: 2rem 1.5rem;
       }
 
+      /* Special sizing for summary card - 50% bigger */
+      .session-card:nth-child(5) {
+        height: 900px; /* 50% bigger than 600px */
+      }
+
       .session-card.agreement-card {
-        height: 1152px; /* Increased by another 20% from 960px */
+        height: 1382px; /* Increased by another 20% from 1152px (total 73% increase from original) */
         padding: 3rem 1.5rem; /* Increased top/bottom padding */
       }
 
@@ -879,15 +884,17 @@
       <!-- Progress Indicator -->
       <div class="session-progress-section" id="sessionProgress">
         <div class="session-progress-steps">
-          <div class="session-progress-step completed">1</div>
-          <div class="session-progress-line completed"></div>
-          <div class="session-progress-step completed">2</div>
-          <div class="session-progress-line completed"></div>
-          <div class="session-progress-step active">3</div>
+          <div class="session-progress-step active">1</div>
+          <div class="session-progress-line"></div>
+          <div class="session-progress-step">2</div>
+          <div class="session-progress-line"></div>
+          <div class="session-progress-step">3</div>
           <div class="session-progress-line"></div>
           <div class="session-progress-step">4</div>
+          <div class="session-progress-line"></div>
+          <div class="session-progress-step">5</div>
         </div>
-        <p class="session-progress-text" id="sessionProgressText">Questions</p>
+        <p class="session-progress-text" id="sessionProgressText">Session Builder</p>
       </div>
     </section>
   </main>
@@ -959,27 +966,30 @@
       const steps = document.querySelectorAll('.session-progress-step');
       const lines = document.querySelectorAll('.session-progress-line');
       
-      // Only show progress bar for cards 3 and 4 (questions and summary)
-      if (currentCard >= 3 && currentCard <= 4) {
-        progressSection.classList.add('visible');
-        
-        // Update progress based on current card
-        if (currentCard === 3) {
-          // Questions card
-          progressText.textContent = 'Questions';
-          steps[2].className = 'session-progress-step active';
-          steps[3].className = 'session-progress-step';
-          lines[2].className = 'session-progress-line';
-        } else if (currentCard === 4) {
-          // Summary card  
-          progressText.textContent = 'Summary';
-          steps[2].className = 'session-progress-step completed';
-          steps[3].className = 'session-progress-step active';
-          lines[2].className = 'session-progress-line completed';
-        }
-      } else {
-        progressSection.classList.remove('visible');
+      // Always show progress bar
+      progressSection.classList.add('visible');
+      
+      // Reset all steps and lines
+      steps.forEach((step, index) => {
+        step.className = 'session-progress-step';
+      });
+      lines.forEach((line, index) => {
+        line.className = 'session-progress-line';
+      });
+      
+      // Update progress based on current card
+      if (currentCard >= 0 && currentCard <= 4) {
+        // Step 1: Session Builder (cards 0-4)
+        progressText.textContent = 'Session Builder';
+        steps[0].className = 'session-progress-step active';
+      } else if (currentCard >= 5 && currentCard <= 7) {
+        // Step 2: Agreements (cards 5-7)
+        progressText.textContent = 'Agreements';
+        steps[0].className = 'session-progress-step completed';
+        steps[1].className = 'session-progress-step active';
+        lines[0].className = 'session-progress-line completed';
       }
+      // Note: Steps 3-5 (Pick a Date, Intake, Payment) will be handled on their respective pages
     }
 
     // Show specific card and track history properly
