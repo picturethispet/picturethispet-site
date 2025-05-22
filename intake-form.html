@@ -180,14 +180,14 @@
       position: relative;
       height: auto;
       z-index: 2;
-      min-height: 900px;
+      min-height: 1100px;
     }
 
     .intake-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: 900px;
+      height: 1100px;
       width: 100%;
       max-width: 600px;
       animation: moveBackground 30s ease-in-out infinite;
@@ -201,8 +201,7 @@
       transform: scale(0.9);
       display: none;
       position: relative;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: visible;
     }
 
     .intake-card.active {
@@ -236,7 +235,7 @@
       width: 100%;
       min-height: 0;
       padding-bottom: 4rem;
-      overflow-y: auto;
+      overflow: visible;
     }
 
     .intake-card-body h2 {
@@ -854,10 +853,19 @@
         return;
       }
       
-      // Auto-advance for choice questions after a short delay
-      setTimeout(() => {
-        advanceCard();
-      }, 800);
+      // Check if this card has ONLY choice buttons (no other form fields)
+      const activeCard = document.querySelector('.intake-card.active');
+      const hasOtherFields = activeCard.querySelectorAll('input, select, textarea').length > 0;
+      
+      // Only auto-advance if there are no other form fields to fill
+      if (!hasOtherFields) {
+        setTimeout(() => {
+          advanceCard();
+        }, 800);
+      } else {
+        // Just update validation state
+        validateCurrentCard();
+      }
     }
 
     // Validate current card
@@ -1009,9 +1017,10 @@
           <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
           <div class="intake-card-body">
             <h2>More About ${petCount > 1 ? `Pet ${i}` : 'Your Pet'}</h2>
-            <div class="form-group">
+            <div class="form-group required">
               <label for="${petPrefix}FavoriteToy">Favorite Toy</label>
-              <input type="text" id="${petPrefix}FavoriteToy" name="${petPrefix}FavoriteToy" placeholder="What's their favorite toy?" value="${intakeData[petPrefix + 'FavoriteToy'] || ''}" onkeypress="handleEnterKey(event)">
+              <input type="text" id="${petPrefix}FavoriteToy" name="${petPrefix}FavoriteToy" required placeholder="What's their favorite toy?" value="${intakeData[petPrefix + 'FavoriteToy'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-error">Please enter your pet's favorite toy</div>
             </div>
             <div class="form-group required">
               <label>Is your pet good off leash?</label>
@@ -1020,9 +1029,10 @@
                 <button class="choice-btn ${intakeData[petPrefix + 'OffLeash'] === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', '${petPrefix}OffLeash')">No</button>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group required">
               <label for="${petPrefix}Behavior">Describe your pet's general behavior</label>
-              <textarea id="${petPrefix}Behavior" name="${petPrefix}Behavior" placeholder="Tell us about their personality, energy level, etc...">${intakeData[petPrefix + 'Behavior'] || ''}</textarea>
+              <textarea id="${petPrefix}Behavior" name="${petPrefix}Behavior" required placeholder="Tell us about their personality, energy level, etc...">${intakeData[petPrefix + 'Behavior'] || ''}</textarea>
+              <div class="form-error">Please describe your pet's behavior</div>
             </div>
             <div class="form-group">
               <label for="${petPrefix}Notes">Anything else you'd like us to know?</label>
@@ -1236,9 +1246,16 @@
       if (value === 'No') {
         // Skip Instagram handles and go to final submission
         setTimeout(() => {
-          // Regenerate cards to skip Instagram handles
+          advanceCard(); // Just go to next card (final submission)
+        }, 800);
+      } else if (value === 'Yes') {
+        // Regenerate cards to include Instagram handles
+        setTimeout(() => {
           generateIntakeCards();
-          showCard(totalCards - 1); // Go to last card (submission)
+          showCard(currentCard); // Stay on current card but regenerated
+          setTimeout(() => {
+            advanceCard(); // Then advance to Instagram handles
+          }, 100);
         }, 800);
       }
     }
