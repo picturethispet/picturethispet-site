@@ -629,9 +629,25 @@
         padding: 0 1rem;
       }
 
+      .session-card-stack {
+        height: 450px; /* Match mobile card height */
+      }
+
       .session-card {
         height: 450px; /* Slightly smaller for mobile */
         padding: 1.5rem;
+      }
+
+      .session-card.active {
+        transform: translateX(-50%) translateY(0) scale(1);
+      }
+
+      .session-card.stacked-1 {
+        transform: translateX(-50%) translateY(6px) scale(0.97);
+      }
+
+      .session-card.stacked-2 {
+        transform: translateX(-50%) translateY(12px) scale(0.94);
       }
 
       .session-card-body h2,
@@ -741,7 +757,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved.</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.0.1</p>
   </footer>
 
   <script>
@@ -926,7 +942,7 @@
             <li class="total"><span class="label">Total:</span> <span class="value">$${total}</span></li>
           </ul>
           <div class="session-card-footer">
-            <a href="/ptp-agreements-complete-step-2" class="continue-btn">Continue →</a>
+            <a href="/ptp-pick-date-step-3.html" class="continue-btn">Continue →</a>
           </div>
           <div class="navigation-buttons">
             <button class="back-btn" onclick="goBack()">🔙 Back</button>
