@@ -180,14 +180,14 @@
       position: relative;
       height: auto;
       z-index: 2;
-      min-height: 750px;
+      min-height: 900px;
     }
 
     .intake-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: 750px;
+      height: 900px;
       width: 100%;
       max-width: 600px;
       animation: moveBackground 30s ease-in-out infinite;
@@ -201,7 +201,8 @@
       transform: scale(0.9);
       display: none;
       position: relative;
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
     .intake-card.active {
@@ -234,7 +235,8 @@
       justify-content: flex-start;
       width: 100%;
       min-height: 0;
-      padding-bottom: 3rem;
+      padding-bottom: 4rem;
+      overflow-y: auto;
     }
 
     .intake-card-body h2 {
@@ -257,7 +259,7 @@
 
     /* === FORM STYLES === */
     .form-group {
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       text-align: left;
       width: 100%;
       max-width: 450px;
@@ -286,6 +288,7 @@
       font-size: 1rem;
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
+      min-height: 50px;
     }
 
     .form-group input::placeholder,
@@ -680,6 +683,7 @@
       loadIntakeData();
       generateIntakeCards();
       setupKeyboardNavigation();
+      setupRealTimeValidation();
     });
 
     // Load session data from localStorage
@@ -712,7 +716,20 @@
       localStorage.setItem("ptpIntakeData", JSON.stringify(intakeData));
     }
 
-    // Keyboard navigation setup
+    // Setup real-time validation
+    function setupRealTimeValidation() {
+      document.addEventListener('input', function(e) {
+        if (e.target.matches('input, select, textarea')) {
+          setTimeout(validateCurrentCard, 100);
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        if (e.target.matches('.choice-btn')) {
+          setTimeout(validateCurrentCard, 100);
+        }
+      });
+    }
     function setupKeyboardNavigation() {
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
@@ -869,6 +886,16 @@
         }
       });
 
+      // Update continue button state
+      const continueBtn = activeCard.querySelector('.continue-btn');
+      if (continueBtn) {
+        if (isValid) {
+          continueBtn.classList.remove('disabled');
+        } else {
+          continueBtn.classList.add('disabled');
+        }
+      }
+
       return isValid;
     }
 
@@ -899,13 +926,16 @@
       // Card 0 - Welcome
       const welcomeCard = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
-          <h2>Almost There!</h2>
-          <p>Just a few details about you and your pet(s) to complete your booking. This will help us provide the best possible session experience.</p>
+        <div class="intake-card-body" style="justify-content: center; align-items: center; text-align: center;">
+          <div>
+            <h2>Almost There!</h2>
+            <p>Just a few details about you and your pet(s) to complete your booking. This will help us provide the best possible session experience.</p>
+            <button class="continue-btn" onclick="advanceCard()" style="margin-top: 2rem;">Let's Get Started →</button>
+          </div>
         </div>
         <div class="intake-card-footer">
           <div class="button-group-left"></div>
-          <button class="continue-btn" onclick="advanceCard()">Let's Get Started →</button>
+          <div></div>
         </div>
       `, true);
       container.appendChild(welcomeCard);
