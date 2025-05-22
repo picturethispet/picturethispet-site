@@ -1342,8 +1342,20 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, initializing...');
       loadSessionData();
+      
+      // Reset variables
+      currentCard = 0;
+      currentQuestion = 0;
+      cardHistory = [];
+      
       initializeSessionBuilder();
+      
+      // Make sure first card is active
+      setTimeout(() => {
+        showCard(0);
+      }, 200);
     });
   </script>
 </body>
