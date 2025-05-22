@@ -49,7 +49,7 @@
     }
 
     /* === HEADER STYLES === */
-    header, footer {
+    footer {
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
       background-position: center;
@@ -65,7 +65,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: transparent; /* Made transparent */
       backdrop-filter: blur(8px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -922,7 +922,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v2.0.0</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v2.2.0 - Transparent Header + Button Fix</p>
   </footer>
 
   <script>
@@ -1264,8 +1264,22 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('*** PAGE LOADED - Initializing Session Builder ***');
       loadSessionData();
+      
+      // Reset variables
+      currentCard = 0;
+      currentQuestion = 0;
+      cardHistory = [];
+      
       initializeSessionBuilder();
+      
+      // Verify setup
+      setTimeout(() => {
+        console.log('*** Final check: Total cards created:', document.querySelectorAll('.session-card').length);
+        console.log('*** Active cards:', document.querySelectorAll('.session-card.active').length);
+        console.log('*** Start button exists:', !!document.querySelector('[data-action="start"]'));
+      }, 500);
     });
   </script>
 </body>
