@@ -231,6 +231,70 @@
       overflow: hidden;
     }
 
+    /* === PROGRESS INDICATOR === */
+    .session-progress-section {
+      text-align: center;
+      margin: 2rem auto;
+      max-width: 600px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .session-progress-section.visible {
+      opacity: 1;
+    }
+
+    .session-progress-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .session-progress-step {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .session-progress-step.completed {
+      background: var(--available-green);
+      border-color: var(--available-green);
+      color: white;
+    }
+
+    .session-progress-step.active {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .session-progress-line {
+      width: 50px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .session-progress-line.completed {
+      background: var(--available-green);
+    }
+
+    .session-progress-text {
+      color: white;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
     .session-builder-header {
       text-align: center;
       margin-bottom: 3rem;
@@ -656,12 +720,12 @@
       }
 
       .session-card.agreement-card {
-        height: 960px; /* Increased proportionally by 20% from 800px */
-        padding: 2.5rem 1.5rem;
+        height: 1152px; /* Increased by another 20% from 960px */
+        padding: 3rem 1.5rem; /* Increased top/bottom padding */
       }
 
       .session-card-logo {
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem; /* Increased from 2rem for better spacing */
         max-width: 150px;
       }
 
@@ -716,7 +780,7 @@
       .navigation-buttons {
         flex-direction: column;
         align-items: center;
-        gap: 0.75rem;
+        gap: 1rem; /* Increased gap for better spacing */
         margin-top: 2rem;
         padding-top: 1.5rem;
       }
@@ -726,6 +790,7 @@
         width: 100%;
         max-width: 200px;
         padding: 1rem 1.5rem;
+        text-align: center; /* Ensure text is centered */
       }
 
       .session-card-footer {
@@ -810,6 +875,20 @@
       <div class="session-card-stack" id="sessionCardStack">
         <!-- Cards will be dynamically generated -->
       </div>
+
+      <!-- Progress Indicator -->
+      <div class="session-progress-section" id="sessionProgress">
+        <div class="session-progress-steps">
+          <div class="session-progress-step completed">1</div>
+          <div class="session-progress-line completed"></div>
+          <div class="session-progress-step completed">2</div>
+          <div class="session-progress-line completed"></div>
+          <div class="session-progress-step active">3</div>
+          <div class="session-progress-line"></div>
+          <div class="session-progress-step">4</div>
+        </div>
+        <p class="session-progress-text" id="sessionProgressText">Questions</p>
+      </div>
     </section>
   </main>
 
@@ -873,6 +952,36 @@
       return card;
     }
 
+    // Update progress bar based on current card
+    function updateProgressBar() {
+      const progressSection = document.getElementById('sessionProgress');
+      const progressText = document.getElementById('sessionProgressText');
+      const steps = document.querySelectorAll('.session-progress-step');
+      const lines = document.querySelectorAll('.session-progress-line');
+      
+      // Only show progress bar for cards 3 and 4 (questions and summary)
+      if (currentCard >= 3 && currentCard <= 4) {
+        progressSection.classList.add('visible');
+        
+        // Update progress based on current card
+        if (currentCard === 3) {
+          // Questions card
+          progressText.textContent = 'Questions';
+          steps[2].className = 'session-progress-step active';
+          steps[3].className = 'session-progress-step';
+          lines[2].className = 'session-progress-line';
+        } else if (currentCard === 4) {
+          // Summary card  
+          progressText.textContent = 'Summary';
+          steps[2].className = 'session-progress-step completed';
+          steps[3].className = 'session-progress-step active';
+          lines[2].className = 'session-progress-line completed';
+        }
+      } else {
+        progressSection.classList.remove('visible');
+      }
+    }
+
     // Show specific card and track history properly
     function showCard(index) {
       const cards = document.querySelectorAll('.session-card');
@@ -886,6 +995,9 @@
       
       // Update card position
       currentCard = index;
+      
+      // Update progress bar
+      updateProgressBar();
     }
 
     // Advance to next card with animation and track history
