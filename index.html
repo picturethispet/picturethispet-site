@@ -11,7 +11,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
-  
   <style>
     :root {
       --orange: #F47C2C;
@@ -19,136 +18,29 @@
       --dark-brown: #4B2E1E;
     }
 
-    /* === SESSION BUILDER CARDS === */
-.session-card-stack {
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 2;
-}
-
-.session-card {
-  background-image: url("assets/images/ani_bkgd_cool.png");
-  background-size: 100% 100%;
-  background-position: center;
-  min-height: 360px;
-  animation: moveBackground 30s ease-in-out infinite;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  padding: 2rem;
-  width: 100%;
-  margin-bottom: 2rem;
-  color: white;
-  font-family: 'SF Pro Display', sans-serif;
-  transition: transform 0.6s ease, opacity 0.6s ease;
-  opacity: 0;
-  transform: scale(0.98);
-  display: none;
-
-  /* 🔥 NEW - to center content inside */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.session-card.active {
-  display: block;
-  opacity: 1;
-  transform: scale(1);
-}
-
-.session-card-logo {
-  display: block;
-  max-width: 180px;
-  margin: 0 auto 1rem;
-}
-
-.session-card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-  }
-
-.session-card-footer {
-    margin-top: auto;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-.answer-button {
-    padding: 0.6rem 1.2rem; /* matched to start/next buttons */
-    min-width: 120px;
-  }
-.session-card-footer button,
-.continue-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 2px solid white;
-  border-radius: 12px;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.answer-button:hover,
-.session-card-footer button:hover,
-.continue-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.session-summary ul {
-  list-style: none;
-  padding: 0;
-  font-size: 1.1rem;
-  text-align: left;
-  max-width: 320px;
-  margin: 1rem auto;
-}
-
-.session-summary ul li {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding: 0.5rem 0;
-}
-
-.session-summary ul li.total {
-  font-weight: bold;
-  border-top: 2px solid rgba(255,255,255,0.2);
-  margin-top: 1rem;
-}
-
-.session-summary ul li.total {
-  font-weight: bold;
-  border-top: 2px solid rgba(255,255,255,0.2);
-  margin-top: 1rem;
-}
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+    
     html, body {
       overflow-x: hidden;
     }
+    
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
     }
+
     @keyframes moveBackground {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
+    /* === HEADER STYLES === */
     header, footer {
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: cover;
@@ -158,6 +50,7 @@
       animation: moveBackground 30s ease-in-out infinite;
       background-size: 100% 100%;
     }
+    
     header {
       width: 100%;
       display: flex;
@@ -174,20 +67,24 @@
       z-index: 1000;
       height: 110px;
     }
+    
     .desktop-logo {
       height: 100px;
     }
+    
     .site-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
     }
+    
     .site-nav a {
       color: white;
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
     }
+    
     .book-btn {
       background-color: var(--dark-brown);
       color: white;
@@ -197,18 +94,23 @@
       text-decoration: none;
       margin-left: 1rem;
     }
+    
     .mobile-menu-btn {
       display: none;
     }
+
+    /* === HERO SECTION === */
     .hero-section {
       margin-top: 100px;
       position: relative;
     }
+    
     .hero-section img {
       width: 100%;
       height: auto;
       display: block;
     }
+    
     .gradient-text {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
@@ -225,6 +127,8 @@
       max-width: 320px;
       pointer-events: none;
     }
+
+    /* === SECTION SPLIT === */
     .section-split {
       display: flex;
       justify-content: space-between;
@@ -240,6 +144,7 @@
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
       z-index: 1;
     }
+    
     .section-split::before {
       content: "";
       position: absolute;
@@ -253,16 +158,19 @@
       animation: moveBackground 30s ease-in-out infinite;
       opacity: 0.5;
     }
+    
     .side-a, .side-b {
       flex: 1;
       padding: 2rem;
     }
+    
     .side-a {
       display: flex;
       justify-content: flex-end;
       align-items: center;
       text-align: right;
     }
+    
     .side-a h1 {
       max-width: 420px;
       margin-left: auto;
@@ -277,12 +185,14 @@
       -webkit-text-fill-color: transparent;
       text-align: left;
     }
+    
     .side-b-inner {
       display: flex;
       flex-direction: column;
       text-align: left;
       max-width: 420px;
     }
+    
     .side-b h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
@@ -290,6 +200,7 @@
       line-height: 1.3;
       margin-bottom: 1rem;
     }
+    
     .side-b p {
       font-family: 'Inter', sans-serif;
       font-size: 1.35rem;
@@ -297,6 +208,292 @@
       max-width: 480px;
       margin: 0 auto;
     }
+
+    /* === SESSION BUILDER SECTION === */
+    section#session-builder-section {
+      padding: 6rem 1rem;
+      background: url('/api/placeholder/1920/1080');
+      background-size: 100% 100%;
+      animation: moveBackground 30s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .session-builder-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .session-heading {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 3.8rem;
+      line-height: 1.25;
+      background: url('/api/placeholder/800/600');
+      background-size: cover;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .session-subtext {
+      color: white;
+      font-size: 1.2rem;
+      font-family: 'SF Pro Display', sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    /* === SESSION CARDS === */
+    .session-card-stack {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .session-card {
+      background-image: url('/api/placeholder/600/400');
+      background-size: 100% 100%;
+      background-position: center;
+      min-height: 400px;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      width: 100%;
+      margin-bottom: 2rem;
+      color: white;
+      font-family: 'SF Pro Display', sans-serif;
+      transition: all 0.6s ease;
+      opacity: 0;
+      transform: translateX(100px) scale(0.95);
+      display: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .session-card.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+
+    .session-card.exiting {
+      transform: translateX(-100px) scale(0.95);
+      opacity: 0;
+    }
+
+    .session-card-logo {
+      display: block;
+      max-width: 180px;
+      margin: 0 auto 1.5rem;
+      height: auto;
+    }
+
+    .session-card-body {
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .session-card-body h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .session-card-body p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .session-info-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+      text-align: left;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .session-info-list li {
+      font-size: 1.1rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+    }
+
+    .session-info-list li:last-child {
+      border-bottom: none;
+    }
+
+    .question-prompt {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: white;
+    }
+
+    .answer-options {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .answer-button {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      min-width: 140px;
+    }
+
+    .answer-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .session-card-footer {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .session-card-footer button,
+    .continue-btn,
+    .primary-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .session-card-footer button:hover,
+    .continue-btn:hover,
+    .primary-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .navigation-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .back-btn,
+    .restart-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover,
+    .restart-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* === SUMMARY STYLES === */
+    .session-summary h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: white;
+    }
+
+    .session-summary-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+      text-align: left;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .session-summary-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem 0;
+      font-size: 1.1rem;
+    }
+
+    .session-summary-list li:last-child {
+      border-bottom: none;
+    }
+
+    .session-summary-list li.total {
+      font-weight: bold;
+      font-size: 1.3rem;
+      border-top: 2px solid rgba(255, 255, 255, 0.3);
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    .session-summary-list .label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .session-summary-list .value {
+      color: white;
+      font-weight: 600;
+    }
+
+    /* === FOOTER === */
     footer {
       background-color: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
@@ -305,17 +502,14 @@
       padding: 2rem 1rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
+
     .payments img {
       height: 30px;
       margin: 0 1rem;
       filter: brightness(0) invert(1);
     }
-    section#session-builder-section {
-      padding: 6rem 1rem;
-      background: url('assets/images/main_background_allsystem.png');
-      background-size: 100% 100%;
-      animation: moveBackground 30s ease-in-out infinite;
-    }
+
+    /* === RESPONSIVE DESIGN === */
     @media (max-width: 768px) {
       header {
         flex-direction: row;
@@ -324,7 +518,11 @@
         height: 80px;
         padding: 0.5rem 1rem;
       }
-      .desktop-logo { height: 48px; }
+      
+      .desktop-logo { 
+        height: 48px; 
+      }
+      
       .site-nav {
         display: none;
         flex-direction: column;
@@ -337,11 +535,13 @@
         padding: 1rem;
         z-index: 999;
       }
+      
       .site-nav a {
         display: block;
         margin: 0.5rem 0;
         font-size: 1.2rem;
       }
+      
       .mobile-menu-btn {
         display: block;
         background: none;
@@ -350,29 +550,103 @@
         font-size: 2rem;
         cursor: pointer;
       }
+      
       .hero-section {
         margin-top: 80px;
       }
+      
       .section-split {
         flex-direction: column;
         text-align: center;
         padding: 1.5rem 1rem;
         gap: 0.5rem;
       }
+      
       .side-a h1, .side-b h2, .side-b p {
         text-align: center;
       }
+
+      .side-a h1 {
+        font-size: 2.5rem;
+      }
+
+      .side-b h2 {
+        font-size: 1.8rem;
+      }
+
+      .side-b p {
+        font-size: 1.1rem;
+      }
+
+      /* Mobile Session Builder */
+      section#session-builder-section {
+        padding: 4rem 1rem;
+      }
+
+      .session-heading {
+        font-size: 2.5rem;
+      }
+
+      .session-subtext {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+
+      .session-card {
+        min-height: 360px;
+        padding: 1.5rem;
+      }
+
+      .session-card-body h2 {
+        font-size: 1.8rem;
+      }
+
+      .question-prompt {
+        font-size: 1.6rem;
+      }
+
+      .answer-options {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .answer-button {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .navigation-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .back-btn,
+      .restart-btn {
+        width: 100%;
+        max-width: 200px;
+      }
     }
+
     @media (min-width: 769px) {
-      .mobile-menu-btn { display: none !important; }
-      .side-a { padding-left: 6rem; }
-      .side-b { padding-right: 2rem; }
+      .mobile-menu-btn { 
+        display: none !important; 
+      }
+      
+      .side-a { 
+        padding-left: 6rem; 
+      }
+      
+      .side-b { 
+        padding-right: 2rem; 
+      }
     }
   </style>
+  
   <script>
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
     };
+    
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
@@ -381,7 +655,7 @@
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <img src="/api/placeholder/200/100" alt="PictureThisPet Logo" class="desktop-logo" />
     <nav class="site-nav">
       <a href="#">Home</a>
       <a href="#">Locations</a>
@@ -391,164 +665,258 @@
     </nav>
     <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
   </header>
+  
   <main>
     <section class="hero-section">
-      <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
+      <img src="/api/placeholder/1200/600" alt="Golden Retriever in Cheesman Park" />
       <div class="section-breaker-shadow"></div>
     </section>
+    
     <section class="section-split">
       <div class="side-a">
-        <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
+        <h1>ONE DAY, THEY WON'T<br />BE THERE BY YOUR SIDE</h1>
       </div>
       <div class="side-b">
         <div class="side-b-inner">
-          <h2>But these moments?<br />They’ll last forever.</h2>
+          <h2>But these moments?<br />They'll last forever.</h2>
           <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
         </div>
       </div>
     </section>
-    
 
-<!-- ✅ SECTION 3: SESSION BUILDER START -->
-<section id="session-builder-section" style="padding: 6rem 1rem; background: url('assets/images/main_background_allsystem.png'); background-size: 100% 100%; animation: moveBackground 30s ease-in-out infinite;">
-  <!-- Section Heading -->
-  <div class="session-builder-header" style="text-align: center; margin-bottom: 3rem;">
-    <h2 class="session-heading" style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 3.8rem; line-height: 1.25; background: url('assets/images/ani_bkgd_cool.png'); background-size: cover; background-position: center; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Let’s Find Your Perfect Session</h2>
-    <p class="session-subtext" style="color: white; font-size: 1.2rem; font-family: 'SF Pro Display', sans-serif; max-width: 600px; margin: 1rem auto 3rem auto; text-align: center; opacity: 0.9;">We take a unique approach to help you discover the perfect session type<br />for you and your pet. Just answer a few quick questions to get started.</p>
-  </div>
-
-  <!-- Card Stack -->
-  <div class="session-card-stack" id="sessionCardStack">
-    <!-- Cards will be dynamically injected -->
-  </div>
-</section> 
-    <script>
-  const questions = [
-    { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
-    { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
-    { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
-    { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] }
-  ];
-
-  let answers = JSON.parse(localStorage.getItem("ptpSessionData")) || {};
-  let qIndex = 0;
-
-  function createCard(content, id = "", isActive = false) {
-    const card = document.createElement("div");
-    card.className = `session-card${isActive ? ' active' : ''}`;
-    if (id) card.id = id;
-    card.innerHTML = content;
-    document.getElementById("sessionCardStack").appendChild(card);
-  }
-
-  function renderInitialCards() {
-    createCard(`
-      <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" class="session-card-logo" />
-      <div class="session-card-body">
-        <h2 class="intro-heading">Let’s go over what’s included</h2>
-        <p class="intro-subtext">In just a few quick steps, we’ll help you pick the perfect session, and show you what’s included with each option.</p>
+    <!-- SESSION BUILDER SECTION -->
+    <section id="session-builder-section">
+      <div class="session-builder-header">
+        <h2 class="session-heading">Let's Find Your Perfect Session</h2>
+        <p class="session-subtext">We take a unique approach to help you discover the perfect session type<br />for you and your pet. Just answer a few quick questions to get started.</p>
       </div>
-      <div class="session-card-footer">
-        <button onclick="advanceTo(1)">Start →</button>
+
+      <div class="session-card-stack" id="sessionCardStack">
+        <!-- Cards will be dynamically generated -->
       </div>
-    `, "card0", true);
+    </section>
+  </main>
 
-    createCard(`<div class="session-card-body"><h2 class="session-info-heading">Mini Session</h2><ul class="session-info-list"><li>✔ Up to 60 minutes</li><li>✔ 5 edited photos</li><li>✔ 1 person + 1 pet included</li><li>✔ Access to downloads & print shop</li></ul></div><div class="session-card-footer"><button onclick="advanceTo(2)">Next →</button></div>`, "card1");
+  <footer>
+    <div class="payments">
+      <img src="/api/placeholder/80/30" alt="Visa" />
+      <img src="/api/placeholder/80/30" alt="Mastercard" />
+      <img src="/api/placeholder/80/30" alt="PayPal" />
+    </div>
+    <p>&copy; 2024 PictureThisPet. All rights reserved.</p>
+  </footer>
 
-    createCard(`<div class="session-card-body"><h2 class="session-info-heading">Full Session</h2><ul class="session-info-list"><li>✔ Up to 90 minutes</li><li>✔ 10 edited photos</li><li>✔ 1 person + 1 pet included</li><li>✔ Access to downloads & print shop</li></ul></div><div class="session-card-footer"><button onclick="advanceTo(3)">Next →</button></div>`, "card2");
+  <script>
+    // Session Builder Logic
+    const sessionData = {
+      session: '',
+      park: '',
+      petCount: '',
+      peopleCount: ''
+    };
 
-    createCard(`<div class="session-card-body" id="questionCard"></div>`, "card3");
-    createCard(`<div class="session-card-body session-summary" id="summaryCard" style="display:none;"></div>`, "card4");
-  }
+    const questions = [
+      { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
+      { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
+      { label: "How many pets? (max 2)", name: "petCount", options: ["1", "2"] },
+      { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] }
+    ];
 
-  function advanceTo(index) {
-    document.querySelectorAll(".session-card").forEach((card, i) => {
-      card.classList.remove("active");
-      if (i === index) card.classList.add("active");
-    });
-    if (index === 3) loadQuestion();
-  }
+    let currentCard = 0;
+    let currentQuestion = 0;
 
-  function loadQuestion() {
-    const q = questions[qIndex];
-    const container = document.getElementById("questionCard");
-    container.innerHTML = `<h2>${q.label}</h2>`;
-    const footer = document.createElement("div");
-    footer.className = "session-card-footer";
-
-    q.options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.className = "answer-button";
-      btn.textContent = opt;
-      btn.onclick = () => {
-        answers[q.name] = opt;
-        localStorage.setItem("ptpSessionData", JSON.stringify(answers));
-        if (qIndex < questions.length - 1) {
-          qIndex++;
-          loadQuestion();
-        } else {
-          renderSummary();
-          advanceTo(4);
-        }
-      };
-      footer.appendChild(btn);
-    });
-
-    if (qIndex > 0) {
-      const backBtn = document.createElement("button");
-      backBtn.textContent = "← Back";
-      backBtn.onclick = () => {
-        qIndex--;
-        loadQuestion();
-      };
-      footer.appendChild(backBtn);
-
-      const restartBtn = document.createElement("button");
-      restartBtn.textContent = "Start Over";
-      restartBtn.onclick = () => {
-        if (confirm("Are you sure you want to start over?")) {
-          localStorage.removeItem("ptpSessionData");
-          qIndex = 0;
-          answers = {};
-          advanceTo(3);
-        }
-      };
-      footer.appendChild(restartBtn);
+    // Load existing data from localStorage
+    function loadSessionData() {
+      const saved = localStorage.getItem("ptpSessionData");
+      if (saved) {
+        Object.assign(sessionData, JSON.parse(saved));
+      }
     }
 
-    container.appendChild(footer);
-  }
+    // Save data to localStorage
+    function saveSessionData() {
+      localStorage.setItem("ptpSessionData", JSON.stringify(sessionData));
+    }
 
-  function renderSummary() {
-    const data = answers;
-    let total = 0;
-    if (data.session === "Mini") total += 50;
-    if (data.session === "Full") total += 100;
-    if (data.petCount === "2") total += 40;
-    if (data.peopleCount === "2") total += 20;
+    // Calculate total price
+    function calculateTotal() {
+      let total = 0;
+      if (sessionData.session === "Mini") total += 50;
+      if (sessionData.session === "Full") total += 100;
+      if (sessionData.petCount === "2") total += 40;
+      if (sessionData.peopleCount === "2") total += 20;
+      return total;
+    }
 
-    const summaryHTML = `
-      <h3>Your Session Summary</h3>
-      <ul>
-        <li><strong>Session:</strong> ${data.session || "—"}</li>
-        <li><strong>Location:</strong> ${data.park || "—"}</li>
-        <li><strong>Pets:</strong> ${data.petCount || "—"}</li>
-        <li><strong>People:</strong> ${data.peopleCount || "—"}</li>
-        <li class="total"><strong>Total:</strong> $${total}</li>
-      </ul>
-      <button class="continue-btn" onclick="window.location.href='/ptp-agreements-complete-step-2'">Continue →</button>
-    `;
+    // Create card element
+    function createCard(content, isActive = false) {
+      const card = document.createElement("div");
+      card.className = `session-card${isActive ? ' active' : ''}`;
+      card.innerHTML = content;
+      return card;
+    }
 
-    const summaryCard = document.getElementById("summaryCard");
-    summaryCard.innerHTML = summaryHTML;
-    summaryCard.style.display = "block";
-  }
+    // Show specific card
+    function showCard(index) {
+      const cards = document.querySelectorAll('.session-card');
+      cards.forEach((card, i) => {
+        if (i === index) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+      currentCard = index;
+    }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    renderInitialCards();
-  });
-</script>
+    // Advance to next card with animation
+    function advanceCard() {
+      const currentCardEl = document.querySelector('.session-card.active');
+      if (currentCardEl) {
+        currentCardEl.classList.add('exiting');
+        setTimeout(() => {
+          currentCardEl.classList.remove('active', 'exiting');
+          showCard(currentCard + 1);
+        }, 300);
+      } else {
+        showCard(currentCard + 1);
+      }
+    }
 
-<!-- ✅ SECTION 3: SESSION BUILDER END -->
-</body>
-</html>
+    // Go back to previous card
+    function goBack() {
+      if (currentCard > 3) {
+        currentQuestion--;
+        showCard(currentCard - 1);
+      } else if (currentCard > 0) {
+        showCard(currentCard - 1);
+      }
+    }
+
+    // Restart session
+    function restartSession() {
+      if (confirm("Are you sure you want to start over? This will clear all your selections.")) {
+        // Clear data
+        Object.keys(sessionData).forEach(key => sessionData[key] = '');
+        localStorage.removeItem("ptpSessionData");
+        currentCard = 0;
+        currentQuestion = 0;
+        
+        // Reinitialize
+        initializeSessionBuilder();
+      }
+    }
+
+    // Handle question answer
+    function selectAnswer(questionName, answer) {
+      sessionData[questionName] = answer;
+      saveSessionData();
+      
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        setTimeout(() => {
+          advanceCard();
+          renderQuestion();
+        }, 300);
+      } else {
+        setTimeout(() => {
+          advanceCard();
+          renderSummary();
+        }, 300);
+      }
+    }
+
+    // Render current question
+    function renderQuestion() {
+      const question = questions[currentQuestion];
+      const questionCard = document.getElementById('questionCard');
+      
+      if (questionCard) {
+        const buttonsHtml = currentCard > 3 ? `
+          <div class="navigation-buttons">
+            <button class="back-btn" onclick="goBack()">🔙 Back</button>
+            <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+          </div>
+        ` : '';
+
+        questionCard.innerHTML = `
+          <div class="question-prompt">${question.label}</div>
+          <div class="answer-options">
+            ${question.options.map(option => 
+              `<button class="answer-button" onclick="selectAnswer('${question.name}', '${option}')">
+                ${option}
+              </button>`
+            ).join('')}
+          </div>
+          ${buttonsHtml}
+        `;
+      }
+    }
+
+    // Render summary
+    function renderSummary() {
+      const summaryCard = document.getElementById('summaryCard');
+      const total = calculateTotal();
+      
+      if (summaryCard) {
+        summaryCard.innerHTML = `
+          <h3>Your Session Summary</h3>
+          <ul class="session-summary-list">
+            <li><span class="label">Session:</span> <span class="value">${sessionData.session || "—"}</span></li>
+            <li><span class="label">Location:</span> <span class="value">${sessionData.park || "—"}</span></li>
+            <li><span class="label">Pets:</span> <span class="value">${sessionData.petCount || "—"}</span></li>
+            <li><span class="label">People:</span> <span class="value">${sessionData.peopleCount || "—"}</span></li>
+            <li class="total"><span class="label">Total:</span> <span class="value">$${total}</span></li>
+          </ul>
+          <div class="session-card-footer">
+            <a href="/ptp-agreements-complete-step-2" class="continue-btn">Continue →</a>
+          </div>
+          <div class="navigation-buttons">
+            <button class="back-btn" onclick="goBack()">🔙 Back</button>
+            <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+          </div>
+        `;
+      }
+    }
+
+    // Initialize all cards
+    function initializeSessionBuilder() {
+      const container = document.getElementById('sessionCardStack');
+      container.innerHTML = '';
+
+      // Card 0 - Intro
+      const card0 = createCard(`
+        <img src="/api/placeholder/180/80" alt="PictureThisPet Logo" class="session-card-logo" />
+        <div class="session-card-body">
+          <h2>Let's go over what's included</h2>
+          <p>In just a few quick steps, we'll help you pick the perfect session, and show you what's included with each option.</p>
+        </div>
+        <div class="session-card-footer">
+          <button onclick="advanceCard()">Start →</button>
+        </div>
+      `, true);
+
+      // Card 1 - Mini Session Info
+      const card1 = createCard(`
+        <div class="session-card-body">
+          <h2>Mini Session</h2>
+          <ul class="session-info-list">
+            <li>✔ Up to 60 minutes</li>
+            <li>✔ 5 edited photos</li>
+            <li>✔ 1 person + 1 pet included</li>
+            <li>✔ Access to downloads & print shop</li>
+          </ul>
+        </div>
+        <div class="session-card-footer">
+          <button onclick="advanceCard()">Next →</button>
+        </div>
+      `);
+
+      // Card 2 - Full Session Info
+      const card2 = createCard(`
+        <div class="session-card-body">
+          <h2>Full Session</h2>
+          <ul class="session-info-list">
+            <li>✔ Up to 90 minutes</li>
+            <li>✔ 10 edited photos</li>
+            <li>✔ 1 person +
