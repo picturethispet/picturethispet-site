@@ -16,7 +16,6 @@
       --orange: #F47C2C;
       --gold: #FDB75E;
       --dark-brown: #4B2E1E;
-      --available-green: #10b981;
     }
 
     * {
@@ -245,70 +244,6 @@
       margin-left: calc(-50vw + 50%);
     }
 
-    /* === PROGRESS INDICATOR === */
-    .session-progress-section {
-      text-align: center;
-      margin: 2rem auto;
-      max-width: 600px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .session-progress-section.visible {
-      opacity: 1;
-    }
-
-    .session-progress-steps {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .session-progress-step {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: rgba(255, 255, 255, 0.7);
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-    }
-
-    .session-progress-step.completed {
-      background: var(--available-green);
-      border-color: var(--available-green);
-      color: white;
-    }
-
-    .session-progress-step.active {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-      color: white;
-    }
-
-    .session-progress-line {
-      width: 50px;
-      height: 2px;
-      background: rgba(255, 255, 255, 0.3);
-      position: relative;
-    }
-
-    .session-progress-line.completed {
-      background: var(--available-green);
-    }
-
-    .session-progress-text {
-      color: white;
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-
     .session-builder-header {
       text-align: center;
       margin-bottom: 3rem;
@@ -365,9 +300,7 @@
       opacity: 0;
       transform: scale(0.9);
       display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
+      position: relative;
       overflow: hidden;
     }
 
@@ -380,10 +313,6 @@
       grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: 2rem;
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%) scale(0.9);
     }
 
     .session-card.agreement-card .session-card-logo {
@@ -435,14 +364,10 @@
       align-items: center;
       opacity: 1;
       transform: scale(1);
-      position: relative;
     }
 
     .session-card.agreement-card.active {
       display: grid;
-      opacity: 1;
-      transform: translateX(-50%) scale(1);
-      position: absolute;
     }
 
     .session-card.exiting {
@@ -747,14 +672,6 @@
       .session-card {
         height: 600px;
         padding: 2rem 1.5rem;
-        position: relative;
-        left: 0;
-        transform: scale(0.9);
-      }
-
-      .session-card.active {
-        position: relative;
-        transform: scale(1);
       }
 
       /* Mobile Agreement Cards - Much Bigger (60% increase) */
@@ -766,17 +683,12 @@
         flex-direction: column;
         grid-template-columns: none;
         gap: 0;
-        position: relative;
-        left: 0;
-        transform: scale(0.9);
         align-items: center;
         justify-content: flex-start;
       }
 
       .session-card.agreement-card.active {
         display: flex;
-        position: relative;
-        transform: scale(1);
       }
 
       .session-card.agreement-card .session-card-logo {
@@ -971,22 +883,6 @@
       <div class="session-card-stack" id="sessionCardStack">
         <!-- Cards will be dynamically generated -->
       </div>
-
-      <!-- Progress Indicator -->
-      <div class="session-progress-section" id="sessionProgress">
-        <div class="session-progress-steps">
-          <div class="session-progress-step active">1</div>
-          <div class="session-progress-line"></div>
-          <div class="session-progress-step">2</div>
-          <div class="session-progress-line"></div>
-          <div class="session-progress-step">3</div>
-          <div class="session-progress-line"></div>
-          <div class="session-progress-step">4</div>
-          <div class="session-progress-line"></div>
-          <div class="session-progress-step">5</div>
-        </div>
-        <p class="session-progress-text" id="sessionProgressText">Session Builder</p>
-      </div>
     </section>
   </main>
 
@@ -1000,7 +896,7 @@
   </footer>
 
   <script>
-    // Session Builder Logic
+    // Session Builder Logic - FIXED VERSION
     const sessionData = {
       session: '',
       park: '',
@@ -1040,39 +936,6 @@
       return card;
     }
 
-    // Update progress bar based on current card
-    function updateProgressBar() {
-      const progressSection = document.getElementById('sessionProgress');
-      const progressText = document.getElementById('sessionProgressText');
-      const steps = document.querySelectorAll('.session-progress-step');
-      const lines = document.querySelectorAll('.session-progress-line');
-      
-      // Always show progress bar
-      progressSection.classList.add('visible');
-      
-      // Reset all steps and lines
-      steps.forEach((step, index) => {
-        step.className = 'session-progress-step';
-      });
-      lines.forEach((line, index) => {
-        line.className = 'session-progress-line';
-      });
-      
-      // Update progress based on current card
-      if (currentCard >= 0 && currentCard <= 3) {
-        // Step 1: Session Builder (cards 0-3, removed summary card)
-        progressText.textContent = 'Session Builder';
-        steps[0].className = 'session-progress-step active';
-      } else if (currentCard >= 4 && currentCard <= 6) {
-        // Step 2: Agreements (cards 4-6)
-        progressText.textContent = 'Agreements';
-        steps[0].className = 'session-progress-step completed';
-        steps[1].className = 'session-progress-step active';
-        lines[0].className = 'session-progress-line completed';
-      }
-      // Note: Steps 3-5 (Pick a Date, Intake, Payment) will be handled on their respective pages
-    }
-
     // Show specific card and track history properly
     function showCard(index) {
       const cards = document.querySelectorAll('.session-card');
@@ -1093,9 +956,6 @@
           renderCurrentQuestion();
         }, 100);
       }
-      
-      // Update progress bar
-      updateProgressBar();
     }
 
     // Advance to next card with animation and track history
@@ -1116,7 +976,7 @@
       }
     }
 
-    // FIXED: Go back to actual previous card using history
+    // Go back to actual previous card using history
     function goBack() {
       if (cardHistory.length > 0) {
         const previousCard = cardHistory.pop(); // Get and remove last visited card
@@ -1263,9 +1123,9 @@
         </div>
       `);
 
-      // REMOVED: Card 4 - Summary (this card has been completely removed)
+      // REMOVED: Summary card (skip directly to agreements)
 
-      // Card 4 - Behavior Policy Agreement (previously card 5)
+      // Card 4 - Behavior Policy Agreement
       const card4 = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
@@ -1284,7 +1144,7 @@
       `);
       card4.classList.add('agreement-card');
 
-      // Card 5 - Photography Agreement (previously card 6)
+      // Card 5 - Photography Agreement
       const card5 = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
@@ -1303,7 +1163,7 @@
       `);
       card5.classList.add('agreement-card');
 
-      // Card 6 - Cancellation Policy Agreement (previously card 7)
+      // Card 6 - Cancellation Policy Agreement
       const card6 = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
@@ -1342,20 +1202,8 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('DOM loaded, initializing...');
       loadSessionData();
-      
-      // Reset variables
-      currentCard = 0;
-      currentQuestion = 0;
-      cardHistory = [];
-      
       initializeSessionBuilder();
-      
-      // Make sure first card is active
-      setTimeout(() => {
-        showCard(0);
-      }, 200);
     });
   </script>
 </body>
