@@ -175,7 +175,7 @@
 
     /* === INTAKE FORM SECTION === */
     .intake-section {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
       position: relative;
       height: auto;
@@ -190,11 +190,11 @@
       height: auto;
       min-height: 500px;
       width: 100%;
-      max-width: 800px;
+      max-width: 900px;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      padding: 2.5rem;
+      padding: 3rem;
       color: white;
       font-family: 'SF Pro Display', sans-serif;
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -289,7 +289,7 @@
       margin-bottom: 1.75rem;
       text-align: left;
       width: 100%;
-      max-width: 500px;
+      max-width: 600px;
       margin-left: auto;
       margin-right: auto;
       position: relative;
@@ -297,13 +297,28 @@
 
     .form-row {
       display: flex;
-      gap: 1.5rem;
+      gap: 2rem;
       align-items: flex-start;
+      margin-bottom: 1.75rem;
     }
 
     .form-row .form-group {
       flex: 1;
+      margin-bottom: 0;
+      max-width: none;
+    }
+
+    .form-row-thirds {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
       margin-bottom: 1.75rem;
+    }
+
+    .form-row-thirds .form-group {
+      flex: 1;
+      margin-bottom: 0;
+      max-width: none;
     }
 
     .form-group label {
@@ -327,6 +342,14 @@
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
       min-height: 50px;
+    }
+
+    .form-group input[type="text"]:not([maxlength="10"]):not([maxlength="12"]) {
+      text-transform: capitalize;
+    }
+
+    .form-group input[name*="ZipCode"] {
+      max-width: 150px;
     }
 
     .form-group input::placeholder,
@@ -684,8 +707,10 @@
         <div class="progress-step completed">3</div>
         <div class="progress-line completed"></div>
         <div class="progress-step active">4</div>
+        <div class="progress-line"></div>
+        <div class="progress-step">5</div>
       </div>
-      <p class="progress-text">Step 4 of 4 - Session Details</p>
+      <p class="progress-text">Session Details</p>
     </div>
 
     <!-- Intake Form Section -->
@@ -801,7 +826,11 @@
       input.value = formattedValue;
     }
 
-    // Date formatting (MM/DD/YYYY)
+    // Zip code formatting (5-digit numeric only)
+    function formatZipCode(input) {
+      const value = input.value.replace(/\D/g, '');
+      input.value = value.slice(0, 5);
+    }
     function formatDate(input) {
       const value = input.value.replace(/\D/g, '');
       let formattedValue = '';
@@ -962,7 +991,15 @@
         });
         
         saveIntakeData();
-        advanceCard();
+        
+        // Check if we need to regenerate cards for Instagram handles
+        if (intakeData.socialTagging === 'Yes' && currentCard === totalCards - 2) {
+          // We're on the social tagging card and user selected Yes
+          generateIntakeCards(); // Regenerate to include Instagram card
+          showCard(currentCard + 1); // Go to Instagram handles
+        } else {
+          advanceCard();
+        }
       }
     }
 
@@ -1104,32 +1141,36 @@
         const personPrefix = i === 1 ? 'client' : `client${i}`;
         const clientCard = createCard(`
           <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body">
+          <div class="intake-card-body form-content">
             <h2>${peopleCount > 1 ? `Person ${i} Information` : 'Your Information'}</h2>
-            <div class="form-group required">
-              <label for="${personPrefix}FirstName">First Name</label>
-              <input type="text" id="${personPrefix}FirstName" name="${personPrefix}FirstName" required placeholder="Enter first name" value="${intakeData[personPrefix + 'FirstName'] || ''}" onkeypress="handleEnterKey(event)">
-              <div class="form-error">Please enter first name</div>
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="${personPrefix}FirstName">First Name</label>
+                <input type="text" id="${personPrefix}FirstName" name="${personPrefix}FirstName" required placeholder="Enter first name" value="${intakeData[personPrefix + 'FirstName'] || ''}" onkeypress="handleEnterKey(event)">
+                <div class="form-error">Please enter first name</div>
+              </div>
+              <div class="form-group required">
+                <label for="${personPrefix}LastName">Last Name</label>
+                <input type="text" id="${personPrefix}LastName" name="${personPrefix}LastName" required placeholder="Enter last name" value="${intakeData[personPrefix + 'LastName'] || ''}" onkeypress="handleEnterKey(event)">
+                <div class="form-error">Please enter last name</div>
+              </div>
             </div>
-            <div class="form-group required">
-              <label for="${personPrefix}LastName">Last Name</label>
-              <input type="text" id="${personPrefix}LastName" name="${personPrefix}LastName" required placeholder="Enter last name" value="${intakeData[personPrefix + 'LastName'] || ''}" onkeypress="handleEnterKey(event)">
-              <div class="form-error">Please enter last name</div>
-            </div>
-            <div class="form-group required">
-              <label for="${personPrefix}Email">Email</label>
-              <input type="email" id="${personPrefix}Email" name="${personPrefix}Email" required placeholder="Enter email address" value="${intakeData[personPrefix + 'Email'] || ''}" onkeypress="handleEnterKey(event)">
-              <div class="form-error">Please enter a valid email address</div>
-            </div>
-            <div class="form-group required">
-              <label for="${personPrefix}Phone">Phone Number</label>
-              <input type="tel" id="${personPrefix}Phone" name="${personPrefix}Phone" required placeholder="555-555-5555" value="${intakeData[personPrefix + 'Phone'] || ''}" oninput="formatPhoneNumber(this)" onkeypress="handleEnterKey(event)" maxlength="12">
-              <div class="form-error">Please enter phone number</div>
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="${personPrefix}Phone">Phone Number</label>
+                <input type="tel" id="${personPrefix}Phone" name="${personPrefix}Phone" required placeholder="555-555-5555" value="${intakeData[personPrefix + 'Phone'] || ''}" oninput="formatPhoneNumber(this)" onkeypress="handleEnterKey(event)" maxlength="12">
+                <div class="form-error">Please enter phone number</div>
+              </div>
+              <div class="form-group required">
+                <label for="${personPrefix}Email">Email</label>
+                <input type="email" id="${personPrefix}Email" name="${personPrefix}Email" required placeholder="Enter email address" value="${intakeData[personPrefix + 'Email'] || ''}" onkeypress="handleEnterKey(event)">
+                <div class="form-error">Please enter a valid email address</div>
+              </div>
             </div>
             <div class="form-group required">
               <label for="${personPrefix}ZipCode">Zip Code</label>
-              <input type="text" id="${personPrefix}ZipCode" name="${personPrefix}ZipCode" required placeholder="Enter zip code" value="${intakeData[personPrefix + 'ZipCode'] || ''}" onkeypress="handleEnterKey(event)">
-              <div class="form-error">Please enter zip code</div>
+              <input type="text" id="${personPrefix}ZipCode" name="${personPrefix}ZipCode" required placeholder="12345" value="${intakeData[personPrefix + 'ZipCode'] || ''}" onkeypress="handleEnterKey(event)" oninput="formatZipCode(this)" maxlength="5" pattern="[0-9]{5}">
+              <div class="form-error">Please enter a 5-digit zip code</div>
             </div>
           </div>
           <div class="intake-card-footer">
@@ -1139,7 +1180,7 @@
             </div>
             <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
           </div>
-        `);
+        `, false, 'medium-card');
         container.appendChild(clientCard);
         cardIndex++;
       }
@@ -1245,10 +1286,14 @@
       // Final Submission Card
       const submissionCard = createCard(`
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
+        <div class="intake-card-body form-content">
           <h2>Ready to Proceed!</h2>
-          <p>All your information has been collected. Click below to proceed to payment and complete your booking.</p>
+          <p>Review your booking details below and proceed to payment to complete your session.</p>
           <div class="booking-summary" id="finalSummary">
+            <div class="summary-header">
+              <h3>Your Booking Summary</h3>
+              <p>Please review the details below</p>
+            </div>
             <!-- Summary will be populated by JavaScript -->
           </div>
         </div>
@@ -1259,7 +1304,7 @@
           </div>
           <button class="continue-btn" onclick="proceedToPayment()">Proceed to Payment →</button>
         </div>
-      `);
+      `, false, 'large-card');
       container.appendChild(submissionCard);
       cardIndex++;
 
@@ -1288,23 +1333,15 @@
 
     // Handle social media choice
     function handleSocialChoice(button, value) {
-      selectChoice(button, value, 'socialTagging');
+      const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
+      choiceButtons.forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
       
-      if (value === 'No') {
-        // Skip Instagram handles and go to final submission
-        setTimeout(() => {
-          advanceCard(); // Just go to next card (final submission)
-        }, 800);
-      } else if (value === 'Yes') {
-        // Regenerate cards to include Instagram handles
-        setTimeout(() => {
-          generateIntakeCards();
-          showCard(currentCard); // Stay on current card but regenerated
-          setTimeout(() => {
-            advanceCard(); // Then advance to Instagram handles
-          }, 100);
-        }, 800);
-      }
+      intakeData.socialTagging = value;
+      saveIntakeData();
+      
+      // Don't auto-advance, let user click Continue to proceed
+      validateCurrentCard();
     }
 
     // Calculate total price
