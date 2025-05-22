@@ -62,6 +62,17 @@
       z-index: 1000;
       height: 110px;
     }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+    }
     
     .desktop-logo {
       height: 100px;
@@ -568,7 +579,9 @@
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <a href="/" class="logo-link">
+      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
     <nav class="site-nav">
       <a href="/">Home</a>
       <a href="#">Locations</a>
@@ -590,8 +603,10 @@
         <div class="progress-step active">3</div>
         <div class="progress-line"></div>
         <div class="progress-step">4</div>
+        <div class="progress-line"></div>
+        <div class="progress-step">5</div>
       </div>
-      <p class="progress-text">Step 3 of 4 - Pick Your Date</p>
+      <p class="progress-text">Pick Your Date</p>
     </div>
 
     <!-- Calendar Section -->
@@ -673,7 +688,7 @@
 
   <!-- Version Footer -->
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v1.0.0</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v2.0.0</p>
   </footer>
 
   <script>
@@ -810,7 +825,7 @@
       }
     }
 
-    // Select date
+    // Select date - FIXED VERSION
     function selectDate(dateString, element) {
       // Remove previous selection
       document.querySelectorAll('.calendar-day.selected').forEach(el => {
@@ -822,14 +837,23 @@
       
       selectedDate = dateString;
       
-      // Update display
-      const date = new Date(dateString);
+      // FIXED: Create date object correctly to avoid timezone issues
+      const dateParts = dateString.split('-');
+      const year = parseInt(dateParts[0]);
+      const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed
+      const day = parseInt(dateParts[2]);
+      const date = new Date(year, month, day);
+      
+      // Format the date properly
       const formattedDate = new Intl.DateTimeFormat('en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
       }).format(date);
+      
+      console.log('Selected date string:', dateString);
+      console.log('Formatted date:', formattedDate);
       
       document.getElementById('selectedDate').textContent = formattedDate;
       
