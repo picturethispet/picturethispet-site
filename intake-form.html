@@ -1,1 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session Details | Picture This Pet</title>
+  <meta name="description" content="Tell us about your pet and session preferences.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --error-red: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* === HEADER === */
+    header {
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .book-btn {
+      background-color: var(--dark-brown);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      min-height: calc(100vh - 110px);
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      padding: 4rem 1rem;
+      position: relative;
+    }
+
+    /* === PROGRESS INDICATOR === */
+    .progress-section {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.completed {
+      background: var(--available-green);
+      border-color: var(--available-green);
+      color: white;
+    }
+
+    .progress-step.active {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .progress-line {
+      width: 60px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .progress-line.completed {
+      background: var(--available-green);
+    }
+
+    .progress-text {
+      color: white;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* === INTAKE FORM SECTION === */
+    .intake-section {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      height: auto;
+      z-index: 2;
+      min-height: 600px;
+    }
+
+    .intake-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      height: 600px;
+      width: 100%;
+      max-width: 600px;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      color: white;
+      font-family: 'SF Pro Display', sans-serif;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: scale(0.9);
+      display: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intake-card.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .intake-card.exiting {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    .intake-card-logo {
+      display: block;
+      max-width: 180px;
+      margin: 0 auto 2rem;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .intake-card-body {
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+    }
+
+    .intake-card-body h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: white;
+      margin-top: 1rem;
+    }
+
+    .intake-card-body p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* === FORM STYLES === */
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+      width: 100%;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-group.required label::after {
+      content: " *";
+      color: var(--error-red);
+    }
+
+    .form-error {
+      color: var(--error-red);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .form-group.error input,
+    .form-group.error select,
+    .form-group.error textarea {
+      border-color: var(--error-red);
+    }
+
+    .form-group.error .form-error {
+      display: block;
+    }
+
+    /* === BUTTON STYLES === */
+    .intake-card-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .continue-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .continue-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .continue-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* === SUMMARY STYLES === */
+    .booking-summary {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: left;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .summary-item .label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .summary-item .value {
+      color: white;
+      font-weight: 600;
+    }
+
+    .summary-item.total {
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      margin-top: 1rem;
+      padding-top: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo {
+        height: 48px;
+      }
+      
+      .site-nav {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      main {
+        margin-top: 80px;
+        padding: 2rem 1rem;
+      }
+
+      .intake-card {
+        height: 550px;
+        padding: 1.5rem;
+      }
+
+      .intake-card-body h2 {
+        font-size: 1.6rem;
+      }
+
+      .progress-steps {
+        gap: 0.5rem;
+      }
+
+      .progress-step {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+
+      .progress-line {
+        width: 40px;
+      }
+
+      .form-group {
+        max-width: 100%;
+      }
+    }
+
+    /* === ANIMATIONS === */
+    .intake-section {
+      animation: slideInUp 0.8s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link">
+      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="book-btn">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Progress Indicator -->
+    <div class="progress-section">
+      <div class="progress-steps">
+        <div class="progress-step completed">1</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">2</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">3</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step active">4</div>
+      </div>
+      <p class="progress-text">Step 4 of 4 - Session Details</p>
+    </div>
+
+    <!-- Intake Form Section -->
+    <div class="intake-section">
+      <div class="intake-card-stack" id="intakeCardStack">
+        <!-- Cards will be dynamically generated -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Version Footer -->
+  <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v1.0.0</p>
+  </footer>
+
+  <script>
+    // Session Data Management
+    let sessionData = {};
+    let intakeData = {};
+    let currentCard = 0;
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSessionData();
+      loadIntakeData();
+      generateIntakeCards();
+    });
+
+    // Load session data from localStorage
+    function loadSessionData() {
+      const saved = localStorage.getItem("ptpSessionData");
+      if (saved) {
+        sessionData = JSON.parse(saved);
+      }
+    }
+
+    // Load intake data from localStorage
+    function loadIntakeData() {
+      const saved = localStorage.getItem("ptpIntakeData");
+      if (saved) {
+        intakeData = JSON.parse(saved);
+      }
+    }
+
+    // Save intake data to localStorage
+    function saveIntakeData() {
+      localStorage.setItem("ptpIntakeData", JSON.stringify(intakeData));
+    }
+
+    // Create card element
+    function createCard(content, isActive = false) {
+      const card = document.createElement("div");
+      card.className = `intake-card${isActive ? ' active' : ''}`;
+      card.innerHTML = content;
+      return card;
+    }
+
+    // Show specific card
+    function showCard(index) {
+      const cards = document.querySelectorAll('.intake-card');
+      cards.forEach((card, i) => {
+        if (i === index) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+      currentCard = index;
+    }
+
+    // Advance to next card
+    function advanceCard() {
+      const currentCardEl = document.querySelector('.intake-card.active');
+      if (currentCardEl) {
+        currentCardEl.classList.add('exiting');
+        setTimeout(() => {
+          currentCardEl.classList.remove('active', 'exiting');
+          showCard(currentCard + 1);
+        }, 300);
+      } else {
+        showCard(currentCard + 1);
+      }
+    }
+
+    // Go back to previous card
+    function goBack() {
+      if (currentCard > 0) {
+        showCard(currentCard - 1);
+      }
+    }
+
+    // Validate current card
+    function validateCurrentCard() {
+      const activeCard = document.querySelector('.intake-card.active');
+      const inputs = activeCard.querySelectorAll('input[required], select[required], textarea[required]');
+      let isValid = true;
+
+      inputs.forEach(input => {
+        const formGroup = input.closest('.form-group');
+        if (!input.value.trim()) {
+          formGroup.classList.add('error');
+          isValid = false;
+        } else {
+          formGroup.classList.remove('error');
+        }
+      });
+
+      return isValid;
+    }
+
+    // Save current card data and advance
+    function saveAndContinue() {
+      if (validateCurrentCard()) {
+        // Save current form data
+        const activeCard = document.querySelector('.intake-card.active');
+        const inputs = activeCard.querySelectorAll('input, select, textarea');
+        
+        inputs.forEach(input => {
+          if (input.name) {
+            intakeData[input.name] = input.value;
+          }
+        });
+        
+        saveIntakeData();
+        advanceCard();
+      }
+    }
+
+    // Calculate total price
+    function calculateTotal() {
+      let total = 0;
+      if (sessionData.session === "Mini") total += 50;
+      if (sessionData.session === "Full") total += 100;
+      if (sessionData.petCount === "2") total += 40;
+      if (sessionData.peopleCount === "2") total += 20;
+      return total;
+    }
+
+    // Generate all intake cards
+    function generateIntakeCards() {
+      const container = document.getElementById('intakeCardStack');
+      container.innerHTML = '';
+
+      // Card 0 - Welcome
+      const card0 = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>Almost There!</h2>
+          <p>Just a few details about you and your pet(s) to complete your booking. This will help us provide the best possible session experience.</p>
+        </div>
+        <div class="intake-card-footer">
+          <button class="continue-btn" onclick="advanceCard()">Let's Get Started →</button>
+        </div>
+      `, true);
+
+      // Card 1 - Primary Pet Info
+      const card1 = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>Tell Us About Your Pet</h2>
+          <div class="form-group required">
+            <label for="petName">Pet's Name</label>
+            <input type="text" id="petName" name="petName" required placeholder="Enter your pet's name" value="${intakeData.petName || ''}">
+            <div class="form-error">Please enter your pet's name</div>
+          </div>
+          <div class="form-group required">
+            <label for="petBreed">Breed</label>
+            <input type="text" id="petBreed" name="petBreed" required placeholder="e.g., Golden Retriever, Mixed Breed" value="${intakeData.petBreed || ''}">
+            <div class="form-error">Please enter your pet's breed</div>
+          </div>
+          <div class="form-group required">
+            <label for="petAge">Age</label>
+            <select id="petAge" name="petAge" required>
+              <option value="">Select age range</option>
+              <option value="Puppy (under 1 year)" ${intakeData.petAge === 'Puppy (under 1 year)' ? 'selected' : ''}>Puppy (under 1 year)</option>
+              <option value="Young (1-3 years)" ${intakeData.petAge === 'Young (1-3 years)' ? 'selected' : ''}>Young (1-3 years)</option>
+              <option value="Adult (4-7 years)" ${intakeData.petAge === 'Adult (4-7 years)' ? 'selected' : ''}>Adult (4-7 years)</option>
+              <option value="Senior (8+ years)" ${intakeData.petAge === 'Senior (8+ years)' ? 'selected' : ''}>Senior (8+ years)</option>
+            </select>
+            <div class="form-error">Please select your pet's age range</div>
+          </div>
+        </div>
+        <div class="intake-card-footer">
+          <button class="back-btn" onclick="goBack()">← Back</button>
+          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+        </div>
+      `);
+
+      // Add cards to container
+      container.appendChild(card0);
+      container.appendChild(card1);
+
+      // Add second pet card if needed
+      if (sessionData.petCount === "2") {
+        const card2 = createCard(`
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+          <div class="intake-card-body">
+            <h2>Tell Us About Your Second Pet</h2>
+            <div class="form-group required">
+              <label for="pet2Name">Pet's Name</label>
+              <input type="text" id="pet2Name" name="pet2Name" required placeholder="Enter your second pet's name" value="${intakeData.pet2Name || ''}">
+              <div class="form-error">Please enter your pet's name</div>
+            </div>
+            <div class="form-group required">
+              <label for="pet2Breed">Breed</label>
+              <input type="text" id="pet2Breed" name="pet2Breed" required placeholder="e.g., Golden Retriever, Mixed Breed" value="${intakeData.pet2Breed || ''}">
+              <div class="form-error">Please enter your pet's breed</div>
+            </div>
+            <div class="form-group required">
+              <label for="pet2Age">Age</label>
+              <select id="pet2Age" name="pet2Age" required>
+                <option value="">Select age range</option>
+                <option value="Puppy (under 1 year)" ${intakeData.pet2Age === 'Puppy (under 1 year)' ? 'selected' : ''}>Puppy (under 1 year)</option>
+                <option value="Young (1-3 years)" ${intakeData.pet2Age === 'Young (1-3 years)' ? 'selected' : ''}>Young (1-3 years)</option>
+                <option value="Adult (4-7 years)" ${intakeData.pet2Age === 'Adult (4-7 years)' ? 'selected' : ''}>Adult (4-7 years)</option>
+                <option value="Senior (8+ years)" ${intakeData.pet2Age === 'Senior (8+ years)' ? 'selected' : ''}>Senior (8+ years)</option>
+              </select>
+              <div class="form-error">Please select your pet's age range</div>
+            </div>
+          </div>
+          <div class="intake-card-footer">
+            <button class="back-btn" onclick="goBack()">← Back</button>
+            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+          </div>
+        `);
+        container.appendChild(card2);
+      }
+
+      // Contact Info Card
+      const contactCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>Your Contact Information</h2>
+          <div class="form-group required">
+            <label for="ownerName">Full Name</label>
+            <input type="text" id="ownerName" name="ownerName" required placeholder="Enter your full name" value="${intakeData.ownerName || ''}">
+            <div class="form-error">Please enter your full name</div>
+          </div>
+          <div class="form-group required">
+            <label for="ownerEmail">Email Address</label>
+            <input type="email" id="ownerEmail" name="ownerEmail" required placeholder="Enter your email address" value="${intakeData.ownerEmail || ''}">
+            <div class="form-error">Please enter a valid email address</div>
+          </div>
+          <div class="form-group required">
+            <label for="ownerPhone">Phone Number</label>
+            <input type="tel" id="ownerPhone" name="ownerPhone" required placeholder="Enter your phone number" value="${intakeData.ownerPhone || ''}">
+            <div class="form-error">Please enter your phone number</div>
+          </div>
+        </div>
+        <div class="intake-card-footer">
+          <button class="back-btn" onclick="goBack()">← Back</button>
+          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+        </div>
+      `);
+      container.appendChild(contactCard);
+
+      // Add second person card if needed
+      if (sessionData.peopleCount === "2") {
+        const person2Card = createCard(`
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+          <div class="intake-card-body">
+            <h2>Second Person Information</h2>
+            <div class="form-group">
+              <label for="person2Name">Full Name</label>
+              <input type="text" id="person2Name" name="person2Name" placeholder="Enter second person's name" value="${intakeData.person2Name || ''}">
+            </div>
+            <div class="form-group">
+              <label for="person2Relation">Relationship</label>
+              <select id="person2Relation" name="person2Relation">
+                <option value="">Select relationship</option>
+                <option value="Spouse/Partner" ${intakeData.person2Relation === 'Spouse/Partner' ? 'selected' : ''}>Spouse/Partner</option>
+                <option value="Family Member" ${intakeData.person2Relation === 'Family Member' ? 'selected' : ''}>Family Member</option>
+                <option value="Friend" ${intakeData.person2Relation === 'Friend' ? 'selected' : ''}>Friend</option>
+                <option value="Other" ${intakeData.person2Relation === 'Other' ? 'selected' : ''}>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="intake-card-footer">
+            <button class="back-btn" onclick="goBack()">← Back</button>
+            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+          </div>
+        `);
+        container.appendChild(person2Card);
+      }
+
+      // Special Requests Card
+      const requestsCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>Special Requests & Notes</h2>
+          <div class="form-group">
+            <label for="specialRequests">Any special requests or things we should know?</label>
+            <textarea id="specialRequests" name="specialRequests" placeholder="Let us know about any special needs, behavior notes, or specific shots you'd like...">${intakeData.specialRequests || ''}</textarea>
+          </div>
+        </div>
+        <div class="intake-card-footer">
+          <button class="back-btn" onclick="goBack()">← Back</button>
+          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+        </div>
+      `);
+      container.appendChild(requestsCard);
+
+      // Final Review Card
+      const reviewCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body">
+          <h2>Ready to Book!</h2>
+          <div class="booking-summary" id="finalSummary">
+            <!-- Summary will be populated by JavaScript -->
+          </div>
+        </div>
+        <div class="intake-card-footer">
+          <button class="back-btn" onclick="goBack()">← Back</button>
+          <button class="continue-btn" onclick="proceedToPayment()">Proceed to Payment →</button>
+        </div>
+      `);
+      container.appendChild(reviewCard);
+
+      // Populate final summary when last card is reached
+      populateFinalSummary();
+    }
+
+    // Populate final summary
+    function populateFinalSummary() {
+      // This will be called when the review card is shown
+      setTimeout(() => {
+        const summary = document.getElementById('finalSummary');
+        if (summary) {
+          const total = calculateTotal();
+          summary.innerHTML = `
+            <div class="summary-item">
+              <span class="label">Session:</span>
+              <span class="value">${sessionData.session || "—"}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Date & Time:</span>
+              <span class="value">${sessionData.selectedDateTime || "—"}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Location:</span>
+              <span class="value">${sessionData.park || "—"}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Pet(s):</span>
+              <span class="value">${intakeData.petName || "—"}${sessionData.petCount === "2" ? ` & ${intakeData.pet2Name || "Pet 2"}` : ""}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Contact:</span>
+              <span class="value">${intakeData.ownerName || "—"}</span>
+            </div>
+            <div class="summary-item total">
+              <span class="label">Total:</span>
+              <span class="value">$${total}</span>
+            </div>
+          `;
+        }
+      }, 100);
+    }
+
+    // Proceed to payment (placeholder for now)
+    function proceedToPayment() {
+      // Save all data
+      saveIntakeData();
+      
+      // Combine all data for payment
+      const finalData = {
+        ...sessionData,
+        ...intakeData,
+        totalPrice: calculateTotal()
+      };
+      
+      localStorage.setItem("ptpFinalBookingData", JSON.stringify(finalData));
+      
+      // TODO: Integrate with Stripe payment
+      alert("Payment integration coming soon! All your data has been saved.");
+      console.log("Final booking data:", finalData);
+    }
+  </script>
+</body>
+</html>
