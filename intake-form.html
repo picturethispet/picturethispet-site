@@ -1,4 +1,27 @@
-<!DOCTYPE html>
+@media (max-width: 768px) {
+      .intake-section {
+        max-width: 100%;
+        padding: 0 1rem;
+      }
+      
+      .intake-card {
+        max-width: 100%;
+        padding: 2.5rem;
+        margin-bottom: 1rem;
+        min-height: 750px;
+      }
+
+      .intake-card.small-card {
+        min-height: 650px;
+      }
+
+      .intake-card.medium-card {
+        min-height: 850px;
+      }
+
+      .intake-card.large-card {
+        min-height: 1000px;
+      <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -208,18 +231,23 @@
 
     /* Card size variations */
     .intake-card.small-card {
-      min-height: 400px;
-      max-height: 500px;
+      min-height: 500px;
+      max-height: 600px;
     }
 
     .intake-card.medium-card {
-      min-height: 600px;
-      max-height: 750px;
+      min-height: 700px;
+      max-height: 850px;
     }
 
     .intake-card.large-card {
-      min-height: 800px;
-      max-height: 1000px;
+      min-height: 900px;
+      max-height: 1100px;
+    }
+
+    .intake-card.extra-large-card {
+      min-height: 1000px;
+      max-height: 1200px;
     }
 
     .intake-card.active {
@@ -239,7 +267,7 @@
     .intake-card-logo {
       display: block;
       max-width: 180px;
-      margin: 0 auto 1.5rem;
+      margin: 0 auto 2.5rem;
       height: auto;
       flex-shrink: 0;
     }
@@ -252,18 +280,20 @@
       justify-content: center;
       width: 100%;
       min-height: 0;
-      padding-bottom: 2rem;
+      padding-bottom: 3rem;
       overflow: visible;
     }
 
     .intake-card-body.form-content {
       justify-content: flex-start;
-      padding-top: 1rem;
+      padding-top: 1.5rem;
+      padding-bottom: 3.5rem;
     }
 
     .intake-card-body.centered-content {
       justify-content: center;
       align-items: center;
+      padding-bottom: 3rem;
     }
 
     .intake-card-body h2 {
@@ -290,7 +320,7 @@
 
     /* === FORM STYLES === */
     .form-group {
-      margin-bottom: 1.75rem;
+      margin-bottom: 2.25rem;
       text-align: left;
       width: 100%;
       max-width: 600px;
@@ -303,7 +333,7 @@
       display: flex;
       gap: 2rem;
       align-items: flex-start;
-      margin-bottom: 1.75rem;
+      margin-bottom: 2.25rem;
     }
 
     .form-row .form-group {
@@ -316,10 +346,23 @@
       display: flex;
       gap: 1.5rem;
       align-items: flex-start;
-      margin-bottom: 1.75rem;
+      margin-bottom: 2.25rem;
     }
 
     .form-row-thirds .form-group {
+      flex: 1;
+      margin-bottom: 0;
+      max-width: none;
+    }
+
+    .form-row-quad {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-bottom: 2.25rem;
+    }
+
+    .form-row-quad .form-group {
       flex: 1;
       margin-bottom: 0;
       max-width: none;
@@ -401,8 +444,8 @@
       display: flex;
       gap: 1rem;
       justify-content: center;
-      margin-top: 1rem;
-      margin-bottom: 2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 2.5rem;
     }
 
     .choice-btn {
@@ -505,14 +548,14 @@
 
     /* === BUTTON STYLES === */
     .intake-card-footer {
-      margin-top: 2rem;
+      margin-top: 3rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
       width: 100%;
       flex-shrink: 0;
-      padding-top: 1.5rem;
+      padding-top: 2rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -1079,16 +1122,18 @@
                 <div class="form-error">Please enter your pet's age</div>
               </div>
             </div>
-            <div class="form-group required">
-              <label for="${petPrefix}Birthdate">Pet's Birthdate</label>
-              <input type="text" id="${petPrefix}Birthdate" name="${petPrefix}Birthdate" required placeholder="MM/DD/YYYY" value="${intakeData[petPrefix + 'Birthdate'] || ''}" oninput="formatDate(this)" onkeypress="handleEnterKey(event)" maxlength="10">
-              <div class="form-error">Please enter your pet's birthdate</div>
-            </div>
-            <div class="form-group required">
-              <label>Pet's Gender</label>
-              <div class="choice-buttons" data-required="true">
-                <button class="choice-btn ${intakeData[petPrefix + 'Gender'] === 'Male' ? 'selected' : ''}" onclick="selectChoice(this, 'Male', '${petPrefix}Gender')">Male</button>
-                <button class="choice-btn ${intakeData[petPrefix + 'Gender'] === 'Female' ? 'selected' : ''}" onclick="selectChoice(this, 'Female', '${petPrefix}Gender')">Female</button>
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="${petPrefix}Birthdate">Pet's Birthdate</label>
+                <input type="text" id="${petPrefix}Birthdate" name="${petPrefix}Birthdate" required placeholder="MM/DD/YYYY" value="${intakeData[petPrefix + 'Birthdate'] || ''}" oninput="formatDate(this)" onkeypress="handleEnterKey(event)" maxlength="10">
+                <div class="form-error">Please enter your pet's birthdate</div>
+              </div>
+              <div class="form-group required">
+                <label>Pet's Gender</label>
+                <div class="choice-buttons" data-required="true" style="margin-top: 1rem; margin-bottom: 0;">
+                  <button class="choice-btn ${intakeData[petPrefix + 'Gender'] === 'Male' ? 'selected' : ''}" onclick="selectChoice(this, 'Male', '${petPrefix}Gender')">Male</button>
+                  <button class="choice-btn ${intakeData[petPrefix + 'Gender'] === 'Female' ? 'selected' : ''}" onclick="selectChoice(this, 'Female', '${petPrefix}Gender')">Female</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1301,13 +1346,15 @@
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
         <div class="intake-card-body form-content">
           <h2>Ready to Proceed!</h2>
-          <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">Review your booking details below and proceed to payment to complete your session.</p>
+          <p style="font-size: 1.2rem; margin-bottom: 2rem; font-weight: 500;">Please carefully review all details below. Once you proceed to payment, changes may incur cancellation fees.</p>
           <div class="booking-summary" id="finalSummary">
             <div class="summary-header">
-              <h3>Your Session Details</h3>
-              <p>Please review everything looks correct</p>
+              <h3>Confirm Your Session Details</h3>
+              <p>Review everything carefully before proceeding</p>
             </div>
-            <!-- Summary will be populated by JavaScript -->
+            <div class="summary-content">
+              <!-- Summary will be populated by JavaScript -->
+            </div>
           </div>
         </div>
         <div class="intake-card-footer">
@@ -1317,7 +1364,7 @@
           </div>
           <button class="continue-btn" onclick="proceedToPayment()">Proceed to Payment →</button>
         </div>
-      `, false, 'large-card');
+      `, false, 'extra-large-card');
       container.appendChild(submissionCard);
       cardIndex++;
 
