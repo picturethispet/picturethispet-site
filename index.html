@@ -71,6 +71,16 @@
     .desktop-logo {
       height: 100px;
     }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+    }
     
     .site-nav {
       display: flex;
@@ -720,7 +730,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.1.0</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.2.0</p>
   </footer>
 
   <script>
@@ -961,18 +971,13 @@
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
           <h2>🐕 Pet Behavior Policy</h2>
-          <div class="agreement-text">
-            <p>All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet's behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved.</p>
-          </div>
-          <div class="agreement-checkbox">
-            <label>
-              <input type="checkbox" id="behaviorAgreement" onchange="checkAgreement('behavior')">
-              <span>I acknowledge and agree to the Pet Behavior Policy</span>
-            </label>
+          <div class="agreement-summary">
+            <p>You agree to abide by the pet behavior policy.</p>
+            <button class="view-policy-btn" onclick="openPolicyModal('behavior')">Click here to view full policy →</button>
           </div>
         </div>
         <div class="session-card-footer">
-          <button id="behaviorContinue" class="continue-btn disabled" onclick="advanceCard()">Continue →</button>
+          <button class="agree-btn" onclick="agreeToPolicy('behavior')">Agree</button>
         </div>
       `);
 
@@ -981,18 +986,13 @@
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
           <h2>📸 Photography Service Agreement</h2>
-          <div class="agreement-text">
-            <p>By participating in this photo session, you agree that all photographs taken by PictureThisPet are the intellectual property of the photographer. You are purchasing high-resolution digital files for personal use, but the photographer retains full ownership and the right to use images for marketing, portfolio, and promotional purposes. You may not alter, edit, or sell the images without written permission. You are granted a perpetual license to share and print the images for personal use, but PictureThisPet reserves all commercial rights.</p>
-          </div>
-          <div class="agreement-checkbox">
-            <label>
-              <input type="checkbox" id="photographyAgreement" onchange="checkAgreement('photography')">
-              <span>I acknowledge and agree to the Photography Service Agreement</span>
-            </label>
+          <div class="agreement-summary">
+            <p>You agree to the photography service terms and usage rights.</p>
+            <button class="view-policy-btn" onclick="openPolicyModal('photography')">Click here to view full policy →</button>
           </div>
         </div>
         <div class="session-card-footer">
-          <button id="photographyContinue" class="continue-btn disabled" onclick="advanceCard()">Continue →</button>
+          <button class="agree-btn" onclick="agreeToPolicy('photography')">Agree</button>
         </div>
       `);
 
@@ -1001,18 +1001,13 @@
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
         <div class="session-card-body">
           <h2>📅 Cancellation & Refund Policy</h2>
-          <div class="agreement-text">
-            <p>All session payments are non-refundable. However, sessions may be rescheduled with at least 48 hours' notice. In cases of severe weather or emergencies, we will work with you to find a new session date. Missed appointments or cancellations with less than 48 hours' notice are not eligible for rescheduling or refund. Your session is not guaranteed until full payment is received.</p>
-          </div>
-          <div class="agreement-checkbox">
-            <label>
-              <input type="checkbox" id="cancellationAgreement" onchange="checkAgreement('cancellation')">
-              <span>I acknowledge and agree to the Cancellation & Refund Policy</span>
-            </label>
+          <div class="agreement-summary">
+            <p>You agree to the cancellation and refund policy terms.</p>
+            <button class="view-policy-btn" onclick="openPolicyModal('cancellation')">Click here to view full policy →</button>
           </div>
         </div>
         <div class="session-card-footer">
-          <button id="cancellationContinue" class="continue-btn disabled" onclick="proceedToCalendar()">Continue to Date Selection →</button>
+          <button class="agree-btn" onclick="agreeToPolicy('cancellation')">Continue to Date Selection</button>
         </div>
       `);
 
@@ -1081,41 +1076,89 @@
       }
     }
 
+    // Policy content
+    const policyContent = {
+      behavior: {
+        title: "🐕 Pet Behavior Policy",
+        text: "All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet's behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved."
+      },
+      photography: {
+        title: "📸 Photography Service Agreement",
+        text: "By participating in this photo session, you agree that all photographs taken by PictureThisPet are the intellectual property of the photographer. You are purchasing high-resolution digital files for personal use, but the photographer retains full ownership and the right to use images for marketing, portfolio, and promotional purposes. You may not alter, edit, or sell the images without written permission. You are granted a perpetual license to share and print the images for personal use, but PictureThisPet reserves all commercial rights."
+      },
+      cancellation: {
+        title: "📅 Cancellation & Refund Policy", 
+        text: "All session payments are non-refundable. However, sessions may be rescheduled with at least 48 hours' notice. In cases of severe weather or emergencies, we will work with you to find a new session date. Missed appointments or cancellations with less than 48 hours' notice are not eligible for rescheduling or refund. Your session is not guaranteed until full payment is received."
+      }
+    };
+
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
       loadSessionData();
       initializeSessionBuilder();
+      createPolicyModal();
     });
 
-    // Check agreement checkbox
-    function checkAgreement(type) {
-      const checkbox = document.getElementById(`${type}Agreement`);
-      const container = checkbox.closest('.agreement-checkbox');
-      const continueBtn = document.getElementById(`${type}Continue`);
-      
-      if (checkbox.checked) {
-        container.classList.add('checked');
-        continueBtn.classList.remove('disabled');
-        
-        // Save agreement to sessionData
-        sessionData[`${type}Agreement`] = true;
-        saveSessionData();
-      } else {
-        container.classList.remove('checked');
-        continueBtn.classList.add('disabled');
-        delete sessionData[`${type}Agreement`];
-        saveSessionData();
-      }
+    // Create policy modal
+    function createPolicyModal() {
+      const modal = document.createElement('div');
+      modal.className = 'policy-modal';
+      modal.id = 'policyModal';
+      modal.innerHTML = `
+        <div class="policy-modal-content">
+          <div class="policy-modal-header">
+            <h3 class="policy-modal-title" id="modalTitle"></h3>
+            <button class="close-modal-btn" onclick="closePolicyModal()">✕</button>
+          </div>
+          <div class="policy-modal-text" id="modalText"></div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Close on background click
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closePolicyModal();
+        }
+      });
     }
 
-    // Proceed to calendar after all agreements
-    function proceedToCalendar() {
-      // Save final data
-      sessionData.agreementsCompleted = true;
+    // Open policy modal
+    function openPolicyModal(policyType) {
+      const modal = document.getElementById('policyModal');
+      const title = document.getElementById('modalTitle');
+      const text = document.getElementById('modalText');
+      
+      const policy = policyContent[policyType];
+      title.textContent = policy.title;
+      text.textContent = policy.text;
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close policy modal
+    function closePolicyModal() {
+      const modal = document.getElementById('policyModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Agree to policy and advance
+    function agreeToPolicy(policyType) {
+      // Save agreement to sessionData
+      sessionData[`${policyType}Agreement`] = true;
       saveSessionData();
       
-      // Redirect to calendar
-      window.location.href = '/ptp-pick-date-step-3.html';
+      // If it's the last policy, redirect to calendar
+      if (policyType === 'cancellation') {
+        sessionData.agreementsCompleted = true;
+        saveSessionData();
+        window.location.href = '/ptp-pick-date-step-3.html';
+      } else {
+        // Advance to next card
+        advanceCard();
+      }
     }
   </script>
 </body>
