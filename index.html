@@ -989,25 +989,43 @@
     }
 
     // Advance to next card with animation and track history
-    function advanceCard() {
+    function advanceCard(event) {
+      // Prevent any default behavior
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      
+      console.log('advanceCard called, currentCard:', currentCard);
       const currentCardEl = document.querySelector('.session-card.active');
+      console.log('currentCardEl found:', !!currentCardEl);
       
       // Add current card to history before advancing
       cardHistory.push(currentCard);
+      
+      const nextIndex = currentCard + 1;
+      console.log('Next card index will be:', nextIndex);
       
       if (currentCardEl) {
         currentCardEl.classList.add('exiting');
         setTimeout(() => {
           currentCardEl.classList.remove('active', 'exiting');
-          showCard(currentCard + 1);
+          showCard(nextIndex);
         }, 300);
       } else {
-        showCard(currentCard + 1);
+        showCard(nextIndex);
       }
+      
+      return false; // Prevent form submission
     }
 
     // Go back to actual previous card using history
-    function goBack() {
+    function goBack(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      
       if (cardHistory.length > 0) {
         const previousCard = cardHistory.pop(); // Get and remove last visited card
         
@@ -1015,7 +1033,7 @@
         if (currentCard === 3 && currentQuestion > 0) {
           currentQuestion--;
           renderCurrentQuestion();
-          return; // Stay on question card but show previous question
+          return false; // Stay on question card but show previous question
         }
         
         // If we're going back TO questions card, set up the last question
@@ -1033,10 +1051,17 @@
         // Fallback: simple previous card
         showCard(currentCard - 1);
       }
+      
+      return false;
     }
 
     // Restart session
-    function restartSession() {
+    function restartSession(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      
       if (confirm("Are you sure you want to start over? This will clear all your selections.")) {
         // Clear data and history
         Object.keys(sessionData).forEach(key => sessionData[key] = '');
@@ -1048,10 +1073,17 @@
         // Reinitialize
         initializeSessionBuilder();
       }
+      
+      return false;
     }
 
     // Handle question answer
-    function handleQuestionAnswer(questionName, answer) {
+    function handleQuestionAnswer(questionName, answer, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      
       sessionData[questionName] = answer;
       saveSessionData();
       
@@ -1068,6 +1100,8 @@
           advanceCard();
         }, 300);
       }
+      
+      return false;
     }
 
     // Render current question
@@ -1082,14 +1116,14 @@
         <div class="question-prompt">${question.label}</div>
         <div class="answer-options">
           ${question.options.map(option => 
-            `<button class="answer-button" onclick="handleQuestionAnswer('${question.name}', '${option}')">
+            `<button type="button" class="answer-button" onclick="handleQuestionAnswer('${question.name}', '${option}', event); return false;">
               ${option}
             </button>`
           ).join('')}
         </div>
         <div class="navigation-buttons">
-          <button class="back-btn" onclick="goBack()">🔙 Back</button>
-          <button class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+          <button type="button" class="back-btn" onclick="goBack(event); return false;">🔙 Back</button>
+          <button type="button" class="restart-btn" onclick="restartSession(event); return false;">🔄 Start Over</button>
         </div>
       `;
     }
@@ -1107,7 +1141,7 @@
           <p>In just a few quick steps, we'll help you pick the perfect session, and show you what's included with each option.</p>
         </div>
         <div class="session-card-footer">
-          <button type="button" onclick="advanceCard()">Start →</button>
+          <button type="button" onclick="advanceCard(event); return false;">Start →</button>
         </div>
       `, true);
 
@@ -1124,7 +1158,7 @@
           </ul>
         </div>
         <div class="session-card-footer">
-          <button type="button" onclick="advanceCard()">Next →</button>
+          <button type="button" onclick="advanceCard(event); return false;">Next →</button>
         </div>
       `);
 
@@ -1141,7 +1175,7 @@
           </ul>
         </div>
         <div class="session-card-footer">
-          <button type="button" onclick="advanceCard()">Next →</button>
+          <button type="button" onclick="advanceCard(event); return false;">Next →</button>
         </div>
       `);
 
