@@ -26,6 +26,7 @@
     
     html, body {
       overflow-x: hidden;
+      overflow-y: auto; /* Allow vertical scrolling */
     }
     
     body {
@@ -251,7 +252,7 @@
       color: white;
       font-size: 1.2rem;
       font-family: 'SF Pro Display', sans-serif;
-      max-width: 600px;
+      max-width: 650px; /* Wider to prevent "type" on separate line */
       margin: 0 auto;
       text-align: center;
       opacity: 0.9;
@@ -263,8 +264,9 @@
       max-width: 600px;
       margin: 0 auto;
       position: relative;
-      height: 500px; /* Fixed height container */
+      height: auto; /* Allow natural height instead of fixed */
       z-index: 2;
+      min-height: 500px; /* Minimum height but can grow */
     }
 
     .session-card {
@@ -289,7 +291,8 @@
     }
 
     .session-card.agreement-card {
-      height: 650px; /* Taller for agreement cards */
+      height: 750px; /* Even taller for better spacing */
+      padding: 2.5rem 2rem; /* More top/bottom padding for spacing */
     }
 
     .session-card.active {
@@ -619,7 +622,8 @@
       }
 
       .session-card-stack {
-        height: 550px; /* Adjust for mobile agreement cards */
+        height: auto; /* Allow natural height on mobile */
+        min-height: 400px;
       }
 
       .session-card {
@@ -628,13 +632,22 @@
       }
 
       .session-card.agreement-card {
-        height: 550px; /* Taller for mobile agreement cards */
-        padding: 1.2rem;
+        height: 650px; /* Taller for mobile agreement cards */
+        padding: 1.5rem 1.2rem;
+      }
+
+      .session-card-body h2 {
+        font-size: 1.6rem; /* Smaller on mobile */
       }
 
       .agreement-text {
         font-size: 0.9rem;
         padding: 1.2rem;
+      }
+
+      .session-subtext {
+        max-width: 90%; /* More responsive on mobile */
+        font-size: 1.1rem;
       }
 
       .session-card-body h2,
@@ -744,7 +757,7 @@
       <img src="/api/placeholder/80/30" alt="Mastercard" />
       <img src="/api/placeholder/80/30" alt="PayPal" />
     </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.4.0</p>
+    <p>&copy; 2024 PictureThisPet. All rights reserved. | v1.4.1</p>
   </footer>
 
   <script>
