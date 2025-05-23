@@ -205,8 +205,8 @@
       height: auto;
     }
 
-    /* === LOADING STATE === */
-    .loading-content h2 {
+    /* === PAYMENT CONTENT === */
+    .payment-content h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.4rem;
       font-weight: 700;
@@ -215,7 +215,7 @@
       letter-spacing: -0.02em;
     }
 
-    .loading-content p {
+    .payment-content p {
       font-family: 'Inter', sans-serif;
       font-size: 1.2rem;
       font-weight: 400;
@@ -227,19 +227,39 @@
       margin-right: auto;
     }
 
-    .loading-spinner {
-      width: 60px;
-      height: 60px;
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-top: 4px solid var(--gold);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 2rem;
+    /* === PAYMENT ACTIONS === */
+    .payment-actions {
+      margin: 2rem 0;
+      text-align: center;
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .payment-actions .continue-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 1.2rem 3rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      min-width: 200px;
+    }
+
+    .payment-actions .continue-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .payment-actions .continue-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
 
     .secure-badges {
@@ -411,12 +431,7 @@
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
-    /* === COUNTDOWN === */
-    .redirect-countdown {
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      opacity: 0.7;
-    }
+
 
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
@@ -452,11 +467,18 @@
         max-width: 95%;
       }
 
-      .loading-content h2 {
+      .payment-content h2 {
         font-size: 2rem;
       }
 
-      .loading-content p {
+      .payment-content p {
+        font-size: 1.1rem;
+      }
+
+      .payment-actions .continue-btn {
+        width: 100%;
+        max-width: 300px;
+        padding: 1rem 2rem;
         font-size: 1.1rem;
       }
 
@@ -561,14 +583,13 @@
 
     <!-- Payment Section -->
     <div class="payment-section">
-      <!-- Loading Payment Card -->
-      <div class="payment-card" id="loadingCard">
+      <!-- Payment Card -->
+      <div class="payment-card" id="paymentCard">
         <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="payment-logo" />
         
-        <div class="loading-content">
-          <div class="loading-spinner"></div>
-          <h2>Hold tight...</h2>
-          <p>We're preparing your secure payment link. You'll be redirected to Stripe Checkout in just a moment.</p>
+        <div class="payment-content">
+          <h2>Complete Your Booking</h2>
+          <p>Review your session details below and proceed to secure checkout.</p>
         </div>
 
         <!-- Order Summary -->
@@ -577,6 +598,13 @@
             <h3>Order Summary</h3>
           </div>
           <!-- Summary items will be populated by JavaScript -->
+        </div>
+
+        <!-- Pay Now Button -->
+        <div class="payment-actions">
+          <button class="continue-btn" id="payNowBtn" onclick="proceedToStripeCheckout()">
+            Pay Now →
+          </button>
         </div>
 
         <!-- Security Badges -->
@@ -593,10 +621,6 @@
             <span class="security-icon">🛡️</span>
             <span>PCI Compliant</span>
           </div>
-        </div>
-
-        <div class="redirect-countdown" id="countdown">
-          Redirecting in <span id="countdownTimer">3</span> seconds...
         </div>
       </div>
 
@@ -624,55 +648,125 @@
   </footer>
 
   <script>
-    // Stripe product lookup table (you'll replace these with real URLs)
+    // Real Stripe product URLs from your session guide
     const stripeRedirects = {
-      "Mini-Cheesman Park-1-1": "https://buy.stripe.com/test_abc123mini1",
-      "Mini-Cheesman Park-1-2": "https://buy.stripe.com/test_abc123mini2",
-      "Mini-Cheesman Park-2-1": "https://buy.stripe.com/test_abc123mini3",
-      "Mini-Cheesman Park-2-2": "https://buy.stripe.com/test_abc123mini4",
-      "Mini-City Park-1-1": "https://buy.stripe.com/test_def456mini1",
-      "Mini-City Park-1-2": "https://buy.stripe.com/test_def456mini2",
-      "Mini-City Park-2-1": "https://buy.stripe.com/test_def456mini3",
-      "Mini-City Park-2-2": "https://buy.stripe.com/test_def456mini4",
-      "Full-Cheesman Park-1-1": "https://buy.stripe.com/test_ghi789full1",
-      "Full-Cheesman Park-1-2": "https://buy.stripe.com/test_ghi789full2",
-      "Full-Cheesman Park-2-1": "https://buy.stripe.com/test_ghi789full3",
-      "Full-Cheesman Park-2-2": "https://buy.stripe.com/test_ghi789full4",
-      "Full-City Park-1-1": "https://buy.stripe.com/test_jkl012full1",
-      "Full-City Park-1-2": "https://buy.stripe.com/test_jkl012full2",
-      "Full-City Park-2-1": "https://buy.stripe.com/test_jkl012full3",
-      "Full-City Park-2-2": "https://buy.stripe.com/test_jkl012full4"
+      "Full-Cheesman Park-1-1": "https://buy.stripe.com/4gw6ry0Wz0bXe1G147",
+      "Full-Cheesman Park-2-1": "https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08", 
+      "Full-Cheesman Park-1-2": "https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c",
+      "Full-Cheesman Park-2-2": "https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d",
+      "Full-City Park-1-1": "https://buy.stripe.com/00gg28eNp9Mx9Lq9AE",
+      "Full-City Park-2-1": "https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07",
+      "Full-City Park-1-2": "https://buy.stripe.com/14A8wR8d12921VD80B9bO0e", 
+      "Full-City Park-2-2": "https://buy.stripe.com/6oU28tdxl29243Lft39bO0f",
+      "Mini-Cheesman Park-1-1": "https://buy.stripe.com/eVag28fRtgaVe1GcMN",
+      "Mini-Cheesman Park-2-1": "https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05",
+      "Mini-Cheesman Park-1-2": "https://buy.stripe.com/8x24gB64T292eIpbcN9bO09",
+      "Mini-Cheesman Park-2-2": "https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g", 
+      "Mini-City Park-1-1": "https://buy.stripe.com/9AQ6ry7kX8It3n28wy",
+      "Mini-City Park-2-1": "https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06",
+      "Mini-City Park-1-2": "https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b",
+      "Mini-City Park-2-2": "https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a"
     };
 
     let bookingData = null;
-    let countdownTimer = 3;
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
-      processPayment();
+      initializePaymentPage();
     });
 
-    // Main payment processing function
-    function processPayment() {
+    // Initialize payment page
+    function initializePaymentPage() {
       try {
+        console.log('Initializing payment page...');
+        
         // Get booking data from localStorage
         bookingData = getBookingData();
         
         if (!bookingData) {
+          console.log('No valid booking data found, showing error state');
           showError();
           return;
         }
 
+        console.log('Valid booking data found, setting up payment page...');
+
         // Display order summary
         displayOrderSummary(bookingData);
 
-        // Start countdown and redirect to Stripe
-        startCountdownAndRedirect(bookingData);
+        // Ensure data persistence for Stripe return
+        ensureDataPersistence(bookingData);
+
+        // Validate Stripe URL availability
+        const stripeURL = getStripeURL(bookingData);
+        if (!stripeURL) {
+          console.error('No Stripe URL found for configuration:', bookingData);
+          showError();
+          return;
+        }
+
+        console.log('Payment page ready. Stripe URL available:', stripeURL);
 
       } catch (error) {
-        console.error('Error processing payment:', error);
+        console.error('Error initializing payment page:', error);
         showError();
       }
+    }
+
+    // Handle Pay Now button click
+    function proceedToStripeCheckout() {
+      try {
+        if (!bookingData) {
+          console.error('No booking data available');
+          showError();
+          return;
+        }
+
+        // Get Stripe URL
+        const stripeURL = getStripeURL(bookingData);
+        
+        if (!stripeURL) {
+          console.error('No Stripe URL found for configuration:', bookingData);
+          alert('Sorry, we encountered an error with the payment setup. Please try again or contact support.');
+          return;
+        }
+
+        console.log('Redirecting to Stripe Checkout:', stripeURL);
+
+        // Disable button to prevent double-clicks
+        const payNowBtn = document.getElementById('payNowBtn');
+        payNowBtn.disabled = true;
+        payNowBtn.textContent = 'Redirecting...';
+
+        // Add return URL parameter to Stripe URL if needed
+        const finalStripeURL = addReturnUrlToStripe(stripeURL);
+
+        // Redirect to Stripe
+        window.location.href = finalStripeURL;
+
+      } catch (error) {
+        console.error('Error proceeding to Stripe checkout:', error);
+        alert('Sorry, we encountered an error. Please try again or contact support.');
+        
+        // Re-enable button
+        const payNowBtn = document.getElementById('payNowBtn');
+        payNowBtn.disabled = false;
+        payNowBtn.textContent = 'Pay Now →';
+      }
+    }
+
+    // Add return URL to Stripe URL if needed
+    function addReturnUrlToStripe(stripeURL) {
+      // Get current domain for return URL
+      const currentDomain = window.location.origin;
+      const successUrl = `${currentDomain}/success.html`;
+      
+      // Stripe URLs might already have parameters, so check
+      const separator = stripeURL.includes('?') ? '&' : '?';
+      
+      // Note: This depends on how your Stripe products are configured
+      // If you've already set success/cancel URLs in Stripe dashboard, this might not be needed
+      return stripeURL; // For now, return as-is since URLs are pre-configured
     }
 
     // Get booking data from localStorage
@@ -781,37 +875,24 @@
       return names.length > 0 ? names.join(' & ') : 'Your Pet(s)';
     }
 
-    // Start countdown and redirect to Stripe
-    function startCountdownAndRedirect(data) {
-      // Determine Stripe URL
-      const stripeURL = getStripeURL(data);
-      
-      if (!stripeURL || stripeURL === '/error') {
-        console.error('No Stripe URL found for configuration:', data);
-        showError();
-        return;
-      }
-
-      console.log('Redirecting to Stripe URL:', stripeURL);
-
-      // Start countdown
-      const countdownElement = document.getElementById('countdownTimer');
-      const countdownInterval = setInterval(() => {
-        countdownTimer--;
-        countdownElement.textContent = countdownTimer;
+    // Ensure booking data persists through Stripe redirect
+    function ensureDataPersistence(data) {
+      try {
+        // Make sure ptpFinalBookingData is properly stored
+        localStorage.setItem('ptpFinalBookingData', JSON.stringify(data));
         
-        if (countdownTimer <= 0) {
-          clearInterval(countdownInterval);
-          // Redirect to Stripe
-          window.location.href = stripeURL;
-        }
-      }, 1000);
-
-      // Also allow manual redirect if user clicks anywhere
-      document.getElementById('loadingCard').addEventListener('click', () => {
-        clearInterval(countdownInterval);
-        window.location.href = stripeURL;
-      });
+        // Also store a backup with timestamp for debugging
+        const backupData = {
+          ...data,
+          paymentPageTimestamp: new Date().toISOString(),
+          paymentPageUrl: window.location.href
+        };
+        localStorage.setItem('ptpBookingBackup', JSON.stringify(backupData));
+        
+        console.log('Booking data persistence ensured');
+      } catch (error) {
+        console.error('Error ensuring data persistence:', error);
+      }
     }
 
     // Determine correct Stripe URL based on booking data
@@ -832,7 +913,7 @@
 
     // Show error state
     function showError() {
-      document.getElementById('loadingCard').style.display = 'none';
+      document.getElementById('paymentCard').style.display = 'none';
       document.getElementById('errorCard').style.display = 'block';
       document.getElementById('errorCard').classList.add('fade-in');
     }
@@ -845,7 +926,10 @@
 
     // Prevent back button issues during redirect
     window.addEventListener('beforeunload', function() {
-      // Add any cleanup if needed
+      // Ensure data is saved before leaving
+      if (bookingData) {
+        ensureDataPersistence(bookingData);
+      }
     });
   </script>
 </body>
