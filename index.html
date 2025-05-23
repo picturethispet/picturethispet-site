@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="preload" href="assets/images/sec1_img_final.png" as="image" />
 
   <style>
     :root {
@@ -26,17 +27,17 @@
     
     html {
       overflow-x: hidden;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* Internet Explorer 10+ */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
     
-    html::-webkit-scrollbar { /* WebKit */
+    html::-webkit-scrollbar {
       width: 0;
       height: 0;
     }
     
     body {
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
       overflow-x: hidden;
@@ -49,23 +50,13 @@
     }
 
     /* === HEADER STYLES === */
-    footer {
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      animation: moveBackground 30s ease-in-out infinite;
-      background-size: 100% 100%;
-    }
-    
     header {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-color: transparent; /* Made transparent */
+      background-color: transparent;
       backdrop-filter: blur(8px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -116,6 +107,11 @@
     
     .mobile-menu-btn {
       display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
     }
 
     /* === HERO SECTION === */
@@ -168,20 +164,6 @@
       margin-left: calc(-50vw + 50%);
     }
     
-    .section-split::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-      background-repeat: no-repeat;
-      z-index: -1;
-      animation: moveBackground 30s ease-in-out infinite;
-      opacity: 0.5;
-    }
-    
     .side-a, .side-b {
       flex: 1;
       padding: 2rem;
@@ -227,6 +209,7 @@
     .side-b p {
       font-family: 'Inter', sans-serif;
       font-size: 1.35rem;
+      font-weight: 400;
       line-height: 1.75;
       max-width: 480px;
       margin: 0 auto;
@@ -265,7 +248,7 @@
     .session-subtext {
       color: white;
       font-size: 1.2rem;
-      font-family: 'SF Pro Display', sans-serif;
+      font-family: 'Inter', sans-serif;
       max-width: 650px;
       margin: 0 auto;
       text-align: center;
@@ -295,11 +278,11 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       padding: 2.5rem;
       color: white;
-      font-family: 'SF Pro Display', sans-serif;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: 'Inter', sans-serif;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.9);
-      display: none;
+      visibility: hidden;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -307,9 +290,8 @@
       overflow: hidden;
     }
 
-    /* Desktop Agreement Cards - MUCH BIGGER (15% increase) */
     .session-card.agreement-card {
-      height: 805px; /* Increased by 15% from 700px */
+      height: 805px;
       max-width: 1200px;
       width: 90vw;
       padding: 3rem 4rem;
@@ -323,6 +305,7 @@
       display: flex;
       opacity: 1;
       transform: scale(1);
+      visibility: visible;
     }
 
     .session-card.agreement-card .session-card-logo {
@@ -351,18 +334,16 @@
 
     .session-card.agreement-card .agreement-text {
       font-size: 1.1rem;
-      padding: 1.5rem 2rem; /* Tightened padding - reduced from 2.5rem */
-      margin: 1.5rem 0; /* Reduced margin from 2rem */
+      padding: 1.5rem 2rem;
+      margin: 1.5rem 0;
       line-height: 1.8;
-      max-width: 700px; /* Reduced from 800px to tighten container */
+      max-width: 700px;
       width: 100%;
     }
 
     .session-card.agreement-card .session-card-footer,
     .session-card.agreement-card .navigation-buttons {
       margin-top: 2rem;
-      padding-top: 0; /* REMOVED padding-top that was creating lines */
-      border-top: none; /* REMOVED border-top that was creating lines */
       flex-direction: row;
       gap: 2rem;
       width: 100%;
@@ -384,18 +365,16 @@
       align-items: center;
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
+      visibility: visible;
       position: absolute;
       top: 50%;
       left: 50%;
     }
 
-    .session-card.agreement-card.active {
-      display: flex;
-    }
-
     .session-card.exiting {
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.8);
+      visibility: hidden;
     }
 
     .session-card-logo {
@@ -404,6 +383,7 @@
       margin: 0 auto 2.5rem;
       height: auto;
       flex-shrink: 0;
+      loading: lazy;
     }
 
     .session-card-logo[src=""], 
@@ -423,13 +403,7 @@
       padding-bottom: 2rem;
     }
 
-    .session-card-body h2 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 2rem;
-      color: white;
-    }
-
+    .session-card-body h2,
     .session-card-body h3 {
       font-size: 2.2rem;
       font-weight: 700;
@@ -587,7 +561,7 @@
 
     /* === FOOTER === */
     footer {
-      background-color: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
       box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
@@ -630,6 +604,10 @@
         z-index: 999;
       }
       
+      .site-nav.active {
+        display: flex;
+      }
+      
       .site-nav a {
         display: block;
         margin: 0.5rem 0;
@@ -638,15 +616,16 @@
       
       .mobile-menu-btn {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
       }
       
       .hero-section {
         margin-top: 80px;
+      }
+      
+      .gradient-text {
+        font-size: 2rem;
+        right: 20px;
+        max-width: 250px;
       }
       
       .section-split {
@@ -672,7 +651,6 @@
         font-size: 1.1rem;
       }
 
-      /* Mobile Session Builder */
       section#session-builder-section {
         padding: 4rem 1rem;
       }
@@ -697,14 +675,12 @@
         padding: 2rem 1.5rem;
       }
 
-      /* Mobile Agreement Cards - Much Bigger (60% increase) */
       .session-card.agreement-card {
-        height: 960px; /* Increased by 60% from 600px base */
+        height: 960px;
         max-width: 600px;
-        padding: 3rem 2rem; /* Increased padding */
+        padding: 3rem 2rem;
         display: flex;
         flex-direction: column;
-        grid-template-columns: none;
         gap: 0;
         align-items: center;
         justify-content: flex-start;
@@ -717,12 +693,10 @@
       .session-card.agreement-card .session-card-logo {
         margin: 0 auto 2.5rem;
         max-width: 140px;
-        grid-column: unset;
         flex-shrink: 0;
       }
 
       .session-card.agreement-card .session-card-body {
-        grid-column: unset;
         text-align: center;
         padding-bottom: 2rem;
         flex: 1;
@@ -751,7 +725,6 @@
 
       .session-card.agreement-card .session-card-footer,
       .session-card.agreement-card .navigation-buttons {
-        grid-column: unset;
         margin-top: 2rem;
         padding-top: 1.5rem;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -856,70 +829,12 @@
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
     };
-    
+
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+      nav.classList.toggle('active');
     }
-  </script>
-</head>
-<body>
-  <header>
-    <a href="/" class="logo-link">
-      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
-    </a>
-    <nav class="site-nav">
-      <a href="#">Home</a>
-      <a href="#">Locations</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
-      <a href="#" class="book-btn">Book Now</a>
-    </nav>
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
-  </header>
-  
-  <main>
-    <section class="hero-section">
-      <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
-      <div class="section-breaker-shadow"></div>
-    </section>
-    
-    <section class="section-split">
-      <div class="side-a">
-        <h1>ONE DAY, THEY WON'T<br />BE THERE BY YOUR SIDE</h1>
-      </div>
-      <div class="side-b">
-        <div class="side-b-inner">
-          <h2>But these moments?<br />They'll last forever.</h2>
-          <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
-        </div>
-      </div>
-    </section>
 
-    <!-- SESSION BUILDER SECTION -->
-    <section id="session-builder-section">
-      <div class="session-builder-header">
-        <h2 class="session-heading">Let's Find Your Perfect Session</h2>
-        <p class="session-subtext">We take a unique approach to help you discover the perfect session type<br />for you and your pet. Just answer a few quick questions to get started.</p>
-      </div>
-
-      <div class="session-card-stack" id="sessionCardStack">
-        <!-- Cards will be dynamically generated -->
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="payments">
-      <img src="/api/placeholder/80/30" alt="Visa" />
-      <img src="/api/placeholder/80/30" alt="Mastercard" />
-      <img src="/api/placeholder/80/30" alt="PayPal" />
-    </div>
-    <p>&copy; 2024 PictureThisPet. All rights reserved. | v2.3.0 - Simple Working Flow</p>
-  </footer>
-
-  <script>
-    // Session Builder Logic - FIXED VERSION
     const sessionData = {
       session: '',
       park: '',
@@ -936,9 +851,8 @@
 
     let currentCard = 0;
     let currentQuestion = 0;
-    let cardHistory = []; // Track card navigation history
+    let cardHistory = [];
 
-    // Load existing data from localStorage
     function loadSessionData() {
       const saved = localStorage.getItem("ptpSessionData");
       if (saved) {
@@ -946,12 +860,10 @@
       }
     }
 
-    // Save data to localStorage
     function saveSessionData() {
       localStorage.setItem("ptpSessionData", JSON.stringify(sessionData));
     }
 
-    // Create card element
     function createCard(content, isActive = false) {
       const card = document.createElement("div");
       card.className = `session-card${isActive ? ' active' : ''}`;
@@ -959,186 +871,189 @@
       return card;
     }
 
-    // Show specific card and track history properly
     function showCard(index) {
       const cards = document.querySelectorAll('.session-card');
+      if (index < 0 || index >= cards.length) {
+        console.error('Invalid card index:', index);
+        return;
+      }
+      
       cards.forEach((card, i) => {
         if (i === index) {
           card.classList.add('active');
+          card.style.visibility = 'visible';
         } else {
           card.classList.remove('active');
+          card.style.visibility = 'hidden';
         }
       });
-      
-      // Update card position
+
       currentCard = index;
-      
-      // If we're showing the question card (card 3), make sure the question is rendered
+
       if (index === 3) {
         setTimeout(() => {
           renderCurrentQuestion();
         }, 100);
       }
+
+      addButtonListeners();
     }
 
-    // Advance to next card with animation and track history
     function advanceCard(event) {
-      // Prevent any default behavior
       if (event) {
         event.preventDefault();
         event.stopPropagation();
       }
-      
-      console.log('advanceCard called, currentCard:', currentCard);
+
       const currentCardEl = document.querySelector('.session-card.active');
-      console.log('currentCardEl found:', !!currentCardEl);
-      
-      // Add current card to history before advancing
       cardHistory.push(currentCard);
-      
       const nextIndex = currentCard + 1;
-      console.log('Next card index will be:', nextIndex);
-      
+
       if (currentCardEl) {
         currentCardEl.classList.add('exiting');
         setTimeout(() => {
           currentCardEl.classList.remove('active', 'exiting');
+          currentCardEl.style.visibility = 'hidden';
           showCard(nextIndex);
-        }, 300);
+        }, 600);
       } else {
         showCard(nextIndex);
       }
-      
-      return false; // Prevent form submission
+
+      return false;
     }
 
-    // Go back to actual previous card using history
     function goBack() {
-      console.log('*** GOING BACK ***');
       if (cardHistory.length > 0) {
-        const previousCard = cardHistory.pop(); // Get and remove last visited card
-        
-        // If we're going back from questions, adjust question index
+        const previousCard = cardHistory.pop();
+
         if (currentCard === 3 && currentQuestion > 0) {
           currentQuestion--;
           renderCurrentQuestion();
-          return false; // Stay on question card but show previous question
+          return false;
         }
-        
-        // If we're going back TO questions card, set up the last question
+
         if (previousCard === 3 && currentQuestion > 0) {
           currentQuestion--;
         }
-        
+
         showCard(previousCard);
-        
-        // If we landed on questions card, render the current question
+
         if (previousCard === 3) {
           renderCurrentQuestion();
         }
       } else if (currentCard > 0) {
-        // Fallback: simple previous card
         showCard(currentCard - 1);
       }
     }
 
-    // Restart session
     function restartSession() {
-      console.log('*** RESTARTING SESSION ***');
       if (confirm("Are you sure you want to start over? This will clear all your selections.")) {
-        // Clear data and history
         Object.keys(sessionData).forEach(key => sessionData[key] = '');
         localStorage.removeItem("ptpSessionData");
         currentCard = 0;
         currentQuestion = 0;
         cardHistory = [];
-        
-        // Reinitialize
         initializeSessionBuilder();
       }
     }
 
-    // Handle question answer
     function handleQuestionAnswer(questionName, answer) {
-      console.log('*** QUESTION ANSWERED:', questionName, '=', answer);
+      if (!questionName || !answer || !questions.find(q => q.name === questionName)) {
+        console.error('Invalid question or answer:', questionName, answer);
+        return;
+      }
+
       sessionData[questionName] = answer;
       saveSessionData();
-      
+
       currentQuestion++;
-      
+
       if (currentQuestion < questions.length) {
-        // More questions - render next question
         setTimeout(() => {
           renderCurrentQuestion();
-        }, 300);
+        }, 600);
       } else {
-        // All questions answered - advance directly to agreements (skip summary)
         setTimeout(() => {
           advanceCard();
-        }, 300);
+        }, 600);
       }
     }
 
-    // Render current question
     function renderCurrentQuestion() {
       const questionCard = document.getElementById('questionCard');
       if (!questionCard) return;
-      
+
       const question = questions[currentQuestion];
       if (!question) return;
 
       questionCard.innerHTML = `
         <div class="question-prompt">${question.label}</div>
         <div class="answer-options">
-          ${question.options.map((option, index) => 
-            `<button type="button" class="answer-button" data-question="${question.name}" data-answer="${option}">
+          ${question.options.map((option) => 
+            `<button type="button" class="answer-button" data-question="${question.name}" data-answer="${option}" aria-label="Select ${option}">
               ${option}
             </button>`
           ).join('')}
         </div>
         <div class="navigation-buttons">
-          <button type="button" class="back-btn" data-action="back">🔙 Back</button>
-          <button type="button" class="restart-btn" data-action="restart">🔄 Start Over</button>
+          <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
+          <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
         </div>
       `;
 
-      // Add listeners for answer buttons
-      const answerBtns = questionCard.querySelectorAll('[data-question]');
-      answerBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          const questionName = btn.dataset.question;
-          const answer = btn.dataset.answer;
-          handleQuestionAnswer(questionName, answer);
-          return false;
-        });
-      });
-
-      // Re-add listeners for back/restart buttons in questions
       addButtonListeners();
     }
 
-    // Initialize all cards
+    function addButtonListeners() {
+      const buttons = document.querySelectorAll('.session-card button, .answer-button');
+      buttons.forEach(button => {
+        button.removeEventListener('click', handleButtonClick);
+        button.addEventListener('click', handleButtonClick);
+      });
+    }
+
+    function handleButtonClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const button = e.currentTarget;
+      const action = button.dataset.action;
+      const question = button.dataset.question;
+      const answer = button.dataset.answer;
+
+      if (question && answer) {
+        handleQuestionAnswer(question, answer);
+      } else if (action === 'start' || action === 'next' || action === 'agree') {
+        advanceCard(e);
+      } else if (action === 'back') {
+        goBack();
+      } else if (action === 'restart') {
+        restartSession();
+      } else if (action === 'pick-date') {
+        window.location.href = 'ptp-pick-date-step-3.html';
+      }
+
+      return false;
+    }
+
     function initializeSessionBuilder() {
       const container = document.getElementById('sessionCardStack');
       container.innerHTML = '';
 
-      // Card 0 - Intro
       const card0 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>Let's go over what's included</h2>
           <p>In just a few quick steps, we'll help you pick the perfect session, and show you what's included with each option.</p>
         </div>
         <div class="session-card-footer">
-          <button type="button" data-action="start">Start →</button>
+          <button type="button" data-action="start" aria-label="Start session builder">Start →</button>
         </div>
       `, true);
 
-      // Card 1 - Mini Session Info
       const card1 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>Mini Session</h2>
           <ul class="session-info-list">
@@ -1149,13 +1064,12 @@
           </ul>
         </div>
         <div class="session-card-footer">
-          <button type="button" data-action="next">Next →</button>
+          <button type="button" data-action="next" aria-label="Next card">Next →</button>
         </div>
       `);
 
-      // Card 2 - Full Session Info
       const card2 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>Full Session</h2>
           <ul class="session-info-list">
@@ -1166,23 +1080,19 @@
           </ul>
         </div>
         <div class="session-card-footer">
-          <button type="button" data-action="next">Next →</button>
+          <button type="button" data-action="next" aria-label="Next card">Next →</button>
         </div>
       `);
 
-      // Card 3 - Questions (All questions will be rendered in this one card)
       const card3 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body" id="questionCard">
           <!-- Question content will be populated here -->
         </div>
       `);
 
-      // REMOVED: Summary card (skip directly to agreements)
-
-      // Card 4 - Behavior Policy Agreement
       const card4 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>🐕 Behavior Policy</h2>
           <div class="agreement-text">
@@ -1190,18 +1100,17 @@
           </div>
         </div>
         <div class="session-card-footer">
-          <button type="button" onclick="advanceCard()">Agree & Continue →</button>
+          <button type="button" data-action="agree" aria-label="Agree to behavior policy">Agree & Continue →</button>
         </div>
         <div class="navigation-buttons">
-          <button type="button" class="back-btn" onclick="goBack()">🔙 Back</button>
-          <button type="button" class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+          <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
+          <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
         </div>
       `);
       card4.classList.add('agreement-card');
 
-      // Card 5 - Photography Agreement
       const card5 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>📸 Photography Service Agreement</h2>
           <div class="agreement-text">
@@ -1209,18 +1118,17 @@
           </div>
         </div>
         <div class="session-card-footer">
-          <button type="button" onclick="advanceCard()">Agree & Continue →</button>
+          <button type="button" data-action="agree" aria-label="Agree to photography service agreement">Agree & Continue →</button>
         </div>
         <div class="navigation-buttons">
-          <button type="button" class="back-btn" onclick="goBack()">🔙 Back</button>
-          <button type="button" class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+          <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
+          <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
         </div>
       `);
       card5.classList.add('agreement-card');
 
-      // Card 6 - Cancellation Policy Agreement (FINAL - goes to pick date)
       const card6 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" />
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>📅 Cancellation & Refund Policy</h2>
           <div class="agreement-text">
@@ -1228,16 +1136,15 @@
           </div>
         </div>
         <div class="session-card-footer">
-          <button type="button" onclick="window.location.href='ptp-pick-date-step-3.html'">Agree & Continue to Pick a Date →</button>
+          <button type="button" data-action="pick-date" aria-label="Agree and continue to pick a date">Agree & Continue to Pick a Date →</button>
         </div>
         <div class="navigation-buttons">
-          <button type="button" class="back-btn" onclick="goBack()">🔙 Back</button>
-          <button type="button" class="restart-btn" onclick="restartSession()">🔄 Start Over</button>
+          <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
+          <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
         </div>
       `);
       card6.classList.add('agreement-card');
 
-      // Add all cards to container
       container.appendChild(card0);
       container.appendChild(card1);
       container.appendChild(card2);
@@ -1246,34 +1153,72 @@
       container.appendChild(card5);
       container.appendChild(card6);
 
-      // Reset question index and setup first question
       currentQuestion = 0;
-      
-      // Make sure the question card will be properly rendered when it becomes active
-      setTimeout(() => {
-        renderCurrentQuestion();
-      }, 100);
+      renderCurrentQuestion();
+      addButtonListeners();
     }
 
-    // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('*** PAGE LOADED - Initializing Session Builder ***');
       loadSessionData();
-      
-      // Reset variables
       currentCard = 0;
       currentQuestion = 0;
       cardHistory = [];
-      
       initializeSessionBuilder();
-      
-      // Verify setup
-      setTimeout(() => {
-        console.log('*** Final check: Total cards created:', document.querySelectorAll('.session-card').length);
-        console.log('*** Active cards:', document.querySelectorAll('.session-card.active').length);
-        console.log('*** Start button exists:', !!document.querySelector('[data-action="start"]'));
-      }, 500);
     });
   </script>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="#" aria-label="Home page">Home</a>
+      <a href="#" aria-label="Locations page">Locations</a>
+      <a href="#" aria-label="Pricing page">Pricing</a>
+      <a href="#" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+  
+  <main>
+    <section class="hero-section">
+      <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" loading="lazy" />
+      <div class="gradient-text">Capture Timeless Memories</div>
+    </section>
+    
+    <section class="section-split">
+      <div class="side-a">
+        <h1>ONE DAY, THEY WON'T<br />BE THERE BY YOUR SIDE</h1>
+      </div>
+      <div class="side-b">
+        <div class="side-b-inner">
+          <h2>But these moments?<br />They'll last forever.</h2>
+          <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="session-builder-section">
+      <div class="session-builder-header">
+        <h2 class="session-heading">Let's Find Your Perfect Session</h2>
+        <p class="session-subtext">We take a unique approach to help you discover the perfect session type<br />for you and your pet. Just answer a few quick questions to get started.</p>
+      </div>
+
+      <div class="session-card-stack" id="sessionCardStack">
+        <!-- Cards will be dynamically generated -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="payments">
+      <img src="assets/images/visa.png" alt="Visa payment accepted" loading="lazy" />
+      <img src="assets/images/mastercard.png" alt="Mastercard payment accepted" loading="lazy" />
+      <img src="assets/images/paypal.png" alt="PayPal payment accepted" loading="lazy" />
+    </div>
+    <p>© 2025 PictureThisPet. All rights reserved. | v2.3.0 - Simple Working Flow</p>
+  </footer>
 </body>
 </html>
