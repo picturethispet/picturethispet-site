@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Availability Calendar | Picture This Pet</title>
-  <meta name="description" content="View available dates for pet photography sessions.">
+  <title>Admin Calendar | Picture This Pet</title>
+  <meta name="description" content="Manage session availability and bookings.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -16,7 +16,6 @@
       --dark-brown: #4B2E1E;
       --available-green: #10b981;
       --booked-red: #ef4444;
-      --soft-hold-yellow: #f59e0b;
     }
 
     * {
@@ -27,6 +26,7 @@
     
     html, body {
       overflow-x: hidden;
+      height: 100%;
     }
     
     body {
@@ -43,7 +43,7 @@
 
     /* === HEADER === */
     header {
-      background-image: url("assets/images/main_background_allsystem.png");
+      background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
@@ -52,7 +52,6 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-color: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -92,13 +91,37 @@
     }
     
     .book-btn {
-      background-color: var(--dark-brown);
-      color: white;
-      padding: 0.6rem 1.2rem;
+      background: url("assets/images/ani_bkgd_warm.png");
+      background-size: cover;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding: 0.8rem 2rem;
+      border: 2px solid transparent;
       border-radius: 999px;
-      font-weight: bold;
+      font-weight: 900;
+      font-size: 1.2rem;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-clip: text;
+      position: relative;
+    }
+
+    .book-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("assets/images/ani_bkgd_warm.png");
+      background-size: cover;
+      background-position: center;
+      border-radius: 999px;
+      opacity: 0.15;
+      z-index: -1;
     }
     
     .mobile-menu-btn {
@@ -108,332 +131,203 @@
     /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
-      min-height: calc(100vh - 110px);
+      height: calc(100vh - 110px);
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 4rem 1rem;
+      padding: 2rem;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     /* === PAGE HEADER === */
     .page-header {
       text-align: center;
-      margin-bottom: 4rem;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-bottom: 2rem;
     }
 
     .page-title {
-      font-size: 3.5rem;
+      font-size: 3rem;
       font-weight: 700;
       color: white;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .page-subtitle {
-      font-size: 1.3rem;
-      color: rgba(255, 255, 255, 0.9);
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    .info-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .info-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .info-card h3 {
-      color: var(--gold);
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .info-card p {
+      font-size: 1.2rem;
       color: rgba(255, 255, 255, 0.8);
-      font-size: 0.95rem;
+      margin-bottom: 1rem;
     }
 
-    /* === CALENDAR SECTION === */
-    .calendar-section {
-      max-width: 1000px;
-      margin: 0 auto;
+    .admin-controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
     }
 
+    .admin-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      backdrop-filter: blur(10px);
+    }
+
+    .admin-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .admin-btn.primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+    }
+
+    .admin-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    /* === CALENDAR CONTAINER === */
     .calendar-container {
+      flex: 1;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
+      padding: 1.5rem;
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
 
     .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 3rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .calendar-title {
-      font-size: 2.2rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: white;
     }
 
-    .calendar-nav {
+    .view-toggle {
       display: flex;
-      gap: 1rem;
+      gap: 0.5rem;
     }
 
-    .nav-button {
+    .view-btn {
       background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-size: 1.2rem;
     }
 
-    .nav-button:hover {
+    .view-btn.active,
+    .view-btn:hover {
       background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.05);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
-    /* === CALENDAR GRID === */
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 2px;
-      background: rgba(255, 255, 255, 0.1);
+    /* === CALENDAR IFRAME === */
+    .calendar-frame-container {
+      flex: 1;
       border-radius: 16px;
       overflow: hidden;
-      margin-bottom: 3rem;
-    }
-
-    .calendar-day-header {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 1.2rem 0.5rem;
-      text-align: center;
-      font-weight: 600;
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .calendar-day {
       background: rgba(255, 255, 255, 0.05);
-      padding: 1.2rem 0.5rem;
-      text-align: center;
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
-
-    .calendar-day.other-month {
-      color: rgba(255, 255, 255, 0.3);
-    }
-
-    .calendar-day.past {
-      color: rgba(255, 255, 255, 0.3);
-      background: rgba(0, 0, 0, 0.1);
-    }
-
-    .calendar-day.available {
-      background: rgba(16, 185, 129, 0.2);
-      border: 2px solid rgba(16, 185, 129, 0.5);
-      color: white;
-      position: relative;
-    }
-
-    .calendar-day.available::after {
-      content: "✓";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
-      color: var(--available-green);
-      font-weight: bold;
-    }
-
-    .calendar-day.booked {
-      background: rgba(239, 68, 68, 0.2);
-      border: 2px solid rgba(239, 68, 68, 0.5);
-      color: rgba(255, 255, 255, 0.7);
-      position: relative;
-    }
-
-    .calendar-day.booked::after {
-      content: "✕";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
-      color: var(--booked-red);
-      font-weight: bold;
-    }
-
-    .calendar-day.soft-hold {
-      background: rgba(245, 158, 11, 0.2);
-      border: 2px solid rgba(245, 158, 11, 0.5);
-      color: rgba(255, 255, 255, 0.9);
-      position: relative;
-    }
-
-    .calendar-day.soft-hold::after {
-      content: "?";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
-      color: var(--soft-hold-yellow);
-      font-weight: bold;
-    }
-
-    /* === LEGEND === */
-    .calendar-legend {
-      display: flex;
-      gap: 3rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-size: 1rem;
-      font-weight: 500;
-    }
-
-    .legend-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-    }
-
-    .legend-dot.available {
-      background: rgba(16, 185, 129, 0.7);
-      border-color: rgba(16, 185, 129, 0.5);
-    }
-
-    .legend-dot.booked {
-      background: rgba(239, 68, 68, 0.7);
-      border-color: rgba(239, 68, 68, 0.5);
-    }
-
-    .legend-dot.soft-hold {
-      background: rgba(245, 158, 11, 0.7);
-      border-color: rgba(245, 158, 11, 0.5);
-    }
-
-    .loading-indicator {
-      text-align: center;
-      padding: 2rem;
-      color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      margin: 2rem 0;
-    }
-
-    .loading-indicator h3 {
-      margin-bottom: 1rem;
-      color: var(--gold);
-    }
-
-    /* === ACTION SECTION === */
-    .action-section {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 2.5rem;
-      margin-top: 2rem;
+      min-height: 500px;
     }
 
-    .action-title {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 1rem;
+    .calendar-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 16px;
+      min-height: 500px;
     }
 
-    .action-subtitle {
+    .loading-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 500px;
+      color: rgba(255, 255, 255, 0.7);
       font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 2rem;
+      text-align: center;
       line-height: 1.6;
     }
 
-    .book-now-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      padding: 1.2rem 3rem;
-      border-radius: 16px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      cursor: pointer;
+    /* === QUICK ACTIONS === */
+    .quick-actions {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .quick-actions h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .action-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
       transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      margin-right: 1rem;
     }
 
-    .book-now-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(244, 124, 44, 0.4);
-    }
-
-    .contact-btn {
+    .action-card:hover {
       background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 1.2rem 3rem;
-      border-radius: 16px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
+      transform: translateY(-2px);
     }
 
-    .contact-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-3px);
+    .action-card h4 {
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .action-card p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      line-height: 1.4;
     }
 
     /* === RESPONSIVE === */
@@ -462,96 +356,37 @@
 
       main {
         margin-top: 80px;
-        padding: 2rem 1rem;
+        height: calc(100vh - 80px);
+        padding: 1rem;
       }
 
       .page-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
       }
 
-      .page-subtitle {
-        font-size: 1.1rem;
+      .admin-controls {
+        flex-direction: column;
+        align-items: center;
       }
 
-      .calendar-container {
-        padding: 2rem;
-      }
-
-      .calendar-title {
-        font-size: 1.8rem;
-      }
-
-      .calendar-day {
-        min-height: 45px;
-        font-size: 0.95rem;
-        padding: 1rem 0.3rem;
-      }
-
-      .calendar-day-header {
-        padding: 1rem 0.3rem;
-        font-size: 0.9rem;
-      }
-
-      .calendar-legend {
-        gap: 1.5rem;
-      }
-
-      .action-section {
-        padding: 2rem;
-      }
-
-      .book-now-btn,
-      .contact-btn {
-        display: block;
-        margin: 0.5rem auto;
+      .admin-btn {
         width: 100%;
         max-width: 300px;
       }
 
-      .nav-button {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
+      .calendar-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
       }
-    }
 
-    /* === ANIMATIONS === */
-    .calendar-container {
-      animation: slideInUp 0.8s ease-out;
-    }
-
-    .page-header {
-      animation: fadeInDown 0.8s ease-out;
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
+      .view-toggle {
+        justify-content: center;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
 
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
+      .action-grid {
+        grid-template-columns: 1fr;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .calendar-day {
-      transition: all 0.3s ease;
-    }
-
-    .calendar-day:hover {
-      transform: scale(1.05);
     }
   </style>
 </head>
@@ -562,9 +397,9 @@
     </a>
     <nav class="site-nav">
       <a href="/">Home</a>
+      <a href="/availability.html">Availability</a>
       <a href="#">Locations</a>
       <a href="#">Pricing</a>
-      <a href="/availability">Availability</a>
       <a href="#">Contact</a>
       <a href="#" class="book-btn">Book Now</a>
     </nav>
@@ -574,92 +409,81 @@
   <main>
     <!-- Page Header -->
     <div class="page-header">
-      <h1 class="page-title">Availability Calendar</h1>
-      <p class="page-subtitle">
-        Check our real-time availability for pet photography sessions. 
-        All dates shown are updated live and reflect current bookings.
-      </p>
+      <h1 class="page-title">Session Calendar Admin</h1>
+      <p class="page-subtitle">Manage your session availability and bookings</p>
       
-      <div class="info-cards">
-        <div class="info-card">
-          <h3>Live Calendar</h3>
-          <p>Real-time availability from our booking system</p>
-        </div>
-        <div class="info-card">
-          <h3>Session Times</h3>
-          <p>Sessions available at 6:00 PM (golden hour for best lighting)</p>
-        </div>
-        <div class="info-card">
-          <h3>Booking Window</h3>
-          <p>Sessions can be booked up to 3 months in advance</p>
-        </div>
-        <div class="info-card">
-          <h3>Weather Policy</h3>
-          <p>Outdoor sessions rescheduled for severe weather</p>
-        </div>
+      <div class="admin-controls">
+        <a href="https://calendar.google.com/calendar/u/0/r/week" target="_blank" class="admin-btn primary">
+          📅 Open Full Calendar
+        </a>
+        <button class="admin-btn" onclick="refreshCalendar()">
+          🔄 Refresh
+        </button>
+        <a href="/availability.html" class="admin-btn">
+          👁️ View Public Calendar
+        </a>
+        <a href="/ptp-pick-date-step-3.html" class="admin-btn">
+          🗓️ Test Booking Flow
+        </a>
       </div>
     </div>
 
-    <!-- Calendar Section -->
-    <div class="calendar-section">
-      <div class="calendar-container">
-        <div class="calendar-header">
-          <h2 class="calendar-title" id="calendarTitle">December 2024</h2>
-          <div class="calendar-nav">
-            <button class="nav-button" onclick="previousMonth()">‹</button>
-            <button class="nav-button" onclick="nextMonth()">›</button>
+    <!-- Calendar Container -->
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <h2 class="calendar-title">Session Availability Calendar</h2>
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="switchView('week')">Week</button>
+          <button class="view-btn" onclick="switchView('month')">Month</button>
+          <button class="view-btn" onclick="switchView('agenda')">Agenda</button>
+        </div>
+      </div>
+
+      <div class="calendar-frame-container">
+        <iframe 
+          id="calendarFrame"
+          class="calendar-iframe"
+          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&src=MDkzNzg1YWM0ZmM0YmM1MzI1MGFjYWE3ZGY0MThiNWI4NzE2ZGUwNjdhODRkMjc4NjFlY2IzOWM3NWQ5MWE1MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23039BE5&mode=WEEK&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=1&showTz=0"
+          loading="lazy">
+        </iframe>
+        <div class="loading-message" id="loadingMessage">
+          <div>
+            <p><strong>Loading your Session Availability calendar...</strong></p>
+            <p>If the calendar doesn't load, you may need to sign in to your Google account first.</p>
+            <br>
+            <p><a href="https://calendar.google.com/calendar/u/0/r" target="_blank" style="color: var(--gold);">→ Open Calendar in New Tab</a></p>
           </div>
         </div>
+      </div>
 
-        <div id="calendarContainer">
-          <div class="loading-indicator" id="loadingIndicator">
-            <h3>🔄 Loading Live Availability...</h3>
-            <p>Fetching real-time data from your Session Availability calendar</p>
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <h3>Quick Actions</h3>
+        <div class="action-grid">
+          <div class="action-card">
+            <h4>Add Session Block</h4>
+            <p>Block time for new photography sessions</p>
           </div>
-        </div>
-
-        <div class="calendar-legend">
-          <div class="legend-item">
-            <div class="legend-dot available"></div>
-            <span>Available</span>
+          <div class="action-card">
+            <h4>Mark Unavailable</h4>
+            <p>Block dates when you're not available</p>
           </div>
-          <div class="legend-item">
-            <div class="legend-dot soft-hold"></div>
-            <span>Soft Hold</span>
+          <div class="action-card">
+            <h4>View Bookings</h4>
+            <p>See all confirmed and pending bookings</p>
           </div>
-          <div class="legend-item">
-            <div class="legend-dot booked"></div>
-            <span>Fully Booked</span>
+          <div class="action-card">
+            <h4>Export Schedule</h4>
+            <p>Download calendar data for backup</p>
           </div>
-        </div>
-
-        <div class="action-section">
-          <h3 class="action-title">Ready to Book Your Session?</h3>
-          <p class="action-subtitle">
-            See an available date that works for you? Start your booking process now or contact us for custom scheduling.
-          </p>
-          <a href="/" class="book-now-btn">Book Now</a>
-          <a href="#" class="contact-btn">Contact Us</a>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Version Footer -->
-  <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v2.0.0</p>
-  </footer>
-
   <script>
-    let currentMonth = new Date();
-    
-    // Your Session Availability calendar feed
-    const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
-    
-    // Calendar data - will be populated from iCal feed
-    let bookedDates = [];
-    let softHoldDates = [];
-    let calendarEvents = [];
+    let currentView = 'week';
+    const calendarId = '093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com';
 
     // Mobile menu toggle
     function toggleMenu() {
@@ -667,235 +491,80 @@
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    // Parse iCal data
-    function parseICalData(icsData) {
-      const events = [];
-      const lines = icsData.split('\n');
-      let currentEvent = {};
-      let inEvent = false;
-
-      for (let line of lines) {
-        line = line.trim();
-        
-        if (line === 'BEGIN:VEVENT') {
-          inEvent = true;
-          currentEvent = {};
-        } else if (line === 'END:VEVENT') {
-          if (currentEvent.dtstart && currentEvent.summary) {
-            events.push(currentEvent);
-          }
-          inEvent = false;
-        } else if (inEvent) {
-          if (line.startsWith('DTSTART')) {
-            const dateMatch = line.match(/DTSTART[^:]*:(\d{8}T?\d{0,6}Z?)/);
-            if (dateMatch) {
-              currentEvent.dtstart = parseDateFromICS(dateMatch[1]);
-            }
-          } else if (line.startsWith('DTEND')) {
-            const dateMatch = line.match(/DTEND[^:]*:(\d{8}T?\d{0,6}Z?)/);
-            if (dateMatch) {
-              currentEvent.dtend = parseDateFromICS(dateMatch[1]);
-            }
-          } else if (line.startsWith('SUMMARY:')) {
-            currentEvent.summary = line.substring(8);
-          }
-        }
-      }
-      return events;
-    }
-
-    // Parse date from ICS format
-    function parseDateFromICS(dateStr) {
-      // Handle formats like: 20241215T180000Z or 20241215
-      if (dateStr.includes('T')) {
-        const year = dateStr.substring(0, 4);
-        const month = dateStr.substring(4, 6);
-        const day = dateStr.substring(6, 8);
-        const hour = dateStr.substring(9, 11) || '00';
-        const minute = dateStr.substring(11, 13) || '00';
-        return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
-      } else {
-        const year = dateStr.substring(0, 4);
-        const month = dateStr.substring(4, 6);
-        const day = dateStr.substring(6, 8);
-        return new Date(`${year}-${month}-${day}`);
-      }
-    }
-
-    // Fetch calendar data
-    async function fetchCalendarData() {
-      try {
-        console.log('Fetching calendar data...');
-        // Use a CORS proxy for development/testing
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
-        const response = await fetch(proxyUrl + encodeURIComponent(CALENDAR_FEED_URL));
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const icsData = await response.text();
-        console.log('Calendar data fetched successfully');
-        
-        calendarEvents = parseICalData(icsData);
-        console.log('Parsed events:', calendarEvents);
-        
-        processCalendarEvents();
-        generateCalendar();
-        
-      } catch (error) {
-        console.error('Error fetching calendar data:', error);
-        console.log('Using fallback data...');
-        // Fallback data if calendar fetch fails
-        bookedDates = [
-          "2024-12-15",
-          "2024-12-22", 
-          "2024-12-29",
-          "2025-01-05",
-          "2025-01-12",
-          "2025-01-19"
-        ];
-        generateCalendar();
-      }
-    }
-
-    // Process calendar events to determine availability
-    function processCalendarEvents() {
-      bookedDates = [];
-      softHoldDates = [];
+    // Switch calendar view
+    function switchView(view) {
+      currentView = view;
       
-      calendarEvents.forEach(event => {
-        if (event.dtstart) {
-          const eventDate = event.dtstart;
-          const dateString = `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
-          
-          // Determine event type based on summary
-          const summary = (event.summary || '').toLowerCase();
-          
-          if (summary.includes('booked') || summary.includes('session') || summary.includes('appointment')) {
-            bookedDates.push(dateString);
-          } else if (summary.includes('hold') || summary.includes('pending') || summary.includes('maybe')) {
-            softHoldDates.push(dateString);
-          } else {
-            // Default to booked for any calendar event
-            bookedDates.push(dateString);
-          }
-        }
+      // Update button states
+      document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.classList.remove('active');
       });
+      event.target.classList.add('active');
       
-      console.log('Processed booked dates:', bookedDates);
-      console.log('Processed soft hold dates:', softHoldDates);
+      // Update iframe src with new view
+      const iframe = document.getElementById('calendarFrame');
+      let mode = 'WEEK';
+      
+      switch(view) {
+        case 'month':
+          mode = 'MONTH';
+          break;
+        case 'agenda':
+          mode = 'AGENDA';
+          break;
+        default:
+          mode = 'WEEK';
+      }
+      
+      const newSrc = `https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&src=${calendarId}&color=%23039BE5&mode=${mode}&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=1&showTz=0`;
+      
+      iframe.src = newSrc;
+      console.log(`Switched to ${view} view`);
     }
 
-    // Generate calendar
-    function generateCalendar() {
-      const container = document.getElementById('calendarContainer');
-      const title = document.getElementById('calendarTitle');
-      
-      if (!container || !title) {
-        console.error('Calendar elements not found');
-        return;
-      }
-      
-      const year = currentMonth.getFullYear();
-      const month = currentMonth.getMonth();
-      
-      title.textContent = new Intl.DateTimeFormat('en-US', { 
-        month: 'long', 
-        year: 'numeric' 
-      }).format(currentMonth);
-
-      // Clear container and create grid
-      container.innerHTML = '';
-      const grid = document.createElement('div');
-      grid.className = 'calendar-grid';
-      grid.id = 'calendarGrid';
-
-      // Add day headers
-      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      dayHeaders.forEach(day => {
-        const header = document.createElement('div');
-        header.className = 'calendar-day-header';
-        header.textContent = day;
-        grid.appendChild(header);
-      });
-
-      // Calculate first day of month and number of days
-      const firstDay = new Date(year, month, 1);
-      const lastDay = new Date(year, month + 1, 0);
-      const daysInMonth = lastDay.getDate();
-      const startingDayOfWeek = firstDay.getDay();
-
-      // Add empty cells for days before month starts
-      for (let i = 0; i < startingDayOfWeek; i++) {
-        const emptyDay = document.createElement('div');
-        emptyDay.className = 'calendar-day other-month';
-        grid.appendChild(emptyDay);
-      }
-
-      // Add days of the month
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dayElement = document.createElement('div');
-        dayElement.className = 'calendar-day';
-        dayElement.textContent = day;
-        
-        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const dayDate = new Date(year, month, day);
-        
-        // Mark past dates
-        if (dayDate < new Date()) {
-          dayElement.classList.add('past');
-        }
-        // Mark booked dates
-        else if (bookedDates.includes(dateString)) {
-          dayElement.classList.add('booked');
-        }
-        // Mark soft hold dates
-        else if (softHoldDates.includes(dateString)) {
-          dayElement.classList.add('soft-hold');
-        }
-        // Mark available dates (not Sunday, not booked, not past)
-        else if (dayDate.getDay() !== 0) {
-          dayElement.classList.add('available');
-        }
-        
-        grid.appendChild(dayElement);
-      }
-      
-      container.appendChild(grid);
-      console.log('Availability calendar generated successfully');
+    // Refresh calendar
+    function refreshCalendar() {
+      const iframe = document.getElementById('calendarFrame');
+      const currentSrc = iframe.src;
+      iframe.src = 'about:blank';
+      setTimeout(() => {
+        iframe.src = currentSrc;
+      }, 100);
+      console.log('Calendar refreshed');
     }
 
-    // Navigation functions
-    function previousMonth() {
-      currentMonth.setMonth(currentMonth.getMonth() - 1);
-      // Only regenerate if calendar has loaded
-      if (document.getElementById('calendarGrid')) {
-        generateCalendar();
-      }
-    }
-
-    function nextMonth() {
-      currentMonth.setMonth(currentMonth.getMonth() + 1);
-      // Only regenerate if calendar has loaded
-      if (document.getElementById('calendarGrid')) {
-        generateCalendar();
-      }
-    }
-
-    // Initialize page
+    // Hide loading message when iframe loads
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Availability page loaded, initializing...');
+      const iframe = document.getElementById('calendarFrame');
+      const loadingMessage = document.getElementById('loadingMessage');
       
-      // Fetch real calendar data
-      fetchCalendarData();
+      iframe.addEventListener('load', function() {
+        loadingMessage.style.display = 'none';
+      });
+      
+      // Hide loading message after 5 seconds regardless
+      setTimeout(() => {
+        loadingMessage.style.display = 'none';
+      }, 5000);
+      
+      console.log('Admin calendar page initialized');
     });
 
-    // Auto-refresh calendar every 5 minutes to show real-time updates
-    setInterval(function() {
-      console.log('Auto-refreshing availability data...');
-      fetchCalendarData();
-    }, 300000); // 5 minutes
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Alt + R = Refresh
+      if (e.altKey && e.key === 'r') {
+        e.preventDefault();
+        refreshCalendar();
+      }
+      
+      // Alt + 1/2/3 = Switch views
+      if (e.altKey && ['1', '2', '3'].includes(e.key)) {
+        e.preventDefault();
+        const views = ['week', 'month', 'agenda'];
+        switchView(views[parseInt(e.key) - 1]);
+      }
+    });
   </script>
 </body>
 </html>
