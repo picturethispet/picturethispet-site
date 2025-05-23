@@ -657,28 +657,40 @@
     // Main booking processing function
     async function processBooking() {
       try {
+        console.log('Starting booking confirmation process...');
+        
         // Get booking data from localStorage
         const bookingData = getBookingData();
         
         if (!bookingData) {
+          console.log('No valid booking data found, showing error state');
           showError();
           return;
         }
 
+        console.log('Valid booking data found, processing...');
+
         // Display booking details
         displayBookingDetails(bookingData);
+        console.log('Booking details displayed successfully');
 
-        // Submit to Google Sheets
+        // Submit to Google Sheets (non-blocking)
         await submitToGoogleSheets(bookingData);
+        console.log('Google Sheets submission completed');
 
         // Show success card
         showSuccess();
+        console.log('Success state displayed');
 
         // Clean up localStorage after successful submission
         cleanupLocalStorage();
+        console.log('localStorage cleanup completed');
+
+        console.log('Booking confirmation process completed successfully');
 
       } catch (error) {
-        console.error('Error processing booking:', error);
+        console.error('Critical error in booking processing:', error);
+        console.error('Error stack:', error.stack);
         showError();
       }
     }
@@ -689,10 +701,12 @@
         const data = localStorage.getItem('ptpFinalBookingData');
         if (!data) {
           console.log('No booking data found in localStorage');
+          console.log('Available localStorage keys:', Object.keys(localStorage));
           return null;
         }
 
         const bookingData = JSON.parse(data);
+        console.log('Retrieved booking data:', bookingData);
         
         // Validate required fields
         const requiredFields = ['session', 'selectedDateTime', 'clientFirstName', 'totalPrice'];
@@ -700,46 +714,70 @@
         
         if (missingFields.length > 0) {
           console.log('Missing required fields:', missingFields);
+          console.log('Available fields:', Object.keys(bookingData));
           return null;
+        }
+
+        // Validate data integrity
+        if (bookingData.totalPrice <= 0) {
+          console.warn('Invalid total price:', bookingData.totalPrice);
+        }
+
+        if (!bookingData.clientEmail && !bookingData.clientPhone) {
+          console.warn('No contact information found');
         }
 
         return bookingData;
       } catch (error) {
         console.error('Error parsing booking data:', error);
+        console.error('Raw localStorage data:', localStorage.getItem('ptpFinalBookingData'));
         return null;
       }
     }
 
     // Display booking details in the UI
     function displayBookingDetails(data) {
-      // Session details
-      document.getElementById('sessionType').textContent = data.session || '—';
-      document.getElementById('sessionDateTime').textContent = data.selectedDateTime || '—';
-      document.getElementById('sessionLocation').textContent = data.park || '—';
+      try {
+        // Session details
+        document.getElementById('sessionType').textContent = data.session || '—';
+        document.getElementById('sessionDateTime').textContent = data.selectedDateTime || data.selectedDate || '—';
+        document.getElementById('sessionLocation').textContent = data.park || '—';
 
-      // Client details
-      const clientName = `${data.clientFirstName || ''} ${data.clientLastName || ''}`.trim();
-      document.getElementById('clientName').textContent = clientName || '—';
-      
-      const clientPhone = data.clientPhone || '';
-      const clientEmail = data.clientEmail || '';
-      let contactInfo = '';
-      if (clientPhone && clientEmail) {
-        contactInfo = `${clientPhone} • ${clientEmail}`;
-      } else if (clientPhone || clientEmail) {
-        contactInfo = clientPhone || clientEmail;
-      } else {
-        contactInfo = '—';
+        // Client details
+        const clientName = `${data.clientFirstName || ''} ${data.clientLastName || ''}`.trim();
+        document.getElementById('clientName').textContent = clientName || '—';
+        
+        // Enhanced contact info display
+        const clientPhone = data.clientPhone || '';
+        const clientEmail = data.clientEmail || '';
+        let contactInfo = '';
+        if (clientPhone && clientEmail) {
+          contactInfo = `${clientPhone} • ${clientEmail}`;
+        } else if (clientPhone) {
+          contactInfo = clientPhone;
+        } else if (clientEmail) {
+          contactInfo = clientEmail;
+        } else {
+          contactInfo = '—';
+        }
+        document.getElementById('clientContact').textContent = contactInfo;
+
+        // Pet names with enhanced logic
+        const petNames = getPetNames(data);
+        document.getElementById('petNames').textContent = petNames || '—';
+
+        // Total price with validation
+        const totalPrice = parseFloat(data.totalPrice) || 0;
+        document.getElementById('totalPrice').textContent = `${totalPrice}`;
+
+        console.log('Successfully displayed booking details for:', clientName);
+      } catch (error) {
+        console.error('Error displaying booking details:', error);
+        // Fallback to showing basic info
+        document.getElementById('sessionType').textContent = data.session || 'Session';
+        document.getElementById('clientName').textContent = data.clientFirstName || 'Client';
+        document.getElementById('totalPrice').textContent = `${data.totalPrice || 0}`;
       }
-      document.getElementById('clientContact').textContent = contactInfo;
-
-      // Pet names
-      const petNames = getPetNames(data);
-      document.getElementById('petNames').textContent = petNames || '—';
-
-      // Total price
-      const totalPrice = data.totalPrice || 0;
-      document.getElementById('totalPrice').textContent = `$${totalPrice}`;
     }
 
     // Extract pet names from booking data
@@ -761,7 +799,75 @@
     // Submit booking data to Google Sheets
     async function submitToGoogleSheets(data) {
       try {
-        console.log('Submitting to Google Sheets:', data);
+        // Prepare comprehensive payload for Google Sheets
+        const payload = {
+          // Booking metadata
+          submissionTimestamp: new Date().toISOString(),
+          bookingId: generateBookingId(data),
+          
+          // Session details
+          sessionType: data.session || '',
+          location: data.park || '',
+          selectedDate: data.selectedDate || '',
+          selectedTime: data.selectedTime || '',
+          selectedDateTime: data.selectedDateTime || '',
+          petCount: data.petCount || '',
+          peopleCount: data.peopleCount || '',
+          totalPrice: data.totalPrice || 0,
+          
+          // Client information
+          clientFirstName: data.clientFirstName || '',
+          clientLastName: data.clientLastName || '',
+          clientPhone: data.clientPhone || '',
+          clientEmail: data.clientEmail || '',
+          clientZipCode: data.clientZipCode || '',
+          
+          // Additional client (if applicable)
+          client2FirstName: data.client2FirstName || '',
+          client2LastName: data.client2LastName || '',
+          client2Phone: data.client2Phone || '',
+          client2Email: data.client2Email || '',
+          client2ZipCode: data.client2ZipCode || '',
+          
+          // Pet information
+          petName: data.petName || '',
+          petAge: data.petAge || '',
+          petBirthdate: data.petBirthdate || '',
+          petGender: data.petGender || '',
+          petFavoriteToy: data.petFavoriteToy || '',
+          petOffLeash: data.petOffLeash || '',
+          petBehavior: data.petBehavior || '',
+          petNotes: data.petNotes || '',
+          petInstagram: data.petInstagram || '',
+          
+          // Second pet (if applicable)
+          pet2Name: data.pet2Name || '',
+          pet2Age: data.pet2Age || '',
+          pet2Birthdate: data.pet2Birthdate || '',
+          pet2Gender: data.pet2Gender || '',
+          pet2FavoriteToy: data.pet2FavoriteToy || '',
+          pet2OffLeash: data.pet2OffLeash || '',
+          pet2Behavior: data.pet2Behavior || '',
+          pet2Notes: data.pet2Notes || '',
+          pet2Instagram: data.pet2Instagram || '',
+          
+          // Agreements and preferences
+          vaccination: data.vaccination || '',
+          referralSource: data.referralSource || '',
+          socialTagging: data.socialTagging || '',
+          clientInstagram: data.clientInstagram || '',
+          client2Instagram: data.client2Instagram || '',
+          
+          // Policy acceptances
+          acceptedBehaviorPolicy: data.acceptedBehaviorPolicy || false,
+          acceptedServiceAgreement: data.acceptedServiceAgreement || false,
+          acceptedCancellationPolicy: data.acceptedCancellationPolicy || false,
+          
+          // Raw data for debugging
+          rawData: JSON.stringify(data)
+        };
+
+        console.log('Submitting comprehensive payload to Google Sheets:', payload);
         
         const response = await fetch(GOOGLE_SHEETS_URL, {
           method: 'POST',
@@ -769,18 +875,27 @@
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(payload)
         });
 
         // Note: no-cors mode means we can't read the response,
         // but the data should still be submitted successfully
-        console.log('Google Sheets submission completed');
+        console.log('Google Sheets submission completed successfully');
         
       } catch (error) {
         console.error('Error submitting to Google Sheets:', error);
+        console.error('Failed payload:', data);
         // Don't throw error here - we still want to show success to user
         // The booking was completed and paid for
       }
+    }
+
+    // Generate a unique booking ID for tracking
+    function generateBookingId(data) {
+      const timestamp = Date.now();
+      const clientInitials = (data.clientFirstName?.[0] || '') + (data.clientLastName?.[0] || '');
+      const petInitial = data.petName?.[0] || 'X';
+      return `PTP-${clientInitials}${petInitial}-${timestamp}`;
     }
 
     // Show success state
