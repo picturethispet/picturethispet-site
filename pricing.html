@@ -150,6 +150,7 @@
       background-position: center;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
       padding: 0.8rem 2rem;
       border: 2px solid transparent;
       border-radius: 999px;
@@ -159,8 +160,8 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      background-clip: text;
       position: relative;
+      display: inline-block;
     }
 
     .book-btn::before {
@@ -391,7 +392,7 @@
       margin: 0 auto;
       margin-top: 4rem;
       position: relative;
-      min-height: 700px;
+      min-height: 800px;
       z-index: 2;
     }
 
@@ -400,15 +401,15 @@
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      height: 650px;
+      height: 700px;
       width: 100%;
-      max-width: 700px;
+      max-width: 800px;
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
       padding: 3rem;
       color: white;
       font-family: 'Inter', sans-serif;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.9);
       visibility: hidden;
@@ -426,10 +427,10 @@
     }
 
     .session-card.agreement-card {
-      height: 600px;
+      height: 750px;
       max-width: 900px;
       width: 100%;
-      padding: 2.5rem;
+      padding: 3rem;
     }
 
     .session-card.active {
@@ -505,16 +506,17 @@
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 2rem;
       margin: 1rem 0 2rem;
       border: 1px solid rgba(255, 255, 255, 0.15);
       text-align: left;
       line-height: 1.6;
       font-size: 1.1rem;
-      max-width: 750px;
-      min-height: 240px;
+      max-width: 800px;
+      min-height: 200px;
       margin-left: auto;
       margin-right: auto;
+      overflow-y: auto;
     }
 
     .session-info-list {
@@ -709,9 +711,23 @@
       }
       
       .book-btn {
+        background: url("assets/images/ani_bkgd_warm.png");
+        background-size: cover;
+        background-position: center;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         padding: 0.6rem 1.5rem;
+        border-radius: 999px;
+        font-weight: 900;
         font-size: 1rem;
         margin-left: 0;
+        display: inline-block;
+        position: relative;
+      }
+
+      .book-btn::before {
+        opacity: 0.2;
       }
       
       .mobile-menu-btn {
@@ -765,20 +781,20 @@
 
       .session-card-container {
         margin-top: 3rem;
-        min-height: 600px;
+        min-height: 700px;
       }
 
       .session-card {
-        height: 580px;
+        height: 650px;
         max-width: 95%;
         padding: 2rem;
-        top: 55%;
+        top: 50%;
       }
 
       .session-card.agreement-card {
-        height: 650px;
+        height: 700px;
         max-width: 95%;
-        padding: 1.5rem;
+        padding: 2rem;
       }
 
       .session-card-logo {
@@ -805,9 +821,9 @@
 
       .agreement-text {
         max-width: 95%;
-        min-height: 280px;
-        margin: 0.5rem 0 1.5rem;
-        padding: 1rem;
+        min-height: 200px;
+        margin: 1rem 0 1.5rem;
+        padding: 1.5rem;
         font-size: 1rem;
       }
 
@@ -857,22 +873,14 @@
     }
 
     /* === ENHANCED ANIMATIONS === */
-    .session-card {
-      animation: none;
-    }
-
-    .session-card.entering {
-      animation: cardSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-
     @keyframes cardSlideIn {
       from {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.9) rotateY(10deg);
+        transform: translate(-50%, -50%) scale(0.9);
       }
       to {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1) rotateY(0deg);
+        transform: translate(-50%, -50%) scale(1);
       }
     }
   </style>
@@ -1006,13 +1014,14 @@
       }
       
       cards.forEach((card, i) => {
-        card.classList.remove('active', 'entering');
+        card.classList.remove('active', 'exiting');
         if (i === index) {
+          card.style.visibility = 'visible';
           setTimeout(() => {
-            card.classList.add('active', 'entering');
-            card.style.visibility = 'visible';
+            card.classList.add('active');
           }, 50);
         } else {
+          card.classList.remove('active');
           card.style.visibility = 'hidden';
         }
       });
@@ -1023,7 +1032,9 @@
         renderCurrentQuestion();
       }
 
-      addButtonListeners();
+      setTimeout(() => {
+        addButtonListeners();
+      }, 100);
     }
 
     // Advance to next card
@@ -1043,7 +1054,7 @@
           currentCardEl.classList.remove('active', 'exiting');
           currentCardEl.style.visibility = 'hidden';
           showCard(nextIndex);
-        }, 300);
+        }, 400);
       } else {
         showCard(nextIndex);
       }
@@ -1137,7 +1148,9 @@
         </div>
       `;
 
-      addButtonListeners();
+      setTimeout(() => {
+        addButtonListeners();
+      }, 100);
     }
 
     // Add button listeners
@@ -1312,8 +1325,10 @@
       container.appendChild(card6);
 
       currentQuestion = 0;
-      renderCurrentQuestion();
-      addButtonListeners();
+      setTimeout(() => {
+        renderCurrentQuestion();
+        addButtonListeners();
+      }, 200);
     }
 
     // Session data management
@@ -1353,11 +1368,13 @@
         Object.assign(sessionData, parsed);
       }
 
-      // Initialize session builder
-      currentCard = 0;
-      currentQuestion = 0;
-      cardHistory = [];
-      initializeSessionBuilder();
+      // Initialize session builder with delay
+      setTimeout(() => {
+        currentCard = 0;
+        currentQuestion = 0;
+        cardHistory = [];
+        initializeSessionBuilder();
+      }, 100);
 
       console.log('✨ Polished homepage initialized successfully');
     });
