@@ -164,59 +164,123 @@ export default function GalleryPage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen ptp-card-background flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <Card className="glass-card border-white/10">
-            <CardContent className="p-8">
-              <div className="text-center mb-8">
-                <Camera className="h-16 w-16 mx-auto mb-4 text-orange-400" />
-                <h1 className="text-3xl font-bold gradient-text mb-2">
-                  Your Photo Gallery
-                </h1>
-                <p className="text-white/80">
-                  Enter your session details to view and order your photos
-                </p>
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #2D1B69 0%, #11998E 50%, #38A169 100%)',
+        backgroundSize: '400% 400%',
+        animation: 'moveBackground 30s ease-in-out infinite',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2rem'
+      }}>
+        <div style={{
+          width: '100%',
+          maxWidth: '28rem'
+        }}>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '16px',
+            padding: '2rem'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <Camera className="h-16 w-16 mx-auto mb-4" style={{ color: '#FDB75E' }} />
+              <h1 style={{
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                background: 'linear-gradient(135deg, #F47C2C, #FDB75E)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                marginBottom: '0.5rem'
+              }}>
+                Your Photo Gallery
+              </h1>
+              <p style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                Enter your session details to view and order your photos
+              </p>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  marginBottom: '0.5rem'
+                }}>
+                  Session ID
+                </label>
+                <Input
+                  type="text"
+                  placeholder="e.g., PTP-2024-001"
+                  value={loginData.sessionId}
+                  onChange={(e) => setLoginData({ ...loginData, sessionId: e.target.value })}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: 'white',
+                    borderRadius: '8px',
+                    padding: '0.75rem'
+                  }}
+                />
               </div>
               
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-white/90 mb-2">
-                    Session ID
-                  </label>
-                  <Input
-                    type="text"
-                    placeholder="e.g., PTP-2024-001"
-                    value={loginData.sessionId}
-                    onChange={(e) => setLoginData({ ...loginData, sessionId: e.target.value })}
-                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
-                  />
-                </div>
-                
-                <div className="text-center text-white/60 text-sm">— OR —</div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-white/90 mb-2">
-                    Email Address
-                  </label>
-                  <Input
-                    type="email"
-                    placeholder="your@email.com"
-                    value={loginData.email}
-                    onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
-                  />
-                </div>
-                
-                <Button 
-                  onClick={handleLogin} 
-                  disabled={loginMutation.isPending}
-                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold py-3"
-                >
-                  {loginMutation.isPending ? "Accessing Gallery..." : "Access My Gallery"}
-                </Button>
+              <div style={{
+                textAlign: 'center',
+                color: 'rgba(255, 255, 255, 0.6)',
+                fontSize: '0.875rem'
+              }}>
+                — OR —
               </div>
-            </CardContent>
-          </Card>
+              
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  marginBottom: '0.5rem'
+                }}>
+                  Email Address
+                </label>
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={loginData.email}
+                  onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: 'white',
+                    borderRadius: '8px',
+                    padding: '0.75rem'
+                  }}
+                />
+              </div>
+              
+              <Button 
+                onClick={handleLogin} 
+                disabled={loginMutation.isPending}
+                style={{
+                  width: '100%',
+                  background: 'linear-gradient(135deg, #F47C2C, #FDB75E)',
+                  color: 'white',
+                  fontWeight: '600',
+                  padding: '0.75rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                {loginMutation.isPending ? "Accessing Gallery..." : "Access My Gallery"}
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     );
