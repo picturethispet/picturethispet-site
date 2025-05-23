@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Session Details | Picture This Pet</title>
-  <meta name="description" content="Tell us about your pet and session preferences.">
+  <title>Contact Us | Picture This Pet</title>
+  <meta name="description" content="Get in touch for pet photography sessions or business partnerships.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -24,15 +24,23 @@
       padding: 0;
     }
     
-    html, body {
+    html {
       overflow-x: hidden;
-      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
     }
     
     body {
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
+      overflow-x: hidden;
     }
 
     @keyframes moveBackground {
@@ -41,20 +49,52 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* === HEADER === */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* === HEADER STYLES === */
     header {
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
@@ -70,12 +110,13 @@
     .logo-link {
       display: flex;
       align-items: center;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       text-decoration: none;
     }
 
     .logo-link:hover {
       opacity: 0.8;
+      transform: scale(1.02);
     }
     
     .site-nav {
@@ -84,25 +125,78 @@
       margin-left: auto;
     }
     
-    .site-nav a {
-      color: white;
+    .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
     }
     
     .book-btn {
-      background-color: var(--dark-brown);
-      color: white;
-      padding: 0.6rem 1.2rem;
+      background: url("assets/images/ani_bkgd_warm.png");
+      background-size: cover;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      padding: 0.8rem 2rem;
+      border: 2px solid transparent;
       border-radius: 999px;
-      font-weight: bold;
+      font-weight: 900;
+      font-size: 1.2rem;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+    }
+
+    .book-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("assets/images/ani_bkgd_warm.png");
+      background-size: cover;
+      background-position: center;
+      border-radius: 999px;
+      opacity: 0.15;
+      z-index: -1;
+      transition: all 0.3s ease;
+    }
+
+    .book-btn:hover::before {
+      opacity: 0.25;
+      transform: scale(1.05);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
     }
     
     .mobile-menu-btn {
       display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
     }
 
     /* === MAIN CONTENT === */
@@ -115,113 +209,45 @@
       animation: moveBackground 30s ease-in-out infinite;
       padding: 4rem 1rem 8rem;
       position: relative;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
     }
 
-    /* === PROGRESS INDICATOR === */
-    .progress-section {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .progress-steps {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .progress-step {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: rgba(255, 255, 255, 0.7);
-      transition: all 0.3s ease;
-    }
-
-    .progress-step.completed {
-      background: var(--available-green);
-      border-color: var(--available-green);
-      color: white;
-    }
-
-    .progress-step.active {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-      color: white;
-    }
-
-    .progress-line {
-      width: 60px;
-      height: 2px;
-      background: rgba(255, 255, 255, 0.3);
-      position: relative;
-    }
-
-    .progress-line.completed {
-      background: var(--available-green);
-    }
-
-    .progress-text {
-      color: white;
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-
-    /* === INTAKE FORM SECTION === */
-    .intake-section {
+    /* === CONTACT SECTION === */
+    .contact-section {
       max-width: 900px;
       margin: 0 auto;
       position: relative;
       z-index: 2;
+      animation: fadeInUp 0.8s ease-out;
     }
 
-    .intake-card {
+    .contact-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
       height: auto;
-      min-height: 500px;
+      min-height: 600px;
       width: 100%;
       max-width: 900px;
-      animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
       padding: 3rem;
       color: white;
-      font-family: 'SF Pro Display', sans-serif;
+      font-family: 'Inter', sans-serif;
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0;
       transform: scale(0.9);
       display: none;
       position: relative;
-      overflow: visible;
-      margin-bottom: 2rem;
+      overflow: hidden;
+      margin: 0 auto 2rem;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Card size variations - Remove max-height constraints */
-    .intake-card.small-card {
-      min-height: 500px;
-    }
-
-    .intake-card.medium-card {
-      min-height: 700px;
-    }
-
-    .intake-card.large-card {
-      min-height: 900px;
-    }
-
-    .intake-card.extra-large-card {
-      min-height: 1000px;
-    }
-
-    .intake-card.active {
+    .contact-card.active {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -230,20 +256,20 @@
       transform: scale(1);
     }
 
-    .intake-card.exiting {
+    .contact-card.exiting {
       opacity: 0;
       transform: scale(0.8);
     }
 
-    .intake-card-logo {
+    .contact-card-logo {
       display: block;
-      max-width: 180px;
-      margin: 0 auto 2.5rem;
+      max-width: 300px;
+      margin: 0 auto 2rem;
       height: auto;
       flex-shrink: 0;
     }
 
-    .intake-card-body {
+    .contact-card-body {
       text-align: center;
       flex: 1;
       display: flex;
@@ -252,91 +278,72 @@
       width: 100%;
       min-height: 0;
       padding-bottom: 3rem;
-      overflow: visible;
     }
 
-    .intake-card-body.form-content {
+    .contact-card-body.form-content {
       justify-content: flex-start;
-      padding-top: 1.5rem;
-      padding-bottom: 3.5rem;
+      text-align: left;
+      padding-top: 1rem;
+      padding-bottom: 2rem;
     }
 
-    .intake-card-body.centered-content {
+    .contact-card-body.centered-content {
       justify-content: center;
       align-items: center;
-      padding-bottom: 3rem;
+      text-align: center;
     }
 
-    .intake-card-body h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 2.2rem;
+    .contact-card-body h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 3.5rem;
+      line-height: 1.1;
+      background: url("assets/images/ani_bkgd_cool.png");
+      background-size: cover;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    .contact-card-body h2 {
+      font-family: 'Playfair Display', serif;
       font-weight: 700;
-      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
       color: white;
-      margin-top: 0.5rem;
-      letter-spacing: -0.02em;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .intake-card-body p {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 1.2rem;
+    .contact-card-body p {
+      font-size: 1.3rem;
       line-height: 1.6;
       opacity: 0.9;
-      margin-bottom: 2.5rem;
-      max-width: 500px;
+      margin-bottom: 2rem;
+      max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-      font-weight: 400;
     }
 
     /* === FORM STYLES === */
     .form-group {
-      margin-bottom: 2.25rem;
+      margin-bottom: 2rem;
       text-align: left;
       width: 100%;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
     }
 
     .form-row {
       display: flex;
       gap: 2rem;
       align-items: flex-start;
-      margin-bottom: 2.25rem;
+      margin-bottom: 2rem;
     }
 
     .form-row .form-group {
       flex: 1;
       margin-bottom: 0;
-      max-width: none;
-    }
-
-    .form-row-thirds {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
-      margin-bottom: 2.25rem;
-    }
-
-    .form-row-thirds .form-group {
-      flex: 1;
-      margin-bottom: 0;
-      max-width: none;
-    }
-
-    .form-row-quad {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
-      margin-bottom: 2.25rem;
-    }
-
-    .form-row-quad .form-group {
-      flex: 1;
-      margin-bottom: 0;
-      max-width: none;
     }
 
     .form-group label {
@@ -362,19 +369,9 @@
       min-height: 50px;
     }
 
-    .form-group input[type="text"]:not([maxlength="10"]):not([maxlength="12"]) {
-      text-transform: capitalize;
-    }
-
-    /* === ZIP CODE STYLING === */
-    .form-group input[name*="ZipCode"] {
-      width: 150px;
-      margin: 0 auto;
-      display: block;
-    }
-
-    .form-group.zip-code-group {
-      text-align: center;
+    .form-group input[type="text"],
+    .form-group input[type="email"] {
+      text-transform: none;
     }
 
     .form-group input::placeholder,
@@ -388,11 +385,12 @@
       outline: none;
       border-color: var(--gold);
       background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
     }
 
     .form-group textarea {
       resize: vertical;
-      min-height: 120px;
+      min-height: 140px;
     }
 
     .form-group.required label::after {
@@ -420,113 +418,96 @@
     /* === CHOICE BUTTONS === */
     .choice-buttons {
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       justify-content: center;
-      margin-top: 1.5rem;
-      margin-bottom: 2.5rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
     }
 
     .choice-btn {
       background: rgba(255, 255, 255, 0.1);
       color: white;
       border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
+      border-radius: 16px;
+      padding: 1.5rem 2.5rem;
+      font-size: 1.2rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
-      min-width: 120px;
+      min-width: 200px;
+      text-align: center;
     }
 
     .choice-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
 
     .choice-btn.selected {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       border-color: var(--gold);
       color: white;
+      box-shadow: 0 8px 25px rgba(244, 124, 44, 0.3);
     }
 
-    .choice-btn.no-btn {
-      border-color: rgba(239, 68, 68, 0.5);
-      color: rgba(239, 68, 68, 0.9);
+    .choice-btn.business {
+      border-color: rgba(16, 185, 129, 0.5);
+      color: rgba(16, 185, 129, 0.9);
     }
 
-    .choice-btn.no-btn:hover {
-      background: rgba(239, 68, 68, 0.1);
-      border-color: rgba(239, 68, 68, 0.7);
+    .choice-btn.business:hover {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.7);
     }
 
-    .choice-btn.no-btn.selected {
-      background: var(--error-red);
-      border-color: var(--error-red);
+    .choice-btn.business.selected {
+      background: var(--available-green);
+      border-color: var(--available-green);
       color: white;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
     }
 
-    /* === VACCINATION BLOCK MODAL === */
-    .vaccination-block {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
-
-    .vaccination-block-content {
-      background: rgba(239, 68, 68, 0.95);
-      border-radius: 20px;
-      padding: 3rem;
-      text-align: center;
-      max-width: 500px;
-      margin: 1rem;
+    /* === CONTACT INFO DISPLAY === */
+    .contact-info {
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      text-align: center;
     }
 
-    .vaccination-block h3 {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-      color: white;
-    }
-
-    .vaccination-block p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      color: white;
-      opacity: 0.95;
-    }
-
-    .vaccination-block button {
-      background: white;
-      color: var(--error-red);
-      border: none;
-      border-radius: 12px;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
+    .contact-info h3 {
+      color: var(--gold);
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
       font-weight: 600;
-      cursor: pointer;
+    }
+
+    .contact-info p {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .contact-info a {
+      color: var(--gold);
+      text-decoration: none;
       transition: all 0.3s ease;
     }
 
-    .vaccination-block button:hover {
-      background: rgba(255, 255, 255, 0.9);
-      transform: translateY(-2px);
+    .contact-info a:hover {
+      color: white;
+      transform: translateY(-1px);
     }
 
     /* === BUTTON STYLES === */
-    .intake-card-footer {
-      margin-top: 3rem;
+    .contact-card-footer {
+      margin-top: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -542,156 +523,181 @@
       gap: 0.75rem;
     }
 
-    .continue-btn {
-      background: rgba(255, 255, 255, 0.1);
+    .submit-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      padding: 1rem 2rem;
+      border: none;
+      border-radius: 16px;
+      padding: 1.2rem 2.5rem;
       font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
       text-decoration: none;
       display: inline-block;
       text-align: center;
+      box-shadow: 0 8px 25px rgba(244, 124, 44, 0.3);
     }
 
-    .continue-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(244, 124, 44, 0.4);
     }
 
-    .continue-btn.disabled {
+    .submit-btn.business {
+      background: linear-gradient(135deg, var(--available-green), #059669);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .submit-btn.business:hover {
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+    }
+
+    .submit-btn.disabled {
       opacity: 0.5;
       cursor: not-allowed;
       pointer-events: none;
     }
 
-    .back-btn, .restart-btn {
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(255, 255, 255, 0.7);
+    .back-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      padding: 0.75rem 1.5rem;
-      font-size: 0.9rem;
+      border-radius: 12px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
     }
 
-    .back-btn:hover, .restart-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
       color: white;
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
     }
 
-    .restart-btn {
-      color: rgba(255, 204, 102, 0.8);
-      border-color: rgba(255, 204, 102, 0.3);
+    /* === SUCCESS MESSAGE === */
+    .success-message {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin: 2rem 0;
+      backdrop-filter: blur(10px);
     }
 
-    .restart-btn:hover {
-      color: rgb(255, 204, 102);
-      border-color: rgba(255, 204, 102, 0.5);
-      background: rgba(255, 204, 102, 0.1);
+    .success-message h3 {
+      color: var(--available-green);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
-    /* === RESPONSIVE === */
+    .success-message p {
+      color: white;
+      opacity: 0.9;
+      margin-bottom: 0;
+    }
+
+    /* === RESPONSIVE DESIGN === */
     @media (max-width: 768px) {
       header {
         height: 80px;
         padding: 0.5rem 1rem;
       }
       
-      .desktop-logo {
-        height: 48px;
+      .desktop-logo { 
+        height: 48px; 
       }
       
       .site-nav {
         display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
+      
+      .book-btn {
+        background: url("assets/images/ani_bkgd_warm.png");
+        background-size: cover;
+        background-position: center;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        padding: 0.6rem 1.5rem;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        position: relative;
+      }
+
+      .book-btn::before {
+        opacity: 0.2;
       }
       
       .mobile-menu-btn {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
       }
 
       main {
         margin-top: 80px;
         padding: 2rem 1rem 6rem;
-        min-height: auto;
       }
 
-      .intake-section {
+      .contact-section {
         max-width: 100%;
-        padding: 0;
       }
       
-      .intake-card {
+      .contact-card {
         max-width: 100%;
         padding: 2rem;
         margin-bottom: 2rem;
-        min-height: auto; /* Let content determine height */
+        min-height: auto;
       }
 
-      .intake-card.small-card {
-        min-height: 700px; /* Significantly increased */
-      }
-
-      .intake-card.medium-card {
-        min-height: 1000px; /* Much larger for mobile forms */
-      }
-
-      .intake-card.large-card {
-        min-height: 1300px; /* Very large for complex forms */
-      }
-
-      .intake-card.extra-large-card {
-        min-height: 1500px; /* Extra space for final summary */
-      }
-
-      .intake-card-logo {
-        max-width: 160px; /* Slightly larger logo */
-        margin-bottom: 2rem; /* More space below logo */
-      }
-
-      .intake-card-body {
-        padding-bottom: 2rem;
-      }
-
-      .intake-card-body h2 {
-        font-size: 1.8rem;
+      .contact-card-logo {
+        max-width: 200px;
         margin-bottom: 1.5rem;
       }
 
-      .intake-card-body p {
-        font-size: 1rem;
-        margin-bottom: 2rem;
+      .contact-card-body h1 {
+        font-size: 2.5rem;
       }
 
-      .progress-steps {
-        gap: 0.5rem;
+      .contact-card-body h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
       }
 
-      .progress-step {
-        width: 35px;
-        height: 35px;
-        font-size: 0.9rem;
-      }
-
-      .progress-line {
-        width: 40px;
-      }
-
-      .form-group {
-        max-width: 100%;
-        margin-bottom: 2rem;
+      .contact-card-body p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
       }
 
       .form-row {
@@ -703,83 +709,61 @@
         margin-bottom: 2rem;
       }
 
-      .form-row-thirds {
-        flex-direction: column;
-        gap: 0;
-      }
-
-      .form-row-thirds .form-group {
-        margin-bottom: 2rem;
-      }
-
       .form-group input,
       .form-group select,
       .form-group textarea {
-        padding: 1.2rem; /* Larger touch-friendly padding */
-        font-size: 1.1rem; /* Larger text */
-        min-height: 60px; /* Taller inputs */
+        padding: 1.2rem;
+        font-size: 1.1rem;
+        min-height: 60px;
       }
 
       .form-group textarea {
-        min-height: 140px; /* Taller textareas */
-      }
-
-      .form-group label {
-        font-size: 1.1rem; /* Larger labels */
-        margin-bottom: 1rem;
-      }
-
-      /* ZIP CODE MOBILE FIX */
-      .form-group input[name*="ZipCode"] {
-        width: 100%;
-        max-width: 200px;
+        min-height: 140px;
       }
 
       .choice-buttons {
         flex-direction: column;
         align-items: center;
-        gap: 1.5rem; /* Increased gap */
-        margin: 3rem 0; /* More margin around choice buttons */
+        gap: 1rem;
+        margin: 2rem 0;
       }
 
       .choice-btn {
         width: 100%;
-        max-width: 250px;
-        padding: 1.2rem; /* Larger touch target */
+        max-width: 280px;
+        padding: 1.2rem;
       }
 
-      .intake-card-footer {
+      .contact-card-footer {
         flex-direction: column;
-        gap: 2rem; /* More space */
-        padding-top: 3rem; /* More padding */
-        margin-top: 3rem;
+        gap: 1.5rem;
+        padding-top: 2rem;
+        margin-top: 2rem;
       }
 
       .button-group-left {
         order: 2;
         width: 100%;
         justify-content: center;
-        gap: 1rem;
       }
 
-      .continue-btn {
+      .submit-btn {
         order: 1;
         width: 100%;
-        max-width: 300px;
-        padding: 1.2rem 2rem; /* Larger button */
-        font-size: 1.1rem;
+        max-width: 280px;
+        padding: 1.2rem 2rem;
       }
 
-      .back-btn, .restart-btn {
-        flex: 1;
+      .back-btn {
+        width: 100%;
+        max-width: 150px;
+        padding: 1rem;
         text-align: center;
-        padding: 1rem; /* Larger buttons */
-        font-size: 1rem;
       }
     }
 
     /* === ANIMATIONS === */
-    .intake-section {
+    .contact-section {
       animation: slideInUp 0.8s ease-out;
     }
 
@@ -794,137 +778,84 @@
       }
     }
   </style>
-
-  <script>
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-    }
-  </script>
 </head>
 <body>
   <header>
-    <a href="/" class="logo-link">
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="site-nav">
-      <a href="/">Home</a>
-      <a href="#">Locations</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
-      <a href="#" class="book-btn">Book Now</a>
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="#" aria-label="Locations page">Locations</a>
+      <a href="#" aria-label="Pricing page">Pricing</a>
+      <a href="#" class="active" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
-
+  
   <main>
-    <!-- Progress Indicator -->
-    <div class="progress-section">
-      <div class="progress-steps">
-        <div class="progress-step completed">1</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">2</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">3</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step active">4</div>
-        <div class="progress-line"></div>
-        <div class="progress-step">5</div>
-      </div>
-      <p class="progress-text">Session Details</p>
-    </div>
-
-    <!-- Intake Form Section -->
-    <div class="intake-section">
-      <div class="intake-card-stack" id="intakeCardStack">
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="contact-card-stack" id="contactCardStack">
         <!-- Cards will be dynamically generated -->
       </div>
-    </div>
-
-    <!-- Vaccination Block Modal -->
-    <div class="vaccination-block" id="vaccinationBlock">
-      <div class="vaccination-block-content">
-        <h3>Vaccination Required</h3>
-        <p>Sorry! We require pets to be fully vaccinated before participating in a session. Please come back and book with us when your pet is up-to-date.</p>
-        <button onclick="goToHomePage()">Return to Homepage</button>
-      </div>
-    </div>
+    </section>
   </main>
 
-  <!-- Version Footer -->
-  <footer style="text-align: center; padding: 2rem 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem;">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v3.1.0</p>
+  <footer style="text-align: center; padding: 3rem 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem;">
+    <div style="margin-bottom: 2rem;">
+      <img src="assets/images/visa.png" alt="Visa payment accepted" style="height: 35px; margin: 0 1rem; filter: brightness(0) invert(1); transition: all 0.3s ease;" />
+      <img src="assets/images/mastercard.png" alt="Mastercard payment accepted" style="height: 35px; margin: 0 1rem; filter: brightness(0) invert(1); transition: all 0.3s ease;" />
+      <img src="assets/images/paypal.png" alt="PayPal payment accepted" style="height: 35px; margin: 0 1rem; filter: brightness(0) invert(1); transition: all 0.3s ease;" />
+    </div>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | Contact v1.1 - Email Integration Ready</p>
   </footer>
 
   <script>
-    // Session Data Management
-    let sessionData = {};
-    let intakeData = {};
+    // Contact form state
+    let contactData = {};
     let currentCard = 0;
     let totalCards = 0;
+    let contactType = '';
+
+    // Email Configuration
+    const RECIPIENT_EMAIL = 'info@picturethispet.com';
+    // TODO: Integrate with backend email service and custom email template design
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
-      loadSessionData();
-      loadIntakeData();
-      generateIntakeCards();
+      generateContactCards();
+      setupFormValidation();
       setupKeyboardNavigation();
-      setupRealTimeValidation();
     });
 
-    // Load session data from localStorage
-    function loadSessionData() {
-      const saved = localStorage.getItem("ptpSessionData");
-      if (saved) {
-        sessionData = JSON.parse(saved);
-      } else {
-        // Fallback data for testing
-        sessionData = {
-          session: "Mini",
-          petCount: "1",
-          peopleCount: "1",
-          park: "Test Park",
-          selectedDateTime: "Test Date"
-        };
-      }
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
     }
 
-    // Load intake data from localStorage
-    function loadIntakeData() {
-      const saved = localStorage.getItem("ptpIntakeData");
-      if (saved) {
-        intakeData = JSON.parse(saved);
-      }
+    // Setup keyboard navigation
+    function setupKeyboardNavigation() {
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && e.target.matches('input, textarea, select')) {
+          e.preventDefault();
+          const activeCard = document.querySelector('.contact-card.active');
+          const submitBtn = activeCard.querySelector('.submit-btn');
+          if (submitBtn && !submitBtn.classList.contains('disabled')) {
+            submitBtn.click();
+          }
+        }
+      });
     }
 
-    // Save intake data to localStorage
-    function saveIntakeData() {
-      localStorage.setItem("ptpIntakeData", JSON.stringify(intakeData));
-    }
-
-    // Setup real-time validation
-    function setupRealTimeValidation() {
+    // Setup form validation
+    function setupFormValidation() {
       document.addEventListener('input', function(e) {
         if (e.target.matches('input, select, textarea')) {
           setTimeout(validateCurrentCard, 100);
-        }
-      });
-
-      document.addEventListener('click', function(e) {
-        if (e.target.matches('.choice-btn')) {
-          setTimeout(validateCurrentCard, 100);
-        }
-      });
-    }
-    function setupKeyboardNavigation() {
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          const activeCard = document.querySelector('.intake-card.active');
-          const continueBtn = activeCard.querySelector('.continue-btn');
-          if (continueBtn && !continueBtn.classList.contains('disabled')) {
-            continueBtn.click();
-          }
         }
       });
     }
@@ -947,39 +878,17 @@
       input.value = formattedValue;
     }
 
-    // Zip code formatting (5-digit numeric only)
-    function formatZipCode(input) {
-      const value = input.value.replace(/\D/g, '');
-      input.value = value.slice(0, 5);
-    }
-    function formatDate(input) {
-      const value = input.value.replace(/\D/g, '');
-      let formattedValue = '';
-      
-      if (value.length > 0) {
-        if (value.length <= 2) {
-          formattedValue = value;
-        } else if (value.length <= 4) {
-          formattedValue = `${value.slice(0, 2)}/${value.slice(2)}`;
-        } else {
-          formattedValue = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4, 8)}`;
-        }
-      }
-      
-      input.value = formattedValue;
-    }
-
-    // Create card element with size class
-    function createCard(content, isActive = false, sizeClass = 'medium-card') {
+    // Create card element
+    function createCard(content, isActive = false) {
       const card = document.createElement("div");
-      card.className = `intake-card ${sizeClass}${isActive ? ' active' : ''}`;
+      card.className = `contact-card${isActive ? ' active' : ''}`;
       card.innerHTML = content;
       return card;
     }
 
     // Show specific card
     function showCard(index) {
-      const cards = document.querySelectorAll('.intake-card');
+      const cards = document.querySelectorAll('.contact-card');
       cards.forEach((card, i) => {
         if (i === index) {
           card.classList.add('active');
@@ -993,13 +902,13 @@
     // Advance to next card
     function advanceCard() {
       if (currentCard < totalCards - 1) {
-        const currentCardEl = document.querySelector('.intake-card.active');
+        const currentCardEl = document.querySelector('.contact-card.active');
         if (currentCardEl) {
           currentCardEl.classList.add('exiting');
           setTimeout(() => {
             currentCardEl.classList.remove('active', 'exiting');
             showCard(currentCard + 1);
-          }, 300);
+          }, 400);
         } else {
           showCard(currentCard + 1);
         }
@@ -1013,60 +922,28 @@
       }
     }
 
-    // Restart form
-    function restartForm() {
-      if (confirm('Are you sure you want to start over? This will clear all your answers.')) {
-        intakeData = {};
-        saveIntakeData();
-        location.reload();
-      }
-    }
-
-    // Go to home page (vaccination block)
-    function goToHomePage() {
-      window.location.href = '/';
-    }
-
-    // Handle choice button selection
-    function selectChoice(button, value, fieldName) {
+    // Handle contact type selection
+    function selectContactType(button, type) {
       const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
       choiceButtons.forEach(btn => btn.classList.remove('selected'));
       button.classList.add('selected');
       
-      intakeData[fieldName] = value;
-      saveIntakeData();
+      contactType = type;
+      contactData.contactType = type;
       
-      // Handle vaccination logic
-      if (fieldName === 'vaccination' && value === 'No') {
-        setTimeout(() => {
-          document.getElementById('vaccinationBlock').style.display = 'flex';
-        }, 500);
-        return;
-      }
-      
-      // Check if this card has ONLY choice buttons (no other form fields)
-      const activeCard = document.querySelector('.intake-card.active');
-      const hasOtherFields = activeCard.querySelectorAll('input, select, textarea').length > 0;
-      
-      // Only auto-advance if there are no other form fields to fill
-      if (!hasOtherFields) {
-        setTimeout(() => {
-          advanceCard();
-        }, 800);
-      } else {
-        // Just update validation state
-        validateCurrentCard();
-      }
+      // Auto-advance after selection
+      setTimeout(() => {
+        generateContactCards(); // Regenerate with appropriate form
+        showCard(1); // Show the form card
+      }, 800);
     }
 
     // Validate current card
     function validateCurrentCard() {
-      const activeCard = document.querySelector('.intake-card.active');
+      const activeCard = document.querySelector('.contact-card.active');
       const requiredInputs = activeCard.querySelectorAll('input[required], select[required], textarea[required]');
-      const requiredChoices = activeCard.querySelectorAll('[data-required="true"]');
       let isValid = true;
 
-      // Validate required inputs
       requiredInputs.forEach(input => {
         const formGroup = input.closest('.form-group');
         if (!input.value.trim()) {
@@ -1074,439 +951,272 @@
           isValid = false;
         } else {
           formGroup.classList.remove('error');
+          
+          // Email validation
+          if (input.type === 'email' && input.value.trim()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(input.value.trim())) {
+              formGroup.classList.add('error');
+              isValid = false;
+            }
+          }
         }
       });
 
-      // Validate required choices
-      requiredChoices.forEach(choiceGroup => {
-        const selected = choiceGroup.querySelector('.choice-btn.selected');
-        if (!selected) {
-          isValid = false;
-        }
-      });
-
-      // Update continue button state
-      const continueBtn = activeCard.querySelector('.continue-btn');
-      if (continueBtn) {
+      // Update submit button state
+      const submitBtn = activeCard.querySelector('.submit-btn');
+      if (submitBtn) {
         if (isValid) {
-          continueBtn.classList.remove('disabled');
+          submitBtn.classList.remove('disabled');
         } else {
-          continueBtn.classList.add('disabled');
+          submitBtn.classList.add('disabled');
         }
       }
 
       return isValid;
     }
 
-    // Save current card data and advance
-    function saveAndContinue() {
+    // Submit form
+    function submitContactForm() {
       if (validateCurrentCard()) {
-        // Save current form data
-        const activeCard = document.querySelector('.intake-card.active');
+        // Save form data
+        const activeCard = document.querySelector('.contact-card.active');
         const inputs = activeCard.querySelectorAll('input, select, textarea');
         
         inputs.forEach(input => {
           if (input.name && input.value) {
-            intakeData[input.name] = input.value;
+            contactData[input.name] = input.value;
           }
         });
-        
-        saveIntakeData();
-        
-        // Special handling for social tagging card
-        const isSocialCard = activeCard.querySelector('[name="socialTagging"]') || 
-                           activeCard.querySelector('.choice-buttons[data-field="socialTagging"]');
-        
-        if (isSocialCard && intakeData.socialTagging === 'Yes') {
-          // User selected Yes on social tagging, need to show Instagram handles
-          setTimeout(() => {
-            generateIntakeCards(); // Regenerate all cards to include Instagram
-            showCard(currentCard + 1); // Advance to Instagram handles card
-          }, 100);
-        } else {
-          advanceCard();
-        }
+
+        // Add metadata
+        contactData.submissionTime = new Date().toISOString();
+        contactData.userAgent = navigator.userAgent;
+        contactData.recipientEmail = 'info@picturethispet.com';
+
+        // TODO: Send to backend endpoint that will format and email to info@picturethispet.com
+        // Backend should use the custom email template design
+        console.log('Contact form submitted to info@picturethispet.com:', contactData);
+
+        // Show success message
+        showSuccessCard();
       }
     }
 
-    // Generate all intake cards based on session data
-    function generateIntakeCards() {
-      const container = document.getElementById('intakeCardStack');
+    // Show success card
+    function showSuccessCard() {
+      const container = document.getElementById('contactCardStack');
+      const successCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="contact-card-logo" />
+        <div class="contact-card-body centered-content">
+          <div>
+            <h2>Message Sent!</h2>
+            <div class="success-message">
+              <h3>✨ Thank You!</h3>
+              <p>We've received your ${contactType === 'client' ? 'inquiry' : 'partnership request'} and will get back to you from info@picturethispet.com within 24 hours.</p>
+            </div>
+            <div class="contact-info">
+              <h3>Get In Touch Directly</h3>
+              <p>📧 <a href="mailto:info@picturethispet.com">info@picturethispet.com</a></p>
+              <p>📱 <a href="tel:+1234567890">(123) 456-7890</a></p>
+              <p>📍 Denver, Colorado</p>
+            </div>
+          </div>
+        </div>
+        <div class="contact-card-footer">
+          <div class="button-group-left">
+            <button class="back-btn" onclick="window.location.href='/'">← Back to Home</button>
+          </div>
+          <button class="submit-btn" onclick="window.location.href='/'">Book a Session →</button>
+        </div>
+      `, true);
+      
+      container.appendChild(successCard);
+      showCard(container.children.length - 1);
+    }
+
+    // Generate contact cards
+    function generateContactCards() {
+      const container = document.getElementById('contactCardStack');
       container.innerHTML = '';
       let cardIndex = 0;
 
-      // Card 0 - Welcome
-      const welcomeCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body centered-content">
+      // Card 0 - Contact Type Selection
+      const typeCard = createCard(`
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="contact-card-logo" />
+        <div class="contact-card-body centered-content">
           <div>
-            <h2>Almost There!</h2>
-            <p>Just a few details about you and your pet(s) to complete your booking. This will help us provide the best possible session experience.</p>
-            <button class="continue-btn" onclick="advanceCard()" style="margin-top: 2rem;">Let's Get Started →</button>
+            <h1>Get In Touch</h1>
+            <p>Whether you're looking to book a session or explore partnership opportunities, we'd love to hear from you!</p>
+            <div class="choice-buttons">
+              <button class="choice-btn ${contactType === 'client' ? 'selected' : ''}" onclick="selectContactType(this, 'client')">
+                🐾 Pet Photography<br><small style="opacity: 0.8;">Sessions & General Inquiries</small>
+              </button>
+              <button class="choice-btn business ${contactType === 'business' ? 'selected' : ''}" onclick="selectContactType(this, 'business')">
+                🤝 Business Partnership<br><small style="opacity: 0.8;">Organizations & Collaborations</small>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="intake-card-footer">
+        <div class="contact-card-footer">
           <div class="button-group-left"></div>
           <div></div>
         </div>
-      `, true, 'small-card');
-      container.appendChild(welcomeCard);
+      `, true);
+      container.appendChild(typeCard);
       cardIndex++;
 
-      // Card 1 - Vaccination Requirement
-      const vaccinationCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body centered-content">
-          <div>
-            <h2>Vaccination Requirement</h2>
-            <p>Is your pet fully vaccinated?</p>
-            <div class="choice-buttons" data-required="true">
-              <button class="choice-btn ${intakeData.vaccination === 'Yes' ? 'selected' : ''}" onclick="selectChoice(this, 'Yes', 'vaccination')">Yes</button>
-              <button class="choice-btn no-btn ${intakeData.vaccination === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', 'vaccination')">No</button>
-            </div>
-          </div>
-        </div>
-        <div class="intake-card-footer">
-          <div class="button-group-left">
-            <button class="restart-btn" onclick="restartForm()">Start Over</button>
-          </div>
-          <div></div>
-        </div>
-      `, false, 'small-card');
-      container.appendChild(vaccinationCard);
-      cardIndex++;
-
-      // Pet Information Cards
-      const petCount = parseInt(sessionData.petCount) || 1;
-      for (let i = 1; i <= petCount; i++) {
-        const petPrefix = i === 1 ? 'pet' : `pet${i}`;
-        const petCard = createCard(`
-          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body form-content">
-            <h2>Tell Us About ${petCount > 1 ? `Pet ${i}` : 'Your Pet'}</h2>
+      // Card 1 - Form based on contact type
+      if (contactType === 'client') {
+        const clientFormCard = createCard(`
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="contact-card-logo" />
+          <div class="contact-card-body form-content">
+            <h2>Tell Us About Your Inquiry</h2>
+            
             <div class="form-row">
               <div class="form-group required">
-                <label for="${petPrefix}Name">Pet's Name</label>
-                <input type="text" id="${petPrefix}Name" name="${petPrefix}Name" required placeholder="Enter your pet's name" value="${intakeData[petPrefix + 'Name'] || ''}" onkeypress="handleEnterKey(event)">
-                <div class="form-error">Please enter your pet's name</div>
+                <label for="clientName">Your Name</label>
+                <input type="text" id="clientName" name="clientName" required placeholder="Enter your full name" value="${contactData.clientName || ''}">
+                <div class="form-error">Please enter your name</div>
               </div>
               <div class="form-group required">
-                <label for="${petPrefix}Age">Pet's Age</label>
-                <input type="text" id="${petPrefix}Age" name="${petPrefix}Age" required placeholder="e.g., 2 years" value="${intakeData[petPrefix + 'Age'] || ''}" onkeypress="handleEnterKey(event)">
-                <div class="form-error">Please enter your pet's age</div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="${petPrefix}Birthdate">Pet's Birthdate</label>
-                <input type="text" id="${petPrefix}Birthdate" name="${petPrefix}Birthdate" required placeholder="MM/DD/YYYY" value="${intakeData[petPrefix + 'Birthdate'] || ''}" oninput="formatDate(this)" onkeypress="handleEnterKey(event)" maxlength="10">
-                <div class="form-error">Please enter your pet's birthdate</div>
-              </div>
-              <div class="form-group required">
-                <label>Pet's Gender</label>
-                <div class="choice-buttons" data-required="true" style="margin-top: 1rem; margin-bottom: 0;">
-                  <button class="choice-btn ${intakeData[petPrefix + 'Gender'] === 'Male' ? 'selected' : ''}" onclick="selectChoice(this, 'Male', '${petPrefix}Gender')">Male</button>
-                  <button class="choice-btn ${intakeData[petPrefix + 'Gender'] === 'Female' ? 'selected' : ''}" onclick="selectChoice(this, 'Female', '${petPrefix}Gender')">Female</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="intake-card-footer">
-            <div class="button-group-left">
-              <button class="back-btn" onclick="goBack()">← Back</button>
-              <button class="restart-btn" onclick="restartForm()">Start Over</button>
-            </div>
-            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
-          </div>
-        `, false, 'medium-card');
-        container.appendChild(petCard);
-        cardIndex++;
-
-        // Additional pet details card
-        const petDetailsCard = createCard(`
-          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body form-content">
-            <h2>More About ${petCount > 1 ? `Pet ${i}` : 'Your Pet'}</h2>
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="${petPrefix}FavoriteToy">Favorite Toy</label>
-                <input type="text" id="${petPrefix}FavoriteToy" name="${petPrefix}FavoriteToy" required placeholder="What's their favorite toy?" value="${intakeData[petPrefix + 'FavoriteToy'] || ''}" onkeypress="handleEnterKey(event)">
-                <div class="form-error">Please enter your pet's favorite toy</div>
-              </div>
-              <div class="form-group required">
-                <label>Good off leash?</label>
-                <div class="choice-buttons" data-required="true">
-                  <button class="choice-btn ${intakeData[petPrefix + 'OffLeash'] === 'Yes' ? 'selected' : ''}" onclick="selectChoice(this, 'Yes', '${petPrefix}OffLeash')">Yes</button>
-                  <button class="choice-btn ${intakeData[petPrefix + 'OffLeash'] === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', '${petPrefix}OffLeash')">No</button>
-                </div>
-              </div>
-            </div>
-            <div class="form-group required">
-              <label for="${petPrefix}Behavior">Describe your pet's general behavior</label>
-              <textarea id="${petPrefix}Behavior" name="${petPrefix}Behavior" required placeholder="Tell us about their personality, energy level, etc...">${intakeData[petPrefix + 'Behavior'] || ''}</textarea>
-              <div class="form-error">Please describe your pet's behavior</div>
-            </div>
-            <div class="form-group">
-              <label for="${petPrefix}Notes">Anything else you'd like us to know?</label>
-              <textarea id="${petPrefix}Notes" name="${petPrefix}Notes" placeholder="Special needs, quirks, commands they know, etc...">${intakeData[petPrefix + 'Notes'] || ''}</textarea>
-            </div>
-          </div>
-          <div class="intake-card-footer">
-            <div class="button-group-left">
-              <button class="back-btn" onclick="goBack()">← Back</button>
-              <button class="restart-btn" onclick="restartForm()">Start Over</button>
-            </div>
-            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
-          </div>
-        `, false, 'large-card');
-        container.appendChild(petDetailsCard);
-        cardIndex++;
-      }
-
-      // Client Information Cards
-      const peopleCount = parseInt(sessionData.peopleCount) || 1;
-      for (let i = 1; i <= peopleCount; i++) {
-        const personPrefix = i === 1 ? 'client' : `client${i}`;
-        const isOptional = i > 1; // Person 2+ is optional
-        const optionalText = isOptional ? ' (optional)' : '';
-        const requiredClass = isOptional ? '' : 'required';
-        const requiredAttr = isOptional ? '' : 'required';
-        
-        const clientCard = createCard(`
-          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body form-content">
-            <h2>${peopleCount > 1 ? `Person ${i} Information` : 'Your Information'}${isOptional ? ' (Optional)' : ''}</h2>
-            <div class="form-row">
-              <div class="form-group ${requiredClass}">
-                <label for="${personPrefix}FirstName">First Name${optionalText}</label>
-                <input type="text" id="${personPrefix}FirstName" name="${personPrefix}FirstName" ${requiredAttr} placeholder="Enter first name" value="${intakeData[personPrefix + 'FirstName'] || ''}" onkeypress="handleEnterKey(event)">
-                <div class="form-error">Please enter first name</div>
-              </div>
-              <div class="form-group ${requiredClass}">
-                <label for="${personPrefix}LastName">Last Name${optionalText}</label>
-                <input type="text" id="${personPrefix}LastName" name="${personPrefix}LastName" ${requiredAttr} placeholder="Enter last name" value="${intakeData[personPrefix + 'LastName'] || ''}" onkeypress="handleEnterKey(event)">
-                <div class="form-error">Please enter last name</div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group ${requiredClass}">
-                <label for="${personPrefix}Phone">Phone Number${optionalText}</label>
-                <input type="tel" id="${personPrefix}Phone" name="${personPrefix}Phone" ${requiredAttr} placeholder="555-555-5555" value="${intakeData[personPrefix + 'Phone'] || ''}" oninput="formatPhoneNumber(this)" onkeypress="handleEnterKey(event)" maxlength="12">
-                <div class="form-error">Please enter phone number</div>
-              </div>
-              <div class="form-group ${requiredClass}">
-                <label for="${personPrefix}Email">Email${optionalText}</label>
-                <input type="email" id="${personPrefix}Email" name="${personPrefix}Email" ${requiredAttr} placeholder="Enter email address" value="${intakeData[personPrefix + 'Email'] || ''}" onkeypress="handleEnterKey(event)">
+                <label for="clientEmail">Email Address</label>
+                <input type="email" id="clientEmail" name="clientEmail" required placeholder="your@email.com" value="${contactData.clientEmail || ''}">
                 <div class="form-error">Please enter a valid email address</div>
               </div>
             </div>
-            <div class="form-group ${requiredClass} zip-code-group">
-              <label for="${personPrefix}ZipCode">Zip Code${optionalText}</label>
-              <input type="text" id="${personPrefix}ZipCode" name="${personPrefix}ZipCode" ${requiredAttr} placeholder="12345" value="${intakeData[personPrefix + 'ZipCode'] || ''}" onkeypress="handleEnterKey(event)" oninput="formatZipCode(this)" maxlength="5" pattern="[0-9]{5}">
-              <div class="form-error">Please enter a 5-digit zip code</div>
+
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="clientPhone">Phone Number</label>
+                <input type="tel" id="clientPhone" name="clientPhone" required placeholder="(555) 555-5555" value="${contactData.clientPhone || ''}" oninput="formatPhoneNumber(this)" maxlength="12">
+                <div class="form-error">Please enter your phone number</div>
+              </div>
+              <div class="form-group required">
+                <label for="inquiryType">Type of Inquiry</label>
+                <select id="inquiryType" name="inquiryType" required>
+                  <option value="">Select inquiry type...</option>
+                  <option value="session-booking" ${contactData.inquiryType === 'session-booking' ? 'selected' : ''}>Session Booking</option>
+                  <option value="pricing-info" ${contactData.inquiryType === 'pricing-info' ? 'selected' : ''}>Pricing Information</option>
+                  <option value="availability" ${contactData.inquiryType === 'availability' ? 'selected' : ''}>Availability</option>
+                  <option value="gift-certificate" ${contactData.inquiryType === 'gift-certificate' ? 'selected' : ''}>Gift Certificate</option>
+                  <option value="general-question" ${contactData.inquiryType === 'general-question' ? 'selected' : ''}>General Question</option>
+                  <option value="other" ${contactData.inquiryType === 'other' ? 'selected' : ''}>Other</option>
+                </select>
+                <div class="form-error">Please select inquiry type</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="petInfo">Tell us about your pet(s)</label>
+              <input type="text" id="petInfo" name="petInfo" placeholder="e.g., Golden Retriever named Max, 3 years old" value="${contactData.petInfo || ''}">
+            </div>
+
+            <div class="form-group required">
+              <label for="clientMessage">Your Message</label>
+              <textarea id="clientMessage" name="clientMessage" required placeholder="Tell us about what you're looking for, preferred dates, any special requests, etc.">${contactData.clientMessage || ''}</textarea>
+              <div class="form-error">Please enter your message</div>
             </div>
           </div>
-          <div class="intake-card-footer">
+          <div class="contact-card-footer">
             <div class="button-group-left">
               <button class="back-btn" onclick="goBack()">← Back</button>
-              <button class="restart-btn" onclick="restartForm()">Start Over</button>
             </div>
-            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+            <button class="submit-btn" onclick="submitContactForm()">Send Message →</button>
           </div>
-        `, false, 'medium-card');
-        container.appendChild(clientCard);
+        `);
+        container.appendChild(clientFormCard);
         cardIndex++;
-      }
 
-      // Referral Source Card
-      const referralCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body">
-          <h2>How did you hear about us?</h2>
-          <div class="form-group required">
-            <label for="referralSource">Referral Source</label>
-            <select id="referralSource" name="referralSource" required onchange="handleSelectChange(this)">
-              <option value="">Please select...</option>
-              <option value="Instagram" ${intakeData.referralSource === 'Instagram' ? 'selected' : ''}>Instagram</option>
-              <option value="Google" ${intakeData.referralSource === 'Google' ? 'selected' : ''}>Google</option>
-              <option value="Flyer" ${intakeData.referralSource === 'Flyer' ? 'selected' : ''}>Flyer</option>
-              <option value="Friend" ${intakeData.referralSource === 'Friend' ? 'selected' : ''}>Friend</option>
-              <option value="Other" ${intakeData.referralSource === 'Other' ? 'selected' : ''}>Other</option>
-            </select>
-            <div class="form-error">Please select how you heard about us</div>
-          </div>
-        </div>
-        <div class="intake-card-footer">
-          <div class="button-group-left">
-            <button class="back-btn" onclick="goBack()">← Back</button>
-            <button class="restart-btn" onclick="restartForm()">Start Over</button>
-          </div>
-          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
-        </div>
-      `);
-      container.appendChild(referralCard);
-      cardIndex++;
-
-      // Social Media Tagging Card
-      const socialCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body centered-content">
-          <div>
-            <h2>Social Media Tagging</h2>
-            <p>Would you or your pet like to be tagged on Instagram?</p>
-            <div class="choice-buttons" data-required="true" data-field="socialTagging">
-              <button class="choice-btn ${intakeData.socialTagging === 'Yes' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'Yes')">Yes</button>
-              <button class="choice-btn ${intakeData.socialTagging === 'No' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'No')">No</button>
+      } else if (contactType === 'business') {
+        const businessFormCard = createCard(`
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="contact-card-logo" />
+          <div class="contact-card-body form-content">
+            <h2>Partnership Inquiry</h2>
+            
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="contactName">Contact Person</label>
+                <input type="text" id="contactName" name="contactName" required placeholder="Your full name" value="${contactData.contactName || ''}">
+                <div class="form-error">Please enter contact person name</div>
+              </div>
+              <div class="form-group required">
+                <label for="businessEmail">Business Email</label>
+                <input type="email" id="businessEmail" name="businessEmail" required placeholder="contact@company.com" value="${contactData.businessEmail || ''}">
+                <div class="form-error">Please enter a valid business email</div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="intake-card-footer">
-          <div class="button-group-left">
-            <button class="back-btn" onclick="goBack()">← Back</button>
-            <button class="restart-btn" onclick="restartForm()">Start Over</button>
-          </div>
-          <button class="continue-btn" onclick="handleSocialContinue()">Continue →</button>
-        </div>
-      `, false, 'small-card');
-      container.appendChild(socialCard);
-      cardIndex++;
 
-      // Instagram Handles Card (conditional)
-      if (intakeData.socialTagging === 'Yes') {
-        let instagramFields = '';
-        
-        // Pet handles
-        for (let i = 1; i <= petCount; i++) {
-          const petPrefix = i === 1 ? 'pet' : `pet${i}`;
-          const petName = intakeData[petPrefix + 'Name'] || `Pet ${i}`;
-          instagramFields += `
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="companyName">Company/Organization</label>
+                <input type="text" id="companyName" name="companyName" required placeholder="Company name" value="${contactData.companyName || ''}">
+                <div class="form-error">Please enter company name</div>
+              </div>
+              <div class="form-group required">
+                <label for="businessPhone">Phone Number</label>
+                <input type="tel" id="businessPhone" name="businessPhone" required placeholder="(555) 555-5555" value="${contactData.businessPhone || ''}" oninput="formatPhoneNumber(this)" maxlength="12">
+                <div class="form-error">Please enter phone number</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="partnershipType">Partnership Type</label>
+                <select id="partnershipType" name="partnershipType" required>
+                  <option value="">Select partnership type...</option>
+                  <option value="pet-business" ${contactData.partnershipType === 'pet-business' ? 'selected' : ''}>Pet Business Collaboration</option>
+                  <option value="veterinary" ${contactData.partnershipType === 'veterinary' ? 'selected' : ''}>Veterinary Clinic</option>
+                  <option value="rescue-shelter" ${contactData.partnershipType === 'rescue-shelter' ? 'selected' : ''}>Animal Rescue/Shelter</option>
+                  <option value="event-venue" ${contactData.partnershipType === 'event-venue' ? 'selected' : ''}>Event Venue</option>
+                  <option value="corporate" ${contactData.partnershipType === 'corporate' ? 'selected' : ''}>Corporate Photography</option>
+                  <option value="media-content" ${contactData.partnershipType === 'media-content' ? 'selected' : ''}>Media/Content Creation</option>
+                  <option value="other" ${contactData.partnershipType === 'other' ? 'selected' : ''}>Other Partnership</option>
+                </select>
+                <div class="form-error">Please select partnership type</div>
+              </div>
+              <div class="form-group">
+                <label for="companySize">Company Size</label>
+                <select id="companySize" name="companySize">
+                  <option value="">Select size...</option>
+                  <option value="1-10" ${contactData.companySize === '1-10' ? 'selected' : ''}>1-10 employees</option>
+                  <option value="11-50" ${contactData.companySize === '11-50' ? 'selected' : ''}>11-50 employees</option>
+                  <option value="51-200" ${contactData.companySize === '51-200' ? 'selected' : ''}>51-200 employees</option>
+                  <option value="200+" ${contactData.companySize === '200+' ? 'selected' : ''}>200+ employees</option>
+                  <option value="nonprofit" ${contactData.companySize === 'nonprofit' ? 'selected' : ''}>Non-profit</option>
+                </select>
+              </div>
+            </div>
+
             <div class="form-group">
-              <label for="${petPrefix}Instagram">${petName}'s Instagram Handle</label>
-              <input type="text" id="${petPrefix}Instagram" name="${petPrefix}Instagram" placeholder="@username (optional)" value="${intakeData[petPrefix + 'Instagram'] || ''}" onkeypress="handleEnterKey(event)">
+              <label for="website">Website/Social Media</label>
+              <input type="text" id="website" name="website" placeholder="www.yourcompany.com or @instagram" value="${contactData.website || ''}">
             </div>
-          `;
-        }
-        
-        // People handles
-        for (let i = 1; i <= peopleCount; i++) {
-          const personPrefix = i === 1 ? 'client' : `client${i}`;
-          const personName = intakeData[personPrefix + 'FirstName'] || `Person ${i}`;
-          instagramFields += `
-            <div class="form-group">
-              <label for="${personPrefix}Instagram">${personName}'s Instagram Handle</label>
-              <input type="text" id="${personPrefix}Instagram" name="${personPrefix}Instagram" placeholder="@username (optional)" value="${intakeData[personPrefix + 'Instagram'] || ''}" onkeypress="handleEnterKey(event)">
-            </div>
-          `;
-        }
 
-        const instagramCard = createCard(`
-          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-          <div class="intake-card-body form-content">
-            <h2>Instagram Handles</h2>
-            <p>Please provide the Instagram handles you'd like us to tag (optional):</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-              ${instagramFields}
+            <div class="form-group required">
+              <label for="businessMessage">Partnership Details</label>
+              <textarea id="businessMessage" name="businessMessage" required placeholder="Describe your partnership idea, goals, timeline, budget considerations, and how you envision working together...">${contactData.businessMessage || ''}</textarea>
+              <div class="form-error">Please describe your partnership proposal</div>
             </div>
           </div>
-          <div class="intake-card-footer">
+          <div class="contact-card-footer">
             <div class="button-group-left">
               <button class="back-btn" onclick="goBack()">← Back</button>
-              <button class="restart-btn" onclick="restartForm()">Start Over</button>
             </div>
-            <button class="continue-btn" onclick="proceedToPayment()">Proceed to Payment →</button>
+            <button class="submit-btn business" onclick="submitContactForm()">Submit Partnership Inquiry →</button>
           </div>
-        `, false, 'large-card');
-        container.appendChild(instagramCard);
+        `);
+        container.appendChild(businessFormCard);
         cardIndex++;
-      } else {
-        // If user chose "No" to social tagging, the social card should go directly to payment
-        const lastCard = container.children[container.children.length - 1];
-        const socialCardFooter = lastCard.querySelector('.intake-card-footer');
-        socialCardFooter.innerHTML = `
-          <div class="button-group-left">
-            <button class="back-btn" onclick="goBack()">← Back</button>
-            <button class="restart-btn" onclick="restartForm()">Start Over</button>
-          </div>
-          <button class="continue-btn" onclick="proceedToPayment()">Proceed to Payment →</button>
-        `;
       }
 
       totalCards = cardIndex;
+      
+      // Setup validation after cards are created
+      setTimeout(validateCurrentCard, 100);
     }
 
-    // Handle Enter key press
-    function handleEnterKey(event) {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        const continueBtn = event.target.closest('.intake-card').querySelector('.continue-btn');
-        if (continueBtn && !continueBtn.classList.contains('disabled')) {
-          saveAndContinue();
-        }
-      }
-    }
-
-    // Handle select change
-    function handleSelectChange(select) {
-      if (select.value) {
-        intakeData[select.name] = select.value;
-        saveIntakeData();
-      }
-    }
-
-    // Handle social media choice
-    function handleSocialChoice(button, value) {
-      const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
-      choiceButtons.forEach(btn => btn.classList.remove('selected'));
-      button.classList.add('selected');
-      
-      intakeData.socialTagging = value;
-      saveIntakeData();
-      
-      // Update validation to enable continue button
-      validateCurrentCard();
-      
-      console.log('Social choice selected:', value); // Debug log
-    }
-
-    // Handle social media continue button
-    function handleSocialContinue() {
-      if (intakeData.socialTagging === 'Yes') {
-        // Show Instagram handles card
-        saveAndContinue();
-      } else {
-        // Go directly to payment
-        proceedToPayment();
-      }
-    }
-
-    // Calculate total price
-    function calculateTotal() {
-      let total = 0;
-      if (sessionData.session === "Mini") total += 50;
-      if (sessionData.session === "Full") total += 100;
-      if (sessionData.petCount === "2") total += 40;
-      if (sessionData.peopleCount === "2") total += 20;
-      return total;
-    }
-
-    // Proceed to payment
-    function proceedToPayment() {
-      // Save all final data
-      saveIntakeData();
-      
-      // Combine all data for payment
-      const finalData = {
-        ...sessionData,
-        ...intakeData,
-        totalPrice: calculateTotal(),
-        submissionTimestamp: new Date().toISOString()
-      };
-      
-      localStorage.setItem("ptpFinalBookingData", JSON.stringify(finalData));
-      
-      // Redirect to payment page
-      window.location.href = 'payment.html';
-    }
+    console.log('✨ Contact page initialized successfully');
   </script>
 </body>
 </html>
