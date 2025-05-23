@@ -116,33 +116,17 @@
 
     /* === HERO SECTION === */
     .hero-section {
-      margin-top: 110px;
       position: relative;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
+      margin-top: 0; /* Removed margin to allow header overlap */
+      z-index: 1;
     }
     
     .hero-section img {
       width: 100%;
       height: auto;
       display: block;
-    }
-    
-    .gradient-text {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 3rem;
-      position: absolute;
-      top: 20px;
-      right: 40px;
-      background: url("assets/images/ani_bkgd_cool.png");
-      background-size: 200%;
-      background-position: center;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-align: right;
-      max-width: 320px;
-      pointer-events: none;
     }
 
     /* === SECTION SPLIT === */
@@ -159,9 +143,10 @@
       background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-      z-index: 1;
+      z-index: 2;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
+      margin-top: -50px; /* Pulls section up to meet hero image */
     }
     
     .side-a, .side-b {
@@ -288,87 +273,31 @@
       left: 50%;
       transform-origin: center;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .session-card.agreement-card {
       height: 805px;
-      max-width: 1200px;
-      width: 90vw;
-      padding: 3rem 4rem;
+      max-width: 600px; /* Match regular cards for consistency */
+      width: 100%;
+      padding: 2.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-    }
-
-    .session-card.agreement-card.active {
-      display: flex;
-      opacity: 1;
-      transform: scale(1);
-      visibility: visible;
-    }
-
-    .session-card.agreement-card .session-card-logo {
-      margin: 0 auto 2rem;
-      max-width: 140px;
-      flex-shrink: 0;
-    }
-
-    .session-card.agreement-card .session-card-body {
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      padding-bottom: 2rem;
-      max-width: 900px;
-    }
-
-    .session-card.agreement-card .session-card-body h2 {
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
-      line-height: 1.2;
-    }
-
-    .session-card.agreement-card .agreement-text {
-      font-size: 1.1rem;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-      line-height: 1.8;
-      max-width: 700px;
-      width: 100%;
-    }
-
-    .session-card.agreement-card .session-card-footer,
-    .session-card.agreement-card .navigation-buttons {
-      margin-top: 2rem;
-      flex-direction: row;
-      gap: 2rem;
-      width: 100%;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .session-card.agreement-card .session-card-footer button,
-    .session-card.agreement-card .navigation-buttons button {
-      padding: 1rem 2.5rem;
-      font-size: 1.1rem;
-      min-width: 180px;
-    }
-
-    .session-card.active {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-      visibility: visible;
       position: absolute;
       top: 50%;
       left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .session-card.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      visibility: visible;
     }
 
     .session-card.exiting {
@@ -561,12 +490,13 @@
 
     /* === FOOTER === */
     footer {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+      background-image: url('assets/images/main_background_allsystem.png');
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      animation: moveBackground 30s ease-in-out infinite;
       text-align: center;
       padding: 2rem 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
       width: 100vw;
       margin-left: calc(-50vw + 50%);
     }
@@ -575,6 +505,12 @@
       height: 30px;
       margin: 0 1rem;
       filter: brightness(0) invert(1);
+    }
+
+    footer p {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      opacity: 0.9;
     }
 
     /* === RESPONSIVE DESIGN === */
@@ -618,21 +554,12 @@
         display: block;
       }
       
-      .hero-section {
-        margin-top: 80px;
-      }
-      
-      .gradient-text {
-        font-size: 2rem;
-        right: 20px;
-        max-width: 250px;
-      }
-      
       .section-split {
         flex-direction: column;
         text-align: center;
         padding: 1.5rem 1rem;
         gap: 0.5rem;
+        margin-top: -30px; /* Adjusted for mobile */
       }
       
       .side-a h1, .side-b h2, .side-b p {
@@ -678,61 +605,7 @@
       .session-card.agreement-card {
         height: 960px;
         max-width: 600px;
-        padding: 3rem 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        align-items: center;
-        justify-content: flex-start;
-      }
-
-      .session-card.agreement-card.active {
-        display: flex;
-      }
-
-      .session-card.agreement-card .session-card-logo {
-        margin: 0 auto 2.5rem;
-        max-width: 140px;
-        flex-shrink: 0;
-      }
-
-      .session-card.agreement-card .session-card-body {
-        text-align: center;
-        padding-bottom: 2rem;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        width: 100%;
-        min-height: 0;
-      }
-
-      .session-card.agreement-card .session-card-body h2 {
-        font-size: 1.8rem;
-        margin-bottom: 2rem;
-      }
-
-      .session-card.agreement-card .agreement-text {
-        font-size: 1rem;
-        padding: 2rem;
-        margin: 2rem 0;
-        line-height: 1.7;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .session-card.agreement-card .session-card-footer,
-      .session-card.agreement-card .navigation-buttons {
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        width: 100%;
-        flex-shrink: 0;
+        padding: 2rem 1.5rem;
       }
 
       .session-card-logo {
@@ -1185,7 +1058,6 @@
   <main>
     <section class="hero-section">
       <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" loading="lazy" />
-      <div class="gradient-text">Capture Timeless Memories</div>
     </section>
     
     <section class="section-split">
