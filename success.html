@@ -427,6 +427,14 @@
       100% { transform: rotate(360deg); }
     }
 
+    /* === DEBUG MESSAGES === */
+    .debug-message {
+      font-size: 1rem;
+      margin-top: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+    }
+
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
@@ -618,6 +626,8 @@
           <a href="/" class="action-btn primary">Return to Homepage</a>
           <a href="mailto:hello@picturethispet.co" class="action-btn">Contact Us</a>
         </div>
+
+        <div class="debug-message" id="debugMessage"></div>
       </div>
 
       <!-- Error content (hidden initially) -->
@@ -636,7 +646,7 @@
 
   <!-- Version Footer -->
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 03:28 AM MDT, May 23, 2025</p>
   </footer>
 
   <script>
@@ -657,40 +667,37 @@
     // Main booking processing function
     async function processBooking() {
       try {
-        console.log('Starting booking confirmation process...');
-        
+        const debugMessage = document.getElementById('debugMessage');
+        const errorMessage = document.querySelector('.error-card p.success-subtitle'); // Use existing subtitle for error
+
         // Get booking data from localStorage
         const bookingData = getBookingData();
         
         if (!bookingData) {
-          console.log('No valid booking data found, showing error state');
+          debugMessage.innerHTML += '<span style="color: #ef4444;">Error: Could not retrieve booking data. Please contact support.</span><br>';
           showError();
           return;
         }
 
-        console.log('Valid booking data found, processing...');
+        debugMessage.innerHTML += `Received data: Session = ${bookingData.session || 'N/A'}, Client = ${bookingData.clientFirstName || 'N/A'}, Total = $${bookingData.totalPrice || 'N/A'}<br>';
 
         // Display booking details
         displayBookingDetails(bookingData);
-        console.log('Booking details displayed successfully');
 
-        // Submit to Google Sheets (non-blocking)
+        // Submit to Google Sheets
+        debugMessage.innerHTML += 'Sending data to Google Sheets...<br>';
         await submitToGoogleSheets(bookingData);
-        console.log('Google Sheets submission completed');
+        debugMessage.innerHTML += 'Data successfully saved to Google Sheets!<br>';
 
         // Show success card
         showSuccess();
-        console.log('Success state displayed');
 
         // Clean up localStorage after successful submission
         cleanupLocalStorage();
-        console.log('localStorage cleanup completed');
-
-        console.log('Booking confirmation process completed successfully');
 
       } catch (error) {
         console.error('Critical error in booking processing:', error);
-        console.error('Error stack:', error.stack);
+        document.getElementById('debugMessage').innerHTML += `<span style="color: #ef4444;">Error: Failed to save data. (${error.message}) Please contact support.</span><br>`;
         showError();
       }
     }
@@ -700,37 +707,21 @@
       try {
         const data = localStorage.getItem('ptpFinalBookingData');
         if (!data) {
-          console.log('No booking data found in localStorage');
-          console.log('Available localStorage keys:', Object.keys(localStorage));
           return null;
         }
 
         const bookingData = JSON.parse(data);
-        console.log('Retrieved booking data:', bookingData);
         
         // Validate required fields
         const requiredFields = ['session', 'selectedDateTime', 'clientFirstName', 'totalPrice'];
         const missingFields = requiredFields.filter(field => !bookingData[field]);
         
         if (missingFields.length > 0) {
-          console.log('Missing required fields:', missingFields);
-          console.log('Available fields:', Object.keys(bookingData));
           return null;
-        }
-
-        // Validate data integrity
-        if (bookingData.totalPrice <= 0) {
-          console.warn('Invalid total price:', bookingData.totalPrice);
-        }
-
-        if (!bookingData.clientEmail && !bookingData.clientPhone) {
-          console.warn('No contact information found');
         }
 
         return bookingData;
       } catch (error) {
-        console.error('Error parsing booking data:', error);
-        console.error('Raw localStorage data:', localStorage.getItem('ptpFinalBookingData'));
         return null;
       }
     }
@@ -768,15 +759,9 @@
 
         // Total price with validation
         const totalPrice = parseFloat(data.totalPrice) || 0;
-        document.getElementById('totalPrice').textContent = `${totalPrice}`;
-
-        console.log('Successfully displayed booking details for:', clientName);
+        document.getElementById('totalPrice').textContent = `$${totalPrice.toFixed(2)}`;
       } catch (error) {
         console.error('Error displaying booking details:', error);
-        // Fallback to showing basic info
-        document.getElementById('sessionType').textContent = data.session || 'Session';
-        document.getElementById('clientName').textContent = data.clientFirstName || 'Client';
-        document.getElementById('totalPrice').textContent = `${data.totalPrice || 0}`;
       }
     }
 
@@ -799,13 +784,9 @@
     // Submit booking data to Google Sheets
     async function submitToGoogleSheets(data) {
       try {
-        // Prepare comprehensive payload for Google Sheets
         const payload = {
-          // Booking metadata
           submissionTimestamp: new Date().toISOString(),
           bookingId: generateBookingId(data),
-          
-          // Session details
           sessionType: data.session || '',
           location: data.park || '',
           selectedDate: data.selectedDate || '',
@@ -814,22 +795,16 @@
           petCount: data.petCount || '',
           peopleCount: data.peopleCount || '',
           totalPrice: data.totalPrice || 0,
-          
-          // Client information
           clientFirstName: data.clientFirstName || '',
           clientLastName: data.clientLastName || '',
           clientPhone: data.clientPhone || '',
           clientEmail: data.clientEmail || '',
           clientZipCode: data.clientZipCode || '',
-          
-          // Additional client (if applicable)
           client2FirstName: data.client2FirstName || '',
           client2LastName: data.client2LastName || '',
           client2Phone: data.client2Phone || '',
           client2Email: data.client2Email || '',
           client2ZipCode: data.client2ZipCode || '',
-          
-          // Pet information
           petName: data.petName || '',
           petAge: data.petAge || '',
           petBirthdate: data.petBirthdate || '',
@@ -839,8 +814,6 @@
           petBehavior: data.petBehavior || '',
           petNotes: data.petNotes || '',
           petInstagram: data.petInstagram || '',
-          
-          // Second pet (if applicable)
           pet2Name: data.pet2Name || '',
           pet2Age: data.pet2Age || '',
           pet2Birthdate: data.pet2Birthdate || '',
@@ -850,43 +823,31 @@
           pet2Behavior: data.pet2Behavior || '',
           pet2Notes: data.pet2Notes || '',
           pet2Instagram: data.pet2Instagram || '',
-          
-          // Agreements and preferences
           vaccination: data.vaccination || '',
           referralSource: data.referralSource || '',
           socialTagging: data.socialTagging || '',
           clientInstagram: data.clientInstagram || '',
           client2Instagram: data.client2Instagram || '',
-          
-          // Policy acceptances
           acceptedBehaviorPolicy: data.acceptedBehaviorPolicy || false,
           acceptedServiceAgreement: data.acceptedServiceAgreement || false,
           acceptedCancellationPolicy: data.acceptedCancellationPolicy || false,
-          
-          // Raw data for debugging
           rawData: JSON.stringify(data)
         };
 
-        console.log('Submitting comprehensive payload to Google Sheets:', payload);
-        
         const response = await fetch(GOOGLE_SHEETS_URL, {
           method: 'POST',
-          mode: 'no-cors', // Required for Google Apps Script
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
 
-        // Note: no-cors mode means we can't read the response,
-        // but the data should still be submitted successfully
-        console.log('Google Sheets submission completed successfully');
-        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
       } catch (error) {
-        console.error('Error submitting to Google Sheets:', error);
-        console.error('Failed payload:', data);
-        // Don't throw error here - we still want to show success to user
-        // The booking was completed and paid for
+        throw error;
       }
     }
 
@@ -915,14 +876,9 @@
     // Clean up localStorage after successful booking
     function cleanupLocalStorage() {
       try {
-        // Remove the final booking data
         localStorage.removeItem('ptpFinalBookingData');
-        
-        // Optionally, also clean up intermediate data
         localStorage.removeItem('ptpSessionData');
         localStorage.removeItem('ptpIntakeData');
-        
-        console.log('LocalStorage cleaned up successfully');
       } catch (error) {
         console.error('Error cleaning up localStorage:', error);
       }
@@ -939,7 +895,6 @@
     // Handle any errors gracefully
     window.addEventListener('error', function(e) {
       console.error('Global error:', e.error);
-      // Could add additional error tracking here
     });
   </script>
 </body>
