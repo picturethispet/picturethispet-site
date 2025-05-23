@@ -89,7 +89,6 @@
     }
     
     .site-nav a:not(.book-btn) {
-      color: white;
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
@@ -126,7 +125,7 @@
       position: relative;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-      padding-top: 20px; /* Pushes hero image down slightly */
+      padding-top: 80px; /* Pushes hero image down significantly */
       z-index: 1;
     }
     
@@ -239,9 +238,9 @@
 
     .session-subtext {
       color: white;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-family: 'Inter', sans-serif;
-      max-width: 600px;
+      max-width: 580px;
       margin: 0 auto;
       text-align: center;
       opacity: 0.9;
@@ -252,6 +251,7 @@
     .session-card-stack {
       max-width: 1200px;
       margin: 0 auto;
+      margin-top: 3rem; /* Adds space between subheader and cards */
       position: relative;
       height: auto;
       z-index: 2;
@@ -276,7 +276,7 @@
       transform: translate(-50%, -50%) scale(0.9);
       visibility: hidden;
       position: absolute;
-      top: 50%;
+      top: 55%; /* Shifts cards down slightly */
       left: 50%;
       transform-origin: center;
       overflow: hidden;
@@ -296,7 +296,7 @@
       justify-content: space-between;
       align-items: center;
       position: absolute;
-      top: 50%;
+      top: 55%;
       left: 50%;
       transform: translate(-50%, -50%);
     }
@@ -311,20 +311,6 @@
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.8);
       visibility: hidden;
-    }
-
-    .session-card-logo {
-      display: block;
-      max-width: 180px;
-      margin: 0 auto 3rem;
-      height: auto;
-      flex-shrink: 0;
-      loading: lazy;
-    }
-
-    .session-card-logo[src=""], 
-    .session-card-logo:not([src]) {
-      display: none;
     }
 
     .session-card-body {
@@ -345,6 +331,7 @@
       font-weight: 700;
       margin-bottom: 2rem;
       color: white;
+      padding-top: 2rem; /* Adds space at top of card */
       padding-bottom: 2.5rem;
     }
 
@@ -563,7 +550,7 @@
       }
       
       .hero-section {
-        padding-top: 15px; /* Slightly less padding for mobile */
+        padding-top: 60px; /* Adjusted for mobile */
       }
       
       .section-split {
@@ -592,7 +579,7 @@
 
       section#session-builder-section {
         padding: 6rem 1rem;
-        min-height: calc(100vh - 80px); /* Ensures cards are fully visible */
+        min-height: calc(100vh - 80px);
       }
 
       .session-heading {
@@ -606,6 +593,7 @@
       }
 
       .session-card-stack {
+        margin-top: 2.5rem; /* Adds space between subheader and cards */
         height: auto;
         min-height: 400px;
       }
@@ -614,27 +602,21 @@
         height: 500px;
         max-width: 90%;
         padding: 1.5rem;
+        top: 55%; /* Shifts cards down slightly */
       }
 
       .session-card.agreement-card {
         height: 800px;
         max-width: 90%;
         padding: 1.5rem;
-      }
-
-      .session-card-logo {
-        margin-bottom: 2.5rem;
-        max-width: 150px;
-      }
-
-      .session-card-body {
-        padding-bottom: 2rem;
+        top: 55%;
       }
 
       .session-card-body h2,
       .session-card-body h3 {
         font-size: 1.8rem;
         margin-bottom: 1.5rem;
+        padding-top: 1.5rem; /* Adjusted for mobile */
         padding-bottom: 2rem;
       }
 
@@ -930,7 +912,6 @@
       container.innerHTML = '';
 
       const card0 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>Let's go over what's included</h2>
           <p>In just a few quick steps, we'll help you pick the perfect session, and show you what's included with each option.</p>
@@ -941,7 +922,6 @@
       `, true);
 
       const card1 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>Mini Session</h2>
           <ul class="session-info-list">
@@ -957,7 +937,6 @@
       `);
 
       const card2 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>Full Session</h2>
           <ul class="session-info-list">
@@ -973,14 +952,12 @@
       `);
 
       const card3 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body" id="questionCard">
           <!-- Question content will be populated here -->
         </div>
       `);
 
       const card4 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>🐕 Behavior Policy</h2>
           <div class="agreement-text">
@@ -998,7 +975,6 @@
       card4.classList.add('agreement-card');
 
       const card5 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>📸 Photography Service Agreement</h2>
           <div class="agreement-text">
@@ -1016,7 +992,6 @@
       card5.classList.add('agreement-card');
 
       const card6 = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="session-card-logo" loading="lazy" />
         <div class="session-card-body">
           <h2>📅 Cancellation & Refund Policy</h2>
           <div class="agreement-text">
@@ -1090,7 +1065,7 @@
     <section id="session-builder-section">
       <div class="session-builder-header">
         <h2 class="session-heading">Let's Find Your Perfect Session</h2>
-        <p class="session-subtext">We take a unique approach to help you discover the perfect session type for you and your pet. Answer a few quick questions to get started.</p>
+        <p class="session-subtext">We take a unique approach to help you find the perfect session for your pet. Answer a few quick questions to start.</p>
       </div>
 
       <div class="session-card-stack" id="sessionCardStack">
