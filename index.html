@@ -913,8 +913,13 @@
       } else if (action === 'start' || action === 'next') {
         advanceCard(e);
       } else if (action === 'agree' && agreementType) {
-        acceptAgreement(agreementType);
-        advanceCard(e);
+        if (agreementType === 'cancellation') {
+          acceptAgreement(agreementType);
+          redirectToPickADate();
+        } else {
+          acceptAgreement(agreementType);
+          advanceCard(e);
+        }
       } else if (action === 'pick-date') {
         redirectToPickADate();
       } else if (action === 'back') {
@@ -1029,48 +1034,12 @@
           </div>
           <div class="session-card-footer">
             <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
-            <button type="button" data-action="pick-date" aria-label="Agree and continue to pick a date">Agree & Continue to Pick a Date →</button>
+            <button type="button" data-action="agree" data-agreement="cancellation" aria-label="Agree and continue to pick a date">Agree & Continue to Pick a Date →</button>
             <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
           </div>
         </div>
       `);
       card6.classList.add('agreement-card');
-
-      const card7 = createCard(`
-        <div class="session-card-body">
-          <div class="session-card-content">
-            <h2>Additional Info 1</h2>
-            <p>This is additional information for the session.</p>
-          </div>
-          <div class="session-card-footer">
-            <button type="button" data-action="next" aria-label="Next card">Next →</button>
-          </div>
-        </div>
-      `);
-
-      const card8 = createCard(`
-        <div class="session-card-body">
-          <div class="session-card-content">
-            <h2>Additional Info 2</h2>
-            <p>This is more additional information for the session.</p>
-          </div>
-          <div class="session-card-footer">
-            <button type="button" data-action="next" aria-label="Next card">Next →</button>
-          </div>
-        </div>
-      `);
-
-      const card9 = createCard(`
-        <div class="session-card-body">
-          <div class="session-card-content">
-            <h2>Additional Info 3</h2>
-            <p>This is the final additional information for the session.</p>
-          </div>
-          <div class="session-card-footer">
-            <button type="button" data-action="next" aria-label="Next card">Next →</button>
-          </div>
-        </div>
-      `);
 
       container.appendChild(card0);
       container.appendChild(card1);
@@ -1079,9 +1048,6 @@
       container.appendChild(card4);
       container.appendChild(card5);
       container.appendChild(card6);
-      container.appendChild(card7);
-      container.appendChild(card8);
-      container.appendChild(card9);
 
       currentQuestion = 0;
       renderCurrentQuestion();
@@ -1146,7 +1112,7 @@
       <img src="assets/images/mastercard.png" alt="Mastercard payment accepted" loading="lazy" />
       <img src="assets/images/paypal.png" alt="PayPal payment accepted" loading="lazy" />
     </div>
-    <p>© 2025 PictureThisPet. All rights reserved. | v3.3.1</p>
+    <p>© 2025 PictureThisPet. All rights reserved. | v3.4.1</p>
   </footer>
 
   <script>
