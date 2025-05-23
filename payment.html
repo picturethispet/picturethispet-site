@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Load Stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
 
   <style>
     :root {
@@ -68,7 +70,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-image: url("assets/images/ani_bkgd_cool.png");
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
@@ -257,43 +259,12 @@
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 0.8rem;
-      font-size: 1rem;
-      font-family: 'Inter', sans-serif;
-      color: white;
+    /* Stripe Payment Element Styling */
+    #payment-element {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .form-row {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .form-row .form-group {
-      flex: 1;
+      padding: 1rem;
     }
 
     .payment-actions {
@@ -320,6 +291,11 @@
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
+    .pay-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     .back-btn {
       background: rgba(255, 255, 255, 0.1);
       color: rgba(255, 255, 255, 0.8);
@@ -337,6 +313,14 @@
     .back-btn:hover {
       background: rgba(255, 255, 255, 0.2);
       color: white;
+    }
+
+    #payment-message {
+      color: var(--booked-red);
+      font-size: 1rem;
+      margin-top: 1rem;
+      text-align: center;
+      display: none;
     }
 
     /* === BOOKING SUMMARY === */
@@ -556,20 +540,6 @@
         font-size: 1.8rem;
       }
 
-      .form-group label {
-        font-size: 1rem;
-      }
-
-      .form-group input {
-        font-size: 0.9rem;
-        padding: 0.6rem;
-      }
-
-      .form-row {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
       .pay-btn {
         padding: 0.8rem 2rem;
         font-size: 1rem;
@@ -642,33 +612,17 @@
 
     <!-- Payment Section -->
     <div class="payment-section">
-      <!-- Payment Form -->
+      <!-- Payment Form with Stripe -->
       <div class="payment-form">
         <h2>Payment Details</h2>
-        <form id="paymentForm">
-          <div class="form-group">
-            <label for="cardNumber">Card Number</label>
-            <input type="text" id="cardNumber" name="cardNumber" required placeholder="1234 5678 9012 3456" maxlength="19" />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="expiryDate">Expiry Date</label>
-              <input type="text" id="expiryDate" name="expiryDate" required placeholder="MM/YY" maxlength="5" />
-            </div>
-            <div class="form-group">
-              <label for="cvv">CVV</label>
-              <input type="text" id="cvv" name="cvv" required placeholder="123" maxlength="4" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="cardHolder">Cardholder Name</label>
-            <input type="text" id="cardHolder" name="cardHolder" required placeholder="Enter cardholder name" />
-          </div>
-          <div class="payment-actions">
-            <a href="/intake-form.html" class="back-btn" aria-label="Go back to intake form">← Back</a>
-            <button type="submit" class="pay-btn">Pay Now</button>
-          </div>
-        </form>
+        <div id="payment-element">
+          <!-- Stripe Payment Element will be mounted here -->
+        </div>
+        <div class="payment-actions">
+          <a href="/intake-form.html" class="back-btn" aria-label="Go back to intake form">← Back</a>
+          <button id="pay-btn" class="pay-btn" disabled>Pay Now</button>
+        </div>
+        <div id="payment-message"></div>
       </div>
 
       <!-- Booking Summary -->
@@ -740,11 +694,14 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:27 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:48 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
   <script>
+    // Initialize Stripe with your publishable key
+    const stripe = Stripe('pk_test_51H3X9aG5ZJ6Yk7L8n9M2vPqR'); // Replace with your Stripe publishable key
+
     // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
@@ -757,8 +714,8 @@
       window.location.href = '/#session-builder-section';
     }
 
-    // Display session details and handle payment form submission
-    document.addEventListener('DOMContentLoaded', function() {
+    // Display session details and handle Stripe payment
+    document.addEventListener('DOMContentLoaded', async function() {
       console.log('Payment page loaded, initializing...');
 
       // Retrieve session data from localStorage
@@ -779,25 +736,60 @@
       if (sessionData.peopleCount === "2") total += 20;
       document.getElementById('totalPrice').textContent = `$${total}`;
 
-      // Handle payment form submission
-      const form = document.getElementById('paymentForm');
-      form.addEventListener('submit', function(e) {
+      // Simulate fetching a client secret from your server
+      // In a real implementation, you'd make a fetch request to your server to create a PaymentIntent
+      const response = {
+        clientSecret: 'pi_123_secret_456' // Replace with actual client secret from your server
+      };
+      const clientSecret = response.clientSecret;
+
+      // Initialize Stripe Elements
+      const elements = stripe.elements({ clientSecret });
+
+      // Create and mount the Payment Element
+      const paymentElement = elements.create('payment', {
+        layout: 'tabs', // Customize the layout as needed
+        paymentMethodOrder: ['card', 'apple_pay', 'google_pay', 'klarna', 'afterpay_clearpay', 'affirm', 'ach_debit', 'sepa_debit', 'bancontact', 'ideal', 'boleto', 'oxxo', 'upi'],
+        fields: {
+          billingDetails: {
+            name: 'auto',
+            email: 'auto',
+            phone: 'auto',
+            address: 'auto'
+          }
+        }
+      });
+      paymentElement.mount('#payment-element');
+
+      // Enable the pay button once the Payment Element is ready
+      const payBtn = document.getElementById('pay-btn');
+      paymentElement.on('ready', function() {
+        payBtn.disabled = false;
+      });
+
+      // Handle payment submission
+      payBtn.addEventListener('click', async function(e) {
         e.preventDefault();
+        payBtn.disabled = true;
 
-        // Simulate payment processing (in a real app, this would integrate with a payment gateway)
-        const paymentData = {
-          cardNumber: document.getElementById('cardNumber').value,
-          expiryDate: document.getElementById('expiryDate').value,
-          cvv: document.getElementById('cvv').value,
-          cardHolder: document.getElementById('cardHolder').value
-        };
+        const { error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: window.location.origin + '/success.html'
+          }
+        });
 
-        // Save payment data to localStorage (for demo purposes)
-        sessionData.payment = paymentData;
-        localStorage.setItem('ptpSessionData', JSON.stringify(sessionData));
-
-        // Redirect to success page
-        window.location.href = 'success.html';
+        if (error) {
+          const messageContainer = document.getElementById('payment-message');
+          messageContainer.textContent = error.message;
+          messageContainer.style.display = 'block';
+          payBtn.disabled = false;
+        } else {
+          // Payment succeeded, redirect handled by Stripe
+          // Save payment details to localStorage (simulated here)
+          sessionData.payment = { status: 'succeeded' };
+          localStorage.setItem('ptpSessionData', JSON.stringify(sessionData));
+        }
       });
     });
   </script>
