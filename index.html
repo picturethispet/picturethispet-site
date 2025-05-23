@@ -17,6 +17,9 @@
       --orange: #F47C2C;
       --gold: #FDB75E;
       --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
     }
 
     * {
@@ -50,6 +53,39 @@
       100% { background-position: 0% 50%; }
     }
 
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
     /* === HEADER STYLES === */
     header {
       width: 100%;
@@ -61,8 +97,8 @@
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
@@ -78,12 +114,13 @@
     .logo-link {
       display: flex;
       align-items: center;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       text-decoration: none;
     }
 
     .logo-link:hover {
       opacity: 0.8;
+      transform: scale(1.02);
     }
     
     .site-nav {
@@ -97,6 +134,14 @@
       text-decoration: none;
       font-weight: 600;
       color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
     }
     
     .book-btn {
@@ -105,6 +150,7 @@
       background-position: center;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
       padding: 0.8rem 2rem;
       border: 2px solid transparent;
       border-radius: 999px;
@@ -114,8 +160,8 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      background-clip: text;
       position: relative;
+      display: inline-block;
     }
 
     .book-btn::before {
@@ -131,14 +177,16 @@
       border-radius: 999px;
       opacity: 0.15;
       z-index: -1;
+      transition: all 0.3s ease;
     }
 
     .book-btn:hover::before {
       opacity: 0.25;
+      transform: scale(1.05);
     }
 
     .book-btn:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
     
     .mobile-menu-btn {
@@ -148,6 +196,11 @@
       color: white;
       font-size: 2rem;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
     }
 
     /* === HERO SECTION === */
@@ -155,22 +208,24 @@
       position: relative;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-      padding-top: 105px;
+      margin-top: 110px;
       z-index: 1;
+      overflow: hidden;
     }
     
     .hero-section img {
       width: 100%;
       height: auto;
       display: block;
+      animation: fadeInUp 1s ease-out;
     }
 
-    /* === SECTION SPLIT === */
-    .section-split {
+    /* === EMOTIONAL STORY SECTION === */
+    .story-section {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2rem 2rem 3rem;
+      padding: 6rem 2rem;
       position: relative;
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
@@ -184,63 +239,80 @@
       margin-left: calc(-50vw + 50%);
       margin-top: -50px;
     }
-    
-    .side-a, .side-b {
-      flex: 1;
-      padding: 2rem;
-    }
-    
-    .side-a {
-      display: flex;
-      justify-content: flex-end;
+
+    .story-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
       align-items: center;
-      text-align: right;
+      width: 100%;
     }
     
-    .side-a h1 {
-      max-width: 420px;
-      margin-left: auto;
+    .story-left {
+      animation: slideInLeft 0.8s ease-out;
+    }
+    
+    .story-left h1 {
       font-family: 'Inter', sans-serif;
       font-weight: 900;
-      font-size: 3.8rem;
-      line-height: 1.25;
+      font-size: 4.2rem;
+      line-height: 1.1;
       background: url("assets/images/ani_bkgd_cool.png");
       background-size: cover;
       background-position: center;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-align: left;
+      margin-bottom: 2rem;
     }
     
-    .side-b-inner {
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-      max-width: 420px;
+    .story-right {
+      animation: slideInRight 0.8s ease-out 0.2s both;
     }
     
-    .side-b h2 {
+    .story-right h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
-      font-size: 2.3rem;
-      line-height: 1.3;
-      margin-bottom: 1rem;
+      font-size: 2.8rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: white;
     }
     
-    .side-b p {
+    .story-right p {
       font-family: 'Inter', sans-serif;
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 400;
-      line-height: 1.75;
-      max-width: 480px;
-      margin: 0 auto;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2.5rem;
+    }
+
+    .story-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 16px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .story-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(244, 124, 44, 0.4);
     }
 
     /* === SESSION BUILDER SECTION === */
-    section#session-builder-section {
-      padding: 6rem 1rem 8rem;
+    .session-builder-section {
+      padding: 8rem 1rem 10rem;
       background: url('assets/images/main_background_allsystem.png');
       background-size: 100% 100%;
+      background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       position: relative;
       overflow: hidden;
@@ -250,54 +322,91 @@
 
     .session-builder-header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 4rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
     }
 
     .session-heading {
       font-family: 'Inter', sans-serif;
       font-weight: 900;
-      font-size: 3.8rem;
-      line-height: 1.25;
+      font-size: 4rem;
+      line-height: 1.2;
       background: url('assets/images/ani_bkgd_cool.png');
       background-size: cover;
       background-position: center;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .session-subtext {
-      color: white;
-      font-size: 1.15rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.3rem;
       font-family: 'Inter', sans-serif;
-      max-width: 580px;
-      margin: 0 auto;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .session-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
       text-align: center;
-      opacity: 0.9;
-      line-height: 1.5;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .feature-card h3 {
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .feature-card p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
+      line-height: 1.4;
     }
 
     /* === SESSION CARDS === */
-    .session-card-stack {
-      max-width: 1200px;
+    .session-card-container {
+      max-width: 1000px;
       margin: 0 auto;
-      margin-top: 3rem;
+      margin-top: 4rem;
       position: relative;
-      height: auto;
+      min-height: 800px;
       z-index: 2;
-      min-height: 700px;
     }
 
     .session-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: 600px;
+      animation: moveBackground 30s ease-in-out infinite;
+      height: 700px;
       width: 100%;
-      max-width: 600px;
+      max-width: 800px;
       border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      padding: 3rem;
       color: white;
       font-family: 'Inter', sans-serif;
       transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -305,7 +414,7 @@
       transform: translate(-50%, -50%) scale(0.9);
       visibility: hidden;
       position: absolute;
-      top: 55%;
+      top: 50%;
       left: 50%;
       transform-origin: center;
       overflow: hidden;
@@ -313,21 +422,15 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .session-card.agreement-card {
-      height: 552px;
-      max-width: 800px;
+      height: 750px;
+      max-width: 900px;
       width: 100%;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      position: absolute;
-      top: 55%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      padding: 3rem;
     }
 
     .session-card.active {
@@ -344,12 +447,8 @@
 
     .session-card-logo {
       max-width: 400px;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
       display: block;
-    }
-
-    .card-0-content {
-      padding-top: 0;
     }
 
     .session-card-body {
@@ -377,76 +476,82 @@
 
     .session-card-body h2,
     .session-card-body h3 {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       font-weight: 700;
-      margin: 0 auto;
+      margin: 0 auto 1.5rem;
       color: white;
-      padding-top: 0.5rem;
-      padding-bottom: 1rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .session-card-body .question-prompt {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       color: white;
-      padding-top: 0.5rem;
-      padding-bottom: 1rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .session-card-body p {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       line-height: 1.6;
       opacity: 0.9;
-      margin-bottom: 1.5rem;
-      max-width: 400px;
+      margin-bottom: 2rem;
+      max-width: 500px;
       margin-left: auto;
       margin-right: auto;
       text-align: center;
     }
 
     .agreement-text {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
       border-radius: 16px;
-      padding: 1rem;
+      padding: 2rem;
       margin: 1rem 0 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       text-align: left;
       line-height: 1.6;
-      font-size: 1rem;
-      max-width: 750px;
-      min-height: 240px;
+      font-size: 1.1rem;
+      max-width: 800px;
+      min-height: 200px;
       margin-left: auto;
       margin-right: auto;
+      overflow-y: auto;
     }
 
     .session-info-list {
       list-style: none;
       padding: 0;
-      margin: 1rem 0;
+      margin: 1.5rem 0;
       text-align: left;
-      max-width: 320px;
+      max-width: 350px;
       margin-left: auto;
       margin-right: auto;
     }
 
     .session-info-list li {
-      font-size: 1.1rem;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 1.2rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
       display: flex;
       align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .session-info-list li:hover {
+      padding-left: 0.5rem;
+      color: var(--gold);
     }
 
     .session-info-list li:last-child {
       border-bottom: none;
-      padding-bottom: 1rem;
+      padding-bottom: 1.5rem;
     }
 
     .answer-options {
       display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -455,75 +560,78 @@
       background: rgba(255, 255, 255, 0.1);
       color: white;
       border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      padding: 0.75rem 1.5rem;
-      font-size: 1.1rem;
+      border-radius: 16px;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
-      min-width: 140px;
+      min-width: 160px;
     }
 
     .answer-button:hover {
       background: rgba(255, 255, 255, 0.25);
       border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
 
     .session-card-footer {
       margin-top: auto;
       display: flex;
       justify-content: center;
-      gap: 1rem;
+      gap: 1.5rem;
       width: 100%;
       flex-shrink: 0;
-      padding: 1rem 0;
+      padding: 1.5rem 0;
+      flex-wrap: wrap;
     }
 
     .session-card-footer button,
     .continue-btn,
     .primary-btn {
-      background: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 16px;
+      padding: 1rem 2rem;
       font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
       text-decoration: none;
       display: inline-block;
       text-align: center;
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.3);
     }
 
     .session-card-footer button:hover,
     .continue-btn:hover,
     .primary-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(244, 124, 44, 0.4);
     }
 
     .session-card-footer .back-btn,
     .session-card-footer .restart-btn {
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
+      border-radius: 12px;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
     }
 
     .session-card-footer .back-btn:hover,
     .session-card-footer .restart-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
       color: white;
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
     }
 
     /* === FOOTER === */
@@ -533,30 +641,38 @@
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 3rem 1rem;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
       position: relative;
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .payments {
+      margin-bottom: 2rem;
     }
 
     .payments img {
-      height: 30px;
+      height: 35px;
       margin: 0 1rem;
       filter: brightness(0) invert(1);
+      transition: all 0.3s ease;
+    }
+
+    .payments img:hover {
+      transform: scale(1.1);
+      opacity: 0.8;
     }
 
     footer p {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      opacity: 0.9;
+      font-size: 1rem;
+      opacity: 0.8;
     }
 
     /* === RESPONSIVE DESIGN === */
     @media (max-width: 768px) {
       header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
         height: 80px;
         padding: 0.5rem 1rem;
       }
@@ -579,6 +695,7 @@
         padding: 1rem;
         z-index: 999;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
       }
       
       .site-nav.active {
@@ -589,7 +706,8 @@
         display: block;
         margin: 0.5rem 0;
         font-size: 1.2rem;
-        color: #FFF; /* Ensure all links in active mobile menu are white */
+        color: white;
+        padding: 0.5rem 1rem;
       }
       
       .book-btn {
@@ -598,12 +716,18 @@
         background-position: center;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        padding: 0.6rem 1.2rem;
+        background-clip: text;
+        padding: 0.6rem 1.5rem;
         border-radius: 999px;
-        font-weight: bold;
-        text-decoration: none;
-        margin-left: 0;
+        font-weight: 900;
         font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        position: relative;
+      }
+
+      .book-btn::before {
+        opacity: 0.2;
       }
       
       .mobile-menu-btn {
@@ -611,143 +735,134 @@
       }
       
       .hero-section {
-        padding-top: 75px;
+        margin-top: 80px;
       }
       
-      .section-split {
-        flex-direction: column;
-        text-align: center;
-        padding: 1.5rem 1rem;
-        gap: 0.5rem;
+      .story-section {
+        padding: 4rem 1rem;
         margin-top: -30px;
       }
-      
-      .side-a h1, .side-b h2, .side-b p {
+
+      .story-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
         text-align: center;
       }
-
-      .side-a h1 {
-        font-size: 2.5rem;
+      
+      .story-left h1 {
+        font-size: 3rem;
       }
 
-      .side-b h2 {
-        font-size: 1.8rem;
+      .story-right h2 {
+        font-size: 2.2rem;
       }
 
-      .side-b p {
-        font-size: 1.1rem;
+      .story-right p {
+        font-size: 1.2rem;
       }
 
-      section#session-builder-section {
-        padding: 6rem 1rem 10rem;
-        min-height: 160vh;
+      .session-builder-section {
+        padding: 6rem 1rem 8rem;
       }
 
       .session-heading {
-        font-size: 2.5rem;
+        font-size: 3rem;
       }
 
       .session-subtext {
-        font-size: 1rem;
+        font-size: 1.1rem;
         padding: 0 1rem;
-        max-width: 90%;
       }
 
-      .session-card-stack {
-        margin-top: 2.5rem;
-        height: auto;
-        min-height: 600px;
+      .session-features {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .session-card-container {
+        margin-top: 3rem;
+        min-height: 700px;
       }
 
       .session-card {
-        height: 510px;
-        max-width: 510px;
-        padding: 1.5rem;
-        top: 60%;
+        height: 650px;
+        max-width: 95%;
+        padding: 2rem;
+        top: 50%;
       }
 
       .session-card.agreement-card {
-        height: 792px;
-        max-width: 92%; /* Increased to be close to page edges */
-        padding: 1rem;
-        top: 60%;
+        height: 700px;
+        max-width: 95%;
+        padding: 2rem;
       }
 
       .session-card-logo {
-        max-width: 225px; /* Increased by 1.5x from 150px for Card 0 */
-        margin-bottom: 0.4rem;
-      }
-
-      .session-card-body {
-        padding: 0.3rem 0;
+        max-width: 250px;
+        margin-bottom: 0.5rem;
       }
 
       .session-card-body h2,
       .session-card-body h3 {
-        font-size: 1.8rem;
-        padding-top: 0.4rem;
-        padding-bottom: 0.8rem;
+        font-size: 2rem;
+        margin-bottom: 1rem;
       }
 
       .session-card-body .question-prompt {
-        font-size: 1.6rem;
-        margin-bottom: 1rem;
-        padding-top: 0.4rem;
-        padding-bottom: 0.8rem;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
       }
 
       .session-card-body p {
-        font-size: 1rem;
-        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
         max-width: 90%;
       }
 
       .agreement-text {
         max-width: 95%;
-        min-height: 320px;
-        margin: 0.5rem 0 1rem;
-        padding: 0.8rem;
+        min-height: 200px;
+        margin: 1rem 0 1.5rem;
+        padding: 1.5rem;
+        font-size: 1rem;
       }
 
       .session-info-list {
-        margin: 0.5rem 0;
+        margin: 1rem 0;
+        max-width: 300px;
       }
 
       .session-info-list li {
-        padding: 0.3rem 0;
-        font-size: 0.9rem;
-      }
-
-      .session-info-list li:last-child {
-        padding-bottom: 0.8rem;
+        padding: 0.6rem 0;
+        font-size: 1.1rem;
       }
 
       .answer-options {
-        gap: 0.5rem;
-        margin-bottom: 1rem;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
       }
 
       .answer-button {
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
-        min-width: 120px;
+        padding: 0.8rem 1.5rem;
+        font-size: 1.1rem;
+        min-width: 140px;
       }
 
       .session-card-footer {
-        padding: 0.5rem 0;
-        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem 0;
       }
 
       .session-card-footer button,
       .continue-btn {
-        padding: 0.5rem 1rem;
+        padding: 0.8rem 1.5rem;
         font-size: 1rem;
       }
 
       .session-card-footer .back-btn,
       .session-card-footer .restart-btn {
-        padding: 0.3rem 0.8rem;
-        font-size: 0.8rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
       }
     }
 
@@ -755,34 +870,110 @@
       .mobile-menu-btn { 
         display: none !important; 
       }
-      
-      .side-a { 
-        padding-left: 6rem; 
+    }
+
+    /* === ENHANCED ANIMATIONS === */
+    @keyframes cardSlideIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
       }
-      
-      .side-b { 
-        padding-right: 2rem; 
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
       }
     }
   </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="#" aria-label="Locations page">Locations</a>
+      <a href="#" aria-label="Pricing page">Pricing</a>
+      <a href="#" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
   
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" loading="lazy" />
+    </section>
+    
+    <!-- Emotional Story Section -->
+    <section class="story-section">
+      <div class="story-content">
+        <div class="story-left">
+          <h1>ONE DAY, THEY WON'T<br />BE THERE BY YOUR SIDE</h1>
+        </div>
+        <div class="story-right">
+          <h2>But these moments?<br />They'll last forever.</h2>
+          <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
+          <a href="#" class="story-cta" onclick="scrollToSessionBuilder(event)">Start Your Session →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Session Builder Section -->
+    <section class="session-builder-section" id="session-builder-section">
+      <div class="session-builder-header">
+        <h2 class="session-heading">Let's Find Your Perfect Session</h2>
+        <p class="session-subtext">We take a unique approach to help you find the perfect session for your pet. Answer a few quick questions to start building your personalized experience.</p>
+        
+        <div class="session-features">
+          <div class="feature-card">
+            <h3>🐾 Personalized Experience</h3>
+            <p>Tailored to your pet's unique personality and your specific needs</p>
+          </div>
+          <div class="feature-card">
+            <h3>📸 Professional Quality</h3>
+            <p>High-end equipment and expert editing for stunning results</p>
+          </div>
+          <div class="feature-card">
+            <h3>🌅 Golden Hour Magic</h3>
+            <p>Perfect lighting conditions for beautiful, natural-looking photos</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="session-card-container" id="sessionCardContainer">
+        <!-- Cards will be dynamically generated -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="payments">
+      <img src="assets/images/visa.png" alt="Visa payment accepted" loading="lazy" />
+      <img src="assets/images/mastercard.png" alt="Mastercard payment accepted" loading="lazy" />
+      <img src="assets/images/paypal.png" alt="PayPal payment accepted" loading="lazy" />
+    </div>
+    <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1</p>
+  </footer>
+
   <script>
-    window.onbeforeunload = function () {
-      window.scrollTo(0, 0);
+    // Session Data Management
+    const sessionData = {
+      session: '',
+      park: '',
+      petCount: '',
+      peopleCount: '',
+      acceptedBehaviorPolicy: false,
+      acceptedServiceAgreement: false,
+      acceptedCancellationPolicy: false
     };
 
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('active');
-    }
-
-    function scrollToSessionBuilder(e) {
-      e.preventDefault();
-      const sessionSection = document.getElementById('session-builder-section');
-      if (sessionSection) {
-        sessionSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    // Session Builder State
+    let currentCard = 0;
+    let currentQuestion = 0;
+    let cardHistory = [];
 
     const questions = [
       { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
@@ -791,10 +982,22 @@
       { label: "How many people? (max 2)", name: "peopleCount", options: ["1", "2"] }
     ];
 
-    let currentCard = 0;
-    let currentQuestion = 0;
-    let cardHistory = [];
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
 
+    // Smooth scroll to session builder
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      const sessionSection = document.getElementById('session-builder-section');
+      if (sessionSection) {
+        sessionSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Create session card
     function createCard(content, isActive = false) {
       const card = document.createElement("div");
       card.className = `session-card${isActive ? ' active' : ''}`;
@@ -802,6 +1005,7 @@
       return card;
     }
 
+    // Show specific card
     function showCard(index) {
       const cards = document.querySelectorAll('.session-card');
       if (index < 0 || index >= cards.length) {
@@ -810,9 +1014,12 @@
       }
       
       cards.forEach((card, i) => {
+        card.classList.remove('active', 'exiting');
         if (i === index) {
-          card.classList.add('active');
           card.style.visibility = 'visible';
+          setTimeout(() => {
+            card.classList.add('active');
+          }, 50);
         } else {
           card.classList.remove('active');
           card.style.visibility = 'hidden';
@@ -825,9 +1032,12 @@
         renderCurrentQuestion();
       }
 
-      addButtonListeners();
+      setTimeout(() => {
+        addButtonListeners();
+      }, 100);
     }
 
+    // Advance to next card
     function advanceCard(event) {
       if (event) {
         event.preventDefault();
@@ -844,7 +1054,7 @@
           currentCardEl.classList.remove('active', 'exiting');
           currentCardEl.style.visibility = 'hidden';
           showCard(nextIndex);
-        }, 600);
+        }, 400);
       } else {
         showCard(nextIndex);
       }
@@ -852,6 +1062,7 @@
       return false;
     }
 
+    // Go back to previous card
     function goBack() {
       if (cardHistory.length > 0) {
         const previousCard = cardHistory.pop();
@@ -876,6 +1087,7 @@
       }
     }
 
+    // Restart session
     function restartSession() {
       if (confirm("Are you sure you want to start over? This will clear all your selections.")) {
         Object.keys(sessionData).forEach(key => {
@@ -893,6 +1105,7 @@
       }
     }
 
+    // Handle question answers
     function handleQuestionAnswer(questionName, answer) {
       if (!questionName || !answer || !questions.find(q => q.name === questionName)) {
         console.error('Invalid question or answer:', questionName, answer);
@@ -910,6 +1123,7 @@
       }
     }
 
+    // Render current question
     function renderCurrentQuestion() {
       const questionCard = document.getElementById('questionCard');
       if (!questionCard) return;
@@ -929,14 +1143,17 @@
           </div>
         </div>
         <div class="session-card-footer">
-          <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
+          <button type="button" class="back-btn" data-action="back" aria-label="Go back">← Back</button>
           <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
         </div>
       `;
 
-      addButtonListeners();
+      setTimeout(() => {
+        addButtonListeners();
+      }, 100);
     }
 
+    // Add button listeners
     function addButtonListeners() {
       const buttons = document.querySelectorAll('.session-card button, .answer-button');
       buttons.forEach(button => {
@@ -945,6 +1162,7 @@
       });
     }
 
+    // Handle button clicks
     function handleButtonClick(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -978,8 +1196,9 @@
       return false;
     }
 
+    // Initialize session builder
     function initializeSessionBuilder() {
-      const container = document.getElementById('sessionCardStack');
+      const container = document.getElementById('sessionCardContainer');
       container.innerHTML = '';
 
       const card0 = createCard(`
@@ -987,12 +1206,12 @@
           <div class="session-card-logo">
             <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Warm Logo" class="session-card-logo">
           </div>
-          <div class="session-card-content card-0-content">
-            <h2>Let's go over what's included</h2>
-            <p>In just a few quick steps, we'll help you pick the perfect session, and show you what's included with each option.</p>
+          <div class="session-card-content">
+            <h2>Let's Create Something Beautiful</h2>
+            <p>In just a few quick steps, we'll help you design the perfect session for your beloved pet. Each session is carefully crafted to capture their unique personality.</p>
           </div>
           <div class="session-card-footer">
-            <button type="button" data-action="start" aria-label="Start session builder">Start →</button>
+            <button type="button" data-action="start" aria-label="Start session builder">Start Your Journey →</button>
           </div>
         </div>
       `, true);
@@ -1000,16 +1219,17 @@
       const card1 = createCard(`
         <div class="session-card-body">
           <div class="session-card-content">
-            <h2>Mini Session</h2>
+            <h2>✨ Mini Session</h2>
             <ul class="session-info-list">
-              <li>✔ Up to 60 minutes</li>
-              <li>✔ 5 edited photos</li>
-              <li>✔ 1 person + 1 pet included</li>
-              <li>✔ Access to downloads & print shop</li>
+              <li>⏱️ Up to 60 minutes of shooting</li>
+              <li>📸 5 professionally edited photos</li>
+              <li>👥 1 person + 1 pet included</li>
+              <li>💾 Full resolution digital downloads</li>
+              <li>🛒 Access to premium print shop</li>
             </ul>
           </div>
           <div class="session-card-footer">
-            <button type="button" data-action="next" aria-label="Next card">Next →</button>
+            <button type="button" data-action="next" aria-label="Continue to full session">Continue →</button>
           </div>
         </div>
       `);
@@ -1017,16 +1237,18 @@
       const card2 = createCard(`
         <div class="session-card-body">
           <div class="session-card-content">
-            <h2>Full Session</h2>
+            <h2>🌟 Full Session</h2>
             <ul class="session-info-list">
-              <li>✔ Up to 90 minutes</li>
-              <li>✔ 10 edited photos</li>
-              <li>✔ 1 person + 1 pet included</li>
-              <li>✔ Access to downloads & print shop</li>
+              <li>⏱️ Up to 90 minutes of shooting</li>
+              <li>📸 10 professionally edited photos</li>
+              <li>👥 1 person + 1 pet included</li>
+              <li>💾 Full resolution digital downloads</li>
+              <li>🛒 Access to premium print shop</li>
+              <li>🎁 Bonus lifestyle shots included</li>
             </ul>
           </div>
           <div class="session-card-footer">
-            <button type="button" data-action="next" aria-label="Next card">Next →</button>
+            <button type="button" data-action="next" aria-label="Continue to questions">Let's Customize →</button>
           </div>
         </div>
       `);
@@ -1040,14 +1262,16 @@
       const card4 = createCard(`
         <div class="session-card-body">
           <div class="session-card-content">
-            <h2>🐕 Behavior Policy</h2>
+            <h2>🐕 Pet Behavior Policy</h2>
             <div class="agreement-text">
-              <p>All pets must be well-behaved and under control. Owners are responsible for pet behavior. Disruptive or aggressive actions may terminate the session without refund. Sessions occur in public/private settings, requiring respectful behavior from all for safety and enjoyment.</p>
+              <p><strong>For everyone's safety and enjoyment:</strong></p>
+              <p>All pets must be well-behaved and under control during the session. Pet owners are fully responsible for their pet's behavior throughout the shoot.</p>
+              <p>Sessions that are disrupted by aggressive or uncontrollable behavior may need to be terminated without refund. We shoot in both public and private settings, so respectful behavior from all participants is essential for a successful session.</p>
             </div>
           </div>
           <div class="session-card-footer">
-            <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
-            <button type="button" data-action="agree" data-agreement="behavior" aria-label="Agree to behavior policy">Agree & Continue →</button>
+            <button type="button" class="back-btn" data-action="back" aria-label="Go back">← Back</button>
+            <button type="button" data-action="agree" data-agreement="behavior" aria-label="Agree to behavior policy">I Understand & Agree →</button>
             <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
           </div>
         </div>
@@ -1057,14 +1281,16 @@
       const card5 = createCard(`
         <div class="session-card-body">
           <div class="session-card-content">
-            <h2>📸 Photography Service Agreement</h2>
+            <h2>📸 Photography Rights Agreement</h2>
             <div class="agreement-text">
-              <p>By participating, you agree photos are PictureThisPet's intellectual property. You receive high-resolution files for personal use; the photographer retains ownership and marketing rights. No editing/selling images without permission. You're granted a perpetual license for personal sharing/printing; commercial rights reserved.</p>
+              <p><strong>Image ownership and usage rights:</strong></p>
+              <p>By participating in this session, you acknowledge that all photographs remain the intellectual property of PictureThisPet. You will receive high-resolution files for personal use, while the photographer retains ownership and marketing rights.</p>
+              <p>You may not edit, alter, or sell these images without explicit permission. You are granted a perpetual license for personal sharing and printing, while commercial usage rights remain reserved.</p>
             </div>
           </div>
           <div class="session-card-footer">
-            <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
-            <button type="button" data-action="agree" data-agreement="service" aria-label="Agree to photography service agreement">Agree & Continue →</button>
+            <button type="button" class="back-btn" data-action="back" aria-label="Go back">← Back</button>
+            <button type="button" data-action="agree" data-agreement="service" aria-label="Agree to photography service agreement">I Understand & Agree →</button>
             <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
           </div>
         </div>
@@ -1074,14 +1300,16 @@
       const card6 = createCard(`
         <div class="session-card-body">
           <div class="session-card-content">
-            <h2>📅 Cancellation & Refund Policy</h2>
+            <h2>📅 Booking & Cancellation Policy</h2>
             <div class="agreement-text">
-              <p>Payments are non-refundable. Rescheduling requires 48+ hours' notice. Severe weather/emergencies allow rescheduling. Missed appointments or late cancellations forfeit rescheduling/refunds. Sessions are confirmed only after full payment.</p>
+              <p><strong>Important booking terms:</strong></p>
+              <p>All session payments are non-refundable. Rescheduling requires at least 48 hours advance notice. We accommodate rescheduling for severe weather conditions and genuine emergencies.</p>
+              <p>Missed appointments or last-minute cancellations (under 48 hours) forfeit both rescheduling privileges and refunds. Sessions are only confirmed after full payment is received.</p>
             </div>
           </div>
           <div class="session-card-footer">
-            <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
-            <button type="button" data-action="agree" data-agreement="cancellation" aria-label="Agree and continue to pick a date">Agree & Continue to Pick a Date →</button>
+            <button type="button" class="back-btn" data-action="back" aria-label="Go back">← Back</button>
+            <button type="button" data-action="agree" data-agreement="cancellation" aria-label="Agree and continue to pick a date">I Understand & Continue to Booking →</button>
             <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
           </div>
         </div>
@@ -1097,83 +1325,13 @@
       container.appendChild(card6);
 
       currentQuestion = 0;
-      renderCurrentQuestion();
-      addButtonListeners();
+      setTimeout(() => {
+        renderCurrentQuestion();
+        addButtonListeners();
+      }, 200);
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      currentCard = 0;
-      currentQuestion = 0;
-      cardHistory = [];
-      initializeSessionBuilder();
-    });
-  </script>
-</head>
-<body>
-  <header>
-    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
-    </a>
-    <nav class="site-nav">
-      <a href="#" aria-label="Home page">Home</a>
-      <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="#" aria-label="Locations page">Locations</a>
-      <a href="#" aria-label="Pricing page">Pricing</a>
-      <a href="#" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
-    </nav>
-    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
-  </header>
-  
-  <main>
-    <section class="hero-section">
-      <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" loading="lazy" />
-    </section>
-    
-    <section class="section-split">
-      <div class="side-a">
-        <h1>ONE DAY, THEY WON'T<br />BE THERE BY YOUR SIDE</h1>
-      </div>
-      <div class="side-b">
-        <div class="side-b-inner">
-          <h2>But these moments?<br />They'll last forever.</h2>
-          <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="session-builder-section">
-      <div class="session-builder-header">
-        <h2 class="session-heading">Let's Find Your Perfect Session</h2>
-        <p class="session-subtext">We take a unique approach to help you find the perfect session for your pet. Answer a few quick questions to start.</p>
-      </div>
-
-      <div class="session-card-stack" id="sessionCardStack">
-        <!-- Cards will be dynamically generated -->
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="payments">
-      <img src="assets/images/visa.png" alt="Visa payment accepted" loading="lazy" />
-      <img src="assets/images/mastercard.png" alt="Mastercard payment accepted" loading="lazy" />
-      <img src="assets/images/paypal.png" alt="PayPal payment accepted" loading="lazy" />
-    </div>
-    <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1</p>
-  </footer>
-
-  <script>
-    const sessionData = {
-      session: '',
-      park: '',
-      petCount: '',
-      peopleCount: '',
-      acceptedBehaviorPolicy: false,
-      acceptedServiceAgreement: false,
-      acceptedCancellationPolicy: false
-    };
-
+    // Session data management
     function saveSessionData() {
       localStorage.setItem("ptpSessionData", JSON.stringify(sessionData));
     }
@@ -1201,13 +1359,30 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load existing session data
       const saved = localStorage.getItem("ptpSessionData");
       if (saved) {
         const parsed = JSON.parse(saved);
         Object.assign(sessionData, parsed);
       }
+
+      // Initialize session builder with delay
+      setTimeout(() => {
+        currentCard = 0;
+        currentQuestion = 0;
+        cardHistory = [];
+        initializeSessionBuilder();
+      }, 100);
+
+      console.log('✨ Polished homepage initialized successfully');
     });
+
+    // Smooth scroll restoration
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+    };
   </script>
 </body>
 </html>
