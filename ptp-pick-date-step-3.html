@@ -25,14 +25,23 @@
       padding: 0;
     }
     
-    html, body {
+    html {
       overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
     }
     
     body {
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
+      overflow-x: hidden;
     }
 
     @keyframes moveBackground {
@@ -41,19 +50,30 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* === HEADER === */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === HEADER STYLES === */
     header {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
@@ -61,20 +81,21 @@
       z-index: 1000;
       height: 110px;
     }
+    
+    .desktop-logo {
+      height: 100px;
+    }
 
     .logo-link {
       display: flex;
       align-items: center;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       text-decoration: none;
     }
 
     .logo-link:hover {
       opacity: 0.8;
-    }
-    
-    .desktop-logo {
-      height: 100px;
+      transform: scale(1.02);
     }
     
     .site-nav {
@@ -83,21 +104,26 @@
       margin-left: auto;
     }
     
-    .site-nav a {
-      color: white;
+    .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
     }
     
     .book-btn {
-      background: url("assets/images/ani_bkgd_warm.png");
-      background-size: cover;
-      background-position: center;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
       padding: 0.8rem 2rem;
-      border: 2px solid transparent;
+      border: none;
       border-radius: 999px;
       font-weight: 900;
       font-size: 1.2rem;
@@ -105,27 +131,28 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      background-clip: text;
       position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
     }
 
-    .book-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url("assets/images/ani_bkgd_warm.png");
-      background-size: cover;
-      background-position: center;
-      border-radius: 999px;
-      opacity: 0.15;
-      z-index: -1;
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
     
     .mobile-menu-btn {
       display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
     }
 
     /* === MAIN CONTENT === */
@@ -144,6 +171,7 @@
     .progress-section {
       text-align: center;
       margin-bottom: 3rem;
+      animation: fadeInUp 1s ease-out;
     }
 
     .progress-steps {
@@ -521,23 +549,63 @@
         padding: 0.5rem 1rem;
       }
       
-      .desktop-logo {
-        height: 48px;
+      .desktop-logo { 
+        height: 48px; 
       }
       
       .site-nav {
         display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/ptp-locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
       }
       
       .mobile-menu-btn {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
       }
-
+      
       main {
         margin-top: 80px;
         padding: 2rem 1rem;
@@ -581,18 +649,18 @@
 </head>
 <body>
   <header>
-    <a href="/" class="logo-link">
-      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="site-nav">
-      <a href="/">Home</a>
-      <a href="/availability.html">Availability</a>
-      <a href="#">Locations</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
-      <a href="#" class="book-btn">Book Now</a>
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/ptp-locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
@@ -675,6 +743,7 @@
           <h3>Session Time</h3>
           <div class="time-selection">
             <div class="time-slot selected" id="timeSlot">6:00 PM</div>
+            <!-- Extend with more time slots if needed -->
           </div>
         </div>
 
@@ -688,16 +757,46 @@
 
         <!-- Continue Button -->
         <div class="continue-section">
-          <a href="/" class="back-btn">← Back</a>
+          <a href="/" class="back-btn" aria-label="Go back to home">← Back</a>
           <button class="continue-btn" id="continueBtn">Continue to Intake →</button>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Version Footer -->
-  <footer style="text-align: center; padding: 1rem; background-image: url('assets/images/ani_bkgd_cool.png'); background-size: 100% 100%; background-position: center; animation: moveBackground 30s ease-in-out infinite; border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v2.0.0</p>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:40 PM MDT, May 23, 2025</p>
+    </div>
   </footer>
 
   <script>
@@ -719,7 +818,13 @@
     // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+      nav.classList.toggle('active');
+    }
+
+    // Smooth scroll to session builder (for Book Now)
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      window.location.href = '/#session-builder-section';
     }
 
     // Parse iCal data
@@ -761,7 +866,6 @@
 
     // Parse date from ICS format
     function parseDateFromICS(dateStr) {
-      // Handle formats like: 20241215T180000Z or 20241215
       if (dateStr.includes('T')) {
         const year = dateStr.substring(0, 4);
         const month = dateStr.substring(4, 6);
@@ -781,7 +885,6 @@
     async function fetchCalendarData() {
       try {
         console.log('Fetching calendar data...');
-        // Use dedicated Google Calendar CORS proxy
         const proxyUrl = 'https://gcal-cors-proxy.vercel.app?url=';
         const response = await fetch(proxyUrl + encodeURIComponent(CALENDAR_FEED_URL));
         
@@ -802,10 +905,9 @@
       } catch (error) {
         console.error('Error fetching calendar data:', error);
         console.log('Using fallback data...');
-        // Fallback data if calendar fetch fails
         bookedDates = [
           "2024-12-15",
-          "2024-12-22", 
+          "2024-12-22",
           "2024-12-29",
           "2025-01-05",
           "2025-01-12",
@@ -826,7 +928,6 @@
           const eventDate = event.dtstart;
           const dateString = `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
           
-          // Determine event type based on summary
           const summary = (event.summary || '').toLowerCase();
           
           if (summary.includes('booked') || summary.includes('session') || summary.includes('appointment')) {
@@ -834,7 +935,6 @@
           } else if (summary.includes('hold') || summary.includes('pending') || summary.includes('maybe')) {
             softHoldDates.push(dateString);
           } else {
-            // Default to booked for any calendar event
             bookedDates.push(dateString);
           }
         }
@@ -908,13 +1008,11 @@
         year: 'numeric' 
       }).format(currentMonth);
 
-      // Clear container and create grid
       container.innerHTML = '';
       const grid = document.createElement('div');
       grid.className = 'calendar-grid';
       grid.id = 'calendarGrid';
 
-      // Add day headers
       const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       dayHeaders.forEach(day => {
         const header = document.createElement('div');
@@ -923,20 +1021,17 @@
         grid.appendChild(header);
       });
 
-      // Calculate first day of month and number of days
       const firstDay = new Date(year, month, 1);
       const lastDay = new Date(year, month + 1, 0);
       const daysInMonth = lastDay.getDate();
       const startingDayOfWeek = firstDay.getDay();
 
-      // Add empty cells for days before month starts
       for (let i = 0; i < startingDayOfWeek; i++) {
         const emptyDay = document.createElement('div');
         emptyDay.className = 'calendar-day other-month';
         grid.appendChild(emptyDay);
       }
 
-      // Add days of the month
       for (let day = 1; day <= daysInMonth; day++) {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
@@ -945,19 +1040,15 @@
         const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const dayDate = new Date(year, month, day);
         
-        // Mark past dates
         if (dayDate < new Date()) {
           dayElement.classList.add('past');
         }
-        // Mark booked dates
         else if (bookedDates.includes(dateString)) {
           dayElement.classList.add('booked');
         }
-        // Mark soft hold dates  
         else if (softHoldDates.includes(dateString)) {
           dayElement.classList.add('soft-hold');
         }
-        // Mark available dates (not Sunday, not booked, not past)
         else if (dayDate.getDay() !== 0) {
           dayElement.classList.add('available');
           dayElement.onclick = () => selectDate(dateString, dayElement);
@@ -972,24 +1063,20 @@
 
     // Select date
     function selectDate(dateString, element) {
-      // Remove previous selection
       document.querySelectorAll('.calendar-day.selected').forEach(el => {
         el.classList.remove('selected');
       });
       
-      // Add selection to clicked date
       element.classList.add('selected');
       
       selectedDate = dateString;
       
-      // Create date object correctly to avoid timezone issues
       const dateParts = dateString.split('-');
       const year = parseInt(dateParts[0]);
-      const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed
+      const month = parseInt(dateParts[1]) - 1;
       const day = parseInt(dateParts[2]);
       const date = new Date(year, month, day);
       
-      // Format the date properly
       const formattedDate = new Intl.DateTimeFormat('en-US', {
         weekday: 'long',
         year: 'numeric',
@@ -1002,17 +1089,14 @@
       
       document.getElementById('selectedDate').textContent = formattedDate;
       
-      // Save to session data with the correct key structure
       sessionData.selectedDate = dateString;
       sessionData.selectedTime = selectedTime;
       sessionData.selectedDateTime = `${formattedDate} at ${selectedTime}`;
       
-      // Store the selected date/time in localStorage for the next page
-      localStorage.setItem('selectedDateTime', `${dateString}T18:00:00`); // 6:00 PM in ISO format
+      localStorage.setItem('selectedDateTime', `${dateString}T18:00:00`);
       
       saveSessionData();
       
-      // Enable continue button
       const continueBtn = document.getElementById('continueBtn');
       continueBtn.classList.add('enabled');
       continueBtn.onclick = function() {
@@ -1040,8 +1124,6 @@
       console.log('Pick a Date page loaded, initializing...');
       loadSessionData();
       updateSessionSummary();
-      
-      // Fetch real calendar data
       fetchCalendarData();
     });
   </script>
