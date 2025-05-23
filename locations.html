@@ -251,6 +251,83 @@
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
+    /* === FOOTER === */
+    footer {
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      padding: 3rem 2rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .footer-section p, .footer-section a {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .footer-section.socials a {
+      display: inline-block;
+      margin-right: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .payment-icon:nth-child(1) { animation-delay: 0.5s; }
+    .payment-icon:nth-child(2) { animation-delay: 1s; }
+    .payment-icon:nth-child(3) { animation-delay: 1.5s; }
+    .payment-icon:nth-child(4) { animation-delay: 2s; }
+    .payment-icon:nth-child(5) { animation-delay: 2.5s; }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
@@ -311,6 +388,19 @@
       .map-image {
         height: 200px;
       }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-section.socials a {
+        margin: 0 0.5rem;
+      }
+
+      .payment-methods {
+        justify-content: center;
+      }
     }
 
     /* === ANIMATIONS === */
@@ -318,6 +408,17 @@
       from {
         opacity: 0;
         transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
       }
       to {
         opacity: 1;
@@ -381,8 +482,41 @@
     </div>
   </main>
 
-  <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 12:39 PM MDT, May 23, 2025</p>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="/">Home</a>
+        <a href="/ptp-locations.html">Locations</a>
+        <a href="#">Pricing</a>
+        <a href="#">Contact</a>
+        <a href="#">Book Now</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <p>Email: <a href="mailto:hello@picturethispet.co">hello@picturethispet.co</a></p>
+        <p>Phone: <a href="tel:+13035551234">+1 (303) 555-1234</a></p>
+      </div>
+      <div class="footer-section socials">
+        <h4>Follow Us</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank">Instagram</a>
+        <a href="https://facebook.com/picturethispet" target="_blank">Facebook</a>
+        <a href="https://twitter.com/picturethispet" target="_blank">Twitter</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" class="payment-icon" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard" class="payment-icon" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Paypal_2014_logo.png" alt="PayPal" class="payment-icon" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Apple_Pay_logo.svg" alt="Apple Pay" class="payment-icon" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/Google_Pay_Logo_2020.svg" alt="Google Pay" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 12:57 PM MDT, May 23, 2025</p>
+    </div>
   </footer>
 
   <script>
