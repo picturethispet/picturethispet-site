@@ -602,7 +602,233 @@
       margin-bottom: 0;
     }
 
-    /* === RESPONSIVE DESIGN === */
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      position: relative;
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4rem 2rem 2rem;
+      margin-top: -2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-section h3 {
+      color: var(--gold);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-section li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-section a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+
+    .footer-section p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info-footer {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-info-footer a {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .contact-info-footer a:hover {
+      color: white;
+      transform: none;
+    }
+
+    .payment-methods {
+      text-align: center;
+      margin: 3rem 0 2rem;
+    }
+
+    .payment-methods h3 {
+      color: var(--gold);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .payment-item {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1rem;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      width: 100%;
+      max-width: 120px;
+    }
+
+    .payment-item:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .payment-item img {
+      max-width: 100%;
+      max-height: 40px;
+      filter: brightness(0) invert(1);
+      transition: all 0.3s ease;
+    }
+
+    .payment-item:hover img {
+      filter: brightness(0) invert(1);
+      transform: scale(1.05);
+    }
+
+    .payment-text {
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 2rem;
+      text-align: center;
+    }
+
+    .footer-bottom-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .copyright {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.8rem;
+    }
+
+    /* === FOOTER MOBILE === */
+    @media (max-width: 768px) {
+      footer {
+        padding: 3rem 1rem 2rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .payment-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 1rem;
+        max-width: 100%;
+      }
+
+      .payment-item {
+        max-width: 100px;
+        min-height: 50px;
+        padding: 0.8rem;
+      }
+
+      .payment-item img {
+        max-height: 30px;
+      }
+
+      .footer-bottom-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .footer-links {
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
     @media (max-width: 768px) {
       header {
         height: 80px;
@@ -659,7 +885,19 @@
       }
 
       .book-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("assets/images/ani_bkgd_warm.png");
+        background-size: cover;
+        background-position: center;
+        border-radius: 999px;
         opacity: 0.2;
+        z-index: -1;
+        transition: all 0.3s ease;
       }
       
       .mobile-menu-btn {
@@ -760,6 +998,44 @@
         max-width: 150px;
         padding: 1rem;
         text-align: center;
+      }
+
+      /* Footer Mobile Styles */
+      footer {
+        padding: 3rem 1rem 2rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .payment-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 1rem;
+        max-width: 100%;
+      }
+
+      .payment-item {
+        max-width: 100px;
+        min-height: 50px;
+        padding: 0.8rem;
+      }
+
+      .payment-item img {
+        max-height: 30px;
+      }
+
+      .footer-bottom-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .footer-links {
+        justify-content: center;
+        gap: 1rem;
       }
     }
 
