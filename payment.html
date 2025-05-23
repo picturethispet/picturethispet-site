@@ -694,13 +694,13 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:48 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:54 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
   <script>
-    // Initialize Stripe with your publishable key
-    const stripe = Stripe('pk_test_51H3X9aG5ZJ6Yk7L8n9M2vPqR'); // Replace with your Stripe publishable key
+    // Initialize Stripe with your live publishable key
+    const stripe = Stripe('pk_live_51ROtszRx80bFczxMOLCnd9oqviP65Z8EBn048SNneldUUY7LFJSZOdc5fPE8IFBB1rz4lva70xmb94JQNloIvD6500B85reSW2');
 
     // Mobile menu toggle
     function toggleMenu() {
@@ -736,61 +736,76 @@
       if (sessionData.peopleCount === "2") total += 20;
       document.getElementById('totalPrice').textContent = `$${total}`;
 
-      // Simulate fetching a client secret from your server
-      // In a real implementation, you'd make a fetch request to your server to create a PaymentIntent
-      const response = {
-        clientSecret: 'pi_123_secret_456' // Replace with actual client secret from your server
-      };
-      const clientSecret = response.clientSecret;
-
-      // Initialize Stripe Elements
-      const elements = stripe.elements({ clientSecret });
-
-      // Create and mount the Payment Element
-      const paymentElement = elements.create('payment', {
-        layout: 'tabs', // Customize the layout as needed
-        paymentMethodOrder: ['card', 'apple_pay', 'google_pay', 'klarna', 'afterpay_clearpay', 'affirm', 'ach_debit', 'sepa_debit', 'bancontact', 'ideal', 'boleto', 'oxxo', 'upi'],
-        fields: {
-          billingDetails: {
-            name: 'auto',
-            email: 'auto',
-            phone: 'auto',
-            address: 'auto'
-          }
-        }
-      });
-      paymentElement.mount('#payment-element');
-
-      // Enable the pay button once the Payment Element is ready
-      const payBtn = document.getElementById('pay-btn');
-      paymentElement.on('ready', function() {
-        payBtn.disabled = false;
-      });
-
-      // Handle payment submission
-      payBtn.addEventListener('click', async function(e) {
-        e.preventDefault();
-        payBtn.disabled = true;
-
-        const { error } = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: window.location.origin + '/success.html'
-          }
+      // Fetch the client secret from your server
+      try {
+        const response = await fetch('http://localhost:3000/create-payment-intent', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ total }),
         });
 
-        if (error) {
-          const messageContainer = document.getElementById('payment-message');
-          messageContainer.textContent = error.message;
-          messageContainer.style.display = 'block';
-          payBtn.disabled = false;
-        } else {
-          // Payment succeeded, redirect handled by Stripe
-          // Save payment details to localStorage (simulated here)
-          sessionData.payment = { status: 'succeeded' };
-          localStorage.setItem('ptpSessionData', JSON.stringify(sessionData));
+        const data = await response.json();
+        if (data.error) {
+          throw new Error(data.error);
         }
-      });
+
+        const clientSecret = data.clientSecret;
+
+        // Initialize Stripe Elements
+        const elements = stripe.elements({ clientSecret });
+
+        // Create and mount the Payment Element
+        const paymentElement = elements.create('payment', {
+          layout: 'tabs',
+          paymentMethodOrder: ['card', 'apple_pay', 'google_pay', 'klarna', 'afterpay_clearpay', 'affirm', 'ach_debit', 'sepa_debit', 'bancontact', 'ideal', 'boleto', 'oxxo', 'upi'],
+          fields: {
+            billingDetails: {
+              name: 'auto',
+              email: 'auto',
+              phone: 'auto',
+              address: 'auto'
+            }
+          }
+        });
+        paymentElement.mount('#payment-element');
+
+        // Enable the pay button once the Payment Element is ready
+        const payBtn = document.getElementById('pay-btn');
+        paymentElement.on('ready', function() {
+          payBtn.disabled = false;
+        });
+
+        // Handle payment submission
+        payBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          payBtn.disabled = true;
+
+          const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+              return_url: window.location.origin + '/success.html'
+            }
+          });
+
+          if (error) {
+            const messageContainer = document.getElementById('payment-message');
+            messageContainer.textContent = error.message;
+            messageContainer.style.display = 'block';
+            payBtn.disabled = false;
+          } else {
+            // Payment succeeded, redirect handled by Stripe
+            // Save payment details to localStorage
+            sessionData.payment = { status: 'succeeded' };
+            localStorage.setItem('ptpSessionData', JSON.stringify(sessionData));
+          }
+        });
+      } catch (error) {
+        const messageContainer = document.getElementById('payment-message');
+        messageContainer.textContent = 'Unable to initialize payment: ' + error.message;
+        messageContainer.style.display = 'block';
+      }
     });
   </script>
 </body>
