@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Calendar | Picture This Pet</title>
-  <meta name="description" content="Manage session availability and bookings.">
+  <meta name="description" content="Manage session availability and bookings with beautiful interface.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -16,6 +16,8 @@
       --dark-brown: #4B2E1E;
       --available-green: #10b981;
       --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+      --admin-purple: #8b5cf6;
     }
 
     * {
@@ -26,7 +28,6 @@
     
     html, body {
       overflow-x: hidden;
-      height: 100%;
     }
     
     body {
@@ -131,46 +132,356 @@
     /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
-      height: calc(100vh - 110px);
+      min-height: calc(100vh - 110px);
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 2rem;
+      padding: 4rem 1rem;
       position: relative;
-      display: flex;
-      flex-direction: column;
     }
 
     /* === PAGE HEADER === */
     .page-header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 4rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .page-title {
-      font-size: 3rem;
+      font-size: 3.5rem;
       font-weight: 700;
       color: white;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
       text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .page-subtitle {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .admin-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .admin-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .admin-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .admin-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .admin-card.primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+    }
+
+    .admin-card.primary:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(244, 124, 44, 0.4);
+    }
+
+    .admin-card h3 {
+      color: white;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .admin-card p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .admin-card.primary h3,
+    .admin-card.primary p {
+      color: white;
+    }
+
+    /* === CALENDAR SECTION === */
+    .calendar-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .calendar-container {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+
+    .calendar-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .calendar-nav {
       display: flex;
       gap: 1rem;
+    }
+
+    .nav-button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    /* === CALENDAR GRID === */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+
+    .calendar-day-header {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 1.2rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .calendar-day {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.2rem 0.5rem;
+      text-align: center;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .calendar-day:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
+    }
+
+    .calendar-day.other-month {
+      color: rgba(255, 255, 255, 0.3);
+      cursor: default;
+    }
+
+    .calendar-day.past {
+      color: rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .calendar-day.available {
+      background: rgba(16, 185, 129, 0.2);
+      border: 2px solid rgba(16, 185, 129, 0.5);
+      color: white;
+      position: relative;
+    }
+
+    .calendar-day.available::after {
+      content: "✓";
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      font-size: 0.8rem;
+      color: var(--available-green);
+      font-weight: bold;
+    }
+
+    .calendar-day.booked {
+      background: rgba(239, 68, 68, 0.2);
+      border: 2px solid rgba(239, 68, 68, 0.5);
+      color: rgba(255, 255, 255, 0.7);
+      position: relative;
+    }
+
+    .calendar-day.booked::after {
+      content: "✕";
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      font-size: 0.8rem;
+      color: var(--booked-red);
+      font-weight: bold;
+    }
+
+    .calendar-day.soft-hold {
+      background: rgba(245, 158, 11, 0.2);
+      border: 2px solid rgba(245, 158, 11, 0.5);
+      color: rgba(255, 255, 255, 0.9);
+      position: relative;
+    }
+
+    .calendar-day.soft-hold::after {
+      content: "?";
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      font-size: 0.8rem;
+      color: var(--soft-hold-yellow);
+      font-weight: bold;
+    }
+
+    .calendar-day.selected {
+      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
+      border: 2px solid #ec4899;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* === LEGEND === */
+    .calendar-legend {
+      display: flex;
+      gap: 2rem;
       justify-content: center;
       flex-wrap: wrap;
       margin-bottom: 2rem;
     }
 
-    .admin-btn {
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .legend-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+    }
+
+    .legend-dot.available {
+      background: rgba(16, 185, 129, 0.7);
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+
+    .legend-dot.booked {
+      background: rgba(239, 68, 68, 0.7);
+      border-color: rgba(239, 68, 68, 0.5);
+    }
+
+    .legend-dot.soft-hold {
+      background: rgba(245, 158, 11, 0.7);
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .legend-dot.selected {
+      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
+      border-color: #ec4899;
+    }
+
+    /* === ADMIN PANEL === */
+    .admin-panel {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: fit-content;
+    }
+
+    .panel-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .panel-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .panel-section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .action-btn {
       background: rgba(255, 255, 255, 0.1);
       color: white;
       border: 2px solid rgba(255, 255, 255, 0.3);
@@ -182,152 +493,104 @@
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
-      backdrop-filter: blur(10px);
+      margin: 0.5rem 0.5rem 0.5rem 0;
+      text-align: center;
     }
 
-    .admin-btn:hover {
+    .action-btn:hover {
       background: rgba(255, 255, 255, 0.2);
       border-color: rgba(255, 255, 255, 0.5);
       transform: translateY(-2px);
     }
 
-    .admin-btn.primary {
+    .action-btn.primary {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       border-color: var(--gold);
     }
 
-    .admin-btn.primary:hover {
+    .action-btn.primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
-    /* === CALENDAR CONTAINER === */
-    .calendar-container {
-      flex: 1;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 1.5rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
+    .action-btn.danger {
+      background: linear-gradient(135deg, var(--booked-red), #dc2626);
+      border-color: #dc2626;
     }
 
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .calendar-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: white;
-    }
-
-    .view-toggle {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .view-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .view-btn.active,
-    .view-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    /* === CALENDAR IFRAME === */
-    .calendar-frame-container {
-      flex: 1;
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      min-height: 500px;
-    }
-
-    .calendar-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: 16px;
-      min-height: 500px;
-    }
-
-    .loading-message {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 500px;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 1.1rem;
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    /* === QUICK ACTIONS === */
-    .quick-actions {
-      margin-top: 1.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .quick-actions h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .action-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-
-    .action-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 1rem;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .action-card:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .action-btn.danger:hover {
       transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
     }
 
-    .action-card h4 {
-      color: var(--gold);
+    .loading-indicator {
+      text-align: center;
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      margin: 2rem 0;
+    }
+
+    .loading-indicator h3 {
+      margin-bottom: 1rem;
+      color: var(--admin-purple);
+    }
+
+    .selected-date-info {
+      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .selected-date-info h4 {
+      font-size: 1.3rem;
       margin-bottom: 0.5rem;
     }
 
-    .action-card p {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 0.9rem;
-      line-height: 1.4;
+    .event-form {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1rem;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--admin-purple);
+      background: rgba(255, 255, 255, 0.15);
     }
 
     /* === RESPONSIVE === */
@@ -356,36 +619,54 @@
 
       main {
         margin-top: 80px;
-        height: calc(100vh - 80px);
-        padding: 1rem;
+        padding: 2rem 1rem;
       }
 
       .page-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
+      }
+
+      .page-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .calendar-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
       }
 
       .admin-controls {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .admin-btn {
-        width: 100%;
-        max-width: 300px;
-      }
-
-      .calendar-header {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-      }
-
-      .view-toggle {
-        justify-content: center;
-      }
-
-      .action-grid {
         grid-template-columns: 1fr;
+      }
+
+      .calendar-container,
+      .admin-panel {
+        padding: 2rem;
+      }
+
+      .calendar-title {
+        font-size: 1.8rem;
+      }
+
+      .calendar-day {
+        min-height: 45px;
+        font-size: 0.95rem;
+        padding: 1rem 0.3rem;
+      }
+
+      .calendar-day-header {
+        padding: 1rem 0.3rem;
+        font-size: 0.9rem;
+      }
+
+      .calendar-legend {
+        gap: 1.5rem;
+      }
+
+      .nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
       }
     }
   </style>
@@ -409,81 +690,166 @@
   <main>
     <!-- Page Header -->
     <div class="page-header">
+      <div class="admin-badge">🔒 Admin Access</div>
       <h1 class="page-title">Session Calendar Admin</h1>
-      <p class="page-subtitle">Manage your session availability and bookings</p>
+      <p class="page-subtitle">
+        Manage your session availability with the same beautiful interface your clients see. 
+        Click dates to add events, manage bookings, and control your schedule.
+      </p>
       
       <div class="admin-controls">
-        <a href="https://calendar.google.com/calendar/u/0/r/week" target="_blank" class="admin-btn primary">
-          📅 Open Full Calendar
-        </a>
-        <button class="admin-btn" onclick="refreshCalendar()">
-          🔄 Refresh
-        </button>
-        <a href="/availability.html" class="admin-btn">
-          👁️ View Public Calendar
-        </a>
-        <a href="/ptp-pick-date-step-3.html" class="admin-btn">
-          🗓️ Test Booking Flow
-        </a>
+        <div class="admin-card primary" onclick="window.open('https://calendar.google.com/calendar/u/0/r/week', '_blank')">
+          <h3>📅 Full Google Calendar</h3>
+          <p>Open complete calendar interface in new tab</p>
+        </div>
+        <div class="admin-card" onclick="refreshCalendar()">
+          <h3>🔄 Refresh Data</h3>
+          <p>Reload calendar from live feed</p>
+        </div>
+        <div class="admin-card" onclick="window.open('/availability.html', '_blank')">
+          <h3>👁️ Public View</h3>
+          <p>See what clients see on availability page</p>
+        </div>
+        <div class="admin-card" onclick="window.open('/ptp-pick-date-step-3.html', '_blank')">
+          <h3>🧪 Test Booking</h3>
+          <p>Test the full booking flow</p>
+        </div>
       </div>
     </div>
 
-    <!-- Calendar Container -->
-    <div class="calendar-container">
-      <div class="calendar-header">
-        <h2 class="calendar-title">Session Availability Calendar</h2>
-        <div class="view-toggle">
-          <button class="view-btn active" onclick="switchView('week')">Week</button>
-          <button class="view-btn" onclick="switchView('month')">Month</button>
-          <button class="view-btn" onclick="switchView('agenda')">Agenda</button>
+    <!-- Calendar Section -->
+    <div class="calendar-section">
+      <!-- Calendar Container -->
+      <div class="calendar-container">
+        <div class="calendar-header">
+          <h2 class="calendar-title" id="calendarTitle">Loading...</h2>
+          <div class="calendar-nav">
+            <button class="nav-button" onclick="previousMonth()">‹</button>
+            <button class="nav-button" onclick="nextMonth()">›</button>
+          </div>
+        </div>
+
+        <div id="calendarContainer">
+          <div class="loading-indicator" id="loadingIndicator">
+            <h3>🔄 Loading Admin Calendar...</h3>
+            <p>Fetching live data from your Session Availability calendar</p>
+          </div>
+        </div>
+
+        <div class="calendar-legend">
+          <div class="legend-item">
+            <div class="legend-dot available"></div>
+            <span>Available</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot soft-hold"></div>
+            <span>Soft Hold</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot booked"></div>
+            <span>Booked</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot selected"></div>
+            <span>Selected</span>
+          </div>
         </div>
       </div>
 
-      <div class="calendar-frame-container">
-        <iframe 
-          id="calendarFrame"
-          class="calendar-iframe"
-          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&src=MDkzNzg1YWM0ZmM0YmM1MzI1MGFjYWE3ZGY0MThiNWI4NzE2ZGUwNjdhODRkMjc4NjFlY2IzOWM3NWQ5MWE1MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23039BE5&mode=WEEK&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=1&showTz=0"
-          loading="lazy">
-        </iframe>
-        <div class="loading-message" id="loadingMessage">
-          <div>
-            <p><strong>Loading your Session Availability calendar...</strong></p>
-            <p>If the calendar doesn't load, you may need to sign in to your Google account first.</p>
-            <br>
-            <p><a href="https://calendar.google.com/calendar/u/0/r" target="_blank" style="color: var(--gold);">→ Open Calendar in New Tab</a></p>
+      <!-- Admin Panel -->
+      <div class="admin-panel">
+        <h2 class="panel-title">📋 Admin Controls</h2>
+
+        <!-- Selected Date Info -->
+        <div id="selectedDatePanel" style="display: none;">
+          <div class="selected-date-info">
+            <h4 id="selectedDateDisplay">No date selected</h4>
+            <p>Click a date to manage events</p>
           </div>
         </div>
-      </div>
 
-      <!-- Quick Actions -->
-      <div class="quick-actions">
-        <h3>Quick Actions</h3>
-        <div class="action-grid">
-          <div class="action-card">
-            <h4>Add Session Block</h4>
-            <p>Block time for new photography sessions</p>
+        <!-- Quick Actions -->
+        <div class="panel-section">
+          <h3>Quick Actions</h3>
+          <button class="action-btn primary" onclick="addSessionBlock()">➕ Add Session Block</button>
+          <button class="action-btn" onclick="markUnavailable()">🚫 Mark Unavailable</button>
+          <button class="action-btn danger" onclick="removeEvent()">🗑️ Remove Event</button>
+        </div>
+
+        <!-- Event Form -->
+        <div class="panel-section" id="eventFormSection" style="display: none;">
+          <h3>Add Event</h3>
+          <div class="event-form">
+            <div class="form-group">
+              <label for="eventType">Event Type</label>
+              <select id="eventType">
+                <option value="session">Photography Session</option>
+                <option value="unavailable">Unavailable</option>
+                <option value="hold">Soft Hold</option>
+                <option value="personal">Personal</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="eventTime">Time</label>
+              <input type="time" id="eventTime" value="18:00">
+            </div>
+            <div class="form-group">
+              <label for="eventTitle">Title</label>
+              <input type="text" id="eventTitle" placeholder="Session with...">
+            </div>
+            <div class="form-group">
+              <label for="eventNotes">Notes</label>
+              <textarea id="eventNotes" rows="3" placeholder="Additional details..."></textarea>
+            </div>
+            <button class="action-btn primary" onclick="saveEvent()">💾 Save Event</button>
+            <button class="action-btn" onclick="cancelEvent()">❌ Cancel</button>
           </div>
-          <div class="action-card">
-            <h4>Mark Unavailable</h4>
-            <p>Block dates when you're not available</p>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="panel-section">
+          <h3>Recent Activity</h3>
+          <div id="recentActivity">
+            <p style="color: rgba(255,255,255,0.7); font-style: italic;">No recent changes</p>
           </div>
-          <div class="action-card">
-            <h4>View Bookings</h4>
-            <p>See all confirmed and pending bookings</p>
-          </div>
-          <div class="action-card">
-            <h4>Export Schedule</h4>
-            <p>Download calendar data for backup</p>
+        </div>
+
+        <!-- Calendar Stats -->
+        <div class="panel-section">
+          <h3>This Month</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: center;">
+            <div>
+              <div style="font-size: 2rem; color: var(--available-green);" id="availableCount">0</div>
+              <div style="font-size: 0.9rem; opacity: 0.8;">Available</div>
+            </div>
+            <div>
+              <div style="font-size: 2rem; color: var(--booked-red);" id="bookedCount">0</div>
+              <div style="font-size: 0.9rem; opacity: 0.8;">Booked</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </main>
 
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 1rem; background-image: url('assets/images/ani_bkgd_cool.png'); background-size: 100% 100%; background-position: center; animation: moveBackground 30s ease-in-out infinite; border-top: 1px solid rgba(255,255,255,0.1);">
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet Admin Panel. All rights reserved. | v2.0.0</p>
+  </footer>
+
   <script>
-    let currentView = 'week';
-    const calendarId = '093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com';
+    // Your Session Availability calendar feed
+    const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
+    
+    let currentMonth = new Date();
+    let selectedDate = null;
+    let selectedDateElement = null;
+    
+    // Calendar data - will be populated from iCal feed
+    let bookedDates = [];
+    let softHoldDates = [];
+    let calendarEvents = [];
+    let calendarLoaded = false;
 
     // Mobile menu toggle
     function toggleMenu() {
@@ -491,78 +857,357 @@
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    // Switch calendar view
-    function switchView(view) {
-      currentView = view;
+    // Parse iCal data (same as availability page)
+    function parseICalData(icsData) {
+      const events = [];
+      const lines = icsData.split('\n');
+      let currentEvent = {};
+      let inEvent = false;
+
+      for (let line of lines) {
+        line = line.trim();
+        
+        if (line === 'BEGIN:VEVENT') {
+          inEvent = true;
+          currentEvent = {};
+        } else if (line === 'END:VEVENT') {
+          if (currentEvent.dtstart && currentEvent.summary) {
+            events.push(currentEvent);
+          }
+          inEvent = false;
+        } else if (inEvent) {
+          if (line.startsWith('DTSTART')) {
+            const dateMatch = line.match(/DTSTART[^:]*:(\d{8}T?\d{0,6}Z?)/);
+            if (dateMatch) {
+              currentEvent.dtstart = parseDateFromICS(dateMatch[1]);
+            }
+          } else if (line.startsWith('DTEND')) {
+            const dateMatch = line.match(/DTEND[^:]*:(\d{8}T?\d{0,6}Z?)/);
+            if (dateMatch) {
+              currentEvent.dtend = parseDateFromICS(dateMatch[1]);
+            }
+          } else if (line.startsWith('SUMMARY:')) {
+            currentEvent.summary = line.substring(8);
+          }
+        }
+      }
+      return events;
+    }
+
+    // Parse date from ICS format
+    function parseDateFromICS(dateStr) {
+      if (dateStr.includes('T')) {
+        const year = dateStr.substring(0, 4);
+        const month = dateStr.substring(4, 6);
+        const day = dateStr.substring(6, 8);
+        const hour = dateStr.substring(9, 11) || '00';
+        const minute = dateStr.substring(11, 13) || '00';
+        return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
+      } else {
+        const year = dateStr.substring(0, 4);
+        const month = dateStr.substring(4, 6);
+        const day = dateStr.substring(6, 8);
+        return new Date(`${year}-${month}-${day}`);
+      }
+    }
+
+    // Fetch calendar data
+    async function fetchCalendarData() {
+      try {
+        console.log('Fetching admin calendar data...');
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const response = await fetch(proxyUrl + encodeURIComponent(CALENDAR_FEED_URL));
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const icsData = await response.text();
+        console.log('Admin calendar data fetched successfully');
+        
+        calendarEvents = parseICalData(icsData);
+        console.log('Parsed admin events:', calendarEvents);
+        
+        processCalendarEvents();
+        calendarLoaded = true;
+        generateCalendar();
+        updateStats();
+        
+      } catch (error) {
+        console.error('Error fetching admin calendar data:', error);
+        console.log('Using fallback data for admin...');
+        // Fallback data
+        bookedDates = [
+          "2024-12-15",
+          "2024-12-22", 
+          "2024-12-29",
+          "2025-01-05"
+        ];
+        calendarLoaded = true;
+        generateCalendar();
+        updateStats();
+      }
+    }
+
+    // Process calendar events
+    function processCalendarEvents() {
+      bookedDates = [];
+      softHoldDates = [];
       
-      // Update button states
-      document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.classList.remove('active');
+      calendarEvents.forEach(event => {
+        if (event.dtstart) {
+          const eventDate = event.dtstart;
+          const dateString = `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
+          
+          const summary = (event.summary || '').toLowerCase();
+          
+          if (summary.includes('booked') || summary.includes('session') || summary.includes('appointment')) {
+            bookedDates.push(dateString);
+          } else if (summary.includes('hold') || summary.includes('pending') || summary.includes('maybe')) {
+            softHoldDates.push(dateString);
+          } else {
+            bookedDates.push(dateString);
+          }
+        }
       });
-      event.target.classList.add('active');
       
-      // Update iframe src with new view
-      const iframe = document.getElementById('calendarFrame');
-      let mode = 'WEEK';
+      console.log('Admin processed booked dates:', bookedDates);
+      console.log('Admin processed soft hold dates:', softHoldDates);
+    }
+
+    // Generate calendar (same as availability but with click handlers)
+    function generateCalendar() {
+      const container = document.getElementById('calendarContainer');
+      const title = document.getElementById('calendarTitle');
       
-      switch(view) {
-        case 'month':
-          mode = 'MONTH';
-          break;
-        case 'agenda':
-          mode = 'AGENDA';
-          break;
-        default:
-          mode = 'WEEK';
+      if (!container || !title) {
+        console.error('Admin calendar elements not found');
+        return;
       }
       
-      const newSrc = `https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&src=${calendarId}&color=%23039BE5&mode=${mode}&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=1&showTz=0`;
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
       
-      iframe.src = newSrc;
-      console.log(`Switched to ${view} view`);
+      title.textContent = new Intl.DateTimeFormat('en-US', { 
+        month: 'long', 
+        year: 'numeric' 
+      }).format(currentMonth);
+
+      // Clear container and create grid
+      container.innerHTML = '';
+      const grid = document.createElement('div');
+      grid.className = 'calendar-grid';
+      grid.id = 'calendarGrid';
+
+      // Add day headers
+      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayHeaders.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day-header';
+        header.textContent = day;
+        grid.appendChild(header);
+      });
+
+      // Calculate first day of month and number of days
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+      const startingDayOfWeek = firstDay.getDay();
+
+      // Add empty cells for days before month starts
+      for (let i = 0; i < startingDayOfWeek; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day other-month';
+        grid.appendChild(emptyDay);
+      }
+
+      // Add days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.textContent = day;
+        
+        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayDate = new Date(year, month, day);
+        
+        // Add click handler for admin functionality
+        dayElement.onclick = () => selectDate(dateString, dayElement, dayDate);
+        
+        // Mark past dates
+        if (dayDate < new Date()) {
+          dayElement.classList.add('past');
+        }
+        // Mark booked dates
+        else if (bookedDates.includes(dateString)) {
+          dayElement.classList.add('booked');
+        }
+        // Mark soft hold dates
+        else if (softHoldDates.includes(dateString)) {
+          dayElement.classList.add('soft-hold');
+        }
+        // Mark available dates
+        else if (dayDate.getDay() !== 0) {
+          dayElement.classList.add('available');
+        }
+        
+        grid.appendChild(dayElement);
+      }
+      
+      container.appendChild(grid);
+      console.log('Admin calendar generated successfully');
     }
 
-    // Refresh calendar
-    function refreshCalendar() {
-      const iframe = document.getElementById('calendarFrame');
-      const currentSrc = iframe.src;
-      iframe.src = 'about:blank';
-      setTimeout(() => {
-        iframe.src = currentSrc;
-      }, 100);
-      console.log('Calendar refreshed');
-    }
-
-    // Hide loading message when iframe loads
-    document.addEventListener('DOMContentLoaded', function() {
-      const iframe = document.getElementById('calendarFrame');
-      const loadingMessage = document.getElementById('loadingMessage');
-      
-      iframe.addEventListener('load', function() {
-        loadingMessage.style.display = 'none';
+    // Select date for admin actions
+    function selectDate(dateString, element, dateObj) {
+      // Remove previous selection
+      document.querySelectorAll('.calendar-day.selected').forEach(el => {
+        el.classList.remove('selected');
       });
       
-      // Hide loading message after 5 seconds regardless
-      setTimeout(() => {
-        loadingMessage.style.display = 'none';
-      }, 5000);
+      // Add selection to clicked date
+      element.classList.add('selected');
       
-      console.log('Admin calendar page initialized');
+      selectedDate = dateString;
+      selectedDateElement = element;
+      
+      // Format the date for display
+      const formattedDate = new Intl.DateTimeFormat('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(dateObj);
+      
+      // Show selected date panel
+      document.getElementById('selectedDatePanel').style.display = 'block';
+      document.getElementById('selectedDateDisplay').textContent = formattedDate;
+      
+      console.log('Admin selected date:', dateString);
+    }
+
+    // Update calendar stats
+    function updateStats() {
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      
+      let availableCount = 0;
+      let bookedCount = 0;
+      
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayDate = new Date(year, month, day);
+        
+        if (dayDate >= new Date() && dayDate.getDay() !== 0) {
+          if (bookedDates.includes(dateString) || softHoldDates.includes(dateString)) {
+            bookedCount++;
+          } else {
+            availableCount++;
+          }
+        }
+      }
+      
+      document.getElementById('availableCount').textContent = availableCount;
+      document.getElementById('bookedCount').textContent = bookedCount;
+    }
+
+    // Admin action functions
+    function addSessionBlock() {
+      if (!selectedDate) {
+        alert('Please select a date first');
+        return;
+      }
+      document.getElementById('eventFormSection').style.display = 'block';
+      document.getElementById('eventType').value = 'session';
+      document.getElementById('eventTitle').value = 'Photography Session';
+    }
+
+    function markUnavailable() {
+      if (!selectedDate) {
+        alert('Please select a date first');
+        return;
+      }
+      document.getElementById('eventFormSection').style.display = 'block';
+      document.getElementById('eventType').value = 'unavailable';
+      document.getElementById('eventTitle').value = 'Unavailable';
+    }
+
+    function removeEvent() {
+      if (!selectedDate) {
+        alert('Please select a date first');
+        return;
+      }
+      if (confirm(`Remove all events from ${selectedDate}?`)) {
+        // In a real implementation, this would make an API call
+        alert('This would remove events from your Google Calendar. Please use the full calendar interface for actual changes.');
+        addRecentActivity(`Removed events from ${selectedDate}`);
+      }
+    }
+
+    function saveEvent() {
+      const eventType = document.getElementById('eventType').value;
+      const eventTime = document.getElementById('eventTime').value;
+      const eventTitle = document.getElementById('eventTitle').value;
+      const eventNotes = document.getElementById('eventNotes').value;
+      
+      if (!selectedDate || !eventTitle) {
+        alert('Please select a date and enter a title');
+        return;
+      }
+      
+      // In a real implementation, this would create a calendar event
+      alert(`This would create an event in your Google Calendar:\n\nDate: ${selectedDate}\nTime: ${eventTime}\nTitle: ${eventTitle}\nType: ${eventType}\n\nPlease use the full calendar interface for actual changes.`);
+      
+      addRecentActivity(`Added "${eventTitle}" on ${selectedDate}`);
+      cancelEvent();
+    }
+
+    function cancelEvent() {
+      document.getElementById('eventFormSection').style.display = 'none';
+      document.getElementById('eventTitle').value = '';
+      document.getElementById('eventNotes').value = '';
+    }
+
+    function addRecentActivity(activity) {
+      const container = document.getElementById('recentActivity');
+      const time = new Date().toLocaleTimeString();
+      container.innerHTML = `<p style="color: rgba(255,255,255,0.9); margin-bottom: 0.5rem;">${activity}</p><p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">at ${time}</p>` + container.innerHTML;
+    }
+
+    function refreshCalendar() {
+      console.log('Refreshing admin calendar...');
+      fetchCalendarData();
+      addRecentActivity('Refreshed calendar data');
+    }
+
+    // Navigation functions
+    function previousMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() - 1);
+      if (calendarLoaded) {
+        generateCalendar();
+        updateStats();
+      }
+    }
+
+    function nextMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() + 1);
+      if (calendarLoaded) {
+        generateCalendar();
+        updateStats();
+      }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Admin calendar page loaded, initializing...');
+      fetchCalendarData();
     });
 
     // Add keyboard shortcuts
     document.addEventListener('keydown', function(e) {
-      // Alt + R = Refresh
       if (e.altKey && e.key === 'r') {
         e.preventDefault();
         refreshCalendar();
-      }
-      
-      // Alt + 1/2/3 = Switch views
-      if (e.altKey && ['1', '2', '3'].includes(e.key)) {
-        e.preventDefault();
-        const views = ['week', 'month', 'agenda'];
-        switchView(views[parseInt(e.key) - 1]);
       }
     });
   </script>
