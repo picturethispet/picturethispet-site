@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payment | Picture This Pet</title>
-  <meta name="description" content="Complete your payment to finalize your pet session booking.">
+  <meta name="description" content="Complete your payment to confirm your pet photography session.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -15,7 +15,8 @@
       --gold: #FDB75E;
       --dark-brown: #4B2E1E;
       --available-green: #10b981;
-      --error-red: #ef4444;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
     }
 
     * {
@@ -24,15 +25,23 @@
       padding: 0;
     }
     
-    html, body {
+    html {
       overflow-x: hidden;
-      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
     }
     
     body {
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
+      overflow-x: hidden;
     }
 
     @keyframes moveBackground {
@@ -41,20 +50,30 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* === HEADER === */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === HEADER STYLES === */
     header {
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
@@ -70,12 +89,13 @@
     .logo-link {
       display: flex;
       align-items: center;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       text-decoration: none;
     }
 
     .logo-link:hover {
       opacity: 0.8;
+      transform: scale(1.02);
     }
     
     .site-nav {
@@ -84,25 +104,55 @@
       margin-left: auto;
     }
     
-    .site-nav a {
-      color: white;
+    .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
     }
     
     .book-btn {
-      background-color: var(--dark-brown);
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
       color: white;
-      padding: 0.6rem 1.2rem;
+      padding: 0.8rem 2rem;
+      border: none;
       border-radius: 999px;
-      font-weight: bold;
+      font-weight: 900;
+      font-size: 1.2rem;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
     
     .mobile-menu-btn {
       display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
     }
 
     /* === MAIN CONTENT === */
@@ -113,137 +163,122 @@
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 4rem 1rem 8rem;
+      padding: 4rem 1rem;
       position: relative;
     }
 
+    /* === PROGRESS INDICATOR === */
+    .progress-section {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.completed {
+      background: var(--available-green);
+      border-color: var(--available-green);
+      color: white;
+    }
+
+    .progress-step.active {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .progress-line {
+      width: 60px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .progress-line.completed {
+      background: var(--available-green);
+    }
+
+    .progress-text {
+      color: white;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* === PAYMENT SECTION === */
     .payment-section {
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
-      position: relative;
-      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
     }
 
-    .payment-card {
+    .payment-form {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: auto;
-      min-height: 700px;
-      width: 100%;
-      max-width: 900px;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
       color: white;
-      font-family: 'SF Pro Display', sans-serif;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 0;
-      transform: scale(0.9);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      opacity: 1;
-      transform: scale(1);
-      position: relative;
-      overflow: visible;
-      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .payment-card-logo {
-      display: block;
-      max-width: 180px;
-      margin: 0 auto 2.5rem;
-      height: auto;
-      flex-shrink: 0;
-    }
-
-    .payment-card-body {
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%;
-      min-height: 0;
-      padding-bottom: 3rem;
-      overflow: visible;
-    }
-
-    .payment-card-body h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 2.2rem;
+    .payment-form h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
       font-weight: 700;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
       color: white;
-      margin-top: 0.5rem;
-      letter-spacing: -0.02em;
-    }
-
-    .payment-card-body p {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 1.2rem;
-      line-height: 1.6;
-      opacity: 0.9;
-      margin-bottom: 2.5rem;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      font-weight: 400;
-    }
-
-    .summary-table {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      border-collapse: collapse;
-    }
-
-    .summary-table th, .summary-table td {
-      padding: 1rem;
-      text-align: left;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .summary-table th {
-      font-weight: 600;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .form-group {
-      margin-bottom: 2.25rem;
-      text-align: left;
-      width: 100%;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
+      margin-bottom: 1.5rem;
     }
 
     .form-group label {
       display: block;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: white;
+      margin-bottom: 0.5rem;
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .form-group input {
       width: 100%;
-      padding: 1.2rem;
-      border-radius: 12px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
+      padding: 0.8rem;
       font-size: 1rem;
-      backdrop-filter: blur(10px);
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
       transition: all 0.3s ease;
-      min-height: 50px;
-    }
-
-    .form-group input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
     }
 
     .form-group input:focus {
@@ -252,24 +287,176 @@
       background: rgba(255, 255, 255, 0.15);
     }
 
-    .submit-btn {
-      background: var(--dark-brown);
+    .form-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .payment-actions {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .pay-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       border: none;
+      padding: 1rem 3rem;
       border-radius: 12px;
-      padding: 1.2rem 2.5rem;
       font-size: 1.2rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto;
+      text-decoration: none;
+      display: inline-block;
     }
 
-    .submit-btn:hover {
-      background: rgba(75, 46, 30, 0.9);
+    .pay-btn:hover {
       transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 1rem;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    /* === BOOKING SUMMARY === */
+    .booking-summary {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: fit-content;
+    }
+
+    .summary-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .summary-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .summary-section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .summary-item .label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .summary-item .value {
+      color: white;
+      font-weight: 600;
+    }
+
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* === RESPONSIVE === */
@@ -279,111 +466,340 @@
         padding: 0.5rem 1rem;
       }
       
-      .desktop-logo {
-        height: 48px;
+      .desktop-logo { 
+        height: 48px; 
       }
       
       .site-nav {
         display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
       }
       
       .mobile-menu-btn {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
       }
-
+      
       main {
         margin-top: 80px;
-        padding: 2rem 1rem 6rem;
-        min-height: auto;
+        padding: 2rem 1rem;
+      }
+
+      .progress-steps {
+        gap: 0.5rem;
+      }
+
+      .progress-step {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+
+      .progress-line {
+        width: 40px;
       }
 
       .payment-section {
-        max-width: 100%;
-        padding: 0;
+        grid-template-columns: 1fr;
+        gap: 2rem;
       }
 
-      .payment-card {
-        max-width: 100%;
-        padding: 2rem;
-        min-height: 1000px;
+      .payment-form,
+      .booking-summary {
+        padding: 1.5rem;
       }
 
-      .payment-card-logo {
-        max-width: 160px;
-        margin-bottom: 2rem;
-      }
-
-      .payment-card-body h2 {
+      .payment-form h2 {
         font-size: 1.8rem;
-        margin-bottom: 1.5rem;
       }
 
-      .payment-card-body p {
+      .form-group label {
         font-size: 1rem;
-        margin-bottom: 2rem;
       }
 
       .form-group input {
-        padding: 1.2rem;
-        font-size: 1.1rem;
-        min-height: 60px;
+        font-size: 0.9rem;
+        padding: 0.6rem;
       }
 
-      .submit-btn {
-        padding: 1.2rem;
+      .form-row {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .pay-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+      }
+
+      .back-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .summary-title {
+        font-size: 1.5rem;
+      }
+
+      .summary-section h3 {
         font-size: 1.1rem;
+      }
+
+      .summary-item {
+        font-size: 0.9rem;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .payment-methods {
+        justify-content: center;
       }
     }
   </style>
-
-  <script>
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const finalData = JSON.parse(localStorage.getItem("ptpFinalBookingData")) || {};
-      const summaryTable = document.getElementById('summaryTable');
-      if (summaryTable) {
-        summaryTable.innerHTML = `
-          <tr><th>Session Type</th><td>${finalData.session || 'N/A'}</td></tr>
-          <tr><th>Pet Count</th><td>${finalData.petCount || 'N/A'}</td></tr>
-          <tr><th>People Count</th><td>${finalData.peopleCount || 'N/A'}</td></tr>
-          <tr><th>Park</th><td>${finalData.park || 'N/A'}</td></tr>
-          <tr><th>Date & Time</th><td>${finalData.selectedDateTime || 'N/A'}</td></tr>
-          <tr><th>Total Price</th><td>$${finalData.totalPrice || 0}</td></tr>
-        `;
-      }
-
-      const submitBtn = document.querySelector('.submit-btn');
-      if (submitBtn) {
-        submitBtn.addEventListener('click', function() {
-          alert('Payment processed successfully! Thank you for booking with Picture This Pet.');
-          localStorage.removeItem("ptpSessionData");
-          localStorage.removeItem("ptpIntakeData");
-          localStorage.removeItem("ptpFinalBookingData");
-          window.location.href = '/';
-        });
-      }
-    });
-  </script>
 </head>
 <body>
   <header>
-    <a href="/" class="logo-link">
-      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="site-nav">
-      <a href="/">Home</a>
-      <a href="/ptp-locations.html">Locations</a>
-      <a href="/pricing">Pricing</a>
-      <a href="/contact">Contact</a>
-      <a href="#" class="book-btn">Book Now</a>
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
-    <button class="mobile-menu-btn" onclick
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Progress Indicator -->
+    <div class="progress-section">
+      <div class="progress-steps">
+        <div class="progress-step completed">1</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">2</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">3</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">4</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step active">5</div>
+      </div>
+      <p class="progress-text">Payment</p>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="payment-section">
+      <!-- Payment Form -->
+      <div class="payment-form">
+        <h2>Payment Details</h2>
+        <form id="paymentForm">
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" name="cardNumber" required placeholder="1234 5678 9012 3456" maxlength="19" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expiryDate">Expiry Date</label>
+              <input type="text" id="expiryDate" name="expiryDate" required placeholder="MM/YY" maxlength="5" />
+            </div>
+            <div class="form-group">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" name="cvv" required placeholder="123" maxlength="4" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cardHolder">Cardholder Name</label>
+            <input type="text" id="cardHolder" name="cardHolder" required placeholder="Enter cardholder name" />
+          </div>
+          <div class="payment-actions">
+            <a href="/intake-form.html" class="back-btn" aria-label="Go back to intake form">← Back</a>
+            <button type="submit" class="pay-btn">Pay Now</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Booking Summary -->
+      <div class="booking-summary">
+        <h2 class="summary-title">Booking Summary</h2>
+        <div class="summary-section">
+          <h3>Session Details</h3>
+          <div id="sessionDetails">
+            <div class="summary-item">
+              <span class="label">Session Type:</span>
+              <span class="value" id="sessionType">—</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Location:</span>
+              <span class="value" id="sessionLocation">—</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Date & Time:</span>
+              <span class="value" id="sessionDateTime">—</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Pets:</span>
+              <span class="value" id="petCount">—</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">People:</span>
+              <span class="value" id="peopleCount">—</span>
+            </div>
+          </div>
+        </div>
+        <div class="summary-section">
+          <div class="summary-item">
+            <span class="label">Total Price:</span>
+            <span class="value" id="totalPrice">$0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:27 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Smooth scroll to session builder (for Book Now)
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      window.location.href = '/#session-builder-section';
+    }
+
+    // Display session details and handle payment form submission
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Payment page loaded, initializing...');
+
+      // Retrieve session data from localStorage
+      const sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+
+      // Populate session details
+      document.getElementById('sessionType').textContent = sessionData.session || '—';
+      document.getElementById('sessionLocation').textContent = sessionData.park || '—';
+      document.getElementById('sessionDateTime').textContent = sessionData.selectedDateTime || '—';
+      document.getElementById('petCount').textContent = sessionData.petCount || '—';
+      document.getElementById('peopleCount').textContent = sessionData.peopleCount || '—';
+
+      // Calculate total price
+      let total = 0;
+      if (sessionData.session === "Mini") total += 50;
+      if (sessionData.session === "Full") total += 100;
+      if (sessionData.petCount === "2") total += 40;
+      if (sessionData.peopleCount === "2") total += 20;
+      document.getElementById('totalPrice').textContent = `$${total}`;
+
+      // Handle payment form submission
+      const form = document.getElementById('paymentForm');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Simulate payment processing (in a real app, this would integrate with a payment gateway)
+        const paymentData = {
+          cardNumber: document.getElementById('cardNumber').value,
+          expiryDate: document.getElementById('expiryDate').value,
+          cvv: document.getElementById('cvv').value,
+          cardHolder: document.getElementById('cardHolder').value
+        };
+
+        // Save payment data to localStorage (for demo purposes)
+        sessionData.payment = paymentData;
+        localStorage.setItem('ptpSessionData', JSON.stringify(sessionData));
+
+        // Redirect to success page
+        window.location.href = 'success.html';
+      });
+    });
+  </script>
+</body>
+</html>
