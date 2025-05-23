@@ -1,27 +1,4 @@
-@media (max-width: 768px) {
-      .intake-section {
-        max-width: 100%;
-        padding: 0 1rem;
-      }
-      
-      .intake-card {
-        max-width: 100%;
-        padding: 2.5rem;
-        margin-bottom: 1rem;
-        min-height: 750px;
-      }
-
-      .intake-card.small-card {
-        min-height: 650px;
-      }
-
-      .intake-card.medium-card {
-        min-height: 850px;
-      }
-
-      .intake-card.large-card {
-        min-height: 1000px;
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -53,7 +30,7 @@
     }
     
     body {
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
     }
@@ -219,7 +196,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       padding: 3rem;
       color: white;
-      font-family: 'SF Pro Display', sans-serif;
+      font-family: 'Inter', sans-serif;
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0;
       transform: scale(0.9);
@@ -297,7 +274,7 @@
     }
 
     .intake-card-body h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 2.2rem;
       font-weight: 700;
       margin-bottom: 2rem;
@@ -306,8 +283,16 @@
       letter-spacing: -0.02em;
     }
 
+    .intake-card-body h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
     .intake-card-body p {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.2rem;
       line-height: 1.6;
       opacity: 0.9;
@@ -620,6 +605,54 @@
       background: rgba(255, 204, 102, 0.1);
     }
 
+    /* === SUMMARY STYLES === */
+    .booking-summary {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .summary-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .summary-content {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 1.1rem;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-item.total {
+      font-weight: 600;
+      font-size: 1.3rem;
+      margin-top: 1rem;
+      color: var(--gold);
+    }
+
+    .summary-item .label {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .summary-item .value {
+      color: white;
+      font-weight: 500;
+    }
+
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
@@ -633,6 +666,36 @@
       
       .site-nav {
         display: none;
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: #FFF;
+      }
+      
+      .book-btn {
+        background-color: var(--dark-brown);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 999px;
+        font-weight: bold;
+        text-decoration: none;
+        margin-left: 0;
       }
       
       .mobile-menu-btn {
@@ -649,13 +712,40 @@
         padding: 2rem 1rem;
       }
 
+      .intake-section {
+        max-width: 100%;
+        padding: 0 1rem;
+      }
+      
       .intake-card {
-        height: 700px;
-        padding: 2rem;
+        max-width: 100%;
+        padding: 2.5rem;
+        margin-bottom: 1rem;
+        min-height: 750px;
+      }
+
+      .intake-card.small-card {
+        min-height: 650px;
+      }
+
+      .intake-card.medium-card {
+        min-height: 850px;
+      }
+
+      .intake-card.large-card {
+        min-height: 1000px;
+      }
+
+      .intake-card.extra-large-card {
+        min-height: 1200px;
       }
 
       .intake-card-body h2 {
         font-size: 1.6rem;
+      }
+
+      .intake-card-body h3 {
+        font-size: 1.4rem;
       }
 
       .progress-steps {
@@ -674,6 +764,21 @@
 
       .form-group {
         max-width: 100%;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .form-row-thirds {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .form-row-quad {
+        flex-direction: column;
+        gap: 1.5rem;
       }
 
       .choice-buttons {
@@ -702,6 +807,20 @@
         width: 100%;
         max-width: 300px;
       }
+
+      .summary-content {
+        padding: 1.5rem;
+      }
+
+      .summary-item {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      .summary-item.total {
+        font-size: 1.2rem;
+      }
     }
 
     /* === ANIMATIONS === */
@@ -720,27 +839,20 @@
       }
     }
   </style>
-
-  <script>
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-    }
-  </script>
 </head>
 <body>
   <header>
-    <a href="/" class="logo-link">
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="site-nav">
-      <a href="/">Home</a>
-      <a href="#">Locations</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
-      <a href="#" class="book-btn">Book Now</a>
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="#" aria-label="Locations page">Locations</a>
+      <a href="#" aria-label="Pricing page">Pricing</a>
+      <a href="#" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
@@ -779,13 +891,14 @@
 
   <!-- Version Footer -->
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v2.0.0</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.2</p>
   </footer>
 
   <script>
     // Session Data Management
     let sessionData = {};
     let intakeData = {};
+    let cardHistory = [];
     let currentCard = 0;
     let totalCards = 0;
 
@@ -796,6 +909,7 @@
       generateIntakeCards();
       setupKeyboardNavigation();
       setupRealTimeValidation();
+      showCard(currentCard);
     });
 
     // Load session data from localStorage
@@ -804,14 +918,10 @@
       if (saved) {
         sessionData = JSON.parse(saved);
       } else {
-        // Fallback data for testing
-        sessionData = {
-          session: "Mini",
-          petCount: "1",
-          peopleCount: "1",
-          park: "Test Park",
-          selectedDateTime: "Test Date"
-        };
+        // Redirect to Session Builder if no session data
+        alert("No session data found. Please start from the Session Builder.");
+        window.location.href = '/';
+        return;
       }
     }
 
@@ -820,6 +930,12 @@
       const saved = localStorage.getItem("ptpIntakeData");
       if (saved) {
         intakeData = JSON.parse(saved);
+      } else {
+        intakeData = {
+          vaccination: '',
+          socialTagging: '',
+          referralSource: ''
+        };
       }
     }
 
@@ -842,17 +958,40 @@
         }
       });
     }
+
+    // Setup keyboard navigation
     function setupKeyboardNavigation() {
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          const activeCard = document.querySelector('.intake-card.active');
+      document.addEventListener('keydown', handleEnterKey);
+
+      const inputs = document.querySelectorAll('input, select, textarea');
+      inputs.forEach(input => {
+        input.addEventListener('input', function() {
+          if (this.name && this.value) {
+            intakeData[this.name] = this.value;
+            saveIntakeData();
+          }
+        });
+      });
+    }
+
+    // Handle Enter key press
+    function handleEnterKey(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const activeCard = document.querySelector('.intake-card.active');
+        const inputs = Array.from(activeCard.querySelectorAll('input:not([type="checkbox"]), select, textarea'));
+        const currentInput = event.target;
+        const currentIndex = inputs.indexOf(currentInput);
+
+        if (currentIndex < inputs.length - 1) {
+          inputs[currentIndex + 1].focus();
+        } else {
           const continueBtn = activeCard.querySelector('.continue-btn');
           if (continueBtn && !continueBtn.classList.contains('disabled')) {
             continueBtn.click();
           }
         }
-      });
+      }
     }
 
     // Phone number formatting
@@ -871,15 +1010,21 @@
       }
       
       input.value = formattedValue;
+      intakeData[input.name] = formattedValue;
+      saveIntakeData();
     }
 
     // Zip code formatting (5-digit numeric only)
     function formatZipCode(input) {
       const value = input.value.replace(/\D/g, '');
       input.value = value.slice(0, 5);
+      intakeData[input.name] = input.value;
+      saveIntakeData();
     }
+
+    // Date formatting (MM/DD/YYYY)
     function formatDate(input) {
-      const value = input.value.replace(/\D/g, '');
+      let value = input.value.replace(/\D/g, '');
       let formattedValue = '';
       
       if (value.length > 0) {
@@ -888,11 +1033,25 @@
         } else if (value.length <= 4) {
           formattedValue = `${value.slice(0, 2)}/${value.slice(2)}`;
         } else {
+          value = value.slice(0, 8);
           formattedValue = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4, 8)}`;
         }
       }
       
       input.value = formattedValue;
+      intakeData[input.name] = formattedValue;
+      saveIntakeData();
+    }
+
+    // Instagram handle formatting
+    function formatInstagram(input) {
+      let value = input.value.trim();
+      if (value && !value.startsWith('@')) {
+        value = '@' + value.replace(/^@+/, '');
+      }
+      input.value = value;
+      intakeData[input.name] = value;
+      saveIntakeData();
     }
 
     // Create card element with size class
@@ -906,26 +1065,37 @@
     // Show specific card
     function showCard(index) {
       const cards = document.querySelectorAll('.intake-card');
+      if (index < 0 || index >= cards.length) {
+        console.error('Invalid card index:', index);
+        return;
+      }
+      
       cards.forEach((card, i) => {
         if (i === index) {
           card.classList.add('active');
+          card.style.display = 'flex';
         } else {
           card.classList.remove('active');
+          card.style.display = 'none';
         }
       });
+
       currentCard = index;
+      validateCurrentCard();
     }
 
     // Advance to next card
     function advanceCard() {
       if (currentCard < totalCards - 1) {
         const currentCardEl = document.querySelector('.intake-card.active');
+        cardHistory.push(currentCard);
         if (currentCardEl) {
           currentCardEl.classList.add('exiting');
           setTimeout(() => {
             currentCardEl.classList.remove('active', 'exiting');
+            currentCardEl.style.display = 'none';
             showCard(currentCard + 1);
-          }, 300);
+          }, 600);
         } else {
           showCard(currentCard + 1);
         }
@@ -934,7 +1104,10 @@
 
     // Go back to previous card
     function goBack() {
-      if (currentCard > 0) {
+      if (cardHistory.length > 0) {
+        const previousCard = cardHistory.pop();
+        showCard(previousCard);
+      } else if (currentCard > 0) {
         showCard(currentCard - 1);
       }
     }
@@ -942,9 +1115,16 @@
     // Restart form
     function restartForm() {
       if (confirm('Are you sure you want to start over? This will clear all your answers.')) {
-        intakeData = {};
+        intakeData = {
+          vaccination: '',
+          socialTagging: '',
+          referralSource: ''
+        };
         saveIntakeData();
-        location.reload();
+        currentCard = 0;
+        cardHistory = [];
+        generateIntakeCards();
+        showCard(0);
       }
     }
 
@@ -980,7 +1160,6 @@
           advanceCard();
         }, 800);
       } else {
-        // Just update validation state
         validateCurrentCard();
       }
     }
@@ -988,6 +1167,8 @@
     // Validate current card
     function validateCurrentCard() {
       const activeCard = document.querySelector('.intake-card.active');
+      if (!activeCard) return false;
+
       const requiredInputs = activeCard.querySelectorAll('input[required], select[required], textarea[required]');
       const requiredChoices = activeCard.querySelectorAll('[data-required="true"]');
       let isValid = true;
@@ -995,7 +1176,23 @@
       // Validate required inputs
       requiredInputs.forEach(input => {
         const formGroup = input.closest('.form-group');
-        if (!input.value.trim()) {
+        let isInputValid = false;
+
+        if (input.type === 'email') {
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          isInputValid = emailPattern.test(input.value.trim());
+        } else if (input.name.includes('ZipCode')) {
+          isInputValid = /^\d{5}$/.test(input.value.trim());
+        } else if (input.name.includes('Birthdate')) {
+          const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+          isInputValid = datePattern.test(input.value.trim());
+        } else if (input.name.includes('Phone')) {
+          isInputValid = /^\d{3}-\d{3}-\d{4}$/.test(input.value.trim());
+        } else {
+          isInputValid = input.value.trim() !== '';
+        }
+
+        if (!isInputValid) {
           formGroup.classList.add('error');
           isValid = false;
         } else {
@@ -1027,7 +1224,6 @@
     // Save current card data and advance
     function saveAndContinue() {
       if (validateCurrentCard()) {
-        // Save current form data
         const activeCard = document.querySelector('.intake-card.active');
         const inputs = activeCard.querySelectorAll('input, select, textarea');
         
@@ -1039,20 +1235,22 @@
         
         saveIntakeData();
         
-        // Special handling for social tagging card
-        const isSocialCard = activeCard.querySelector('[name="socialTagging"]') || 
-                           activeCard.querySelector('.choice-buttons[data-field="socialTagging"]');
-        
-        if (isSocialCard && intakeData.socialTagging === 'Yes') {
-          // User selected Yes on social tagging, need to show Instagram handles
-          setTimeout(() => {
-            generateIntakeCards(); // Regenerate all cards to include Instagram
-            showCard(currentCard + 1); // Advance to Instagram handles card
-          }, 100);
+        const isSocialCard = activeCard.querySelector('.choice-buttons[data-field="socialTagging"]');
+        if (isSocialCard && intakeData.socialTagging === 'Yes' && !intakeData.instagramHandlesGenerated) {
+          intakeData.instagramHandlesGenerated = true;
+          saveIntakeData();
+          generateIntakeCards();
+          showCard(currentCard + 1);
         } else {
           advanceCard();
         }
       }
+    }
+
+    // Toggle mobile menu
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
     }
 
     // Generate all intake cards based on session data
@@ -1113,20 +1311,20 @@
             <div class="form-row">
               <div class="form-group required">
                 <label for="${petPrefix}Name">Pet's Name</label>
-                <input type="text" id="${petPrefix}Name" name="${petPrefix}Name" required placeholder="Enter your pet's name" value="${intakeData[petPrefix + 'Name'] || ''}" onkeypress="handleEnterKey(event)">
+                <input type="text" id="${petPrefix}Name" name="${petPrefix}Name" required placeholder="Enter your pet's name" value="${intakeData[petPrefix + 'Name'] || ''}">
                 <div class="form-error">Please enter your pet's name</div>
               </div>
               <div class="form-group required">
                 <label for="${petPrefix}Age">Pet's Age</label>
-                <input type="text" id="${petPrefix}Age" name="${petPrefix}Age" required placeholder="e.g., 2 years" value="${intakeData[petPrefix + 'Age'] || ''}" onkeypress="handleEnterKey(event)">
+                <input type="text" id="${petPrefix}Age" name="${petPrefix}Age" required placeholder="e.g., 2 years" value="${intakeData[petPrefix + 'Age'] || ''}">
                 <div class="form-error">Please enter your pet's age</div>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group required">
                 <label for="${petPrefix}Birthdate">Pet's Birthdate</label>
-                <input type="text" id="${petPrefix}Birthdate" name="${petPrefix}Birthdate" required placeholder="MM/DD/YYYY" value="${intakeData[petPrefix + 'Birthdate'] || ''}" oninput="formatDate(this)" onkeypress="handleEnterKey(event)" maxlength="10">
-                <div class="form-error">Please enter your pet's birthdate</div>
+                <input type="text" id="${petPrefix}Birthdate" name="${petPrefix}Birthdate" required placeholder="MM/DD/YYYY" value="${intakeData[petPrefix + 'Birthdate'] || ''}" oninput="formatDate(this)" maxlength="10">
+                <div class="form-error">Please enter a valid birthdate (MM/DD/YYYY)</div>
               </div>
               <div class="form-group required">
                 <label>Pet's Gender</label>
@@ -1156,7 +1354,7 @@
             <div class="form-row">
               <div class="form-group required">
                 <label for="${petPrefix}FavoriteToy">Favorite Toy</label>
-                <input type="text" id="${petPrefix}FavoriteToy" name="${petPrefix}FavoriteToy" required placeholder="What's their favorite toy?" value="${intakeData[petPrefix + 'FavoriteToy'] || ''}" onkeypress="handleEnterKey(event)">
+                <input type="text" id="${petPrefix}FavoriteToy" name="${petPrefix}FavoriteToy" required placeholder="What's their favorite toy?" value="${intakeData[petPrefix + 'FavoriteToy'] || ''}">
                 <div class="form-error">Please enter your pet's favorite toy</div>
               </div>
               <div class="form-group required">
@@ -1200,30 +1398,30 @@
             <div class="form-row">
               <div class="form-group required">
                 <label for="${personPrefix}FirstName">First Name</label>
-                <input type="text" id="${personPrefix}FirstName" name="${personPrefix}FirstName" required placeholder="Enter first name" value="${intakeData[personPrefix + 'FirstName'] || ''}" onkeypress="handleEnterKey(event)">
+                <input type="text" id="${personPrefix}FirstName" name="${personPrefix}FirstName" required placeholder="Enter first name" value="${intakeData[personPrefix + 'FirstName'] || ''}">
                 <div class="form-error">Please enter first name</div>
               </div>
               <div class="form-group required">
                 <label for="${personPrefix}LastName">Last Name</label>
-                <input type="text" id="${personPrefix}LastName" name="${personPrefix}LastName" required placeholder="Enter last name" value="${intakeData[personPrefix + 'LastName'] || ''}" onkeypress="handleEnterKey(event)">
+                <input type="text" id="${personPrefix}LastName" name="${personPrefix}LastName" required placeholder="Enter last name" value="${intakeData[personPrefix + 'LastName'] || ''}">
                 <div class="form-error">Please enter last name</div>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group required">
                 <label for="${personPrefix}Phone">Phone Number</label>
-                <input type="tel" id="${personPrefix}Phone" name="${personPrefix}Phone" required placeholder="555-555-5555" value="${intakeData[personPrefix + 'Phone'] || ''}" oninput="formatPhoneNumber(this)" onkeypress="handleEnterKey(event)" maxlength="12">
-                <div class="form-error">Please enter phone number</div>
+                <input type="tel" id="${personPrefix}Phone" name="${personPrefix}Phone" required placeholder="555-555-5555" value="${intakeData[personPrefix + 'Phone'] || ''}" oninput="formatPhoneNumber(this)" maxlength="12">
+                <div class="form-error">Please enter a valid phone number (555-555-5555)</div>
               </div>
               <div class="form-group required">
                 <label for="${personPrefix}Email">Email</label>
-                <input type="email" id="${personPrefix}Email" name="${personPrefix}Email" required placeholder="Enter email address" value="${intakeData[personPrefix + 'Email'] || ''}" onkeypress="handleEnterKey(event)">
+                <input type="email" id="${personPrefix}Email" name="${personPrefix}Email" required placeholder="Enter email address" value="${intakeData[personPrefix + 'Email'] || ''}">
                 <div class="form-error">Please enter a valid email address</div>
               </div>
             </div>
             <div class="form-group required">
               <label for="${personPrefix}ZipCode">Zip Code</label>
-              <input type="text" id="${personPrefix}ZipCode" name="${personPrefix}ZipCode" required placeholder="12345" value="${intakeData[personPrefix + 'ZipCode'] || ''}" onkeypress="handleEnterKey(event)" oninput="formatZipCode(this)" maxlength="5" pattern="[0-9]{5}">
+              <input type="text" id="${personPrefix}ZipCode" name="${personPrefix}ZipCode" required placeholder="12345" value="${intakeData[personPrefix + 'ZipCode'] || ''}" oninput="formatZipCode(this)" maxlength="5" pattern="[0-9]{5}">
               <div class="form-error">Please enter a 5-digit zip code</div>
             </div>
           </div>
@@ -1264,7 +1462,7 @@
           </div>
           <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
         </div>
-      `);
+      `, false, 'small-card');
       container.appendChild(referralCard);
       cardIndex++;
 
@@ -1276,8 +1474,8 @@
             <h2>Social Media Tagging</h2>
             <p>Would you or your pet like to be tagged on Instagram?</p>
             <div class="choice-buttons" data-required="true" data-field="socialTagging">
-              <button class="choice-btn ${intakeData.socialTagging === 'Yes' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'Yes')">Yes</button>
-              <button class="choice-btn ${intakeData.socialTagging === 'No' ? 'selected' : ''}" onclick="handleSocialChoice(this, 'No')">No</button>
+              <button class="choice-btn ${intakeData.socialTagging === 'Yes' ? 'selected' : ''}" onclick="selectChoice(this, 'Yes', 'socialTagging')">Yes</button>
+              <button class="choice-btn ${intakeData.socialTagging === 'No' ? 'selected' : ''}" onclick="selectChoice(this, 'No', 'socialTagging')">No</button>
             </div>
           </div>
         </div>
@@ -1303,7 +1501,7 @@
           instagramFields += `
             <div class="form-group">
               <label for="${petPrefix}Instagram">${petName}'s Instagram Handle</label>
-              <input type="text" id="${petPrefix}Instagram" name="${petPrefix}Instagram" placeholder="@username (optional)" value="${intakeData[petPrefix + 'Instagram'] || ''}" onkeypress="handleEnterKey(event)">
+              <input type="text" id="${petPrefix}Instagram" name="${petPrefix}Instagram" placeholder="@username (optional)" value="${intakeData[petPrefix + 'Instagram'] || ''}" oninput="formatInstagram(this)">
             </div>
           `;
         }
@@ -1315,7 +1513,7 @@
           instagramFields += `
             <div class="form-group">
               <label for="${personPrefix}Instagram">${personName}'s Instagram Handle</label>
-              <input type="text" id="${personPrefix}Instagram" name="${personPrefix}Instagram" placeholder="@username (optional)" value="${intakeData[personPrefix + 'Instagram'] || ''}" onkeypress="handleEnterKey(event)">
+              <input type="text" id="${personPrefix}Instagram" name="${personPrefix}Instagram" placeholder="@username (optional)" value="${intakeData[personPrefix + 'Instagram'] || ''}" oninput="formatInstagram(this)">
             </div>
           `;
         }
@@ -1352,7 +1550,7 @@
               <h3>Confirm Your Session Details</h3>
               <p>Review everything carefully before proceeding</p>
             </div>
-            <div class="summary-content">
+            <div class="summary-content" id="summaryContent">
               <!-- Summary will be populated by JavaScript -->
             </div>
           </div>
@@ -1372,38 +1570,13 @@
       populateFinalSummary();
     }
 
-    // Handle Enter key press
-    function handleEnterKey(event) {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        const continueBtn = event.target.closest('.intake-card').querySelector('.continue-btn');
-        if (continueBtn && !continueBtn.classList.contains('disabled')) {
-          saveAndContinue();
-        }
-      }
-    }
-
     // Handle select change
     function handleSelectChange(select) {
       if (select.value) {
         intakeData[select.name] = select.value;
         saveIntakeData();
+        validateCurrentCard();
       }
-    }
-
-    // Handle social media choice
-    function handleSocialChoice(button, value) {
-      const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
-      choiceButtons.forEach(btn => btn.classList.remove('selected'));
-      button.classList.add('selected');
-      
-      intakeData.socialTagging = value;
-      saveIntakeData();
-      
-      // Update validation to enable continue button
-      validateCurrentCard();
-      
-      console.log('Social choice selected:', value); // Debug log
     }
 
     // Calculate total price
@@ -1419,54 +1592,132 @@
     // Populate final summary
     function populateFinalSummary() {
       setTimeout(() => {
-        const summary = document.getElementById('finalSummary');
-        if (summary) {
-          const total = calculateTotal();
-          const petNames = [];
-          const petCount = parseInt(sessionData.petCount) || 1;
-          
-          for (let i = 1; i <= petCount; i++) {
-            const petPrefix = i === 1 ? 'pet' : `pet${i}`;
-            const petName = intakeData[petPrefix + 'Name'];
-            if (petName) petNames.push(petName);
-          }
-          
-          summary.innerHTML = `
+        const summaryContent = document.getElementById('summaryContent');
+        if (!summaryContent) return;
+
+        const total = calculateTotal();
+        const petCount = parseInt(sessionData.petCount) || 1;
+        const peopleCount = parseInt(sessionData.peopleCount) || 1;
+
+        // Build pet details
+        let petDetails = '';
+        for (let i = 1; i <= petCount; i++) {
+          const petPrefix = i === 1 ? 'pet' : `pet${i}`;
+          const petName = intakeData[petPrefix + 'Name'] || `Pet ${i}`;
+          const instagramHandle = intakeData[petPrefix + 'Instagram'] || 'N/A';
+          petDetails += `
             <div class="summary-item">
-              <span class="label">Session:</span>
-              <span class="value">${sessionData.session || "—"}</span>
+              <span class="label">${petCount > 1 ? `Pet ${i}` : 'Pet'} Name:</span>
+              <span class="value">${petName}</span>
             </div>
             <div class="summary-item">
-              <span class="label">Date & Time:</span>
-              <span class="value">${sessionData.selectedDateTime || "—"}</span>
+              <span class="label">Age:</span>
+              <span class="value">${intakeData[petPrefix + 'Age'] || 'N/A'}</span>
             </div>
             <div class="summary-item">
-              <span class="label">Location:</span>
-              <span class="value">${sessionData.park || "—"}</span>
+              <span class="label">Birthdate:</span>
+              <span class="value">${intakeData[petPrefix + 'Birthdate'] || 'N/A'}</span>
             </div>
             <div class="summary-item">
-              <span class="label">Pet(s):</span>
-              <span class="value">${petNames.join(' & ') || "—"}</span>
+              <span class="label">Gender:</span>
+              <span class="value">${intakeData[petPrefix + 'Gender'] || 'N/A'}</span>
             </div>
             <div class="summary-item">
-              <span class="label">Contact:</span>
-              <span class="value">${intakeData.clientFirstName || "—"} ${intakeData.clientLastName || ""}</span>
+              <span class="label">Favorite Toy:</span>
+              <span class="value">${intakeData[petPrefix + 'FavoriteToy'] || 'N/A'}</span>
             </div>
-            <div class="summary-item total">
-              <span class="label">Total:</span>
-              <span class="value">${total}</span>
+            <div class="summary-item">
+              <span class="label">Good Off Leash:</span>
+              <span class="value">${intakeData[petPrefix + 'OffLeash'] || 'N/A'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Behavior:</span>
+              <span class="value">${intakeData[petPrefix + 'Behavior'] || 'N/A'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Notes:</span>
+              <span class="value">${intakeData[petPrefix + 'Notes'] || 'None'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Instagram Handle:</span>
+              <span class="value">${instagramHandle}</span>
             </div>
           `;
         }
+
+        // Build people details
+        let peopleDetails = '';
+        for (let i = 1; i <= peopleCount; i++) {
+          const personPrefix = i === 1 ? 'client' : `client${i}`;
+          const personName = `${intakeData[personPrefix + 'FirstName'] || ''} ${intakeData[personPrefix + 'LastName'] || ''}`.trim() || `Person ${i}`;
+          const instagramHandle = intakeData[personPrefix + 'Instagram'] || 'N/A';
+          peopleDetails += `
+            <div class="summary-item">
+              <span class="label">${peopleCount > 1 ? `Person ${i}` : 'Contact'} Name:</span>
+              <span class="value">${personName}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Phone:</span>
+              <span class="value">${intakeData[personPrefix + 'Phone'] || 'N/A'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Email:</span>
+              <span class="value">${intakeData[personPrefix + 'Email'] || 'N/A'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Zip Code:</span>
+              <span class="value">${intakeData[personPrefix + 'ZipCode'] || 'N/A'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Instagram Handle:</span>
+              <span class="value">${instagramHandle}</span>
+            </div>
+          `;
+        }
+
+        summaryContent.innerHTML = `
+          <div class="summary-item">
+            <span class="label">Session:</span>
+            <span class="value">${sessionData.session || "N/A"}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Date & Time:</span>
+            <span class="value">${sessionData.selectedDateTime || "N/A"}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Location:</span>
+            <span class="value">${sessionData.park || "N/A"}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Pet Count:</span>
+            <span class="value">${sessionData.petCount || "N/A"}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">People Count:</span>
+            <span class="value">${sessionData.peopleCount || "N/A"}</span>
+          </div>
+          ${petDetails}
+          ${peopleDetails}
+          <div class="summary-item">
+            <span class="label">Referral Source:</span>
+            <span class="value">${intakeData.referralSource || 'N/A'}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Social Media Tagging:</span>
+            <span class="value">${intakeData.socialTagging || 'N/A'}</span>
+          </div>
+          <div class="summary-item total">
+            <span class="label">Total:</span>
+            <span class="value">$${total.toFixed(2)}</span>
+          </div>
+        `;
       }, 100);
     }
 
     // Proceed to payment
     function proceedToPayment() {
-      // Save all final data
       saveIntakeData();
       
-      // Combine all data for payment
       const finalData = {
         ...sessionData,
         ...intakeData,
@@ -1475,9 +1726,7 @@
       };
       
       localStorage.setItem("ptpFinalBookingData", JSON.stringify(finalData));
-      
-      // Redirect to payment page
-      window.location.href = 'payment.html';
+      window.location.href = '/payment.html';
     }
   </script>
 </body>
