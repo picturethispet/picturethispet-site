@@ -88,15 +88,22 @@
       margin-left: auto;
     }
     
-    .site-nav a {
+    .site-nav a:not(.book-btn) {
       color: white;
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
+      background: url("assets/images/ani_bkgd_warm.png");
+      background-size: cover;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     
     .book-btn {
-      background-color: var(--dark-brown);
+      background: url("assets/images/ani_bkgd_warm.png");
+      background-size: cover;
+      background-position: center;
       color: white;
       padding: 0.6rem 1.2rem;
       border-radius: 999px;
@@ -119,7 +126,7 @@
       position: relative;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-      margin-top: 0; /* Removed margin to allow header overlap */
+      padding-top: 20px; /* Pushes hero image down slightly */
       z-index: 1;
     }
     
@@ -146,7 +153,7 @@
       z-index: 2;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-      margin-top: -50px; /* Pulls section up to meet hero image */
+      margin-top: -50px;
     }
     
     .side-a, .side-b {
@@ -234,11 +241,11 @@
       color: white;
       font-size: 1.2rem;
       font-family: 'Inter', sans-serif;
-      max-width: 650px;
+      max-width: 600px;
       margin: 0 auto;
       text-align: center;
       opacity: 0.9;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     /* === SESSION CARDS === */
@@ -255,7 +262,7 @@
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: 580px;
+      height: 620px;
       width: 100%;
       max-width: 600px;
       animation: moveBackground 30s ease-in-out infinite;
@@ -281,7 +288,7 @@
 
     .session-card.agreement-card {
       height: 805px;
-      max-width: 600px; /* Match regular cards for consistency */
+      max-width: 600px;
       width: 100%;
       padding: 2.5rem;
       display: flex;
@@ -309,7 +316,7 @@
     .session-card-logo {
       display: block;
       max-width: 180px;
-      margin: 0 auto 2.5rem;
+      margin: 0 auto 3rem;
       height: auto;
       flex-shrink: 0;
       loading: lazy;
@@ -338,6 +345,7 @@
       font-weight: 700;
       margin-bottom: 2rem;
       color: white;
+      padding-bottom: 2.5rem;
     }
 
     .session-card-body p {
@@ -554,12 +562,16 @@
         display: block;
       }
       
+      .hero-section {
+        padding-top: 15px; /* Slightly less padding for mobile */
+      }
+      
       .section-split {
         flex-direction: column;
         text-align: center;
         padding: 1.5rem 1rem;
         gap: 0.5rem;
-        margin-top: -30px; /* Adjusted for mobile */
+        margin-top: -30px;
       }
       
       .side-a h1, .side-b h2, .side-b p {
@@ -579,7 +591,8 @@
       }
 
       section#session-builder-section {
-        padding: 4rem 1rem;
+        padding: 6rem 1rem;
+        min-height: calc(100vh - 80px); /* Ensures cards are fully visible */
       }
 
       .session-heading {
@@ -598,18 +611,19 @@
       }
 
       .session-card {
-        height: 600px;
-        padding: 2rem 1.5rem;
+        height: 500px;
+        max-width: 90%;
+        padding: 1.5rem;
       }
 
       .session-card.agreement-card {
-        height: 960px;
-        max-width: 600px;
-        padding: 2rem 1.5rem;
+        height: 800px;
+        max-width: 90%;
+        padding: 1.5rem;
       }
 
       .session-card-logo {
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
         max-width: 150px;
       }
 
@@ -621,6 +635,7 @@
       .session-card-body h3 {
         font-size: 1.8rem;
         margin-bottom: 1.5rem;
+        padding-bottom: 2rem;
       }
 
       .session-info-list {
@@ -1075,7 +1090,7 @@
     <section id="session-builder-section">
       <div class="session-builder-header">
         <h2 class="session-heading">Let's Find Your Perfect Session</h2>
-        <p class="session-subtext">We take a unique approach to help you discover the perfect session type<br />for you and your pet. Just answer a few quick questions to get started.</p>
+        <p class="session-subtext">We take a unique approach to help you discover the perfect session type for you and your pet. Answer a few quick questions to get started.</p>
       </div>
 
       <div class="session-card-stack" id="sessionCardStack">
