@@ -103,9 +103,52 @@
       display: none;
     }
 
+    /* === HERO SECTION === */
+    .hero-section {
+      position: relative;
+      height: 400px;
+      background-image: url("assets/images/park_header.jpg");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 110px;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
     /* === MAIN CONTENT === */
     main {
-      margin-top: 110px;
       min-height: calc(100vh - 110px);
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
@@ -117,7 +160,7 @@
 
     /* === LOCATIONS SECTION === */
     .locations-section {
-      max-width: 1200px;
+      max-width: 900px;
       margin: 0 auto;
       text-align: center;
       animation: slideInUp 0.8s ease-out;
@@ -144,20 +187,6 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       text-align: left;
       margin-bottom: 2rem;
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .location-image {
-      width: 40%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-
-    .location-content {
-      width: 60%;
     }
 
     .location-content h3 {
@@ -171,6 +200,34 @@
       opacity: 0.9;
       margin-bottom: 1rem;
       line-height: 1.6;
+    }
+
+    .map-container {
+      position: relative;
+      margin-top: 1.5rem;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .map-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+    }
+
+    .map-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      animation: moveBackground 30s ease-in-out infinite;
+      pointer-events: none;
+      border-radius: 24px;
     }
 
     .location-btn {
@@ -215,8 +272,20 @@
         cursor: pointer;
       }
 
-      main {
+      .hero-section {
+        height: 300px;
         margin-top: 80px;
+      }
+
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      main {
         padding: 2rem 1rem;
       }
 
@@ -225,17 +294,7 @@
       }
 
       .location-card {
-        flex-direction: column;
         padding: 1.5rem;
-      }
-
-      .location-image {
-        width: 100%;
-        height: 200px;
-      }
-
-      .location-content {
-        width: 100%;
       }
 
       .location-content h3 {
@@ -244,6 +303,10 @@
 
       .location-content p {
         font-size: 0.9rem;
+      }
+
+      .map-image {
+        height: 200px;
       }
     }
 
@@ -275,28 +338,40 @@
     <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
   </header>
 
+  <div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Our Denver Locations</h1>
+      <p>Explore the best parks in Denver for your pet photography session with Picture This Pet.</p>
+    </div>
+  </div>
+
   <main>
     <div class="locations-section">
-      <h2>Our Denver Locations</h2>
-
       <div class="location-card">
-        <img src="assets/images/parkphoto.jpg" alt="Cheesman Park" class="location-image" />
         <div class="location-content">
           <h3>Cheesman Park</h3>
           <p><strong>Directions:</strong> Located at 1599 E 8th Ave, Denver, CO 80218. Access via 8th Ave or 13th Ave, with free street parking on surrounding streets like Humboldt St and Race St (check signs for restrictions). Head toward the Cheesman Memorial Pavilion or the central meadow for the best pet photo spots.</p>
           <p><strong>What It Offers:</strong> This 80-acre park features sprawling grassy lawns, groves of trees like American Linden and Colorado Blue Spruce, a stunning neoclassical pavilion, and fountains. Enjoy mountain views and a connection to the Denver Botanic Gardens.</p>
           <p><strong>Why It’s Great for Pet Shots:</strong> The open meadows give pets space to run and play for candid action shots, while shaded groves offer soft lighting for portraits. The pavilion and fountains add elegant backdrops, and the Botanic Gardens nearby provide floral elements for unique compositions.</p>
+          <div class="map-container">
+            <img src="assets/images/cheesman_map.jpg" alt="Cheesman Park Map" class="map-image" />
+            <div class="map-overlay"></div>
+          </div>
           <a href="https://www.google.com/maps/dir/?api=1&destination=1599+E+8th+Ave,+Denver,+CO+80218" target="_blank" class="location-btn">Get Directions</a>
         </div>
       </div>
 
       <div class="location-card">
-        <img src="assets/images/parkphoto.jpg" alt="City Park" class="location-image" />
         <div class="location-content">
           <h3>City Park</h3>
           <p><strong>Directions:</strong> Located at 2001 Colorado Blvd, Denver, CO 80205, east of downtown. Enter via 17th Ave or York St, with parking along the park’s roads or at lots near the Denver Zoo or Denver Museum of Nature & Science. Ideal photo spots are near Ferril Lake, the flower gardens, or the Martin Luther King Memorial.</p>
           <p><strong>What It Offers:</strong> A 330-acre park with Ferril and Duck Lakes, flower gardens, fountains, a golf course, and attractions like the Denver Zoo and Denver Museum of Nature & Science. Features rolling lawns, tree-lined paths, and skyline views with the Rocky Mountains in the background.</p>
           <p><strong>Why It’s Great for Pet Shots:</strong> The lakes and fountains create reflective, scenic backdrops, while the flower gardens add vibrant colors. The open lawns allow for playful pet shots, and the skyline views provide a dynamic urban contrast, blending natural and city elements in one frame.</p>
+          <div class="map-container">
+            <img src="assets/images/citypark_map.jpg" alt="City Park Map" class="map-image" />
+            <div class="map-overlay"></div>
+          </div>
           <a href="https://www.google.com/maps/dir/?api=1&destination=2001+Colorado+Blvd,+Denver,+CO+80205" target="_blank" class="location-btn">Get Directions</a>
         </div>
       </div>
@@ -304,7 +379,7 @@
   </main>
 
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 12:06 PM MDT, May 23, 2025</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 12:12 PM MDT, May 23, 2025</p>
   </footer>
 
   <script>
