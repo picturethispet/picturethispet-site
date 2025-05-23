@@ -202,7 +202,7 @@
 
     /* === BOOKING DETAILS === */
     .booking-details {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 250, 0.05);
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 2.5rem;
@@ -647,7 +647,7 @@
 
   <!-- Version Footer -->
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 03:40 AM MDT, May 23, 2025</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 04:16 AM MDT, May 23, 2025</p>
   </footer>
 
   <script>
@@ -691,13 +691,13 @@
         debugMessage.innerHTML += 'Booking details displayed.<br>';
 
         // Submit to Google Sheets with timeout
-        debugMessage.innerHTML += 'Sending data to Google Sheets...<br>';
+        debugMessage.innerHTML += 'Attempting to send data to Google Sheets...<br>';
         try {
           await Promise.race([
             submitToGoogleSheets(bookingData),
             new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), 10000)) // 10-second timeout
           ]);
-          successDebugMessage.innerHTML += 'Data successfully saved to Google Sheets!<br>';
+          successDebugMessage.innerHTML += 'Data submission to Google Sheets completed (status unknown due to no-cors mode).<br>';
         } catch (error) {
           successDebugMessage.innerHTML += `<span style="color: #ef4444;">Warning: Failed to save data to Google Sheets. (${error.message}) Your booking is still confirmed.</span><br>`;
         }
@@ -848,17 +848,12 @@
           rawData: JSON.stringify(data)
         };
 
-        const response = await fetch(GOOGLE_SHEETS_URL, {
+        await fetch(GOOGLE_SHEETS_URL, {
           method: 'POST',
+          mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
 
       } catch (error) {
         throw error;
