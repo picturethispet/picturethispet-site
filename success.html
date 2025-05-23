@@ -541,6 +541,7 @@
           <div class="loading-spinner"></div>
           <h2>Processing your booking...</h2>
           <p>Please wait while we confirm your session details.</p>
+          <div class="debug-message" id="debugMessage"></div>
         </div>
       </div>
 
@@ -627,14 +628,14 @@
           <a href="mailto:hello@picturethispet.co" class="action-btn">Contact Us</a>
         </div>
 
-        <div class="debug-message" id="debugMessage"></div>
+        <div class="debug-message" id="successDebugMessage"></div>
       </div>
 
       <!-- Error content (hidden initially) -->
       <div class="error-card" id="errorCard" style="display: none;">
         <div class="error-icon">⚠</div>
         <h1 class="success-title">Booking Not Found</h1>
-        <p class="success-subtitle">We couldn't find your booking information. This might happen if you navigated here directly or if your session expired.</p>
+        <p class="success-subtitle" id="errorSubtitle">We couldn't find your booking information. This might happen if you navigated here directly or if your session expired.</p>
         
         <div class="action-buttons">
           <a href="/" class="action-btn primary">Start New Booking</a>
@@ -646,7 +647,7 @@
 
   <!-- Version Footer -->
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 03:28 AM MDT, May 23, 2025</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 03:40 AM MDT, May 23, 2025</p>
   </footer>
 
   <script>
@@ -666,38 +667,51 @@
 
     // Main booking processing function
     async function processBooking() {
+      const debugMessage = document.getElementById('debugMessage');
+      const successDebugMessage = document.getElementById('successDebugMessage');
+      const errorSubtitle = document.getElementById('errorSubtitle');
+
       try {
-        const debugMessage = document.getElementById('debugMessage');
-        const errorMessage = document.querySelector('.error-card p.success-subtitle'); // Use existing subtitle for error
+        debugMessage.innerHTML += 'Checking for booking data...<br>';
 
         // Get booking data from localStorage
         const bookingData = getBookingData();
         
         if (!bookingData) {
           debugMessage.innerHTML += '<span style="color: #ef4444;">Error: Could not retrieve booking data. Please contact support.</span><br>';
+          errorSubtitle.textContent = 'We couldn’t find your booking information. This might happen if you navigated here directly or if your session expired.';
           showError();
           return;
         }
 
-        debugMessage.innerHTML += `Received data: Session = ${bookingData.session || 'N/A'}, Client = ${bookingData.clientFirstName || 'N/A'}, Total = $${bookingData.totalPrice || 'N/A'}<br>';
+        debugMessage.innerHTML += `Received data: Session = ${bookingData.session || 'N/A'}, Client = ${bookingData.clientFirstName || 'N/A'}, Total = $${bookingData.totalPrice || 'N/A'}<br>`;
 
         // Display booking details
         displayBookingDetails(bookingData);
+        debugMessage.innerHTML += 'Booking details displayed.<br>';
 
-        // Submit to Google Sheets
+        // Submit to Google Sheets with timeout
         debugMessage.innerHTML += 'Sending data to Google Sheets...<br>';
-        await submitToGoogleSheets(bookingData);
-        debugMessage.innerHTML += 'Data successfully saved to Google Sheets!<br>';
+        try {
+          await Promise.race([
+            submitToGoogleSheets(bookingData),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), 10000)) // 10-second timeout
+          ]);
+          successDebugMessage.innerHTML += 'Data successfully saved to Google Sheets!<br>';
+        } catch (error) {
+          successDebugMessage.innerHTML += `<span style="color: #ef4444;">Warning: Failed to save data to Google Sheets. (${error.message}) Your booking is still confirmed.</span><br>`;
+        }
 
-        // Show success card
+        // Show success card regardless of Google Sheets outcome
         showSuccess();
 
-        // Clean up localStorage after successful submission
+        // Clean up localStorage after successful display
         cleanupLocalStorage();
+        debugMessage.innerHTML += 'LocalStorage cleaned up.<br>';
 
       } catch (error) {
-        console.error('Critical error in booking processing:', error);
-        document.getElementById('debugMessage').innerHTML += `<span style="color: #ef4444;">Error: Failed to save data. (${error.message}) Please contact support.</span><br>`;
+        debugMessage.innerHTML += `<span style="color: #ef4444;">Error: ${error.message}. Please contact support.</span><br>`;
+        errorSubtitle.textContent = `An unexpected error occurred: ${error.message}. Please contact support.`;
         showError();
       }
     }
@@ -895,6 +909,8 @@
     // Handle any errors gracefully
     window.addEventListener('error', function(e) {
       console.error('Global error:', e.error);
+      document.getElementById('debugMessage').innerHTML += `<span style="color: #ef4444;">Global error: ${e.message}. Please contact support.</span><br>`;
+      showError();
     });
   </script>
 </body>
