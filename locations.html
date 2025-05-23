@@ -7,7 +7,7 @@
   <meta name="description" content="Discover the best locations for your pet photography session with Picture This Pet in Denver, CO.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -23,14 +23,23 @@
       padding: 0;
     }
     
-    html, body {
+    html {
       overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
     }
     
     body {
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
+      overflow-x: hidden;
     }
 
     @keyframes moveBackground {
@@ -39,20 +48,19 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* === HEADER === */
+    /* === HEADER STYLES === */
     header {
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
@@ -68,12 +76,13 @@
     .logo-link {
       display: flex;
       align-items: center;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       text-decoration: none;
     }
 
     .logo-link:hover {
       opacity: 0.8;
+      transform: scale(1.02);
     }
     
     .site-nav {
@@ -82,25 +91,55 @@
       margin-left: auto;
     }
     
-    .site-nav a {
-      color: white;
+    .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
     }
     
     .book-btn {
-      background-color: var(--dark-brown);
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
       color: white;
-      padding: 0.6rem 1.2rem;
+      padding: 0.8rem 2rem;
+      border: none;
       border-radius: 999px;
-      font-weight: bold;
+      font-weight: 900;
+      font-size: 1.2rem;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
     
     .mobile-menu-btn {
       display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
     }
 
     /* === HERO SECTION === */
@@ -345,21 +384,61 @@
         padding: 0.5rem 1rem;
       }
       
-      .desktop-logo {
-        height: 48px;
+      .desktop-logo { 
+        height: 48px; 
       }
       
       .site-nav {
         display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
+      
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/ptp-locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
       }
       
       .mobile-menu-btn {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
       }
 
       .hero-section {
@@ -444,17 +523,18 @@
 </head>
 <body>
   <header>
-    <a href="/" class="logo-link">
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="site-nav">
-      <a href="/">Home</a>
-      <a href="/ptp-locations.html">Locations</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
-      <a href="#" class="book-btn">Book Now</a>
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/ptp-locations.html" class="active" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <div class="hero-section">
@@ -528,14 +608,14 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 01:03 PM MDT, May 23, 2025</p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 01:10 PM MDT, May 23, 2025</p>
     </div>
   </footer>
 
   <script>
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+      nav.classList.toggle('active');
     }
   </script>
 </body>
