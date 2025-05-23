@@ -468,6 +468,35 @@
       color: white;
     }
 
+    /* === INSTAGRAM HANDLES GRID === */
+    .instagram-handles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .instagram-handles-grid.two-columns {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .instagram-handles-grid.three-columns {
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .instagram-handles-grid.four-columns {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     /* === VACCINATION BLOCK MODAL === */
     .vaccination-block {
       position: fixed;
@@ -776,6 +805,19 @@
         padding: 1rem; /* Larger buttons */
         font-size: 1rem;
       }
+
+      /* Instagram handles mobile grid */
+      .instagram-handles-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .instagram-handles-grid.two-columns,
+      .instagram-handles-grid.three-columns,
+      .instagram-handles-grid.four-columns {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+      }
     }
 
     /* === ANIMATIONS === */
@@ -853,7 +895,7 @@
 
   <!-- Version Footer -->
   <footer style="text-align: center; padding: 2rem 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem;">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v3.1.0</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v3.2.1 - Optional Instagram Handles</p>
   </footer>
 
   <script>
@@ -916,6 +958,7 @@
         }
       });
     }
+
     function setupKeyboardNavigation() {
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
@@ -952,6 +995,7 @@
       const value = input.value.replace(/\D/g, '');
       input.value = value.slice(0, 5);
     }
+
     function formatDate(input) {
       const value = input.value.replace(/\D/g, '');
       let formattedValue = '';
@@ -1112,20 +1156,56 @@
         });
         
         saveIntakeData();
+        advanceCard();
+      }
+    }
+
+    // Handle social media choice - REFINED VERSION
+    function handleSocialChoice(button, value) {
+      const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
+      choiceButtons.forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
+      
+      intakeData.socialTagging = value;
+      saveIntakeData();
+      
+      // Clear existing Instagram handle data if they change their mind
+      if (value === 'No') {
+        const petCount = parseInt(sessionData.petCount) || 1;
+        const peopleCount = parseInt(sessionData.peopleCount) || 1;
         
-        // Special handling for social tagging card
-        const isSocialCard = activeCard.querySelector('[name="socialTagging"]') || 
-                           activeCard.querySelector('.choice-buttons[data-field="socialTagging"]');
-        
-        if (isSocialCard && intakeData.socialTagging === 'Yes') {
-          // User selected Yes on social tagging, need to show Instagram handles
-          setTimeout(() => {
-            generateIntakeCards(); // Regenerate all cards to include Instagram
-            showCard(currentCard + 1); // Advance to Instagram handles card
-          }, 100);
-        } else {
-          advanceCard();
+        // Clear pet Instagram handles
+        for (let i = 1; i <= petCount; i++) {
+          const petPrefix = i === 1 ? 'pet' : `pet${i}`;
+          delete intakeData[petPrefix + 'Instagram'];
         }
+        
+        // Clear people Instagram handles  
+        for (let i = 1; i <= peopleCount; i++) {
+          const personPrefix = i === 1 ? 'client' : `client${i}`;
+          delete intakeData[personPrefix + 'Instagram'];
+        }
+        
+        saveIntakeData();
+      }
+      
+      // Update validation to enable continue button
+      validateCurrentCard();
+      
+      console.log('Social choice selected:', value);
+    }
+
+    // Handle social media continue button - REFINED VERSION
+    function handleSocialContinue() {
+      if (intakeData.socialTagging === 'Yes') {
+        // Regenerate cards to include Instagram handles and advance
+        setTimeout(() => {
+          generateIntakeCards();
+          showCard(currentCard + 1);
+        }, 100);
+      } else {
+        // Go directly to payment
+        proceedToPayment();
       }
     }
 
@@ -1371,11 +1451,18 @@
       container.appendChild(socialCard);
       cardIndex++;
 
-      // Instagram Handles Card (conditional)
+      // REFINED Instagram Handles Card (conditional)
       if (intakeData.socialTagging === 'Yes') {
         let instagramFields = '';
+        const totalFields = petCount + peopleCount;
         
-        // Pet handles
+        // Determine grid class based on total fields
+        let gridClass = 'instagram-handles-grid';
+        if (totalFields === 2) gridClass += ' two-columns';
+        else if (totalFields === 3) gridClass += ' three-columns';
+        else if (totalFields === 4) gridClass += ' four-columns';
+        
+        // Pet handles - OPTIONAL
         for (let i = 1; i <= petCount; i++) {
           const petPrefix = i === 1 ? 'pet' : `pet${i}`;
           const petName = intakeData[petPrefix + 'Name'] || `Pet ${i}`;
@@ -1387,7 +1474,7 @@
           `;
         }
         
-        // People handles
+        // People handles - OPTIONAL
         for (let i = 1; i <= peopleCount; i++) {
           const personPrefix = i === 1 ? 'client' : `client${i}`;
           const personName = intakeData[personPrefix + 'FirstName'] || `Person ${i}`;
@@ -1403,8 +1490,8 @@
           <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
           <div class="intake-card-body form-content">
             <h2>Instagram Handles</h2>
-            <p>Please provide the Instagram handles you'd like us to tag (optional):</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <p>Please provide the Instagram handles you'd like us to tag (leave blank if not applicable):</p>
+            <div class="${gridClass}">
               ${instagramFields}
             </div>
           </div>
@@ -1453,32 +1540,6 @@
       }
     }
 
-    // Handle social media choice
-    function handleSocialChoice(button, value) {
-      const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
-      choiceButtons.forEach(btn => btn.classList.remove('selected'));
-      button.classList.add('selected');
-      
-      intakeData.socialTagging = value;
-      saveIntakeData();
-      
-      // Update validation to enable continue button
-      validateCurrentCard();
-      
-      console.log('Social choice selected:', value); // Debug log
-    }
-
-    // Handle social media continue button
-    function handleSocialContinue() {
-      if (intakeData.socialTagging === 'Yes') {
-        // Show Instagram handles card
-        saveAndContinue();
-      } else {
-        // Go directly to payment
-        proceedToPayment();
-      }
-    }
-
     // Calculate total price
     function calculateTotal() {
       let total = 0;
@@ -1492,6 +1553,15 @@
     // Proceed to payment
     function proceedToPayment() {
       // Save all final data
+      const activeCard = document.querySelector('.intake-card.active');
+      const inputs = activeCard.querySelectorAll('input, select, textarea');
+      
+      inputs.forEach(input => {
+        if (input.name && input.value) {
+          intakeData[input.name] = input.value;
+        }
+      });
+      
       saveIntakeData();
       
       // Combine all data for payment
