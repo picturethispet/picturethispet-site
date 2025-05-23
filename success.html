@@ -1,1 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Confirmed! | Picture This Pet</title>
+  <meta name="description" content="Your pet photography session has been successfully booked.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      overflow-x: hidden;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* === HEADER === */
+    header {
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .book-btn {
+      background-color: var(--dark-brown);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      min-height: calc(100vh - 110px);
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      padding: 4rem 1rem;
+      position: relative;
+    }
+
+    /* === SUCCESS SECTION === */
+    .success-section {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      animation: slideInUp 0.8s ease-out;
+    }
+
+    .success-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .success-logo {
+      display: block;
+      max-width: 200px;
+      margin: 0 auto 2rem;
+      height: auto;
+    }
+
+    .checkmark-container {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--available-green), #059669);
+      margin: 0 auto 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: checkmarkBounce 0.6s ease-out 0.3s both;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    @keyframes checkmarkBounce {
+      0% {
+        opacity: 0;
+        transform: scale(0.3);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .checkmark {
+      color: white;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+
+    .success-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 3rem;
+      opacity: 0.9;
+      line-height: 1.5;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* === BOOKING DETAILS === */
+    .booking-details {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2.5rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .details-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .details-header h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .details-header p {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-weight: 500;
+      opacity: 0.8;
+      font-size: 1rem;
+    }
+
+    .detail-value {
+      font-weight: 600;
+      color: white;
+      font-size: 1rem;
+      text-align: right;
+    }
+
+    .detail-value.highlight {
+      color: var(--gold);
+      font-size: 1.1rem;
+    }
+
+    .total-section {
+      border-top: 2px solid rgba(255, 255, 255, 0.2);
+      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .total-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .total-item .detail-label {
+      font-size: 1.2rem;
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .total-item .detail-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    /* === NEXT STEPS === */
+    .next-steps {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .next-steps h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .steps-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .steps-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .step-number {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* === ACTION BUTTONS === */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .action-btn.primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+    }
+
+    .action-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    /* === ERROR STATE === */
+    .error-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .error-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      margin: 0 auto 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    /* === LOADING STATE === */
+    .loading-state {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo {
+        height: 48px;
+      }
+      
+      .site-nav {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      main {
+        margin-top: 80px;
+        padding: 2rem 1rem;
+      }
+
+      .success-card {
+        padding: 2rem;
+      }
+
+      .success-title {
+        font-size: 2.2rem;
+      }
+
+      .success-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .booking-details {
+        padding: 2rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .action-btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link">
+      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="book-btn">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <div class="success-section" id="successSection">
+      <!-- Loading state initially -->
+      <div class="success-card" id="loadingCard">
+        <div class="loading-state">
+          <div class="loading-spinner"></div>
+          <h2>Processing your booking...</h2>
+          <p>Please wait while we confirm your session details.</p>
+        </div>
+      </div>
+
+      <!-- Success content (hidden initially) -->
+      <div class="success-card" id="successCard" style="display: none;">
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="success-logo" />
+        
+        <div class="checkmark-container">
+          <div class="checkmark">✓</div>
+        </div>
+
+        <h1 class="success-title">You're All Set!</h1>
+        <p class="success-subtitle">Your pet photography session has been successfully booked. We can't wait to capture beautiful memories with you and your furry family!</p>
+
+        <div class="booking-details">
+          <div class="details-header">
+            <h3>Booking Confirmation</h3>
+            <p>Here are your session details</p>
+          </div>
+
+          <div class="details-grid">
+            <div>
+              <div class="detail-item">
+                <span class="detail-label">Session Type:</span>
+                <span class="detail-value" id="sessionType">—</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Date & Time:</span>
+                <span class="detail-value highlight" id="sessionDateTime">—</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Location:</span>
+                <span class="detail-value" id="sessionLocation">—</span>
+              </div>
+            </div>
+            <div>
+              <div class="detail-item">
+                <span class="detail-label">Client Name:</span>
+                <span class="detail-value" id="clientName">—</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Pet Name(s):</span>
+                <span class="detail-value" id="petNames">—</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Contact:</span>
+                <span class="detail-value" id="clientContact">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="total-section">
+            <div class="total-item">
+              <span class="detail-label">Total Paid:</span>
+              <span class="detail-value" id="totalPrice">$0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="next-steps">
+          <h3>What happens next?</h3>
+          <ul class="steps-list">
+            <li>
+              <div class="step-number">1</div>
+              <div>You'll receive a confirmation email within the next few minutes with all your session details.</div>
+            </li>
+            <li>
+              <div class="step-number">2</div>
+              <div>We'll send you a session preparation guide 2-3 days before your appointment.</div>
+            </li>
+            <li>
+              <div class="step-number">3</div>
+              <div>On the day of your session, arrive 10 minutes early and bring your pet's favorite toy!</div>
+            </li>
+            <li>
+              <div class="step-number">4</div>
+              <div>Your edited photos will be ready for download within 5-7 business days.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="action-buttons">
+          <a href="/" class="action-btn primary">Return to Homepage</a>
+          <a href="mailto:hello@picturethispet.co" class="action-btn">Contact Us</a>
+        </div>
+      </div>
+
+      <!-- Error content (hidden initially) -->
+      <div class="error-card" id="errorCard" style="display: none;">
+        <div class="error-icon">⚠</div>
+        <h1 class="success-title">Booking Not Found</h1>
+        <p class="success-subtitle">We couldn't find your booking information. This might happen if you navigated here directly or if your session expired.</p>
+        
+        <div class="action-buttons">
+          <a href="/" class="action-btn primary">Start New Booking</a>
+          <a href="mailto:hello@picturethispet.co" class="action-btn">Get Help</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Version Footer -->
+  <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1</p>
+  </footer>
+
+  <script>
+    // Google Sheets endpoint
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwT0DwjVLxTSLlansFuiT97Qghg1VfIMgcim6RXBTAMAlvYusiSaYPDleI1NfjH-4CXoQ/exec';
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Initialize page on load
+    document.addEventListener('DOMContentLoaded', function() {
+      processBooking();
+    });
+
+    // Main booking processing function
+    async function processBooking() {
+      try {
+        // Get booking data from localStorage
+        const bookingData = getBookingData();
+        
+        if (!bookingData) {
+          showError();
+          return;
+        }
+
+        // Display booking details
+        displayBookingDetails(bookingData);
+
+        // Submit to Google Sheets
+        await submitToGoogleSheets(bookingData);
+
+        // Show success card
+        showSuccess();
+
+        // Clean up localStorage after successful submission
+        cleanupLocalStorage();
+
+      } catch (error) {
+        console.error('Error processing booking:', error);
+        showError();
+      }
+    }
+
+    // Get and validate booking data from localStorage
+    function getBookingData() {
+      try {
+        const data = localStorage.getItem('ptpFinalBookingData');
+        if (!data) {
+          console.log('No booking data found in localStorage');
+          return null;
+        }
+
+        const bookingData = JSON.parse(data);
+        
+        // Validate required fields
+        const requiredFields = ['session', 'selectedDateTime', 'clientFirstName', 'totalPrice'];
+        const missingFields = requiredFields.filter(field => !bookingData[field]);
+        
+        if (missingFields.length > 0) {
+          console.log('Missing required fields:', missingFields);
+          return null;
+        }
+
+        return bookingData;
+      } catch (error) {
+        console.error('Error parsing booking data:', error);
+        return null;
+      }
+    }
+
+    // Display booking details in the UI
+    function displayBookingDetails(data) {
+      // Session details
+      document.getElementById('sessionType').textContent = data.session || '—';
+      document.getElementById('sessionDateTime').textContent = data.selectedDateTime || '—';
+      document.getElementById('sessionLocation').textContent = data.park || '—';
+
+      // Client details
+      const clientName = `${data.clientFirstName || ''} ${data.clientLastName || ''}`.trim();
+      document.getElementById('clientName').textContent = clientName || '—';
+      
+      const clientPhone = data.clientPhone || '';
+      const clientEmail = data.clientEmail || '';
+      let contactInfo = '';
+      if (clientPhone && clientEmail) {
+        contactInfo = `${clientPhone} • ${clientEmail}`;
+      } else if (clientPhone || clientEmail) {
+        contactInfo = clientPhone || clientEmail;
+      } else {
+        contactInfo = '—';
+      }
+      document.getElementById('clientContact').textContent = contactInfo;
+
+      // Pet names
+      const petNames = getPetNames(data);
+      document.getElementById('petNames').textContent = petNames || '—';
+
+      // Total price
+      const totalPrice = data.totalPrice || 0;
+      document.getElementById('totalPrice').textContent = `$${totalPrice}`;
+    }
+
+    // Extract pet names from booking data
+    function getPetNames(data) {
+      const names = [];
+      const petCount = parseInt(data.petCount) || 1;
+      
+      for (let i = 1; i <= petCount; i++) {
+        const petPrefix = i === 1 ? 'pet' : `pet${i}`;
+        const petName = data[petPrefix + 'Name'];
+        if (petName) {
+          names.push(petName);
+        }
+      }
+      
+      return names.length > 0 ? names.join(' & ') : null;
+    }
+
+    // Submit booking data to Google Sheets
+    async function submitToGoogleSheets(data) {
+      try {
+        console.log('Submitting to Google Sheets:', data);
+        
+        const response = await fetch(GOOGLE_SHEETS_URL, {
+          method: 'POST',
+          mode: 'no-cors', // Required for Google Apps Script
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+
+        // Note: no-cors mode means we can't read the response,
+        // but the data should still be submitted successfully
+        console.log('Google Sheets submission completed');
+        
+      } catch (error) {
+        console.error('Error submitting to Google Sheets:', error);
+        // Don't throw error here - we still want to show success to user
+        // The booking was completed and paid for
+      }
+    }
+
+    // Show success state
+    function showSuccess() {
+      document.getElementById('loadingCard').style.display = 'none';
+      document.getElementById('successCard').style.display = 'block';
+      document.getElementById('successCard').classList.add('fade-in');
+    }
+
+    // Show error state
+    function showError() {
+      document.getElementById('loadingCard').style.display = 'none';
+      document.getElementById('errorCard').style.display = 'block';
+      document.getElementById('errorCard').classList.add('fade-in');
+    }
+
+    // Clean up localStorage after successful booking
+    function cleanupLocalStorage() {
+      try {
+        // Remove the final booking data
+        localStorage.removeItem('ptpFinalBookingData');
+        
+        // Optionally, also clean up intermediate data
+        localStorage.removeItem('ptpSessionData');
+        localStorage.removeItem('ptpIntakeData');
+        
+        console.log('LocalStorage cleaned up successfully');
+      } catch (error) {
+        console.error('Error cleaning up localStorage:', error);
+      }
+    }
+
+    // Utility function to format currency
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(amount);
+    }
+
+    // Handle any errors gracefully
+    window.addEventListener('error', function(e) {
+      console.error('Global error:', e.error);
+      // Could add additional error tracking here
+    });
+  </script>
+</body>
+</html>
