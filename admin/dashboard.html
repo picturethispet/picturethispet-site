@@ -1,1 +1,570 @@
-html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Calendar | Picture This Pet</title>
+  <meta name="description" content="Manage session availability and bookings.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      overflow-x: hidden;
+      height: 100%;
+    }
+    
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* === HEADER === */
+    header {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .book-btn {
+      background: url("assets/images/ani_bkgd_warm.png");
+      background-size: cover;
+      background-position: center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding: 0.8rem 2rem;
+      border: 2px solid transparent;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-clip: text;
+      position: relative;
+    }
+
+    .book-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("assets/images/ani_bkgd_warm.png");
+      background-size: cover;
+      background-position: center;
+      border-radius: 999px;
+      opacity: 0.15;
+      z-index: -1;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      height: calc(100vh - 110px);
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === PAGE HEADER === */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1rem;
+    }
+
+    .admin-controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .admin-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      backdrop-filter: blur(10px);
+    }
+
+    .admin-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .admin-btn.primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+    }
+
+    .admin-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    /* === CALENDAR CONTAINER === */
+    .calendar-container {
+      flex: 1;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 1.5rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .calendar-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .view-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .view-btn.active,
+    .view-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* === CALENDAR IFRAME === */
+    .calendar-frame-container {
+      flex: 1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      min-height: 500px;
+    }
+
+    .calendar-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 16px;
+      min-height: 500px;
+    }
+
+    .loading-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 500px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* === QUICK ACTIONS === */
+    .quick-actions {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .quick-actions h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .action-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .action-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .action-card h4 {
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .action-card p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo {
+        height: 48px;
+      }
+      
+      .site-nav {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      main {
+        margin-top: 80px;
+        height: calc(100vh - 80px);
+        padding: 1rem;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .admin-controls {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .admin-btn {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .calendar-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .view-toggle {
+        justify-content: center;
+      }
+
+      .action-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link">
+      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/availability.html">Availability</a>
+      <a href="#">Locations</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="book-btn">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1 class="page-title">Session Calendar Admin</h1>
+      <p class="page-subtitle">Manage your session availability and bookings</p>
+      
+      <div class="admin-controls">
+        <a href="https://calendar.google.com/calendar/u/0/r/week" target="_blank" class="admin-btn primary">
+          📅 Open Full Calendar
+        </a>
+        <button class="admin-btn" onclick="refreshCalendar()">
+          🔄 Refresh
+        </button>
+        <a href="/availability.html" class="admin-btn">
+          👁️ View Public Calendar
+        </a>
+        <a href="/ptp-pick-date-step-3.html" class="admin-btn">
+          🗓️ Test Booking Flow
+        </a>
+      </div>
+    </div>
+
+    <!-- Calendar Container -->
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <h2 class="calendar-title">Session Availability Calendar</h2>
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="switchView('week')">Week</button>
+          <button class="view-btn" onclick="switchView('month')">Month</button>
+          <button class="view-btn" onclick="switchView('agenda')">Agenda</button>
+        </div>
+      </div>
+
+      <div class="calendar-frame-container">
+        <iframe 
+          id="calendarFrame"
+          class="calendar-iframe"
+          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&src=MDkzNzg1YWM0ZmM0YmM1MzI1MGFjYWE3ZGY0MThiNWI4NzE2ZGUwNjdhODRkMjc4NjFlY2IzOWM3NWQ5MWE1MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23039BE5&mode=WEEK&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=1&showTz=0"
+          loading="lazy">
+        </iframe>
+        <div class="loading-message" id="loadingMessage">
+          <div>
+            <p><strong>Loading your Session Availability calendar...</strong></p>
+            <p>If the calendar doesn't load, you may need to sign in to your Google account first.</p>
+            <br>
+            <p><a href="https://calendar.google.com/calendar/u/0/r" target="_blank" style="color: var(--gold);">→ Open Calendar in New Tab</a></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <h3>Quick Actions</h3>
+        <div class="action-grid">
+          <div class="action-card">
+            <h4>Add Session Block</h4>
+            <p>Block time for new photography sessions</p>
+          </div>
+          <div class="action-card">
+            <h4>Mark Unavailable</h4>
+            <p>Block dates when you're not available</p>
+          </div>
+          <div class="action-card">
+            <h4>View Bookings</h4>
+            <p>See all confirmed and pending bookings</p>
+          </div>
+          <div class="action-card">
+            <h4>Export Schedule</h4>
+            <p>Download calendar data for backup</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let currentView = 'week';
+    const calendarId = '093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com';
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Switch calendar view
+    function switchView(view) {
+      currentView = view;
+      
+      // Update button states
+      document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Update iframe src with new view
+      const iframe = document.getElementById('calendarFrame');
+      let mode = 'WEEK';
+      
+      switch(view) {
+        case 'month':
+          mode = 'MONTH';
+          break;
+        case 'agenda':
+          mode = 'AGENDA';
+          break;
+        default:
+          mode = 'WEEK';
+      }
+      
+      const newSrc = `https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&src=${calendarId}&color=%23039BE5&mode=${mode}&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=1&showTz=0`;
+      
+      iframe.src = newSrc;
+      console.log(`Switched to ${view} view`);
+    }
+
+    // Refresh calendar
+    function refreshCalendar() {
+      const iframe = document.getElementById('calendarFrame');
+      const currentSrc = iframe.src;
+      iframe.src = 'about:blank';
+      setTimeout(() => {
+        iframe.src = currentSrc;
+      }, 100);
+      console.log('Calendar refreshed');
+    }
+
+    // Hide loading message when iframe loads
+    document.addEventListener('DOMContentLoaded', function() {
+      const iframe = document.getElementById('calendarFrame');
+      const loadingMessage = document.getElementById('loadingMessage');
+      
+      iframe.addEventListener('load', function() {
+        loadingMessage.style.display = 'none';
+      });
+      
+      // Hide loading message after 5 seconds regardless
+      setTimeout(() => {
+        loadingMessage.style.display = 'none';
+      }, 5000);
+      
+      console.log('Admin calendar page initialized');
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Alt + R = Refresh
+      if (e.altKey && e.key === 'r') {
+        e.preventDefault();
+        refreshCalendar();
+      }
+      
+      // Alt + 1/2/3 = Switch views
+      if (e.altKey && ['1', '2', '3'].includes(e.key)) {
+        e.preventDefault();
+        const views = ['week', 'month', 'agenda'];
+        switchView(views[parseInt(e.key) - 1]);
+      }
+    });
+  </script>
+</body>
+</html>
