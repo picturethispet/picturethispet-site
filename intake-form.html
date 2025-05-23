@@ -299,14 +299,30 @@
       background-position-y: 50%;
     }
 
+    .form-group.vaccination-group {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group.vaccination-group label {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
     .form-group .radio-buttons {
       display: flex;
-      gap: 1rem;
+      gap: 2rem;
       align-items: center;
+      justify-content: center;
     }
 
     .form-group .radio-buttons label {
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 400;
       margin-bottom: 0;
       display: flex;
@@ -317,6 +333,28 @@
     .form-group .radio-buttons input[type="radio"] {
       width: auto;
       margin: 0;
+      transform: scale(1.5);
+    }
+
+    .form-group .radio-buttons label:hover {
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: white;
     }
 
     .form-actions {
@@ -587,10 +625,22 @@
         padding: 0.6rem;
       }
 
+      .form-group.vaccination-group {
+        padding: 1rem;
+      }
+
+      .form-group.vaccination-group label {
+        font-size: 1.2rem;
+      }
+
       .form-group .radio-buttons {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .form-card h3 {
+        font-size: 1.3rem;
       }
 
       .submit-btn {
@@ -673,7 +723,7 @@
       <h2>Intake Form</h2>
       <form id="intakeForm">
         <!-- Vaccination Question -->
-        <div class="form-group" id="vaccinationGroup">
+        <div class="form-group vaccination-group" id="vaccinationGroup">
           <label for="isVaccinated">Is your pet vaccinated?</label>
           <div class="radio-buttons">
             <label><input type="radio" name="isVaccinated" value="yes" required> Yes</label>
@@ -681,43 +731,182 @@
           </div>
         </div>
 
-        <!-- Owner and Contact Information -->
-        <div class="form-group" id="ownerNameGroup" style="display: none;">
-          <label for="ownerName">Owner's Name</label>
-          <input type="text" id="ownerName" name="ownerName" placeholder="Enter your full name" />
-        </div>
-        <div class="form-group" id="emailGroup" style="display: none;">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" placeholder="Enter your email address" />
-        </div>
-        <div class="form-group" id="phoneGroup" style="display: none;">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" />
+        <!-- Client Information (Person 1 - Required) -->
+        <div class="form-card" id="clientInfo1" style="display: none;">
+          <h3>Client Information (Person 1)</h3>
+          <div class="form-group">
+            <label for="person1Name">Name *</label>
+            <input type="text" id="person1Name" name="person1Name" required placeholder="Enter your full name" />
+          </div>
+          <div class="form-group">
+            <label for="person1Email">Email Address *</label>
+            <input type="email" id="person1Email" name="person1Email" required placeholder="Enter your email address" />
+          </div>
+          <div class="form-group">
+            <label for="person1Phone">Phone Number *</label>
+            <input type="tel" id="person1Phone" name="person1Phone" required placeholder="Enter your phone number" />
+          </div>
+          <div class="form-group">
+            <label for="person1Zip">Zip Code *</label>
+            <input type="text" id="person1Zip" name="person1Zip" required placeholder="Enter your zip code" />
+          </div>
         </div>
 
-        <!-- Pet Information -->
-        <div class="form-group" id="petNameGroup" style="display: none;">
-          <label for="petName">Pet's Name</label>
-          <input type="text" id="petName" name="petName" placeholder="Enter your pet's name" />
+        <!-- Client Information (Person 2 - Conditional) -->
+        <div class="form-card" id="clientInfo2" style="display: none;">
+          <h3>Client Information (Person 2)</h3>
+          <div class="form-group">
+            <label for="person2Name">Name</label>
+            <input type="text" id="person2Name" name="person2Name" placeholder="Enter full name" />
+          </div>
+          <div class="form-group">
+            <label for="person2Email">Email Address</label>
+            <input type="email" id="person2Email" name="person2Email" placeholder="Enter email address" />
+          </div>
+          <div class="form-group">
+            <label for="person2Phone">Phone Number</label>
+            <input type="tel" id="person2Phone" name="person2Phone" placeholder="Enter phone number" />
+          </div>
+          <div class="form-group">
+            <label for="person2Zip">Zip Code</label>
+            <input type="text" id="person2Zip" name="person2Zip" placeholder="Enter zip code" />
+          </div>
         </div>
-        <div class="form-group" id="petTypeGroup" style="display: none;">
-          <label for="petType">Pet Type</label>
-          <select id="petType" name="petType">
-            <option value="">Select pet type</option>
-            <option value="Dog">Dog</option>
-            <option value="Cat">Cat</option>
+
+        <!-- Pet Information (Pet 1 - Required) -->
+        <div class="form-card" id="petInfo1" style="display: none;">
+          <h3>Pet Information (Pet 1)</h3>
+          <div class="form-group">
+            <label for="pet1Name">Pet's Name *</label>
+            <input type="text" id="pet1Name" name="pet1Name" required placeholder="Enter your pet's name" />
+          </div>
+          <div class="form-group">
+            <label for="pet1Age">Age *</label>
+            <input type="number" id="pet1Age" name="pet1Age" required placeholder="Enter pet's age" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="pet1Birthdate">Birthdate *</label>
+            <input type="date" id="pet1Birthdate" name="pet1Birthdate" required />
+          </div>
+          <div class="form-group">
+            <label for="pet1Gender">Gender *</label>
+            <select id="pet1Gender" name="pet1Gender" required>
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pet1FavoriteToy">Favorite Toy</label>
+            <input type="text" id="pet1FavoriteToy" name="pet1FavoriteToy" placeholder="E.g., squeaky ball" />
+          </div>
+          <div class="form-group">
+            <label for="pet1OffLeash">Can your pet be off-leash? *</label>
+            <div class="radio-buttons">
+              <label><input type="radio" name="pet1OffLeash" value="yes" required> Yes</label>
+              <label><input type="radio" name="pet1OffLeash" value="no"> No</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="pet1Behavior">Behavior Description *</label>
+            <textarea id="pet1Behavior" name="pet1Behavior" required placeholder="Describe your pet's behavior (e.g., friendly, shy, energetic)"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pet1Notes">Additional Notes</label>
+            <textarea id="pet1Notes" name="pet1Notes" placeholder="Any special requests or notes about this pet?"></textarea>
+          </div>
+        </div>
+
+        <!-- Pet Information (Pet 2 - Conditional) -->
+        <div class="form-card" id="petInfo2" style="display: none;">
+          <h3>Pet Information (Pet 2)</h3>
+          <div class="form-group">
+            <label for="pet2Name">Pet's Name</label>
+            <input type="text" id="pet2Name" name="pet2Name" placeholder="Enter your pet's name" />
+          </div>
+          <div class="form-group">
+            <label for="pet2Age">Age</label>
+            <input type="number" id="pet2Age" name="pet2Age" placeholder="Enter pet's age" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="pet2Birthdate">Birthdate</label>
+            <input type="date" id="pet2Birthdate" name="pet2Birthdate" />
+          </div>
+          <div class="form-group">
+            <label for="pet2Gender">Gender</label>
+            <select id="pet2Gender" name="pet2Gender">
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pet2FavoriteToy">Favorite Toy</label>
+            <input type="text" id="pet2FavoriteToy" name="pet2FavoriteToy" placeholder="E.g., squeaky ball" />
+          </div>
+          <div class="form-group">
+            <label for="pet2OffLeash">Can your pet be off-leash?</label>
+            <div class="radio-buttons">
+              <label><input type="radio" name="pet2OffLeash" value="yes"> Yes</label>
+              <label><input type="radio" name="pet2OffLeash" value="no"> No</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="pet2Behavior">Behavior Description</label>
+            <textarea id="pet2Behavior" name="pet2Behavior" placeholder="Describe your pet's behavior (e.g., friendly, shy, energetic)"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pet2Notes">Additional Notes</label>
+            <textarea id="pet2Notes" name="pet2Notes" placeholder="Any special requests or notes about this pet?"></textarea>
+          </div>
+        </div>
+
+        <!-- Referral Source -->
+        <div class="form-group" id="referralGroup" style="display: none;">
+          <label for="referralSource">How did you hear about us? *</label>
+          <select id="referralSource" name="referralSource" required>
+            <option value="">Select an option</option>
+            <option value="Social Media">Social Media</option>
+            <option value="Friend/Family">Friend/Family</option>
+            <option value="Google Search">Google Search</option>
+            <option value="Advertisement">Advertisement</option>
             <option value="Other">Other</option>
           </select>
         </div>
-        <div class="form-group" id="petBreedGroup" style="display: none;">
-          <label for="petBreed">Pet Breed</label>
-          <input type="text" id="petBreed" name="petBreed" placeholder="E.g., Golden Retriever" />
+
+        <!-- Instagram Tagging Question -->
+        <div class="form-group" id="instagramTagGroup" style="display: none;">
+          <label for="instagramTag">Would you or your pet like to be tagged on Instagram? *</label>
+          <div class="radio-buttons">
+            <label><input type="radio" name="instagramTag" value="yes" required> Yes</label>
+            <label><input type="radio" name="instagramTag" value="no"> No</label>
+          </div>
         </div>
 
-        <!-- Additional Notes -->
-        <div class="form-group" id="notesGroup" style="display: none;">
-          <label for="notes">Additional Notes</label>
-          <textarea id="notes" name="notes" placeholder="Any special requests or notes about your pet?"></textarea>
+        <!-- Instagram Handles (Pet 1) -->
+        <div class="form-group" id="pet1InstagramGroup" style="display: none;">
+          <label for="pet1Instagram">Instagram Handle for Pet 1</label>
+          <input type="text" id="pet1Instagram" name="pet1Instagram" placeholder="@pet1handle" />
+        </div>
+
+        <!-- Instagram Handles (Pet 2 - Conditional) -->
+        <div class="form-group" id="pet2InstagramGroup" style="display: none;">
+          <label for="pet2Instagram">Instagram Handle for Pet 2</label>
+          <input type="text" id="pet2Instagram" name="pet2Instagram" placeholder="@pet2handle" />
+        </div>
+
+        <!-- Instagram Handles (Person 1) -->
+        <div class="form-group" id="person1InstagramGroup" style="display: none;">
+          <label for="person1Instagram">Instagram Handle for Person 1</label>
+          <input type="text" id="person1Instagram" name="person1Instagram" placeholder="@person1handle" />
+        </div>
+
+        <!-- Instagram Handles (Person 2 - Conditional) -->
+        <div class="form-group" id="person2InstagramGroup" style="display: none;">
+          <label for="person2Instagram">Instagram Handle for Person 2</label>
+          <input type="text" id="person2Instagram" name="person2Instagram" placeholder="@person2handle" />
         </div>
 
         <!-- Form Actions -->
@@ -769,7 +958,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:32 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:38 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -797,55 +986,152 @@
 
       const form = document.getElementById('intakeForm');
       const vaccinationInputs = document.getElementsByName('isVaccinated');
+      const instagramTagInputs = document.getElementsByName('instagramTag');
       const submitBtn = document.getElementById('submitBtn');
       const popup = document.getElementById('vaccinationPopup');
+      let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      let marketingData = JSON.parse(localStorage.getItem('ptpMarketingData')) || {};
+
+      // Dynamically show/hide pet and client information based on session data
+      const petCount = sessionData.petCount || '1';
+      const peopleCount = sessionData.peopleCount || '1';
+
+      // Show/hide pet cards
+      if (petCount === '1') {
+        document.getElementById('petInfo2').style.display = 'none';
+      }
+
+      // Show/hide client cards
+      if (peopleCount === '1') {
+        document.getElementById('clientInfo2').style.display = 'none';
+      }
 
       // Show remaining questions only if vaccination is "Yes"
       vaccinationInputs.forEach(input => {
         input.addEventListener('change', function() {
           if (input.value === 'yes') {
-            document.getElementById('ownerNameGroup').style.display = 'block';
-            document.getElementById('emailGroup').style.display = 'block';
-            document.getElementById('phoneGroup').style.display = 'block';
-            document.getElementById('petNameGroup').style.display = 'block';
-            document.getElementById('petTypeGroup').style.display = 'block';
-            document.getElementById('petBreedGroup').style.display = 'block';
-            document.getElementById('notesGroup').style.display = 'block';
+            document.getElementById('clientInfo1').style.display = 'block';
+            if (peopleCount === '2') {
+              document.getElementById('clientInfo2').style.display = 'block';
+            }
+            document.getElementById('petInfo1').style.display = 'block';
+            if (petCount === '2') {
+              document.getElementById('petInfo2').style.display = 'block';
+            }
+            document.getElementById('referralGroup').style.display = 'block';
+            document.getElementById('instagramTagGroup').style.display = 'block';
             submitBtn.style.display = 'inline-block';
             popup.style.display = 'none';
           } else if (input.value === 'no') {
             popup.style.display = 'flex';
-            document.getElementById('ownerNameGroup').style.display = 'none';
-            document.getElementById('emailGroup').style.display = 'none';
-            document.getElementById('phoneGroup').style.display = 'none';
-            document.getElementById('petNameGroup').style.display = 'none';
-            document.getElementById('petTypeGroup').style.display = 'none';
-            document.getElementById('petBreedGroup').style.display = 'none';
-            document.getElementById('notesGroup').style.display = 'none';
+            document.getElementById('clientInfo1').style.display = 'none';
+            document.getElementById('clientInfo2').style.display = 'none';
+            document.getElementById('petInfo1').style.display = 'none';
+            document.getElementById('petInfo2').style.display = 'none';
+            document.getElementById('referralGroup').style.display = 'none';
+            document.getElementById('instagramTagGroup').style.display = 'none';
+            document.getElementById('pet1InstagramGroup').style.display = 'none';
+            document.getElementById('pet2InstagramGroup').style.display = 'none';
+            document.getElementById('person1InstagramGroup').style.display = 'none';
+            document.getElementById('person2InstagramGroup').style.display = 'none';
             submitBtn.style.display = 'none';
           }
         });
       });
 
+      // Show/hide Instagram handle fields based on tagging preference
+      instagramTagInputs.forEach(input => {
+        input.addEventListener('change', function() {
+          if (input.value === 'yes') {
+            document.getElementById('pet1InstagramGroup').style.display = 'block';
+            if (petCount === '2') {
+              document.getElementById('pet2InstagramGroup').style.display = 'block';
+            }
+            document.getElementById('person1InstagramGroup').style.display = 'block';
+            if (peopleCount === '2') {
+              document.getElementById('person2InstagramGroup').style.display = 'block';
+            }
+          } else {
+            document.getElementById('pet1InstagramGroup').style.display = 'none';
+            document.getElementById('pet2InstagramGroup').style.display = 'none';
+            document.getElementById('person1InstagramGroup').style.display = 'none';
+            document.getElementById('person2InstagramGroup').style.display = 'none';
+          }
+        });
+      });
+
+      // Save marketing data as soon as key fields are entered
+      const marketingFields = ['person1Name', 'person1Email', 'person1Phone', 'pet1Name'];
+      marketingFields.forEach(field => {
+        const input = document.getElementById(field);
+        if (input) {
+          input.addEventListener('input', function() {
+            marketingData[field] = input.value;
+            marketingData.sessionData = {
+              session: sessionData.session,
+              park: sessionData.park,
+              selectedDateTime: sessionData.selectedDateTime,
+              petCount: sessionData.petCount,
+              peopleCount: sessionData.peopleCount
+            };
+            localStorage.setItem('ptpMarketingData', JSON.stringify(marketingData));
+          });
+        }
+      });
+
+      // Form submission handling
       form.addEventListener('submit', function(e) {
         e.preventDefault();
 
         // Collect form data
         const formData = {
           isVaccinated: document.querySelector('input[name="isVaccinated"]:checked')?.value || '',
-          ownerName: document.getElementById('ownerName').value,
-          email: document.getElementById('email').value,
-          phone: document.getElementById('phone').value,
-          petName: document.getElementById('petName').value,
-          petType: document.getElementById('petType').value,
-          petBreed: document.getElementById('petBreed').value,
-          notes: document.getElementById('notes').value
+          person1: {
+            name: document.getElementById('person1Name').value,
+            email: document.getElementById('person1Email').value,
+            phone: document.getElementById('person1Phone').value,
+            zip: document.getElementById('person1Zip').value,
+            instagram: document.getElementById('person1Instagram')?.value || ''
+          },
+          person2: peopleCount === '2' ? {
+            name: document.getElementById('person2Name').value,
+            email: document.getElementById('person2Email').value,
+            phone: document.getElementById('person2Phone').value,
+            zip: document.getElementById('person2Zip').value,
+            instagram: document.getElementById('person2Instagram')?.value || ''
+          } : null,
+          pet1: {
+            name: document.getElementById('pet1Name').value,
+            age: document.getElementById('pet1Age').value,
+            birthdate: document.getElementById('pet1Birthdate').value,
+            gender: document.getElementById('pet1Gender').value,
+            favoriteToy: document.getElementById('pet1FavoriteToy').value,
+            offLeash: document.querySelector('input[name="pet1OffLeash"]:checked')?.value || '',
+            behavior: document.getElementById('pet1Behavior').value,
+            notes: document.getElementById('pet1Notes').value,
+            instagram: document.getElementById('pet1Instagram')?.value || ''
+          },
+          pet2: petCount === '2' ? {
+            name: document.getElementById('pet2Name').value,
+            age: document.getElementById('pet2Age').value,
+            birthdate: document.getElementById('pet2Birthdate').value,
+            gender: document.getElementById('pet2Gender').value,
+            favoriteToy: document.getElementById('pet2FavoriteToy').value,
+            offLeash: document.querySelector('input[name="pet2OffLeash"]:checked')?.value || '',
+            behavior: document.getElementById('pet2Behavior').value,
+            notes: document.getElementById('pet2Notes').value,
+            instagram: document.getElementById('pet2Instagram')?.value || ''
+          } : null,
+          referralSource: document.getElementById('referralSource').value,
+          instagramTag: document.querySelector('input[name="instagramTag"]:checked')?.value || ''
         };
 
         // Save form data to localStorage
-        const savedSessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
-        savedSessionData.intakeForm = formData;
-        localStorage.setItem('ptpSessionData', JSON.stringify(savedSessionData));
+        sessionData.intakeForm = formData;
+        localStorage.setItem('ptpSessionData', JSON.stringify(sessionData));
+
+        // Clear marketing data after successful submission
+        localStorage.removeItem('ptpMarketingData');
 
         // Redirect to payment page
         window.location.href = 'payment.html';
