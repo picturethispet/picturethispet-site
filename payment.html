@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Secure Payment | Picture This Pet</title>
-  <meta name="description" content="Complete your pet photography session booking with secure payment.">
+  <title>Payment | Picture This Pet</title>
+  <meta name="description" content="Complete your payment to finalize your pet session booking.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -26,6 +26,7 @@
     
     html, body {
       overflow-x: hidden;
+      overflow-y: auto;
     }
     
     body {
@@ -61,6 +62,10 @@
       z-index: 1000;
       height: 110px;
     }
+    
+    .desktop-logo {
+      height: 100px;
+    }
 
     .logo-link {
       display: flex;
@@ -71,10 +76,6 @@
 
     .logo-link:hover {
       opacity: 0.8;
-    }
-    
-    .desktop-logo {
-      height: 100px;
     }
     
     .site-nav {
@@ -112,326 +113,164 @@
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 4rem 1rem;
+      padding: 4rem 1rem 8rem;
       position: relative;
     }
 
-    /* === PROGRESS INDICATOR === */
-    .progress-section {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .progress-steps {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .progress-step {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: rgba(255, 255, 255, 0.7);
-      transition: all 0.3s ease;
-    }
-
-    .progress-step.completed {
-      background: var(--available-green);
-      border-color: var(--available-green);
-      color: white;
-    }
-
-    .progress-step.active {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-      color: white;
-    }
-
-    .progress-line {
-      width: 60px;
-      height: 2px;
-      background: rgba(255, 255, 255, 0.3);
-      position: relative;
-    }
-
-    .progress-line.completed {
-      background: var(--available-green);
-    }
-
-    .progress-text {
-      color: white;
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-
-    /* === PAYMENT SECTION === */
     .payment-section {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 60vh;
+      position: relative;
+      z-index: 2;
     }
 
     .payment-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
+      height: auto;
+      min-height: 700px;
+      width: 100%;
+      max-width: 900px;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       padding: 3rem;
       color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-      width: 100%;
-      max-width: 600px;
+      font-family: 'SF Pro Display', sans-serif;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: scale(0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 1;
+      transform: scale(1);
+      position: relative;
+      overflow: visible;
+      margin-bottom: 2rem;
     }
 
-    .payment-logo {
+    .payment-card-logo {
       display: block;
-      max-width: 200px;
+      max-width: 180px;
       margin: 0 auto 2.5rem;
       height: auto;
+      flex-shrink: 0;
     }
 
-    /* === PAYMENT CONTENT === */
-    .payment-content h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
+    .payment-card-body {
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+      padding-bottom: 3rem;
+      overflow: visible;
+    }
+
+    .payment-card-body h2 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       color: white;
+      margin-top: 0.5rem;
       letter-spacing: -0.02em;
     }
 
-    .payment-content p {
-      font-family: 'Inter', sans-serif;
+    .payment-card-body p {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 1.2rem;
-      font-weight: 400;
-      margin-bottom: 2.5rem;
+      line-height: 1.6;
       opacity: 0.9;
-      line-height: 1.5;
-      max-width: 480px;
+      margin-bottom: 2.5rem;
+      max-width: 500px;
       margin-left: auto;
       margin-right: auto;
+      font-weight: 400;
     }
 
-    /* === PAYMENT ACTIONS === */
-    .payment-actions {
-      margin: 2rem 0;
-      text-align: center;
-    }
-
-    .payment-actions .continue-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: 2px solid var(--gold);
-      border-radius: 12px;
-      padding: 1.2rem 3rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
-      min-width: 200px;
-    }
-
-    .payment-actions .continue-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    .payment-actions .continue-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .secure-badges {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .security-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
-
-    .security-icon {
-      font-size: 1.2rem;
-    }
-
-    /* === ORDER SUMMARY === */
-    .order-summary {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2rem;
-      margin: 2rem 0;
-      text-align: left;
-    }
-
-    .summary-header {
-      text-center;
-      margin-bottom: 1.5rem;
-    }
-
-    .summary-header h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 0.5rem;
-    }
-
-    .summary-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .summary-item:last-child {
-      border-bottom: none;
-      padding-top: 1rem;
-      margin-top: 1rem;
-      border-top: 2px solid rgba(255, 255, 255, 0.2);
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-
-    .summary-label {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 1rem;
-    }
-
-    .summary-value {
-      color: white;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    .summary-item:last-child .summary-value {
-      color: var(--gold);
-      font-size: 1.2rem;
-    }
-
-    /* === ERROR STATE === */
-    .error-content {
-      text-align: center;
-    }
-
-    .error-icon {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--error-red), #dc2626);
+    .summary-table {
+      width: 100%;
+      max-width: 600px;
       margin: 0 auto 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
+      border-collapse: collapse;
+    }
+
+    .summary-table th, .summary-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .summary-table th {
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 2.25rem;
+      text-align: left;
+      width: 100%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
       color: white;
-      animation: errorBounce 0.6s ease-out;
     }
 
-    @keyframes errorBounce {
-      0% {
-        opacity: 0;
-        transform: scale(0.3);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .error-content h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .error-content p {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.1rem;
-      margin-bottom: 2.5rem;
-      opacity: 0.9;
-      line-height: 1.5;
-    }
-
-    .error-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .error-btn {
+    .form-group input {
+      width: 100%;
+      padding: 1.2rem;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
       background: rgba(255, 255, 255, 0.1);
       color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      font-size: 1rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      min-height: 50px;
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .submit-btn {
+      background: var(--dark-brown);
+      color: white;
+      border: none;
       border-radius: 12px;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
+      padding: 1.2rem 2.5rem;
+      font-size: 1.2rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
     }
 
-    .error-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
+    .submit-btn:hover {
+      background: rgba(75, 46, 30, 0.9);
       transform: translateY(-2px);
     }
-
-    .error-btn.primary {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-    }
-
-    .error-btn.primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-
 
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
@@ -459,86 +298,46 @@
 
       main {
         margin-top: 80px;
-        padding: 2rem 1rem;
+        padding: 2rem 1rem 6rem;
+        min-height: auto;
+      }
+
+      .payment-section {
+        max-width: 100%;
+        padding: 0;
       }
 
       .payment-card {
+        max-width: 100%;
         padding: 2rem;
-        max-width: 95%;
+        min-height: 1000px;
       }
 
-      .payment-content h2 {
-        font-size: 2rem;
+      .payment-card-logo {
+        max-width: 160px;
+        margin-bottom: 2rem;
       }
 
-      .payment-content p {
+      .payment-card-body h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .payment-card-body p {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .form-group input {
+        padding: 1.2rem;
+        font-size: 1.1rem;
+        min-height: 60px;
+      }
+
+      .submit-btn {
+        padding: 1.2rem;
         font-size: 1.1rem;
       }
-
-      .payment-actions .continue-btn {
-        width: 100%;
-        max-width: 300px;
-        padding: 1rem 2rem;
-        font-size: 1.1rem;
-      }
-
-      .progress-steps {
-        gap: 0.5rem;
-      }
-
-      .progress-step {
-        width: 35px;
-        height: 35px;
-        font-size: 0.9rem;
-      }
-
-      .progress-line {
-        width: 40px;
-      }
-
-      .secure-badges {
-        gap: 1rem;
-      }
-
-      .security-badge {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-      }
-
-      .error-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .error-btn {
-        width: 100%;
-        max-width: 280px;
-      }
-    }
-
-    /* === ANIMATIONS === */
-    .payment-section {
-      animation: slideInUp 0.8s ease-out;
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .fade-in {
-      animation: fadeIn 0.5s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
   </style>
 
@@ -547,6 +346,32 @@
       const nav = document.querySelector('.site-nav');
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const finalData = JSON.parse(localStorage.getItem("ptpFinalBookingData")) || {};
+      const summaryTable = document.getElementById('summaryTable');
+      if (summaryTable) {
+        summaryTable.innerHTML = `
+          <tr><th>Session Type</th><td>${finalData.session || 'N/A'}</td></tr>
+          <tr><th>Pet Count</th><td>${finalData.petCount || 'N/A'}</td></tr>
+          <tr><th>People Count</th><td>${finalData.peopleCount || 'N/A'}</td></tr>
+          <tr><th>Park</th><td>${finalData.park || 'N/A'}</td></tr>
+          <tr><th>Date & Time</th><td>${finalData.selectedDateTime || 'N/A'}</td></tr>
+          <tr><th>Total Price</th><td>$${finalData.totalPrice || 0}</td></tr>
+        `;
+      }
+
+      const submitBtn = document.querySelector('.submit-btn');
+      if (submitBtn) {
+        submitBtn.addEventListener('click', function() {
+          alert('Payment processed successfully! Thank you for booking with Picture This Pet.');
+          localStorage.removeItem("ptpSessionData");
+          localStorage.removeItem("ptpIntakeData");
+          localStorage.removeItem("ptpFinalBookingData");
+          window.location.href = '/';
+        });
+      }
+    });
   </script>
 </head>
 <body>
@@ -556,381 +381,9 @@
     </a>
     <nav class="site-nav">
       <a href="/">Home</a>
-      <a href="#">Locations</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
+      <a href="/ptp-locations.html">Locations</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/contact">Contact</a>
       <a href="#" class="book-btn">Book Now</a>
     </nav>
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
-  </header>
-
-  <main>
-    <!-- Progress Indicator -->
-    <div class="progress-section">
-      <div class="progress-steps">
-        <div class="progress-step completed">1</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">2</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">3</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">4</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step active">5</div>
-      </div>
-      <p class="progress-text">Secure Payment</p>
-    </div>
-
-    <!-- Payment Section -->
-    <div class="payment-section">
-      <!-- Payment Card -->
-      <div class="payment-card" id="paymentCard">
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="payment-logo" />
-        
-        <div class="payment-content">
-          <h2>Complete Your Booking</h2>
-          <p>Review your session details below and proceed to secure checkout.</p>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="order-summary" id="orderSummary">
-          <div class="summary-header">
-            <h3>Order Summary</h3>
-          </div>
-          <!-- Summary items will be populated by JavaScript -->
-        </div>
-
-        <!-- Pay Now Button -->
-        <div class="payment-actions">
-          <button class="continue-btn" id="payNowBtn" onclick="proceedToStripeCheckout()">
-            Pay Now →
-          </button>
-        </div>
-
-        <!-- Security Badges -->
-        <div class="secure-badges">
-          <div class="security-badge">
-            <span class="security-icon">🔒</span>
-            <span>SSL Encrypted</span>
-          </div>
-          <div class="security-badge">
-            <span class="security-icon">💳</span>
-            <span>Stripe Secure</span>
-          </div>
-          <div class="security-badge">
-            <span class="security-icon">🛡️</span>
-            <span>PCI Compliant</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Error Card (hidden initially) -->
-      <div class="payment-card" id="errorCard" style="display: none;">
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="payment-logo" />
-        
-        <div class="error-content">
-          <div class="error-icon">⚠</div>
-          <h2>Oops! Session Not Found</h2>
-          <p>We couldn't find your session information. This might happen if you navigated here directly or if your session expired.</p>
-          
-          <div class="error-buttons">
-            <a href="/" class="error-btn primary">Start New Booking</a>
-            <a href="mailto:hello@picturethispet.co" class="error-btn">Get Help</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Version Footer -->
-  <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1</p>
-  </footer>
-
-  <script>
-    // Real Stripe product URLs from your session guide
-    const stripeRedirects = {
-      "Full-Cheesman Park-1-1": "https://buy.stripe.com/4gw6ry0Wz0bXe1G147",
-      "Full-Cheesman Park-2-1": "https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08", 
-      "Full-Cheesman Park-1-2": "https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c",
-      "Full-Cheesman Park-2-2": "https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d",
-      "Full-City Park-1-1": "https://buy.stripe.com/00gg28eNp9Mx9Lq9AE",
-      "Full-City Park-2-1": "https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07",
-      "Full-City Park-1-2": "https://buy.stripe.com/14A8wR8d12921VD80B9bO0e", 
-      "Full-City Park-2-2": "https://buy.stripe.com/6oU28tdxl29243Lft39bO0f",
-      "Mini-Cheesman Park-1-1": "https://buy.stripe.com/eVag28fRtgaVe1GcMN",
-      "Mini-Cheesman Park-2-1": "https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05",
-      "Mini-Cheesman Park-1-2": "https://buy.stripe.com/8x24gB64T292eIpbcN9bO09",
-      "Mini-Cheesman Park-2-2": "https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g", 
-      "Mini-City Park-1-1": "https://buy.stripe.com/9AQ6ry7kX8It3n28wy",
-      "Mini-City Park-2-1": "https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06",
-      "Mini-City Park-1-2": "https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b",
-      "Mini-City Park-2-2": "https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a"
-    };
-
-    let bookingData = null;
-
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', function() {
-      initializePaymentPage();
-    });
-
-    // Initialize payment page
-    function initializePaymentPage() {
-      try {
-        console.log('Initializing payment page...');
-        
-        // Get booking data from localStorage
-        bookingData = getBookingData();
-        
-        if (!bookingData) {
-          console.log('No valid booking data found, showing error state');
-          showError();
-          return;
-        }
-
-        console.log('Valid booking data found, setting up payment page...');
-
-        // Display order summary
-        displayOrderSummary(bookingData);
-
-        // Ensure data persistence for Stripe return
-        ensureDataPersistence(bookingData);
-
-        // Validate Stripe URL availability
-        const stripeURL = getStripeURL(bookingData);
-        if (!stripeURL) {
-          console.error('No Stripe URL found for configuration:', bookingData);
-          showError();
-          return;
-        }
-
-        console.log('Payment page ready. Stripe URL available:', stripeURL);
-
-      } catch (error) {
-        console.error('Error initializing payment page:', error);
-        showError();
-      }
-    }
-
-    // Handle Pay Now button click
-    function proceedToStripeCheckout() {
-      try {
-        if (!bookingData) {
-          console.error('No booking data available');
-          showError();
-          return;
-        }
-
-        // Get Stripe URL
-        const stripeURL = getStripeURL(bookingData);
-        
-        if (!stripeURL) {
-          console.error('No Stripe URL found for configuration:', bookingData);
-          alert('Sorry, we encountered an error with the payment setup. Please try again or contact support.');
-          return;
-        }
-
-        console.log('Redirecting to Stripe Checkout:', stripeURL);
-
-        // Disable button to prevent double-clicks
-        const payNowBtn = document.getElementById('payNowBtn');
-        payNowBtn.disabled = true;
-        payNowBtn.textContent = 'Redirecting...';
-
-        // Add return URL parameter to Stripe URL if needed
-        const finalStripeURL = addReturnUrlToStripe(stripeURL);
-
-        // Redirect to Stripe
-        window.location.href = finalStripeURL;
-
-      } catch (error) {
-        console.error('Error proceeding to Stripe checkout:', error);
-        alert('Sorry, we encountered an error. Please try again or contact support.');
-        
-        // Re-enable button
-        const payNowBtn = document.getElementById('payNowBtn');
-        payNowBtn.disabled = false;
-        payNowBtn.textContent = 'Pay Now →';
-      }
-    }
-
-    // Add return URL to Stripe URL if needed
-    function addReturnUrlToStripe(stripeURL) {
-      // Get current domain for return URL
-      const currentDomain = window.location.origin;
-      const successUrl = `${currentDomain}/success.html`;
-      
-      // Stripe URLs might already have parameters, so check
-      const separator = stripeURL.includes('?') ? '&' : '?';
-      
-      // Note: This depends on how your Stripe products are configured
-      // If you've already set success/cancel URLs in Stripe dashboard, this might not be needed
-      return stripeURL; // For now, return as-is since URLs are pre-configured
-    }
-
-    // Get booking data from localStorage
-    function getBookingData() {
-      try {
-        const data = localStorage.getItem('ptpFinalBookingData');
-        if (!data) {
-          console.log('No booking data found in localStorage');
-          return null;
-        }
-
-        const bookingData = JSON.parse(data);
-        
-        // Validate required fields for payment
-        const requiredFields = ['session', 'park', 'petCount', 'peopleCount', 'totalPrice'];
-        const missingFields = requiredFields.filter(field => !bookingData[field]);
-        
-        if (missingFields.length > 0) {
-          console.log('Missing required fields:', missingFields);
-          return null;
-        }
-
-        return bookingData;
-      } catch (error) {
-        console.error('Error parsing booking data:', error);
-        return null;
-      }
-    }
-
-    // Display order summary
-    function displayOrderSummary(data) {
-      const summaryContainer = document.getElementById('orderSummary');
-      
-      // Get pet names for display
-      const petNames = getPetNames(data);
-      const clientName = `${data.clientFirstName || ''} ${data.clientLastName || ''}`.trim();
-
-      // Calculate price breakdown
-      let basePrice = 0;
-      if (data.session === "Mini") basePrice = 50;
-      if (data.session === "Full") basePrice = 100;
-      
-      const petAddOn = data.petCount === "2" ? 40 : 0;
-      const peopleAddOn = data.peopleCount === "2" ? 20 : 0;
-      const totalPrice = data.totalPrice || (basePrice + petAddOn + peopleAddOn);
-
-      let summaryHTML = `
-        <div class="summary-header">
-          <h3>Order Summary</h3>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">${data.session} Session</span>
-          <span class="summary-value">$${basePrice}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">Location: ${data.park}</span>
-          <span class="summary-value">—</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">Date: ${data.selectedDateTime || 'Selected Date'}</span>
-          <span class="summary-value">—</span>
-        </div>
-      `;
-
-      if (petAddOn > 0) {
-        summaryHTML += `
-          <div class="summary-item">
-            <span class="summary-label">Additional Pet</span>
-            <span class="summary-value">$${petAddOn}</span>
-          </div>
-        `;
-      }
-
-      if (peopleAddOn > 0) {
-        summaryHTML += `
-          <div class="summary-item">
-            <span class="summary-label">Additional Person</span>
-            <span class="summary-value">$${peopleAddOn}</span>
-          </div>
-        `;
-      }
-
-      summaryHTML += `
-        <div class="summary-item">
-          <span class="summary-label">Total</span>
-          <span class="summary-value">$${totalPrice}</span>
-        </div>
-      `;
-
-      summaryContainer.innerHTML = summaryHTML;
-    }
-
-    // Get pet names from booking data
-    function getPetNames(data) {
-      const names = [];
-      const petCount = parseInt(data.petCount) || 1;
-      
-      for (let i = 1; i <= petCount; i++) {
-        const petPrefix = i === 1 ? 'pet' : `pet${i}`;
-        const petName = data[petPrefix + 'Name'];
-        if (petName) {
-          names.push(petName);
-        }
-      }
-      
-      return names.length > 0 ? names.join(' & ') : 'Your Pet(s)';
-    }
-
-    // Ensure booking data persists through Stripe redirect
-    function ensureDataPersistence(data) {
-      try {
-        // Make sure ptpFinalBookingData is properly stored
-        localStorage.setItem('ptpFinalBookingData', JSON.stringify(data));
-        
-        // Also store a backup with timestamp for debugging
-        const backupData = {
-          ...data,
-          paymentPageTimestamp: new Date().toISOString(),
-          paymentPageUrl: window.location.href
-        };
-        localStorage.setItem('ptpBookingBackup', JSON.stringify(backupData));
-        
-        console.log('Booking data persistence ensured');
-      } catch (error) {
-        console.error('Error ensuring data persistence:', error);
-      }
-    }
-
-    // Determine correct Stripe URL based on booking data
-    function getStripeURL(data) {
-      const key = `${data.session}-${data.park}-${data.petCount}-${data.peopleCount}`;
-      console.log('Looking up Stripe URL for key:', key);
-      
-      const stripeURL = stripeRedirects[key];
-      
-      if (!stripeURL) {
-        console.warn('No Stripe URL found for key:', key);
-        console.log('Available keys:', Object.keys(stripeRedirects));
-        return null;
-      }
-      
-      return stripeURL;
-    }
-
-    // Show error state
-    function showError() {
-      document.getElementById('paymentCard').style.display = 'none';
-      document.getElementById('errorCard').style.display = 'block';
-      document.getElementById('errorCard').classList.add('fade-in');
-    }
-
-    // Handle any global errors
-    window.addEventListener('error', function(e) {
-      console.error('Global error:', e.error);
-      showError();
-    });
-
-    // Prevent back button issues during redirect
-    window.addEventListener('beforeunload', function() {
-      // Ensure data is saved before leaving
-      if (bookingData) {
-        ensureDataPersistence(bookingData);
-      }
-    });
-  </script>
-</body>
-</html>
+    <button class="mobile-menu-btn" onclick
