@@ -207,7 +207,7 @@
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 4rem 1rem 8rem;
+      padding: 4rem 1rem 2rem;
       position: relative;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
@@ -298,13 +298,14 @@
       font-weight: 900;
       font-size: 3.5rem;
       line-height: 1.1;
-      background: url("assets/images/ani_bkgd_warm.png");
-      background-size: cover;
-      background-position: center;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
       margin-bottom: 1.5rem;
       animation: slideInLeft 0.8s ease-out;
+      /* Fallback for browsers that don't support background-clip */
+      color: var(--gold);
     }
 
     .contact-card-body h2 {
@@ -804,7 +805,7 @@
     </section>
   </main>
 
-  <footer style="text-align: center; padding: 3rem 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1); margin-top: 1rem;">
+  <footer style="text-align: center; padding: 3rem 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1); margin-top: -2rem;">
     <div style="margin-bottom: 2rem;">
       <img src="assets/images/visa.png" alt="Visa payment accepted" style="height: 35px; margin: 0 1rem; filter: brightness(0) invert(1); transition: all 0.3s ease;" />
       <img src="assets/images/mastercard.png" alt="Mastercard payment accepted" style="height: 35px; margin: 0 1rem; filter: brightness(0) invert(1); transition: all 0.3s ease;" />
