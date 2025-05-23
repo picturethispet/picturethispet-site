@@ -263,7 +263,8 @@
     }
 
     .form-group input,
-    .form-group textarea {
+    .form-group textarea,
+    .form-group select {
       width: 100%;
       padding: 0.8rem;
       font-size: 1rem;
@@ -276,7 +277,8 @@
     }
 
     .form-group input:focus,
-    .form-group textarea:focus {
+    .form-group textarea:focus,
+    .form-group select:focus {
       outline: none;
       border-color: var(--gold);
       background: rgba(255, 255, 255, 0.15);
@@ -285,6 +287,36 @@
     .form-group textarea {
       resize: vertical;
       min-height: 100px;
+    }
+
+    .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position-x: 98%;
+      background-position-y: 50%;
+    }
+
+    .form-group .radio-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .form-group .radio-buttons label {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group .radio-buttons input[type="radio"] {
+      width: auto;
+      margin: 0;
     }
 
     .form-actions {
@@ -328,6 +360,63 @@
     .back-btn:hover {
       background: rgba(255, 255, 255, 0.2);
       color: white;
+    }
+
+    /* === POP-UP STYLES === */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .popup-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .popup-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .popup-content button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .popup-content button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
     /* === FOOTER STYLES === */
@@ -492,9 +581,16 @@
       }
 
       .form-group input,
-      .form-group textarea {
+      .form-group textarea,
+      .form-group select {
         font-size: 0.9rem;
         padding: 0.6rem;
+      }
+
+      .form-group .radio-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
       }
 
       .submit-btn {
@@ -505,6 +601,23 @@
       .back-btn {
         padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
+      }
+
+      .popup-content {
+        padding: 1.5rem;
+      }
+
+      .popup-content h3 {
+        font-size: 1.5rem;
+      }
+
+      .popup-content p {
+        font-size: 1rem;
+      }
+
+      .popup-content button {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
       }
 
       footer {
@@ -559,39 +672,69 @@
     <div class="form-section">
       <h2>Intake Form</h2>
       <form id="intakeForm">
-        <div class="form-group">
+        <!-- Vaccination Question -->
+        <div class="form-group" id="vaccinationGroup">
+          <label for="isVaccinated">Is your pet vaccinated?</label>
+          <div class="radio-buttons">
+            <label><input type="radio" name="isVaccinated" value="yes" required> Yes</label>
+            <label><input type="radio" name="isVaccinated" value="no"> No</label>
+          </div>
+        </div>
+
+        <!-- Owner and Contact Information -->
+        <div class="form-group" id="ownerNameGroup" style="display: none;">
           <label for="ownerName">Owner's Name</label>
-          <input type="text" id="ownerName" name="ownerName" required placeholder="Enter your full name" />
+          <input type="text" id="ownerName" name="ownerName" placeholder="Enter your full name" />
         </div>
-        <div class="form-group">
+        <div class="form-group" id="emailGroup" style="display: none;">
           <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" required placeholder="Enter your email address" />
+          <input type="email" id="email" name="email" placeholder="Enter your email address" />
         </div>
-        <div class="form-group">
+        <div class="form-group" id="phoneGroup" style="display: none;">
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" />
+          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" />
         </div>
-        <div class="form-group">
+
+        <!-- Pet Information -->
+        <div class="form-group" id="petNameGroup" style="display: none;">
           <label for="petName">Pet's Name</label>
-          <input type="text" id="petName" name="petName" required placeholder="Enter your pet's name" />
+          <input type="text" id="petName" name="petName" placeholder="Enter your pet's name" />
         </div>
-        <div class="form-group">
+        <div class="form-group" id="petTypeGroup" style="display: none;">
           <label for="petType">Pet Type</label>
-          <input type="text" id="petType" name="petType" required placeholder="E.g., Dog, Cat" />
+          <select id="petType" name="petType">
+            <option value="">Select pet type</option>
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="petBreedGroup" style="display: none;">
           <label for="petBreed">Pet Breed</label>
-          <input type="text" id="petBreed" name="petBreed" required placeholder="E.g., Golden Retriever" />
+          <input type="text" id="petBreed" name="petBreed" placeholder="E.g., Golden Retriever" />
         </div>
-        <div class="form-group">
+
+        <!-- Additional Notes -->
+        <div class="form-group" id="notesGroup" style="display: none;">
           <label for="notes">Additional Notes</label>
           <textarea id="notes" name="notes" placeholder="Any special requests or notes about your pet?"></textarea>
         </div>
+
+        <!-- Form Actions -->
         <div class="form-actions">
           <a href="/ptp-pick-date-step-3.html" class="back-btn" aria-label="Go back to pick a date">← Back</a>
-          <button type="submit" class="submit-btn">Submit and Proceed to Payment</button>
+          <button type="submit" class="submit-btn" id="submitBtn" style="display: none;">Submit and Proceed to Payment</button>
         </div>
       </form>
+    </div>
+
+    <!-- Pop-up for Vaccination Requirement -->
+    <div class="popup" id="vaccinationPopup">
+      <div class="popup-content">
+        <h3>Vaccination Required</h3>
+        <p>We can’t serve you at this time. Please come back when your pet is fully vaccinated.</p>
+        <button onclick="redirectHome()">Return to Home</button>
+      </div>
     </div>
   </main>
 
@@ -626,7 +769,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:21 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:32 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -643,16 +786,53 @@
       window.location.href = '/#session-builder-section';
     }
 
+    // Redirect to home page
+    function redirectHome() {
+      window.location.href = '/';
+    }
+
     // Form submission handling
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Intake Form page loaded, initializing...');
 
       const form = document.getElementById('intakeForm');
+      const vaccinationInputs = document.getElementsByName('isVaccinated');
+      const submitBtn = document.getElementById('submitBtn');
+      const popup = document.getElementById('vaccinationPopup');
+
+      // Show remaining questions only if vaccination is "Yes"
+      vaccinationInputs.forEach(input => {
+        input.addEventListener('change', function() {
+          if (input.value === 'yes') {
+            document.getElementById('ownerNameGroup').style.display = 'block';
+            document.getElementById('emailGroup').style.display = 'block';
+            document.getElementById('phoneGroup').style.display = 'block';
+            document.getElementById('petNameGroup').style.display = 'block';
+            document.getElementById('petTypeGroup').style.display = 'block';
+            document.getElementById('petBreedGroup').style.display = 'block';
+            document.getElementById('notesGroup').style.display = 'block';
+            submitBtn.style.display = 'inline-block';
+            popup.style.display = 'none';
+          } else if (input.value === 'no') {
+            popup.style.display = 'flex';
+            document.getElementById('ownerNameGroup').style.display = 'none';
+            document.getElementById('emailGroup').style.display = 'none';
+            document.getElementById('phoneGroup').style.display = 'none';
+            document.getElementById('petNameGroup').style.display = 'none';
+            document.getElementById('petTypeGroup').style.display = 'none';
+            document.getElementById('petBreedGroup').style.display = 'none';
+            document.getElementById('notesGroup').style.display = 'none';
+            submitBtn.style.display = 'none';
+          }
+        });
+      });
+
       form.addEventListener('submit', function(e) {
         e.preventDefault();
 
         // Collect form data
         const formData = {
+          isVaccinated: document.querySelector('input[name="isVaccinated"]:checked')?.value || '',
           ownerName: document.getElementById('ownerName').value,
           email: document.getElementById('email').value,
           phone: document.getElementById('phone').value,
