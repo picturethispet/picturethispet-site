@@ -97,6 +97,7 @@
       background-position: center;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      color: transparent; /* Prevents color override */
     }
     
     .book-btn {
@@ -125,7 +126,7 @@
       position: relative;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-      padding-top: 80px; /* Pushes hero image down significantly */
+      padding-top: 80px;
       z-index: 1;
     }
     
@@ -251,7 +252,7 @@
     .session-card-stack {
       max-width: 1200px;
       margin: 0 auto;
-      margin-top: 3rem; /* Adds space between subheader and cards */
+      margin-top: 3rem;
       position: relative;
       height: auto;
       z-index: 2;
@@ -276,7 +277,7 @@
       transform: translate(-50%, -50%) scale(0.9);
       visibility: hidden;
       position: absolute;
-      top: 55%; /* Shifts cards down slightly */
+      top: 55%;
       left: 50%;
       transform-origin: center;
       overflow: hidden;
@@ -318,10 +319,11 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between; /* Distributes header and content */
       align-items: center;
       width: 100%;
       min-height: 0;
+      padding-top: 2rem; /* Ensures content isn't too close to top */
       padding-bottom: 2rem;
     }
 
@@ -329,10 +331,10 @@
     .session-card-body h3 {
       font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 2rem;
+      margin: 0 auto; /* Horizontal centering */
       color: white;
-      padding-top: 2rem; /* Adds space at top of card */
-      padding-bottom: 2.5rem;
+      padding-top: 1rem; /* Reduced for balance */
+      padding-bottom: 1.5rem; /* Space before body content */
     }
 
     .session-card-body p {
@@ -550,7 +552,7 @@
       }
       
       .hero-section {
-        padding-top: 60px; /* Adjusted for mobile */
+        padding-top: 60px;
       }
       
       .section-split {
@@ -593,7 +595,7 @@
       }
 
       .session-card-stack {
-        margin-top: 2.5rem; /* Adds space between subheader and cards */
+        margin-top: 2.5rem;
         height: auto;
         min-height: 400px;
       }
@@ -601,23 +603,28 @@
       .session-card {
         height: 500px;
         max-width: 90%;
-        padding: 1.5rem;
-        top: 55%; /* Shifts cards down slightly */
+        padding: 2rem; /* Increased for consistency */
+        top: 55%;
       }
 
       .session-card.agreement-card {
-        height: 800px;
+        height: 900px; /* Increased for more vertical space */
         max-width: 90%;
-        padding: 1.5rem;
+        padding: 2rem;
         top: 55%;
+      }
+
+      .session-card-body {
+        padding-top: 1.5rem; /* Adjusted for mobile */
+        padding-bottom: 1.5rem;
       }
 
       .session-card-body h2,
       .session-card-body h3 {
         font-size: 1.8rem;
-        margin-bottom: 1.5rem;
-        padding-top: 1.5rem; /* Adjusted for mobile */
-        padding-bottom: 2rem;
+        margin: 0 auto;
+        padding-top: 0.8rem; /* Reduced for mobile */
+        padding-bottom: 1.2rem;
       }
 
       .session-info-list {
