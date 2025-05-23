@@ -97,7 +97,7 @@
       background-position: center;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      color: transparent; /* Prevents color override */
+      color: transparent;
     }
     
     .book-btn {
@@ -126,7 +126,7 @@
       position: relative;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-      padding-top: 80px;
+      padding-top: 90px; /* Nudged down slightly */
       z-index: 1;
     }
     
@@ -289,7 +289,7 @@
 
     .session-card.agreement-card {
       height: 805px;
-      max-width: 600px;
+      max-width: 900px; /* Wider for desktop */
       width: 100%;
       padding: 2.5rem;
       display: flex;
@@ -314,16 +314,22 @@
       visibility: hidden;
     }
 
+    .session-card-logo {
+      max-width: 200px;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
     .session-card-body {
       text-align: center;
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* Distributes header and content */
+      justify-content: space-between;
       align-items: center;
       width: 100%;
       min-height: 0;
-      padding-top: 2rem; /* Ensures content isn't too close to top */
+      padding-top: 2rem;
       padding-bottom: 2rem;
     }
 
@@ -331,10 +337,10 @@
     .session-card-body h3 {
       font-size: 2.2rem;
       font-weight: 700;
-      margin: 0 auto; /* Horizontal centering */
+      margin: 0 auto;
       color: white;
-      padding-top: 1rem; /* Reduced for balance */
-      padding-bottom: 1.5rem; /* Space before body content */
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
     }
 
     .session-card-body p {
@@ -356,7 +362,7 @@
       text-align: left;
       line-height: 1.6;
       font-size: 1rem;
-      max-width: 500px;
+      max-width: 700px; /* Wider for desktop */
       margin-left: auto;
       margin-right: auto;
     }
@@ -552,7 +558,7 @@
       }
       
       .hero-section {
-        padding-top: 60px;
+        padding-top: 65px; /* Nudged down slightly */
       }
       
       .section-split {
@@ -580,8 +586,8 @@
       }
 
       section#session-builder-section {
-        padding: 6rem 1rem;
-        min-height: calc(100vh - 80px);
+        padding: 6rem 1rem 4rem; /* Added bottom padding */
+        min-height: 100vh; /* Ensures full viewport height */
       }
 
       .session-heading {
@@ -597,25 +603,30 @@
       .session-card-stack {
         margin-top: 2.5rem;
         height: auto;
-        min-height: 400px;
+        min-height: 600px; /* Increased for taller cards */
       }
 
       .session-card {
         height: 500px;
         max-width: 90%;
-        padding: 2rem; /* Increased for consistency */
+        padding: 2rem;
         top: 55%;
       }
 
       .session-card.agreement-card {
-        height: 900px; /* Increased for more vertical space */
+        height: 900px;
         max-width: 90%;
         padding: 2rem;
         top: 55%;
       }
 
+      .session-card-logo {
+        max-width: 150px;
+        margin-bottom: 0.8rem;
+      }
+
       .session-card-body {
-        padding-top: 1.5rem; /* Adjusted for mobile */
+        padding-top: 1.5rem;
         padding-bottom: 1.5rem;
       }
 
@@ -623,8 +634,12 @@
       .session-card-body h3 {
         font-size: 1.8rem;
         margin: 0 auto;
-        padding-top: 0.8rem; /* Reduced for mobile */
+        padding-top: 0.8rem;
         padding-bottom: 1.2rem;
+      }
+
+      .agreement-text {
+        max-width: 90%; /* Adjusted for mobile */
       }
 
       .session-info-list {
@@ -768,9 +783,7 @@
       currentCard = index;
 
       if (index === 3) {
-        setTimeout(() => {
-          renderCurrentQuestion();
-        }, 100);
+        renderCurrentQuestion();
       }
 
       addButtonListeners();
@@ -847,13 +860,9 @@
       currentQuestion++;
 
       if (currentQuestion < questions.length) {
-        setTimeout(() => {
-          renderCurrentQuestion();
-        }, 600);
+        renderCurrentQuestion();
       } else {
-        setTimeout(() => {
-          advanceCard();
-        }, 600);
+        advanceCard();
       }
     }
 
@@ -920,6 +929,7 @@
 
       const card0 = createCard(`
         <div class="session-card-body">
+          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Warm Logo" class="session-card-logo">
           <h2>Let's go over what's included</h2>
           <p>In just a few quick steps, we'll help you pick the perfect session, and show you what's included with each option.</p>
         </div>
