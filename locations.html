@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="preload" href="assets/images/parkphoto.png" as="image" />
 
   <style>
     :root {
@@ -133,6 +134,23 @@
 
     .mobile-menu-btn:hover {
       transform: scale(1.1);
+    }
+
+    /* === HERO SECTION === */
+    .hero-section {
+      position: relative;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-top: 110px;
+      z-index: 1;
+      overflow: hidden;
+    }
+    
+    .hero-section img {
+      width: 100%;
+      height: auto;
+      display: block;
+      animation: fadeInUp 1s ease-out;
     }
 
     /* === MAIN CONTENT === */
@@ -466,6 +484,10 @@
         padding: 2rem 1rem;
       }
 
+      .hero-section {
+        margin-top: 80px;
+      }
+
       .page-title {
         font-size: 2.5rem;
       }
@@ -555,6 +577,17 @@
       }
     }
 
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -584,6 +617,11 @@
   </header>
 
   <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <img src="assets/images/parkphoto.png" alt="Denver Park Landscape" loading="lazy" />
+    </section>
+
     <!-- Page Header -->
     <div class="page-header">
       <h1 class="page-title">Our Locations</h1>
@@ -661,7 +699,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:43 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:48 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
