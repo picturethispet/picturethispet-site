@@ -43,7 +43,7 @@
 
     /* === HEADER === */
     header {
-      background-image: url("assets/images/main_background_allsystem.png");
+      background-image: linear-gradient(-45deg, #F47C2C, #FDB75E, #10b981, #8b5cf6);
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
@@ -76,6 +76,16 @@
     
     .desktop-logo {
       height: 100px;
+      width: 120px;
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      font-size: 1.5rem;
+      font-family: 'Playfair Display', serif;
     }
     
     .site-nav {
@@ -89,6 +99,10 @@
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
+    }
+    
+    .site-nav a.active {
+      color: var(--gold);
     }
     
     .book-btn {
@@ -109,7 +123,7 @@
     main {
       margin-top: 110px;
       min-height: calc(100vh - 110px);
-      background-image: url("assets/images/main_background_allsystem.png");
+      background-image: linear-gradient(-45deg, #F47C2C, #FDB75E, #10b981, #8b5cf6);
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
@@ -161,6 +175,7 @@
       color: var(--gold);
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
+      font-weight: 600;
     }
 
     .info-card p {
@@ -175,7 +190,7 @@
     }
 
     .calendar-container {
-      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-image: linear-gradient(135deg, rgba(244, 124, 44, 0.3), rgba(253, 183, 94, 0.2), rgba(16, 185, 129, 0.3));
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
@@ -256,6 +271,11 @@
       position: relative;
       font-size: 1.1rem;
       font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .calendar-day:hover {
+      transform: scale(1.05);
     }
 
     .calendar-day.other-month {
@@ -445,6 +465,8 @@
       
       .desktop-logo {
         height: 48px;
+        width: 80px;
+        font-size: 1rem;
       }
       
       .site-nav {
@@ -545,26 +567,18 @@
         transform: translateY(0);
       }
     }
-
-    .calendar-day {
-      transition: all 0.3s ease;
-    }
-
-    .calendar-day:hover {
-      transform: scale(1.05);
-    }
   </style>
 </head>
 <body>
   <header>
     <a href="/" class="logo-link">
-      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <div class="desktop-logo">PTP</div>
     </a>
     <nav class="site-nav">
       <a href="/">Home</a>
       <a href="#">Locations</a>
       <a href="#">Pricing</a>
-      <a href="/availability">Availability</a>
+      <a href="/availability" class="active">Availability</a>
       <a href="#">Contact</a>
       <a href="#" class="book-btn">Book Now</a>
     </nav>
@@ -604,7 +618,7 @@
     <div class="calendar-section">
       <div class="calendar-container">
         <div class="calendar-header">
-          <h2 class="calendar-title" id="calendarTitle">December 2024</h2>
+          <h2 class="calendar-title" id="calendarTitle">May 2025</h2>
           <div class="calendar-nav">
             <button class="nav-button" onclick="previousMonth()">‹</button>
             <button class="nav-button" onclick="nextMonth()">›</button>
@@ -653,138 +667,26 @@
   <script>
     let currentMonth = new Date();
     
-    // Your Session Availability calendar feed
-    const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
+    // Mock data for demonstration
+    let bookedDates = [
+      "2025-05-15",
+      "2025-05-22", 
+      "2025-05-29",
+      "2025-06-05",
+      "2025-06-12",
+      "2025-06-19"
+    ];
     
-    // Calendar data - will be populated from iCal feed
-    let bookedDates = [];
-    let softHoldDates = [];
-    let calendarEvents = [];
+    let softHoldDates = [
+      "2025-05-08",
+      "2025-05-16",
+      "2025-06-03"
+    ];
 
     // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-    }
-
-    // Parse iCal data
-    function parseICalData(icsData) {
-      const events = [];
-      const lines = icsData.split('\n');
-      let currentEvent = {};
-      let inEvent = false;
-
-      for (let line of lines) {
-        line = line.trim();
-        
-        if (line === 'BEGIN:VEVENT') {
-          inEvent = true;
-          currentEvent = {};
-        } else if (line === 'END:VEVENT') {
-          if (currentEvent.dtstart && currentEvent.summary) {
-            events.push(currentEvent);
-          }
-          inEvent = false;
-        } else if (inEvent) {
-          if (line.startsWith('DTSTART')) {
-            const dateMatch = line.match(/DTSTART[^:]*:(\d{8}T?\d{0,6}Z?)/);
-            if (dateMatch) {
-              currentEvent.dtstart = parseDateFromICS(dateMatch[1]);
-            }
-          } else if (line.startsWith('DTEND')) {
-            const dateMatch = line.match(/DTEND[^:]*:(\d{8}T?\d{0,6}Z?)/);
-            if (dateMatch) {
-              currentEvent.dtend = parseDateFromICS(dateMatch[1]);
-            }
-          } else if (line.startsWith('SUMMARY:')) {
-            currentEvent.summary = line.substring(8);
-          }
-        }
-      }
-      return events;
-    }
-
-    // Parse date from ICS format
-    function parseDateFromICS(dateStr) {
-      // Handle formats like: 20241215T180000Z or 20241215
-      if (dateStr.includes('T')) {
-        const year = dateStr.substring(0, 4);
-        const month = dateStr.substring(4, 6);
-        const day = dateStr.substring(6, 8);
-        const hour = dateStr.substring(9, 11) || '00';
-        const minute = dateStr.substring(11, 13) || '00';
-        return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
-      } else {
-        const year = dateStr.substring(0, 4);
-        const month = dateStr.substring(4, 6);
-        const day = dateStr.substring(6, 8);
-        return new Date(`${year}-${month}-${day}`);
-      }
-    }
-
-    // Fetch calendar data
-    async function fetchCalendarData() {
-      try {
-        console.log('Fetching calendar data...');
-        // Use a CORS proxy for development/testing
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
-        const response = await fetch(proxyUrl + encodeURIComponent(CALENDAR_FEED_URL));
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const icsData = await response.text();
-        console.log('Calendar data fetched successfully');
-        
-        calendarEvents = parseICalData(icsData);
-        console.log('Parsed events:', calendarEvents);
-        
-        processCalendarEvents();
-        generateCalendar();
-        
-      } catch (error) {
-        console.error('Error fetching calendar data:', error);
-        console.log('Using fallback data...');
-        // Fallback data if calendar fetch fails
-        bookedDates = [
-          "2024-12-15",
-          "2024-12-22", 
-          "2024-12-29",
-          "2025-01-05",
-          "2025-01-12",
-          "2025-01-19"
-        ];
-        generateCalendar();
-      }
-    }
-
-    // Process calendar events to determine availability
-    function processCalendarEvents() {
-      bookedDates = [];
-      softHoldDates = [];
-      
-      calendarEvents.forEach(event => {
-        if (event.dtstart) {
-          const eventDate = event.dtstart;
-          const dateString = `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
-          
-          // Determine event type based on summary
-          const summary = (event.summary || '').toLowerCase();
-          
-          if (summary.includes('booked') || summary.includes('session') || summary.includes('appointment')) {
-            bookedDates.push(dateString);
-          } else if (summary.includes('hold') || summary.includes('pending') || summary.includes('maybe')) {
-            softHoldDates.push(dateString);
-          } else {
-            // Default to booked for any calendar event
-            bookedDates.push(dateString);
-          }
-        }
-      });
-      
-      console.log('Processed booked dates:', bookedDates);
-      console.log('Processed soft hold dates:', softHoldDates);
     }
 
     // Generate calendar
@@ -869,33 +771,23 @@
     // Navigation functions
     function previousMonth() {
       currentMonth.setMonth(currentMonth.getMonth() - 1);
-      // Only regenerate if calendar has loaded
-      if (document.getElementById('calendarGrid')) {
-        generateCalendar();
-      }
+      generateCalendar();
     }
 
     function nextMonth() {
       currentMonth.setMonth(currentMonth.getMonth() + 1);
-      // Only regenerate if calendar has loaded
-      if (document.getElementById('calendarGrid')) {
-        generateCalendar();
-      }
+      generateCalendar();
     }
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Availability page loaded, initializing...');
       
-      // Fetch real calendar data
-      fetchCalendarData();
+      // Generate initial calendar
+      setTimeout(() => {
+        generateCalendar();
+      }, 1000);
     });
-
-    // Auto-refresh calendar every 5 minutes to show real-time updates
-    setInterval(function() {
-      console.log('Auto-refreshing availability data...');
-      fetchCalendarData();
-    }, 300000); // 5 minutes
   </script>
 </body>
 </html>
