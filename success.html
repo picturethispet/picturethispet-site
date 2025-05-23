@@ -647,7 +647,7 @@
 
   <!-- Version Footer -->
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 04:16 AM MDT, May 23, 2025</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 10:36 AM MDT, May 23, 2025</p>
   </footer>
 
   <script>
@@ -699,7 +699,7 @@
           ]);
           successDebugMessage.innerHTML += 'Data submission to Google Sheets completed (status unknown due to no-cors mode).<br>';
         } catch (error) {
-          successDebugMessage.innerHTML += `<span style="color: #ef4444;">Warning: Failed to save data to Google Sheets. (${error.message}) Your booking is still confirmed.</span><br>`;
+          successDebugMessage.innerHTML += `<span style="color: #ef4444;">Warning: Failed to save data to Google Sheets. (${error.message}) Your booking is still confirmed.</span><br>';
         }
 
         // Show success card regardless of Google Sheets outcome
@@ -710,8 +710,8 @@
         debugMessage.innerHTML += 'LocalStorage cleaned up.<br>';
 
       } catch (error) {
-        debugMessage.innerHTML += `<span style="color: #ef4444;">Error: ${error.message}. Please contact support.</span><br>`;
-        errorSubtitle.textContent = `An unexpected error occurred: ${error.message}. Please contact support.`;
+        debugMessage.innerHTML += `<span style="color: #ef4444;">Error: ${error.message}. Please contact support.</span><br>';
+        errorSubtitle.textContent = `An unexpected error occurred: ${error.message}. Please contact support.';
         showError();
       }
     }
@@ -860,7 +860,7 @@
       }
     }
 
-    // Generate a unique booking ID for tracking
+    // Generate a unique booking Id for tracking
     function generateBookingId(data) {
       const timestamp = Date.now();
       const clientInitials = (data.clientFirstName?.[0] || '') + (data.clientLastName?.[0] || '');
