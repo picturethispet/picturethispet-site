@@ -144,13 +144,55 @@
       margin-top: 110px;
       z-index: 1;
       overflow: hidden;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: url('assets/images/parkphoto.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
-    
-    .hero-section img {
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: auto;
-      display: block;
+      height: 100%;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      opacity: 0.5;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      margin-bottom: 1rem;
       animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-content p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      animation: fadeInUp 1s ease-out 0.3s both;
     }
 
     /* === MAIN CONTENT === */
@@ -486,6 +528,15 @@
 
       .hero-section {
         margin-top: 80px;
+        height: 50vh;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
       }
 
       .page-title {
@@ -619,7 +670,11 @@
   <main>
     <!-- Hero Section -->
     <section class="hero-section">
-      <img src="assets/images/parkphoto.jpg" alt="Denver Park Landscape" loading="lazy" />
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Explore Our Denver Parks</h1>
+        <p>Capture your pet's joy in the perfect setting at one of our scenic park locations.</p>
+      </div>
     </section>
 
     <!-- Page Header -->
@@ -699,7 +754,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:48 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:57 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
