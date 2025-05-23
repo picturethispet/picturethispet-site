@@ -29,6 +29,7 @@
       overflow-x: hidden;
       scrollbar-width: none;
       -ms-overflow-style: none;
+      scroll-behavior: smooth;
     }
     
     html::-webkit-scrollbar {
@@ -99,12 +100,42 @@
       background: url("assets/images/ani_bkgd_warm.png");
       background-size: cover;
       background-position: center;
-      color: var(--orange);
-      padding: 0.6rem 1.2rem;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding: 0.8rem 2rem;
+      border: 2px solid transparent;
       border-radius: 999px;
-      font-weight: bold;
+      font-weight: 900;
+      font-size: 1.2rem;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-clip: text;
+      position: relative;
+    }
+
+    .book-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("assets/images/ani_bkgd_warm.png");
+      background-size: cover;
+      background-position: center;
+      border-radius: 999px;
+      opacity: 0.15;
+      z-index: -1;
+    }
+
+    .book-btn:hover::before {
+      opacity: 0.25;
+    }
+
+    .book-btn:hover {
+      transform: translateY(-1px);
     }
     
     .mobile-menu-btn {
@@ -494,15 +525,12 @@
 
     /* === FOOTER === */
     footer {
-      background-image: url('assets/images/main_background_allsystem.png');
-      background-size: 100% 100%;
-      background-position: center;
-      background-repeat: no-repeat;
-      animation: moveBackground 30s ease-in-out infinite;
+      background: transparent;
       text-align: center;
       padding: 2rem 1rem;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
+      position: relative;
     }
 
     .payments img {
@@ -559,12 +587,14 @@
         background: url("assets/images/ani_bkgd_warm.png");
         background-size: cover;
         background-position: center;
-        color: var(--orange);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         padding: 0.6rem 1.2rem;
         border-radius: 999px;
         font-weight: bold;
         text-decoration: none;
         margin-left: 0;
+        font-size: 1rem;
       }
       
       .mobile-menu-btn {
@@ -735,6 +765,14 @@
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
+    }
+
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      const sessionSection = document.getElementById('session-builder-section');
+      if (sessionSection) {
+        sessionSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
     const questions = [
@@ -1012,7 +1050,7 @@
           <div class="session-card-content">
             <h2>📸 Photography Service Agreement</h2>
             <div class="agreement-text">
-              <p>By participating, you agree photos are PictureThisPet’s intellectual property. You receive high-resolution files for personal use; the photographer retains ownership and marketing rights. No editing/selling images without permission. You’re granted a perpetual license for personal sharing/printing; commercial rights reserved.</p>
+              <p>By participating, you agree photos are PictureThisPet's intellectual property. You receive high-resolution files for personal use; the photographer retains ownership and marketing rights. No editing/selling images without permission. You're granted a perpetual license for personal sharing/printing; commercial rights reserved.</p>
             </div>
           </div>
           <div class="session-card-footer">
@@ -1029,7 +1067,7 @@
           <div class="session-card-content">
             <h2>📅 Cancellation & Refund Policy</h2>
             <div class="agreement-text">
-              <p>Payments are non-refundable. Rescheduling requires 48+ hours’ notice. Severe weather/emergencies allow rescheduling. Missed appointments or late cancellations forfeit rescheduling/refunds. Sessions are confirmed only after full payment.</p>
+              <p>Payments are non-refundable. Rescheduling requires 48+ hours' notice. Severe weather/emergencies allow rescheduling. Missed appointments or late cancellations forfeit rescheduling/refunds. Sessions are confirmed only after full payment.</p>
             </div>
           </div>
           <div class="session-card-footer">
@@ -1069,10 +1107,11 @@
     </a>
     <nav class="site-nav">
       <a href="#" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
       <a href="#" aria-label="Locations page">Locations</a>
       <a href="#" aria-label="Pricing page">Pricing</a>
       <a href="#" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session">Book Now</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
@@ -1112,7 +1151,7 @@
       <img src="assets/images/mastercard.png" alt="Mastercard payment accepted" loading="lazy" />
       <img src="assets/images/paypal.png" alt="PayPal payment accepted" loading="lazy" />
     </div>
-    <p>© 2025 PictureThisPet. All rights reserved. | v3.4.1</p>
+    <p>© 2025 PictureThisPet. All rights reserved. | v4.0.0</p>
   </footer>
 
   <script>
