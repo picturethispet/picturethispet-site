@@ -126,7 +126,7 @@
       position: relative;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-      padding-top: 90px; /* Nudged down slightly */
+      padding-top: 100px; /* Lowered again */
       z-index: 1;
     }
     
@@ -217,8 +217,6 @@
       overflow: hidden;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-      min-height: 100vh; /* <-- Add this line if not already set */
-}
     }
 
     .session-builder-header {
@@ -265,7 +263,7 @@
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      height: 620px;
+      height: 600px; /* Unified height */
       width: 100%;
       max-width: 600px;
       animation: moveBackground 30s ease-in-out infinite;
@@ -290,8 +288,8 @@
     }
 
     .session-card.agreement-card {
-      height: 805px;
-      max-width: 900px; /* Wider for desktop */
+      height: 600px; /* Unified and reduced height */
+      max-width: 1000px; /* Wider for desktop */
       width: 100%;
       padding: 2.5rem;
       display: flex;
@@ -317,7 +315,7 @@
     }
 
     .session-card-logo {
-      max-width: 200px;
+      max-width: 400px; /* Doubled for desktop */
       margin-bottom: 1rem;
       display: block;
     }
@@ -342,7 +340,15 @@
       margin: 0 auto;
       color: white;
       padding-top: 1rem;
-      padding-bottom: 1.5rem;
+      padding-bottom: 1rem; /* Closer to body */
+    }
+
+    .session-card-body .question-prompt {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: white;
+      padding-bottom: 1rem; /* Closer to answers */
     }
 
     .session-card-body p {
@@ -364,7 +370,7 @@
       text-align: left;
       line-height: 1.6;
       font-size: 1rem;
-      max-width: 700px; /* Wider for desktop */
+      max-width: 900px; /* Wider for less line wrapping */
       margin-left: auto;
       margin-right: auto;
     }
@@ -390,13 +396,6 @@
     .session-info-list li:last-child {
       border-bottom: none;
       padding-bottom: 1.5rem;
-    }
-
-    .question-prompt {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 2.5rem;
-      color: white;
     }
 
     .answer-options {
@@ -560,7 +559,7 @@
       }
       
       .hero-section {
-        padding-top: 65px; /* Nudged down slightly */
+        padding-top: 70px; /* Lowered again */
       }
       
       .section-split {
@@ -588,8 +587,8 @@
       }
 
       section#session-builder-section {
-        padding: 6rem 1rem 4rem; /* Added bottom padding */
-        min-height: 100vh; /* Ensures full viewport height */
+        padding: 6rem 1rem 6rem; /* Increased bottom padding */
+        min-height: 120vh; /* Larger for mobile */
       }
 
       .session-heading {
@@ -605,25 +604,25 @@
       .session-card-stack {
         margin-top: 2.5rem;
         height: auto;
-        min-height: 600px; /* Increased for taller cards */
+        min-height: 600px;
       }
 
       .session-card {
-        height: 500px;
+        height: 600px; /* Increased by 20% for questions */
         max-width: 90%;
         padding: 2rem;
         top: 55%;
       }
 
       .session-card.agreement-card {
-        height: 900px;
+        height: 1000px; /* Elongated for mobile */
         max-width: 90%;
         padding: 2rem;
         top: 55%;
       }
 
       .session-card-logo {
-        max-width: 150px;
+        max-width: 150px; /* Kept smaller for mobile */
         margin-bottom: 0.8rem;
       }
 
@@ -637,11 +636,17 @@
         font-size: 1.8rem;
         margin: 0 auto;
         padding-top: 0.8rem;
-        padding-bottom: 1.2rem;
+        padding-bottom: 0.8rem; /* Closer to body */
+      }
+
+      .session-card-body .question-prompt {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.8rem; /* Closer to answers */
       }
 
       .agreement-text {
-        max-width: 90%; /* Adjusted for mobile */
+        max-width: 90%;
       }
 
       .session-info-list {
@@ -655,11 +660,6 @@
 
       .session-info-list li:last-child {
         padding-bottom: 1.5rem;
-      }
-
-      .question-prompt {
-        font-size: 1.6rem;
-        margin-bottom: 2rem;
       }
 
       .answer-options {
@@ -980,7 +980,7 @@
         <div class="session-card-body">
           <h2>🐕 Behavior Policy</h2>
           <div class="agreement-text">
-            <p>All pets must be under control and well-behaved throughout the session. Owners are responsible for their pet's behavior at all times. Disruptive or aggressive behavior from pets or people may result in early termination of the session without refund. Sessions take place in public and private environments, so respectful behavior from all parties — pets, owners, and humans alike — is required to ensure a safe and fun experience for everyone involved.</p>
+            <p>All pets must be well-behaved and under control. Owners are responsible for pet behavior. Disruptive or aggressive actions may terminate the session without refund. Sessions occur in public/private settings, requiring respectful behavior from all for safety and enjoyment.</p>
           </div>
         </div>
         <div class="session-card-footer">
@@ -997,7 +997,7 @@
         <div class="session-card-body">
           <h2>📸 Photography Service Agreement</h2>
           <div class="agreement-text">
-            <p>By participating in this photo session, you agree that all photographs taken by PictureThisPet are the intellectual property of the photographer. You are purchasing high-resolution digital files for personal use, but the photographer retains full ownership and the right to use images for marketing, portfolio, and promotional purposes. You may not alter, edit, or sell the images without written permission. You are granted a perpetual license to share and print the images for personal use, but PictureThisPet reserves all commercial rights.</p>
+            <p>By participating, you agree photos are PictureThisPet’s intellectual property. You receive high-resolution files for personal use; the photographer retains ownership and marketing rights. No editing/selling images without permission. You’re granted a perpetual license for personal sharing/printing; commercial rights reserved.</p>
           </div>
         </div>
         <div class="session-card-footer">
@@ -1014,7 +1014,7 @@
         <div class="session-card-body">
           <h2>📅 Cancellation & Refund Policy</h2>
           <div class="agreement-text">
-            <p>All session payments are non-refundable. However, sessions may be rescheduled with at least 48 hours' notice. In cases of severe weather or emergencies, we will work with you to find a new session date. Missed appointments or cancellations with less than 48 hours' notice are not eligible for rescheduling or refund. Your session is not guaranteed until full payment is received.</p>
+            <p>Payments are non-refundable. Rescheduling requires 48+ hours’ notice. Severe weather/emergencies allow rescheduling. Missed appointments or late cancellations forfeit rescheduling/refunds. Sessions are confirmed only after full payment.</p>
           </div>
         </div>
         <div class="session-card-footer">
