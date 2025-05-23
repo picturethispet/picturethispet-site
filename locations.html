@@ -1,61 +1,50 @@
-<!-- ✅ CHUNK 1: HEADER + SECTION 1 + SECTION 2 -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Picture This Pet | Capture Timeless Memories</title>
-  <meta name="description" content="Professional pet photography that captures timeless moments. Book your session today.">
-  <meta name="robots" content="noarchive, noodp, noimageindex">
-  <link rel="canonical" href="https://picturethispet.co/" />
+  <title>Locations | Picture This Pet</title>
+  <meta name="description" content="Discover the best locations for your pet photography session with Picture This Pet in Denver, CO.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
     :root {
       --orange: #F47C2C;
       --gold: #FDB75E;
       --dark-brown: #4B2E1E;
+      --available-green: #10b981;
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+    
     html, body {
       overflow-x: hidden;
     }
+    
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
     }
+
     @keyframes moveBackground {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    header, footer {
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      animation: moveBackground 30s ease-in-out infinite;
-      background-size: 100% 100%;
-    }
-    .section-breaker-shadow {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 80px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.4));
-      z-index: 2;
-      pointer-events: none;
-    }
+
+    /* === HEADER === */
     header {
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -71,20 +60,35 @@
       z-index: 1000;
       height: 110px;
     }
+    
     .desktop-logo {
       height: 100px;
     }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+    }
+    
     .site-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
     }
+    
     .site-nav a {
       color: white;
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
     }
+    
     .book-btn {
       background-color: var(--dark-brown);
       color: white;
@@ -94,125 +98,220 @@
       text-decoration: none;
       margin-left: 1rem;
     }
-    .hero-section {
-      margin-top: 100px;
-      position: relative;
+    
+    .mobile-menu-btn {
+      display: none;
     }
-    .hero-section img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .gradient-text {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 3rem;
-      position: absolute;
-      top: 20px;
-      right: 40px;
-      background: url("assets/images/ani_bkgd_cool.png");
-      background-size: 200%;
-      background-position: center;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-align: right;
-      max-width: 320px;
-      pointer-events: none;
-    }
-    .section-split {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2rem 2rem 3rem;
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
-    }
-    .section-split::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      min-height: calc(100vh - 110px);
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
       background-position: center;
-      background-repeat: no-repeat;
-      z-index: -1;
       animation: moveBackground 30s ease-in-out infinite;
-      opacity: 0.5;
+      padding: 4rem 1rem;
+      position: relative;
     }
-    .side-a, .side-b {
-      flex: 1;
-      padding: 2rem;
+
+    /* === LOCATIONS SECTION === */
+    .locations-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      animation: slideInUp 0.8s ease-out;
     }
-    .side-a {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      text-align: right;
-    }
-    .side-a h1 {
-      max-width: 420px;
-      margin-left: auto;
-      font-family: 'Inter', sans-serif;
-      font-weight: 900;
-      font-size: 3.8rem;
-      line-height: 1.25;
-      background: url("assets/images/ani_bkgd_cool.png");
-      background-size: cover;
-      background-position: center;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-align: left;
-    }
-    .side-b-inner {
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-      max-width: 420px;
-    }
-    .side-b h2 {
+
+    .locations-section h2 {
       font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
       font-weight: 700;
-      font-size: 2.3rem;
-      line-height: 1.3;
+      margin-bottom: 3rem;
+      color: white;
+    }
+
+    .location-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .location-image {
+      width: 40%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .location-content {
+      width: 60%;
+    }
+
+    .location-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
       margin-bottom: 1rem;
     }
-    .side-b p {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.35rem;
-      line-height: 1.75;
-      max-width: 480px;
-      margin: 0 auto;
+
+    .location-content p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .location-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .location-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo {
+        height: 48px;
+      }
+      
+      .site-nav {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      main {
+        margin-top: 80px;
+        padding: 2rem 1rem;
+      }
+
+      .locations-section h2 {
+        font-size: 2rem;
+      }
+
+      .location-card {
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+
+      .location-image {
+        width: 100%;
+        height: 200px;
+      }
+
+      .location-content {
+        width: 100%;
+      }
+
+      .location-content h3 {
+        font-size: 1.5rem;
+      }
+
+      .location-content p {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <a href="/" class="logo-link">
+      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
     <nav class="site-nav">
-      <a href="#">Home</a>
-      <a href="#">Locations</a>
+      <a href="/">Home</a>
+      <a href="/ptp-locations.html">Locations</a>
       <a href="#">Pricing</a>
       <a href="#">Contact</a>
       <a href="#" class="book-btn">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
   </header>
+
   <main>
-    <section class="hero-section">
-      <img src="assets/images/sec1_img_final.png" alt="Golden Retriever in Cheesman Park" />
-      <div class="section-breaker-shadow"></div>
-    </section>
-    <section class="section-split">
-      <div class="side-a">
-        <h1>ONE DAY, THEY WON’T<br />BE THERE BY YOUR SIDE</h1>
-      </div>
-      <div class="side-b">
-        <div class="side-b-inner">
-          <h2>But these moments?<br />They’ll last forever.</h2>
-          <p>Photographs capture your pet's personality, their quirks, the joy they bring into your life. Years from now, you'll cherish those memories.</p>
+    <div class="locations-section">
+      <h2>Our Denver Locations</h2>
+
+      <div class="location-card">
+        <img src="assets/images/parkphoto.jpg" alt="Cheesman Park" class="location-image" />
+        <div class="location-content">
+          <h3>Cheesman Park</h3>
+          <p><strong>Directions:</strong> Located at 1599 E 8th Ave, Denver, CO 80218. Access via 8th Ave or 13th Ave, with free street parking on surrounding streets like Humboldt St and Race St (check signs for restrictions). Head toward the Cheesman Memorial Pavilion or the central meadow for the best pet photo spots.</p>
+          <p><strong>What It Offers:</strong> This 80-acre park features sprawling grassy lawns, groves of trees like American Linden and Colorado Blue Spruce, a stunning neoclassical pavilion, and fountains. Enjoy mountain views and a connection to the Denver Botanic Gardens.</p>
+          <p><strong>Why It’s Great for Pet Shots:</strong> The open meadows give pets space to run and play for candid action shots, while shaded groves offer soft lighting for portraits. The pavilion and fountains add elegant backdrops, and the Botanic Gardens nearby provide floral elements for unique compositions.</p>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=1599+E+8th+Ave,+Denver,+CO+80218" target="_blank" class="location-btn">Get Directions</a>
         </div>
       </div>
-    </section>
-<!-- ✅ ENTER CHUNK 2 HERE -->
+
+      <div class="location-card">
+        <img src="assets/images/parkphoto.jpg" alt="City Park" class="location-image" />
+        <div class="location-content">
+          <h3>City Park</h3>
+          <p><strong>Directions:</strong> Located at 2001 Colorado Blvd, Denver, CO 80205, east of downtown. Enter via 17th Ave or York St, with parking along the park’s roads or at lots near the Denver Zoo or Denver Museum of Nature & Science. Ideal photo spots are near Ferril Lake, the flower gardens, or the Martin Luther King Memorial.</p>
+          <p><strong>What It Offers:</strong> A 330-acre park with Ferril and Duck Lakes, flower gardens, fountains, a golf course, and attractions like the Denver Zoo and Denver Museum of Nature & Science. Features rolling lawns, tree-lined paths, and skyline views with the Rocky Mountains in the background.</p>
+          <p><strong>Why It’s Great for Pet Shots:</strong> The lakes and fountains create reflective, scenic backdrops, while the flower gardens add vibrant colors. The open lawns allow for playful pet shots, and the skyline views provide a dynamic urban contrast, blending natural and city elements in one frame.</p>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=2001+Colorado+Blvd,+Denver,+CO+80205" target="_blank" class="location-btn">Get Directions</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 12:06 PM MDT, May 23, 2025</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+</body>
+</html>
