@@ -838,18 +838,211 @@
   </footer>
 
   <script>
-    // Your Session Availability calendar feed
+    // Google Calendar API Configuration
+    const CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'; // You'll need to set this up
+    const API_KEY = 'YOUR_GOOGLE_API_KEY'; // You'll need to set this up
+    const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
+    const SCOPES = 'https://www.googleapis.com/auth/calendar';
+    
+    // Your Session Availability calendar ID (extracted from your iCal URL)
+    const CALENDAR_ID = '093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51@group.calendar.google.com';
     const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
     
     let currentMonth = new Date();
     let selectedDate = null;
     let selectedDateElement = null;
+    let isGoogleAPIReady = false;
+    let isSignedIn = false;
     
     // Calendar data - will be populated from iCal feed
     let bookedDates = [];
     let softHoldDates = [];
     let calendarEvents = [];
     let calendarLoaded = false;
+
+    // Initialize Google API
+    async function initializeGoogleAPI() {
+      try {
+        await gapi.load('auth2', () => {
+          gapi.auth2.init({
+            client_id: CLIENT_ID,
+          });
+        });
+        
+        await gapi.load('client', async () => {
+          await gapi.client.init({
+            apiKey: API_KEY,
+            clientId: CLIENT_ID,
+            discoveryDocs: [DISCOVERY_DOC],
+            scope: SCOPES
+          });
+          
+          isGoogleAPIReady = true;
+          const authInstance = gapi.auth2.getAuthInstance();
+          isSignedIn = authInstance.isSignedIn.get();
+          
+          updateAuthStatus();
+          console.log('Google Calendar API initialized');
+        });
+      } catch (error) {
+        console.error('Error initializing Google API:', error);
+        showAPISetupInstructions();
+      }
+    }
+
+    // Update authentication status in UI
+    function updateAuthStatus() {
+      const authSection = document.getElementById('authSection');
+      if (!authSection) return;
+      
+      if (!isGoogleAPIReady) {
+        authSection.innerHTML = `
+          <div style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+            <h4 style="color: #ef4444; margin-bottom: 0.5rem;">⚠️ API Setup Required</h4>
+            <p style="color: rgba(255,255,255,0.9); font-size: 0.9rem; line-height: 1.4;">
+              To enable real calendar management, you need to set up Google Calendar API credentials. 
+              <a href="#" onclick="showAPISetupInstructions()" style="color: var(--gold);">Click here for setup instructions</a>
+            </p>
+          </div>
+        `;
+      } else if (!isSignedIn) {
+        authSection.innerHTML = `
+          <div style="background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.5); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+            <h4 style="color: var(--soft-hold-yellow); margin-bottom: 0.5rem;">🔑 Sign In Required</h4>
+            <p style="color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-bottom: 1rem;">
+              Sign in to your Google account to manage calendar events
+            </p>
+            <button class="action-btn primary" onclick="signIn()">🔐 Sign In to Google</button>
+          </div>
+        `;
+      } else {
+        authSection.innerHTML = `
+          <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+            <h4 style="color: var(--available-green); margin-bottom: 0.5rem;">✅ Connected</h4>
+            <p style="color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-bottom: 1rem;">
+              You're signed in and ready to manage calendar events
+            </p>
+            <button class="action-btn" onclick="signOut()">🔓 Sign Out</button>
+          </div>
+        `;
+      }
+    }
+
+    // Show API setup instructions
+    function showAPISetupInstructions() {
+      const instructions = `
+        🔧 **Google Calendar API Setup Instructions:**
+        
+        1. **Go to Google Cloud Console:** https://console.cloud.google.com/
+        2. **Create a new project** (or select existing)
+        3. **Enable Calendar API:**
+           - Go to "APIs & Services" → "Library"
+           - Search "Google Calendar API" → Enable it
+        4. **Create Credentials:**
+           - Go to "APIs & Services" → "Credentials"
+           - Click "Create Credentials" → "API Key"
+           - Copy your API Key
+        5. **Set up OAuth:**
+           - Click "Create Credentials" → "OAuth 2.0 Client ID"
+           - Choose "Web application"
+           - Add your domain to "Authorized origins"
+           - Copy your Client ID
+        6. **Update the code:**
+           - Replace 'YOUR_GOOGLE_CLIENT_ID' with your Client ID
+           - Replace 'YOUR_GOOGLE_API_KEY' with your API Key
+        
+        **Need help?** The setup takes about 5-10 minutes. Once complete, you'll have full calendar control!
+      `;
+      
+      alert(instructions);
+    }
+
+    // Authentication functions
+    async function signIn() {
+      if (!isGoogleAPIReady) {
+        showAPISetupInstructions();
+        return;
+      }
+      
+      try {
+        const authInstance = gapi.auth2.getAuthInstance();
+        await authInstance.signIn();
+        isSignedIn = true;
+        updateAuthStatus();
+        addRecentActivity('Signed in to Google Calendar');
+      } catch (error) {
+        console.error('Sign in error:', error);
+        alert('Sign in failed. Please try again.');
+      }
+    }
+
+    async function signOut() {
+      if (!isGoogleAPIReady) return;
+      
+      try {
+        const authInstance = gapi.auth2.getAuthInstance();
+        await authInstance.signOut();
+        isSignedIn = false;
+        updateAuthStatus();
+        addRecentActivity('Signed out from Google Calendar');
+      } catch (error) {
+        console.error('Sign out error:', error);
+      }
+    }
+
+    // Real Calendar API Functions
+    async function createCalendarEvent(eventData) {
+      if (!isGoogleAPIReady || !isSignedIn) {
+        alert('Please sign in first to create calendar events');
+        return false;
+      }
+      
+      try {
+        const event = {
+          summary: eventData.title,
+          start: {
+            dateTime: eventData.startDateTime,
+            timeZone: 'America/Denver'
+          },
+          end: {
+            dateTime: eventData.endDateTime,
+            timeZone: 'America/Denver'
+          },
+          description: eventData.notes || ''
+        };
+        
+        const response = await gapi.client.calendar.events.insert({
+          calendarId: CALENDAR_ID,
+          resource: event
+        });
+        
+        console.log('Event created:', response.result);
+        return response.result;
+      } catch (error) {
+        console.error('Error creating event:', error);
+        throw error;
+      }
+    }
+
+    async function deleteCalendarEvent(eventId) {
+      if (!isGoogleAPIReady || !isSignedIn) {
+        alert('Please sign in first to delete calendar events');
+        return false;
+      }
+      
+      try {
+        await gapi.client.calendar.events.delete({
+          calendarId: CALENDAR_ID,
+          eventId: eventId
+        });
+        
+        console.log('Event deleted:', eventId);
+        return true;
+      } catch (error) {
+        console.error('Error deleting event:', error);
+        throw error;
+      }
+    }
 
     // Mobile menu toggle
     function toggleMenu() {
@@ -915,7 +1108,8 @@
     async function fetchCalendarData() {
       try {
         console.log('Fetching admin calendar data...');
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        // Use dedicated Google Calendar CORS proxy
+        const proxyUrl = 'https://gcal-cors-proxy.vercel.app?url=';
         const response = await fetch(proxyUrl + encodeURIComponent(CALENDAR_FEED_URL));
         
         if (!response.ok) {
@@ -1111,40 +1305,64 @@
       document.getElementById('bookedCount').textContent = bookedCount;
     }
 
-    // Admin action functions
-    function addSessionBlock() {
+    // REAL Admin action functions with Google Calendar API
+    async function addSessionBlock() {
       if (!selectedDate) {
         alert('Please select a date first');
         return;
       }
+      
+      if (!isGoogleAPIReady || !isSignedIn) {
+        alert('Please sign in to Google Calendar first');
+        return;
+      }
+      
       document.getElementById('eventFormSection').style.display = 'block';
       document.getElementById('eventType').value = 'session';
       document.getElementById('eventTitle').value = 'Photography Session';
     }
 
-    function markUnavailable() {
+    async function markUnavailable() {
       if (!selectedDate) {
         alert('Please select a date first');
         return;
       }
+      
+      if (!isGoogleAPIReady || !isSignedIn) {
+        alert('Please sign in to Google Calendar first');
+        return;
+      }
+      
       document.getElementById('eventFormSection').style.display = 'block';
       document.getElementById('eventType').value = 'unavailable';
       document.getElementById('eventTitle').value = 'Unavailable';
     }
 
-    function removeEvent() {
+    async function removeEvent() {
       if (!selectedDate) {
         alert('Please select a date first');
         return;
       }
+      
+      if (!isGoogleAPIReady || !isSignedIn) {
+        alert('Please sign in to Google Calendar first');
+        return;
+      }
+      
       if (confirm(`Remove all events from ${selectedDate}?`)) {
-        // In a real implementation, this would make an API call
-        alert('This would remove events from your Google Calendar. Please use the full calendar interface for actual changes.');
-        addRecentActivity(`Removed events from ${selectedDate}`);
+        try {
+          // In a real implementation, you'd need to get the event IDs first
+          // This is a simplified version
+          alert('Event removal feature requires additional API setup to list existing events. For now, please use the full Google Calendar interface.');
+          addRecentActivity(`Attempted to remove events from ${selectedDate}`);
+        } catch (error) {
+          console.error('Error removing events:', error);
+          alert('Error removing events. Please try again.');
+        }
       }
     }
 
-    function saveEvent() {
+    async function saveEvent() {
       const eventType = document.getElementById('eventType').value;
       const eventTime = document.getElementById('eventTime').value;
       const eventTitle = document.getElementById('eventTitle').value;
@@ -1155,11 +1373,42 @@
         return;
       }
       
-      // In a real implementation, this would create a calendar event
-      alert(`This would create an event in your Google Calendar:\n\nDate: ${selectedDate}\nTime: ${eventTime}\nTitle: ${eventTitle}\nType: ${eventType}\n\nPlease use the full calendar interface for actual changes.`);
+      if (!isGoogleAPIReady || !isSignedIn) {
+        alert('Please sign in to Google Calendar first');
+        return;
+      }
       
-      addRecentActivity(`Added "${eventTitle}" on ${selectedDate}`);
-      cancelEvent();
+      try {
+        // Create ISO datetime strings
+        const startDateTime = `${selectedDate}T${eventTime}:00`;
+        const endTime = eventTime.split(':');
+        const endHour = parseInt(endTime[0]) + 1; // 1 hour duration
+        const endDateTime = `${selectedDate}T${String(endHour).padStart(2, '0')}:${endTime[1]}:00`;
+        
+        const eventData = {
+          title: eventTitle,
+          startDateTime: startDateTime,
+          endDateTime: endDateTime,
+          notes: eventNotes
+        };
+        
+        const result = await createCalendarEvent(eventData);
+        
+        if (result) {
+          alert(`✅ Event created successfully!\n\nTitle: ${eventTitle}\nDate: ${selectedDate}\nTime: ${eventTime}`);
+          addRecentActivity(`Created "${eventTitle}" on ${selectedDate}`);
+          
+          // Refresh calendar data
+          setTimeout(() => {
+            refreshCalendar();
+          }, 2000); // Wait 2 seconds for Google to sync
+          
+          cancelEvent();
+        }
+      } catch (error) {
+        console.error('Error creating event:', error);
+        alert('❌ Error creating event. Please check your permissions and try again.');
+      }
     }
 
     function cancelEvent() {
@@ -1200,6 +1449,14 @@
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Admin calendar page loaded, initializing...');
+      
+      // Initialize Google API
+      if (CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID' && API_KEY !== 'YOUR_GOOGLE_API_KEY') {
+        initializeGoogleAPI();
+      } else {
+        updateAuthStatus(); // Show setup instructions
+      }
+      
       fetchCalendarData();
     });
 
@@ -1211,5 +1468,8 @@
       }
     });
   </script>
+  
+  <!-- Google APIs -->
+  <script src="https://apis.google.com/js/api.js"></script>
 </body>
 </html>
