@@ -145,14 +145,10 @@
     }
     
     .book-btn {
-      background: url("assets/images/ani_bkgd_warm.png");
-      background-size: cover;
-      background-position: center;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
       padding: 0.8rem 2rem;
-      border: 2px solid transparent;
+      border: none;
       border-radius: 999px;
       font-weight: 900;
       font-size: 1.2rem;
@@ -162,31 +158,12 @@
       transition: all 0.3s ease;
       position: relative;
       display: inline-block;
-    }
-
-    .book-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url("assets/images/ani_bkgd_warm.png");
-      background-size: cover;
-      background-position: center;
-      border-radius: 999px;
-      opacity: 0.15;
-      z-index: -1;
-      transition: all 0.3s ease;
-    }
-
-    .book-btn:hover::before {
-      opacity: 0.25;
-      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
     
     .mobile-menu-btn {
@@ -709,25 +686,25 @@
         color: white;
         padding: 0.5rem 1rem;
       }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/ptp-locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
       
       .book-btn {
-        background: url("assets/images/ani_bkgd_warm.png");
-        background-size: cover;
-        background-position: center;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
         padding: 0.6rem 1.5rem;
+        border: none;
         border-radius: 999px;
         font-weight: 900;
         font-size: 1rem;
         margin-left: 0;
         display: inline-block;
-        position: relative;
-      }
-
-      .book-btn::before {
-        opacity: 0.2;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
       }
       
       .mobile-menu-btn {
@@ -891,11 +868,11 @@
       <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="site-nav">
-      <a href="/" aria-label="Home page">Home</a>
+      <a href="/" class="active" aria-label="Home page">Home</a>
       <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="#" aria-label="Locations page">Locations</a>
-      <a href="#" aria-label="Pricing page">Pricing</a>
-      <a href="#" aria-label="Contact page">Contact</a>
+      <a href="/ptp-locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
       <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
@@ -955,7 +932,7 @@
       <img src="assets/images/mastercard.png" alt="Mastercard payment accepted" loading="lazy" />
       <img src="assets/images/paypal.png" alt="PayPal payment accepted" loading="lazy" />
     </div>
-    <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1</p>
+    <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:14 PM MDT, May 23, 2025</p>
   </footer>
 
   <script>
