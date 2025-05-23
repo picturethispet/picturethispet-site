@@ -113,7 +113,7 @@
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 4rem 1rem;
+      padding: 4rem 1rem 8rem;
       position: relative;
     }
 
@@ -178,9 +178,7 @@
       max-width: 900px;
       margin: 0 auto;
       position: relative;
-      height: auto;
       z-index: 2;
-      min-height: 600px;
     }
 
     .intake-card {
@@ -206,25 +204,21 @@
       margin-bottom: 2rem;
     }
 
-    /* Card size variations */
+    /* Card size variations - Remove max-height constraints */
     .intake-card.small-card {
       min-height: 500px;
-      max-height: 600px;
     }
 
     .intake-card.medium-card {
       min-height: 700px;
-      max-height: 850px;
     }
 
     .intake-card.large-card {
       min-height: 900px;
-      max-height: 1100px;
     }
 
     .intake-card.extra-large-card {
       min-height: 1000px;
-      max-height: 1200px;
     }
 
     .intake-card.active {
@@ -630,40 +624,41 @@
 
       main {
         margin-top: 80px;
-        padding: 2rem 1rem;
+        padding: 2rem 1rem 6rem;
+        min-height: auto;
       }
 
       .intake-section {
         max-width: 100%;
-        padding: 0 1rem;
+        padding: 0;
       }
       
       .intake-card {
         max-width: 100%;
         padding: 2rem;
-        margin-bottom: 1rem;
-        min-height: 700px; /* Base mobile height */
+        margin-bottom: 2rem;
+        min-height: auto; /* Let content determine height */
       }
 
       .intake-card.small-card {
-        min-height: 600px;
+        min-height: 700px; /* Significantly increased */
       }
 
       .intake-card.medium-card {
-        min-height: 900px; /* Increased for mobile */
+        min-height: 1000px; /* Much larger for mobile forms */
       }
 
       .intake-card.large-card {
-        min-height: 1100px; /* Increased for mobile */
+        min-height: 1300px; /* Very large for complex forms */
       }
 
       .intake-card.extra-large-card {
-        min-height: 1300px; /* Increased for mobile */
+        min-height: 1500px; /* Extra space for final summary */
       }
 
       .intake-card-logo {
-        max-width: 150px;
-        margin-bottom: 1.5rem;
+        max-width: 160px; /* Slightly larger logo */
+        margin-bottom: 2rem; /* More space below logo */
       }
 
       .intake-card-body {
@@ -720,8 +715,18 @@
       .form-group input,
       .form-group select,
       .form-group textarea {
-        padding: 1rem;
-        font-size: 1rem;
+        padding: 1.2rem; /* Larger touch-friendly padding */
+        font-size: 1.1rem; /* Larger text */
+        min-height: 60px; /* Taller inputs */
+      }
+
+      .form-group textarea {
+        min-height: 140px; /* Taller textareas */
+      }
+
+      .form-group label {
+        font-size: 1.1rem; /* Larger labels */
+        margin-bottom: 1rem;
       }
 
       /* ZIP CODE MOBILE FIX */
@@ -733,21 +738,21 @@
       .choice-buttons {
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
-        margin: 2rem 0;
+        gap: 1.5rem; /* Increased gap */
+        margin: 3rem 0; /* More margin around choice buttons */
       }
 
       .choice-btn {
         width: 100%;
         max-width: 250px;
-        padding: 1rem;
+        padding: 1.2rem; /* Larger touch target */
       }
 
       .intake-card-footer {
         flex-direction: column;
-        gap: 1.5rem;
-        padding-top: 2rem;
-        margin-top: 2rem;
+        gap: 2rem; /* More space */
+        padding-top: 3rem; /* More padding */
+        margin-top: 3rem;
       }
 
       .button-group-left {
@@ -761,13 +766,15 @@
         order: 1;
         width: 100%;
         max-width: 300px;
-        padding: 1rem 2rem;
+        padding: 1.2rem 2rem; /* Larger button */
+        font-size: 1.1rem;
       }
 
       .back-btn, .restart-btn {
         flex: 1;
         text-align: center;
-        padding: 0.75rem 1rem;
+        padding: 1rem; /* Larger buttons */
+        font-size: 1rem;
       }
     }
 
@@ -845,8 +852,8 @@
   </main>
 
   <!-- Version Footer -->
-  <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v2.0.0</p>
+  <footer style="text-align: center; padding: 2rem 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem;">
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet. All rights reserved. | v3.1.0</p>
   </footer>
 
   <script>
@@ -1260,37 +1267,42 @@
       const peopleCount = parseInt(sessionData.peopleCount) || 1;
       for (let i = 1; i <= peopleCount; i++) {
         const personPrefix = i === 1 ? 'client' : `client${i}`;
+        const isOptional = i > 1; // Person 2+ is optional
+        const optionalText = isOptional ? ' (optional)' : '';
+        const requiredClass = isOptional ? '' : 'required';
+        const requiredAttr = isOptional ? '' : 'required';
+        
         const clientCard = createCard(`
           <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
           <div class="intake-card-body form-content">
-            <h2>${peopleCount > 1 ? `Person ${i} Information` : 'Your Information'}</h2>
+            <h2>${peopleCount > 1 ? `Person ${i} Information` : 'Your Information'}${isOptional ? ' (Optional)' : ''}</h2>
             <div class="form-row">
-              <div class="form-group required">
-                <label for="${personPrefix}FirstName">First Name</label>
-                <input type="text" id="${personPrefix}FirstName" name="${personPrefix}FirstName" required placeholder="Enter first name" value="${intakeData[personPrefix + 'FirstName'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-group ${requiredClass}">
+                <label for="${personPrefix}FirstName">First Name${optionalText}</label>
+                <input type="text" id="${personPrefix}FirstName" name="${personPrefix}FirstName" ${requiredAttr} placeholder="Enter first name" value="${intakeData[personPrefix + 'FirstName'] || ''}" onkeypress="handleEnterKey(event)">
                 <div class="form-error">Please enter first name</div>
               </div>
-              <div class="form-group required">
-                <label for="${personPrefix}LastName">Last Name</label>
-                <input type="text" id="${personPrefix}LastName" name="${personPrefix}LastName" required placeholder="Enter last name" value="${intakeData[personPrefix + 'LastName'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-group ${requiredClass}">
+                <label for="${personPrefix}LastName">Last Name${optionalText}</label>
+                <input type="text" id="${personPrefix}LastName" name="${personPrefix}LastName" ${requiredAttr} placeholder="Enter last name" value="${intakeData[personPrefix + 'LastName'] || ''}" onkeypress="handleEnterKey(event)">
                 <div class="form-error">Please enter last name</div>
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group required">
-                <label for="${personPrefix}Phone">Phone Number</label>
-                <input type="tel" id="${personPrefix}Phone" name="${personPrefix}Phone" required placeholder="555-555-5555" value="${intakeData[personPrefix + 'Phone'] || ''}" oninput="formatPhoneNumber(this)" onkeypress="handleEnterKey(event)" maxlength="12">
+              <div class="form-group ${requiredClass}">
+                <label for="${personPrefix}Phone">Phone Number${optionalText}</label>
+                <input type="tel" id="${personPrefix}Phone" name="${personPrefix}Phone" ${requiredAttr} placeholder="555-555-5555" value="${intakeData[personPrefix + 'Phone'] || ''}" oninput="formatPhoneNumber(this)" onkeypress="handleEnterKey(event)" maxlength="12">
                 <div class="form-error">Please enter phone number</div>
               </div>
-              <div class="form-group required">
-                <label for="${personPrefix}Email">Email</label>
-                <input type="email" id="${personPrefix}Email" name="${personPrefix}Email" required placeholder="Enter email address" value="${intakeData[personPrefix + 'Email'] || ''}" onkeypress="handleEnterKey(event)">
+              <div class="form-group ${requiredClass}">
+                <label for="${personPrefix}Email">Email${optionalText}</label>
+                <input type="email" id="${personPrefix}Email" name="${personPrefix}Email" ${requiredAttr} placeholder="Enter email address" value="${intakeData[personPrefix + 'Email'] || ''}" onkeypress="handleEnterKey(event)">
                 <div class="form-error">Please enter a valid email address</div>
               </div>
             </div>
-            <div class="form-group required zip-code-group">
-              <label for="${personPrefix}ZipCode">Zip Code</label>
-              <input type="text" id="${personPrefix}ZipCode" name="${personPrefix}ZipCode" required placeholder="12345" value="${intakeData[personPrefix + 'ZipCode'] || ''}" onkeypress="handleEnterKey(event)" oninput="formatZipCode(this)" maxlength="5" pattern="[0-9]{5}">
+            <div class="form-group ${requiredClass} zip-code-group">
+              <label for="${personPrefix}ZipCode">Zip Code${optionalText}</label>
+              <input type="text" id="${personPrefix}ZipCode" name="${personPrefix}ZipCode" ${requiredAttr} placeholder="12345" value="${intakeData[personPrefix + 'ZipCode'] || ''}" onkeypress="handleEnterKey(event)" oninput="formatZipCode(this)" maxlength="5" pattern="[0-9]{5}">
               <div class="form-error">Please enter a 5-digit zip code</div>
             </div>
           </div>
@@ -1353,7 +1365,7 @@
             <button class="back-btn" onclick="goBack()">← Back</button>
             <button class="restart-btn" onclick="restartForm()">Start Over</button>
           </div>
-          <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+          <button class="continue-btn" onclick="handleSocialContinue()">Continue →</button>
         </div>
       `, false, 'small-card');
       container.appendChild(socialCard);
@@ -1401,42 +1413,25 @@
               <button class="back-btn" onclick="goBack()">← Back</button>
               <button class="restart-btn" onclick="restartForm()">Start Over</button>
             </div>
-            <button class="continue-btn" onclick="saveAndContinue()">Continue →</button>
+            <button class="continue-btn" onclick="proceedToPayment()">Proceed to Payment →</button>
           </div>
         `, false, 'large-card');
         container.appendChild(instagramCard);
         cardIndex++;
-      }
-
-      // Final Submission Card
-      const submissionCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body form-content">
-          <h2>Ready to Proceed!</h2>
-          <p style="font-size: 1.2rem; margin-bottom: 2rem; font-weight: 500;">Please carefully review all details below. Once you proceed to payment, changes may incur cancellation fees.</p>
-          <div class="booking-summary" id="finalSummary">
-            <div class="summary-header">
-              <h3>Confirm Your Session Details</h3>
-              <p>Review everything carefully before proceeding</p>
-            </div>
-            <div class="summary-content">
-              <!-- Summary will be populated by JavaScript -->
-            </div>
-          </div>
-        </div>
-        <div class="intake-card-footer">
+      } else {
+        // If user chose "No" to social tagging, the social card should go directly to payment
+        const lastCard = container.children[container.children.length - 1];
+        const socialCardFooter = lastCard.querySelector('.intake-card-footer');
+        socialCardFooter.innerHTML = `
           <div class="button-group-left">
             <button class="back-btn" onclick="goBack()">← Back</button>
             <button class="restart-btn" onclick="restartForm()">Start Over</button>
           </div>
           <button class="continue-btn" onclick="proceedToPayment()">Proceed to Payment →</button>
-        </div>
-      `, false, 'extra-large-card');
-      container.appendChild(submissionCard);
-      cardIndex++;
+        `;
+      }
 
       totalCards = cardIndex;
-      populateFinalSummary();
     }
 
     // Handle Enter key press
@@ -1473,6 +1468,17 @@
       console.log('Social choice selected:', value); // Debug log
     }
 
+    // Handle social media continue button
+    function handleSocialContinue() {
+      if (intakeData.socialTagging === 'Yes') {
+        // Show Instagram handles card
+        saveAndContinue();
+      } else {
+        // Go directly to payment
+        proceedToPayment();
+      }
+    }
+
     // Calculate total price
     function calculateTotal() {
       let total = 0;
@@ -1481,46 +1487,6 @@
       if (sessionData.petCount === "2") total += 40;
       if (sessionData.peopleCount === "2") total += 20;
       return total;
-    }
-
-    // Populate final summary - UPDATED to only show required fields
-    function populateFinalSummary() {
-      setTimeout(() => {
-        const summary = document.getElementById('finalSummary');
-        if (summary) {
-          const petNames = [];
-          const petCount = parseInt(sessionData.petCount) || 1;
-          
-          for (let i = 1; i <= petCount; i++) {
-            const petPrefix = i === 1 ? 'pet' : `pet${i}`;
-            const petName = intakeData[petPrefix + 'Name'];
-            if (petName) petNames.push(petName);
-          }
-          
-          summary.innerHTML = `
-            <div class="summary-item">
-              <span class="label">Session:</span>
-              <span class="value">${sessionData.session || "—"}</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Date & Time:</span>
-              <span class="value">${sessionData.selectedDateTime || "—"}</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Location:</span>
-              <span class="value">${sessionData.park || "—"}</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Number of Pets:</span>
-              <span class="value">${sessionData.petCount || "—"}</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Number of People:</span>
-              <span class="value">${sessionData.peopleCount || "—"}</span>
-            </div>
-          `;
-        }
-      }, 100);
     }
 
     // Proceed to payment
