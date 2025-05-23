@@ -737,13 +737,6 @@
       nav.classList.toggle('active');
     }
 
-    const sessionData = {
-      session: '',
-      park: '',
-      petCount: '',
-      peopleCount: ''
-    };
-
     const questions = [
       { label: "What type of session?", name: "session", options: ["Mini", "Full"] },
       { label: "Which park location?", name: "park", options: ["Cheesman Park", "City Park"] },
@@ -754,17 +747,6 @@
     let currentCard = 0;
     let currentQuestion = 0;
     let cardHistory = [];
-
-    function loadSessionData() {
-      const saved = localStorage.getItem("ptpSessionData");
-      if (saved) {
-        Object.assign(sessionData, JSON.parse(saved));
-      }
-    }
-
-    function saveSessionData() {
-      localStorage.setItem("ptpSessionData", JSON.stringify(sessionData));
-    }
 
     function createCard(content, isActive = false) {
       const card = document.createElement("div");
@@ -820,10 +802,6 @@
         showCard(nextIndex);
       }
 
-      if (nextIndex === 10) {
-        window.location.href = 'ptp-pick-date-step-3.html';
-      }
-
       return false;
     }
 
@@ -853,7 +831,13 @@
 
     function restartSession() {
       if (confirm("Are you sure you want to start over? This will clear all your selections.")) {
-        Object.keys(sessionData).forEach(key => sessionData[key] = '');
+        Object.keys(sessionData).forEach(key => {
+          if (typeof sessionData[key] === 'boolean') {
+            sessionData[key] = false;
+          } else {
+            sessionData[key] = '';
+          }
+        });
         localStorage.removeItem("ptpSessionData");
         currentCard = 0;
         currentQuestion = 0;
@@ -868,8 +852,7 @@
         return;
       }
 
-      sessionData[questionName] = answer;
-      saveSessionData();
+      handleSessionSelection(questionName, answer);
 
       currentQuestion++;
 
@@ -923,17 +906,21 @@
       const action = button.dataset.action;
       const question = button.dataset.question;
       const answer = button.dataset.answer;
+      const agreementType = button.dataset.agreement;
 
       if (question && answer) {
         handleQuestionAnswer(question, answer);
-      } else if (action === 'start' || action === 'next' || action === 'agree') {
+      } else if (action === 'start' || action === 'next') {
         advanceCard(e);
+      } else if (action === 'agree' && agreementType) {
+        acceptAgreement(agreementType);
+        advanceCard(e);
+      } else if (action === 'pick-date') {
+        redirectToPickADate();
       } else if (action === 'back') {
         goBack();
       } else if (action === 'restart') {
         restartSession();
-      } else if (action === 'pick-date') {
-        window.location.href = 'ptp-pick-date-step-3.html';
       }
 
       return false;
@@ -1008,7 +995,7 @@
           </div>
           <div class="session-card-footer">
             <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
-            <button type="button" data-action="agree" aria-label="Agree to behavior policy">Agree & Continue →</button>
+            <button type="button" data-action="agree" data-agreement="behavior" aria-label="Agree to behavior policy">Agree & Continue →</button>
             <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
           </div>
         </div>
@@ -1025,7 +1012,7 @@
           </div>
           <div class="session-card-footer">
             <button type="button" class="back-btn" data-action="back" aria-label="Go back">🔙 Back</button>
-            <button type="button" data-action="agree" aria-label="Agree to photography service agreement">Agree & Continue →</button>
+            <button type="button" data-action="agree" data-agreement="service" aria-label="Agree to photography service agreement">Agree & Continue →</button>
             <button type="button" class="restart-btn" data-action="restart" aria-label="Restart session">🔄 Start Over</button>
           </div>
         </div>
@@ -1102,7 +1089,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      loadSessionData();
       currentCard = 0;
       currentQuestion = 0;
       cardHistory = [];
@@ -1162,5 +1148,52 @@
     </div>
     <p>© 2025 PictureThisPet. All rights reserved. | v3.2.1</p>
   </footer>
+
+  <script>
+    const sessionData = {
+      session: '',
+      park: '',
+      petCount: '',
+      peopleCount: '',
+      acceptedBehaviorPolicy: false,
+      acceptedServiceAgreement: false,
+      acceptedCancellationPolicy: false
+    };
+
+    function saveSessionData() {
+      localStorage.setItem("ptpSessionData", JSON.stringify(sessionData));
+    }
+
+    function handleSessionSelection(field, value) {
+      sessionData[field] = value;
+      saveSessionData();
+    }
+
+    function acceptAgreement(type) {
+      if (type === 'behavior') sessionData.acceptedBehaviorPolicy = true;
+      if (type === 'service') sessionData.acceptedServiceAgreement = true;
+      if (type === 'cancellation') sessionData.acceptedCancellationPolicy = true;
+      saveSessionData();
+    }
+
+    function redirectToPickADate() {
+      if (sessionData.acceptedBehaviorPolicy &&
+          sessionData.acceptedServiceAgreement &&
+          sessionData.acceptedCancellationPolicy) {
+        saveSessionData();
+        window.location.href = '/ptp-pick-date-step-3.html';
+      } else {
+        alert("Please accept all agreements to continue.");
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const saved = localStorage.getItem("ptpSessionData");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        Object.assign(sessionData, parsed);
+      }
+    });
+  </script>
 </body>
 </html>
