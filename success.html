@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Booking Confirmed! | Picture This Pet</title>
-  <meta name="description" content="Your pet photography session has been successfully booked.">
+  <title>Booking Success | Picture This Pet</title>
+  <meta name="description" content="Your pet photography session booking is confirmed.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -28,7 +28,7 @@
     }
     
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
     }
@@ -129,310 +129,97 @@
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       padding: 3rem;
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
+      text-align: center;
+      width: 100%;
     }
 
-    .success-logo {
-      display: block;
-      max-width: 200px;
+    .success-card-logo {
+      max-width: 180px;
       margin: 0 auto 2rem;
       height: auto;
     }
 
-    .checkmark-container {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--available-green), #059669);
-      margin: 0 auto 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: checkmarkBounce 0.6s ease-out 0.3s both;
-      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-    }
-
-    @keyframes checkmarkBounce {
-      0% {
-        opacity: 0;
-        transform: scale(0.3);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .checkmark {
-      color: white;
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-
-    .success-title {
+    .success-card h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
       color: white;
-      letter-spacing: -0.02em;
     }
 
-    .success-subtitle {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 400;
-      margin-bottom: 3rem;
+    .success-card p {
+      font-size: 1.2rem;
       opacity: 0.9;
-      line-height: 1.5;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* === BOOKING DETAILS === */
-    .booking-details {
-      background: rgba(255, 255, 250, 0.05);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2.5rem;
-      margin: 2rem 0;
-      text-align: left;
-    }
-
-    .details-header {
-      text-align: center;
       margin-bottom: 2rem;
+      line-height: 1.6;
     }
 
-    .details-header h3 {
-      font-family: 'Inter', sans-serif;
+    .booking-details {
+      text-align: left;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .booking-details h3 {
+      font-family: 'Playfair Display', serif;
       font-size: 1.6rem;
-      font-weight: 600;
-      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .booking-details p {
+      font-size: 1rem;
       margin-bottom: 0.5rem;
     }
 
-    .details-header p {
-      font-size: 1rem;
-      opacity: 0.8;
-    }
-
-    .details-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .detail-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .detail-item:last-child {
-      border-bottom: none;
-    }
-
-    .detail-label {
-      font-weight: 500;
-      opacity: 0.8;
-      font-size: 1rem;
-    }
-
-    .detail-value {
-      font-weight: 600;
-      color: white;
-      font-size: 1rem;
-      text-align: right;
-    }
-
-    .detail-value.highlight {
-      color: var(--gold);
-      font-size: 1.1rem;
-    }
-
-    .total-section {
-      border-top: 2px solid rgba(255, 255, 255, 0.2);
-      padding-top: 1.5rem;
-      margin-top: 1.5rem;
-    }
-
-    .total-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .total-item .detail-label {
-      font-size: 1.2rem;
-      font-weight: 600;
-      opacity: 1;
-    }
-
-    .total-item .detail-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--gold);
-    }
-
-    /* === NEXT STEPS === */
-    .next-steps {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2rem;
-      margin: 2rem 0;
-      text-align: left;
-    }
-
-    .next-steps h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    .steps-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .steps-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
-    .step-number {
+    .success-btn {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 600;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-
-    /* === ACTION BUTTONS === */
-    .action-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .action-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      border: 2px solid var(--gold);
       border-radius: 12px;
       padding: 1rem 2rem;
       font-size: 1.1rem;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
       text-decoration: none;
       display: inline-block;
-      text-align: center;
+      transition: all 0.3s ease;
     }
 
-    .action-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
-    }
-
-    .action-btn.primary {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-    }
-
-    .action-btn.primary:hover {
+    .success-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
-    /* === ERROR STATE === */
-    .error-card {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-    }
-
-    .error-icon {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      margin: 0 auto 2rem;
-      display: flex;
-      align-items: center;
+    /* === LOADING OVERLAY (Hidden by default) === */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
       justify-content: center;
-      font-size: 2.5rem;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .loading-overlay.active {
+      display: flex;
+    }
+
+    .loading-text {
+      font-size: 1.5rem;
       color: white;
-    }
-
-    /* === LOADING STATE === */
-    .loading-state {
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-top: 4px solid var(--gold);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* === DEBUG MESSAGES === */
-    .debug-message {
-      font-size: 1rem;
-      margin-top: 1rem;
-      color: rgba(255, 255, 255, 0.8);
-      text-align: center;
+      opacity: 0.9;
     }
 
     /* === RESPONSIVE === */
@@ -468,31 +255,24 @@
         padding: 2rem;
       }
 
-      .success-title {
-        font-size: 2.2rem;
+      .success-card h2 {
+        font-size: 2rem;
       }
 
-      .success-subtitle {
-        font-size: 1.1rem;
-      }
-
-      .details-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+      .success-card p {
+        font-size: 1rem;
       }
 
       .booking-details {
-        padding: 2rem;
+        padding: 1rem;
       }
 
-      .action-buttons {
-        flex-direction: column;
-        align-items: center;
+      .booking-details h3 {
+        font-size: 1.4rem;
       }
 
-      .action-btn {
-        width: 100%;
-        max-width: 300px;
+      .loading-text {
+        font-size: 1.2rem;
       }
     }
 
@@ -506,15 +286,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-    }
-
-    .fade-in {
-      animation: fadeIn 0.5s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
   </style>
 </head>
@@ -534,378 +305,91 @@
   </header>
 
   <main>
-    <div class="success-section" id="successSection">
-      <!-- Loading state initially -->
-      <div class="success-card" id="loadingCard">
-        <div class="loading-state">
-          <div class="loading-spinner"></div>
-          <h2>Processing your booking...</h2>
-          <p>Please wait while we confirm your session details.</p>
-          <div class="debug-message" id="debugMessage"></div>
+    <div class="success-section">
+      <div class="success-card">
+        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="success-card-logo" />
+        <h2>Booking Confirmed!</h2>
+        <p>Thank you for booking your pet photography session with Picture This Pet. Here are your session details:</p>
+        <div class="booking-details" id="bookingDetails">
+          <h3>Session Details</h3>
+          <p><strong>Session Type:</strong> <span id="sessionType"></span></p>
+          <p><strong>Number of Pets:</strong> <span id="petCount"></span></p>
+          <p><strong>Number of People:</strong> <span id="peopleCount"></span></p>
+          <p><strong>Location:</strong> <span id="park"></span></p>
+          <p><strong>Date & Time:</strong> <span id="selectedDateTime"></span></p>
+          <p><strong>Total Price:</strong> $<span id="totalPrice"></span></p>
         </div>
+        <a href="/" class="success-btn">Return to Homepage</a>
       </div>
-
-      <!-- Success content (hidden initially) -->
-      <div class="success-card" id="successCard" style="display: none;">
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="success-logo" />
-        
-        <div class="checkmark-container">
-          <div class="checkmark">✓</div>
-        </div>
-
-        <h1 class="success-title">You're All Set!</h1>
-        <p class="success-subtitle">Your pet photography session has been successfully booked. We can't wait to capture beautiful memories with you and your furry family!</p>
-
-        <div class="booking-details">
-          <div class="details-header">
-            <h3>Booking Confirmation</h3>
-            <p>Here are your session details</p>
-          </div>
-
-          <div class="details-grid">
-            <div>
-              <div class="detail-item">
-                <span class="detail-label">Session Type:</span>
-                <span class="detail-value" id="sessionType">—</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Date & Time:</span>
-                <span class="detail-value highlight" id="sessionDateTime">—</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Location:</span>
-                <span class="detail-value" id="sessionLocation">—</span>
-              </div>
-            </div>
-            <div>
-              <div class="detail-item">
-                <span class="detail-label">Client Name:</span>
-                <span class="detail-value" id="clientName">—</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Pet Name(s):</span>
-                <span class="detail-value" id="petNames">—</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Contact:</span>
-                <span class="detail-value" id="clientContact">—</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="total-section">
-            <div class="total-item">
-              <span class="detail-label">Total Paid:</span>
-              <span class="detail-value" id="totalPrice">$0</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="next-steps">
-          <h3>What happens next?</h3>
-          <ul class="steps-list">
-            <li>
-              <div class="step-number">1</div>
-              <div>You'll receive a confirmation email within the next few minutes with all your session details.</div>
-            </li>
-            <li>
-              <div class="step-number">2</div>
-              <div>We'll send you a session preparation guide 2-3 days before your appointment.</div>
-            </li>
-            <li>
-              <div class="step-number">3</div>
-              <div>On the day of your session, arrive 10 minutes early and bring your pet's favorite toy!</div>
-            </li>
-            <li>
-              <div class="step-number">4</div>
-              <div>Your edited photos will be ready for download within 12-14 business days.</div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="action-buttons">
-          <a href="/" class="action-btn primary">Return to Homepage</a>
-          <a href="mailto:hello@picturethispet.co" class="action-btn">Contact Us</a>
-        </div>
-
-        <div class="debug-message" id="successDebugMessage"></div>
-      </div>
-
-      <!-- Error content (hidden initially) -->
-      <div class="error-card" id="errorCard" style="display: none;">
-        <div class="error-icon">⚠</div>
-        <h1 class="success-title">Booking Not Found</h1>
-        <p class="success-subtitle" id="errorSubtitle">We couldn't find your booking information. This might happen if you navigated here directly or if your session expired.</p>
-        
-        <div class="action-buttons">
-          <a href="/" class="action-btn primary">Start New Booking</a>
-          <a href="mailto:hello@picturethispet.co" class="action-btn">Get Help</a>
-        </div>
-      </div>
+    </div>
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-text">Processing your booking...</div>
     </div>
   </main>
 
-  <!-- Version Footer -->
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 10:52 AM MDT, May 23, 2025</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 11:23 AM MDT, May 23, 2025</p>
   </footer>
 
   <script>
-    // Google Sheets endpoint
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwT0DwjVLxTSLlansFuiT97Qghg1VfIMgcim6RXBTAMAlvYusiSaYPDleI1NfjH-4CXoQ/exec';
-
-    // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    // Initialize page on load
+    // Load booking data and submit to Google Sheets
     document.addEventListener('DOMContentLoaded', function() {
-      processBooking();
-    });
+      const bookingData = JSON.parse(localStorage.getItem('ptpFinalBookingData'));
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const bookingDetails = document.getElementById('bookingDetails');
 
-    // Main booking processing function
-    async function processBooking() {
-      const debugMessage = document.getElementById('debugMessage');
-      const successDebugMessage = document.getElementById('successDebugMessage');
-      const errorSubtitle = document.getElementById('errorSubtitle');
+      if (bookingData) {
+        // Show loading overlay
+        loadingOverlay.classList.add('active');
 
-      try {
-        debugMessage.innerHTML += 'Checking for booking data...<br>';
+        // Display booking details immediately
+        document.getElementById('sessionType').textContent = bookingData.session || 'N/A';
+        document.getElementById('petCount').textContent = bookingData.petCount || 'N/A';
+        document.getElementById('peopleCount').textContent = bookingData.peopleCount || 'N/A';
+        document.getElementById('park').textContent = bookingData.park || 'N/A';
+        document.getElementById('selectedDateTime').textContent = bookingData.selectedDateTime || 'N/A';
+        document.getElementById('totalPrice').textContent = bookingData.totalPrice || 'N/A';
 
-        // Get booking data from localStorage
-        const bookingData = getBookingData();
-        
-        if (!bookingData) {
-          debugMessage.innerHTML += '<span style="color: #ef4444;">Error: Could not retrieve booking data. Please contact support.</span><br>';
-          errorSubtitle.textContent = 'We couldn’t find your booking information. This might happen if you navigated here directly or if your session expired.';
-          showError();
-          return;
-        }
+        // Prepare data for Google Sheets
+        const formData = new URLSearchParams();
+        formData.append('submissionTimestamp', bookingData.submissionTimestamp || new Date().toISOString());
+        formData.append('session', bookingData.session || '');
+        formData.append('petCount', bookingData.petCount || '');
+        formData.append('peopleCount', bookingData.peopleCount || '');
+        formData.append('park', bookingData.park || '');
+        formData.append('selectedDateTime', bookingData.selectedDateTime || '');
+        formData.append('totalPrice', bookingData.totalPrice || '');
+        formData.append('clientFirstName', bookingData.client1FirstName || '');
+        formData.append('clientEmail', bookingData.client1Email || '');
 
-        debugMessage.innerHTML += `Received data: Session = ${bookingData.session || 'N/A'}, Client = ${bookingData.clientFirstName || 'N/A'}, Total = $${bookingData.totalPrice || 'N/A'}<br>';
-
-        // Display booking details
-        displayBookingDetails(bookingData);
-        debugMessage.innerHTML += 'Booking details displayed.<br>';
-
-        // Submit to Google Sheets with timeout
-        debugMessage.innerHTML += 'Attempting to send data to Google Sheets...<br>';
-        try {
-          await Promise.race([
-            submitToGoogleSheets(bookingData),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), 10000)) // 10-second timeout
-          ]);
-          successDebugMessage.innerHTML += 'Data submission to Google Sheets completed (status unknown due to no-cors mode).<br>';
-        } catch (error) {
-          successDebugMessage.innerHTML += `<span style="color: #ef4444;">Warning: Failed to save data to Google Sheets. (${error.message}) Your booking is still confirmed.</span><br>';
-        }
-
-        // Show success card regardless of Google Sheets outcome
-        showSuccess();
-
-        // Clean up localStorage after successful display
-        cleanupLocalStorage();
-        debugMessage.innerHTML += 'LocalStorage cleaned up.<br>';
-
-      } catch (error) {
-        debugMessage.innerHTML += `<span style="color: #ef4444;">Error: ${error.message}. Please contact support.</span><br>';
-        errorSubtitle.textContent = `An unexpected error occurred: ${error.message}. Please contact support.';
-        showError();
-      }
-    }
-
-    // Get and validate booking data from localStorage
-    function getBookingData() {
-      try {
-        const data = localStorage.getItem('ptpFinalBookingData');
-        if (!data) {
-          return null;
-        }
-
-        const bookingData = JSON.parse(data);
-        
-        // Validate required fields
-        const requiredFields = ['session', 'selectedDateTime', 'clientFirstName', 'totalPrice'];
-        const missingFields = requiredFields.filter(field => !bookingData[field]);
-        
-        if (missingFields.length > 0) {
-          return null;
-        }
-
-        return bookingData;
-      } catch (error) {
-        return null;
-      }
-    }
-
-    // Display booking details in the UI
-    function displayBookingDetails(data) {
-      try {
-        // Session details
-        document.getElementById('sessionType').textContent = data.session || '—';
-        document.getElementById('sessionDateTime').textContent = data.selectedDateTime || data.selectedDate || '—';
-        document.getElementById('sessionLocation').textContent = data.park || '—';
-
-        // Client details
-        const clientName = `${data.clientFirstName || ''} ${data.clientLastName || ''}`.trim();
-        document.getElementById('clientName').textContent = clientName || '—';
-        
-        // Enhanced contact info display
-        const clientPhone = data.clientPhone || '';
-        const clientEmail = data.clientEmail || '';
-        let contactInfo = '';
-        if (clientPhone && clientEmail) {
-          contactInfo = `${clientPhone} • ${clientEmail}`;
-        } else if (clientPhone) {
-          contactInfo = clientPhone;
-        } else if (clientEmail) {
-          contactInfo = clientEmail;
-        } else {
-          contactInfo = '—';
-        }
-        document.getElementById('clientContact').textContent = contactInfo;
-
-        // Pet names with enhanced logic
-        const petNames = getPetNames(data);
-        document.getElementById('petNames').textContent = petNames || '—';
-
-        // Total price with validation
-        const totalPrice = parseFloat(data.totalPrice) || 0;
-        document.getElementById('totalPrice').textContent = `$${totalPrice.toFixed(2)}`;
-      } catch (error) {
-        console.error('Error displaying booking details:', error);
-      }
-    }
-
-    // Extract pet names from booking data
-    function getPetNames(data) {
-      const names = [];
-      const petCount = parseInt(data.petCount) || 1;
-      
-      for (let i = 1; i <= petCount; i++) {
-        const petPrefix = i === 1 ? 'pet' : `pet${i}`;
-        const petName = data[petPrefix + 'Name'];
-        if (petName) {
-          names.push(petName);
-        }
-      }
-      
-      return names.length > 0 ? names.join(' & ') : null;
-    }
-
-    // Submit booking data to Google Sheets
-    async function submitToGoogleSheets(data) {
-      try {
-        const payload = {
-          submissionTimestamp: new Date().toISOString(),
-          bookingId: generateBookingId(data),
-          sessionType: data.session || '',
-          location: data.park || '',
-          selectedDate: data.selectedDate || '',
-          selectedTime: data.selectedTime || '',
-          selectedDateTime: data.selectedDateTime || '',
-          petCount: data.petCount || '',
-          peopleCount: data.peopleCount || '',
-          totalPrice: data.totalPrice || 0,
-          clientFirstName: data.clientFirstName || '',
-          clientLastName: data.clientLastName || '',
-          clientPhone: data.clientPhone || '',
-          clientEmail: data.clientEmail || '',
-          clientZipCode: data.clientZipCode || '',
-          client2FirstName: data.client2FirstName || '',
-          client2LastName: data.client2LastName || '',
-          client2Phone: data.client2Phone || '',
-          client2Email: data.client2Email || '',
-          client2ZipCode: data.client2ZipCode || '',
-          petName: data.petName || '',
-          petAge: data.petAge || '',
-          petBirthdate: data.petBirthdate || '',
-          petGender: data.petGender || '',
-          petFavoriteToy: data.petFavoriteToy || '',
-          petOffLeash: data.petOffLeash || '',
-          petBehavior: data.petBehavior || '',
-          petNotes: data.petNotes || '',
-          petInstagram: data.petInstagram || '',
-          pet2Name: data.pet2Name || '',
-          pet2Age: data.pet2Age || '',
-          pet2Birthdate: data.pet2Birthdate || '',
-          pet2Gender: data.pet2Gender || '',
-          pet2FavoriteToy: data.pet2FavoriteToy || '',
-          pet2OffLeash: data.pet2OffLeash || '',
-          pet2Behavior: data.pet2Behavior || '',
-          pet2Notes: data.pet2Notes || '',
-          pet2Instagram: data.pet2Instagram || '',
-          vaccination: data.vaccination || '',
-          referralSource: data.referralSource || '',
-          socialTagging: data.socialTagging || '',
-          clientInstagram: data.clientInstagram || '',
-          client2Instagram: data.client2Instagram || '',
-          acceptedBehaviorPolicy: data.acceptedBehaviorPolicy || false,
-          acceptedServiceAgreement: data.acceptedServiceAgreement || false,
-          acceptedCancellationPolicy: data.acceptedCancellationPolicy || false,
-          rawData: JSON.stringify(data)
-        };
-
-        await fetch(GOOGLE_SHEETS_URL, {
+        // Submit to Google Apps Script web app
+        fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec', { // Replace with your deployed Google Apps Script URL
           method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-      } catch (error) {
-        throw error;
+          body: formData,
+        })
+          .then(response => {
+            if (response.ok) {
+              // Hide loading overlay on success (no console logs)
+              loadingOverlay.classList.remove('active');
+            } else {
+              // Hide loading overlay and show fallback message if submission fails
+              loadingOverlay.classList.remove('active');
+              bookingDetails.innerHTML = '<p>Booking confirmed, but data submission to our records failed. Please contact us at hello@picturethispet.co.</p>' + bookingDetails.innerHTML;
+            }
+          })
+          .catch(() => {
+            // Hide loading overlay and show fallback message on error
+            loadingOverlay.classList.remove('active');
+            bookingDetails.innerHTML = '<p>Booking confirmed, but data submission to our records failed. Please contact us at hello@picturethispet.co.</p>' + bookingDetails.innerHTML;
+          });
+      } else {
+        bookingDetails.innerHTML = '<p>Error: Booking data not found. Please try booking again.</p>';
       }
-    }
-
-    // Generate a unique booking Id for tracking
-    function generateBookingId(data) {
-      const timestamp = Date.now();
-      const clientInitials = (data.clientFirstName?.[0] || '') + (data.clientLastName?.[0] || '');
-      const petInitial = data.petName?.[0] || 'X';
-      return `PTP-${clientInitials}${petInitial}-${timestamp}`;
-    }
-
-    // Show success state
-    function showSuccess() {
-      document.getElementById('loadingCard').style.display = 'none';
-      document.getElementById('successCard').style.display = 'block';
-      document.getElementById('successCard').classList.add('fade-in');
-    }
-
-    // Show error state
-    function showError() {
-      document.getElementById('loadingCard').style.display = 'none';
-      document.getElementById('errorCard').style.display = 'block';
-      document.getElementById('errorCard').classList.add('fade-in');
-    }
-
-    // Clean up localStorage after successful booking
-    function cleanupLocalStorage() {
-      try {
-        localStorage.removeItem('ptpFinalBookingData');
-        localStorage.removeItem('ptpSessionData');
-        localStorage.removeItem('ptpIntakeData');
-      } catch (error) {
-        console.error('Error cleaning up localStorage:', error);
-      }
-    }
-
-    // Utility function to format currency
-    function formatCurrency(amount) {
-      return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      }).format(amount);
-    }
-
-    // Handle any errors gracefully
-    window.addEventListener('error', function(e) {
-      console.error('Global error:', e.error);
-      document.getElementById('debugMessage').innerHTML += `<span style="color: #ef4444;">Global error: ${e.message}. Please contact support.</span><br>';
-      showError();
     });
   </script>
 </body>
