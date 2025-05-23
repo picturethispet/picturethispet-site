@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Booking Success | Picture This Pet</title>
-  <meta name="description" content="Your pet photography session booking is confirmed.">
+  <meta name="description" content="Your pet photography session has been successfully booked!">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -15,6 +15,8 @@
       --gold: #FDB75E;
       --dark-brown: #4B2E1E;
       --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
     }
 
     * {
@@ -23,14 +25,23 @@
       padding: 0;
     }
     
-    html, body {
+    html {
       overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
     }
     
     body {
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
+      overflow-x: hidden;
     }
 
     @keyframes moveBackground {
@@ -39,20 +50,30 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* === HEADER === */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === HEADER STYLES === */
     header {
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
@@ -68,12 +89,13 @@
     .logo-link {
       display: flex;
       align-items: center;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       text-decoration: none;
     }
 
     .logo-link:hover {
       opacity: 0.8;
+      transform: scale(1.02);
     }
     
     .site-nav {
@@ -82,25 +104,55 @@
       margin-left: auto;
     }
     
-    .site-nav a {
-      color: white;
+    .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
     }
     
     .book-btn {
-      background-color: var(--dark-brown);
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
       color: white;
-      padding: 0.6rem 1.2rem;
+      padding: 0.8rem 2rem;
+      border: none;
       border-radius: 999px;
-      font-weight: bold;
+      font-weight: 900;
+      font-size: 1.2rem;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
     
     .mobile-menu-btn {
       display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
     }
 
     /* === MAIN CONTENT === */
@@ -115,111 +167,215 @@
       position: relative;
     }
 
-    /* === SUCCESS SECTION === */
-    .success-section {
-      max-width: 900px;
-      margin: 0 auto;
+    /* === PROGRESS INDICATOR === */
+    .progress-section {
       text-align: center;
-      animation: slideInUp 0.8s ease-out;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease-out;
     }
 
-    .success-card {
+    .progress-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.completed {
+      background: var(--available-green);
+      border-color: var(--available-green);
+      color: white;
+    }
+
+    .progress-step.active {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .progress-line {
+      width: 60px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .progress-line.completed {
+      background: var(--available-green);
+    }
+
+    .progress-text {
+      color: white;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* === SUCCESS SECTION === */
+    .success-section {
+      max-width: 800px;
+      margin: 0 auto;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
       padding: 3rem;
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       text-align: center;
-      width: 100%;
     }
 
-    .success-card-logo {
-      max-width: 180px;
-      margin: 0 auto 2rem;
-      height: auto;
-    }
-
-    .success-card h2 {
+    .success-section h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
       color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .success-card p {
+    .success-section p {
       font-size: 1.2rem;
+      line-height: 1.6;
       opacity: 0.9;
       margin-bottom: 2rem;
-      line-height: 1.6;
     }
 
-    .booking-details {
-      text-align: left;
-      max-width: 600px;
-      margin: 0 auto 2rem;
+    .confirmation-details {
       background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
       padding: 1.5rem;
-      border-radius: 12px;
+      margin-bottom: 2rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .booking-details h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
+    .confirmation-details h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
       margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.9);
     }
 
-    .booking-details p {
-      font-size: 1rem;
+    .confirmation-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 0.5rem;
+      font-size: 1rem;
     }
 
-    .success-btn {
+    .confirmation-item .label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .confirmation-item .value {
+      color: white;
+      font-weight: 600;
+    }
+
+    .success-actions {
+      margin-top: 2rem;
+    }
+
+    .home-btn {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
-      border: 2px solid var(--gold);
+      border: none;
+      padding: 1rem 3rem;
       border-radius: 12px;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
-      transition: all 0.3s ease;
     }
 
-    .success-btn:hover {
+    .home-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
-    /* === LOADING OVERLAY (Hidden by default) === */
-    .loading-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
     }
 
-    .loading-overlay.active {
-      display: flex;
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
     }
 
-    .loading-text {
-      font-size: 1.5rem;
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
       color: white;
-      opacity: 0.9;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* === RESPONSIVE === */
@@ -229,213 +385,292 @@
         padding: 0.5rem 1rem;
       }
       
-      .desktop-logo {
-        height: 48px;
+      .desktop-logo { 
+        height: 48px; 
       }
       
       .site-nav {
         display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
       }
       
       .mobile-menu-btn {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
       }
-
+      
       main {
         margin-top: 80px;
         padding: 2rem 1rem;
       }
 
-      .success-card {
+      .progress-steps {
+        gap: 0.5rem;
+      }
+
+      .progress-step {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+
+      .progress-line {
+        width: 40px;
+      }
+
+      .success-section {
         padding: 2rem;
       }
 
-      .success-card h2 {
+      .success-section h2 {
         font-size: 2rem;
       }
 
-      .success-card p {
-        font-size: 1rem;
+      .success-section p {
+        font-size: 1.1rem;
       }
 
-      .booking-details {
+      .confirmation-details {
         padding: 1rem;
       }
 
-      .booking-details h3 {
-        font-size: 1.4rem;
+      .confirmation-details h3 {
+        font-size: 1.3rem;
       }
 
-      .loading-text {
-        font-size: 1.2rem;
+      .confirmation-item {
+        font-size: 0.9rem;
       }
-    }
 
-    /* === ANIMATIONS === */
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+      .home-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+
+      footer {
+        padding: 1.5rem 1rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .payment-methods {
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <a href="/" class="logo-link">
-      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="site-nav">
-      <a href="/">Home</a>
-      <a href="/ptp-locations.html">Locations</a>
-      <a href="/pricing">Pricing</a>
-      <a href="/contact">Contact</a>
-      <a href="#" class="book-btn">Book Now</a>
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <div class="success-section">
-      <div class="success-card">
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="success-card-logo" />
-        <h2>Booking Confirmed!</h2>
-        <p>Thank you for booking your pet photography session with Picture This Pet. Here are your session details:</p>
-        <div class="booking-details" id="bookingDetails">
-          <h3>Session Details</h3>
-          <p><strong>Session Type:</strong> <span id="sessionType"></span></p>
-          <p><strong>Number of Pets:</strong> <span id="petCount"></span></p>
-          <p><strong>Number of People:</strong> <span id="peopleCount"></span></p>
-          <p><strong>Location:</strong> <span id="park"></span></p>
-          <p><strong>Date & Time:</strong> <span id="selectedDateTime"></span></p>
-          <p><strong>Total Price:</strong> $<span id="totalPrice"></span></p>
-        </div>
-        <a href="/" class="success-btn">Return to Homepage</a>
+    <!-- Progress Indicator -->
+    <div class="progress-section">
+      <div class="progress-steps">
+        <div class="progress-step completed">1</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">2</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">3</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">4</div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step active">5</div>
       </div>
+      <p class="progress-text">Booking Confirmed</p>
     </div>
-    <div class="loading-overlay" id="loadingOverlay">
-      <div class="loading-text">Processing your booking...</div>
+
+    <!-- Success Section -->
+    <div class="success-section">
+      <h2>Booking Successful!</h2>
+      <p>Thank you for booking your pet photography session with Picture This Pet. We’re excited to capture timeless memories for you and your pet!</p>
+      
+      <div class="confirmation-details">
+        <h3>Session Details</h3>
+        <div id="confirmationDetails">
+          <div class="confirmation-item">
+            <span class="label">Session Type:</span>
+            <span class="value" id="sessionType">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Location:</span>
+            <span class="value" id="sessionLocation">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Date & Time:</span>
+            <span class="value" id="sessionDateTime">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Pets:</span>
+            <span class="value" id="petCount">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">People:</span>
+            <span class="value" id="peopleCount">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Total Price:</span>
+            <span class="value" id="totalPrice">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Owner's Name:</span>
+            <span class="value" id="ownerName">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Email:</span>
+            <span class="value" id="email">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Phone:</span>
+            <span class="value" id="phone">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Pet's Name:</span>
+            <span class="value" id="petName">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <a href="/" class="home-btn">Back to Home</a>
+      </div>
     </div>
   </main>
 
-  <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:11 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:25 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+    </div>
   </footer>
 
   <script>
+    // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+      nav.classList.toggle('active');
     }
 
-    // Load booking data, submit to Google Sheets, and clean up localStorage
+    // Smooth scroll to session builder (for Book Now)
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      window.location.href = '/#session-builder-section';
+    }
+
+    // Display session details
     document.addEventListener('DOMContentLoaded', function() {
-      const bookingData = JSON.parse(localStorage.getItem('ptpFinalBookingData'));
-      const loadingOverlay = document.getElementById('loadingOverlay');
-      const bookingDetails = document.getElementById('bookingDetails');
+      console.log('Success page loaded, initializing...');
 
-      if (bookingData) {
-        // Show loading overlay
-        loadingOverlay.classList.add('active');
+      // Retrieve session data from localStorage
+      const sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
 
-        // Display booking details immediately
-        document.getElementById('sessionType').textContent = bookingData.session || 'N/A';
-        document.getElementById('petCount').textContent = bookingData.petCount || 'N/A';
-        document.getElementById('peopleCount').textContent = bookingData.peopleCount || 'N/A';
-        document.getElementById('park').textContent = bookingData.park || 'N/A';
-        document.getElementById('selectedDateTime').textContent = bookingData.selectedDateTime || 'N/A';
-        document.getElementById('totalPrice').textContent = bookingData.totalPrice || 'N/A';
+      // Populate session details
+      document.getElementById('sessionType').textContent = sessionData.session || '—';
+      document.getElementById('sessionLocation').textContent = sessionData.park || '—';
+      document.getElementById('sessionDateTime').textContent = sessionData.selectedDateTime || '—';
+      document.getElementById('petCount').textContent = sessionData.petCount || '—';
+      document.getElementById('peopleCount').textContent = sessionData.peopleCount || '—';
 
-        // Prepare data for Google Sheets
-        const formData = new URLSearchParams();
-        formData.append('submissionTimestamp', bookingData.submissionTimestamp || new Date().toISOString());
-        formData.append('session', bookingData.session || '');
-        formData.append('petCount', bookingData.petCount || '');
-        formData.append('peopleCount', bookingData.peopleCount || '');
-        formData.append('park', bookingData.park || '');
-        formData.append('selectedDateTime', bookingData.selectedDateTime || '');
-        formData.append('totalPrice', bookingData.totalPrice || '');
+      // Calculate total price
+      let total = 0;
+      if (sessionData.session === "Mini") total += 50;
+      if (sessionData.session === "Full") total += 100;
+      if (sessionData.petCount === "2") total += 40;
+      if (sessionData.peopleCount === "2") total += 20;
+      document.getElementById('totalPrice').textContent = `$${total}`;
 
-        // Add client information
-        const peopleCount = parseInt(bookingData.peopleCount) || 1;
-        for (let i = 1; i <= peopleCount; i++) {
-          const personPrefix = i === 1 ? 'client' : `client${i}`;
-          formData.append(`${personPrefix}FirstName`, bookingData[`${personPrefix}FirstName`] || '');
-          formData.append(`${personPrefix}LastName`, bookingData[`${personPrefix}LastName`] || '');
-          formData.append(`${personPrefix}Phone`, bookingData[`${personPrefix}Phone`] || '');
-          formData.append(`${personPrefix}Email`, bookingData[`${personPrefix}Email`] || '');
-          formData.append(`${personPrefix}ZipCode`, bookingData[`${personPrefix}ZipCode`] || '');
-          formData.append(`${personPrefix}Instagram`, bookingData[`${personPrefix}Instagram`] || '');
-        }
-
-        // Add pet information
-        const petCount = parseInt(bookingData.petCount) || 1;
-        for (let i = 1; i <= petCount; i++) {
-          const petPrefix = i === 1 ? 'pet' : `pet${i}`;
-          formData.append(`${petPrefix}Name`, bookingData[`${petPrefix}Name`] || '');
-          formData.append(`${petPrefix}Age`, bookingData[`${petPrefix}Age`] || '');
-          formData.append(`${petPrefix}Birthdate`, bookingData[`${petPrefix}Birthdate`] || '');
-          formData.append(`${petPrefix}Gender`, bookingData[`${petPrefix}Gender`] || '');
-          formData.append(`${petPrefix}FavoriteToy`, bookingData[`${petPrefix}FavoriteToy`] || '');
-          formData.append(`${petPrefix}OffLeash`, bookingData[`${petPrefix}OffLeash`] || '');
-          formData.append(`${petPrefix}Behavior`, bookingData[`${petPrefix}Behavior`] || '');
-          formData.append(`${petPrefix}Notes`, bookingData[`${petPrefix}Notes`] || '');
-          formData.append(`${petPrefix}Instagram`, bookingData[`${petPrefix}Instagram`] || '');
-        }
-
-        // Add remaining fields
-        formData.append('vaccination', bookingData.vaccination || '');
-        formData.append('socialTagging', bookingData.socialTagging || '');
-        formData.append('referralSource', bookingData.referralSource || '');
-
-        // Submit to Google Apps Script web app
-        fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec', { // Replace with your deployed Google Apps Script URL
-          method: 'POST',
-          body: formData,
-        })
-          .then(response => {
-            if (response.ok) {
-              // Clear localStorage on successful submission
-              localStorage.removeItem('ptpSessionData');
-              localStorage.removeItem('ptpIntakeData');
-              localStorage.removeItem('ptpFinalBookingData');
-              // Hide loading overlay
-              loadingOverlay.classList.remove('active');
-            } else {
-              // Clear localStorage even if submission fails
-              localStorage.removeItem('ptpSessionData');
-              localStorage.removeItem('ptpIntakeData');
-              localStorage.removeItem('ptpFinalBookingData');
-              // Hide loading overlay and show fallback message
-              loadingOverlay.classList.remove('active');
-              bookingDetails.innerHTML = '<p>Booking confirmed, but data submission to our records failed. Please contact us at hello@picturethispet.co.</p>' + bookingDetails.innerHTML;
-            }
-          })
-          .catch(() => {
-            // Clear localStorage on error
-            localStorage.removeItem('ptpSessionData');
-            localStorage.removeItem('ptpIntakeData');
-            localStorage.removeItem('ptpFinalBookingData');
-            // Hide loading overlay and show fallback message
-            loadingOverlay.classList.remove('active');
-            bookingDetails.innerHTML = '<p>Booking confirmed, but data submission to our records failed. Please contact us at hello@picturethispet.co.</p>' + bookingDetails.innerHTML;
-          });
-      } else {
-        // Clear localStorage if no booking data is found
-        localStorage.removeItem('ptpSessionData');
-        localStorage.removeItem('ptpIntakeData');
-        localStorage.removeItem('ptpFinalBookingData');
-        bookingDetails.innerHTML = '<p>Error: Booking data not found. Please try booking again.</p>';
-      }
+      // Populate intake form details
+      const intakeForm = sessionData.intakeForm || {};
+      document.getElementById('ownerName').textContent = intakeForm.ownerName || '—';
+      document.getElementById('email').textContent = intakeForm.email || '—';
+      document.getElementById('phone').textContent = intakeForm.phone || '—';
+      document.getElementById('petName').textContent = intakeForm.petName || '—';
     });
   </script>
 </body>
