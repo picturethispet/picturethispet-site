@@ -7,7 +7,7 @@
   <meta name="description" content="Your pet photography session booking is confirmed.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -296,9 +296,9 @@
     </a>
     <nav class="site-nav">
       <a href="/">Home</a>
-      <a href="#">Locations</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
+      <a href="/ptp-locations.html">Locations</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/contact">Contact</a>
       <a href="#" class="book-btn">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
@@ -328,7 +328,7 @@
   </main>
 
   <footer style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v3.4.1 | Last updated: 11:23 AM MDT, May 23, 2025</p>
+    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:11 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
   </footer>
 
   <script>
@@ -337,7 +337,7 @@
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    // Load booking data and submit to Google Sheets
+    // Load booking data, submit to Google Sheets, and clean up localStorage
     document.addEventListener('DOMContentLoaded', function() {
       const bookingData = JSON.parse(localStorage.getItem('ptpFinalBookingData'));
       const loadingOverlay = document.getElementById('loadingOverlay');
@@ -364,8 +364,38 @@
         formData.append('park', bookingData.park || '');
         formData.append('selectedDateTime', bookingData.selectedDateTime || '');
         formData.append('totalPrice', bookingData.totalPrice || '');
-        formData.append('clientFirstName', bookingData.client1FirstName || '');
-        formData.append('clientEmail', bookingData.client1Email || '');
+
+        // Add client information
+        const peopleCount = parseInt(bookingData.peopleCount) || 1;
+        for (let i = 1; i <= peopleCount; i++) {
+          const personPrefix = i === 1 ? 'client' : `client${i}`;
+          formData.append(`${personPrefix}FirstName`, bookingData[`${personPrefix}FirstName`] || '');
+          formData.append(`${personPrefix}LastName`, bookingData[`${personPrefix}LastName`] || '');
+          formData.append(`${personPrefix}Phone`, bookingData[`${personPrefix}Phone`] || '');
+          formData.append(`${personPrefix}Email`, bookingData[`${personPrefix}Email`] || '');
+          formData.append(`${personPrefix}ZipCode`, bookingData[`${personPrefix}ZipCode`] || '');
+          formData.append(`${personPrefix}Instagram`, bookingData[`${personPrefix}Instagram`] || '');
+        }
+
+        // Add pet information
+        const petCount = parseInt(bookingData.petCount) || 1;
+        for (let i = 1; i <= petCount; i++) {
+          const petPrefix = i === 1 ? 'pet' : `pet${i}`;
+          formData.append(`${petPrefix}Name`, bookingData[`${petPrefix}Name`] || '');
+          formData.append(`${petPrefix}Age`, bookingData[`${petPrefix}Age`] || '');
+          formData.append(`${petPrefix}Birthdate`, bookingData[`${petPrefix}Birthdate`] || '');
+          formData.append(`${petPrefix}Gender`, bookingData[`${petPrefix}Gender`] || '');
+          formData.append(`${petPrefix}FavoriteToy`, bookingData[`${petPrefix}FavoriteToy`] || '');
+          formData.append(`${petPrefix}OffLeash`, bookingData[`${petPrefix}OffLeash`] || '');
+          formData.append(`${petPrefix}Behavior`, bookingData[`${petPrefix}Behavior`] || '');
+          formData.append(`${petPrefix}Notes`, bookingData[`${petPrefix}Notes`] || '');
+          formData.append(`${petPrefix}Instagram`, bookingData[`${petPrefix}Instagram`] || '');
+        }
+
+        // Add remaining fields
+        formData.append('vaccination', bookingData.vaccination || '');
+        formData.append('socialTagging', bookingData.socialTagging || '');
+        formData.append('referralSource', bookingData.referralSource || '');
 
         // Submit to Google Apps Script web app
         fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec', { // Replace with your deployed Google Apps Script URL
@@ -374,20 +404,36 @@
         })
           .then(response => {
             if (response.ok) {
-              // Hide loading overlay on success (no console logs)
+              // Clear localStorage on successful submission
+              localStorage.removeItem('ptpSessionData');
+              localStorage.removeItem('ptpIntakeData');
+              localStorage.removeItem('ptpFinalBookingData');
+              // Hide loading overlay
               loadingOverlay.classList.remove('active');
             } else {
-              // Hide loading overlay and show fallback message if submission fails
+              // Clear localStorage even if submission fails
+              localStorage.removeItem('ptpSessionData');
+              localStorage.removeItem('ptpIntakeData');
+              localStorage.removeItem('ptpFinalBookingData');
+              // Hide loading overlay and show fallback message
               loadingOverlay.classList.remove('active');
               bookingDetails.innerHTML = '<p>Booking confirmed, but data submission to our records failed. Please contact us at hello@picturethispet.co.</p>' + bookingDetails.innerHTML;
             }
           })
           .catch(() => {
-            // Hide loading overlay and show fallback message on error
+            // Clear localStorage on error
+            localStorage.removeItem('ptpSessionData');
+            localStorage.removeItem('ptpIntakeData');
+            localStorage.removeItem('ptpFinalBookingData');
+            // Hide loading overlay and show fallback message
             loadingOverlay.classList.remove('active');
             bookingDetails.innerHTML = '<p>Booking confirmed, but data submission to our records failed. Please contact us at hello@picturethispet.co.</p>' + bookingDetails.innerHTML;
           });
       } else {
+        // Clear localStorage if no booking data is found
+        localStorage.removeItem('ptpSessionData');
+        localStorage.removeItem('ptpIntakeData');
+        localStorage.removeItem('ptpFinalBookingData');
         bookingDetails.innerHTML = '<p>Error: Booking data not found. Please try booking again.</p>';
       }
     });
