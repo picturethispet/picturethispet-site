@@ -760,45 +760,40 @@
             <span class="label">Total Price:</span>
             <span class="value" id="totalPrice">—</span>
           </div>
-          <div class="confirmation-item">
-            <span class="label">Client Name:</span>
-            <span class="value" id="clientName">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Email:</span>
-            <span class="value" id="email">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Phone:</span>
-            <span class="value" id="phone">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Pet Name(s):</span>
-            <span class="value" id="petNames">—</span>
-          </div>
         </div>
       </div>
 
       <div class="next-steps">
         <h3>What’s Next? 🚀</h3>
         <div class="next-step-item">
+          <span class="emoji">🎉</span>
+          <p><strong>Your session is booked!</strong> You’re all set for a paws-itively amazing photo shoot!</p>
+        </div>
+        <div class="next-step-item">
           <span class="emoji">📧</span>
-          <p><strong>Check Your Email:</strong> We’ve sent a confirmation to <span id="emailInline">—</span>. Be sure to check your spam/junk folder if you don’t see it!</p>
+          <p><strong>We’ll email you a confirmation.</strong> Check your inbox (and spam/junk folder) for the details!</p>
         </div>
         <div class="next-step-item">
           <span class="emoji">📸</span>
-          <p><strong>Prepare for the Session:</strong> Bring your pet’s favorite treats 🍖, a leash 🐾, and ensure they’re well-rested for the best photos!</p>
+          <p><strong>Keep an eye out!</strong> We’ll email you 2-3 days before your session with instructions on how to prepare.</p>
         </div>
         <div class="next-step-item">
-          <span class="emoji">👀</span>
-          <p><strong>Keep a Lookout:</strong> Follow us on Instagram <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer">@picturethispet</a> for sneak peeks and updates! 📷</p>
+          <span class="emoji">🗺️</span>
+          <p><strong>Get Directions:</strong> Heading to <span id="parkName">—</span>? <a id="directionsLink" href="#" target="_blank" rel="noopener noreferrer">Click here for directions</a>.</p>
+        </div>
+        <div class="next-step-item">
+          <span class="emoji">🌧️</span>
+          <p><strong>Don’t worry about the weather!</strong> We’ll reschedule if there’s inclement weather—no stress!</p>
+        </div>
+        <div class="next-step-item">
+          <span class="emoji">📞</span>
+          <p><strong>Have questions?</strong> Hit us up anytime at <a href="mailto:info@picturethispet.co">info@picturethispet.co</a>!</p>
         </div>
       </div>
 
       <div class="contact-info">
-        <p>If you have any questions, feel free to reach out!</p>
-        <p>Email: <a href="mailto:info@picturethispet.co">info@picturethispet.co</a></p>
-        <p>Follow us on Instagram: <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer">@picturethispet</a></p>
+        <p>Follow us on Instagram for updates and sneak peeks!</p>
+        <p><a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer">@picturethispet</a></p>
       </div>
 
       <div class="success-actions">
@@ -839,7 +834,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:47 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:55 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -862,12 +857,11 @@
 
       // Retrieve session data from localStorage
       const sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
-      const intakeData = JSON.parse(localStorage.getItem('ptpIntakeData')) || {};
 
       // Check if session data is missing
       const successSection = document.getElementById('success-section');
       const fallbackMessage = document.getElementById('fallback-message');
-      if (!sessionData.session || !sessionData.park || !sessionData.selectedDateTime || !sessionData.petCount || !sessionData.peopleCount || !intakeData.person1) {
+      if (!sessionData.session || !sessionData.park || !sessionData.selectedDateTime || !sessionData.petCount || !sessionData.peopleCount) {
         successSection.style.display = 'none';
         fallbackMessage.style.display = 'block';
         return;
@@ -876,6 +870,7 @@
       // Populate session details
       document.getElementById('sessionType').textContent = sessionData.session || '—';
       document.getElementById('sessionLocation').textContent = sessionData.park || '—';
+      document.getElementById('parkName').textContent = sessionData.park || '—';
       document.getElementById('sessionDateTime').textContent = sessionData.selectedDateTime || '—';
       document.getElementById('petCount').textContent = sessionData.petCount || '—';
       document.getElementById('peopleCount').textContent = sessionData.peopleCount || '—';
@@ -888,16 +883,15 @@
       if (sessionData.peopleCount === "2") total += 20;
       document.getElementById('totalPrice').textContent = `$${total}`;
 
-      // Populate intake form details
-      document.getElementById('clientName').textContent = intakeData.person1.name || '—';
-      document.getElementById('email').textContent = intakeData.person1.email || '—';
-      document.getElementById('emailInline').textContent = intakeData.person1.email || 'your email';
-      document.getElementById('phone').textContent = intakeData.person1.phone || '—';
-      const petNames = [intakeData.pet1.name];
-      if (intakeData.pet2 && intakeData.pet2.name) {
-        petNames.push(intakeData.pet2.name);
+      // Set directions link based on park
+      const directionsLink = document.getElementById('directionsLink');
+      if (sessionData.park && sessionData.park.toLowerCase() === "cheesman") {
+        directionsLink.href = "https://maps.google.com/?q=Cheesman+Park,+Denver,+CO";
+      } else if (sessionData.park && sessionData.park.toLowerCase() === "city") {
+        directionsLink.href = "https://maps.google.com/?q=City+Park,+Denver,+CO";
+      } else {
+        directionsLink.style.display = 'none';
       }
-      document.getElementById('petNames').textContent = petNames.join(', ') || '—';
     });
   </script>
 </body>
