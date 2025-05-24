@@ -17,6 +17,9 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
+      --admin-purple: #8b5cf6;
+      --admin-blue: #3b82f6;
+      --popup-event-purple: #a78bfa;
     }
 
     * {
@@ -24,24 +27,30 @@
       margin: 0;
       padding: 0;
     }
-    
-    html {
+
+    html, body {
       overflow-x: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
     }
-    
+
     html::-webkit-scrollbar {
-      width: 0;
-      height: 0;
+      width: 8px;
     }
-    
+
+    html::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    html::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
-      overflow-x: hidden;
     }
 
     @keyframes moveBackground {
@@ -53,7 +62,7 @@
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
       }
       to {
         opacity: 1;
@@ -61,187 +70,278 @@
       }
     }
 
-    /* === HEADER STYLES === */
-    header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.01rem 1.5rem;
-      background-image: url("assets/images/ani_bkgd_cool.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-      height: 110px;
-    }
-    
-    .desktop-logo {
-      height: 100px;
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
 
-    .logo-link {
-      display: flex;
-      align-items: center;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .logo-link:hover {
-      opacity: 0.8;
-      transform: scale(1.02);
-    }
-    
-    .site-nav {
-      display: flex;
-      align-items: center;
-      margin-left: auto;
-    }
-    
-    .site-nav a:not(.book-btn) {
-      margin-left: 1rem;
-      text-decoration: none;
-      font-weight: 600;
-      color: white;
-      transition: all 0.3s ease;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-    }
-
-    .site-nav a:not(.book-btn):hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-1px);
-    }
-    
-    .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
-      color: white;
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-    }
-
-    .book-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
-    }
-    
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu-btn:hover {
-      transform: scale(1.1);
-    }
-
-    /* === MAIN CONTENT === */
-    main {
-      display: flex;
-      margin-top: 110px;
-      min-height: calc(100vh - 110px);
+    /* === LAYOUT === */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      position: relative;
     }
 
-    /* === SIDEBAR === */
-    .sidebar {
-      width: 250px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2rem 1rem;
-      position: fixed;
-      top: 110px;
-      bottom: 0;
-      overflow-y: auto;
+    /* === HEADER STYLES === */
+    header {
+      grid-column: 1 / -1;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
     }
 
-    .sidebar h3 {
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .logo-small {
+      height: 50px;
+    }
+
+    .header-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.8rem;
       font-weight: 700;
-      margin-bottom: 2rem;
       color: white;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .sync-status {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sync-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--available-green);
+      animation: pulse 2s infinite;
+    }
+
+    .sync-indicator.disconnected {
+      background: var(--booked-red);
+    }
+
+    .admin-user {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 80px;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* === SIDEBAR === */
+    .admin-sidebar {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 0;
+      overflow-y: auto;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-section-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+      min-height: 48px;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .nav-item.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border-left-color: var(--gold);
+    }
+
+    .nav-icon {
+      font-size: 1.2rem;
+      width: 20px;
       text-align: center;
     }
 
-    .sidebar a {
-      display: block;
-      padding: 1rem;
-      margin-bottom: 0.5rem;
-      text-decoration: none;
-      color: rgba(255, 255, 255, 0.9);
-      font-weight: 600;
-      border-radius: 8px;
-      transition: all 0.3s ease;
+    .nav-badge {
+      background: var(--booked-red);
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      margin-left: auto;
     }
 
-    .sidebar a:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateX(5px);
-      color: var(--gold);
-    }
-
-    .sidebar a.active {
-      background: rgba(255, 255, 255, 0.2);
-      color: var(--gold);
-    }
-
-    /* === ADMIN CONTENT === */
-    .admin-content {
-      margin-left: 250px;
+    /* === MAIN CONTENT === */
+    .admin-main {
       padding: 2rem;
-      flex: 1;
+      overflow-y: auto;
+      max-height: calc(100vh - 100px - 120px);
+    }
+
+    /* === CARDS === */
+    .admin-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .admin-content h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .admin-content p {
-      font-size: 1.2rem;
-      line-height: 1.6;
       margin-bottom: 2rem;
-      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* === BUTTONS === */
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 48px;
+      min-width: 80px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-small {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      min-height: 40px;
+      min-width: 60px;
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.6rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-height: 40px;
+      min-width: 40px;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     /* === DASHBOARD STATS === */
@@ -332,117 +432,80 @@
     }
 
     .event-item .event-status.popup {
-      color: var(--available-green);
+      color: var(--popup-event-purple);
     }
 
-    /* === POP-UP STYLES === */
-    .popup {
-      display: none;
+    /* === MODALS === */
+    .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      right: 0;
+      bottom: 0;
       background: rgba(0, 0, 0, 0.7);
-      z-index: 2000;
+      backdrop-filter: blur(5px);
+      z-index: 3000;
+      display: none;
       align-items: center;
       justify-content: center;
     }
 
-    .popup-content {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
+    .modal {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
       padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       max-width: 600px;
       width: 90%;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      max-height: 80vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .popup-content h3 {
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .modal-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 1rem;
       color: white;
     }
 
-    .popup-content p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      color: rgba(255, 255, 255, 0.9);
+    .modal-close {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      min-height: 40px;
+      min-width: 40px;
     }
 
-    .popup-content .form-group {
-      margin-bottom: 1rem;
-      text-align: left;
-    }
-
-    .popup-content .form-group label {
-      display: block;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .popup-content .form-group input,
-    .popup-content .form-group select {
-      width: 100%;
-      padding: 0.8rem;
-      font-size: 1rem;
-      font-family: 'Inter', sans-serif;
+    .modal-close:hover {
       color: white;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      transition: all 0.3s ease;
     }
 
-    .popup-content .form-group input:focus,
-    .popup-content .form-group select:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .popup-content .form-actions {
+    .modal-actions {
       display: flex;
       gap: 1rem;
-      justify-content: center;
+      justify-content: flex-end;
       margin-top: 2rem;
-    }
-
-    .popup-content button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      padding: 0.8rem 2rem;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .popup-content button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    .popup-content button.cancel {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .popup-content button.cancel:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
     }
 
     /* === FOOTER STYLES === */
     footer {
+      grid-column: 1 / -1;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -482,6 +545,7 @@
       display: block;
       margin-bottom: 0.5rem;
       transition: color 0.3s ease;
+      min-height: 40px;
     }
 
     .footer-section a:hover {
@@ -514,104 +578,79 @@
     }
 
     /* === RESPONSIVE === */
-    @media (max-width: 768px) {
-      header {
-        height: 80px;
-        padding: 0.5rem 1rem;
+    @media (max-width: 1024px) {
+      .admin-layout {
+        grid-template-columns: 60px 1fr;
       }
-      
-      .desktop-logo { 
-        height: 48px; 
+
+      .admin-sidebar {
+        padding: 1rem 0;
       }
-      
-      .site-nav {
+
+      .nav-item {
+        padding: 1rem 0.8rem;
+        justify-content: center;
+      }
+
+      .nav-item span:not(.nav-icon) {
         display: none;
-        flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: 100% 100%;
-        background-position: center;
-        position: absolute;
-        top: 80px;
-        right: 0;
-        width: 100%;
-        text-align: right;
-        padding: 1rem;
-        z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
-      }
-      
-      .site-nav.active {
-        display: flex;
-      }
-      
-      .site-nav.active a {
-        display: block;
-        margin: 0.5rem 0;
-        font-size: 1.2rem;
-        color: white;
-        padding: 0.5rem 1rem;
       }
 
-      .site-nav.active a[href="/"] { order: 1; }
-      .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/locations.html"] { order: 3; }
-      .site-nav.active a[href="/pricing"] { order: 4; }
-      .site-nav.active a[href="/contact"] { order: 5; }
-      .site-nav.active .book-btn { order: 6; }
-      
-      .book-btn {
-        background: linear-gradient(135deg, #F47C2C, #FDB75E);
-        color: white;
-        padding: 0.6rem 1.5rem;
-        border: none;
-        border-radius: 999px;
-        font-weight: 900;
-        font-size: 1rem;
-        margin-left: 0;
-        display: inline-block;
-        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-      }
-      
-      .mobile-menu-btn {
-        display: block;
-      }
-      
-      main {
-        flex-direction: column;
-        margin-top: 80px;
-      }
-
-      .sidebar {
-        width: 100%;
-        position: static;
-        padding: 1rem;
-      }
-
-      .sidebar h3 {
-        font-size: 1.5rem;
-      }
-
-      .sidebar a {
-        padding: 0.8rem;
-        font-size: 1rem;
-      }
-
-      .admin-content {
-        margin-left: 0;
-        padding: 1rem;
-      }
-
-      .admin-content h2 {
-        font-size: 2rem;
-      }
-
-      .admin-content p {
-        font-size: 1rem;
+      .nav-section-title {
+        display: none;
       }
 
       .dashboard-stats {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .admin-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr auto;
+      }
+
+      .admin-sidebar {
+        background: rgba(0, 0, 0, 0.9);
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        z-index: 4000;
+        transition: left 0.3s ease;
+      }
+
+      .admin-sidebar.open {
+        left: 0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-menu-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .header-title {
+        font-size: 1.4rem;
+      }
+
+      .admin-main {
+        padding: 1rem;
       }
 
       .stat-card {
@@ -641,21 +680,9 @@
         font-size: 0.9rem;
       }
 
-      .popup-content {
+      .modal {
         padding: 1.5rem;
-      }
-
-      .popup-content h3 {
-        font-size: 1.5rem;
-      }
-
-      .popup-content p {
-        font-size: 1rem;
-      }
-
-      .popup-content button {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
+        margin: 1rem;
       }
 
       footer {
@@ -683,159 +710,218 @@
   </style>
 </head>
 <body>
-  <header>
-    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
-    </a>
-    <nav class="site-nav">
-      <a href="/" aria-label="Home page">Home</a>
-      <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations.html" aria-label="Locations page">Locations</a>
-      <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
-    </nav>
-    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
-  </header>
+  <div class="admin-layout">
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">☰</button>
+        <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo-small" />
+        <h1 class="header-title">Admin Dashboard 🐾</h1>
+      </div>
+      <div class="header-right">
+        <div class="sync-status">
+          <div class="sync-indicator" id="syncIndicator"></div>
+          <span id="syncStatus">Connected</span>
+        </div>
+        <div class="admin-user" id="adminUser">Welcome, Admin</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </header>
 
-  <main>
     <!-- Sidebar -->
-    <div class="sidebar">
-      <h3>Admin Menu</h3>
-      <a href="admin.html" class="active">Dashboard</a>
-      <a href="calendar-management.html">Calendar Management</a>
-      <a href="client-session-management.html">Client & Session Management</a>
-      <a href="gallery-management.html">Gallery Management</a>
-      <a href="business-management.html">Business Management</a>
-    </div>
-
-    <!-- Admin Content -->
-    <div class="admin-content">
-      <h2>Admin Dashboard</h2>
-      <p>Welcome to your admin dashboard. Here’s a quick overview of your business.</p>
-
-      <!-- Dashboard Stats -->
-      <div class="dashboard-stats">
-        <div class="stat-card">
-          <h4>Bookings This Month</h4>
-          <p id="bookings-this-month">Loading...</p>
-        </div>
-        <div class="stat-card">
-          <h4>Upcoming Pop-Ups</h4>
-          <p id="upcoming-popups">Loading...</p>
-        </div>
-        <div class="stat-card">
-          <h4>Total Revenue (Month)</h4>
-          <p id="revenue-this-month">Loading...</p>
-        </div>
+    <nav class="admin-sidebar" id="adminSidebar">
+      <div class="nav-section">
+        <div class="nav-section-title">Overview</div>
+        <a href="admin.html" class="nav-item active">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="calendar-management.html" class="nav-item">
+          <span class="nav-icon">📅</span>
+          <span>Calendar Management</span>
+          <span class="nav-badge" id="calendarBadge">0</span>
+        </a>
       </div>
 
-      <!-- Upcoming Events -->
-      <div class="upcoming-events">
-        <h3>Upcoming Events (Next 7 Days)</h3>
-        <div class="event-list" id="event-list">
-          <!-- Events will be populated here -->
+      <div class="nav-section">
+        <div class="nav-section-title">Management</div>
+        <a href="client-session-management.html" class="nav-item">
+          <span class="nav-icon">👥</span>
+          <span>Client & Session Management</span>
+        </a>
+        <a href="gallery-management.html" class="nav-item">
+          <span class="nav-icon">🖼️</span>
+          <span>Gallery Management</span>
+          <span class="nav-badge" id="galleriesBadge">0</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Business</div>
+        <a href="business-management.html" class="nav-item">
+          <span class="nav-icon">📈</span>
+          <span>Business Management</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">System</div>
+        <a href="#" class="nav-item">
+          <span class="nav-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <div class="admin-card">
+        <div class="card-header">
+          <h2 class="card-title">Business Snapshot 📈</h2>
+          <div class="card-actions">
+            <button class="btn btn-secondary btn-small" onclick="syncData()">🔄 Sync</button>
+            <button class="btn btn-primary btn-small" onclick="viewDetailedAnalytics()">📊 View Detailed Analytics</button>
+          </div>
+        </div>
+
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <h4>Bookings This Month 📅</h4>
+            <p id="bookings-this-month">Loading...</p>
+          </div>
+          <div class="stat-card">
+            <h4>Upcoming Pop-Ups 🎉</h4>
+            <p id="upcoming-popups">Loading...</p>
+          </div>
+          <div class="stat-card">
+            <h4>Revenue This Month 💰</h4>
+            <p id="revenue-this-month">Loading...</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Client Record Popup -->
-    <div class="popup" id="clientRecordPopup">
-      <div class="popup-content">
-        <h3>Client Session Details</h3>
-        <p>Edit the session details below.</p>
-        <form id="clientRecordForm">
-          <div class="form-group">
-            <label for="sessionDate">Session Date *</label>
-            <input type="date" id="sessionDate" name="sessionDate" required />
+      <div class="admin-card">
+        <div class="card-header">
+          <h2 class="card-title">Upcoming Events (Next 7 Days) 🐶</h2>
+          <div class="card-actions">
+            <button class="btn btn-primary btn-small" onclick="viewFullCalendar()">📅 View Full Calendar</button>
           </div>
-          <div class="form-group">
-            <label for="sessionTime">Session Time *</label>
-            <select id="sessionTime" name="sessionTime" required>
-              <option value="">Select a time</option>
-              <option value="06:00">6:00 AM</option>
-              <option value="06:20">6:20 AM</option>
-              <option value="06:40">6:40 AM</option>
-              <option value="07:00">7:00 AM</option>
-              <option value="07:20">7:20 AM</option>
-              <option value="07:40">7:40 AM</option>
-              <option value="08:00">8:00 AM</option>
-              <option value="08:20">8:20 AM</option>
-              <option value="08:40">8:40 AM</option>
-              <option value="09:00">9:00 AM</option>
-              <option value="09:20">9:20 AM</option>
-              <option value="09:40">9:40 AM</option>
-              <option value="10:00">10:00 AM</option>
-              <option value="18:00">6:00 PM</option>
-              <option value="18:30">6:30 PM</option>
-              <option value="19:00">7:00 PM</option>
-              <option value="19:30">7:30 PM</option>
-              <option value="20:00">8:00 PM</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="clientName">Client Name *</label>
-            <input type="text" id="clientName" name="clientName" required />
-          </div>
-          <div class="form-group">
-            <label for="clientEmail">Client Email</label>
-            <input type="email" id="clientEmail" name="clientEmail" />
-          </div>
-          <div class="form-group">
-            <label for="clientPhone">Client Phone</label>
-            <input type="tel" id="clientPhone" name="clientPhone" />
-          </div>
-          <div class="form-group">
-            <label for="person1Instagram">Instagram Tag (Person 1)</label>
-            <input type="text" id="person1Instagram" name="person1Instagram" />
-          </div>
-          <div class="form-group">
-            <label for="person2Instagram">Instagram Tag (Person 2)</label>
-            <input type="text" id="person2Instagram" name="person2Instagram" />
-          </div>
-          <div class="form-actions">
-            <button type="button" class="cancel" onclick="closeClientPopup()">Cancel</button>
-            <button type="submit" class="save">Save Changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </main>
+        </div>
 
-  <footer>
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Contact Us</h4>
-        <a href="/contact" aria-label="Contact us page">Contact Us</a>
-      </div>
-      <div class="footer-section socials">
-        <h4>Connect</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-      </div>
-      <div class="footer-section">
-        <h4>We Accept</h4>
-        <div class="payment-methods">
-          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        <div class="upcoming-events">
+          <div class="event-list" id="event-list">
+            <!-- Events will be populated here -->
+          </div>
         </div>
       </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-section">
+          <h4>Contact Us 📬</h4>
+          <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+          <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+        </div>
+        <div class="footer-section socials">
+          <h4>Connect 🌐</h4>
+          <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+          <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+        </div>
+        <div class="footer-section">
+          <h4>We Accept 💳</h4>
+          <div class="payment-methods">
+            <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+            <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 2:01 PM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How! 🤖</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Client Record Modal -->
+  <div class="modal-overlay" id="clientRecordModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Client Session Details 🐾</h3>
+        <button class="modal-close" onclick="closeClientModal()">×</button>
+      </div>
+      
+      <form id="clientRecordForm">
+        <div class="form-group">
+          <label class="form-label">Booking ID 🔍</label>
+          <input type="text" class="form-input" id="bookingId" readonly>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Session Date 📅</label>
+          <input type="date" class="form-input" id="sessionDate" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Session Time ⏰</label>
+          <select id="sessionTime" class="form-input" required>
+            <option value="">Select a time</option>
+            <option value="06:00">6:00 AM</option>
+            <option value="06:20">6:20 AM</option>
+            <option value="06:40">6:40 AM</option>
+            <option value="07:00">7:00 AM</option>
+            <option value="07:20">7:20 AM</option>
+            <option value="07:40">7:40 AM</option>
+            <option value="08:00">8:00 AM</option>
+            <option value="08:20">8:20 AM</option>
+            <option value="08:40">8:40 AM</option>
+            <option value="09:00">9:00 AM</option>
+            <option value="09:20">9:20 AM</option>
+            <option value="09:40">9:40 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="18:00">6:00 PM</option>
+            <option value="18:30">6:30 PM</option>
+            <option value="19:00">7:00 PM</option>
+            <option value="19:30">7:30 PM</option>
+            <option value="20:00">8:00 PM</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Client Name 👤</label>
+          <input type="text" class="form-input" id="clientName" placeholder="Enter client name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Client Email 📧</label>
+          <input type="email" class="form-input" id="clientEmail" placeholder="client@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Client Phone 📱</label>
+          <input type="tel" class="form-input" id="clientPhone" placeholder="(303) 555-0123">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Instagram Tag (Person 1) 📸</label>
+          <input type="text" class="form-input" id="person1Instagram" placeholder="@username">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Instagram Tag (Person 2) 📸</label>
+          <input type="text" class="form-input" id="person2Instagram" placeholder="@username">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeClientModal()">Cancel 🚫</button>
+          <button type="submit" class="btn btn-primary">Save Changes 💾</button>
+        </div>
+      </form>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 1:50 PM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
-    </div>
-  </footer>
+  </div>
 
   <script>
     let bookingsData = [];
@@ -851,6 +937,13 @@
     function scrollToSessionBuilder(e) {
       e.preventDefault();
       window.location.href = '/index.html#session-builder-section';
+    }
+
+    // Toggle sidebar on mobile
+    function toggleSidebar() {
+      console.log('Toggling sidebar...');
+      const sidebar = document.getElementById('adminSidebar');
+      sidebar.classList.toggle('open');
     }
 
     // Log errors to Airtable for live testing
@@ -888,6 +981,28 @@
       }
     }
 
+    // Check authentication (simplified for now)
+    function checkAuthentication() {
+      const isAuthenticated = localStorage.getItem('adminAuthenticated');
+      if (!isAuthenticated) {
+        console.log('Not authenticated, redirecting to login...');
+        window.location.href = '/admin-login.html';
+        return;
+      }
+      const adminUser = localStorage.getItem('adminUser') || 'Admin';
+      document.getElementById('adminUser').textContent = `Welcome, ${adminUser} 👋`;
+      console.log('Authenticated as:', adminUser);
+    }
+
+    // Logout
+    function logout() {
+      console.log('Logging out...');
+      localStorage.removeItem('adminAuthenticated');
+      localStorage.removeItem('adminUser');
+      localStorage.removeItem('adminLoginTime');
+      window.location.href = '/admin-login.html';
+    }
+
     // Fetch calendar data from Airtable
     async function fetchCalendarData() {
       try {
@@ -919,6 +1034,8 @@
         }));
 
         console.log('Calendar data fetched:', calendarData);
+        updateDashboardStats();
+        displayUpcomingEvents();
       } catch (error) {
         console.error('Error fetching calendar data:', error);
         await logErrorToAirtable('admin.html', error);
@@ -962,6 +1079,28 @@
       }
     }
 
+    // Fetch SessionTypes to get price data
+    let sessionTypes = [];
+    async function fetchSessionTypes() {
+      try {
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/SessionTypes', {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+        const data = await response.json();
+        sessionTypes = data.records.map(record => ({
+          id: record.id,
+          typeName: record.fields.typeName,
+          duration: record.fields.duration,
+          price: record.fields.price || 0
+        }));
+      } catch (error) {
+        console.error('Error fetching session types:', error);
+        await logErrorToAirtable('admin.html', error);
+      }
+    }
+
     // Update dashboard stats
     function updateDashboardStats() {
       const today = new Date();
@@ -983,7 +1122,7 @@
       }).length;
       document.getElementById('upcoming-popups').textContent = upcomingPopups;
 
-      // Revenue this month (simplified; assumes price is in SessionTypes)
+      // Revenue this month
       let revenueThisMonth = 0;
       bookingsData.forEach(booking => {
         const bookingDate = new Date(booking.sessionDate);
@@ -999,28 +1138,13 @@
         }
       });
       document.getElementById('revenue-this-month').textContent = `$${revenueThisMonth}`;
-    }
 
-    // Fetch SessionTypes to get price data
-    let sessionTypes = [];
-    async function fetchSessionTypes() {
-      try {
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/SessionTypes', {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-        const data = await response.json();
-        sessionTypes = data.records.map(record => ({
-          id: record.id,
-          typeName: record.fields.typeName,
-          duration: record.fields.duration,
-          price: record.fields.price || 0
-        }));
-      } catch (error) {
-        console.error('Error fetching session types:', error);
-        await logErrorToAirtable('admin.html', error);
-      }
+      // Update calendar badge (total events this month)
+      const eventsThisMonth = calendarData.filter(slot => {
+        const slotDate = new Date(slot.date);
+        return slotDate.getMonth() === currentMonth && slotDate.getFullYear() === currentYear;
+      });
+      document.getElementById('calendarBadge').textContent = eventsThisMonth.length;
     }
 
     // Display upcoming events (next 7 days)
@@ -1056,7 +1180,7 @@
         eventItem.appendChild(eventInfo);
         eventItem.appendChild(eventStatus);
         if (booking) {
-          eventItem.onclick = () => openClientPopup(booking);
+          eventItem.onclick = () => openClientModal(booking);
         }
         eventList.appendChild(eventItem);
       });
@@ -1064,15 +1188,36 @@
       if (upcomingEvents.length === 0) {
         const noEvents = document.createElement('div');
         noEvents.className = 'event-item';
-        noEvents.textContent = 'No upcoming events in the next 7 days.';
+        noEvents.textContent = 'No upcoming events in the next 7 days. 🐾';
         eventList.appendChild(noEvents);
       }
     }
 
-    // Open client record popup
-    function openClientPopup(booking) {
-      const popup = document.getElementById('clientRecordPopup');
+    // Sync data
+    function syncData() {
+      console.log('Syncing data...');
+      fetchCalendarData();
+      fetchBookingsData();
+    }
+
+    // View detailed analytics (redirect to business management)
+    function viewDetailedAnalytics() {
+      console.log('Redirecting to detailed analytics...');
+      window.location.href = 'business-management.html';
+    }
+
+    // View full calendar (redirect to calendar management)
+    function viewFullCalendar() {
+      console.log('Redirecting to full calendar...');
+      window.location.href = 'calendar-management.html';
+    }
+
+    // Open client record modal
+    function openClientModal(booking) {
+      console.log('Opening client modal for booking:', booking);
+      const modal = document.getElementById('clientRecordModal');
       const form = document.getElementById('clientRecordForm');
+      const bookingId = document.getElementById('bookingId');
       const sessionDate = document.getElementById('sessionDate');
       const sessionTime = document.getElementById('sessionTime');
       const clientName = document.getElementById('clientName');
@@ -1081,6 +1226,7 @@
       const person1Instagram = document.getElementById('person1Instagram');
       const person2Instagram = document.getElementById('person2Instagram');
 
+      bookingId.value = booking.bookingId;
       sessionDate.value = booking.sessionDate;
       sessionTime.value = booking.sessionTime;
       clientName.value = booking.clientName;
@@ -1102,15 +1248,19 @@
           }
         };
         await updateBooking(booking.id, updatedBooking, booking.calendarSlot, sessionDate.value, sessionTime.value);
-        popup.style.display = 'none';
+        modal.style.display = 'none';
       };
 
-      popup.style.display = 'flex';
+      modal.style.display = 'flex';
     }
 
-    // Close client popup
-    function closeClientPopup() {
-      document.getElementById('clientRecordPopup').style.display = 'none';
+    // Close client modal
+    function closeClientModal() {
+      console.log('Closing client modal...');
+      const modal = document.getElementById('clientRecordModal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
     }
 
     // Update booking in Airtable
@@ -1135,7 +1285,6 @@
           fields: {
             date: newDate,
             time: newTime
-            // Note: In a full implementation, recalculate endTime based on duration and cushionTime
           }
         };
         const calendarResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar/${calendarSlotId}`, {
@@ -1162,6 +1311,8 @@
 
     // Initialize the page
     document.addEventListener('DOMContentLoaded', async function() {
+      console.log('Page loaded, initializing...');
+      checkAuthentication();
       await fetchSessionTypes();
       await fetchCalendarData();
       await fetchBookingsData();
