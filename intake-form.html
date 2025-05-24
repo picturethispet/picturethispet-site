@@ -251,7 +251,6 @@
     }
 
     .intake-form-card .form-group input,
-    .intake-form-card .form-group select,
     .intake-form-card .form-group textarea {
       width: 100%;
       padding: 0.8rem;
@@ -265,7 +264,6 @@
     }
 
     .intake-form-card .form-group input:focus,
-    .intake-form-card .form-group select:focus,
     .intake-form-card .form-group textarea:focus {
       outline: none;
       border-color: var(--gold);
@@ -275,41 +273,6 @@
     .intake-form-card .form-group textarea {
       resize: vertical;
       min-height: 100px;
-    }
-
-    .intake-form-card .form-group.checkbox-group {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .intake-form-card .form-group.checkbox-group label {
-      font-size: 1rem;
-      font-weight: 400;
-      margin-bottom: 0;
-    }
-
-    .intake-form-card .form-group.checkbox-group input[type="checkbox"] {
-      width: auto;
-    }
-
-    .intake-form-card .form-section {
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .intake-form-card .form-section:last-child {
-      border-bottom: none;
-    }
-
-    .intake-form-card .form-section h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .intake-form-card .submit-btn {
@@ -538,13 +501,8 @@
       }
 
       .intake-form-card .form-group input,
-      .intake-form-card .form-group select,
       .intake-form-card .form-group textarea {
         font-size: 0.9rem;
-      }
-
-      .intake-form-card .form-section h4 {
-        font-size: 1.2rem;
       }
 
       .intake-form-card .submit-btn,
@@ -603,67 +561,31 @@
     <section id="intake-form-section">
       <div class="intake-form-container">
         <h2>Intake Form</h2>
-        <p>Please provide details about your pet(s) and session preferences to finalize your booking.</p>
+        <p>Please provide details about your pet and session preferences to finalize your booking.</p>
 
         <div class="intake-form-card">
           <h3>Complete Your Booking</h3>
           <form id="intake-form">
-            <!-- Customer Information -->
-            <div class="form-section">
-              <h4>Customer Information</h4>
-              <div class="form-group">
-                <label for="customer-name">Full Name *</label>
-                <input type="text" id="customer-name" name="customer-name" required placeholder="Enter your full name" />
-              </div>
-              <div class="form-group">
-                <label for="customer-email">Email Address *</label>
-                <input type="email" id="customer-email" name="customer-email" required placeholder="Enter your email address" />
-              </div>
-              <div class="form-group">
-                <label for="customer-phone">Phone Number *</label>
-                <input type="tel" id="customer-phone" name="customer-phone" required placeholder="Enter your phone number" />
-              </div>
+            <div class="form-group">
+              <label for="customer-name">Your Name *</label>
+              <input type="text" id="customer-name" name="customer-name" required placeholder="Enter your full name" />
             </div>
-
-            <!-- Pet Information -->
-            <div class="form-section" id="pet-info-section">
-              <h4>Pet Information</h4>
-              <!-- Pet inputs will be dynamically generated here -->
+            <div class="form-group">
+              <label for="customer-email">Email Address *</label>
+              <input type="email" id="customer-email" name="customer-email" required placeholder="Enter your email address" />
             </div>
-
-            <!-- People Information -->
-            <div class="form-section" id="people-info-section">
-              <h4>People Attending</h4>
-              <!-- People inputs will be dynamically generated here -->
+            <div class="form-group">
+              <label for="pet-name">Pet Name *</label>
+              <input type="text" id="pet-name" name="pet-name" required placeholder="Enter your pet's name" />
             </div>
-
-            <!-- Session Preferences -->
-            <div class="form-section">
-              <h4>Session Preferences</h4>
-              <div class="form-group">
-                <label for="special-requests">Special Requests</label>
-                <textarea id="special-requests" name="special-requests" placeholder="Any special requests or notes for the session?"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="photo-style">Preferred Photo Style</label>
-                <select id="photo-style" name="photo-style">
-                  <option value="candid">Candid</option>
-                  <option value="posed">Posed</option>
-                  <option value="both">Both</option>
-                </select>
-              </div>
+            <div class="form-group">
+              <label for="pet-details">Pet Details</label>
+              <textarea id="pet-details" name="pet-details" placeholder="Provide details about your pet (e.g., breed, age, behavior)"></textarea>
             </div>
-
-            <!-- Consent -->
-            <div class="form-section">
-              <h4>Consent</h4>
-              <div class="form-group checkbox-group">
-                <input type="checkbox" id="marketing-consent" name="marketing-consent" required />
-                <label for="marketing-consent">I agree to allow Picture This Pet to use photos from this session for marketing purposes *</label>
-              </div>
+            <div class="form-group">
+              <label for="session-preferences">Session Preferences</label>
+              <textarea id="session-preferences" name="session-preferences" placeholder="Any special requests or preferences for the session?"></textarea>
             </div>
-
-            <!-- Form Actions -->
             <div class="card-actions">
               <a href="/ptp-pick-date-step-3.html" class="back-btn">Back</a>
               <button type="submit" class="submit-btn">Submit and Proceed to Payment</button>
@@ -706,7 +628,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:12 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:18 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -734,42 +656,6 @@
         emailInput.value = marketingData.email;
       }
 
-      // Load session data (pet count, people count)
-      const sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
-      const petCount = parseInt(sessionData.petCount) || 1;
-      const peopleCount = parseInt(sessionData.peopleCount) || 1;
-
-      // Dynamically generate pet input fields
-      const petInfoSection = document.getElementById('pet-info-section');
-      for (let i = 1; i <= petCount; i++) {
-        const petDiv = document.createElement('div');
-        petDiv.className = 'form-group';
-        petDiv.innerHTML = `
-          <h5>Pet ${i}</h5>
-          <label for="pet-name-${i}">Pet Name *</label>
-          <input type="text" id="pet-name-${i}" name="pet-name-${i}" required placeholder="Enter pet's name" />
-          <label for="pet-breed-${i}">Breed *</label>
-          <input type="text" id="pet-breed-${i}" name="pet-breed-${i}" required placeholder="Enter pet's breed" />
-          <label for="pet-age-${i}">Age *</label>
-          <input type="number" id="pet-age-${i}" name="pet-age-${i}" required placeholder="Enter pet's age" min="0" />
-          <label for="pet-behavior-${i}">Behavior Notes</label>
-          <textarea id="pet-behavior-${i}" name="pet-behavior-${i}" placeholder="Any behavior notes or special needs?"></textarea>
-        `;
-        petInfoSection.appendChild(petDiv);
-      }
-
-      // Dynamically generate people input fields
-      const peopleInfoSection = document.getElementById('people-info-section');
-      for (let i = 1; i <= peopleCount; i++) {
-        const personDiv = document.createElement('div');
-        personDiv.className = 'form-group';
-        personDiv.innerHTML = `
-          <label for="person-name-${i}">Person ${i} Name *</label>
-          <input type="text" id="person-name-${i}" name="person-name-${i}" required placeholder="Enter person's name" />
-        `;
-        peopleInfoSection.appendChild(personDiv);
-      }
-
       // Handle form submission
       const intakeForm = document.getElementById('intake-form');
       intakeForm.addEventListener('submit', function(e) {
@@ -785,30 +671,10 @@
         const intakeData = {
           customerName: document.getElementById('customer-name').value,
           customerEmail: document.getElementById('customer-email').value,
-          customerPhone: document.getElementById('customer-phone').value,
-          pets: [],
-          people: [],
-          specialRequests: document.getElementById('special-requests').value,
-          photoStyle: document.getElementById('photo-style').value,
-          marketingConsent: document.getElementById('marketing-consent').checked
+          petName: document.getElementById('pet-name').value,
+          petDetails: document.getElementById('pet-details').value,
+          sessionPreferences: document.getElementById('session-preferences').value
         };
-
-        // Collect pet data
-        for (let i = 1; i <= petCount; i++) {
-          intakeData.pets.push({
-            name: document.getElementById(`pet-name-${i}`).value,
-            breed: document.getElementById(`pet-breed-${i}`).value,
-            age: document.getElementById(`pet-age-${i}`).value,
-            behaviorNotes: document.getElementById(`pet-behavior-${i}`).value
-          });
-        }
-
-        // Collect people data
-        for (let i = 1; i <= peopleCount; i++) {
-          intakeData.people.push({
-            name: document.getElementById(`person-name-${i}`).value
-          });
-        }
 
         // Save to localStorage
         localStorage.setItem('ptpIntakeData', JSON.stringify(intakeData));
