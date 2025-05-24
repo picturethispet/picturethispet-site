@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | Picture This Pet</title>
-  <meta name="description" content="Complete business management dashboard for Picture This Pet photography studio.">
+  <meta name="description" content="Admin dashboard for managing calendar and client sessions in Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -17,14 +17,6 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
-      --admin-purple: #8b5cf6;
-      --admin-blue: #3b82f6;
-      --dark-bg: #0f0f0f;
-      --card-bg: rgba(255, 255, 255, 0.05);
-      --border-color: rgba(255, 255, 255, 0.1);
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.8);
-      --text-muted: rgba(255, 255, 255, 0.6);
     }
 
     * {
@@ -33,26 +25,23 @@
       padding: 0;
     }
     
-    html, body {
+    html {
       overflow-x: hidden;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--dark-bg);
-      color: var(--text-primary);
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
     }
     
     html::-webkit-scrollbar {
-      width: 8px;
+      width: 0;
+      height: 0;
     }
     
-    html::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    
-    html::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+      overflow-x: hidden;
     }
 
     @keyframes moveBackground {
@@ -64,7 +53,7 @@
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -72,1204 +61,1034 @@
       }
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+    /* === HEADER STYLES === */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-image: url("assets/images/ani_bkgd_cool.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
     }
 
-    @keyframes slideInRight {
-      from {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
     }
 
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
     }
 
-    /* === LAYOUT === */
-    .admin-layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      grid-template-rows: auto 1fr;
-      min-height: 100vh;
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .book-btn {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      min-height: calc(100vh - 110px);
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-    }
-
-    /* === HEADER === */
-    .admin-header {
-      grid-column: 1 / -1;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid var(--border-color);
-      z-index: 1000;
-      position: sticky;
-      top: 0;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .logo-small {
-      height: 50px;
-      transition: all 0.3s ease;
-    }
-
-    .logo-small:hover {
-      transform: scale(1.05);
-    }
-
-    .header-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .sync-status {
-      background: var(--card-bg);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      backdrop-filter: blur(10px);
-    }
-
-    .sync-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--available-green);
-      animation: pulse 2s infinite;
-    }
-
-    .admin-user {
-      background: var(--card-bg);
-      padding: 0.8rem 1.5rem;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-      backdrop-filter: blur(10px);
-    }
-
-    .logout-btn {
-      background: var(--card-bg);
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-      padding: 0.7rem 1.2rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .logout-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-1px);
-    }
-
-    /* === SIDEBAR === */
-    .admin-sidebar {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      backdrop-filter: blur(12px);
-      border-right: 1px solid var(--border-color);
-      padding: 2rem 0;
-      overflow-y: auto;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-    }
-
-    .nav-section {
-      margin-bottom: 2rem;
-    }
-
-    .nav-section-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 0 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.5rem;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border-left: 3px solid transparent;
-      text-decoration: none;
+      padding: 4rem 1rem;
       position: relative;
     }
 
-    .nav-item:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-primary);
-      transform: translateX(5px);
-    }
-
-    .nav-item.active {
-      background: rgba(255, 255, 255, 0.15);
-      color: var(--text-primary);
-      border-left-color: var(--gold);
-      transform: translateX(5px);
-    }
-
-    .nav-icon {
-      font-size: 1.2rem;
-      width: 20px;
-      text-align: center;
-    }
-
-    .nav-badge {
-      background: var(--booked-red);
-      color: white;
-      font-size: 0.7rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 10px;
-      margin-left: auto;
-      min-width: 18px;
-      text-align: center;
-      animation: bounce 2s infinite;
-    }
-
-    .nav-badge.success {
-      background: var(--available-green);
-    }
-
-    .nav-badge.warning {
-      background: var(--soft-hold-yellow);
-    }
-
-    /* === MAIN CONTENT === */
-    .admin-main {
-      padding: 2rem;
-      overflow-y: auto;
-      max-height: calc(100vh - 100px);
-      animation: fadeInUp 0.6s ease-out;
-    }
-
-    /* === CARDS === */
-    .admin-card {
+    /* === ADMIN SECTION === */
+    .admin-section {
+      max-width: 1200px;
+      margin: 0 auto;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      padding: 2rem;
-      color: var(--text-primary);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-color);
-      margin-bottom: 2rem;
-      transition: all 0.3s ease;
-    }
-
-    .admin-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    /* === BUTTONS === */
-    .btn {
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
       backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
     }
 
-    .btn-primary {
+    .admin-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .admin-section p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* === ADMIN LINKS === */
+    .admin-links {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .admin-link {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
       box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
     }
 
-    .btn-primary:hover {
+    .admin-link:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
-    .btn-secondary {
-      background: var(--card-bg);
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-1px);
-    }
-
-    .btn-small {
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
-    }
-
-    /* === DASHBOARD STATS === */
-    .dashboard-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
+    /* === CALENDAR === */
+    .calendar-container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 2rem;
       margin-bottom: 2rem;
     }
 
-    .stat-card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 2rem;
-      border: 1px solid var(--border-color);
-      text-align: center;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--orange), var(--gold));
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-      font-family: 'Playfair Display', serif;
-    }
-
-    .stat-label {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .stat-change {
-      font-size: 0.8rem;
-      margin-top: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-    }
-
-    .stat-change.positive {
-      color: var(--available-green);
-    }
-
-    .stat-change.negative {
-      color: var(--booked-red);
-    }
-
-    /* === RECENT ACTIVITIES === */
-    .recent-activities {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-
-    .activity-list {
-      max-height: 400px;
-      overflow-y: auto;
-    }
-
-    .activity-item {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.5rem;
-      border: 1px solid var(--border-color);
-      margin-bottom: 1rem;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .activity-item:hover {
-      background: rgba(255, 255, 255, 0.08);
-      transform: translateX(5px);
-    }
-
-    .activity-header {
+    .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .calendar-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .calendar-day-header {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 1rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .calendar-day {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      text-align: center;
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .calendar-day.other-month {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .calendar-day.booked {
+      background: rgba(239, 68, 68, 0.2);
+      border: 2px solid rgba(239, 68, 68, 0.5);
+      color: white;
+      cursor: pointer;
+    }
+
+    .calendar-day.booked:hover {
+      background: rgba(239, 68, 68, 0.3);
+      transform: scale(1.05);
+    }
+
+    .calendar-day .session-info {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* === POP-UP STYLES === */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .popup-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .popup-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .popup-content .form-group {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .popup-content .form-group label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
       margin-bottom: 0.5rem;
     }
 
-    .activity-title {
-      font-weight: 600;
-      color: var(--text-primary);
+    .popup-content .form-group input,
+    .popup-content .form-group select {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      transition: all 0.3s ease;
     }
 
-    .activity-time {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .popup-content .form-group input:focus,
+    .popup-content .form-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
     }
 
-    .activity-description {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.4;
-    }
-
-    .activity-status {
-      display: inline-block;
-      padding: 0.2rem 0.8rem;
-      border-radius: 12px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-top: 0.5rem;
-    }
-
-    .activity-status.pending {
-      background: rgba(245, 158, 11, 0.2);
-      color: var(--soft-hold-yellow);
-    }
-
-    .activity-status.completed {
-      background: rgba(16, 185, 129, 0.2);
-      color: var(--available-green);
-    }
-
-    .activity-status.urgent {
-      background: rgba(239, 68, 68, 0.2);
-      color: var(--booked-red);
-    }
-
-    /* === QUICK ACTIONS === */
-    .quick-actions {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .popup-content .form-actions {
+      display: flex;
       gap: 1rem;
+      justify-content: center;
       margin-top: 2rem;
     }
 
-    .quick-action-card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1px solid var(--border-color);
-      text-align: center;
+    .popup-content button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      text-decoration: none;
-      color: inherit;
     }
 
-    .quick-action-card:hover {
+    .popup-content button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .popup-content button.cancel {
       background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .quick-action-icon {
-      font-size: 2rem;
+    .popup-content button.cancel:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
       margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
       color: var(--gold);
     }
 
-    .quick-action-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
-    .quick-action-desc {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
     }
 
-    /* === NOTIFICATIONS === */
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--available-green);
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      z-index: 5000;
-      transform: translateX(400px);
-      transition: transform 0.3s ease;
-      backdrop-filter: blur(10px);
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
     }
 
-    .notification.show {
-      transform: translateX(0);
-      animation: slideInRight 0.3s ease-out;
-    }
-
-    .notification.error {
-      background: var(--booked-red);
-    }
-
-    .notification.warning {
-      background: var(--soft-hold-yellow);
-    }
-
-    .notification.info {
-      background: var(--admin-blue);
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* === RESPONSIVE === */
-    @media (max-width: 1024px) {
-      .admin-layout {
-        grid-template-columns: 60px 1fr;
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo { 
+        height: 48px; 
+      }
+      
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
       }
 
-      .admin-sidebar {
-        padding: 1rem 0;
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      main {
+        margin-top: 80px;
+        padding: 2rem 1rem;
       }
 
-      .nav-item {
-        padding: 1rem 0.8rem;
+      .admin-section {
+        padding: 2rem;
+      }
+
+      .admin-section h2 {
+        font-size: 2rem;
+      }
+
+      .admin-section p {
+        font-size: 1rem;
+      }
+
+      .admin-links {
+        gap: 1rem;
         justify-content: center;
       }
 
-      .nav-item span:not(.nav-icon) {
-        display: none;
+      .admin-link {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
       }
 
-      .nav-section-title {
-        display: none;
-      }
-
-      .nav-badge {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-      }
-
-      .recent-activities {
-        grid-template-columns: 1fr;
-      }
-
-      .dashboard-stats {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      }
-    }
-
-    @media (max-width: 768px) {
-      .admin-layout {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
-      }
-
-      .admin-sidebar {
-        background: rgba(0, 0, 0, 0.95);
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 280px;
-        height: 100vh;
-        z-index: 5000;
-        transition: left 0.3s ease;
-      }
-
-      .admin-sidebar.open {
-        left: 0;
-      }
-
-      .mobile-menu-btn {
-        display: block !important;
-        background: none;
-        border: none;
-        color: var(--text-primary);
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-
-      .header-title {
-        font-size: 1.4rem;
-      }
-
-      .admin-main {
+      .calendar-container {
         padding: 1rem;
       }
 
-      .quick-actions {
+      .calendar-title {
+        font-size: 1.5rem;
+      }
+
+      .calendar-day {
+        min-height: 80px;
+        font-size: 0.9rem;
+        padding: 0.8rem;
+      }
+
+      .calendar-day-header {
+        padding: 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .calendar-day .session-info {
+        font-size: 0.7rem;
+      }
+
+      .popup-content {
+        padding: 1.5rem;
+      }
+
+      .popup-content h3 {
+        font-size: 1.5rem;
+      }
+
+      .popup-content p {
+        font-size: 1rem;
+      }
+
+      .popup-content button {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
+      }
+
+      .footer-container {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .footer-section {
+        align-items: center;
+        text-align: center;
+      }
+
+      .payment-methods {
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
-  <div class="admin-layout">
-    <!-- Header -->
-    <header class="admin-header">
-      <div class="header-left">
-        <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">☰</button>
-        <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo-small" />
-        <h1 class="header-title">Studio Manager</h1>
-      </div>
-      <div class="header-right">
-        <div class="sync-status">
-          <div class="sync-indicator" id="syncIndicator"></div>
-          <span id="syncStatus">Live & Synced</span>
-        </div>
-        <div class="admin-user" id="adminUser">Welcome, Admin</div>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-      </div>
-    </header>
-
-    <!-- Sidebar Navigation -->
-    <nav class="admin-sidebar" id="adminSidebar">
-      <div class="nav-section">
-        <div class="nav-section-title">Overview</div>
-        <a href="admin.html" class="nav-item active">
-          <span class="nav-icon">📊</span>
-          <span>Dashboard</span>
-        </a>
-        <a href="calendar-management.html" class="nav-item">
-          <span class="nav-icon">📅</span>
-          <span>Calendar</span>
-          <span class="nav-badge" id="calendarBadge">3</span>
-        </a>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Management</div>
-        <a href="client-session-management.html" class="nav-item">
-          <span class="nav-icon">👥</span>
-          <span>Clients & Sessions</span>
-        </a>
-        <a href="gallery-management.html" class="nav-item">
-          <span class="nav-icon">🖼️</span>
-          <span>Gallery</span>
-          <span class="nav-badge success" id="galleryBadge">8</span>
-        </a>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Business</div>
-        <a href="business-management.html" class="nav-item">
-          <span class="nav-icon">📈</span>
-          <span>Analytics</span>
-        </a>
-      </div>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
 
-    <!-- Main Content -->
-    <main class="admin-main">
-      <!-- Dashboard Statistics -->
-      <div class="dashboard-stats">
-        <div class="stat-card">
-          <div class="stat-number" id="monthlySessionsCount">12</div>
-          <div class="stat-label">Sessions This Month</div>
-          <div class="stat-change positive">
-            <span>↗</span> +12% from last month
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="monthlyRevenue">$3,200</div>
-          <div class="stat-label">Monthly Revenue</div>
-          <div class="stat-change positive">
-            <span>↗</span> +18% from last month
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="activeGalleriesCount">8</div>
-          <div class="stat-label">Active Galleries</div>
-          <div class="stat-change positive">
-            <span>↗</span> +3 new this week
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="totalClientsCount">24</div>
-          <div class="stat-label">Total Clients</div>
-          <div class="stat-change positive">
-            <span>↗</span> +5 new this month
-          </div>
-        </div>
+  <main>
+    <!-- Admin Section -->
+    <div class="admin-section">
+      <h2>Admin Dashboard</h2>
+      <p>Manage your calendar, client sessions, and availability from here.</p>
+      
+      <!-- Admin Links -->
+      <div class="admin-links">
+        <a href="calendar-management.html" class="admin-link">Calendar</a>
       </div>
 
-      <!-- Recent Activities -->
-      <div class="recent-activities">
-        <!-- Upcoming Sessions -->
-        <div class="admin-card">
-          <div class="card-header">
-            <h2 class="card-title">Upcoming Sessions</h2>
-            <div class="card-actions">
-              <button class="btn btn-secondary btn-small" onclick="refreshSessions()">🔄 Refresh</button>
-              <a href="calendar-management.html" class="btn btn-primary btn-small">+ Add Session</a>
-            </div>
-          </div>
-          
-          <div class="activity-list" id="upcomingSessions">
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Sarah Johnson - Full Session</div>
-                <div class="activity-time">Today, 6:00 PM</div>
-              </div>
-              <div class="activity-description">Cheesman Park • 2 pets (Buffy & Max) • Special requests: Buffy can be shy</div>
-              <div class="activity-status pending">Today</div>
-            </div>
-            
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Mike Chen - Mini Session</div>
-                <div class="activity-time">Tomorrow, 5:00 PM</div>
-              </div>
-              <div class="activity-description">City Park • 1 pet (Rocky) • Standard session</div>
-              <div class="activity-status pending">Tomorrow</div>
-            </div>
-            
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Lisa Rodriguez - Holiday Session</div>
-                <div class="activity-time">Dec 24, 4:30 PM</div>
-              </div>
-              <div class="activity-description">Washington Park • 1 pet (Luna) • Holiday themed</div>
-              <div class="activity-status pending">Upcoming</div>
-            </div>
+      <!-- Session Calendar -->
+      <div class="calendar-container">
+        <div class="calendar-header">
+          <h3 class="calendar-title" id="calendar-title">Loading...</h3>
+          <div class="calendar-nav">
+            <button class="nav-button" onclick="previousMonth()">‹</button>
+            <button class="nav-button" onclick="nextMonth()">›</button>
           </div>
         </div>
+        <div id="calendar-grid" class="calendar-grid"></div>
+      </div>
+    </div>
 
-        <!-- Pending Actions -->
-        <div class="admin-card">
-          <div class="card-header">
-            <h2 class="card-title">Pending Actions</h2>
-            <div class="card-actions">
-              <button class="btn btn-secondary btn-small" onclick="refreshActions()">🔄 Refresh</button>
-              <button class="btn btn-secondary btn-small" onclick="markAllComplete()">✓ Mark All Complete</button>
-            </div>
+    <!-- Client Record Popup -->
+    <div class="popup" id="clientRecordPopup">
+      <div class="popup-content">
+        <h3>Client Session Details</h3>
+        <p>Edit the session details below.</p>
+        <form id="clientRecordForm">
+          <div class="form-group">
+            <label for="sessionDate">Session Date *</label>
+            <input type="date" id="sessionDate" name="sessionDate" required />
           </div>
-          
-          <div class="activity-list" id="pendingActions">
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Upload Photos</div>
-                <div class="activity-time">Sarah Johnson</div>
-              </div>
-              <div class="activity-description">Session completed yesterday - 24 photos ready for upload</div>
-              <div class="activity-status urgent">High Priority</div>
-            </div>
-            
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Send Gallery Access</div>
-                <div class="activity-time">Mike Chen</div>
-              </div>
-              <div class="activity-description">Gallery created with 15 photos - ready to send credentials</div>
-              <div class="activity-status pending">Pending</div>
-            </div>
-            
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Invoice Payment</div>
-                <div class="activity-time">Lisa Rodriguez</div>
-              </div>
-              <div class="activity-description">Full session invoice sent - payment pending</div>
-              <div class="activity-status pending">Follow Up</div>
-            </div>
-            
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Calendar Sync</div>
-                <div class="activity-time">System</div>
-              </div>
-              <div class="activity-description">3 new bookings from website need to be confirmed</div>
-              <div class="activity-status urgent">Action Needed</div>
-            </div>
+          <div class="form-group">
+            <label for="sessionTime">Session Time *</label>
+            <select id="sessionTime" name="sessionTime" required>
+              <option value="">Select a time</option>
+              <option value="06:00">6:00 AM</option>
+              <option value="06:20">6:20 AM</option>
+              <option value="06:40">6:40 AM</option>
+              <option value="07:00">7:00 AM</option>
+              <option value="07:20">7:20 AM</option>
+              <option value="07:40">7:40 AM</option>
+              <option value="08:00">8:00 AM</option>
+              <option value="08:20">8:20 AM</option>
+              <option value="08:40">8:40 AM</option>
+              <option value="09:00">9:00 AM</option>
+              <option value="09:20">9:20 AM</option>
+              <option value="09:40">9:40 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="18:30">6:30 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="19:30">7:30 PM</option>
+              <option value="20:00">8:00 PM</option>
+            </select>
           </div>
+          <div class="form-group">
+            <label for="clientName">Client Name *</label>
+            <input type="text" id="clientName" name="clientName" required />
+          </div>
+          <div class="form-group">
+            <label for="clientEmail">Client Email</label>
+            <input type="email" id="clientEmail" name="clientEmail" />
+          </div>
+          <div class="form-group">
+            <label for="clientPhone">Client Phone</label>
+            <input type="tel" id="clientPhone" name="clientPhone" />
+          </div>
+          <div class="form-group">
+            <label for="person1Instagram">Instagram Tag (Person 1)</label>
+            <input type="text" id="person1Instagram" name="person1Instagram" />
+          </div>
+          <div class="form-group">
+            <label for="person2Instagram">Instagram Tag (Person 2)</label>
+            <input type="text" id="person2Instagram" name="person2Instagram" />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="cancel" onclick="closeClientPopup()">Cancel</button>
+            <button type="submit" class="save">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
         </div>
       </div>
-
-      <!-- Quick Actions -->
-      <div class="admin-card">
-        <div class="card-header">
-          <h2 class="card-title">Quick Actions</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Common tasks and shortcuts</p>
-        </div>
-        
-        <div class="quick-actions">
-          <a href="calendar-management.html" class="quick-action-card">
-            <div class="quick-action-icon">📅</div>
-            <div class="quick-action-title">Schedule Session</div>
-            <div class="quick-action-desc">Add new photography session to calendar</div>
-          </a>
-          
-          <a href="gallery-management.html" class="quick-action-card">
-            <div class="quick-action-icon">📸</div>
-            <div class="quick-action-title">Upload Photos</div>
-            <div class="quick-action-desc">Add photos to client galleries</div>
-          </a>
-          
-          <a href="client-session-management.html" class="quick-action-card">
-            <div class="quick-action-icon">👤</div>
-            <div class="quick-action-title">Manage Clients</div>
-            <div class="quick-action-desc">View and edit client information</div>
-          </a>
-          
-          <a href="business-management.html" class="quick-action-card">
-            <div class="quick-action-icon">📊</div>
-            <div class="quick-action-title">View Analytics</div>
-            <div class="quick-action-desc">Business insights and reports</div>
-          </a>
-          
-          <div class="quick-action-card" onclick="createBackup()">
-            <div class="quick-action-icon">💾</div>
-            <div class="quick-action-title">Backup Data</div>
-            <div class="quick-action-desc">Export and backup all business data</div>
-          </div>
-          
-          <div class="quick-action-card" onclick="sendReminders()">
-            <div class="quick-action-icon">📧</div>
-            <div class="quick-action-title">Send Reminders</div>
-            <div class="quick-action-desc">Email session reminders to clients</div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 1:33 PM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+    </div>
+  </footer>
 
   <script>
-    // ===== DATA MANAGEMENT =====
-    
-    // Initialize data storage with sample data
-    function initializeData() {
-      // Sessions data
-      if (!localStorage.getItem('ptpAdminSessions')) {
-        const sampleSessions = [
-          {
-            id: 'session_1',
-            clientName: 'Sarah Johnson',
-            date: '2024-12-22',
-            time: '18:00',
-            sessionType: 'Full Session',
-            location: 'Cheesman Park',
-            email: 'sarah.johnson@email.com',
-            phone: '(303) 555-0123',
-            pets: ['Buffy', 'Max'],
-            notes: 'Buffy can be shy at first, Max is great with directions',
-            status: 'scheduled',
-            price: 250,
-            created: new Date().toISOString()
-          },
-          {
-            id: 'session_2',
-            clientName: 'Mike Chen',
-            date: '2024-12-23',
-            time: '17:00',
-            sessionType: 'Mini Session',
-            location: 'City Park',
-            email: 'mike.chen@email.com',
-            phone: '(303) 555-0456',
-            pets: ['Rocky'],
-            notes: 'Standard mini session',
-            status: 'scheduled',
-            price: 150,
-            created: new Date().toISOString()
-          },
-          {
-            id: 'session_3',
-            clientName: 'Lisa Rodriguez',
-            date: '2024-12-24',
-            time: '16:30',
-            sessionType: 'Holiday Session',
-            location: 'Washington Park',
-            email: 'lisa.rodriguez@email.com',
-            phone: '(303) 555-0789',
-            pets: ['Luna'],
-            notes: 'Holiday themed photos',
-            status: 'scheduled',
-            price: 200,
-            created: new Date().toISOString()
+    let currentMonth = new Date();
+    let calendarData = [];
+    let bookingsData = [];
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Smooth scroll to session builder (for Book Now)
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      window.location.href = '/index.html#session-builder-section';
+    }
+
+    // Log errors to Airtable for live testing
+    async function logErrorToAirtable(page, error, data = {}) {
+      try {
+        const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const errorRecord = {
+          fields: {
+            errorId: errorId,
+            timestamp: new Date().toISOString(),
+            page: page,
+            errorMessage: error.message || String(error),
+            errorStack: error.stack || 'No stack trace available',
+            userAgent: navigator.userAgent,
+            sessionData: JSON.stringify(data)
           }
-        ];
-        localStorage.setItem('ptpAdminSessions', JSON.stringify(sampleSessions));
-      }
+        };
 
-      // Clients data
-      if (!localStorage.getItem('ptpAdminClients')) {
-        const sampleClients = [
-          {
-            id: 'client_1',
-            name: 'Sarah Johnson',
-            email: 'sarah.johnson@email.com',
-            phone: '(303) 555-0123',
-            address: '123 Main St, Denver, CO 80206',
-            pets: [
-              { name: 'Buffy', age: 3, breed: 'Golden Retriever', gender: 'Female' },
-              { name: 'Max', age: 5, breed: 'Labrador', gender: 'Male' }
-            ],
-            totalSessions: 1,
-            totalSpent: 250,
-            lastSession: '2024-12-22',
-            created: new Date().toISOString()
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Errors', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
           },
-          {
-            id: 'client_2',
-            name: 'Mike Chen',
-            email: 'mike.chen@email.com',
-            phone: '(303) 555-0456',
-            address: '456 Oak Ave, Denver, CO 80210',
-            pets: [
-              { name: 'Rocky', age: 2, breed: 'German Shepherd', gender: 'Male' }
-            ],
-            totalSessions: 2,
-            totalSpent: 300,
-            lastSession: '2024-12-23',
-            created: new Date().toISOString()
-          }
-        ];
-        localStorage.setItem('ptpAdminClients', JSON.stringify(sampleClients));
-      }
+          body: JSON.stringify(errorRecord)
+        });
 
-      // Galleries data
-      if (!localStorage.getItem('ptpAdminGalleries')) {
-        const sampleGalleries = [
-          {
-            id: 'gallery_1',
-            name: 'Sarah Johnson - Full Session',
-            sessionId: 'session_1',
-            clientId: 'client_1',
-            sessionDate: '2024-12-22',
-            status: 'pending',
-            accessId: '0123',
-            password: 'buffybarks',
-            photos: [],
-            totalPhotos: 0,
-            views: 0,
-            downloads: 0,
-            created: new Date().toISOString()
-          },
-          {
-            id: 'gallery_2',
-            name: 'Mike Chen - Mini Session',
-            sessionId: 'session_2',
-            clientId: 'client_2',
-            sessionDate: '2024-12-20',
-            status: 'active',
-            accessId: '0456',
-            password: 'rockybarks',
-            photos: Array(15).fill().map((_, i) => ({
-              id: `photo_${i + 1}`,
-              filename: `rocky_session_${i + 1}.jpg`,
-              title: `Rocky Photo ${i + 1}`,
-              description: '',
-              uploaded: new Date().toISOString()
-            })),
-            totalPhotos: 15,
-            views: 24,
-            downloads: 5,
-            created: new Date().toISOString()
-          }
-        ];
-        localStorage.setItem('ptpAdminGalleries', JSON.stringify(sampleGalleries));
-      }
-
-      updateDashboardStats();
-      updateBadges();
-    }
-
-    // Get data from localStorage
-    function getData(type) {
-      const data = localStorage.getItem(`ptpAdmin${type}`);
-      return data ? JSON.parse(data) : [];
-    }
-
-    // Save data to localStorage
-    function saveData(type, data) {
-      localStorage.setItem(`ptpAdmin${type}`, JSON.stringify(data));
-      updateDashboardStats();
-      updateBadges();
-      broadcastDataUpdate(type, data);
-    }
-
-    // Broadcast data updates to other pages (simulate real-time sync)
-    function broadcastDataUpdate(type, data) {
-      window.localStorage.setItem('ptpAdminLastUpdate', Date.now());
-      window.dispatchEvent(new CustomEvent('ptpDataUpdate', { 
-        detail: { type, data } 
-      }));
-    }
-
-    // Listen for data updates from other pages
-    window.addEventListener('storage', function(e) {
-      if (e.key === 'ptpAdminLastUpdate') {
-        updateDashboardStats();
-        updateBadges();
-        showNotification('📡 Data updated from another page', 'info');
-      }
-    });
-
-    // ===== DASHBOARD FUNCTIONS =====
-    
-    function updateDashboardStats() {
-      const sessions = getData('Sessions');
-      const clients = getData('Clients');
-      const galleries = getData('Galleries');
-      
-      // Calculate monthly sessions
-      const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear();
-      const monthlySessions = sessions.filter(session => {
-        const sessionDate = new Date(session.date);
-        return sessionDate.getMonth() === currentMonth && sessionDate.getFullYear() === currentYear;
-      });
-      
-      // Calculate monthly revenue
-      const monthlyRevenue = monthlySessions.reduce((total, session) => total + (session.price || 0), 0);
-      
-      // Active galleries (non-pending)
-      const activeGalleries = galleries.filter(gallery => gallery.status === 'active').length;
-      
-      // Update DOM
-      document.getElementById('monthlySessionsCount').textContent = monthlySessions.length;
-      document.getElementById('monthlyRevenue').textContent = `$${monthlyRevenue.toLocaleString()}`;
-      document.getElementById('activeGalleriesCount').textContent = activeGalleries;
-      document.getElementById('totalClientsCount').textContent = clients.length;
-    }
-
-    function updateBadges() {
-      const sessions = getData('Sessions');
-      const galleries = getData('Galleries');
-      
-      // Calendar badge - upcoming sessions this week
-      const nextWeek = new Date();
-      nextWeek.setDate(nextWeek.getDate() + 7);
-      const upcomingSessions = sessions.filter(session => {
-        const sessionDate = new Date(session.date);
-        return sessionDate >= new Date() && sessionDate <= nextWeek;
-      }).length;
-      
-      // Gallery badge - active galleries
-      const activeGalleries = galleries.filter(gallery => gallery.status === 'active').length;
-      
-      document.getElementById('calendarBadge').textContent = upcomingSessions;
-      document.getElementById('galleryBadge').textContent = activeGalleries;
-    }
-
-    // ===== UI FUNCTIONS =====
-    
-    function refreshSessions() {
-      showNotification('📅 Sessions refreshed', 'success');
-      // In a real app, this would fetch fresh data from the server
-    }
-
-    function refreshActions() {
-      showNotification('📋 Actions refreshed', 'success');
-      // In a real app, this would fetch fresh pending actions
-    }
-
-    function markAllComplete() {
-      showNotification('✅ All actions marked as complete', 'success');
-      // In a real app, this would update action statuses
-    }
-
-    function createBackup() {
-      const allData = {
-        sessions: getData('Sessions'),
-        clients: getData('Clients'),
-        galleries: getData('Galleries'),
-        exported: new Date().toISOString()
-      };
-      
-      const dataStr = JSON.stringify(allData, null, 2);
-      const dataBlob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(dataBlob);
-      
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `ptp-backup-${new Date().toISOString().split('T')[0]}.json`;
-      link.click();
-      
-      showNotification('💾 Backup created and downloaded', 'success');
-    }
-
-    function sendReminders() {
-      const sessions = getData('Sessions');
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      
-      const tomorrowSessions = sessions.filter(session => {
-        const sessionDate = new Date(session.date);
-        return sessionDate.toDateString() === tomorrow.toDateString();
-      });
-      
-      if (tomorrowSessions.length > 0) {
-        showNotification(`📧 Reminders sent to ${tomorrowSessions.length} clients`, 'success');
-      } else {
-        showNotification('📧 No sessions tomorrow - no reminders needed', 'info');
-      }
-    }
-
-    // ===== UTILITY FUNCTIONS =====
-    
-    function showNotification(message, type = 'info') {
-      const notification = document.createElement('div');
-      notification.className = `notification ${type}`;
-      notification.textContent = message;
-      
-      document.body.appendChild(notification);
-      
-      setTimeout(() => notification.classList.add('show'), 100);
-      
-      setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.remove(), 300);
-      }, 3000);
-    }
-
-    function toggleSidebar() {
-      const sidebar = document.getElementById('adminSidebar');
-      sidebar.classList.toggle('open');
-    }
-
-    // ===== AUTHENTICATION =====
-    
-    function checkAuthentication() {
-      const isAuthenticated = localStorage.getItem('adminAuthenticated');
-      const loginTime = localStorage.getItem('adminLoginTime');
-      const adminUser = localStorage.getItem('adminUser');
-      
-      if (!isAuthenticated || !loginTime || !adminUser) {
-        window.location.href = '/admin-login.html';
-        return false;
-      }
-      
-      const loginDate = new Date(loginTime);
-      const now = new Date();
-      const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
-      
-      if (hoursDiff >= 24) {
-        logout();
-        return false;
-      }
-      
-      document.getElementById('adminUser').textContent = `Welcome, ${adminUser}`;
-      return true;
-    }
-
-    function logout() {
-      localStorage.removeItem('adminAuthenticated');
-      localStorage.removeItem('adminUser');
-      localStorage.removeItem('adminLoginTime');
-      window.location.href = '/admin-login.html';
-    }
-
-    // ===== INITIALIZATION =====
-    
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Picture This Pet Admin Dashboard loading...');
-      
-      if (!checkAuthentication()) {
-        return;
-      }
-      
-      // Initialize data and UI
-      initializeData();
-      
-      // Show welcome message
-      setTimeout(() => {
-        showNotification('🎉 Welcome to your Studio Manager!', 'success');
-      }, 1000);
-    });
-
-    // Responsive handling
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 1024) {
-        document.getElementById('adminSidebar').classList.remove('open');
-      }
-    });
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-      if (e.ctrlKey || e.metaKey) {
-        switch(e.key) {
-          case 'b':
-            e.preventDefault();
-            createBackup();
-            break;
-          case 'r':
-            e.preventDefault();
-            location.reload();
-            break;
+        if (response.ok) {
+          console.log('✅ Error logged to Airtable:', errorRecord);
+        } else {
+          console.warn('⚠️ Failed to log error to Airtable:', response.status);
         }
+      } catch (innerError) {
+        console.warn('⚠️ Failed to log error to Airtable:', innerError);
       }
+    }
+
+    // Fetch calendar data from Airtable
+    async function fetchCalendarData() {
+      try {
+        console.log('Fetching calendar data from Airtable...');
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        calendarData = data.records.map(record => ({
+          id: record.id,
+          date: record.fields.date,
+          time: record.fields.time,
+          endTime: record.fields.endTime,
+          status: record.fields.status,
+          bookingId: record.fields.bookingId,
+          sessionType: record.fields.sessionType,
+          duration: record.fields.SessionDuration ? record.fields.SessionDuration[0] : null,
+          cushionTime: record.fields.cushionTime || 0,
+          isBlocked: record.fields.isBlocked || false,
+          slotType: record.fields.SlotType || 'Regular',
+          location: record.fields.Location || ''
+        }));
+
+        console.log('Calendar data fetched:', calendarData);
+      } catch (error) {
+        console.error('Error fetching calendar data:', error);
+        await logErrorToAirtable('admin.html', error);
+        document.getElementById('calendar-title').textContent = 'Error loading calendar';
+      }
+    }
+
+    // Fetch bookings data from Airtable
+    async function fetchBookingsData() {
+      try {
+        console.log('Fetching bookings data from Airtable...');
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings', {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        bookingsData = data.records.map(record => ({
+          id: record.id,
+          bookingId: record.fields.bookingId,
+          sessionDate: record.fields.sessionDate ? record.fields.sessionDate.split('T')[0] : null,
+          sessionTime: record.fields.sessionDate ? new Date(record.fields.sessionDate).toTimeString().split(' ')[0].slice(0, 5) : null,
+          clientName: record.fields.clientName,
+          clientEmail: record.fields.clientEmail,
+          clientPhone: record.fields.clientPhone,
+          person1Instagram: record.fields.person1Instagram,
+          person2Instagram: record.fields.person2Instagram,
+          calendarSlot: record.fields.calendarSlot ? record.fields.calendarSlot[0] : null
+        }));
+
+        console.log('Bookings data fetched:', bookingsData);
+        generateCalendar();
+      } catch (error) {
+        console.error('Error fetching bookings data:', error);
+        await logErrorToAirtable('admin.html', error);
+        document.getElementById('calendar-title').textContent = 'Error loading calendar';
+      }
+    }
+
+    // Generate calendar for booked sessions
+    function generateCalendar() {
+      const calendarGrid = document.getElementById('calendar-grid');
+      const calendarTitle = document.getElementById('calendar-title');
+      
+      calendarGrid.innerHTML = '';
+      calendarTitle.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(currentMonth);
+
+      // Add day headers
+      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayHeaders.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day-header';
+        header.textContent = day;
+        calendarGrid.appendChild(header);
+      });
+
+      // Calculate calendar days
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+      const startingDayOfWeek = firstDay.getDay();
+
+      // Add empty days before the first day of the month
+      for (let i = 0; i < startingDayOfWeek; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day other-month';
+        calendarGrid.appendChild(emptyDay);
+      }
+
+      // Add days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.textContent = day;
+
+        const currentDate = new Date(year, month, day);
+        const dateString = currentDate.toISOString().split('T')[0];
+
+        // Find bookings for this date
+        const bookingsOnDay = bookingsData.filter(booking => booking.sessionDate === dateString);
+
+        if (bookingsOnDay.length > 0) {
+          const booking = bookingsOnDay[0]; // Display the first booking
+          dayElement.classList.add('booked');
+          const infoElement = document.createElement('div');
+          infoElement.className = 'session-info';
+          infoElement.textContent = `${booking.sessionTime} - ${booking.clientName}`;
+          dayElement.appendChild(infoElement);
+          dayElement.onclick = () => openClientPopup(booking);
+        }
+
+        calendarGrid.appendChild(dayElement);
+      }
+    }
+
+    // Open client record popup
+    function openClientPopup(booking) {
+      const popup = document.getElementById('clientRecordPopup');
+      const form = document.getElementById('clientRecordForm');
+      const sessionDate = document.getElementById('sessionDate');
+      const sessionTime = document.getElementById('sessionTime');
+      const clientName = document.getElementById('clientName');
+      const clientEmail = document.getElementById('clientEmail');
+      const clientPhone = document.getElementById('clientPhone');
+      const person1Instagram = document.getElementById('person1Instagram');
+      const person2Instagram = document.getElementById('person2Instagram');
+
+      sessionDate.value = booking.sessionDate;
+      sessionTime.value = booking.sessionTime;
+      clientName.value = booking.clientName;
+      clientEmail.value = booking.clientEmail || '';
+      clientPhone.value = booking.clientPhone || '';
+      person1Instagram.value = booking.person1Instagram || '';
+      person2Instagram.value = booking.person2Instagram || '';
+
+      form.onsubmit = async (e) => {
+        e.preventDefault();
+        const updatedBooking = {
+          fields: {
+            sessionDate: `${sessionDate.value}T${sessionTime.value}:00`,
+            clientName: clientName.value,
+            clientEmail: clientEmail.value,
+            clientPhone: clientPhone.value,
+            person1Instagram: person1Instagram.value,
+            person2Instagram: person2Instagram.value
+          }
+        };
+        await updateBooking(booking.id, updatedBooking, booking.calendarSlot, sessionDate.value, sessionTime.value);
+        popup.style.display = 'none';
+      };
+
+      popup.style.display = 'flex';
+    }
+
+    // Close client popup
+    function closeClientPopup() {
+      document.getElementById('clientRecordPopup').style.display = 'none';
+    }
+
+    // Update booking in Airtable
+    async function updateBooking(bookingId, updatedBooking, calendarSlotId, newDate, newTime) {
+      try {
+        // Update the booking
+        const bookingResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings/${bookingId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedBooking)
+        });
+
+        if (!bookingResponse.ok) {
+          throw new Error(`Airtable error updating booking: ${bookingResponse.status}`);
+        }
+
+        // Update the corresponding calendar slot
+        const calendarUpdate = {
+          fields: {
+            date: newDate,
+            time: newTime
+            // Note: In a full implementation, recalculate endTime based on duration and cushionTime
+          }
+        };
+        const calendarResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar/${calendarSlotId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(calendarUpdate)
+        });
+
+        if (!calendarResponse.ok) {
+          throw new Error(`Airtable error updating calendar: ${calendarResponse.status}`);
+        }
+
+        console.log('✅ Booking and calendar slot updated successfully');
+        await fetchCalendarData();
+        await fetchBookingsData();
+      } catch (error) {
+        console.error('Error updating booking:', error);
+        await logErrorToAirtable('admin.html', error, { bookingId, updatedBooking, calendarSlotId });
+      }
+    }
+
+    // Navigation functions
+    function previousMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() - 1);
+      generateCalendar();
+    }
+
+    function nextMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() + 1);
+      generateCalendar();
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', async function() {
+      await fetchCalendarData();
+      await fetchBookingsData();
     });
   </script>
 </body>
