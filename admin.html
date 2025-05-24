@@ -121,6 +121,34 @@
       color: white;
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
+
+    .calendar-sync-status {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sync-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--available-green);
+      animation: pulse 2s infinite;
+    }
+
+    .sync-indicator.disconnected {
+      background: var(--booked-red);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
     
     .logout-btn {
       background: rgba(255, 255, 255, 0.1);
@@ -199,24 +227,30 @@
       color: white;
     }
 
-    .calendar-nav {
+    .calendar-controls {
       display: flex;
       gap: 1rem;
+      align-items: center;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 0.5rem;
     }
 
     .nav-button {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
       color: white;
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .nav-button:hover {
@@ -224,48 +258,32 @@
       transform: scale(1.05);
     }
 
-    /* === CALENDAR TOOLS === */
-    .calendar-tools {
+    .calendar-actions {
       display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .tool-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 0.7rem 1.2rem;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
       gap: 0.5rem;
     }
 
-    .tool-btn:hover {
+    .calendar-action-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .calendar-action-btn:hover {
       background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
       transform: translateY(-1px);
     }
 
-    .tool-btn.primary {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-    }
-
-    .tool-btn.secondary {
+    .calendar-action-btn.sync {
       background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
       border-color: var(--admin-blue);
-    }
-
-    .tool-btn.warning {
-      background: linear-gradient(135deg, var(--soft-hold-yellow), #f59e0b);
-      border-color: #f59e0b;
     }
 
     /* === CALENDAR GRID === */
@@ -276,7 +294,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 16px;
       overflow: hidden;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     .calendar-day-header {
@@ -292,8 +310,9 @@
       background: rgba(255, 255, 255, 0.05);
       padding: 1.2rem 0.5rem;
       text-align: center;
-      min-height: 60px;
+      min-height: 70px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
@@ -303,9 +322,9 @@
       transition: all 0.3s ease;
     }
 
-    .calendar-day:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: scale(1.05);
+    .calendar-day:hover:not(.past):not(.other-month) {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
     }
 
     .calendar-day.other-month {
@@ -349,6 +368,20 @@
       font-size: 0.8rem;
     }
 
+    .calendar-day.blocked {
+      background: rgba(100, 100, 100, 0.3);
+      border: 2px solid rgba(150, 150, 150, 0.5);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .calendar-day.blocked::after {
+      content: "🚫";
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      font-size: 0.8rem;
+    }
+
     .calendar-day.soft-hold {
       background: rgba(245, 158, 11, 0.2);
       border: 2px solid rgba(245, 158, 11, 0.5);
@@ -365,20 +398,6 @@
       font-weight: bold;
     }
 
-    .calendar-day.blocked {
-      background: rgba(75, 85, 99, 0.3);
-      border: 2px solid rgba(75, 85, 99, 0.5);
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .calendar-day.blocked::after {
-      content: "🚫";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
-    }
-
     .calendar-day.selected {
       background: linear-gradient(135deg, var(--admin-purple), #ec4899);
       border: 2px solid #ec4899;
@@ -386,28 +405,37 @@
       transform: scale(1.05);
     }
 
+    .day-events {
+      font-size: 0.7rem;
+      margin-top: 2px;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     /* === CONTEXT MENU === */
     .context-menu {
-      position: absolute;
+      position: fixed;
       background: rgba(20, 20, 20, 0.95);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 12px;
       padding: 0.5rem 0;
-      min-width: 180px;
-      z-index: 1001;
+      min-width: 200px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
       display: none;
     }
 
     .context-menu-item {
-      padding: 0.8rem 1rem;
+      padding: 0.8rem 1.2rem;
       color: white;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
       font-size: 0.9rem;
     }
 
@@ -420,40 +448,41 @@
       cursor: not-allowed;
     }
 
-    .context-menu-divider {
+    .context-menu-separator {
       height: 1px;
       background: rgba(255, 255, 255, 0.1);
       margin: 0.5rem 0;
     }
 
-    /* === MODAL STYLES === */
+    /* === MODALS === */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      right: 0;
+      bottom: 0;
       background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
       z-index: 2000;
       display: none;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(5px);
     }
 
     .modal {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      border-radius: 24px;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
       padding: 2rem;
-      max-width: 600px;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 500px;
       width: 90%;
       max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      animation: fadeInUp 0.3s ease;
     }
 
     .modal-header {
@@ -464,8 +493,7 @@
     }
 
     .modal-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: white;
     }
@@ -473,15 +501,14 @@
     .modal-close {
       background: none;
       border: none;
-      color: white;
-      font-size: 2rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.5rem;
       cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: color 0.3s ease;
     }
 
     .modal-close:hover {
-      opacity: 1;
+      color: white;
     }
 
     .form-group {
@@ -490,36 +517,39 @@
 
     .form-label {
       display: block;
-      color: white;
-      font-weight: 600;
       margin-bottom: 0.5rem;
-      font-size: 0.95rem;
+      font-weight: 600;
+      color: white;
     }
 
-    .form-input,
-    .form-select,
-    .form-textarea {
+    .form-input {
       width: 100%;
-      padding: 0.8rem 1rem;
-      border: 2px solid rgba(255, 255, 255, 0.2);
+      padding: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.1);
       color: white;
-      font-size: 1rem;
-      transition: all 0.3s ease;
+      font-size: 0.95rem;
     }
 
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-input:focus {
       outline: none;
       border-color: var(--admin-purple);
-      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
     }
 
-    .form-textarea {
-      resize: vertical;
-      min-height: 80px;
+    .form-select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 0.95rem;
     }
 
     .form-row {
@@ -550,14 +580,28 @@
       color: white;
     }
 
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
     .btn-secondary {
       background: rgba(255, 255, 255, 0.1);
       color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.8);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 1);
     }
 
     /* === LEGEND === */
@@ -566,20 +610,20 @@
       gap: 2rem;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 500;
     }
 
     .legend-dot {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       border: 2px solid transparent;
     }
@@ -594,19 +638,14 @@
       border-color: rgba(239, 68, 68, 0.5);
     }
 
+    .legend-dot.blocked {
+      background: rgba(100, 100, 100, 0.7);
+      border-color: rgba(150, 150, 150, 0.5);
+    }
+
     .legend-dot.soft-hold {
       background: rgba(245, 158, 11, 0.7);
       border-color: rgba(245, 158, 11, 0.5);
-    }
-
-    .legend-dot.blocked {
-      background: rgba(75, 85, 99, 0.7);
-      border-color: rgba(75, 85, 99, 0.5);
-    }
-
-    .legend-dot.selected {
-      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
-      border-color: #ec4899;
     }
 
     /* === ADMIN PANEL === */
@@ -715,41 +754,6 @@
       font-size: 0.9rem;
     }
 
-    /* === PASSWORD MANAGEMENT === */
-    .password-section {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .password-display {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
-      padding: 1rem;
-      margin: 1rem 0;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .password-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .password-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .btn-small {
-      padding: 0.4rem 0.8rem;
-      font-size: 0.8rem;
-      border-radius: 6px;
-    }
-
     /* === GALLERY MANAGEMENT === */
     .gallery-section {
       background: rgba(255, 255, 255, 0.05);
@@ -825,6 +829,46 @@
       background: rgba(16, 185, 129, 0.2);
       border: 1px solid rgba(16, 185, 129, 0.5);
       color: white;
+    }
+
+    .password-manager {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .password-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .password-info {
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+
+    .password-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.4rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.8rem;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     /* === DEFAULT STATE === */
@@ -946,7 +990,7 @@
       }
 
       .calendar-day {
-        min-height: 45px;
+        min-height: 60px;
         font-size: 0.95rem;
         padding: 1rem 0.3rem;
       }
@@ -972,18 +1016,13 @@
         font-size: 1rem;
       }
 
-      .calendar-tools {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
+      .modal {
+        padding: 1.5rem;
+        margin: 1rem;
       }
 
       .form-row {
         grid-template-columns: 1fr;
-      }
-
-      .modal {
-        width: 95%;
-        padding: 1.5rem;
       }
     }
   </style>
@@ -994,6 +1033,10 @@
       <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="admin-nav">
+      <div class="calendar-sync-status">
+        <div class="sync-indicator" id="syncIndicator"></div>
+        <span id="syncStatus">Google Calendar</span>
+      </div>
       <div class="admin-info" id="adminInfo">Admin Dashboard</div>
       <button class="logout-btn" onclick="logout()">Logout</button>
     </nav>
@@ -1006,32 +1049,22 @@
       <div class="calendar-section">
         <div class="calendar-header">
           <h2 class="calendar-title" id="calendarTitle">Loading...</h2>
-          <div class="calendar-nav">
-            <button class="nav-button" onclick="previousMonth()">‹</button>
-            <button class="nav-button" onclick="nextMonth()">›</button>
+          <div class="calendar-controls">
+            <div class="calendar-nav">
+              <button class="nav-button" onclick="previousMonth()">‹</button>
+              <button class="nav-button" onclick="nextMonth()">›</button>
+            </div>
+            <div class="calendar-actions">
+              <button class="calendar-action-btn sync" onclick="syncCalendar()">🔄 Sync</button>
+              <button class="calendar-action-btn" onclick="openFullCalendar()">📅 Full View</button>
+            </div>
           </div>
-        </div>
-
-        <!-- Calendar Tools -->
-        <div class="calendar-tools">
-          <button class="tool-btn primary" onclick="showAddSessionModal()">
-            ➕ Add Session
-          </button>
-          <button class="tool-btn warning" onclick="enterBlockMode()">
-            🚫 Block Time
-          </button>
-          <button class="tool-btn secondary" onclick="enterEditMode()">
-            ✏️ Edit Mode
-          </button>
-          <button class="tool-btn" onclick="refreshCalendar()">
-            🔄 Refresh
-          </button>
         </div>
 
         <div id="calendarContainer">
           <div class="loading-indicator" id="loadingIndicator">
             <h3>🔄 Loading Calendar...</h3>
-            <p>Fetching live data from Google Calendar</p>
+            <p>Connecting to Google Calendar...</p>
           </div>
         </div>
 
@@ -1039,10 +1072,6 @@
           <div class="legend-item">
             <div class="legend-dot available"></div>
             <span>Available</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot soft-hold"></div>
-            <span>Soft Hold</span>
           </div>
           <div class="legend-item">
             <div class="legend-dot booked"></div>
@@ -1053,8 +1082,8 @@
             <span>Blocked</span>
           </div>
           <div class="legend-item">
-            <div class="legend-dot selected"></div>
-            <span>Selected</span>
+            <div class="legend-dot soft-hold"></div>
+            <span>Soft Hold</span>
           </div>
         </div>
       </div>
@@ -1066,22 +1095,22 @@
           <div class="default-icon">📅</div>
           <h2 class="default-title">Admin Dashboard</h2>
           <p class="default-subtitle">
-            Click on any session date in the calendar to view client details, manage bookings, 
-            and create photo galleries. Use the tools above to add sessions, block time, or edit existing bookings.
+            Click on any date in the calendar to add sessions, block time, or manage existing bookings. 
+            Your complete business management synced with Google Calendar.
           </p>
           
           <div class="quick-actions">
-            <button class="action-btn primary" onclick="window.open('https://calendar.google.com/calendar/u/0/r/week', '_blank')">
+            <button class="action-btn primary" onclick="openFullCalendar()">
               📅 Full Google Calendar
             </button>
-            <button class="action-btn" onclick="refreshCalendar()">
-              🔄 Refresh Calendar
+            <button class="action-btn" onclick="syncCalendar()">
+              🔄 Sync Calendar
             </button>
             <button class="action-btn" onclick="window.open('/availability.html', '_blank')">
               👁️ Public View
             </button>
-            <button class="action-btn gallery" onclick="window.open('/gallery-login.html', '_blank')">
-              📸 Test Client Gallery
+            <button class="action-btn gallery" onclick="manageGalleries()">
+              📸 Manage Galleries
             </button>
           </div>
         </div>
@@ -1091,25 +1120,6 @@
           <div class="panel-header">
             <h2 class="panel-title" id="sessionTitle">Session Details</h2>
             <p class="panel-subtitle" id="sessionDate">Select a session to view details</p>
-          </div>
-
-          <!-- Session Actions -->
-          <div class="client-section">
-            <h3 class="section-title">⚙️ Session Actions</h3>
-            <div class="gallery-actions">
-              <button class="action-btn" onclick="editSession()">
-                ✏️ Edit Session
-              </button>
-              <button class="action-btn warning" onclick="cancelSession()">
-                ❌ Cancel Session
-              </button>
-              <button class="action-btn secondary" onclick="rescheduleSession()">
-                📅 Reschedule
-              </button>
-              <button class="action-btn" onclick="duplicateSession()">
-                📋 Duplicate
-              </button>
-            </div>
           </div>
 
           <!-- Client Information -->
@@ -1136,22 +1146,6 @@
             </div>
           </div>
 
-          <!-- Password Management -->
-          <div class="password-section">
-            <h3 class="section-title">🔐 Gallery Access Management</h3>
-            <div class="password-display" id="passwordDisplay">
-              <!-- Will be populated dynamically -->
-            </div>
-            <div class="gallery-actions">
-              <button class="action-btn" onclick="regeneratePassword()">
-                🔄 New Password
-              </button>
-              <button class="action-btn" onclick="regenerateSessionId()">
-                🆔 New Session ID
-              </button>
-            </div>
-          </div>
-
           <!-- Gallery Management -->
           <div class="client-section">
             <h3 class="section-title">📸 Gallery Management</h3>
@@ -1173,6 +1167,14 @@
               <div class="gallery-status" id="galleryStatus">
                 <p>No gallery created yet for this session</p>
               </div>
+              
+              <!-- Gallery Password Manager -->
+              <div class="password-manager" id="passwordManager" style="display: none;">
+                <h4 style="margin-bottom: 1rem; color: var(--gold);">🔐 Gallery Access</h4>
+                <div id="passwordList">
+                  <!-- Will be populated dynamically -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1181,236 +1183,174 @@
 
     <!-- Context Menu -->
     <div class="context-menu" id="contextMenu">
-      <div class="context-menu-item" onclick="addSessionToDate()">
-        ➕ Add Session
-      </div>
-      <div class="context-menu-item" onclick="addSoftHoldToDate()">
-        ⏳ Add Soft Hold
+      <div class="context-menu-item" onclick="addSession()">
+        📸 Add Session
       </div>
       <div class="context-menu-item" onclick="blockDate()">
-        🚫 Block This Date
+        🚫 Block Date
       </div>
-      <div class="context-menu-divider"></div>
-      <div class="context-menu-item" onclick="editExistingSession()">
+      <div class="context-menu-separator"></div>
+      <div class="context-menu-item" onclick="editSession()">
         ✏️ Edit Session
       </div>
-      <div class="context-menu-item" onclick="removeFromDate()">
-        🗑️ Remove/Cancel
+      <div class="context-menu-item" onclick="removeSession()">
+        🗑️ Remove Session
+      </div>
+      <div class="context-menu-separator"></div>
+      <div class="context-menu-item" onclick="viewOnGoogle()">
+        📅 View in Google Calendar
       </div>
     </div>
 
-    <!-- Add Session Modal -->
-    <div class="modal-overlay" id="addSessionModal">
+    <!-- Session Modal -->
+    <div class="modal-overlay" id="sessionModal">
       <div class="modal">
         <div class="modal-header">
-          <h2 class="modal-title">Add New Session</h2>
-          <button class="modal-close" onclick="closeModal('addSessionModal')">×</button>
+          <h3 class="modal-title" id="sessionModalTitle">Add New Session</h3>
+          <button class="modal-close" onclick="closeSessionModal()">&times;</button>
         </div>
         
-        <form id="addSessionForm">
+        <form id="sessionForm">
+          <div class="form-group">
+            <label class="form-label">Client Name</label>
+            <input type="text" class="form-input" id="clientName" placeholder="Enter client name" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-input" id="sessionDate" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time</label>
+              <input type="time" class="form-input" id="sessionTime" required>
+            </div>
+          </div>
+          
           <div class="form-group">
             <label class="form-label">Session Type</label>
             <select class="form-select" id="sessionType" required>
-              <option value="">Select Session Type</option>
-              <option value="full">Full Session (1.5 hours)</option>
-              <option value="mini">Mini Session (45 minutes)</option>
-              <option value="headshots">Pet Headshots (30 minutes)</option>
-              <option value="event">Special Event</option>
+              <option value="">Select session type</option>
+              <option value="Full Session">Full Session ($250)</option>
+              <option value="Mini Session">Mini Session ($150)</option>
+              <option value="Holiday Session">Holiday Session ($200)</option>
+              <option value="Private Event">Private Event (Custom)</option>
             </select>
           </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Date</label>
-              <input type="date" class="form-input" id="sessionDate" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Time</label>
-              <input type="time" class="form-input" id="sessionTime" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Client Name</label>
-            <input type="text" class="form-input" id="clientName" placeholder="John Smith" required />
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-input" id="clientEmail" placeholder="john@email.com" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Phone</label>
-              <input type="tel" class="form-input" id="clientPhone" placeholder="(555) 123-4567" required />
-            </div>
-          </div>
-
+          
           <div class="form-group">
             <label class="form-label">Location</label>
             <select class="form-select" id="sessionLocation" required>
-              <option value="">Select Location</option>
-              <option value="cheesman">Cheesman Park</option>
-              <option value="wash">Washington Park</option>
-              <option value="city">City Park</option>
-              <option value="sloan">Sloan's Lake</option>
-              <option value="studio">Studio</option>
-              <option value="client-home">Client's Home</option>
-              <option value="other">Other Location</option>
+              <option value="">Select location</option>
+              <option value="Cheesman Park">Cheesman Park</option>
+              <option value="Washington Park">Washington Park</option>
+              <option value="Sloan's Lake">Sloan's Lake</option>
+              <option value="City Park">City Park</option>
+              <option value="Client's Home">Client's Home</option>
+              <option value="Custom Location">Custom Location</option>
             </select>
           </div>
-
+          
           <div class="form-group">
-            <label class="form-label">Pet Name(s)</label>
-            <input type="text" class="form-input" id="petNames" placeholder="Buddy, Max, Bella" required />
+            <label class="form-label">Client Email</label>
+            <input type="email" class="form-input" id="clientEmail" placeholder="client@email.com">
           </div>
-
+          
           <div class="form-group">
-            <label class="form-label">Special Notes</label>
-            <textarea class="form-textarea" id="sessionNotes" placeholder="Any special requirements or notes about the session..."></textarea>
+            <label class="form-label">Client Phone</label>
+            <input type="tel" class="form-input" id="clientPhone" placeholder="(303) 555-0123">
           </div>
-
+          
+          <div class="form-group">
+            <label class="form-label">Notes</label>
+            <textarea class="form-input" id="sessionNotes" placeholder="Special requests, pet names, etc." rows="3"></textarea>
+          </div>
+          
           <div class="modal-actions">
-            <button type="button" class="btn btn-secondary" onclick="closeModal('addSessionModal')">Cancel</button>
-            <button type="submit" class="btn btn-primary">Create Session</button>
+            <button type="button" class="btn btn-secondary" onclick="closeSessionModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Session</button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- Edit Session Modal -->
-    <div class="modal-overlay" id="editSessionModal">
+    <!-- Block Date Modal -->
+    <div class="modal-overlay" id="blockModal">
       <div class="modal">
         <div class="modal-header">
-          <h2 class="modal-title">Edit Session</h2>
-          <button class="modal-close" onclick="closeModal('editSessionModal')">×</button>
+          <h3 class="modal-title">Block Date</h3>
+          <button class="modal-close" onclick="closeBlockModal()">&times;</button>
         </div>
         
-        <form id="editSessionForm">
-          <!-- Same form fields as add session, but pre-populated -->
+        <form id="blockForm">
           <div class="form-group">
-            <label class="form-label">Session Type</label>
-            <select class="form-select" id="editSessionType" required>
-              <option value="full">Full Session (1.5 hours)</option>
-              <option value="mini">Mini Session (45 minutes)</option>
-              <option value="headshots">Pet Headshots (30 minutes)</option>
-              <option value="event">Special Event</option>
+            <label class="form-label">Date to Block</label>
+            <input type="date" class="form-input" id="blockDate" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Reason</label>
+            <select class="form-select" id="blockReason" required>
+              <option value="">Select reason</option>
+              <option value="Personal Day">Personal Day</option>
+              <option value="Vacation">Vacation</option>
+              <option value="Equipment Maintenance">Equipment Maintenance</option>
+              <option value="Weather">Weather</option>
+              <option value="Other">Other</option>
             </select>
           </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Date</label>
-              <input type="date" class="form-input" id="editSessionDate" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Time</label>
-              <input type="time" class="form-input" id="editSessionTime" required />
-            </div>
-          </div>
-
+          
           <div class="form-group">
-            <label class="form-label">Client Name</label>
-            <input type="text" class="form-input" id="editClientName" required />
+            <label class="form-label">Notes (Optional)</label>
+            <textarea class="form-input" id="blockNotes" placeholder="Additional details..." rows="2"></textarea>
           </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-input" id="editClientEmail" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Phone</label>
-              <input type="tel" class="form-input" id="editClientPhone" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Location</label>
-            <select class="form-select" id="editSessionLocation" required>
-              <option value="cheesman">Cheesman Park</option>
-              <option value="wash">Washington Park</option>
-              <option value="city">City Park</option>
-              <option value="sloan">Sloan's Lake</option>
-              <option value="studio">Studio</option>
-              <option value="client-home">Client's Home</option>
-              <option value="other">Other Location</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Pet Name(s)</label>
-            <input type="text" class="form-input" id="editPetNames" required />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Special Notes</label>
-            <textarea class="form-textarea" id="editSessionNotes"></textarea>
-          </div>
-
+          
           <div class="modal-actions">
-            <button type="button" class="btn btn-secondary" onclick="closeModal('editSessionModal')">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="button" class="btn btn-secondary" onclick="closeBlockModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Block Date</button>
           </div>
         </form>
+      </div>
+    </div>
+
+    <!-- Gallery Management Modal -->
+    <div class="modal-overlay" id="galleryModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Gallery Management</h3>
+          <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
+        </div>
+        
+        <div id="galleryContent">
+          <h4 style="margin-bottom: 1rem; color: var(--gold);">All Client Galleries</h4>
+          <div id="galleryList">
+            <!-- Will be populated dynamically -->
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
   <script>
+    // Google Calendar API Configuration
+    const GOOGLE_CALENDAR_CONFIG = {
+      apiKey: 'YOUR_API_KEY', // Replace with your API key
+      clientId: 'YOUR_CLIENT_ID', // Replace with your client ID  
+      discoveryDoc: 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+      scopes: 'https://www.googleapis.com/auth/calendar'
+    };
+
     // Global variables
+    let gapi = null;
+    let isGoogleCalendarConnected = false;
     let currentMonth = new Date();
     let selectedDate = null;
     let selectedDateElement = null;
     let calendarEvents = [];
-    let bookedDates = [];
-    let softHoldDates = [];
-    let blockedDates = [];
-    let calendarLoaded = false;
-    let currentMode = 'view'; // view, block, edit
-    let contextMenuDate = null;
+    let localEvents = {};
+    let contextMenuTarget = null;
 
-    // Authentication check
-    function checkAuthentication() {
-      const isAuthenticated = localStorage.getItem('adminAuthenticated');
-      const loginTime = localStorage.getItem('adminLoginTime');
-      const adminUser = localStorage.getItem('adminUser');
-      
-      if (!isAuthenticated || !loginTime || !adminUser) {
-        window.location.href = '/admin-login.html';
-        return false;
-      }
-      
-      // Check if session is still valid (24 hours)
-      const loginDate = new Date(loginTime);
-      const now = new Date();
-      const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
-      
-      if (hoursDiff >= 24) {
-        logout();
-        return false;
-      }
-      
-      // Update admin info display
-      document.getElementById('adminInfo').textContent = `Welcome, ${adminUser}`;
-      return true;
-    }
-
-    // Logout function
-    function logout() {
-      localStorage.removeItem('adminAuthenticated');
-      localStorage.removeItem('adminUser');
-      localStorage.removeItem('adminLoginTime');
-      window.location.href = '/admin-login.html';
-    }
-
-    // Mobile menu toggle
-    function toggleMenu() {
-      const nav = document.querySelector('.admin-nav');
-      nav.classList.toggle('active');
-    }
-
-    // Sample client data (enhanced with more sessions)
+    // Sample client data with enhanced gallery management
     const sampleClientData = {
       '2024-12-15': {
         sessionData: {
@@ -1418,9 +1358,7 @@
           park: 'Cheesman Park',
           selectedDateTime: '2024-12-15T18:00:00',
           petCount: '2',
-          peopleCount: '1',
-          sessionType: 'full',
-          notes: 'Buffy can be shy at first, Max is great with directions'
+          peopleCount: '1'
         },
         intakeData: {
           person1: {
@@ -1448,170 +1386,140 @@
           specialRequests: 'Buffy can be shy at first, Max is great with directions',
           photoStyle: 'both'
         },
-        hasGallery: false,
-        sessionId: '3123806',
-        password: 'buffybarks'
-      },
-      '2024-12-22': {
-        sessionData: {
-          session: 'Mini Session',
-          park: 'Washington Park',
-          selectedDateTime: '2024-12-22T14:00:00',
-          petCount: '1',
-          peopleCount: '2',
-          sessionType: 'mini',
-          notes: 'First time photo session'
-        },
-        intakeData: {
-          person1: {
-            name: 'Mike Rodriguez',
-            email: 'mike.r@email.com',
-            phone: '720-555-0198',
-            zip: '80224'
-          },
-          pet1: {
-            name: 'Luna',
-            age: '2',
-            gender: 'Female',
-            behavior: 'Very playful, loves treats',
-            offLeash: 'no',
-            favoriteToy: 'Squeaky toy'
-          },
-          photoStyle: 'lifestyle'
-        },
         hasGallery: true,
-        sessionId: '5198224',
-        password: 'lunabarks'
+        galleryId: 'gal_123456',
+        sessionId: '0123',
+        password: 'buffybarks'
       }
     };
 
-    // Calendar data source
-    const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
-
-    // Parse iCal data
-    function parseICalData(icsData) {
-      const events = [];
-      const lines = icsData.split('\n');
-      let currentEvent = {};
-      let inEvent = false;
-
-      for (let line of lines) {
-        line = line.trim();
-        
-        if (line === 'BEGIN:VEVENT') {
-          inEvent = true;
-          currentEvent = {};
-        } else if (line === 'END:VEVENT') {
-          if (currentEvent.dtstart && currentEvent.summary) {
-            events.push(currentEvent);
-          }
-          inEvent = false;
-        } else if (inEvent) {
-          if (line.startsWith('DTSTART')) {
-            const dateMatch = line.match(/DTSTART[^:]*:(\d{8}T?\d{0,6}Z?)/);
-            if (dateMatch) {
-              currentEvent.dtstart = parseDateFromICS(dateMatch[1]);
-            }
-          } else if (line.startsWith('DTEND')) {
-            const dateMatch = line.match(/DTEND[^:]*:(\d{8}T?\d{0,6}Z?)/);
-            if (dateMatch) {
-              currentEvent.dtend = parseDateFromICS(dateMatch[1]);
-            }
-          } else if (line.startsWith('SUMMARY:')) {
-            currentEvent.summary = line.substring(8);
-          }
-        }
-      }
-      return events;
-    }
-
-    // Parse date from ICS format
-    function parseDateFromICS(dateStr) {
-      if (dateStr.includes('T')) {
-        const year = dateStr.substring(0, 4);
-        const month = dateStr.substring(4, 6);
-        const day = dateStr.substring(6, 8);
-        const hour = dateStr.substring(9, 11) || '00';
-        const minute = dateStr.substring(11, 13) || '00';
-        return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
-      } else {
-        const year = dateStr.substring(0, 4);
-        const month = dateStr.substring(4, 6);
-        const day = dateStr.substring(6, 8);
-        return new Date(`${year}-${month}-${day}`);
-      }
-    }
-
-    // Fetch calendar data
-    async function fetchCalendarData() {
+    // Initialize Google Calendar API
+    async function initializeGoogleCalendar() {
       try {
-        console.log('Fetching admin calendar data...');
-        const proxyUrl = 'https://gcal-cors-proxy.vercel.app?url=';
-        const response = await fetch(proxyUrl + encodeURIComponent(CALENDAR_FEED_URL));
+        console.log('Initializing Google Calendar API...');
+        updateSyncStatus('connecting');
         
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        // Load Google API client
+        if (typeof window.gapi !== 'undefined') {
+          await window.gapi.load('client:auth2', initializeGapiClient);
+        } else {
+          console.log('Google API not available, using local mode');
+          updateSyncStatus('local');
+          initializeLocalMode();
         }
-        
-        const icsData = await response.text();
-        console.log('Admin calendar data fetched successfully');
-        
-        calendarEvents = parseICalData(icsData);
-        console.log('Parsed admin events:', calendarEvents);
-        
-        processCalendarEvents();
-        calendarLoaded = true;
-        generateCalendar();
-        
       } catch (error) {
-        console.error('Error fetching admin calendar data:', error);
-        console.log('Using fallback data for admin...');
-        // Fallback data
-        bookedDates = ["2024-12-15", "2024-12-22", "2024-12-29", "2025-01-05"];
-        softHoldDates = ["2024-12-18", "2025-01-08"];
-        blockedDates = ["2024-12-25", "2025-01-01"];
-        calendarLoaded = true;
-        generateCalendar();
+        console.error('Error initializing Google Calendar:', error);
+        updateSyncStatus('error');
+        initializeLocalMode();
       }
     }
 
-    // Process calendar events
-    function processCalendarEvents() {
-      bookedDates = [];
-      softHoldDates = [];
-      blockedDates = [];
-      
-      calendarEvents.forEach(event => {
-        if (event.dtstart) {
-          const eventDate = event.dtstart;
-          const dateString = `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
-          
-          const summary = (event.summary || '').toLowerCase();
-          
-          if (summary.includes('blocked') || summary.includes('unavailable')) {
-            blockedDates.push(dateString);
-          } else if (summary.includes('hold') || summary.includes('pending') || summary.includes('maybe')) {
-            softHoldDates.push(dateString);
-          } else if (summary.includes('booked') || summary.includes('session') || summary.includes('appointment')) {
-            bookedDates.push(dateString);
-          } else {
-            bookedDates.push(dateString);
-          }
-        }
-      });
-      
-      console.log('Admin processed booked dates:', bookedDates);
-      console.log('Admin processed soft hold dates:', softHoldDates);
-      console.log('Admin processed blocked dates:', blockedDates);
+    async function initializeGapiClient() {
+      try {
+        await window.gapi.client.init({
+          apiKey: GOOGLE_CALENDAR_CONFIG.apiKey,
+          clientId: GOOGLE_CALENDAR_CONFIG.clientId,
+          discoveryDocs: [GOOGLE_CALENDAR_CONFIG.discoveryDoc],
+          scope: GOOGLE_CALENDAR_CONFIG.scopes
+        });
+
+        gapi = window.gapi;
+        isGoogleCalendarConnected = true;
+        updateSyncStatus('connected');
+        console.log('Google Calendar API initialized successfully');
+        
+        // Load calendar events
+        await loadCalendarEvents();
+      } catch (error) {
+        console.error('Error initializing GAPI client:', error);
+        updateSyncStatus('error');
+        initializeLocalMode();
+      }
     }
 
-    // Generate calendar
+    function initializeLocalMode() {
+      console.log('Running in local mode - changes will be saved locally');
+      updateSyncStatus('local');
+      loadLocalEvents();
+      generateCalendar();
+    }
+
+    function updateSyncStatus(status) {
+      const indicator = document.getElementById('syncIndicator');
+      const statusText = document.getElementById('syncStatus');
+      
+      switch(status) {
+        case 'connecting':
+          indicator.className = 'sync-indicator';
+          statusText.textContent = 'Connecting...';
+          break;
+        case 'connected':
+          indicator.className = 'sync-indicator';
+          statusText.textContent = 'Google Connected';
+          break;
+        case 'local':
+          indicator.className = 'sync-indicator disconnected';
+          statusText.textContent = 'Local Mode';
+          break;
+        case 'error':
+          indicator.className = 'sync-indicator disconnected';
+          statusText.textContent = 'Connection Error';
+          break;
+      }
+    }
+
+    // Load calendar events from Google Calendar
+    async function loadCalendarEvents() {
+      if (!isGoogleCalendarConnected) {
+        loadLocalEvents();
+        return;
+      }
+
+      try {
+        console.log('Loading events from Google Calendar...');
+        
+        const request = gapi.client.calendar.events.list({
+          'calendarId': 'primary',
+          'timeMin': new Date().toISOString(),
+          'showDeleted': false,
+          'singleEvents': true,
+          'orderBy': 'startTime'
+        });
+
+        const response = await request;
+        calendarEvents = response.result.items || [];
+        console.log('Loaded Google Calendar events:', calendarEvents);
+        
+        generateCalendar();
+      } catch (error) {
+        console.error('Error loading calendar events:', error);
+        loadLocalEvents();
+      }
+    }
+
+    // Load events from local storage
+    function loadLocalEvents() {
+      const stored = localStorage.getItem('adminCalendarEvents');
+      if (stored) {
+        localEvents = JSON.parse(stored);
+        console.log('Loaded local events:', localEvents);
+      }
+      generateCalendar();
+    }
+
+    // Save events to local storage
+    function saveLocalEvents() {
+      localStorage.setItem('adminCalendarEvents', JSON.stringify(localEvents));
+      console.log('Saved local events');
+    }
+
+    // Generate calendar display
     function generateCalendar() {
       const container = document.getElementById('calendarContainer');
       const title = document.getElementById('calendarTitle');
       
       if (!container || !title) {
-        console.error('Admin calendar elements not found');
+        console.error('Calendar elements not found');
         return;
       }
       
@@ -1627,7 +1535,6 @@
       container.innerHTML = '';
       const grid = document.createElement('div');
       grid.className = 'calendar-grid';
-      grid.id = 'calendarGrid';
 
       // Add day headers
       const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -1638,7 +1545,7 @@
         grid.appendChild(header);
       });
 
-      // Calculate first day of month and number of days
+      // Calculate calendar dates
       const firstDay = new Date(year, month, 1);
       const lastDay = new Date(year, month + 1, 0);
       const daysInMonth = lastDay.getDate();
@@ -1655,439 +1562,471 @@
       for (let day = 1; day <= daysInMonth; day++) {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
-        dayElement.textContent = day;
         
         const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const dayDate = new Date(year, month, day);
         
-        // Add click handler for admin functionality
-        dayElement.onclick = (e) => selectDate(dateString, dayElement, dayDate, e);
-        dayElement.oncontextmenu = (e) => showContextMenu(e, dateString, dayElement);
+        // Set day number
+        const dayNumber = document.createElement('div');
+        dayNumber.textContent = day;
+        dayElement.appendChild(dayNumber);
         
-        // Mark past dates
-        if (dayDate < new Date()) {
+        // Add event indicators
+        const events = getEventsForDate(dateString);
+        if (events.length > 0) {
+          const eventDiv = document.createElement('div');
+          eventDiv.className = 'day-events';
+          eventDiv.textContent = events.length > 1 ? `${events.length} events` : events[0].summary || events[0].title;
+          dayElement.appendChild(eventDiv);
+        }
+        
+        // Style based on date status
+        if (dayDate < new Date().setHours(0,0,0,0)) {
           dayElement.classList.add('past');
+        } else {
+          const dateStatus = getDateStatus(dateString);
+          dayElement.classList.add(dateStatus);
         }
-        // Mark blocked dates
-        else if (blockedDates.includes(dateString)) {
-          dayElement.classList.add('blocked');
-        }
-        // Mark booked dates (sessions)
-        else if (bookedDates.includes(dateString)) {
-          dayElement.classList.add('booked');
-        }
-        // Mark soft hold dates
-        else if (softHoldDates.includes(dateString)) {
-          dayElement.classList.add('soft-hold');
-        }
-        // Mark available dates
-        else if (dayDate.getDay() !== 0) {
-          dayElement.classList.add('available');
-        }
+        
+        // Add click handler
+        dayElement.onclick = (e) => handleDateClick(e, dateString, dayElement, dayDate);
         
         grid.appendChild(dayElement);
       }
       
       container.appendChild(grid);
-      console.log('Admin calendar generated successfully');
+      console.log('Calendar generated successfully');
     }
 
-    // Select date and show client profile
-    function selectDate(dateString, element, dateObj, event) {
-      if (event) event.preventDefault();
+    // Get events for a specific date
+    function getEventsForDate(dateString) {
+      const events = [];
       
-      // Handle different modes
-      if (currentMode === 'block') {
-        toggleBlockDate(dateString, element);
-        return;
-      }
-      
-      if (currentMode === 'edit' && (bookedDates.includes(dateString) || softHoldDates.includes(dateString))) {
-        showEditSessionModal(dateString);
-        return;
-      }
-      
-      // Remove previous selection
-      document.querySelectorAll('.calendar-day.selected').forEach(el => {
-        el.classList.remove('selected');
-      });
-      
-      // Add selection to clicked date
-      element.classList.add('selected');
-      
-      selectedDate = dateString;
-      selectedDateElement = element;
-      
-      // Check if this date has a session
-      if (bookedDates.includes(dateString)) {
-        showClientProfile(dateString);
-      } else {
-        showDefaultPanel();
-      }
-      
-      console.log('Admin selected date:', dateString);
-    }
-
-    // Show context menu
-    function showContextMenu(event, dateString, element) {
-      event.preventDefault();
-      contextMenuDate = dateString;
-      
-      const contextMenu = document.getElementById('contextMenu');
-      const dayDate = new Date(dateString);
-      const isPast = dayDate < new Date();
-      const isBooked = bookedDates.includes(dateString);
-      const isSoftHold = softHoldDates.includes(dateString);
-      const isBlocked = blockedDates.includes(dateString);
-      
-      // Position menu
-      contextMenu.style.left = event.pageX + 'px';
-      contextMenu.style.top = event.pageY + 'px';
-      contextMenu.style.display = 'block';
-      
-      // Update menu items based on date status
-      const menuItems = contextMenu.querySelectorAll('.context-menu-item');
-      menuItems.forEach(item => {
-        item.classList.remove('disabled');
-      });
-      
-      // Disable items for past dates
-      if (isPast) {
-        menuItems.forEach(item => {
-          if (!item.textContent.includes('View')) {
-            item.classList.add('disabled');
+      // Check Google Calendar events
+      if (calendarEvents) {
+        calendarEvents.forEach(event => {
+          if (event.start && event.start.date === dateString) {
+            events.push(event);
           }
         });
       }
       
-      // Hide context menu when clicking elsewhere
+      // Check local events
+      if (localEvents[dateString]) {
+        events.push(...localEvents[dateString]);
+      }
+      
+      // Check sample data
+      if (sampleClientData[dateString]) {
+        events.push({
+          title: sampleClientData[dateString].sessionData.session,
+          type: 'session'
+        });
+      }
+      
+      return events;
+    }
+
+    // Get status for a date
+    function getDateStatus(dateString) {
+      const events = getEventsForDate(dateString);
+      
+      if (events.length === 0) {
+        return 'available';
+      }
+      
+      for (let event of events) {
+        const summary = (event.summary || event.title || '').toLowerCase();
+        if (summary.includes('blocked') || summary.includes('unavailable')) {
+          return 'blocked';
+        }
+        if (summary.includes('session') || summary.includes('appointment')) {
+          return 'booked';
+        }
+        if (summary.includes('hold') || summary.includes('maybe')) {
+          return 'soft-hold';
+        }
+      }
+      
+      return 'booked';
+    }
+
+    // Handle date click
+    function handleDateClick(e, dateString, element, dateObj) {
+      e.preventDefault();
+      
+      // Clear previous selection
+      document.querySelectorAll('.calendar-day.selected').forEach(el => {
+        el.classList.remove('selected');
+      });
+      
+      // Select current date
+      element.classList.add('selected');
+      selectedDate = dateString;
+      selectedDateElement = element;
+      contextMenuTarget = { dateString, element, dateObj };
+      
+      // Show context menu
+      showContextMenu(e, dateString);
+    }
+
+    // Show context menu
+    function showContextMenu(e, dateString) {
+      const menu = document.getElementById('contextMenu');
+      const events = getEventsForDate(dateString);
+      const hasSession = events.some(event => 
+        (event.summary || event.title || '').toLowerCase().includes('session')
+      );
+      
+      // Position menu
+      menu.style.left = e.pageX + 'px';
+      menu.style.top = e.pageY + 'px';
+      menu.style.display = 'block';
+      
+      // Update menu items based on date status
+      const editItem = menu.querySelector('.context-menu-item:nth-child(4)');
+      const removeItem = menu.querySelector('.context-menu-item:nth-child(5)');
+      
+      if (hasSession) {
+        editItem.classList.remove('disabled');
+        removeItem.classList.remove('disabled');
+      } else {
+        editItem.classList.add('disabled');
+        removeItem.classList.add('disabled');
+      }
+      
+      // Close menu when clicking elsewhere
       setTimeout(() => {
-        document.addEventListener('click', hideContextMenu, { once: true });
+        document.addEventListener('click', closeContextMenu, { once: true });
       }, 100);
     }
 
-    // Hide context menu
-    function hideContextMenu() {
+    function closeContextMenu() {
       document.getElementById('contextMenu').style.display = 'none';
     }
 
     // Context menu actions
-    function addSessionToDate() {
-      hideContextMenu();
-      if (contextMenuDate) {
-        document.getElementById('sessionDate').value = contextMenuDate;
-        showAddSessionModal();
-      }
-    }
-
-    function addSoftHoldToDate() {
-      hideContextMenu();
-      if (contextMenuDate) {
-        if (!softHoldDates.includes(contextMenuDate)) {
-          softHoldDates.push(contextMenuDate);
-          generateCalendar();
-          // In real app, would sync with Google Calendar
-          console.log('Added soft hold to:', contextMenuDate);
-        }
+    function addSession() {
+      closeContextMenu();
+      if (contextMenuTarget) {
+        openSessionModal('add', contextMenuTarget.dateString);
       }
     }
 
     function blockDate() {
-      hideContextMenu();
-      if (contextMenuDate) {
-        if (!blockedDates.includes(contextMenuDate)) {
-          blockedDates.push(contextMenuDate);
-          generateCalendar();
-          // In real app, would sync with Google Calendar
-          console.log('Blocked date:', contextMenuDate);
+      closeContextMenu();
+      if (contextMenuTarget) {
+        openBlockModal(contextMenuTarget.dateString);
+      }
+    }
+
+    function editSession() {
+      closeContextMenu();
+      if (contextMenuTarget) {
+        const events = getEventsForDate(contextMenuTarget.dateString);
+        const sessionEvent = events.find(event => 
+          (event.summary || event.title || '').toLowerCase().includes('session')
+        );
+        if (sessionEvent) {
+          openSessionModal('edit', contextMenuTarget.dateString, sessionEvent);
         }
       }
     }
 
-    function editExistingSession() {
-      hideContextMenu();
-      if (contextMenuDate && (bookedDates.includes(contextMenuDate) || softHoldDates.includes(contextMenuDate))) {
-        showEditSessionModal(contextMenuDate);
-      }
-    }
-
-    function removeFromDate() {
-      hideContextMenu();
-      if (contextMenuDate) {
-        // Remove from all arrays
-        const index1 = bookedDates.indexOf(contextMenuDate);
-        const index2 = softHoldDates.indexOf(contextMenuDate);
-        const index3 = blockedDates.indexOf(contextMenuDate);
-        
-        if (index1 > -1) bookedDates.splice(index1, 1);
-        if (index2 > -1) softHoldDates.splice(index2, 1);
-        if (index3 > -1) blockedDates.splice(index3, 1);
-        
-        generateCalendar();
-        showDefaultPanel();
-        console.log('Removed from date:', contextMenuDate);
-      }
-    }
-
-    // Tool functions
-    function showAddSessionModal() {
-      const modal = document.getElementById('addSessionModal');
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      
-      // Set default date if selected
-      if (selectedDate) {
-        document.getElementById('sessionDate').value = selectedDate;
-      }
-    }
-
-    function enterBlockMode() {
-      currentMode = currentMode === 'block' ? 'view' : 'block';
-      const btn = event.target;
-      
-      if (currentMode === 'block') {
-        btn.textContent = '✓ Block Mode (Click dates)';
-        btn.style.background = 'linear-gradient(135deg, var(--booked-red), #dc2626)';
-        alert('📍 Block Mode Active\n\nClick on any available date to block it for sessions. Click the button again to exit block mode.');
-      } else {
-        btn.textContent = '🚫 Block Time';
-        btn.style.background = 'linear-gradient(135deg, var(--soft-hold-yellow), #f59e0b)';
-      }
-    }
-
-    function enterEditMode() {
-      currentMode = currentMode === 'edit' ? 'view' : 'edit';
-      const btn = event.target;
-      
-      if (currentMode === 'edit') {
-        btn.textContent = '✓ Edit Mode (Click sessions)';
-        btn.style.background = 'linear-gradient(135deg, var(--admin-purple), var(--admin-blue))';
-        alert('✏️ Edit Mode Active\n\nClick on any booked session to edit its details. Click the button again to exit edit mode.');
-      } else {
-        btn.textContent = '✏️ Edit Mode';
-        btn.style.background = 'linear-gradient(135deg, var(--admin-purple), var(--admin-blue))';
-      }
-    }
-
-    function toggleBlockDate(dateString, element) {
-      if (blockedDates.includes(dateString)) {
-        // Unblock date
-        const index = blockedDates.indexOf(dateString);
-        blockedDates.splice(index, 1);
-        console.log('Unblocked date:', dateString);
-      } else {
-        // Block date (but don't block if already booked)
-        if (!bookedDates.includes(dateString)) {
-          blockedDates.push(dateString);
-          console.log('Blocked date:', dateString);
+    function removeSession() {
+      closeContextMenu();
+      if (contextMenuTarget) {
+        if (confirm('Are you sure you want to remove this session?')) {
+          removeEventFromDate(contextMenuTarget.dateString);
         }
       }
-      generateCalendar();
+    }
+
+    function viewOnGoogle() {
+      closeContextMenu();
+      openFullCalendar();
     }
 
     // Modal functions
-    function closeModal(modalId) {
-      document.getElementById(modalId).style.display = 'none';
-      document.body.style.overflow = 'auto';
+    function openSessionModal(mode = 'add', dateString = null, eventData = null) {
+      const modal = document.getElementById('sessionModal');
+      const title = document.getElementById('sessionModalTitle');
+      const form = document.getElementById('sessionForm');
+      
+      title.textContent = mode === 'edit' ? 'Edit Session' : 'Add New Session';
+      
+      if (dateString) {
+        document.getElementById('sessionDate').value = dateString;
+      }
+      
+      if (eventData && mode === 'edit') {
+        // Populate form with existing data
+        document.getElementById('clientName').value = eventData.clientName || '';
+        document.getElementById('sessionTime').value = eventData.time || '';
+        document.getElementById('sessionType').value = eventData.type || '';
+        document.getElementById('sessionLocation').value = eventData.location || '';
+        document.getElementById('clientEmail').value = eventData.email || '';
+        document.getElementById('clientPhone').value = eventData.phone || '';
+        document.getElementById('sessionNotes').value = eventData.notes || '';
+      }
+      
+      modal.style.display = 'flex';
+      
+      // Handle form submission
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        saveSession(mode, dateString);
+      };
     }
 
-    // Form submissions
-    document.getElementById('addSessionForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    function closeSessionModal() {
+      document.getElementById('sessionModal').style.display = 'none';
+      document.getElementById('sessionForm').reset();
+    }
+
+    function openBlockModal(dateString) {
+      const modal = document.getElementById('blockModal');
+      const form = document.getElementById('blockForm');
       
+      document.getElementById('blockDate').value = dateString;
+      modal.style.display = 'flex';
+      
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        saveBlockedDate();
+      };
+    }
+
+    function closeBlockModal() {
+      document.getElementById('blockModal').style.display = 'none';
+      document.getElementById('blockForm').reset();
+    }
+
+    // Save session
+    async function saveSession(mode, dateString) {
       const formData = {
-        type: document.getElementById('sessionType').value,
+        clientName: document.getElementById('clientName').value,
         date: document.getElementById('sessionDate').value,
         time: document.getElementById('sessionTime').value,
-        clientName: document.getElementById('clientName').value,
-        clientEmail: document.getElementById('clientEmail').value,
-        clientPhone: document.getElementById('clientPhone').value,
+        type: document.getElementById('sessionType').value,
         location: document.getElementById('sessionLocation').value,
-        petNames: document.getElementById('petNames').value,
+        email: document.getElementById('clientEmail').value,
+        phone: document.getElementById('clientPhone').value,
         notes: document.getElementById('sessionNotes').value
       };
       
-      // Add to booked dates
-      if (!bookedDates.includes(formData.date)) {
-        bookedDates.push(formData.date);
-      }
-      
-      // Create client data entry
-      sampleClientData[formData.date] = {
-        sessionData: {
-          session: getSessionTypeName(formData.type),
-          park: getLocationName(formData.location),
-          selectedDateTime: formData.date + 'T' + formData.time + ':00',
-          sessionType: formData.type,
-          notes: formData.notes
-        },
-        intakeData: {
-          person1: {
-            name: formData.clientName,
-            email: formData.clientEmail,
-            phone: formData.clientPhone,
-            zip: '80000' // Default, would be collected in full form
-          },
-          pet1: {
-            name: formData.petNames.split(',')[0].trim(),
-            age: 'Unknown',
-            gender: 'Unknown',
-            behavior: 'To be determined',
-            offLeash: 'unknown',
-            favoriteToy: 'Unknown'
-          },
-          specialRequests: formData.notes || 'None',
-          photoStyle: 'both'
-        },
-        hasGallery: false,
-        sessionId: generateSessionId(formData.clientPhone),
-        password: generatePassword(formData.petNames.split(',')[0].trim())
+      const eventData = {
+        title: `${formData.type} - ${formData.clientName}`,
+        summary: `${formData.type} - ${formData.clientName}`,
+        date: formData.date,
+        time: formData.time,
+        location: formData.location,
+        clientName: formData.clientName,
+        email: formData.email,
+        phone: formData.phone,
+        notes: formData.notes,
+        type: 'session'
       };
       
-      // Close modal and refresh
-      closeModal('addSessionModal');
-      generateCalendar();
-      
-      alert(`✅ Session Created!\n\nClient: ${formData.clientName}\nDate: ${formData.date}\nTime: ${formData.time}\nLocation: ${getLocationName(formData.location)}\n\nSession has been added to your calendar.`);
-      
-      // Select the new session
-      selectDate(formData.date, document.querySelector(`[data-date="${formData.date}"]`), new Date(formData.date));
-      
-      // Reset form
-      this.reset();
-    });
-
-    function showEditSessionModal(dateString) {
-      const sessionData = sampleClientData[dateString];
-      if (!sessionData) {
-        alert('No session data found for this date');
-        return;
-      }
-      
-      const modal = document.getElementById('editSessionModal');
-      
-      // Populate form with existing data
-      document.getElementById('editSessionType').value = sessionData.sessionData.sessionType || 'full';
-      document.getElementById('editSessionDate').value = dateString;
-      document.getElementById('editSessionTime').value = sessionData.sessionData.selectedDateTime ? 
-        sessionData.sessionData.selectedDateTime.split('T')[1].slice(0, 5) : '18:00';
-      document.getElementById('editClientName').value = sessionData.intakeData.person1.name;
-      document.getElementById('editClientEmail').value = sessionData.intakeData.person1.email;
-      document.getElementById('editClientPhone').value = sessionData.intakeData.person1.phone;
-      document.getElementById('editSessionLocation').value = getLocationCode(sessionData.sessionData.park);
-      document.getElementById('editPetNames').value = sessionData.intakeData.pet1.name + 
-        (sessionData.intakeData.pet2 ? ', ' + sessionData.intakeData.pet2.name : '');
-      document.getElementById('editSessionNotes').value = sessionData.sessionData.notes || '';
-      
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    document.getElementById('editSessionForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const originalDate = document.getElementById('editSessionDate').value;
-      const formData = {
-        type: document.getElementById('editSessionType').value,
-        date: document.getElementById('editSessionDate').value,
-        time: document.getElementById('editSessionTime').value,
-        clientName: document.getElementById('editClientName').value,
-        clientEmail: document.getElementById('editClientEmail').value,
-        clientPhone: document.getElementById('editClientPhone').value,
-        location: document.getElementById('editSessionLocation').value,
-        petNames: document.getElementById('editPetNames').value,
-        notes: document.getElementById('editSessionNotes').value
-      };
-      
-      // Update client data
-      if (sampleClientData[originalDate]) {
-        const clientData = sampleClientData[originalDate];
-        
-        // Update session data
-        clientData.sessionData.session = getSessionTypeName(formData.type);
-        clientData.sessionData.park = getLocationName(formData.location);
-        clientData.sessionData.selectedDateTime = formData.date + 'T' + formData.time + ':00';
-        clientData.sessionData.sessionType = formData.type;
-        clientData.sessionData.notes = formData.notes;
-        
-        // Update client data
-        clientData.intakeData.person1.name = formData.clientName;
-        clientData.intakeData.person1.email = formData.clientEmail;
-        clientData.intakeData.person1.phone = formData.clientPhone;
-        clientData.intakeData.pet1.name = formData.petNames.split(',')[0].trim();
-        clientData.intakeData.specialRequests = formData.notes || 'None';
-        
-        // If date changed, move the data
-        if (originalDate !== formData.date) {
-          sampleClientData[formData.date] = clientData;
-          delete sampleClientData[originalDate];
-          
-          // Update booked dates
-          const oldIndex = bookedDates.indexOf(originalDate);
-          if (oldIndex > -1) {
-            bookedDates.splice(oldIndex, 1);
-          }
-          if (!bookedDates.includes(formData.date)) {
-            bookedDates.push(formData.date);
-          }
+      if (isGoogleCalendarConnected) {
+        try {
+          await saveToGoogleCalendar(eventData, mode);
+        } catch (error) {
+          console.error('Error saving to Google Calendar:', error);
+          alert('Error saving to Google Calendar. Saving locally instead.');
         }
       }
       
-      closeModal('editSessionModal');
+      // Save locally as backup
+      saveToLocalEvents(formData.date, eventData);
+      
+      closeSessionModal();
       generateCalendar();
       
-      alert(`✅ Session Updated!\n\nClient: ${formData.clientName}\nDate: ${formData.date}\nTime: ${formData.time}\n\nChanges have been saved.`);
+      alert(`Session ${mode === 'edit' ? 'updated' : 'created'} successfully!`);
+    }
+
+    // Save blocked date
+    function saveBlockedDate() {
+      const date = document.getElementById('blockDate').value;
+      const reason = document.getElementById('blockReason').value;
+      const notes = document.getElementById('blockNotes').value;
       
-      // Show updated session
-      showClientProfile(formData.date);
-    });
-
-    // Helper functions
-    function getSessionTypeName(type) {
-      const types = {
-        'full': 'Full Session',
-        'mini': 'Mini Session', 
-        'headshots': 'Pet Headshots',
-        'event': 'Special Event'
+      const eventData = {
+        title: `Blocked - ${reason}`,
+        summary: `Blocked - ${reason}`,
+        date: date,
+        reason: reason,
+        notes: notes,
+        type: 'blocked'
       };
-      return types[type] || 'Full Session';
+      
+      if (isGoogleCalendarConnected) {
+        saveToGoogleCalendar(eventData, 'add');
+      }
+      
+      saveToLocalEvents(date, eventData);
+      
+      closeBlockModal();
+      generateCalendar();
+      
+      alert('Date blocked successfully!');
     }
 
-    function getLocationName(code) {
-      const locations = {
-        'cheesman': 'Cheesman Park',
-        'wash': 'Washington Park',
-        'city': 'City Park',
-        'sloan': "Sloan's Lake",
-        'studio': 'Studio',
-        'client-home': "Client's Home",
-        'other': 'Other Location'
+    // Save to Google Calendar
+    async function saveToGoogleCalendar(eventData, mode) {
+      if (!gapi || !isGoogleCalendarConnected) {
+        throw new Error('Google Calendar not connected');
+      }
+      
+      const event = {
+        'summary': eventData.title,
+        'description': eventData.notes || '',
+        'start': {
+          'dateTime': `${eventData.date}T${eventData.time || '09:00'}:00`,
+          'timeZone': 'America/Denver'
+        },
+        'end': {
+          'dateTime': `${eventData.date}T${eventData.time ? addHour(eventData.time) : '10:00'}:00`,
+          'timeZone': 'America/Denver'
+        }
       };
-      return locations[code] || 'Cheesman Park';
+      
+      if (eventData.location) {
+        event.location = eventData.location;
+      }
+      
+      const request = gapi.client.calendar.events.insert({
+        'calendarId': 'primary',
+        'resource': event
+      });
+      
+      return request;
     }
 
-    function getLocationCode(name) {
-      const codes = {
-        'Cheesman Park': 'cheesman',
-        'Washington Park': 'wash',
-        'City Park': 'city',
-        "Sloan's Lake": 'sloan',
-        'Studio': 'studio',
-        "Client's Home": 'client-home',
-        'Other Location': 'other'
-      };
-      return codes[name] || 'cheesman';
+    // Save to local events
+    function saveToLocalEvents(date, eventData) {
+      if (!localEvents[date]) {
+        localEvents[date] = [];
+      }
+      localEvents[date].push(eventData);
+      saveLocalEvents();
     }
 
-    function generateSessionId(phone) {
-      return phone.slice(-4) + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    // Remove event from date
+    function removeEventFromDate(dateString) {
+      // Remove from local events
+      if (localEvents[dateString]) {
+        delete localEvents[dateString];
+        saveLocalEvents();
+      }
+      
+      // TODO: Remove from Google Calendar
+      
+      generateCalendar();
+      showDefaultPanel();
+      
+      alert('Session removed successfully!');
     }
 
-    function generatePassword(petName) {
-      return petName.toLowerCase().replace(/[^a-z]/g, '') + 'barks';
+    // Utility functions
+    function addHour(timeString) {
+      const [hours, minutes] = timeString.split(':');
+      const newHours = String(parseInt(hours) + 1).padStart(2, '0');
+      return `${newHours}:${minutes}`;
     }
 
-    // Show client profile for selected session
+    // Calendar navigation
+    function previousMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() - 1);
+      generateCalendar();
+    }
+
+    function nextMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() + 1);
+      generateCalendar();
+    }
+
+    function syncCalendar() {
+      console.log('Syncing calendar...');
+      if (isGoogleCalendarConnected) {
+        loadCalendarEvents();
+      } else {
+        initializeGoogleCalendar();
+      }
+    }
+
+    function openFullCalendar() {
+      window.open('https://calendar.google.com/calendar/u/0/r/week', '_blank');
+    }
+
+    // Gallery management
+    function manageGalleries() {
+      openGalleryModal();
+    }
+
+    function openGalleryModal() {
+      const modal = document.getElementById('galleryModal');
+      const galleryList = document.getElementById('galleryList');
+      
+      // Populate gallery list
+      let galleryHtml = '';
+      Object.keys(sampleClientData).forEach(date => {
+        const client = sampleClientData[date];
+        if (client.hasGallery) {
+          galleryHtml += `
+            <div class="password-row">
+              <div>
+                <strong>${client.intakeData.person1.name}</strong> - ${date}
+                <div class="password-info">ID: ${client.sessionId} | Password: ${client.password}</div>
+              </div>
+              <div class="password-actions">
+                <button class="icon-btn" onclick="regeneratePassword('${date}')" title="Regenerate Password">🔄</button>
+                <button class="icon-btn" onclick="copyCredentials('${date}')" title="Copy Credentials">📋</button>
+                <button class="icon-btn" onclick="emailCredentials('${date}')" title="Email Credentials">📧</button>
+              </div>
+            </div>
+          `;
+        }
+      });
+      
+      if (!galleryHtml) {
+        galleryHtml = '<p style="text-align: center; color: rgba(255,255,255,0.7);">No galleries created yet</p>';
+      }
+      
+      galleryList.innerHTML = galleryHtml;
+      modal.style.display = 'flex';
+    }
+
+    function closeGalleryModal() {
+      document.getElementById('galleryModal').style.display = 'none';
+    }
+
+    function regeneratePassword(date) {
+      const client = sampleClientData[date];
+      const petName = client.intakeData.pet1.name.toLowerCase();
+      const newPassword = petName + Math.floor(Math.random() * 1000);
+      client.password = newPassword;
+      
+      alert(`New password generated: ${newPassword}`);
+      openGalleryModal(); // Refresh display
+    }
+
+    function copyCredentials(date) {
+      const client = sampleClientData[date];
+      const credentials = `Session ID: ${client.sessionId}\nPassword: ${client.password}`;
+      
+      navigator.clipboard.writeText(credentials).then(() => {
+        alert('Credentials copied to clipboard!');
+      });
+    }
+
+    function emailCredentials(date) {
+      const client = sampleClientData[date];
+      alert(`📧 Email sent to ${client.intakeData.person1.email} with gallery access credentials!`);
+    }
+
+    // Show panels
     function showClientProfile(dateString) {
       const clientData = sampleClientData[dateString];
       
@@ -2108,11 +2047,7 @@
         year: 'numeric',
         month: 'long',
         day: 'numeric'
-      }) + ' at ' + (clientData.sessionData.selectedDateTime ? 
-        new Date(clientData.sessionData.selectedDateTime).toLocaleTimeString('en-US', {
-          hour: 'numeric',
-          minute: '2-digit'
-        }) : '6:00 PM');
+      }) + ' at 6:00 PM';
       
       // Populate client information
       const clientInfo = document.getElementById('clientInfo');
@@ -2199,192 +2134,45 @@
         </div>
       `;
       
-      // Update password display
-      updatePasswordDisplay(clientData);
-      
-      // Update gallery status
+      // Update gallery status and password manager
       const galleryStatus = document.getElementById('galleryStatus');
+      const passwordManager = document.getElementById('passwordManager');
+      
       if (clientData.hasGallery) {
         galleryStatus.className = 'gallery-status has-gallery';
         galleryStatus.innerHTML = `
           <p>✅ Gallery created with 24 photos</p>
           <p style="font-size: 0.9rem; margin-top: 0.5rem;">
-            Last updated: ${new Date().toLocaleDateString()}
+            Gallery ID: ${clientData.galleryId}
           </p>
+        `;
+        
+        passwordManager.style.display = 'block';
+        document.getElementById('passwordList').innerHTML = `
+          <div class="password-row">
+            <div class="password-info">
+              <strong>Session ID:</strong> ${clientData.sessionId}<br>
+              <strong>Password:</strong> ${clientData.password}
+            </div>
+            <div class="password-actions">
+              <button class="icon-btn" onclick="regeneratePassword('${dateString}')" title="Regenerate">🔄</button>
+              <button class="icon-btn" onclick="copyCredentials('${dateString}')" title="Copy">📋</button>
+            </div>
+          </div>
         `;
       } else {
         galleryStatus.className = 'gallery-status no-gallery';
         galleryStatus.innerHTML = '<p>No gallery created yet for this session</p>';
+        passwordManager.style.display = 'none';
       }
     }
 
-    // Update password display
-    function updatePasswordDisplay(clientData) {
-      const passwordDisplay = document.getElementById('passwordDisplay');
-      const sessionId = clientData.sessionId || generateSessionId(clientData.intakeData.person1.phone);
-      const password = clientData.password || generatePassword(clientData.intakeData.pet1.name);
-      
-      passwordDisplay.innerHTML = `
-        <div class="password-item">
-          <div>
-            <strong>Session ID:</strong> ${sessionId}
-          </div>
-          <div class="password-actions">
-            <button class="btn btn-small" onclick="copyToClipboard('${sessionId}')">📋 Copy</button>
-            <button class="btn btn-small" onclick="regenerateSessionId()">🔄</button>
-          </div>
-        </div>
-        <div class="password-item">
-          <div>
-            <strong>Password:</strong> ${password}
-          </div>
-          <div class="password-actions">
-            <button class="btn btn-small" onclick="copyToClipboard('${password}')">📋 Copy</button>
-            <button class="btn btn-small" onclick="regeneratePassword()">🔄</button>
-          </div>
-        </div>
-        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; color: rgba(255,255,255,0.7);">
-          <strong>Gallery URL:</strong> ${window.location.origin}/gallery-login.html
-        </div>
-      `;
-      
-      // Update stored data
-      clientData.sessionId = sessionId;
-      clientData.password = password;
-    }
-
-    // Show default panel
     function showDefaultPanel() {
       document.getElementById('clientPanel').classList.remove('active');
       document.getElementById('defaultPanel').style.display = 'block';
     }
 
-    // Session management functions
-    function editSession() {
-      if (!selectedDate) {
-        alert('Please select a session date first');
-        return;
-      }
-      showEditSessionModal(selectedDate);
-    }
-
-    function cancelSession() {
-      if (!selectedDate) {
-        alert('Please select a session date first');
-        return;
-      }
-      
-      if (confirm('⚠️ Cancel Session\n\nAre you sure you want to cancel this session? This action cannot be undone.')) {
-        // Remove from booked dates
-        const index = bookedDates.indexOf(selectedDate);
-        if (index > -1) {
-          bookedDates.splice(index, 1);
-        }
-        
-        // Remove client data
-        delete sampleClientData[selectedDate];
-        
-        generateCalendar();
-        showDefaultPanel();
-        
-        alert('✅ Session cancelled and removed from calendar');
-      }
-    }
-
-    function rescheduleSession() {
-      if (!selectedDate) {
-        alert('Please select a session date first');
-        return;
-      }
-      
-      alert('📅 Reschedule Session\n\nIn the full version, this would:\n\n• Show available dates\n• Allow drag-and-drop rescheduling\n• Send notification to client\n• Update Google Calendar\n• Preserve all session data');
-    }
-
-    function duplicateSession() {
-      if (!selectedDate) {
-        alert('Please select a session date first');
-        return;
-      }
-      
-      const clientData = sampleClientData[selectedDate];
-      if (!clientData) {
-        alert('No session data found');
-        return;
-      }
-      
-      // Pre-fill add session form with existing data
-      const modal = document.getElementById('addSessionModal');
-      document.getElementById('sessionType').value = clientData.sessionData.sessionType || 'full';
-      document.getElementById('clientName').value = clientData.intakeData.person1.name;
-      document.getElementById('clientEmail').value = clientData.intakeData.person1.email;
-      document.getElementById('clientPhone').value = clientData.intakeData.person1.phone;
-      document.getElementById('sessionLocation').value = getLocationCode(clientData.sessionData.park);
-      document.getElementById('petNames').value = clientData.intakeData.pet1.name + 
-        (clientData.intakeData.pet2 ? ', ' + clientData.intakeData.pet2.name : '');
-      document.getElementById('sessionNotes').value = clientData.sessionData.notes || '';
-      
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    // Password management functions
-    function regenerateSessionId() {
-      if (!selectedDate || !sampleClientData[selectedDate]) {
-        alert('Please select a session first');
-        return;
-      }
-      
-      const clientData = sampleClientData[selectedDate];
-      const newSessionId = generateSessionId(clientData.intakeData.person1.phone);
-      clientData.sessionId = newSessionId;
-      
-      updatePasswordDisplay(clientData);
-      alert(`🆔 New Session ID Generated!\n\nNew ID: ${newSessionId}\n\nClients will need the new credentials to access their gallery.`);
-    }
-
-    function regeneratePassword() {
-      if (!selectedDate || !sampleClientData[selectedDate]) {
-        alert('Please select a session first');
-        return;
-      }
-      
-      const clientData = sampleClientData[selectedDate];
-      const newPassword = generatePassword(clientData.intakeData.pet1.name) + Math.floor(Math.random() * 100);
-      clientData.password = newPassword;
-      
-      updatePasswordDisplay(clientData);
-      alert(`🔐 New Password Generated!\n\nNew Password: ${newPassword}\n\nClients will need the new credentials to access their gallery.`);
-    }
-
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        // Create temporary notification
-        const notification = document.createElement('div');
-        notification.textContent = '📋 Copied to clipboard!';
-        notification.style.cssText = `
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: linear-gradient(135deg, var(--available-green), #059669);
-          color: white;
-          padding: 1rem 2rem;
-          border-radius: 8px;
-          z-index: 9999;
-          font-weight: 600;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        `;
-        
-        document.body.appendChild(notification);
-        setTimeout(() => {
-          document.body.removeChild(notification);
-        }, 2000);
-      }).catch(() => {
-        alert(`📋 Copy this text:\n\n${text}`);
-      });
-    }
-
-    // Enhanced gallery management functions
+    // Gallery functions for session panel
     function createGallery() {
       if (!selectedDate) {
         alert('Please select a session date first');
@@ -2397,23 +2185,19 @@
         return;
       }
       
-      if (clientData.hasGallery) {
-        alert('📸 Gallery Already Exists\n\nThis session already has a gallery. Use "Upload Photos" to add more images or "View Gallery" to see the current photos.');
-        return;
-      }
+      const sessionId = clientData.intakeData.person1.phone.slice(-4) + clientData.intakeData.person1.zip.slice(-2);
+      const password = clientData.intakeData.pet1.name.toLowerCase() + 'barks';
       
-      const sessionId = clientData.sessionId;
-      const password = clientData.password;
+      // Update client data
+      clientData.hasGallery = true;
+      clientData.galleryId = 'gal_' + Math.random().toString(36).substr(2, 9);
+      clientData.sessionId = sessionId;
+      clientData.password = password;
       
-      // Simulate gallery creation process
-      alert(`🎨 Creating Gallery...\n\nInitializing photo gallery for ${clientData.intakeData.person1.name}'s session.\n\nThis process will:\n• Create secure gallery space\n• Set up client access\n• Prepare upload interface\n\nPlease wait...`);
+      alert(`🎉 Gallery Created!\n\nSession ID: ${sessionId}\nPassword: ${password}\n\nClients can now access their gallery with these credentials.`);
       
-      setTimeout(() => {
-        clientData.hasGallery = true;
-        showClientProfile(selectedDate);
-        
-        alert(`🎉 Gallery Created Successfully!\n\nClient: ${clientData.intakeData.person1.name}\nSession ID: ${sessionId}\nPassword: ${password}\n\nYou can now upload photos and send access credentials to your client.`);
-      }, 1500);
+      // Refresh display
+      showClientProfile(selectedDate);
     }
 
     function uploadPhotos() {
@@ -2422,26 +2206,7 @@
         return;
       }
       
-      const clientData = sampleClientData[selectedDate];
-      if (!clientData) {
-        alert('No client data found for this session');
-        return;
-      }
-      
-      if (!clientData.hasGallery) {
-        if (confirm('📸 No Gallery Found\n\nThis session doesn\'t have a gallery yet. Would you like to create one now?')) {
-          createGallery();
-          return;
-        }
-        return;
-      }
-      
-      // Simulate advanced photo upload interface
-      const uploadDetails = `📷 Photo Upload Interface\n\nIn the full version, this would provide:\n\n🖱️ Drag & Drop Upload\n• Bulk photo selection\n• Progress indicators\n• Thumbnail previews\n\n⚙️ Auto-Processing\n• Resize for web viewing\n• Generate thumbnails\n• Apply watermarks\n\n📱 Organization Tools\n• Auto-sort by timestamp\n• Batch rename options\n• Category tagging\n\n🎯 Quality Control\n• Duplicate detection\n• Blur/focus analysis\n• Color correction options\n\nWould you like to simulate uploading 24 photos?`;
-      
-      if (confirm(uploadDetails)) {
-        alert('📤 Upload Started!\n\nSimulating upload of 24 high-resolution photos...\n\n✅ Processing complete!\nPhotos are now available in the client gallery.');
-      }
+      alert('📸 Photo Upload\n\nIn the full version, this would open a drag-and-drop interface for uploading session photos. Features would include:\n\n• Bulk photo upload\n• Auto-resizing and optimization\n• Watermark removal for downloads\n• Automatic gallery organization');
     }
 
     function viewGallery() {
@@ -2450,15 +2215,7 @@
         return;
       }
       
-      const clientData = sampleClientData[selectedDate];
-      if (!clientData || !clientData.hasGallery) {
-        alert('No gallery found for this session. Create a gallery first.');
-        return;
-      }
-      
-      // Open gallery in new tab with admin access
-      const galleryUrl = `/gallery.html?session=${clientData.sessionId}&admin=true`;
-      window.open(galleryUrl, '_blank');
+      window.open('/gallery-login.html', '_blank');
     }
 
     function sendCredentials() {
@@ -2468,61 +2225,53 @@
       }
       
       const clientData = sampleClientData[selectedDate];
-      if (!clientData) {
-        alert('No client data found for this session');
+      if (!clientData || !clientData.hasGallery) {
+        alert('No gallery found for this session');
         return;
       }
       
-      if (!clientData.hasGallery) {
-        alert('Please create a gallery first before sending credentials');
-        return;
+      alert(`📧 Email Sent!\n\nGallery access credentials sent to:\n${clientData.intakeData.person1.email}\n\nSession ID: ${clientData.sessionId}\nPassword: ${clientData.password}`);
+    }
+
+    // Authentication functions
+    function checkAuthentication() {
+      const isAuthenticated = localStorage.getItem('adminAuthenticated');
+      const loginTime = localStorage.getItem('adminLoginTime');
+      const adminUser = localStorage.getItem('adminUser');
+      
+      if (!isAuthenticated || !loginTime || !adminUser) {
+        window.location.href = '/admin-login.html';
+        return false;
       }
       
-      const sessionId = clientData.sessionId;
-      const password = clientData.password;
-      const clientEmail = clientData.intakeData.person1.email;
-      const clientName = clientData.intakeData.person1.name;
-      const petName = clientData.intakeData.pet1.name;
+      // Check if session is still valid (24 hours)
+      const loginDate = new Date(loginTime);
+      const now = new Date();
+      const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
       
-      // Simulate sending email with credentials
-      const emailPreview = `📧 Email Preview\n\nTo: ${clientEmail}\nSubject: Your Pet Photography Gallery is Ready! 📸\n\n---\n\nHi ${clientName}!\n\nYour beautiful photos with ${petName} are now ready to view and download!\n\n🔗 Gallery Access:\nWebsite: ${window.location.origin}/gallery-login.html\nSession ID: ${sessionId}\nPassword: ${password}\n\n✨ Features:\n• View all your photos\n• Download high-resolution images\n• Share favorites with friends\n• Available for 90 days\n\nEnjoy your memories!\n\n📸 Picture This Pet Team`;
+      if (hoursDiff >= 24) {
+        logout();
+        return false;
+      }
       
-      if (confirm(emailPreview + '\n\n---\n\nSend this email to the client?')) {
-        alert('✅ Credentials Sent!\n\nAccess credentials have been emailed to:\n' + clientEmail + '\n\nThe client can now view and download their photos using the provided login information.');
-      }
+      // Update admin info display
+      document.getElementById('adminInfo').textContent = `Welcome, ${adminUser}`;
+      return true;
     }
 
-    // Calendar navigation
-    function previousMonth() {
-      currentMonth.setMonth(currentMonth.getMonth() - 1);
-      if (calendarLoaded) {
-        generateCalendar();
-      }
+    function logout() {
+      localStorage.removeItem('adminAuthenticated');
+      localStorage.removeItem('adminUser');
+      localStorage.removeItem('adminLoginTime');
+      window.location.href = '/admin-login.html';
     }
 
-    function nextMonth() {
-      currentMonth.setMonth(currentMonth.getMonth() + 1);
-      if (calendarLoaded) {
-        generateCalendar();
-      }
+    function toggleMenu() {
+      const nav = document.querySelector('.admin-nav');
+      nav.classList.toggle('active');
     }
 
-    function refreshCalendar() {
-      console.log('Refreshing admin calendar...');
-      // Reset mode
-      currentMode = 'view';
-      document.querySelectorAll('.tool-btn').forEach(btn => {
-        btn.style.background = '';
-        if (btn.textContent.includes('Block')) {
-          btn.textContent = '🚫 Block Time';
-        } else if (btn.textContent.includes('Edit')) {
-          btn.textContent = '✏️ Edit Mode';
-        }
-      });
-      fetchCalendarData();
-    }
-
-    // Initialize page
+    // Initialize everything
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Admin dashboard loaded, initializing...');
       
@@ -2531,54 +2280,30 @@
         return;
       }
       
-      // Fetch calendar data
-      fetchCalendarData();
+      // Initialize calendar
+      initializeGoogleCalendar();
     });
 
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
-      // Close modals with escape
       if (e.key === 'Escape') {
-        // Close any open modals
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-          if (modal.style.display === 'flex') {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-          }
-        });
-        
-        // Hide context menu
-        hideContextMenu();
-        
-        // Return to default panel and clear selection
+        closeContextMenu();
+        closeSessionModal();
+        closeBlockModal();
+        closeGalleryModal();
         showDefaultPanel();
+        
+        // Clear selection
         document.querySelectorAll('.calendar-day.selected').forEach(el => {
           el.classList.remove('selected');
         });
-        
-        // Reset mode
-        currentMode = 'view';
-      }
-      
-      // Quick actions
-      if (e.ctrlKey || e.metaKey) {
-        switch(e.key) {
-          case 'n':
-            e.preventDefault();
-            showAddSessionModal();
-            break;
-          case 'r':
-            e.preventDefault();
-            refreshCalendar();
-            break;
-        }
       }
     });
 
-    // Click outside to close context menu
+    // Close context menu when clicking elsewhere
     document.addEventListener('click', function(e) {
-      if (!e.target.closest('.context-menu') && !e.target.closest('.calendar-day')) {
-        hideContextMenu();
+      if (!e.target.closest('.context-menu')) {
+        closeContextMenu();
       }
     });
   </script>
