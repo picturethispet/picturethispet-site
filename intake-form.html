@@ -1026,6 +1026,15 @@
         <button onclick="redirectHome()">Return to Home</button>
       </div>
     </div>
+
+    <!-- Pop-up for Slot Unavailability -->
+    <div class="popup" id="slotUnavailablePopup">
+      <div class="popup-content">
+        <h3>Slot Unavailable</h3>
+        <p>The selected date and time are no longer available. Please choose another slot.</p>
+        <button onclick="redirectToPickDate()">Pick Another Date</button>
+      </div>
+    </div>
   </main>
 
   <footer>
@@ -1060,7 +1069,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:47 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 04:13 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -1080,6 +1089,11 @@
     // Redirect to home page
     function redirectHome() {
       window.location.href = '/';
+    }
+
+    // Redirect to pick a date page
+    function redirectToPickDate() {
+      window.location.href = '/ptp-pick-date-step-3.html';
     }
 
     // Log errors to Airtable for live testing
@@ -1117,15 +1131,121 @@
       }
     }
 
-    // Save intake data to Airtable
-    async function saveIntakeToAirtable(intakeData) {
+    // Verify slot availability in the Calendar table
+    async function verifySlotAvailability(dateTime, bookingId) {
       try {
-        console.log('💾 Saving intake data to Airtable...');
-        
-        const airtableRecord = {
+        const date = dateTime.split('T')[0];
+        const time = dateTime.split('T')[1].substring(0, 5);
+        console.log('Verifying slot availability for:', date, time);
+
+        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar?filterByFormula=AND({date}="${date}", {time}="${time}")`, {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.records.length === 0) {
+          return false; // Slot not found (shouldn't happen if properly set up)
+        }
+
+        const slot = data.records[0].fields;
+        if (slot.status === 'booked') {
+          return false;
+        } else if (slot.status === 'soft-hold') {
+          const softHoldUntil = new Date(slot.softHoldUntil);
+          if (softHoldUntil > new Date() && slot.bookingId !== bookingId) {
+            return false; // Slot is soft-held by another booking
+          }
+        }
+        return true;
+      } catch (error) {
+        console.error('Error verifying slot availability:', error);
+        await logErrorToAirtable('intake-form.html', error, { dateTime, bookingId });
+        return false;
+      }
+    }
+
+    // Extend the soft hold in the Calendar table
+    async function extendSoftHold(dateTime, bookingId) {
+      try {
+        const date = dateTime.split('T')[0];
+        const time = dateTime.split('T')[1].substring(0, 5);
+        console.log('Extending soft hold for:', date, time);
+
+        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar?filterByFormula=AND({date}="${date}", {time}="${time}", {bookingId}="${bookingId}")`, {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.records.length === 0) {
+          throw new Error('Calendar slot not found');
+        }
+
+        const recordId = data.records[0].id;
+        const softHoldUntil = new Date();
+        softHoldUntil.setMinutes(softHoldUntil.getMinutes() + 15);
+
+        const updateRecord = {
           fields: {
-            bookingId: intakeData.bookingId || `BOOKING_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-            timestamp: new Date().toISOString(),
+            softHoldUntil: softHoldUntil.toISOString()
+          }
+        };
+
+        const updateResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar/${recordId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updateRecord)
+        });
+
+        if (updateResponse.ok) {
+          console.log('✅ Soft hold extended');
+        } else {
+          throw new Error(`Airtable error: ${updateResponse.status}`);
+        }
+      } catch (error) {
+        console.error('Error extending soft hold:', error);
+        await logErrorToAirtable('intake-form.html', error, { dateTime, bookingId });
+      }
+    }
+
+    // Update the Bookings record with intake data
+    async function updateBookingWithIntakeData(bookingId, intakeData) {
+      try {
+        console.log('Updating booking with intake data:', bookingId);
+
+        // Fetch the existing booking record
+        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings?filterByFormula={bookingId}="${bookingId}"`, {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.records.length === 0) {
+          throw new Error('Booking not found');
+        }
+
+        const recordId = data.records[0].id;
+        const updateRecord = {
+          fields: {
             status: 'intake_completed',
             clientName: intakeData.client?.name || '',
             clientEmail: intakeData.client?.email || '',
@@ -1151,11 +1271,6 @@
             pet2OffLeash: intakeData.pets?.[1]?.offLeash || false,
             pet2Behavior: intakeData.pets?.[1]?.behavior || '',
             pet2Notes: intakeData.pets?.[1]?.notes || '',
-            sessionType: intakeData.session || '',
-            sessionDate: intakeData.selectedDateTime || '',
-            location: intakeData.park || '',
-            petCount: parseInt(intakeData.petCount) || 1,
-            peopleCount: parseInt(intakeData.peopleCount) || 1,
             specialRequests: intakeData.preferences?.specialRequests || '',
             photoStyle: intakeData.preferences?.photoStyle || '',
             instagramTag: intakeData.preferences?.instagramTag || false,
@@ -1168,60 +1283,74 @@
           }
         };
 
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings', {
-          method: 'POST',
+        const updateResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings/${recordId}`, {
+          method: 'PATCH',
           headers: {
             'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(airtableRecord)
+          body: JSON.stringify(updateRecord)
         });
 
-        if (response.ok) {
-          const result = await response.json();
-          console.log('✅ Intake data saved to Airtable:', result);
-          return result;
+        if (updateResponse.ok) {
+          console.log('✅ Booking updated with intake data');
         } else {
-          throw new Error(`Airtable error: ${response.status}`);
+          throw new Error(`Airtable error: ${updateResponse.status}`);
         }
       } catch (error) {
-        console.error('❌ Failed to save intake data to Airtable:', error);
-        await logErrorToAirtable('intake-form.html', error, intakeData);
-        return null;
+        console.error('Error updating booking with intake data:', error);
+        await logErrorToAirtable('intake-form.html', error, { bookingId, intakeData });
       }
     }
 
-    // Form submission handling with data transfer safety
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('🎯 Intake Form page loaded with data transfer safety mechanisms...');
+    // Form submission handling
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('🎯 Intake Form page loaded with calendar verification...');
 
       const form = document.getElementById('intakeForm');
       const vaccinationInputs = document.getElementsByName('isVaccinated');
       const instagramTagInputs = document.getElementsByName('instagramTag');
       const submitBtn = document.getElementById('submitBtn');
-      const popup = document.getElementById('vaccinationPopup');
+      const vaccinationPopup = document.getElementById('vaccinationPopup');
+      const slotUnavailablePopup = document.getElementById('slotUnavailablePopup');
       
-      // Load existing session and marketing data
+      // Load session and marketing data
       let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
       let marketingData = JSON.parse(localStorage.getItem('ptpMarketingData')) || {};
 
-      console.log('Loaded existing session data:', sessionData);
-      console.log('Loaded existing marketing data:', marketingData);
+      // Validate session data
+      if (!sessionData.bookingId || !sessionData.selectedDateTime) {
+        alert('Booking data or selected date/time not found. Please start over.');
+        window.location.href = '/index.html#session-builder-section';
+        return;
+      }
 
-      // Ensure existing session data is stored redundantly
+      // Verify slot availability
+      const isSlotAvailable = await verifySlotAvailability(sessionData.selectedDateTime, sessionData.bookingId);
+      if (!isSlotAvailable) {
+        slotUnavailablePopup.style.display = 'flex';
+        return;
+      }
+
+      // Extend the soft hold
+      await extendSoftHold(sessionData.selectedDateTime, sessionData.bookingId);
+
+      // Ensure session data is stored redundantly
       try {
-        if (Object.keys(sessionData).length > 0) {
-          const dataString = JSON.stringify(sessionData);
-          localStorage.setItem('ptpSessionBackup', dataString);
-          localStorage.setItem(`ptpBooking_${Date.now()}`, dataString);
-          sessionStorage.setItem('ptpSessionData', dataString);
-          sessionStorage.setItem('ptpSessionBackup', dataString);
-          console.log('✅ Existing session data saved redundantly in 4 locations');
-        }
+        const dataString = JSON.stringify(sessionData);
+        localStorage.setItem('ptpSessionData', dataString);
+        localStorage.setItem('ptpSessionBackup', dataString);
+        localStorage.setItem(`ptpBooking_${sessionData.bookingId}`, dataString);
+        sessionStorage.setItem('ptpSessionData', dataString);
+        sessionStorage.setItem('ptpSessionBackup', dataString);
+        console.log('✅ Existing session data saved redundantly in 5 locations');
       } catch (error) {
         console.error('Error saving session data:', error);
         logErrorToAirtable('intake-form.html', error, sessionData);
       }
+
+      console.log('Loaded existing session data:', sessionData);
+      console.log('Loaded existing marketing data:', marketingData);
 
       // Pre-fill email for Person 1
       const person1EmailInput = document.getElementById('person1Email');
@@ -1260,9 +1389,9 @@
             document.getElementById('instagramTagGroup').style.display = 'block';
             document.getElementById('marketingConsentGroup').style.display = 'block';
             submitBtn.style.display = 'inline-block';
-            popup.style.display = 'none';
+            vaccinationPopup.style.display = 'none';
           } else if (input.value === 'no') {
-            popup.style.display = 'flex';
+            vaccinationPopup.style.display = 'flex';
             document.getElementById('clientInfo1').style.display = 'none';
             document.getElementById('clientInfo2').style.display = 'none';
             document.getElementById('petInfo1').style.display = 'none';
@@ -1330,7 +1459,7 @@
         }
       });
 
-      // Form submission with data transfer safety
+      // Form submission - Update booking with intake data
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
@@ -1340,7 +1469,7 @@
           return;
         }
 
-        console.log('🎯 Form submitted, appending intake data to existing sessionData...');
+        console.log('🎯 Form submitted, updating booking with intake data...');
 
         try {
           // Collect intake form data
@@ -1399,7 +1528,7 @@
             referralSource: document.getElementById('referralSource').value
           };
 
-          // Merge intake data into existing sessionData
+          // Merge intake data into existing session data
           const updatedSessionData = {
             ...sessionData,
             ...intakeData
@@ -1407,14 +1536,14 @@
 
           console.log('🎯 Updated session data with intake form:', updatedSessionData);
 
-          // Save to Airtable
-          await saveIntakeToAirtable(updatedSessionData);
+          // Update the booking record in Airtable
+          await updateBookingWithIntakeData(sessionData.bookingId, updatedSessionData);
 
           // Save redundantly to localStorage and sessionStorage
           const dataString = JSON.stringify(updatedSessionData);
           localStorage.setItem('ptpSessionData', dataString);
           localStorage.setItem('ptpSessionBackup', dataString);
-          localStorage.setItem(`ptpBooking_${Date.now()}`, dataString);
+          localStorage.setItem(`ptpBooking_${sessionData.bookingId}`, dataString);
           sessionStorage.setItem('ptpSessionData', dataString);
           sessionStorage.setItem('ptpSessionBackup', dataString);
           console.log('✅ Session data saved redundantly in 5 locations');
@@ -1435,7 +1564,6 @@
         } catch (error) {
           console.error('Error during form submission:', error);
           await logErrorToAirtable('intake-form.html', error, sessionData);
-          // Optionally, show an error message to the user
           alert('An error occurred while submitting the form. Please try again.');
         }
       });
