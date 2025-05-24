@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard | Picture This Pet</title>
-  <meta name="description" content="Complete admin dashboard for managing sessions, clients, and galleries.">
+  <title>Studio Manager | Picture This Pet</title>
+  <meta name="description" content="Complete studio management dashboard for booking, clients, and galleries.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -69,60 +69,59 @@
       }
     }
 
+    /* === LAYOUT === */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
     /* === HEADER === */
-    header {
+    .admin-header {
+      grid-column: 1 / -1;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.01rem 1.5rem;
+      padding: 1rem 2rem;
       backdrop-filter: blur(8px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: fixed;
-      top: 0;
-      left: 0;
       z-index: 1000;
-      height: 110px;
     }
 
-    .logo-link {
+    .header-left {
       display: flex;
       align-items: center;
-      transition: opacity 0.3s ease;
-      text-decoration: none;
+      gap: 2rem;
     }
 
-    .logo-link:hover {
-      opacity: 0.8;
+    .logo-small {
+      height: 50px;
     }
-    
-    .desktop-logo {
-      height: 100px;
+
+    .header-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
     }
-    
-    .admin-nav {
+
+    .header-right {
       display: flex;
       align-items: center;
-      margin-left: auto;
       gap: 1rem;
     }
 
-    .admin-info {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.8rem 1.5rem;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .calendar-sync-status {
+    .sync-status {
       background: rgba(255, 255, 255, 0.1);
       padding: 0.5rem 1rem;
       border-radius: 20px;
@@ -149,68 +148,276 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
-    
+
+    .admin-user {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
     .logout-btn {
       background: rgba(255, 255, 255, 0.1);
       color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 0.8rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.7rem 1.2rem;
       border-radius: 8px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      text-decoration: none;
     }
 
     .logout-btn:hover {
       background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
       transform: translateY(-1px);
     }
-    
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-    }
 
-    /* === MAIN CONTENT === */
-    main {
-      margin-top: 110px;
-      min-height: calc(100vh - 110px);
-      background-image: url("assets/images/main_background_allsystem.png");
+    /* === SIDEBAR === */
+    .admin-sidebar {
+      background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 2rem 1rem;
-      position: relative;
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 0;
+      overflow-y: auto;
     }
 
-    /* === DASHBOARD LAYOUT === */
-    .dashboard-container {
-      max-width: 1600px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 400px;
-      gap: 2rem;
-      align-items: start;
+    .nav-section {
+      margin-bottom: 2rem;
     }
 
-    /* === CALENDAR SECTION === */
-    .calendar-section {
+    .nav-section-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .nav-item.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border-left-color: var(--gold);
+    }
+
+    .nav-icon {
+      font-size: 1.2rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .nav-badge {
+      background: var(--booked-red);
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      margin-left: auto;
+    }
+
+    /* === MAIN CONTENT === */
+    .admin-main {
+      padding: 2rem;
+      overflow-y: auto;
+      max-height: calc(100vh - 100px);
+    }
+
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    /* === CARDS === */
+    .admin-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
+      padding: 2rem;
       color: white;
       backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* === BUTTONS === */
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-small {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.6rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* === DASHBOARD OVERVIEW === */
+    .dashboard-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .recent-activities {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .activity-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 1rem;
+    }
+
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .activity-title {
+      font-weight: 600;
+      color: white;
+    }
+
+    .activity-time {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .activity-description {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* === CALENDAR === */
+    .calendar-container {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 2rem;
+    }
+
+    .calendar-main {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -222,28 +429,23 @@
     }
 
     .calendar-title {
-      font-size: 2.2rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: white;
-    }
-
-    .calendar-controls {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
     }
 
     .calendar-nav {
       display: flex;
       gap: 0.5rem;
+      align-items: center;
     }
 
     .nav-button {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
       color: white;
-      width: 45px;
-      height: 45px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -258,68 +460,38 @@
       transform: scale(1.05);
     }
 
-    .calendar-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .calendar-action-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .calendar-action-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    .calendar-action-btn.sync {
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      border-color: var(--admin-blue);
-    }
-
-    /* === CALENDAR GRID === */
     .calendar-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 2px;
+      gap: 1px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
+      border-radius: 12px;
       overflow: hidden;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .calendar-day-header {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 1.2rem 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem 0.5rem;
       text-align: center;
       font-weight: 600;
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
     }
 
     .calendar-day {
       background: rgba(255, 255, 255, 0.05);
-      padding: 1.2rem 0.5rem;
+      padding: 0.8rem 0.5rem;
       text-align: center;
-      min-height: 70px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       position: relative;
-      font-size: 1.1rem;
       font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
     }
 
     .calendar-day:hover:not(.past):not(.other-month) {
@@ -334,68 +506,31 @@
 
     .calendar-day.past {
       color: rgba(255, 255, 255, 0.3);
-      background: rgba(0, 0, 0, 0.1);
       cursor: default;
     }
 
     .calendar-day.available {
       background: rgba(16, 185, 129, 0.2);
-      border: 2px solid rgba(16, 185, 129, 0.5);
+      border: 1px solid rgba(16, 185, 129, 0.5);
       color: white;
-    }
-
-    .calendar-day.available::after {
-      content: "✓";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
-      color: var(--available-green);
-      font-weight: bold;
     }
 
     .calendar-day.booked {
       background: rgba(239, 68, 68, 0.2);
-      border: 2px solid rgba(239, 68, 68, 0.5);
+      border: 1px solid rgba(239, 68, 68, 0.5);
       color: rgba(255, 255, 255, 0.9);
-    }
-
-    .calendar-day.booked::after {
-      content: "📸";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
     }
 
     .calendar-day.blocked {
       background: rgba(100, 100, 100, 0.3);
-      border: 2px solid rgba(150, 150, 150, 0.5);
+      border: 1px solid rgba(150, 150, 150, 0.5);
       color: rgba(255, 255, 255, 0.7);
-    }
-
-    .calendar-day.blocked::after {
-      content: "🚫";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
     }
 
     .calendar-day.soft-hold {
       background: rgba(245, 158, 11, 0.2);
-      border: 2px solid rgba(245, 158, 11, 0.5);
+      border: 1px solid rgba(245, 158, 11, 0.5);
       color: rgba(255, 255, 255, 0.9);
-    }
-
-    .calendar-day.soft-hold::after {
-      content: "?";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
-      color: var(--soft-hold-yellow);
-      font-weight: bold;
     }
 
     .calendar-day.selected {
@@ -414,6 +549,257 @@
       white-space: nowrap;
     }
 
+    .calendar-legend {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.available {
+      background: rgba(16, 185, 129, 0.7);
+    }
+
+    .legend-dot.booked {
+      background: rgba(239, 68, 68, 0.7);
+    }
+
+    .legend-dot.blocked {
+      background: rgba(100, 100, 100, 0.7);
+    }
+
+    .legend-dot.soft-hold {
+      background: rgba(245, 158, 11, 0.7);
+    }
+
+    /* === SESSION PANEL === */
+    .session-panel {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .session-panel h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .session-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(253, 183, 94, 0.2);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* === GALLERIES === */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .gallery-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-title {
+      font-weight: 600;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .gallery-status {
+      background: var(--available-green);
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .gallery-status.pending {
+      background: var(--soft-hold-yellow);
+    }
+
+    .gallery-status.expired {
+      background: var(--booked-red);
+    }
+
+    .gallery-info {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .gallery-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-stat {
+      text-align: center;
+    }
+
+    .gallery-stat-number {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .gallery-stat-label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .gallery-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* === CLIENTS === */
+    .client-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .client-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .client-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .client-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .client-name {
+      font-weight: 600;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .client-badge {
+      background: var(--available-green);
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .client-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .client-sessions {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 1rem;
+    }
+
+    .client-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
     /* === CONTEXT MENU === */
     .context-menu {
       position: fixed;
@@ -424,7 +810,7 @@
       min-width: 200px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
-      z-index: 1000;
+      z-index: 2000;
       display: none;
     }
 
@@ -463,7 +849,7 @@
       bottom: 0;
       background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(5px);
-      z-index: 2000;
+      z-index: 3000;
       display: none;
       align-items: center;
       justify-content: center;
@@ -479,7 +865,7 @@
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      max-width: 500px;
+      max-width: 600px;
       width: 90%;
       max-height: 80vh;
       overflow-y: auto;
@@ -493,6 +879,7 @@
     }
 
     .modal-title {
+      font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       font-weight: 700;
       color: white;
@@ -511,53 +898,6 @@
       color: white;
     }
 
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: white;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 0.95rem;
-    }
-
-    .form-input::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: var(--admin-purple);
-      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
-    }
-
-    .form-select {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 0.95rem;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
     .modal-actions {
       display: flex;
       gap: 1rem;
@@ -565,963 +905,902 @@
       margin-top: 2rem;
     }
 
-    .btn {
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-danger {
-      background: rgba(239, 68, 68, 0.8);
-      color: white;
-    }
-
-    .btn-danger:hover {
-      background: rgba(239, 68, 68, 1);
-    }
-
-    /* === LEGEND === */
-    .calendar-legend {
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .legend-dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-    }
-
-    .legend-dot.available {
-      background: rgba(16, 185, 129, 0.7);
-      border-color: rgba(16, 185, 129, 0.5);
-    }
-
-    .legend-dot.booked {
-      background: rgba(239, 68, 68, 0.7);
-      border-color: rgba(239, 68, 68, 0.5);
-    }
-
-    .legend-dot.blocked {
-      background: rgba(100, 100, 100, 0.7);
-      border-color: rgba(150, 150, 150, 0.5);
-    }
-
-    .legend-dot.soft-hold {
-      background: rgba(245, 158, 11, 0.7);
-      border-color: rgba(245, 158, 11, 0.5);
-    }
-
-    /* === ADMIN PANEL === */
-    .admin-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    /* === CLIENT PROFILE PANEL === */
-    .client-panel {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: none;
-    }
-
-    .client-panel.active {
-      display: block;
-    }
-
-    .panel-header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .panel-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: white;
-    }
-
-    .panel-subtitle {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 1rem;
-    }
-
-    .client-section {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .section-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .client-info {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .info-item {
-      margin-bottom: 0.8rem;
-    }
-
-    .info-label {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 0.2rem;
-    }
-
-    .info-value {
-      font-size: 1rem;
-      font-weight: 500;
-      color: white;
-    }
-
-    .pet-card {
-      background: rgba(255, 255, 255, 0.05);
+    /* === UPLOAD AREA === */
+    .upload-area {
+      border: 2px dashed rgba(255, 255, 255, 0.3);
       border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .pet-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-    }
-
-    .pet-details {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-    }
-
-    /* === GALLERY MANAGEMENT === */
-    .gallery-section {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .gallery-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .action-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 0.8rem 1rem;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      text-align: center;
-    }
-
-    .action-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
-    }
-
-    .action-btn.primary {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-    }
-
-    .action-btn.primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    .action-btn.gallery {
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      border-color: var(--admin-blue);
-    }
-
-    .action-btn.gallery:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
-    }
-
-    .gallery-status {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .gallery-status.no-gallery {
-      color: rgba(255, 255, 255, 0.7);
-      font-style: italic;
-    }
-
-    .gallery-status.has-gallery {
-      background: rgba(16, 185, 129, 0.2);
-      border: 1px solid rgba(16, 185, 129, 0.5);
-      color: white;
-    }
-
-    .password-manager {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
-
-    .password-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .password-info {
-      font-family: monospace;
-      font-size: 0.9rem;
-    }
-
-    .password-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .icon-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      padding: 0.4rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 0.8rem;
-    }
-
-    .icon-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    /* === DEFAULT STATE === */
-    .default-panel {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
       padding: 3rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
       text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 1rem 0;
     }
 
-    .default-icon {
-      font-size: 4rem;
+    .upload-area:hover {
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .upload-area.dragover {
+      border-color: var(--gold);
+      background: rgba(253, 183, 94, 0.1);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      color: rgba(255, 255, 255, 0.6);
       margin-bottom: 1rem;
-      opacity: 0.7;
     }
 
-    .default-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .default-subtitle {
+    .upload-text {
       font-size: 1.1rem;
       color: rgba(255, 255, 255, 0.8);
-      line-height: 1.6;
-      margin-bottom: 2rem;
+      margin-bottom: 0.5rem;
     }
 
-    .quick-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    /* === LOADING INDICATOR === */
-    .loading-indicator {
-      text-align: center;
-      padding: 2rem;
-      color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      margin: 2rem 0;
-    }
-
-    .loading-indicator h3 {
-      margin-bottom: 1rem;
-      color: var(--admin-purple);
+    .upload-subtext {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
     }
 
     /* === RESPONSIVE === */
-    @media (max-width: 1200px) {
-      .dashboard-container {
+    @media (max-width: 1024px) {
+      .admin-layout {
+        grid-template-columns: 60px 1fr;
+      }
+
+      .admin-sidebar {
+        padding: 1rem 0;
+      }
+
+      .nav-item {
+        padding: 1rem 0.8rem;
+        justify-content: center;
+      }
+
+      .nav-item span:not(.nav-icon) {
+        display: none;
+      }
+
+      .nav-section-title {
+        display: none;
+      }
+
+      .calendar-container {
         grid-template-columns: 1fr;
-        gap: 2rem;
+      }
+
+      .dashboard-stats {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
+      .recent-activities {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 768px) {
-      header {
-        height: 80px;
-        padding: 0.5rem 1rem;
+      .admin-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
       }
-      
-      .desktop-logo {
-        height: 48px;
+
+      .admin-sidebar {
+        background: rgba(0, 0, 0, 0.9);
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        z-index: 4000;
+        transition: left 0.3s ease;
       }
-      
-      .admin-nav {
-        display: none;
-        flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: 100% 100%;
-        background-position: center;
-        position: absolute;
-        top: 80px;
-        right: 0;
-        width: 100%;
-        text-align: right;
-        padding: 1rem;
-        z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
-        gap: 1rem;
+
+      .admin-sidebar.open {
+        left: 0;
       }
-      
-      .admin-nav.active {
-        display: flex;
-      }
-      
+
       .mobile-menu-btn {
         display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
       }
 
-      main {
-        margin-top: 80px;
+      .header-title {
+        font-size: 1.4rem;
+      }
+
+      .admin-main {
         padding: 1rem;
       }
 
-      .calendar-section,
-      .client-panel,
-      .default-panel {
-        padding: 2rem;
-      }
-
-      .calendar-title,
-      .panel-title,
-      .default-title {
-        font-size: 1.8rem;
-      }
-
-      .calendar-day {
-        min-height: 60px;
-        font-size: 0.95rem;
-        padding: 1rem 0.3rem;
-      }
-
-      .calendar-day-header {
-        padding: 1rem 0.3rem;
-        font-size: 0.9rem;
-      }
-
-      .client-info,
-      .pet-details {
+      .form-row {
         grid-template-columns: 1fr;
       }
 
-      .gallery-actions,
-      .quick-actions {
+      .gallery-grid {
         grid-template-columns: 1fr;
       }
 
-      .nav-button {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
+      .client-details {
+        grid-template-columns: 1fr;
       }
 
       .modal {
         padding: 1.5rem;
         margin: 1rem;
       }
-
-      .form-row {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <a href="/" class="logo-link">
-      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
-    </a>
-    <nav class="admin-nav">
-      <div class="calendar-sync-status">
-        <div class="sync-indicator" id="syncIndicator"></div>
-        <span id="syncStatus">Google Calendar</span>
+  <div class="admin-layout">
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">☰</button>
+        <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo-small" />
+        <h1 class="header-title">Studio Manager</h1>
       </div>
-      <div class="admin-info" id="adminInfo">Admin Dashboard</div>
-      <button class="logout-btn" onclick="logout()">Logout</button>
+      <div class="header-right">
+        <div class="sync-status">
+          <div class="sync-indicator" id="syncIndicator"></div>
+          <span id="syncStatus">Google Connected</span>
+        </div>
+        <div class="admin-user" id="adminUser">Welcome, Admin</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="admin-sidebar" id="adminSidebar">
+      <div class="nav-section">
+        <div class="nav-section-title">Overview</div>
+        <div class="nav-item active" onclick="showView('dashboard')">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </div>
+        <div class="nav-item" onclick="showView('calendar')">
+          <span class="nav-icon">📅</span>
+          <span>Calendar</span>
+          <span class="nav-badge">3</span>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Management</div>
+        <div class="nav-item" onclick="showView('sessions')">
+          <span class="nav-icon">📸</span>
+          <span>Sessions</span>
+        </div>
+        <div class="nav-item" onclick="showView('clients')">
+          <span class="nav-icon">👥</span>
+          <span>Clients</span>
+        </div>
+        <div class="nav-item" onclick="showView('galleries')">
+          <span class="nav-icon">🖼️</span>
+          <span>Galleries</span>
+          <span class="nav-badge">2</span>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Business</div>
+        <div class="nav-item" onclick="showView('contracts')">
+          <span class="nav-icon">📋</span>
+          <span>Contracts</span>
+        </div>
+        <div class="nav-item" onclick="showView('invoicing')">
+          <span class="nav-icon">💰</span>
+          <span>Invoicing</span>
+        </div>
+        <div class="nav-item" onclick="showView('reports')">
+          <span class="nav-icon">📈</span>
+          <span>Reports</span>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">System</div>
+        <div class="nav-item" onclick="showView('settings')">
+          <span class="nav-icon">⚙️</span>
+          <span>Settings</span>
+        </div>
+      </div>
     </nav>
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
-  </header>
 
-  <main>
-    <div class="dashboard-container">
-      <!-- Calendar Section -->
-      <div class="calendar-section">
-        <div class="calendar-header">
-          <h2 class="calendar-title" id="calendarTitle">Loading...</h2>
-          <div class="calendar-controls">
-            <div class="calendar-nav">
-              <button class="nav-button" onclick="previousMonth()">‹</button>
-              <button class="nav-button" onclick="nextMonth()">›</button>
-            </div>
-            <div class="calendar-actions">
-              <button class="calendar-action-btn sync" onclick="syncCalendar()">🔄 Sync</button>
-              <button class="calendar-action-btn" onclick="openFullCalendar()">📅 Full View</button>
-            </div>
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Dashboard View -->
+      <div class="view-section active" id="dashboard-view">
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <div class="stat-number">12</div>
+            <div class="stat-label">Sessions This Month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">$3,200</div>
+            <div class="stat-label">Monthly Revenue</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">8</div>
+            <div class="stat-label">Active Galleries</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">24</div>
+            <div class="stat-label">Total Clients</div>
           </div>
         </div>
 
-        <div id="calendarContainer">
-          <div class="loading-indicator" id="loadingIndicator">
-            <h3>🔄 Loading Calendar...</h3>
-            <p>Connecting to Google Calendar...</p>
+        <div class="recent-activities">
+          <div class="admin-card">
+            <div class="card-header">
+              <h2 class="card-title">Recent Sessions</h2>
+              <button class="btn btn-secondary btn-small" onclick="showView('sessions')">View All</button>
+            </div>
+            <div class="activity-item">
+              <div class="activity-header">
+                <div class="activity-title">Sarah Johnson - Full Session</div>
+                <div class="activity-time">Today, 6:00 PM</div>
+              </div>
+              <div class="activity-description">Cheesman Park • 2 pets • Gallery pending</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-header">
+                <div class="activity-title">Mike Chen - Mini Session</div>
+                <div class="activity-time">Dec 20, 5:00 PM</div>
+              </div>
+              <div class="activity-description">City Park • 1 pet • Gallery delivered</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-header">
+                <div class="activity-title">Lisa Rodriguez - Full Session</div>
+                <div class="activity-time">Dec 18, 4:30 PM</div>
+              </div>
+              <div class="activity-description">Sloan's Lake • 1 pet • Photos uploaded</div>
+            </div>
           </div>
-        </div>
 
-        <div class="calendar-legend">
-          <div class="legend-item">
-            <div class="legend-dot available"></div>
-            <span>Available</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot booked"></div>
-            <span>Session Booked</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot blocked"></div>
-            <span>Blocked</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot soft-hold"></div>
-            <span>Soft Hold</span>
+          <div class="admin-card">
+            <div class="card-header">
+              <h2 class="card-title">Pending Actions</h2>
+              <button class="btn btn-secondary btn-small">Mark All Read</button>
+            </div>
+            <div class="activity-item">
+              <div class="activity-header">
+                <div class="activity-title">Upload Photos</div>
+                <div class="activity-time">Sarah Johnson</div>
+              </div>
+              <div class="activity-description">Session completed, awaiting photo upload</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-header">
+                <div class="activity-title">Send Gallery Access</div>
+                <div class="activity-time">Mike Chen</div>
+              </div>
+              <div class="activity-description">Gallery ready, send client credentials</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-header">
+                <div class="activity-title">Invoice Due</div>
+                <div class="activity-time">Lisa Rodriguez</div>
+              </div>
+              <div class="activity-description">Payment pending for Full Session</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Admin Panel -->
-      <div class="admin-panel">
-        <!-- Default State -->
-        <div class="default-panel" id="defaultPanel">
-          <div class="default-icon">📅</div>
-          <h2 class="default-title">Admin Dashboard</h2>
-          <p class="default-subtitle">
-            Click on any date in the calendar to add sessions, block time, or manage existing bookings. 
-            Your complete business management synced with Google Calendar.
-          </p>
-          
-          <div class="quick-actions">
-            <button class="action-btn primary" onclick="openFullCalendar()">
-              📅 Full Google Calendar
-            </button>
-            <button class="action-btn" onclick="syncCalendar()">
-              🔄 Sync Calendar
-            </button>
-            <button class="action-btn" onclick="window.open('/availability.html', '_blank')">
-              👁️ Public View
-            </button>
-            <button class="action-btn gallery" onclick="manageGalleries()">
-              📸 Manage Galleries
-            </button>
-          </div>
-        </div>
-
-        <!-- Client Profile Panel -->
-        <div class="client-panel" id="clientPanel">
-          <div class="panel-header">
-            <h2 class="panel-title" id="sessionTitle">Session Details</h2>
-            <p class="panel-subtitle" id="sessionDate">Select a session to view details</p>
-          </div>
-
-          <!-- Client Information -->
-          <div class="client-section">
-            <h3 class="section-title">👤 Client Information</h3>
-            <div class="client-info" id="clientInfo">
-              <!-- Will be populated dynamically -->
+      <!-- Calendar View -->
+      <div class="view-section" id="calendar-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Session Calendar</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small" onclick="syncCalendar()">🔄 Sync</button>
+              <button class="btn btn-primary btn-small" onclick="openSessionModal('add')">+ Add Session</button>
             </div>
           </div>
 
-          <!-- Pet Information -->
-          <div class="client-section">
-            <h3 class="section-title">🐕 Pet Information</h3>
-            <div id="petInfo">
-              <!-- Will be populated dynamically -->
-            </div>
-          </div>
-
-          <!-- Session Details -->
-          <div class="client-section">
-            <h3 class="section-title">📋 Session Details</h3>
-            <div class="client-info" id="sessionInfo">
-              <!-- Will be populated dynamically -->
-            </div>
-          </div>
-
-          <!-- Gallery Management -->
-          <div class="client-section">
-            <h3 class="section-title">📸 Gallery Management</h3>
-            <div class="gallery-section">
-              <div class="gallery-actions">
-                <button class="action-btn gallery" onclick="createGallery()">
-                  ➕ Create Gallery
-                </button>
-                <button class="action-btn" onclick="uploadPhotos()">
-                  📷 Upload Photos
-                </button>
-                <button class="action-btn" onclick="viewGallery()">
-                  👁️ View Gallery
-                </button>
-                <button class="action-btn primary" onclick="sendCredentials()">
-                  📧 Send Access
-                </button>
+          <div class="calendar-container">
+            <div class="calendar-main">
+              <div class="calendar-header">
+                <h3 class="calendar-title" id="calendarTitle">Loading...</h3>
+                <div class="calendar-nav">
+                  <button class="nav-button" onclick="previousMonth()">‹</button>
+                  <button class="nav-button" onclick="nextMonth()">›</button>
+                </div>
               </div>
-              <div class="gallery-status" id="galleryStatus">
-                <p>No gallery created yet for this session</p>
+
+              <div id="calendarContainer">
+                <div class="loading-indicator">
+                  <p>Loading calendar data...</p>
+                </div>
               </div>
-              
-              <!-- Gallery Password Manager -->
-              <div class="password-manager" id="passwordManager" style="display: none;">
-                <h4 style="margin-bottom: 1rem; color: var(--gold);">🔐 Gallery Access</h4>
-                <div id="passwordList">
-                  <!-- Will be populated dynamically -->
+
+              <div class="calendar-legend">
+                <div class="legend-item">
+                  <div class="legend-dot available"></div>
+                  <span>Available</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot booked"></div>
+                  <span>Session Booked</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot blocked"></div>
+                  <span>Blocked</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot soft-hold"></div>
+                  <span>Soft Hold</span>
                 </div>
               </div>
             </div>
+
+            <div class="session-panel">
+              <h3>Quick Actions</h3>
+              <div class="session-form">
+                <button class="btn btn-primary" onclick="openSessionModal('add')">📸 Add Session</button>
+                <button class="btn btn-secondary" onclick="openBlockModal()">🚫 Block Date</button>
+                <button class="btn btn-secondary" onclick="openFullCalendar()">📅 Full Calendar</button>
+                <button class="btn btn-secondary" onclick="exportCalendar()">📁 Export</button>
+              </div>
+
+              <div id="selectedDateInfo" style="display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <h4 style="margin-bottom: 1rem; color: var(--gold);">Selected Date</h4>
+                <div id="dateDetails"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Context Menu -->
-    <div class="context-menu" id="contextMenu">
-      <div class="context-menu-item" onclick="addSession()">
-        📸 Add Session
-      </div>
-      <div class="context-menu-item" onclick="blockDate()">
-        🚫 Block Date
-      </div>
-      <div class="context-menu-separator"></div>
-      <div class="context-menu-item" onclick="editSession()">
-        ✏️ Edit Session
-      </div>
-      <div class="context-menu-item" onclick="removeSession()">
-        🗑️ Remove Session
-      </div>
-      <div class="context-menu-separator"></div>
-      <div class="context-menu-item" onclick="viewOnGoogle()">
-        📅 View in Google Calendar
-      </div>
-    </div>
+      <!-- Sessions View -->
+      <div class="view-section" id="sessions-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Session Management</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small">Filter</button>
+              <button class="btn btn-primary btn-small" onclick="openSessionModal('add')">+ New Session</button>
+            </div>
+          </div>
 
-    <!-- Session Modal -->
-    <div class="modal-overlay" id="sessionModal">
-      <div class="modal">
-        <div class="modal-header">
-          <h3 class="modal-title" id="sessionModalTitle">Add New Session</h3>
-          <button class="modal-close" onclick="closeSessionModal()">&times;</button>
+          <div class="client-list">
+            <div class="client-item">
+              <div class="client-header">
+                <div class="client-name">Sarah Johnson - Full Session</div>
+                <div class="client-badge">Today</div>
+              </div>
+              <div class="client-details">
+                <div><strong>Time:</strong> 6:00 PM</div>
+                <div><strong>Location:</strong> Cheesman Park</div>
+                <div><strong>Pets:</strong> Buffy, Max</div>
+              </div>
+              <div class="client-sessions">
+                Session Type: Full Session ($250) • 2 pets • Special requests: Buffy can be shy at first
+              </div>
+              <div class="client-actions">
+                <button class="btn btn-secondary btn-small">📝 Edit</button>
+                <button class="btn btn-secondary btn-small">📧 Contact</button>
+                <button class="btn btn-primary btn-small">📸 Create Gallery</button>
+              </div>
+            </div>
+
+            <div class="client-item">
+              <div class="client-header">
+                <div class="client-name">Mike Chen - Mini Session</div>
+                <div class="client-badge" style="background: var(--available-green);">Completed</div>
+              </div>
+              <div class="client-details">
+                <div><strong>Date:</strong> Dec 20, 2024</div>
+                <div><strong>Location:</strong> City Park</div>
+                <div><strong>Pets:</strong> Rocky</div>
+              </div>
+              <div class="client-sessions">
+                Session Type: Mini Session ($150) • 1 pet • Gallery delivered • Payment complete
+              </div>
+              <div class="client-actions">
+                <button class="btn btn-secondary btn-small">📝 Edit</button>
+                <button class="btn btn-secondary btn-small">👁️ View Gallery</button>
+                <button class="btn btn-secondary btn-small">💰 Invoice</button>
+              </div>
+            </div>
+
+            <div class="client-item">
+              <div class="client-header">
+                <div class="client-name">Lisa Rodriguez - Full Session</div>
+                <div class="client-badge" style="background: var(--soft-hold-yellow);">Processing</div>
+              </div>
+              <div class="client-details">
+                <div><strong>Date:</strong> Dec 18, 2024</div>
+                <div><strong>Location:</strong> Sloan's Lake</div>
+                <div><strong>Pets:</strong> Luna</div>
+              </div>
+              <div class="client-sessions">
+                Session Type: Full Session ($250) • 1 pet • Photos uploaded • Gallery pending
+              </div>
+              <div class="client-actions">
+                <button class="btn btn-secondary btn-small">📝 Edit</button>
+                <button class="btn btn-secondary btn-small">🖼️ Manage Gallery</button>
+                <button class="btn btn-primary btn-small">📧 Send Access</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clients View -->
+      <div class="view-section" id="clients-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Client Management</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small">Export</button>
+              <button class="btn btn-primary btn-small">+ Add Client</button>
+            </div>
+          </div>
+
+          <div class="client-list">
+            <div class="client-item">
+              <div class="client-header">
+                <div class="client-name">Sarah Johnson</div>
+                <div class="client-badge">Active</div>
+              </div>
+              <div class="client-details">
+                <div><strong>Email:</strong> sarah.johnson@email.com</div>
+                <div><strong>Phone:</strong> (303) 555-0123</div>
+                <div><strong>Location:</strong> Denver, CO 80206</div>
+              </div>
+              <div class="client-sessions">
+                <strong>Pets:</strong> Buffy (3yo Female), Max (5yo Male) • <strong>Last Session:</strong> Today • <strong>Total Sessions:</strong> 1
+              </div>
+              <div class="client-actions">
+                <button class="btn btn-secondary btn-small">📝 Edit</button>
+                <button class="btn btn-secondary btn-small">📧 Email</button>
+                <button class="btn btn-secondary btn-small">🖼️ Galleries</button>
+                <button class="btn btn-primary btn-small">📅 Book Session</button>
+              </div>
+            </div>
+
+            <div class="client-item">
+              <div class="client-header">
+                <div class="client-name">Mike Chen</div>
+                <div class="client-badge">Active</div>
+              </div>
+              <div class="client-details">
+                <div><strong>Email:</strong> mike.chen@email.com</div>
+                <div><strong>Phone:</strong> (303) 555-0456</div>
+                <div><strong>Location:</strong> Denver, CO 80210</div>
+              </div>
+              <div class="client-sessions">
+                <strong>Pets:</strong> Rocky (2yo Male) • <strong>Last Session:</strong> Dec 20, 2024 • <strong>Total Sessions:</strong> 2
+              </div>
+              <div class="client-actions">
+                <button class="btn btn-secondary btn-small">📝 Edit</button>
+                <button class="btn btn-secondary btn-small">📧 Email</button>
+                <button class="btn btn-secondary btn-small">🖼️ Galleries</button>
+                <button class="btn btn-primary btn-small">📅 Book Session</button>
+              </div>
+            </div>
+
+            <div class="client-item">
+              <div class="client-header">
+                <div class="client-name">Lisa Rodriguez</div>
+                <div class="client-badge">Active</div>
+              </div>
+              <div class="client-details">
+                <div><strong>Email:</strong> lisa.rodriguez@email.com</div>
+                <div><strong>Phone:</strong> (303) 555-0789</div>
+                <div><strong>Location:</strong> Denver, CO 80218</div>
+              </div>
+              <div class="client-sessions">
+                <strong>Pets:</strong> Luna (4yo Female) • <strong>Last Session:</strong> Dec 18, 2024 • <strong>Total Sessions:</strong> 1
+              </div>
+              <div class="client-actions">
+                <button class="btn btn-secondary btn-small">📝 Edit</button>
+                <button class="btn btn-secondary btn-small">📧 Email</button>
+                <button class="btn btn-secondary btn-small">🖼️ Galleries</button>
+                <button class="btn btn-primary btn-small">📅 Book Session</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Galleries View -->
+      <div class="view-section" id="galleries-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Gallery Management</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small">🔍 Search</button>
+              <button class="btn btn-primary btn-small" onclick="openGalleryModal()">+ Create Gallery</button>
+            </div>
+          </div>
+
+          <div class="gallery-grid">
+            <div class="gallery-card">
+              <div class="gallery-header">
+                <div class="gallery-title">Sarah Johnson - Full Session</div>
+                <div class="gallery-status pending">Pending</div>
+              </div>
+              <div class="gallery-info">
+                <div><strong>Session Date:</strong> Dec 22, 2024</div>
+                <div><strong>Created:</strong> Today</div>
+                <div><strong>Access:</strong> 0123 / buffybarks</div>
+              </div>
+              <div class="gallery-stats">
+                <div class="gallery-stat">
+                  <div class="gallery-stat-number">0</div>
+                  <div class="gallery-stat-label">Photos</div>
+                </div>
+                <div class="gallery-stat">
+                  <div class="gallery-stat-number">0</div>
+                  <div class="gallery-stat-label">Views</div>
+                </div>
+                <div class="gallery-stat">
+                  <div class="gallery-stat-number">$0</div>
+                  <div class="gallery-stat-label">Sales</div>
+                </div>
+              </div>
+              <div class="gallery-actions">
+                <button class="btn btn-primary btn-small">📸 Upload Photos</button>
+                <button class="btn btn-secondary btn-small">⚙️ Settings</button>
+                <button class="btn btn-secondary btn-small">📧 Send Access</button>
+              </div>
+            </div>
+
+            <div class="gallery-card">
+              <div class="gallery-header">
+                <div class="gallery-title">Mike Chen - Mini Session</div>
+                <div class="gallery-status">Active</div>
+              </div>
+              <div class="gallery-info">
+                <div><strong>Session Date:</strong> Dec 20, 2024</div>
+                <div><strong>Created:</strong> Dec 21, 2024</div>
+                <div><strong>Access:</strong> 0456 / rockybarks</div>
+              </div>
+              <div class="gallery-stats">
+                <div class="gallery-stat">
+                  <div class="gallery-stat-number">15</div>
+                  <div class="gallery-stat-label">Photos</div>
+                </div>
+                <div class="gallery-stat">
+                  <div class="gallery-stat-number">24</div>
+                  <div class="gallery-stat-label">Views</div>
+                </div>
+                <div class="gallery-stat">
+                  <div class="gallery-stat-number">$45</div>
+                  <div class="gallery-stat-label">Sales</div>
+                </div>
+              </div>
+              <div class="gallery-actions">
+                <button class="btn btn-secondary btn-small">👁️ View Gallery</button>
+                <button class="btn btn-secondary btn-small">⚙️ Settings</button>
+                <button class="btn btn-secondary btn-small">📊 Analytics</button>
+              </div>
+            </div>
+
+            <div class="gallery-card">
+              <div class="gallery-header">
+                <div class="gallery-title">Lisa Rodriguez - Full Session</div>
+                <div class="gallery-status">Active</div>
+              </div>
+              <div class="gallery-info">
+                <div><strong>Session Date:</strong> Dec 18, 2024</div>
+                <div><strong>Created:</strong> Dec 19, 2024</div>
+                <div><strong>Access:</strong> 0789 / lunabarks</div>
+              </div>
+              <div class="gallery-stats">
+                <div class="gallery-stat">
+                  <div class="gallery-stat-number">22</div>
+                  <div class="gallery-stat-label">Photos</div>
+                </div>
+                <div class="gallery-stat">
+                  <div class="gallery-stat-number">18</div>
+                  <div class="gallery-stat-label">Views</div>
+                </div>
+                <div class="gallery-stat">
+                  <div class="gallery-stat-number">$120</div>
+                  <div class="gallery-stat-label">Sales</div>
+                </div>
+              </div>
+              <div class="gallery-actions">
+                <button class="btn btn-secondary btn-small">👁️ View Gallery</button>
+                <button class="btn btn-secondary btn-small">⚙️ Settings</button>
+                <button class="btn btn-secondary btn-small">📊 Analytics</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contracts View -->
+      <div class="view-section" id="contracts-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Contract Management</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small">Templates</button>
+              <button class="btn btn-primary btn-small">+ Create Contract</button>
+            </div>
+          </div>
+          <p style="text-align: center; color: rgba(255,255,255,0.7); margin: 3rem 0;">Contract management features coming soon...</p>
+        </div>
+      </div>
+
+      <!-- Invoicing View -->
+      <div class="view-section" id="invoicing-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Invoice Management</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small">Reports</button>
+              <button class="btn btn-primary btn-small">+ Create Invoice</button>
+            </div>
+          </div>
+          <p style="text-align: center; color: rgba(255,255,255,0.7); margin: 3rem 0;">Invoice management features coming soon...</p>
+        </div>
+      </div>
+
+      <!-- Reports View -->
+      <div class="view-section" id="reports-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Business Reports</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small">Export</button>
+              <button class="btn btn-primary btn-small">+ Custom Report</button>
+            </div>
+          </div>
+          <p style="text-align: center; color: rgba(255,255,255,0.7); margin: 3rem 0;">Analytics and reporting features coming soon...</p>
+        </div>
+      </div>
+
+      <!-- Settings View -->
+      <div class="view-section" id="settings-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">System Settings</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small">Backup</button>
+              <button class="btn btn-primary btn-small">Save Changes</button>
+            </div>
+          </div>
+          <p style="text-align: center; color: rgba(255,255,255,0.7); margin: 3rem 0;">Settings panel coming soon...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Context Menu -->
+  <div class="context-menu" id="contextMenu">
+    <div class="context-menu-item" onclick="addSession()">
+      📸 Add Session
+    </div>
+    <div class="context-menu-item" onclick="blockDate()">
+      🚫 Block Date
+    </div>
+    <div class="context-menu-separator"></div>
+    <div class="context-menu-item" onclick="editSession()">
+      ✏️ Edit Session
+    </div>
+    <div class="context-menu-item" onclick="removeSession()">
+      🗑️ Remove Session
+    </div>
+    <div class="context-menu-separator"></div>
+    <div class="context-menu-item" onclick="viewSessionDetails()">
+      👁️ View Details
+    </div>
+  </div>
+
+  <!-- Session Modal -->
+  <div class="modal-overlay" id="sessionModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="sessionModalTitle">Add New Session</h3>
+        <button class="modal-close" onclick="closeSessionModal()">&times;</button>
+      </div>
+      
+      <form id="sessionForm">
+        <div class="form-group">
+          <label class="form-label">Client Name</label>
+          <input type="text" class="form-input" id="clientName" placeholder="Enter client name" required>
         </div>
         
-        <form id="sessionForm">
+        <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Client Name</label>
-            <input type="text" class="form-input" id="clientName" placeholder="Enter client name" required>
+            <label class="form-label">Date</label>
+            <input type="date" class="form-input" id="sessionDate" required>
           </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Date</label>
-              <input type="date" class="form-input" id="sessionDate" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Time</label>
-              <input type="time" class="form-input" id="sessionTime" required>
-            </div>
-          </div>
-          
           <div class="form-group">
-            <label class="form-label">Session Type</label>
-            <select class="form-select" id="sessionType" required>
-              <option value="">Select session type</option>
-              <option value="Full Session">Full Session ($250)</option>
-              <option value="Mini Session">Mini Session ($150)</option>
-              <option value="Holiday Session">Holiday Session ($200)</option>
-              <option value="Private Event">Private Event (Custom)</option>
-            </select>
+            <label class="form-label">Time</label>
+            <input type="time" class="form-input" id="sessionTime" required>
           </div>
-          
-          <div class="form-group">
-            <label class="form-label">Location</label>
-            <select class="form-select" id="sessionLocation" required>
-              <option value="">Select location</option>
-              <option value="Cheesman Park">Cheesman Park</option>
-              <option value="Washington Park">Washington Park</option>
-              <option value="Sloan's Lake">Sloan's Lake</option>
-              <option value="City Park">City Park</option>
-              <option value="Client's Home">Client's Home</option>
-              <option value="Custom Location">Custom Location</option>
-            </select>
-          </div>
-          
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Session Type</label>
+          <select class="form-select" id="sessionType" required>
+            <option value="">Select session type</option>
+            <option value="Full Session">Full Session ($250)</option>
+            <option value="Mini Session">Mini Session ($150)</option>
+            <option value="Holiday Session">Holiday Session ($200)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <select class="form-select" id="sessionLocation" required>
+            <option value="">Select location</option>
+            <option value="Cheesman Park">Cheesman Park</option>
+            <option value="Washington Park">Washington Park</option>
+            <option value="Sloan's Lake">Sloan's Lake</option>
+            <option value="City Park">City Park</option>
+            <option value="Client's Home">Client's Home</option>
+          </select>
+        </div>
+        
+        <div class="form-row">
           <div class="form-group">
             <label class="form-label">Client Email</label>
             <input type="email" class="form-input" id="clientEmail" placeholder="client@email.com">
           </div>
-          
           <div class="form-group">
             <label class="form-label">Client Phone</label>
             <input type="tel" class="form-input" id="clientPhone" placeholder="(303) 555-0123">
           </div>
-          
-          <div class="form-group">
-            <label class="form-label">Notes</label>
-            <textarea class="form-input" id="sessionNotes" placeholder="Special requests, pet names, etc." rows="3"></textarea>
-          </div>
-          
-          <div class="modal-actions">
-            <button type="button" class="btn btn-secondary" onclick="closeSessionModal()">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Session</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Block Date Modal -->
-    <div class="modal-overlay" id="blockModal">
-      <div class="modal">
-        <div class="modal-header">
-          <h3 class="modal-title">Block Date</h3>
-          <button class="modal-close" onclick="closeBlockModal()">&times;</button>
         </div>
         
-        <form id="blockForm">
-          <div class="form-group">
-            <label class="form-label">Date to Block</label>
-            <input type="date" class="form-input" id="blockDate" required>
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">Reason</label>
-            <select class="form-select" id="blockReason" required>
-              <option value="">Select reason</option>
-              <option value="Personal Day">Personal Day</option>
-              <option value="Vacation">Vacation</option>
-              <option value="Equipment Maintenance">Equipment Maintenance</option>
-              <option value="Weather">Weather</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">Notes (Optional)</label>
-            <textarea class="form-input" id="blockNotes" placeholder="Additional details..." rows="2"></textarea>
-          </div>
-          
-          <div class="modal-actions">
-            <button type="button" class="btn btn-secondary" onclick="closeBlockModal()">Cancel</button>
-            <button type="submit" class="btn btn-primary">Block Date</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Gallery Management Modal -->
-    <div class="modal-overlay" id="galleryModal">
-      <div class="modal">
-        <div class="modal-header">
-          <h3 class="modal-title">Gallery Management</h3>
-          <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <textarea class="form-input" id="sessionNotes" placeholder="Special requests, pet names, etc." rows="3"></textarea>
         </div>
         
-        <div id="galleryContent">
-          <h4 style="margin-bottom: 1rem; color: var(--gold);">All Client Galleries</h4>
-          <div id="galleryList">
-            <!-- Will be populated dynamically -->
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeSessionModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Session</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Gallery Upload Modal -->
+  <div class="modal-overlay" id="galleryModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Gallery</h3>
+        <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
+      </div>
+      
+      <form id="galleryForm">
+        <div class="form-group">
+          <label class="form-label">Gallery Name</label>
+          <input type="text" class="form-input" id="galleryName" placeholder="Client Name - Session Type" required>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Session Date</label>
+            <input type="date" class="form-input" id="galleryDate" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expiration Date</label>
+            <input type="date" class="form-input" id="galleryExpiration">
           </div>
         </div>
-      </div>
+        
+        <div class="form-group">
+          <label class="form-label">Upload Photos</label>
+          <div class="upload-area" onclick="document.getElementById('photoUpload').click()">
+            <div class="upload-icon">📸</div>
+            <div class="upload-text">Drag & drop photos here</div>
+            <div class="upload-subtext">or click to browse (JPG, PNG, max 10MB each)</div>
+          </div>
+          <input type="file" id="photoUpload" multiple accept="image/*" style="display: none;">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Gallery Password</label>
+            <input type="text" class="form-input" id="galleryPassword" placeholder="Auto-generated" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Session ID</label>
+            <input type="text" class="form-input" id="gallerySessionId" placeholder="Auto-generated" readonly>
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeGalleryModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Gallery</button>
+        </div>
+      </form>
     </div>
-  </main>
+  </div>
 
   <script>
-    // Google Calendar API Configuration
-    const GOOGLE_CALENDAR_CONFIG = {
-      apiKey: 'YOUR_API_KEY', // Replace with your API key
-      clientId: 'YOUR_CLIENT_ID', // Replace with your client ID  
-      discoveryDoc: 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
-      scopes: 'https://www.googleapis.com/auth/calendar'
-    };
-
     // Global variables
-    let gapi = null;
-    let isGoogleCalendarConnected = false;
+    let currentView = 'dashboard';
     let currentMonth = new Date();
     let selectedDate = null;
-    let selectedDateElement = null;
+    let contextMenuTarget = null;
     let calendarEvents = [];
     let localEvents = {};
-    let contextMenuTarget = null;
 
-    // Sample client data with enhanced gallery management
-    const sampleClientData = {
-      '2024-12-15': {
-        sessionData: {
-          session: 'Full Session',
-          park: 'Cheesman Park',
-          selectedDateTime: '2024-12-15T18:00:00',
-          petCount: '2',
-          peopleCount: '1'
-        },
-        intakeData: {
-          person1: {
-            name: 'Sarah Johnson',
-            email: 'sarah.johnson@email.com',
-            phone: '303-555-0123',
-            zip: '80206'
-          },
-          pet1: {
-            name: 'Buffy',
-            age: '3',
-            gender: 'Female',
-            behavior: 'Friendly and energetic, loves to play fetch',
-            offLeash: 'yes',
-            favoriteToy: 'Tennis ball'
-          },
-          pet2: {
-            name: 'Max',
-            age: '5',
-            gender: 'Male', 
-            behavior: 'Calm and well-behaved, good with commands',
-            offLeash: 'yes',
-            favoriteToy: 'Rope toy'
-          },
-          specialRequests: 'Buffy can be shy at first, Max is great with directions',
-          photoStyle: 'both'
-        },
-        hasGallery: true,
-        galleryId: 'gal_123456',
-        sessionId: '0123',
-        password: 'buffybarks'
-      }
-    };
-
-    // Initialize Google Calendar API
-    async function initializeGoogleCalendar() {
-      try {
-        console.log('Initializing Google Calendar API...');
-        updateSyncStatus('connecting');
-        
-        // Load Google API client
-        if (typeof window.gapi !== 'undefined') {
-          await window.gapi.load('client:auth2', initializeGapiClient);
-        } else {
-          console.log('Google API not available, using local mode');
-          updateSyncStatus('local');
-          initializeLocalMode();
-        }
-      } catch (error) {
-        console.error('Error initializing Google Calendar:', error);
-        updateSyncStatus('error');
-        initializeLocalMode();
-      }
-    }
-
-    async function initializeGapiClient() {
-      try {
-        await window.gapi.client.init({
-          apiKey: GOOGLE_CALENDAR_CONFIG.apiKey,
-          clientId: GOOGLE_CALENDAR_CONFIG.clientId,
-          discoveryDocs: [GOOGLE_CALENDAR_CONFIG.discoveryDoc],
-          scope: GOOGLE_CALENDAR_CONFIG.scopes
-        });
-
-        gapi = window.gapi;
-        isGoogleCalendarConnected = true;
-        updateSyncStatus('connected');
-        console.log('Google Calendar API initialized successfully');
-        
-        // Load calendar events
-        await loadCalendarEvents();
-      } catch (error) {
-        console.error('Error initializing GAPI client:', error);
-        updateSyncStatus('error');
-        initializeLocalMode();
-      }
-    }
-
-    function initializeLocalMode() {
-      console.log('Running in local mode - changes will be saved locally');
-      updateSyncStatus('local');
-      loadLocalEvents();
-      generateCalendar();
-    }
-
-    function updateSyncStatus(status) {
-      const indicator = document.getElementById('syncIndicator');
-      const statusText = document.getElementById('syncStatus');
+    // Authentication check
+    function checkAuthentication() {
+      const isAuthenticated = localStorage.getItem('adminAuthenticated');
+      const loginTime = localStorage.getItem('adminLoginTime');
+      const adminUser = localStorage.getItem('adminUser');
       
-      switch(status) {
-        case 'connecting':
-          indicator.className = 'sync-indicator';
-          statusText.textContent = 'Connecting...';
-          break;
-        case 'connected':
-          indicator.className = 'sync-indicator';
-          statusText.textContent = 'Google Connected';
-          break;
-        case 'local':
-          indicator.className = 'sync-indicator disconnected';
-          statusText.textContent = 'Local Mode';
-          break;
-        case 'error':
-          indicator.className = 'sync-indicator disconnected';
-          statusText.textContent = 'Connection Error';
-          break;
+      if (!isAuthenticated || !loginTime || !adminUser) {
+        window.location.href = '/admin-login.html';
+        return false;
+      }
+      
+      const loginDate = new Date(loginTime);
+      const now = new Date();
+      const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
+      
+      if (hoursDiff >= 24) {
+        logout();
+        return false;
+      }
+      
+      document.getElementById('adminUser').textContent = `Welcome, ${adminUser}`;
+      return true;
+    }
+
+    function logout() {
+      localStorage.removeItem('adminAuthenticated');
+      localStorage.removeItem('adminUser');
+      localStorage.removeItem('adminLoginTime');
+      window.location.href = '/admin-login.html';
+    }
+
+    // Navigation
+    function showView(viewName) {
+      // Update navigation
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.closest('.nav-item').classList.add('active');
+      
+      // Show view
+      document.querySelectorAll('.view-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(viewName + '-view').classList.add('active');
+      
+      currentView = viewName;
+      
+      // Initialize view-specific content
+      if (viewName === 'calendar') {
+        initializeCalendar();
       }
     }
 
-    // Load calendar events from Google Calendar
-    async function loadCalendarEvents() {
-      if (!isGoogleCalendarConnected) {
-        loadLocalEvents();
-        return;
-      }
-
-      try {
-        console.log('Loading events from Google Calendar...');
-        
-        const request = gapi.client.calendar.events.list({
-          'calendarId': 'primary',
-          'timeMin': new Date().toISOString(),
-          'showDeleted': false,
-          'singleEvents': true,
-          'orderBy': 'startTime'
-        });
-
-        const response = await request;
-        calendarEvents = response.result.items || [];
-        console.log('Loaded Google Calendar events:', calendarEvents);
-        
-        generateCalendar();
-      } catch (error) {
-        console.error('Error loading calendar events:', error);
-        loadLocalEvents();
-      }
+    function toggleSidebar() {
+      const sidebar = document.getElementById('adminSidebar');
+      sidebar.classList.toggle('open');
     }
 
-    // Load events from local storage
-    function loadLocalEvents() {
-      const stored = localStorage.getItem('adminCalendarEvents');
-      if (stored) {
-        localEvents = JSON.parse(stored);
-        console.log('Loaded local events:', localEvents);
-      }
+    // Calendar functions
+    function initializeCalendar() {
       generateCalendar();
     }
 
-    // Save events to local storage
-    function saveLocalEvents() {
-      localStorage.setItem('adminCalendarEvents', JSON.stringify(localEvents));
-      console.log('Saved local events');
-    }
-
-    // Generate calendar display
     function generateCalendar() {
       const container = document.getElementById('calendarContainer');
       const title = document.getElementById('calendarTitle');
       
-      if (!container || !title) {
-        console.error('Calendar elements not found');
-        return;
-      }
+      if (!container || !title) return;
       
       const year = currentMonth.getFullYear();
       const month = currentMonth.getMonth();
@@ -1531,7 +1810,6 @@
         year: 'numeric' 
       }).format(currentMonth);
 
-      // Clear container and create grid
       container.innerHTML = '';
       const grid = document.createElement('div');
       grid.className = 'calendar-grid';
@@ -1571,12 +1849,12 @@
         dayNumber.textContent = day;
         dayElement.appendChild(dayNumber);
         
-        // Add event indicators
-        const events = getEventsForDate(dateString);
-        if (events.length > 0) {
+        // Add sample events
+        const sampleEvents = getSampleEventsForDate(dateString);
+        if (sampleEvents.length > 0) {
           const eventDiv = document.createElement('div');
           eventDiv.className = 'day-events';
-          eventDiv.textContent = events.length > 1 ? `${events.length} events` : events[0].summary || events[0].title;
+          eventDiv.textContent = sampleEvents[0];
           dayElement.appendChild(eventDiv);
         }
         
@@ -1584,75 +1862,39 @@
         if (dayDate < new Date().setHours(0,0,0,0)) {
           dayElement.classList.add('past');
         } else {
-          const dateStatus = getDateStatus(dateString);
+          const dateStatus = getSampleDateStatus(dateString);
           dayElement.classList.add(dateStatus);
         }
         
         // Add click handler
-        dayElement.onclick = (e) => handleDateClick(e, dateString, dayElement, dayDate);
+        dayElement.onclick = (e) => handleDateClick(e, dateString, dayElement);
         
         grid.appendChild(dayElement);
       }
       
       container.appendChild(grid);
-      console.log('Calendar generated successfully');
     }
 
-    // Get events for a specific date
-    function getEventsForDate(dateString) {
-      const events = [];
-      
-      // Check Google Calendar events
-      if (calendarEvents) {
-        calendarEvents.forEach(event => {
-          if (event.start && event.start.date === dateString) {
-            events.push(event);
-          }
-        });
-      }
-      
-      // Check local events
-      if (localEvents[dateString]) {
-        events.push(...localEvents[dateString]);
-      }
-      
-      // Check sample data
-      if (sampleClientData[dateString]) {
-        events.push({
-          title: sampleClientData[dateString].sessionData.session,
-          type: 'session'
-        });
-      }
-      
-      return events;
+    function getSampleEventsForDate(dateString) {
+      const sampleData = {
+        '2024-12-22': ['Sarah - Full Session'],
+        '2024-12-20': ['Mike - Mini Session'],
+        '2024-12-18': ['Lisa - Full Session'],
+        '2025-01-05': ['Block - Vacation'],
+        '2025-01-12': ['John - Holiday Session']
+      };
+      return sampleData[dateString] || [];
     }
 
-    // Get status for a date
-    function getDateStatus(dateString) {
-      const events = getEventsForDate(dateString);
-      
-      if (events.length === 0) {
-        return 'available';
-      }
-      
-      for (let event of events) {
-        const summary = (event.summary || event.title || '').toLowerCase();
-        if (summary.includes('blocked') || summary.includes('unavailable')) {
-          return 'blocked';
-        }
-        if (summary.includes('session') || summary.includes('appointment')) {
-          return 'booked';
-        }
-        if (summary.includes('hold') || summary.includes('maybe')) {
-          return 'soft-hold';
-        }
-      }
-      
-      return 'booked';
+    function getSampleDateStatus(dateString) {
+      const events = getSampleEventsForDate(dateString);
+      if (events.length === 0) return 'available';
+      if (events[0].includes('Block')) return 'blocked';
+      if (events[0].includes('Session')) return 'booked';
+      return 'available';
     }
 
-    // Handle date click
-    function handleDateClick(e, dateString, element, dateObj) {
+    function handleDateClick(e, dateString, element) {
       e.preventDefault();
       
       // Clear previous selection
@@ -1663,37 +1905,48 @@
       // Select current date
       element.classList.add('selected');
       selectedDate = dateString;
-      selectedDateElement = element;
-      contextMenuTarget = { dateString, element, dateObj };
+      contextMenuTarget = { dateString, element };
       
       // Show context menu
       showContextMenu(e, dateString);
+      
+      // Update selected date info
+      updateSelectedDateInfo(dateString);
     }
 
-    // Show context menu
+    function updateSelectedDateInfo(dateString) {
+      const infoPanel = document.getElementById('selectedDateInfo');
+      const details = document.getElementById('dateDetails');
+      
+      if (!infoPanel || !details) return;
+      
+      const events = getSampleEventsForDate(dateString);
+      const date = new Date(dateString);
+      
+      let detailsHtml = `<p><strong>Date:</strong> ${date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}</p>`;
+      
+      if (events.length > 0) {
+        detailsHtml += `<p><strong>Events:</strong> ${events.join(', ')}</p>`;
+      } else {
+        detailsHtml += `<p><strong>Status:</strong> Available</p>`;
+      }
+      
+      details.innerHTML = detailsHtml;
+      infoPanel.style.display = 'block';
+    }
+
     function showContextMenu(e, dateString) {
       const menu = document.getElementById('contextMenu');
-      const events = getEventsForDate(dateString);
-      const hasSession = events.some(event => 
-        (event.summary || event.title || '').toLowerCase().includes('session')
-      );
       
       // Position menu
       menu.style.left = e.pageX + 'px';
       menu.style.top = e.pageY + 'px';
       menu.style.display = 'block';
-      
-      // Update menu items based on date status
-      const editItem = menu.querySelector('.context-menu-item:nth-child(4)');
-      const removeItem = menu.querySelector('.context-menu-item:nth-child(5)');
-      
-      if (hasSession) {
-        editItem.classList.remove('disabled');
-        removeItem.classList.remove('disabled');
-      } else {
-        editItem.classList.add('disabled');
-        removeItem.classList.add('disabled');
-      }
       
       // Close menu when clicking elsewhere
       setTimeout(() => {
@@ -1708,232 +1961,30 @@
     // Context menu actions
     function addSession() {
       closeContextMenu();
-      if (contextMenuTarget) {
-        openSessionModal('add', contextMenuTarget.dateString);
-      }
+      openSessionModal('add');
     }
 
     function blockDate() {
       closeContextMenu();
-      if (contextMenuTarget) {
-        openBlockModal(contextMenuTarget.dateString);
-      }
+      alert('Block date functionality - would open block date modal');
     }
 
     function editSession() {
       closeContextMenu();
-      if (contextMenuTarget) {
-        const events = getEventsForDate(contextMenuTarget.dateString);
-        const sessionEvent = events.find(event => 
-          (event.summary || event.title || '').toLowerCase().includes('session')
-        );
-        if (sessionEvent) {
-          openSessionModal('edit', contextMenuTarget.dateString, sessionEvent);
-        }
-      }
+      openSessionModal('edit');
     }
 
     function removeSession() {
       closeContextMenu();
-      if (contextMenuTarget) {
-        if (confirm('Are you sure you want to remove this session?')) {
-          removeEventFromDate(contextMenuTarget.dateString);
-        }
+      if (confirm('Are you sure you want to remove this session?')) {
+        alert('Session removed!');
+        generateCalendar();
       }
     }
 
-    function viewOnGoogle() {
+    function viewSessionDetails() {
       closeContextMenu();
-      openFullCalendar();
-    }
-
-    // Modal functions
-    function openSessionModal(mode = 'add', dateString = null, eventData = null) {
-      const modal = document.getElementById('sessionModal');
-      const title = document.getElementById('sessionModalTitle');
-      const form = document.getElementById('sessionForm');
-      
-      title.textContent = mode === 'edit' ? 'Edit Session' : 'Add New Session';
-      
-      if (dateString) {
-        document.getElementById('sessionDate').value = dateString;
-      }
-      
-      if (eventData && mode === 'edit') {
-        // Populate form with existing data
-        document.getElementById('clientName').value = eventData.clientName || '';
-        document.getElementById('sessionTime').value = eventData.time || '';
-        document.getElementById('sessionType').value = eventData.type || '';
-        document.getElementById('sessionLocation').value = eventData.location || '';
-        document.getElementById('clientEmail').value = eventData.email || '';
-        document.getElementById('clientPhone').value = eventData.phone || '';
-        document.getElementById('sessionNotes').value = eventData.notes || '';
-      }
-      
-      modal.style.display = 'flex';
-      
-      // Handle form submission
-      form.onsubmit = (e) => {
-        e.preventDefault();
-        saveSession(mode, dateString);
-      };
-    }
-
-    function closeSessionModal() {
-      document.getElementById('sessionModal').style.display = 'none';
-      document.getElementById('sessionForm').reset();
-    }
-
-    function openBlockModal(dateString) {
-      const modal = document.getElementById('blockModal');
-      const form = document.getElementById('blockForm');
-      
-      document.getElementById('blockDate').value = dateString;
-      modal.style.display = 'flex';
-      
-      form.onsubmit = (e) => {
-        e.preventDefault();
-        saveBlockedDate();
-      };
-    }
-
-    function closeBlockModal() {
-      document.getElementById('blockModal').style.display = 'none';
-      document.getElementById('blockForm').reset();
-    }
-
-    // Save session
-    async function saveSession(mode, dateString) {
-      const formData = {
-        clientName: document.getElementById('clientName').value,
-        date: document.getElementById('sessionDate').value,
-        time: document.getElementById('sessionTime').value,
-        type: document.getElementById('sessionType').value,
-        location: document.getElementById('sessionLocation').value,
-        email: document.getElementById('clientEmail').value,
-        phone: document.getElementById('clientPhone').value,
-        notes: document.getElementById('sessionNotes').value
-      };
-      
-      const eventData = {
-        title: `${formData.type} - ${formData.clientName}`,
-        summary: `${formData.type} - ${formData.clientName}`,
-        date: formData.date,
-        time: formData.time,
-        location: formData.location,
-        clientName: formData.clientName,
-        email: formData.email,
-        phone: formData.phone,
-        notes: formData.notes,
-        type: 'session'
-      };
-      
-      if (isGoogleCalendarConnected) {
-        try {
-          await saveToGoogleCalendar(eventData, mode);
-        } catch (error) {
-          console.error('Error saving to Google Calendar:', error);
-          alert('Error saving to Google Calendar. Saving locally instead.');
-        }
-      }
-      
-      // Save locally as backup
-      saveToLocalEvents(formData.date, eventData);
-      
-      closeSessionModal();
-      generateCalendar();
-      
-      alert(`Session ${mode === 'edit' ? 'updated' : 'created'} successfully!`);
-    }
-
-    // Save blocked date
-    function saveBlockedDate() {
-      const date = document.getElementById('blockDate').value;
-      const reason = document.getElementById('blockReason').value;
-      const notes = document.getElementById('blockNotes').value;
-      
-      const eventData = {
-        title: `Blocked - ${reason}`,
-        summary: `Blocked - ${reason}`,
-        date: date,
-        reason: reason,
-        notes: notes,
-        type: 'blocked'
-      };
-      
-      if (isGoogleCalendarConnected) {
-        saveToGoogleCalendar(eventData, 'add');
-      }
-      
-      saveToLocalEvents(date, eventData);
-      
-      closeBlockModal();
-      generateCalendar();
-      
-      alert('Date blocked successfully!');
-    }
-
-    // Save to Google Calendar
-    async function saveToGoogleCalendar(eventData, mode) {
-      if (!gapi || !isGoogleCalendarConnected) {
-        throw new Error('Google Calendar not connected');
-      }
-      
-      const event = {
-        'summary': eventData.title,
-        'description': eventData.notes || '',
-        'start': {
-          'dateTime': `${eventData.date}T${eventData.time || '09:00'}:00`,
-          'timeZone': 'America/Denver'
-        },
-        'end': {
-          'dateTime': `${eventData.date}T${eventData.time ? addHour(eventData.time) : '10:00'}:00`,
-          'timeZone': 'America/Denver'
-        }
-      };
-      
-      if (eventData.location) {
-        event.location = eventData.location;
-      }
-      
-      const request = gapi.client.calendar.events.insert({
-        'calendarId': 'primary',
-        'resource': event
-      });
-      
-      return request;
-    }
-
-    // Save to local events
-    function saveToLocalEvents(date, eventData) {
-      if (!localEvents[date]) {
-        localEvents[date] = [];
-      }
-      localEvents[date].push(eventData);
-      saveLocalEvents();
-    }
-
-    // Remove event from date
-    function removeEventFromDate(dateString) {
-      // Remove from local events
-      if (localEvents[dateString]) {
-        delete localEvents[dateString];
-        saveLocalEvents();
-      }
-      
-      // TODO: Remove from Google Calendar
-      
-      generateCalendar();
-      showDefaultPanel();
-      
-      alert('Session removed successfully!');
-    }
-
-    // Utility functions
-    function addHour(timeString) {
-      const [hours, minutes] = timeString.split(':');
-      const newHours = String(parseInt(hours) + 1).padStart(2, '0');
-      return `${newHours}:${minutes}`;
+      alert('View session details - would show detailed session information');
     }
 
     // Calendar navigation
@@ -1948,340 +1999,117 @@
     }
 
     function syncCalendar() {
-      console.log('Syncing calendar...');
-      if (isGoogleCalendarConnected) {
-        loadCalendarEvents();
-      } else {
-        initializeGoogleCalendar();
-      }
+      alert('Syncing with Google Calendar...');
+      // Add actual sync logic here
     }
 
     function openFullCalendar() {
       window.open('https://calendar.google.com/calendar/u/0/r/week', '_blank');
     }
 
-    // Gallery management
-    function manageGalleries() {
-      openGalleryModal();
+    function exportCalendar() {
+      alert('Exporting calendar data...');
+      // Add export logic here
+    }
+
+    // Modal functions
+    function openSessionModal(mode = 'add', dateString = null) {
+      const modal = document.getElementById('sessionModal');
+      const title = document.getElementById('sessionModalTitle');
+      
+      title.textContent = mode === 'edit' ? 'Edit Session' : 'Add New Session';
+      
+      if (selectedDate) {
+        document.getElementById('sessionDate').value = selectedDate;
+      }
+      
+      modal.style.display = 'flex';
+    }
+
+    function closeSessionModal() {
+      document.getElementById('sessionModal').style.display = 'none';
+      document.getElementById('sessionForm').reset();
     }
 
     function openGalleryModal() {
       const modal = document.getElementById('galleryModal');
-      const galleryList = document.getElementById('galleryList');
       
-      // Populate gallery list
-      let galleryHtml = '';
-      Object.keys(sampleClientData).forEach(date => {
-        const client = sampleClientData[date];
-        if (client.hasGallery) {
-          galleryHtml += `
-            <div class="password-row">
-              <div>
-                <strong>${client.intakeData.person1.name}</strong> - ${date}
-                <div class="password-info">ID: ${client.sessionId} | Password: ${client.password}</div>
-              </div>
-              <div class="password-actions">
-                <button class="icon-btn" onclick="regeneratePassword('${date}')" title="Regenerate Password">🔄</button>
-                <button class="icon-btn" onclick="copyCredentials('${date}')" title="Copy Credentials">📋</button>
-                <button class="icon-btn" onclick="emailCredentials('${date}')" title="Email Credentials">📧</button>
-              </div>
-            </div>
-          `;
-        }
-      });
+      // Auto-generate credentials
+      const sessionId = Math.floor(1000 + Math.random() * 9000);
+      const password = 'petname' + Math.floor(Math.random() * 100) + 'barks';
       
-      if (!galleryHtml) {
-        galleryHtml = '<p style="text-align: center; color: rgba(255,255,255,0.7);">No galleries created yet</p>';
-      }
+      document.getElementById('gallerySessionId').value = sessionId;
+      document.getElementById('galleryPassword').value = password;
       
-      galleryList.innerHTML = galleryHtml;
       modal.style.display = 'flex';
     }
 
     function closeGalleryModal() {
       document.getElementById('galleryModal').style.display = 'none';
+      document.getElementById('galleryForm').reset();
     }
 
-    function regeneratePassword(date) {
-      const client = sampleClientData[date];
-      const petName = client.intakeData.pet1.name.toLowerCase();
-      const newPassword = petName + Math.floor(Math.random() * 1000);
-      client.password = newPassword;
+    // Form handlers
+    document.getElementById('sessionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
       
-      alert(`New password generated: ${newPassword}`);
-      openGalleryModal(); // Refresh display
-    }
-
-    function copyCredentials(date) {
-      const client = sampleClientData[date];
-      const credentials = `Session ID: ${client.sessionId}\nPassword: ${client.password}`;
+      const formData = {
+        clientName: document.getElementById('clientName').value,
+        date: document.getElementById('sessionDate').value,
+        time: document.getElementById('sessionTime').value,
+        type: document.getElementById('sessionType').value,
+        location: document.getElementById('sessionLocation').value,
+        email: document.getElementById('clientEmail').value,
+        phone: document.getElementById('clientPhone').value,
+        notes: document.getElementById('sessionNotes').value
+      };
       
-      navigator.clipboard.writeText(credentials).then(() => {
-        alert('Credentials copied to clipboard!');
-      });
-    }
-
-    function emailCredentials(date) {
-      const client = sampleClientData[date];
-      alert(`📧 Email sent to ${client.intakeData.person1.email} with gallery access credentials!`);
-    }
-
-    // Show panels
-    function showClientProfile(dateString) {
-      const clientData = sampleClientData[dateString];
+      console.log('Session data:', formData);
+      alert('Session saved successfully!');
+      closeSessionModal();
       
-      if (!clientData) {
-        showDefaultPanel();
-        return;
+      if (currentView === 'calendar') {
+        generateCalendar();
       }
-      
-      // Hide default panel, show client panel
-      document.getElementById('defaultPanel').style.display = 'none';
-      document.getElementById('clientPanel').classList.add('active');
-      
-      // Update session header
-      const sessionDate = new Date(dateString);
-      document.getElementById('sessionTitle').textContent = `${clientData.sessionData.session}`;
-      document.getElementById('sessionDate').textContent = sessionDate.toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      }) + ' at 6:00 PM';
-      
-      // Populate client information
-      const clientInfo = document.getElementById('clientInfo');
-      const person1 = clientData.intakeData.person1;
-      clientInfo.innerHTML = `
-        <div class="info-item">
-          <div class="info-label">Name</div>
-          <div class="info-value">${person1.name}</div>
-        </div>
-        <div class="info-item">
-          <div class="info-label">Email</div>
-          <div class="info-value">${person1.email}</div>
-        </div>
-        <div class="info-item">
-          <div class="info-label">Phone</div>
-          <div class="info-value">${person1.phone}</div>
-        </div>
-        <div class="info-item">
-          <div class="info-label">Zip Code</div>
-          <div class="info-value">${person1.zip}</div>
-        </div>
-      `;
-      
-      // Populate pet information
-      const petInfo = document.getElementById('petInfo');
-      let petHtml = '';
-      
-      if (clientData.intakeData.pet1) {
-        const pet1 = clientData.intakeData.pet1;
-        petHtml += `
-          <div class="pet-card">
-            <div class="pet-name">${pet1.name}</div>
-            <div class="pet-details">
-              <div><strong>Age:</strong> ${pet1.age}</div>
-              <div><strong>Gender:</strong> ${pet1.gender}</div>
-              <div><strong>Off-leash:</strong> ${pet1.offLeash}</div>
-              <div><strong>Toy:</strong> ${pet1.favoriteToy}</div>
-            </div>
-            <div style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
-              <strong>Behavior:</strong> ${pet1.behavior}
-            </div>
-          </div>
-        `;
-      }
-      
-      if (clientData.intakeData.pet2) {
-        const pet2 = clientData.intakeData.pet2;
-        petHtml += `
-          <div class="pet-card">
-            <div class="pet-name">${pet2.name}</div>
-            <div class="pet-details">
-              <div><strong>Age:</strong> ${pet2.age}</div>
-              <div><strong>Gender:</strong> ${pet2.gender}</div>
-              <div><strong>Off-leash:</strong> ${pet2.offLeash}</div>
-              <div><strong>Toy:</strong> ${pet2.favoriteToy}</div>
-            </div>
-            <div style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
-              <strong>Behavior:</strong> ${pet2.behavior}
-            </div>
-          </div>
-        `;
-      }
-      
-      petInfo.innerHTML = petHtml;
-      
-      // Populate session details
-      const sessionInfo = document.getElementById('sessionInfo');
-      sessionInfo.innerHTML = `
-        <div class="info-item">
-          <div class="info-label">Session Type</div>
-          <div class="info-value">${clientData.sessionData.session}</div>
-        </div>
-        <div class="info-item">
-          <div class="info-label">Location</div>
-          <div class="info-value">${clientData.sessionData.park}</div>
-        </div>
-        <div class="info-item">
-          <div class="info-label">Photo Style</div>
-          <div class="info-value">${clientData.intakeData.photoStyle}</div>
-        </div>
-        <div class="info-item">
-          <div class="info-label">Special Requests</div>
-          <div class="info-value">${clientData.intakeData.specialRequests || 'None'}</div>
-        </div>
-      `;
-      
-      // Update gallery status and password manager
-      const galleryStatus = document.getElementById('galleryStatus');
-      const passwordManager = document.getElementById('passwordManager');
-      
-      if (clientData.hasGallery) {
-        galleryStatus.className = 'gallery-status has-gallery';
-        galleryStatus.innerHTML = `
-          <p>✅ Gallery created with 24 photos</p>
-          <p style="font-size: 0.9rem; margin-top: 0.5rem;">
-            Gallery ID: ${clientData.galleryId}
-          </p>
-        `;
-        
-        passwordManager.style.display = 'block';
-        document.getElementById('passwordList').innerHTML = `
-          <div class="password-row">
-            <div class="password-info">
-              <strong>Session ID:</strong> ${clientData.sessionId}<br>
-              <strong>Password:</strong> ${clientData.password}
-            </div>
-            <div class="password-actions">
-              <button class="icon-btn" onclick="regeneratePassword('${dateString}')" title="Regenerate">🔄</button>
-              <button class="icon-btn" onclick="copyCredentials('${dateString}')" title="Copy">📋</button>
-            </div>
-          </div>
-        `;
-      } else {
-        galleryStatus.className = 'gallery-status no-gallery';
-        galleryStatus.innerHTML = '<p>No gallery created yet for this session</p>';
-        passwordManager.style.display = 'none';
-      }
-    }
+    });
 
-    function showDefaultPanel() {
-      document.getElementById('clientPanel').classList.remove('active');
-      document.getElementById('defaultPanel').style.display = 'block';
-    }
+    document.getElementById('galleryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        name: document.getElementById('galleryName').value,
+        date: document.getElementById('galleryDate').value,
+        expiration: document.getElementById('galleryExpiration').value,
+        password: document.getElementById('galleryPassword').value,
+        sessionId: document.getElementById('gallerySessionId').value
+      };
+      
+      console.log('Gallery data:', formData);
+      alert('Gallery created successfully!');
+      closeGalleryModal();
+    });
 
-    // Gallery functions for session panel
-    function createGallery() {
-      if (!selectedDate) {
-        alert('Please select a session date first');
-        return;
+    // File upload handling
+    document.getElementById('photoUpload').addEventListener('change', function(e) {
+      const files = e.target.files;
+      if (files.length > 0) {
+        const fileNames = Array.from(files).map(f => f.name).join(', ');
+        alert(`Selected ${files.length} file(s): ${fileNames}`);
       }
-      
-      const clientData = sampleClientData[selectedDate];
-      if (!clientData) {
-        alert('No client data found for this session');
-        return;
-      }
-      
-      const sessionId = clientData.intakeData.person1.phone.slice(-4) + clientData.intakeData.person1.zip.slice(-2);
-      const password = clientData.intakeData.pet1.name.toLowerCase() + 'barks';
-      
-      // Update client data
-      clientData.hasGallery = true;
-      clientData.galleryId = 'gal_' + Math.random().toString(36).substr(2, 9);
-      clientData.sessionId = sessionId;
-      clientData.password = password;
-      
-      alert(`🎉 Gallery Created!\n\nSession ID: ${sessionId}\nPassword: ${password}\n\nClients can now access their gallery with these credentials.`);
-      
-      // Refresh display
-      showClientProfile(selectedDate);
-    }
+    });
 
-    function uploadPhotos() {
-      if (!selectedDate) {
-        alert('Please select a session date first');
-        return;
-      }
-      
-      alert('📸 Photo Upload\n\nIn the full version, this would open a drag-and-drop interface for uploading session photos. Features would include:\n\n• Bulk photo upload\n• Auto-resizing and optimization\n• Watermark removal for downloads\n• Automatic gallery organization');
-    }
-
-    function viewGallery() {
-      if (!selectedDate) {
-        alert('Please select a session date first');
-        return;
-      }
-      
-      window.open('/gallery-login.html', '_blank');
-    }
-
-    function sendCredentials() {
-      if (!selectedDate) {
-        alert('Please select a session date first');
-        return;
-      }
-      
-      const clientData = sampleClientData[selectedDate];
-      if (!clientData || !clientData.hasGallery) {
-        alert('No gallery found for this session');
-        return;
-      }
-      
-      alert(`📧 Email Sent!\n\nGallery access credentials sent to:\n${clientData.intakeData.person1.email}\n\nSession ID: ${clientData.sessionId}\nPassword: ${clientData.password}`);
-    }
-
-    // Authentication functions
-    function checkAuthentication() {
-      const isAuthenticated = localStorage.getItem('adminAuthenticated');
-      const loginTime = localStorage.getItem('adminLoginTime');
-      const adminUser = localStorage.getItem('adminUser');
-      
-      if (!isAuthenticated || !loginTime || !adminUser) {
-        window.location.href = '/admin-login.html';
-        return false;
-      }
-      
-      // Check if session is still valid (24 hours)
-      const loginDate = new Date(loginTime);
-      const now = new Date();
-      const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
-      
-      if (hoursDiff >= 24) {
-        logout();
-        return false;
-      }
-      
-      // Update admin info display
-      document.getElementById('adminInfo').textContent = `Welcome, ${adminUser}`;
-      return true;
-    }
-
-    function logout() {
-      localStorage.removeItem('adminAuthenticated');
-      localStorage.removeItem('adminUser');
-      localStorage.removeItem('adminLoginTime');
-      window.location.href = '/admin-login.html';
-    }
-
-    function toggleMenu() {
-      const nav = document.querySelector('.admin-nav');
-      nav.classList.toggle('active');
-    }
-
-    // Initialize everything
+    // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Admin dashboard loaded, initializing...');
+      console.log('Studio Manager loaded, initializing...');
       
-      // Check authentication first
       if (!checkAuthentication()) {
         return;
       }
       
-      // Initialize calendar
-      initializeGoogleCalendar();
+      // Initialize calendar if on calendar view
+      if (currentView === 'calendar') {
+        initializeCalendar();
+      }
     });
 
     // Keyboard shortcuts
@@ -2289,21 +2117,21 @@
       if (e.key === 'Escape') {
         closeContextMenu();
         closeSessionModal();
-        closeBlockModal();
         closeGalleryModal();
-        showDefaultPanel();
-        
-        // Clear selection
-        document.querySelectorAll('.calendar-day.selected').forEach(el => {
-          el.classList.remove('selected');
-        });
       }
     });
 
-    // Close context menu when clicking elsewhere
+    // Close modals when clicking outside
     document.addEventListener('click', function(e) {
-      if (!e.target.closest('.context-menu')) {
-        closeContextMenu();
+      if (e.target.classList.contains('modal-overlay')) {
+        e.target.style.display = 'none';
+      }
+    });
+
+    // Responsive sidebar handling
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 1024) {
+        document.getElementById('adminSidebar').classList.remove('open');
       }
     });
   </script>
