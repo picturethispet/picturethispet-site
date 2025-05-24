@@ -190,7 +190,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     .calendar-title {
@@ -222,6 +222,50 @@
     .nav-button:hover {
       background: rgba(255, 255, 255, 0.2);
       transform: scale(1.05);
+    }
+
+    /* === CALENDAR TOOLS === */
+    .calendar-tools {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tool-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 0.7rem 1.2rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tool-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .tool-btn.primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+    }
+
+    .tool-btn.secondary {
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
+      border-color: var(--admin-blue);
+    }
+
+    .tool-btn.warning {
+      background: linear-gradient(135deg, var(--soft-hold-yellow), #f59e0b);
+      border-color: #f59e0b;
     }
 
     /* === CALENDAR GRID === */
@@ -321,11 +365,199 @@
       font-weight: bold;
     }
 
+    .calendar-day.blocked {
+      background: rgba(75, 85, 99, 0.3);
+      border: 2px solid rgba(75, 85, 99, 0.5);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .calendar-day.blocked::after {
+      content: "🚫";
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      font-size: 0.8rem;
+    }
+
     .calendar-day.selected {
       background: linear-gradient(135deg, var(--admin-purple), #ec4899);
       border: 2px solid #ec4899;
       color: white;
       transform: scale(1.05);
+    }
+
+    /* === CONTEXT MENU === */
+    .context-menu {
+      position: absolute;
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 0.5rem 0;
+      min-width: 180px;
+      z-index: 1001;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      display: none;
+    }
+
+    .context-menu-item {
+      padding: 0.8rem 1rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .context-menu-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .context-menu-item.disabled {
+      color: rgba(255, 255, 255, 0.4);
+      cursor: not-allowed;
+    }
+
+    .context-menu-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 0.5rem 0;
+    }
+
+    /* === MODAL STYLES === */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-close:hover {
+      opacity: 1;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      color: white;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--admin-purple);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
     }
 
     /* === LEGEND === */
@@ -365,6 +597,11 @@
     .legend-dot.soft-hold {
       background: rgba(245, 158, 11, 0.7);
       border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .legend-dot.blocked {
+      background: rgba(75, 85, 99, 0.7);
+      border-color: rgba(75, 85, 99, 0.5);
     }
 
     .legend-dot.selected {
@@ -476,6 +713,41 @@
       grid-template-columns: 1fr 1fr;
       gap: 0.5rem;
       font-size: 0.9rem;
+    }
+
+    /* === PASSWORD MANAGEMENT === */
+    .password-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .password-display {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .password-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .password-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-small {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      border-radius: 6px;
     }
 
     /* === GALLERY MANAGEMENT === */
@@ -699,6 +971,20 @@
         height: 40px;
         font-size: 1rem;
       }
+
+      .calendar-tools {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .modal {
+        width: 95%;
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -726,6 +1012,22 @@
           </div>
         </div>
 
+        <!-- Calendar Tools -->
+        <div class="calendar-tools">
+          <button class="tool-btn primary" onclick="showAddSessionModal()">
+            ➕ Add Session
+          </button>
+          <button class="tool-btn warning" onclick="enterBlockMode()">
+            🚫 Block Time
+          </button>
+          <button class="tool-btn secondary" onclick="enterEditMode()">
+            ✏️ Edit Mode
+          </button>
+          <button class="tool-btn" onclick="refreshCalendar()">
+            🔄 Refresh
+          </button>
+        </div>
+
         <div id="calendarContainer">
           <div class="loading-indicator" id="loadingIndicator">
             <h3>🔄 Loading Calendar...</h3>
@@ -747,6 +1049,10 @@
             <span>Session Booked</span>
           </div>
           <div class="legend-item">
+            <div class="legend-dot blocked"></div>
+            <span>Blocked</span>
+          </div>
+          <div class="legend-item">
             <div class="legend-dot selected"></div>
             <span>Selected</span>
           </div>
@@ -761,7 +1067,7 @@
           <h2 class="default-title">Admin Dashboard</h2>
           <p class="default-subtitle">
             Click on any session date in the calendar to view client details, manage bookings, 
-            and create photo galleries. Your complete business management in one place.
+            and create photo galleries. Use the tools above to add sessions, block time, or edit existing bookings.
           </p>
           
           <div class="quick-actions">
@@ -787,6 +1093,25 @@
             <p class="panel-subtitle" id="sessionDate">Select a session to view details</p>
           </div>
 
+          <!-- Session Actions -->
+          <div class="client-section">
+            <h3 class="section-title">⚙️ Session Actions</h3>
+            <div class="gallery-actions">
+              <button class="action-btn" onclick="editSession()">
+                ✏️ Edit Session
+              </button>
+              <button class="action-btn warning" onclick="cancelSession()">
+                ❌ Cancel Session
+              </button>
+              <button class="action-btn secondary" onclick="rescheduleSession()">
+                📅 Reschedule
+              </button>
+              <button class="action-btn" onclick="duplicateSession()">
+                📋 Duplicate
+              </button>
+            </div>
+          </div>
+
           <!-- Client Information -->
           <div class="client-section">
             <h3 class="section-title">👤 Client Information</h3>
@@ -808,6 +1133,22 @@
             <h3 class="section-title">📋 Session Details</h3>
             <div class="client-info" id="sessionInfo">
               <!-- Will be populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Password Management -->
+          <div class="password-section">
+            <h3 class="section-title">🔐 Gallery Access Management</h3>
+            <div class="password-display" id="passwordDisplay">
+              <!-- Will be populated dynamically -->
+            </div>
+            <div class="gallery-actions">
+              <button class="action-btn" onclick="regeneratePassword()">
+                🔄 New Password
+              </button>
+              <button class="action-btn" onclick="regenerateSessionId()">
+                🆔 New Session ID
+              </button>
             </div>
           </div>
 
@@ -837,9 +1178,198 @@
         </div>
       </div>
     </div>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu">
+      <div class="context-menu-item" onclick="addSessionToDate()">
+        ➕ Add Session
+      </div>
+      <div class="context-menu-item" onclick="addSoftHoldToDate()">
+        ⏳ Add Soft Hold
+      </div>
+      <div class="context-menu-item" onclick="blockDate()">
+        🚫 Block This Date
+      </div>
+      <div class="context-menu-divider"></div>
+      <div class="context-menu-item" onclick="editExistingSession()">
+        ✏️ Edit Session
+      </div>
+      <div class="context-menu-item" onclick="removeFromDate()">
+        🗑️ Remove/Cancel
+      </div>
+    </div>
+
+    <!-- Add Session Modal -->
+    <div class="modal-overlay" id="addSessionModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title">Add New Session</h2>
+          <button class="modal-close" onclick="closeModal('addSessionModal')">×</button>
+        </div>
+        
+        <form id="addSessionForm">
+          <div class="form-group">
+            <label class="form-label">Session Type</label>
+            <select class="form-select" id="sessionType" required>
+              <option value="">Select Session Type</option>
+              <option value="full">Full Session (1.5 hours)</option>
+              <option value="mini">Mini Session (45 minutes)</option>
+              <option value="headshots">Pet Headshots (30 minutes)</option>
+              <option value="event">Special Event</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-input" id="sessionDate" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time</label>
+              <input type="time" class="form-input" id="sessionTime" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Client Name</label>
+            <input type="text" class="form-input" id="clientName" placeholder="John Smith" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" id="clientEmail" placeholder="john@email.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" class="form-input" id="clientPhone" placeholder="(555) 123-4567" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Location</label>
+            <select class="form-select" id="sessionLocation" required>
+              <option value="">Select Location</option>
+              <option value="cheesman">Cheesman Park</option>
+              <option value="wash">Washington Park</option>
+              <option value="city">City Park</option>
+              <option value="sloan">Sloan's Lake</option>
+              <option value="studio">Studio</option>
+              <option value="client-home">Client's Home</option>
+              <option value="other">Other Location</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Pet Name(s)</label>
+            <input type="text" class="form-input" id="petNames" placeholder="Buddy, Max, Bella" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Special Notes</label>
+            <textarea class="form-textarea" id="sessionNotes" placeholder="Any special requirements or notes about the session..."></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('addSessionModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create Session</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Session Modal -->
+    <div class="modal-overlay" id="editSessionModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title">Edit Session</h2>
+          <button class="modal-close" onclick="closeModal('editSessionModal')">×</button>
+        </div>
+        
+        <form id="editSessionForm">
+          <!-- Same form fields as add session, but pre-populated -->
+          <div class="form-group">
+            <label class="form-label">Session Type</label>
+            <select class="form-select" id="editSessionType" required>
+              <option value="full">Full Session (1.5 hours)</option>
+              <option value="mini">Mini Session (45 minutes)</option>
+              <option value="headshots">Pet Headshots (30 minutes)</option>
+              <option value="event">Special Event</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-input" id="editSessionDate" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time</label>
+              <input type="time" class="form-input" id="editSessionTime" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Client Name</label>
+            <input type="text" class="form-input" id="editClientName" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" id="editClientEmail" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" class="form-input" id="editClientPhone" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Location</label>
+            <select class="form-select" id="editSessionLocation" required>
+              <option value="cheesman">Cheesman Park</option>
+              <option value="wash">Washington Park</option>
+              <option value="city">City Park</option>
+              <option value="sloan">Sloan's Lake</option>
+              <option value="studio">Studio</option>
+              <option value="client-home">Client's Home</option>
+              <option value="other">Other Location</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Pet Name(s)</label>
+            <input type="text" class="form-input" id="editPetNames" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Special Notes</label>
+            <textarea class="form-textarea" id="editSessionNotes"></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('editSessionModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
 
   <script>
+    // Global variables
+    let currentMonth = new Date();
+    let selectedDate = null;
+    let selectedDateElement = null;
+    let calendarEvents = [];
+    let bookedDates = [];
+    let softHoldDates = [];
+    let blockedDates = [];
+    let calendarLoaded = false;
+    let currentMode = 'view'; // view, block, edit
+    let contextMenuDate = null;
+
     // Authentication check
     function checkAuthentication() {
       const isAuthenticated = localStorage.getItem('adminAuthenticated');
@@ -880,16 +1410,7 @@
       nav.classList.toggle('active');
     }
 
-    // Calendar state
-    let currentMonth = new Date();
-    let selectedDate = null;
-    let selectedDateElement = null;
-    let calendarEvents = [];
-    let bookedDates = [];
-    let softHoldDates = [];
-    let calendarLoaded = false;
-
-    // Sample client data (in real app, this would come from database/API)
+    // Sample client data (enhanced with more sessions)
     const sampleClientData = {
       '2024-12-15': {
         sessionData: {
@@ -897,7 +1418,9 @@
           park: 'Cheesman Park',
           selectedDateTime: '2024-12-15T18:00:00',
           petCount: '2',
-          peopleCount: '1'
+          peopleCount: '1',
+          sessionType: 'full',
+          notes: 'Buffy can be shy at first, Max is great with directions'
         },
         intakeData: {
           person1: {
@@ -925,14 +1448,47 @@
           specialRequests: 'Buffy can be shy at first, Max is great with directions',
           photoStyle: 'both'
         },
-        hasGallery: false
+        hasGallery: false,
+        sessionId: '3123806',
+        password: 'buffybarks'
+      },
+      '2024-12-22': {
+        sessionData: {
+          session: 'Mini Session',
+          park: 'Washington Park',
+          selectedDateTime: '2024-12-22T14:00:00',
+          petCount: '1',
+          peopleCount: '2',
+          sessionType: 'mini',
+          notes: 'First time photo session'
+        },
+        intakeData: {
+          person1: {
+            name: 'Mike Rodriguez',
+            email: 'mike.r@email.com',
+            phone: '720-555-0198',
+            zip: '80224'
+          },
+          pet1: {
+            name: 'Luna',
+            age: '2',
+            gender: 'Female',
+            behavior: 'Very playful, loves treats',
+            offLeash: 'no',
+            favoriteToy: 'Squeaky toy'
+          },
+          photoStyle: 'lifestyle'
+        },
+        hasGallery: true,
+        sessionId: '5198224',
+        password: 'lunabarks'
       }
     };
 
     // Calendar data source
     const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
 
-    // Parse iCal data (same as availability page)
+    // Parse iCal data
     function parseICalData(icsData) {
       const events = [];
       const lines = icsData.split('\n');
@@ -1011,12 +1567,9 @@
         console.error('Error fetching admin calendar data:', error);
         console.log('Using fallback data for admin...');
         // Fallback data
-        bookedDates = [
-          "2024-12-15",
-          "2024-12-22", 
-          "2024-12-29",
-          "2025-01-05"
-        ];
+        bookedDates = ["2024-12-15", "2024-12-22", "2024-12-29", "2025-01-05"];
+        softHoldDates = ["2024-12-18", "2025-01-08"];
+        blockedDates = ["2024-12-25", "2025-01-01"];
         calendarLoaded = true;
         generateCalendar();
       }
@@ -1026,6 +1579,7 @@
     function processCalendarEvents() {
       bookedDates = [];
       softHoldDates = [];
+      blockedDates = [];
       
       calendarEvents.forEach(event => {
         if (event.dtstart) {
@@ -1034,10 +1588,12 @@
           
           const summary = (event.summary || '').toLowerCase();
           
-          if (summary.includes('booked') || summary.includes('session') || summary.includes('appointment')) {
-            bookedDates.push(dateString);
+          if (summary.includes('blocked') || summary.includes('unavailable')) {
+            blockedDates.push(dateString);
           } else if (summary.includes('hold') || summary.includes('pending') || summary.includes('maybe')) {
             softHoldDates.push(dateString);
+          } else if (summary.includes('booked') || summary.includes('session') || summary.includes('appointment')) {
+            bookedDates.push(dateString);
           } else {
             bookedDates.push(dateString);
           }
@@ -1046,9 +1602,10 @@
       
       console.log('Admin processed booked dates:', bookedDates);
       console.log('Admin processed soft hold dates:', softHoldDates);
+      console.log('Admin processed blocked dates:', blockedDates);
     }
 
-    // Generate calendar (using exact same logic as availability page)
+    // Generate calendar
     function generateCalendar() {
       const container = document.getElementById('calendarContainer');
       const title = document.getElementById('calendarTitle');
@@ -1104,11 +1661,16 @@
         const dayDate = new Date(year, month, day);
         
         // Add click handler for admin functionality
-        dayElement.onclick = () => selectDate(dateString, dayElement, dayDate);
+        dayElement.onclick = (e) => selectDate(dateString, dayElement, dayDate, e);
+        dayElement.oncontextmenu = (e) => showContextMenu(e, dateString, dayElement);
         
         // Mark past dates
         if (dayDate < new Date()) {
           dayElement.classList.add('past');
+        }
+        // Mark blocked dates
+        else if (blockedDates.includes(dateString)) {
+          dayElement.classList.add('blocked');
         }
         // Mark booked dates (sessions)
         else if (bookedDates.includes(dateString)) {
@@ -1131,7 +1693,20 @@
     }
 
     // Select date and show client profile
-    function selectDate(dateString, element, dateObj) {
+    function selectDate(dateString, element, dateObj, event) {
+      if (event) event.preventDefault();
+      
+      // Handle different modes
+      if (currentMode === 'block') {
+        toggleBlockDate(dateString, element);
+        return;
+      }
+      
+      if (currentMode === 'edit' && (bookedDates.includes(dateString) || softHoldDates.includes(dateString))) {
+        showEditSessionModal(dateString);
+        return;
+      }
+      
       // Remove previous selection
       document.querySelectorAll('.calendar-day.selected').forEach(el => {
         el.classList.remove('selected');
@@ -1151,6 +1726,365 @@
       }
       
       console.log('Admin selected date:', dateString);
+    }
+
+    // Show context menu
+    function showContextMenu(event, dateString, element) {
+      event.preventDefault();
+      contextMenuDate = dateString;
+      
+      const contextMenu = document.getElementById('contextMenu');
+      const dayDate = new Date(dateString);
+      const isPast = dayDate < new Date();
+      const isBooked = bookedDates.includes(dateString);
+      const isSoftHold = softHoldDates.includes(dateString);
+      const isBlocked = blockedDates.includes(dateString);
+      
+      // Position menu
+      contextMenu.style.left = event.pageX + 'px';
+      contextMenu.style.top = event.pageY + 'px';
+      contextMenu.style.display = 'block';
+      
+      // Update menu items based on date status
+      const menuItems = contextMenu.querySelectorAll('.context-menu-item');
+      menuItems.forEach(item => {
+        item.classList.remove('disabled');
+      });
+      
+      // Disable items for past dates
+      if (isPast) {
+        menuItems.forEach(item => {
+          if (!item.textContent.includes('View')) {
+            item.classList.add('disabled');
+          }
+        });
+      }
+      
+      // Hide context menu when clicking elsewhere
+      setTimeout(() => {
+        document.addEventListener('click', hideContextMenu, { once: true });
+      }, 100);
+    }
+
+    // Hide context menu
+    function hideContextMenu() {
+      document.getElementById('contextMenu').style.display = 'none';
+    }
+
+    // Context menu actions
+    function addSessionToDate() {
+      hideContextMenu();
+      if (contextMenuDate) {
+        document.getElementById('sessionDate').value = contextMenuDate;
+        showAddSessionModal();
+      }
+    }
+
+    function addSoftHoldToDate() {
+      hideContextMenu();
+      if (contextMenuDate) {
+        if (!softHoldDates.includes(contextMenuDate)) {
+          softHoldDates.push(contextMenuDate);
+          generateCalendar();
+          // In real app, would sync with Google Calendar
+          console.log('Added soft hold to:', contextMenuDate);
+        }
+      }
+    }
+
+    function blockDate() {
+      hideContextMenu();
+      if (contextMenuDate) {
+        if (!blockedDates.includes(contextMenuDate)) {
+          blockedDates.push(contextMenuDate);
+          generateCalendar();
+          // In real app, would sync with Google Calendar
+          console.log('Blocked date:', contextMenuDate);
+        }
+      }
+    }
+
+    function editExistingSession() {
+      hideContextMenu();
+      if (contextMenuDate && (bookedDates.includes(contextMenuDate) || softHoldDates.includes(contextMenuDate))) {
+        showEditSessionModal(contextMenuDate);
+      }
+    }
+
+    function removeFromDate() {
+      hideContextMenu();
+      if (contextMenuDate) {
+        // Remove from all arrays
+        const index1 = bookedDates.indexOf(contextMenuDate);
+        const index2 = softHoldDates.indexOf(contextMenuDate);
+        const index3 = blockedDates.indexOf(contextMenuDate);
+        
+        if (index1 > -1) bookedDates.splice(index1, 1);
+        if (index2 > -1) softHoldDates.splice(index2, 1);
+        if (index3 > -1) blockedDates.splice(index3, 1);
+        
+        generateCalendar();
+        showDefaultPanel();
+        console.log('Removed from date:', contextMenuDate);
+      }
+    }
+
+    // Tool functions
+    function showAddSessionModal() {
+      const modal = document.getElementById('addSessionModal');
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      
+      // Set default date if selected
+      if (selectedDate) {
+        document.getElementById('sessionDate').value = selectedDate;
+      }
+    }
+
+    function enterBlockMode() {
+      currentMode = currentMode === 'block' ? 'view' : 'block';
+      const btn = event.target;
+      
+      if (currentMode === 'block') {
+        btn.textContent = '✓ Block Mode (Click dates)';
+        btn.style.background = 'linear-gradient(135deg, var(--booked-red), #dc2626)';
+        alert('📍 Block Mode Active\n\nClick on any available date to block it for sessions. Click the button again to exit block mode.');
+      } else {
+        btn.textContent = '🚫 Block Time';
+        btn.style.background = 'linear-gradient(135deg, var(--soft-hold-yellow), #f59e0b)';
+      }
+    }
+
+    function enterEditMode() {
+      currentMode = currentMode === 'edit' ? 'view' : 'edit';
+      const btn = event.target;
+      
+      if (currentMode === 'edit') {
+        btn.textContent = '✓ Edit Mode (Click sessions)';
+        btn.style.background = 'linear-gradient(135deg, var(--admin-purple), var(--admin-blue))';
+        alert('✏️ Edit Mode Active\n\nClick on any booked session to edit its details. Click the button again to exit edit mode.');
+      } else {
+        btn.textContent = '✏️ Edit Mode';
+        btn.style.background = 'linear-gradient(135deg, var(--admin-purple), var(--admin-blue))';
+      }
+    }
+
+    function toggleBlockDate(dateString, element) {
+      if (blockedDates.includes(dateString)) {
+        // Unblock date
+        const index = blockedDates.indexOf(dateString);
+        blockedDates.splice(index, 1);
+        console.log('Unblocked date:', dateString);
+      } else {
+        // Block date (but don't block if already booked)
+        if (!bookedDates.includes(dateString)) {
+          blockedDates.push(dateString);
+          console.log('Blocked date:', dateString);
+        }
+      }
+      generateCalendar();
+    }
+
+    // Modal functions
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Form submissions
+    document.getElementById('addSessionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        type: document.getElementById('sessionType').value,
+        date: document.getElementById('sessionDate').value,
+        time: document.getElementById('sessionTime').value,
+        clientName: document.getElementById('clientName').value,
+        clientEmail: document.getElementById('clientEmail').value,
+        clientPhone: document.getElementById('clientPhone').value,
+        location: document.getElementById('sessionLocation').value,
+        petNames: document.getElementById('petNames').value,
+        notes: document.getElementById('sessionNotes').value
+      };
+      
+      // Add to booked dates
+      if (!bookedDates.includes(formData.date)) {
+        bookedDates.push(formData.date);
+      }
+      
+      // Create client data entry
+      sampleClientData[formData.date] = {
+        sessionData: {
+          session: getSessionTypeName(formData.type),
+          park: getLocationName(formData.location),
+          selectedDateTime: formData.date + 'T' + formData.time + ':00',
+          sessionType: formData.type,
+          notes: formData.notes
+        },
+        intakeData: {
+          person1: {
+            name: formData.clientName,
+            email: formData.clientEmail,
+            phone: formData.clientPhone,
+            zip: '80000' // Default, would be collected in full form
+          },
+          pet1: {
+            name: formData.petNames.split(',')[0].trim(),
+            age: 'Unknown',
+            gender: 'Unknown',
+            behavior: 'To be determined',
+            offLeash: 'unknown',
+            favoriteToy: 'Unknown'
+          },
+          specialRequests: formData.notes || 'None',
+          photoStyle: 'both'
+        },
+        hasGallery: false,
+        sessionId: generateSessionId(formData.clientPhone),
+        password: generatePassword(formData.petNames.split(',')[0].trim())
+      };
+      
+      // Close modal and refresh
+      closeModal('addSessionModal');
+      generateCalendar();
+      
+      alert(`✅ Session Created!\n\nClient: ${formData.clientName}\nDate: ${formData.date}\nTime: ${formData.time}\nLocation: ${getLocationName(formData.location)}\n\nSession has been added to your calendar.`);
+      
+      // Select the new session
+      selectDate(formData.date, document.querySelector(`[data-date="${formData.date}"]`), new Date(formData.date));
+      
+      // Reset form
+      this.reset();
+    });
+
+    function showEditSessionModal(dateString) {
+      const sessionData = sampleClientData[dateString];
+      if (!sessionData) {
+        alert('No session data found for this date');
+        return;
+      }
+      
+      const modal = document.getElementById('editSessionModal');
+      
+      // Populate form with existing data
+      document.getElementById('editSessionType').value = sessionData.sessionData.sessionType || 'full';
+      document.getElementById('editSessionDate').value = dateString;
+      document.getElementById('editSessionTime').value = sessionData.sessionData.selectedDateTime ? 
+        sessionData.sessionData.selectedDateTime.split('T')[1].slice(0, 5) : '18:00';
+      document.getElementById('editClientName').value = sessionData.intakeData.person1.name;
+      document.getElementById('editClientEmail').value = sessionData.intakeData.person1.email;
+      document.getElementById('editClientPhone').value = sessionData.intakeData.person1.phone;
+      document.getElementById('editSessionLocation').value = getLocationCode(sessionData.sessionData.park);
+      document.getElementById('editPetNames').value = sessionData.intakeData.pet1.name + 
+        (sessionData.intakeData.pet2 ? ', ' + sessionData.intakeData.pet2.name : '');
+      document.getElementById('editSessionNotes').value = sessionData.sessionData.notes || '';
+      
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    document.getElementById('editSessionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const originalDate = document.getElementById('editSessionDate').value;
+      const formData = {
+        type: document.getElementById('editSessionType').value,
+        date: document.getElementById('editSessionDate').value,
+        time: document.getElementById('editSessionTime').value,
+        clientName: document.getElementById('editClientName').value,
+        clientEmail: document.getElementById('editClientEmail').value,
+        clientPhone: document.getElementById('editClientPhone').value,
+        location: document.getElementById('editSessionLocation').value,
+        petNames: document.getElementById('editPetNames').value,
+        notes: document.getElementById('editSessionNotes').value
+      };
+      
+      // Update client data
+      if (sampleClientData[originalDate]) {
+        const clientData = sampleClientData[originalDate];
+        
+        // Update session data
+        clientData.sessionData.session = getSessionTypeName(formData.type);
+        clientData.sessionData.park = getLocationName(formData.location);
+        clientData.sessionData.selectedDateTime = formData.date + 'T' + formData.time + ':00';
+        clientData.sessionData.sessionType = formData.type;
+        clientData.sessionData.notes = formData.notes;
+        
+        // Update client data
+        clientData.intakeData.person1.name = formData.clientName;
+        clientData.intakeData.person1.email = formData.clientEmail;
+        clientData.intakeData.person1.phone = formData.clientPhone;
+        clientData.intakeData.pet1.name = formData.petNames.split(',')[0].trim();
+        clientData.intakeData.specialRequests = formData.notes || 'None';
+        
+        // If date changed, move the data
+        if (originalDate !== formData.date) {
+          sampleClientData[formData.date] = clientData;
+          delete sampleClientData[originalDate];
+          
+          // Update booked dates
+          const oldIndex = bookedDates.indexOf(originalDate);
+          if (oldIndex > -1) {
+            bookedDates.splice(oldIndex, 1);
+          }
+          if (!bookedDates.includes(formData.date)) {
+            bookedDates.push(formData.date);
+          }
+        }
+      }
+      
+      closeModal('editSessionModal');
+      generateCalendar();
+      
+      alert(`✅ Session Updated!\n\nClient: ${formData.clientName}\nDate: ${formData.date}\nTime: ${formData.time}\n\nChanges have been saved.`);
+      
+      // Show updated session
+      showClientProfile(formData.date);
+    });
+
+    // Helper functions
+    function getSessionTypeName(type) {
+      const types = {
+        'full': 'Full Session',
+        'mini': 'Mini Session', 
+        'headshots': 'Pet Headshots',
+        'event': 'Special Event'
+      };
+      return types[type] || 'Full Session';
+    }
+
+    function getLocationName(code) {
+      const locations = {
+        'cheesman': 'Cheesman Park',
+        'wash': 'Washington Park',
+        'city': 'City Park',
+        'sloan': "Sloan's Lake",
+        'studio': 'Studio',
+        'client-home': "Client's Home",
+        'other': 'Other Location'
+      };
+      return locations[code] || 'Cheesman Park';
+    }
+
+    function getLocationCode(name) {
+      const codes = {
+        'Cheesman Park': 'cheesman',
+        'Washington Park': 'wash',
+        'City Park': 'city',
+        "Sloan's Lake": 'sloan',
+        'Studio': 'studio',
+        "Client's Home": 'client-home',
+        'Other Location': 'other'
+      };
+      return codes[name] || 'cheesman';
+    }
+
+    function generateSessionId(phone) {
+      return phone.slice(-4) + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    }
+
+    function generatePassword(petName) {
+      return petName.toLowerCase().replace(/[^a-z]/g, '') + 'barks';
     }
 
     // Show client profile for selected session
@@ -1174,7 +2108,11 @@
         year: 'numeric',
         month: 'long',
         day: 'numeric'
-      }) + ' at 6:00 PM';
+      }) + ' at ' + (clientData.sessionData.selectedDateTime ? 
+        new Date(clientData.sessionData.selectedDateTime).toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit'
+        }) : '6:00 PM');
       
       // Populate client information
       const clientInfo = document.getElementById('clientInfo');
@@ -1261,6 +2199,9 @@
         </div>
       `;
       
+      // Update password display
+      updatePasswordDisplay(clientData);
+      
       // Update gallery status
       const galleryStatus = document.getElementById('galleryStatus');
       if (clientData.hasGallery) {
@@ -1268,7 +2209,7 @@
         galleryStatus.innerHTML = `
           <p>✅ Gallery created with 24 photos</p>
           <p style="font-size: 0.9rem; margin-top: 0.5rem;">
-            Access: ${person1.phone.slice(-4)}${person1.zip} / ${clientData.intakeData.pet1.name.toLowerCase()}barks
+            Last updated: ${new Date().toLocaleDateString()}
           </p>
         `;
       } else {
@@ -1277,13 +2218,173 @@
       }
     }
 
+    // Update password display
+    function updatePasswordDisplay(clientData) {
+      const passwordDisplay = document.getElementById('passwordDisplay');
+      const sessionId = clientData.sessionId || generateSessionId(clientData.intakeData.person1.phone);
+      const password = clientData.password || generatePassword(clientData.intakeData.pet1.name);
+      
+      passwordDisplay.innerHTML = `
+        <div class="password-item">
+          <div>
+            <strong>Session ID:</strong> ${sessionId}
+          </div>
+          <div class="password-actions">
+            <button class="btn btn-small" onclick="copyToClipboard('${sessionId}')">📋 Copy</button>
+            <button class="btn btn-small" onclick="regenerateSessionId()">🔄</button>
+          </div>
+        </div>
+        <div class="password-item">
+          <div>
+            <strong>Password:</strong> ${password}
+          </div>
+          <div class="password-actions">
+            <button class="btn btn-small" onclick="copyToClipboard('${password}')">📋 Copy</button>
+            <button class="btn btn-small" onclick="regeneratePassword()">🔄</button>
+          </div>
+        </div>
+        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+          <strong>Gallery URL:</strong> ${window.location.origin}/gallery-login.html
+        </div>
+      `;
+      
+      // Update stored data
+      clientData.sessionId = sessionId;
+      clientData.password = password;
+    }
+
     // Show default panel
     function showDefaultPanel() {
       document.getElementById('clientPanel').classList.remove('active');
       document.getElementById('defaultPanel').style.display = 'block';
     }
 
-    // Gallery management functions
+    // Session management functions
+    function editSession() {
+      if (!selectedDate) {
+        alert('Please select a session date first');
+        return;
+      }
+      showEditSessionModal(selectedDate);
+    }
+
+    function cancelSession() {
+      if (!selectedDate) {
+        alert('Please select a session date first');
+        return;
+      }
+      
+      if (confirm('⚠️ Cancel Session\n\nAre you sure you want to cancel this session? This action cannot be undone.')) {
+        // Remove from booked dates
+        const index = bookedDates.indexOf(selectedDate);
+        if (index > -1) {
+          bookedDates.splice(index, 1);
+        }
+        
+        // Remove client data
+        delete sampleClientData[selectedDate];
+        
+        generateCalendar();
+        showDefaultPanel();
+        
+        alert('✅ Session cancelled and removed from calendar');
+      }
+    }
+
+    function rescheduleSession() {
+      if (!selectedDate) {
+        alert('Please select a session date first');
+        return;
+      }
+      
+      alert('📅 Reschedule Session\n\nIn the full version, this would:\n\n• Show available dates\n• Allow drag-and-drop rescheduling\n• Send notification to client\n• Update Google Calendar\n• Preserve all session data');
+    }
+
+    function duplicateSession() {
+      if (!selectedDate) {
+        alert('Please select a session date first');
+        return;
+      }
+      
+      const clientData = sampleClientData[selectedDate];
+      if (!clientData) {
+        alert('No session data found');
+        return;
+      }
+      
+      // Pre-fill add session form with existing data
+      const modal = document.getElementById('addSessionModal');
+      document.getElementById('sessionType').value = clientData.sessionData.sessionType || 'full';
+      document.getElementById('clientName').value = clientData.intakeData.person1.name;
+      document.getElementById('clientEmail').value = clientData.intakeData.person1.email;
+      document.getElementById('clientPhone').value = clientData.intakeData.person1.phone;
+      document.getElementById('sessionLocation').value = getLocationCode(clientData.sessionData.park);
+      document.getElementById('petNames').value = clientData.intakeData.pet1.name + 
+        (clientData.intakeData.pet2 ? ', ' + clientData.intakeData.pet2.name : '');
+      document.getElementById('sessionNotes').value = clientData.sessionData.notes || '';
+      
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Password management functions
+    function regenerateSessionId() {
+      if (!selectedDate || !sampleClientData[selectedDate]) {
+        alert('Please select a session first');
+        return;
+      }
+      
+      const clientData = sampleClientData[selectedDate];
+      const newSessionId = generateSessionId(clientData.intakeData.person1.phone);
+      clientData.sessionId = newSessionId;
+      
+      updatePasswordDisplay(clientData);
+      alert(`🆔 New Session ID Generated!\n\nNew ID: ${newSessionId}\n\nClients will need the new credentials to access their gallery.`);
+    }
+
+    function regeneratePassword() {
+      if (!selectedDate || !sampleClientData[selectedDate]) {
+        alert('Please select a session first');
+        return;
+      }
+      
+      const clientData = sampleClientData[selectedDate];
+      const newPassword = generatePassword(clientData.intakeData.pet1.name) + Math.floor(Math.random() * 100);
+      clientData.password = newPassword;
+      
+      updatePasswordDisplay(clientData);
+      alert(`🔐 New Password Generated!\n\nNew Password: ${newPassword}\n\nClients will need the new credentials to access their gallery.`);
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        // Create temporary notification
+        const notification = document.createElement('div');
+        notification.textContent = '📋 Copied to clipboard!';
+        notification.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, var(--available-green), #059669);
+          color: white;
+          padding: 1rem 2rem;
+          border-radius: 8px;
+          z-index: 9999;
+          font-weight: 600;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        `;
+        
+        document.body.appendChild(notification);
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 2000);
+      }).catch(() => {
+        alert(`📋 Copy this text:\n\n${text}`);
+      });
+    }
+
+    // Enhanced gallery management functions
     function createGallery() {
       if (!selectedDate) {
         alert('Please select a session date first');
@@ -1296,14 +2397,23 @@
         return;
       }
       
-      const sessionId = clientData.intakeData.person1.phone.slice(-4) + clientData.intakeData.person1.zip;
-      const password = clientData.intakeData.pet1.name.toLowerCase() + 'barks';
+      if (clientData.hasGallery) {
+        alert('📸 Gallery Already Exists\n\nThis session already has a gallery. Use "Upload Photos" to add more images or "View Gallery" to see the current photos.');
+        return;
+      }
       
-      alert(`🎉 Gallery Created!\n\nSession ID: ${sessionId}\nPassword: ${password}\n\nClients can now access their gallery with these credentials.`);
+      const sessionId = clientData.sessionId;
+      const password = clientData.password;
       
-      // Update gallery status
-      clientData.hasGallery = true;
-      showClientProfile(selectedDate);
+      // Simulate gallery creation process
+      alert(`🎨 Creating Gallery...\n\nInitializing photo gallery for ${clientData.intakeData.person1.name}'s session.\n\nThis process will:\n• Create secure gallery space\n• Set up client access\n• Prepare upload interface\n\nPlease wait...`);
+      
+      setTimeout(() => {
+        clientData.hasGallery = true;
+        showClientProfile(selectedDate);
+        
+        alert(`🎉 Gallery Created Successfully!\n\nClient: ${clientData.intakeData.person1.name}\nSession ID: ${sessionId}\nPassword: ${password}\n\nYou can now upload photos and send access credentials to your client.`);
+      }, 1500);
     }
 
     function uploadPhotos() {
@@ -1312,8 +2422,26 @@
         return;
       }
       
-      // Simulate file upload dialog
-      alert('📸 Photo Upload\n\nIn the full version, this would open a drag-and-drop interface for uploading session photos. Features would include:\n\n• Bulk photo upload\n• Auto-resizing and optimization\n• Watermark removal for downloads\n• Automatic gallery organization');
+      const clientData = sampleClientData[selectedDate];
+      if (!clientData) {
+        alert('No client data found for this session');
+        return;
+      }
+      
+      if (!clientData.hasGallery) {
+        if (confirm('📸 No Gallery Found\n\nThis session doesn\'t have a gallery yet. Would you like to create one now?')) {
+          createGallery();
+          return;
+        }
+        return;
+      }
+      
+      // Simulate advanced photo upload interface
+      const uploadDetails = `📷 Photo Upload Interface\n\nIn the full version, this would provide:\n\n🖱️ Drag & Drop Upload\n• Bulk photo selection\n• Progress indicators\n• Thumbnail previews\n\n⚙️ Auto-Processing\n• Resize for web viewing\n• Generate thumbnails\n• Apply watermarks\n\n📱 Organization Tools\n• Auto-sort by timestamp\n• Batch rename options\n• Category tagging\n\n🎯 Quality Control\n• Duplicate detection\n• Blur/focus analysis\n• Color correction options\n\nWould you like to simulate uploading 24 photos?`;
+      
+      if (confirm(uploadDetails)) {
+        alert('📤 Upload Started!\n\nSimulating upload of 24 high-resolution photos...\n\n✅ Processing complete!\nPhotos are now available in the client gallery.');
+      }
     }
 
     function viewGallery() {
@@ -1322,7 +2450,15 @@
         return;
       }
       
-      window.open('/gallery-login.html', '_blank');
+      const clientData = sampleClientData[selectedDate];
+      if (!clientData || !clientData.hasGallery) {
+        alert('No gallery found for this session. Create a gallery first.');
+        return;
+      }
+      
+      // Open gallery in new tab with admin access
+      const galleryUrl = `/gallery.html?session=${clientData.sessionId}&admin=true`;
+      window.open(galleryUrl, '_blank');
     }
 
     function sendCredentials() {
@@ -1337,10 +2473,23 @@
         return;
       }
       
-      const sessionId = clientData.intakeData.person1.phone.slice(-4) + clientData.intakeData.person1.zip;
-      const password = clientData.intakeData.pet1.name.toLowerCase() + 'barks';
+      if (!clientData.hasGallery) {
+        alert('Please create a gallery first before sending credentials');
+        return;
+      }
       
-      alert(`📧 Email Sent!\n\nGallery access credentials sent to:\n${clientData.intakeData.person1.email}\n\nSession ID: ${sessionId}\nPassword: ${password}`);
+      const sessionId = clientData.sessionId;
+      const password = clientData.password;
+      const clientEmail = clientData.intakeData.person1.email;
+      const clientName = clientData.intakeData.person1.name;
+      const petName = clientData.intakeData.pet1.name;
+      
+      // Simulate sending email with credentials
+      const emailPreview = `📧 Email Preview\n\nTo: ${clientEmail}\nSubject: Your Pet Photography Gallery is Ready! 📸\n\n---\n\nHi ${clientName}!\n\nYour beautiful photos with ${petName} are now ready to view and download!\n\n🔗 Gallery Access:\nWebsite: ${window.location.origin}/gallery-login.html\nSession ID: ${sessionId}\nPassword: ${password}\n\n✨ Features:\n• View all your photos\n• Download high-resolution images\n• Share favorites with friends\n• Available for 90 days\n\nEnjoy your memories!\n\n📸 Picture This Pet Team`;
+      
+      if (confirm(emailPreview + '\n\n---\n\nSend this email to the client?')) {
+        alert('✅ Credentials Sent!\n\nAccess credentials have been emailed to:\n' + clientEmail + '\n\nThe client can now view and download their photos using the provided login information.');
+      }
     }
 
     // Calendar navigation
@@ -1360,6 +2509,16 @@
 
     function refreshCalendar() {
       console.log('Refreshing admin calendar...');
+      // Reset mode
+      currentMode = 'view';
+      document.querySelectorAll('.tool-btn').forEach(btn => {
+        btn.style.background = '';
+        if (btn.textContent.includes('Block')) {
+          btn.textContent = '🚫 Block Time';
+        } else if (btn.textContent.includes('Edit')) {
+          btn.textContent = '✏️ Edit Mode';
+        }
+      });
       fetchCalendarData();
     }
 
@@ -1378,12 +2537,48 @@
 
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
+      // Close modals with escape
       if (e.key === 'Escape') {
+        // Close any open modals
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+          if (modal.style.display === 'flex') {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+          }
+        });
+        
+        // Hide context menu
+        hideContextMenu();
+        
+        // Return to default panel and clear selection
         showDefaultPanel();
-        // Clear selection
         document.querySelectorAll('.calendar-day.selected').forEach(el => {
           el.classList.remove('selected');
         });
+        
+        // Reset mode
+        currentMode = 'view';
+      }
+      
+      // Quick actions
+      if (e.ctrlKey || e.metaKey) {
+        switch(e.key) {
+          case 'n':
+            e.preventDefault();
+            showAddSessionModal();
+            break;
+          case 'r':
+            e.preventDefault();
+            refreshCalendar();
+            break;
+        }
+      }
+    });
+
+    // Click outside to close context menu
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.context-menu') && !e.target.closest('.calendar-day')) {
+        hideContextMenu();
       }
     });
   </script>
