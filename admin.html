@@ -123,9 +123,9 @@
     }
     
     .logout-btn {
-      background: rgba(239, 68, 68, 0.2);
+      background: rgba(255, 255, 255, 0.1);
       color: white;
-      border: 2px solid rgba(239, 68, 68, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       padding: 0.8rem 1.5rem;
       border-radius: 8px;
       font-size: 0.95rem;
@@ -136,13 +136,18 @@
     }
 
     .logout-btn:hover {
-      background: rgba(239, 68, 68, 0.3);
-      border-color: rgba(239, 68, 68, 0.7);
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
       transform: translateY(-1px);
     }
     
     .mobile-menu-btn {
       display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
     }
 
     /* === MAIN CONTENT === */
@@ -167,41 +172,6 @@
       align-items: start;
     }
 
-    /* === PAGE HEADER === */
-    .page-header {
-      text-align: center;
-      margin-bottom: 2rem;
-      grid-column: 1 / -1;
-    }
-
-    .admin-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      color: white;
-      padding: 0.5rem 1.5rem;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .page-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .page-subtitle {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.9);
-      line-height: 1.6;
-    }
-
     /* === CALENDAR SECTION === */
     .calendar-section {
       background-image: url('assets/images/ani_bkgd_cool.png');
@@ -224,7 +194,6 @@
     }
 
     .calendar-title {
-      font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
       font-weight: 700;
       color: white;
@@ -263,7 +232,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 16px;
       overflow: hidden;
-      margin-bottom: 2rem;
+      margin-bottom: 3rem;
     }
 
     .calendar-day-header {
@@ -303,13 +272,13 @@
     .calendar-day.past {
       color: rgba(255, 255, 255, 0.3);
       background: rgba(0, 0, 0, 0.1);
+      cursor: default;
     }
 
     .calendar-day.available {
       background: rgba(16, 185, 129, 0.2);
       border: 2px solid rgba(16, 185, 129, 0.5);
       color: white;
-      position: relative;
     }
 
     .calendar-day.available::after {
@@ -326,8 +295,6 @@
       background: rgba(239, 68, 68, 0.2);
       border: 2px solid rgba(239, 68, 68, 0.5);
       color: rgba(255, 255, 255, 0.9);
-      position: relative;
-      cursor: pointer;
     }
 
     .calendar-day.booked::after {
@@ -338,16 +305,10 @@
       font-size: 0.8rem;
     }
 
-    .calendar-day.booked:hover {
-      background: rgba(239, 68, 68, 0.3);
-      border-color: rgba(239, 68, 68, 0.7);
-    }
-
     .calendar-day.soft-hold {
       background: rgba(245, 158, 11, 0.2);
       border: 2px solid rgba(245, 158, 11, 0.5);
       color: rgba(255, 255, 255, 0.9);
-      position: relative;
     }
 
     .calendar-day.soft-hold::after {
@@ -361,8 +322,8 @@
     }
 
     .calendar-day.selected {
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      border: 2px solid var(--admin-blue);
+      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
+      border: 2px solid #ec4899;
       color: white;
       transform: scale(1.05);
     }
@@ -407,11 +368,18 @@
     }
 
     .legend-dot.selected {
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      border-color: var(--admin-blue);
+      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
+      border-color: #ec4899;
     }
 
-    /* === CLIENT PANEL === */
+    /* === ADMIN PANEL === */
+    .admin-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* === CLIENT PROFILE PANEL === */
     .client-panel {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -423,70 +391,32 @@
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      height: fit-content;
-      max-height: 80vh;
-      overflow-y: auto;
+      display: none;
+    }
+
+    .client-panel.active {
+      display: block;
+    }
+
+    .panel-header {
+      text-align: center;
+      margin-bottom: 2rem;
     }
 
     .panel-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      color: white;
-    }
-
-    /* === WELCOME STATE === */
-    .welcome-state {
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .welcome-icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      opacity: 0.6;
-    }
-
-    .welcome-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .welcome-text {
-      color: rgba(255, 255, 255, 0.8);
-      line-height: 1.6;
-    }
-
-    /* === CLIENT PROFILE === */
-    .client-profile {
-      display: none;
-    }
-
-    .profile-header {
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    .profile-header h3 {
-      font-size: 1.4rem;
+      font-size: 2rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
+      color: white;
     }
 
-    .profile-header .session-date {
+    .panel-subtitle {
+      color: rgba(255, 255, 255, 0.8);
       font-size: 1rem;
-      opacity: 0.9;
     }
 
-    .profile-section {
+    .client-section {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 16px;
       padding: 1.5rem;
@@ -494,39 +424,58 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .profile-section h4 {
+    .section-title {
       font-size: 1.2rem;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: var(--gold);
+      color: white;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
-    .profile-field {
-      display: flex;
-      justify-content: space-between;
+    .client-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .info-item {
       margin-bottom: 0.8rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .profile-field:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
+    .info-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.2rem;
     }
 
-    .field-label {
+    .info-value {
+      font-size: 1rem;
+      font-weight: 500;
+      color: white;
+    }
+
+    .pet-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .pet-name {
+      font-size: 1.1rem;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.9);
-      min-width: 100px;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
     }
 
-    .field-value {
-      color: rgba(255, 255, 255, 0.8);
-      text-align: right;
-      flex: 1;
+    .pet-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      font-size: 0.9rem;
     }
 
     /* === GALLERY MANAGEMENT === */
@@ -534,64 +483,38 @@
       background: rgba(255, 255, 255, 0.05);
       border-radius: 16px;
       padding: 1.5rem;
-      margin-bottom: 1.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .gallery-section h4 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .gallery-status {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .gallery-status.no-gallery {
-      border: 2px dashed rgba(255, 255, 255, 0.3);
-    }
-
-    .gallery-status.has-gallery {
-      background: rgba(16, 185, 129, 0.2);
-      border: 1px solid rgba(16, 185, 129, 0.5);
-    }
-
     .gallery-actions {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
 
     .action-btn {
       background: rgba(255, 255, 255, 0.1);
       color: white;
       border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
       font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       text-align: center;
-      flex: 1;
-      min-width: 120px;
     }
 
     .action-btn:hover {
       background: rgba(255, 255, 255, 0.2);
       border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
     .action-btn.primary {
@@ -600,20 +523,81 @@
     }
 
     .action-btn.primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(244, 124, 44, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
-    .action-btn.success {
-      background: linear-gradient(135deg, var(--available-green), #059669);
-      border-color: var(--available-green);
+    .action-btn.gallery {
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
+      border-color: var(--admin-blue);
     }
 
-    .action-btn.success:hover {
-      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+    .action-btn.gallery:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
     }
 
-    /* === LOADING STATES === */
+    .gallery-status {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .gallery-status.no-gallery {
+      color: rgba(255, 255, 255, 0.7);
+      font-style: italic;
+    }
+
+    .gallery-status.has-gallery {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      color: white;
+    }
+
+    /* === DEFAULT STATE === */
+    .default-panel {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .default-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+    }
+
+    .default-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .default-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* === LOADING INDICATOR === */
     .loading-indicator {
       text-align: center;
       padding: 2rem;
@@ -632,7 +616,7 @@
     @media (max-width: 1200px) {
       .dashboard-container {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 2rem;
       }
     }
 
@@ -670,11 +654,6 @@
       
       .mobile-menu-btn {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
       }
 
       main {
@@ -682,16 +661,15 @@
         padding: 1rem;
       }
 
-      .page-title {
-        font-size: 2rem;
-      }
-
       .calendar-section,
-      .client-panel {
+      .client-panel,
+      .default-panel {
         padding: 2rem;
       }
 
-      .calendar-title {
+      .calendar-title,
+      .panel-title,
+      .default-title {
         font-size: 1.8rem;
       }
 
@@ -706,18 +684,20 @@
         font-size: 0.9rem;
       }
 
+      .client-info,
+      .pet-details {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-actions,
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+
       .nav-button {
         width: 40px;
         height: 40px;
         font-size: 1rem;
-      }
-
-      .gallery-actions {
-        flex-direction: column;
-      }
-
-      .action-btn {
-        min-width: auto;
       }
     }
   </style>
@@ -728,23 +708,14 @@
       <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="admin-nav">
-      <div class="admin-info" id="adminInfo">Welcome, Justin</div>
-      <button class="logout-btn" onclick="handleLogout()">Logout</button>
+      <div class="admin-info" id="adminInfo">Admin Dashboard</div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
     </nav>
     <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
     <div class="dashboard-container">
-      <!-- Page Header -->
-      <div class="page-header">
-        <div class="admin-badge">🔐 Admin Dashboard</div>
-        <h1 class="page-title">Business Management</h1>
-        <p class="page-subtitle">
-          Complete control over your photography business. Manage sessions, view client profiles, and upload galleries.
-        </p>
-      </div>
-
       <!-- Calendar Section -->
       <div class="calendar-section">
         <div class="calendar-header">
@@ -757,8 +728,8 @@
 
         <div id="calendarContainer">
           <div class="loading-indicator" id="loadingIndicator">
-            <h3>🔄 Loading Admin Calendar...</h3>
-            <p>Fetching live data from your Session Availability calendar</p>
+            <h3>🔄 Loading Calendar...</h3>
+            <p>Fetching live data from Google Calendar</p>
           </div>
         </div>
 
@@ -782,108 +753,85 @@
         </div>
       </div>
 
-      <!-- Client Panel -->
-      <div class="client-panel">
-        <!-- Welcome State -->
-        <div class="welcome-state" id="welcomeState">
-          <div class="welcome-icon">👋</div>
-          <h2 class="panel-title">Welcome, Justin!</h2>
-          <h3 class="welcome-title">Click a Session to Begin</h3>
-          <p class="welcome-text">
-            Select any booked session from the calendar to view complete client profiles, 
-            session details, and manage photo galleries.
+      <!-- Admin Panel -->
+      <div class="admin-panel">
+        <!-- Default State -->
+        <div class="default-panel" id="defaultPanel">
+          <div class="default-icon">📅</div>
+          <h2 class="default-title">Admin Dashboard</h2>
+          <p class="default-subtitle">
+            Click on any session date in the calendar to view client details, manage bookings, 
+            and create photo galleries. Your complete business management in one place.
           </p>
+          
+          <div class="quick-actions">
+            <button class="action-btn primary" onclick="window.open('https://calendar.google.com/calendar/u/0/r/week', '_blank')">
+              📅 Full Google Calendar
+            </button>
+            <button class="action-btn" onclick="refreshCalendar()">
+              🔄 Refresh Calendar
+            </button>
+            <button class="action-btn" onclick="window.open('/availability.html', '_blank')">
+              👁️ Public View
+            </button>
+            <button class="action-btn gallery" onclick="window.open('/gallery-login.html', '_blank')">
+              📸 Test Client Gallery
+            </button>
+          </div>
         </div>
 
-        <!-- Client Profile -->
-        <div class="client-profile" id="clientProfile">
-          <div class="profile-header">
-            <h3 id="profileClientName">Loading...</h3>
-            <div class="session-date" id="profileSessionDate">Session Date</div>
+        <!-- Client Profile Panel -->
+        <div class="client-panel" id="clientPanel">
+          <div class="panel-header">
+            <h2 class="panel-title" id="sessionTitle">Session Details</h2>
+            <p class="panel-subtitle" id="sessionDate">Select a session to view details</p>
           </div>
 
-          <!-- Session Details -->
-          <div class="profile-section">
-            <h4>📅 Session Information</h4>
-            <div class="profile-field">
-              <span class="field-label">Type:</span>
-              <span class="field-value" id="sessionType">-</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Location:</span>
-              <span class="field-value" id="sessionLocation">-</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Time:</span>
-              <span class="field-value" id="sessionTime">-</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Pet Count:</span>
-              <span class="field-value" id="petCount">-</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">People Count:</span>
-              <span class="field-value" id="peopleCount">-</span>
-            </div>
-          </div>
-
-          <!-- Client Contact -->
-          <div class="profile-section">
-            <h4>👤 Client Contact</h4>
-            <div class="profile-field">
-              <span class="field-label">Name:</span>
-              <span class="field-value" id="clientName">-</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Email:</span>
-              <span class="field-value" id="clientEmail">-</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Phone:</span>
-              <span class="field-value" id="clientPhone">-</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Zip Code:</span>
-              <span class="field-value" id="clientZip">-</span>
+          <!-- Client Information -->
+          <div class="client-section">
+            <h3 class="section-title">👤 Client Information</h3>
+            <div class="client-info" id="clientInfo">
+              <!-- Will be populated dynamically -->
             </div>
           </div>
 
           <!-- Pet Information -->
-          <div class="profile-section">
-            <h4>🐕 Pet Information</h4>
-            <div id="petDetails">
-              <!-- Pet details will be populated here -->
+          <div class="client-section">
+            <h3 class="section-title">🐕 Pet Information</h3>
+            <div id="petInfo">
+              <!-- Will be populated dynamically -->
             </div>
           </div>
 
-          <!-- Session Preferences -->
-          <div class="profile-section">
-            <h4>📝 Session Notes</h4>
-            <div class="profile-field">
-              <span class="field-label">Photo Style:</span>
-              <span class="field-value" id="photoStyle">-</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Special Requests:</span>
-              <span class="field-value" id="specialRequests">-</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Referral Source:</span>
-              <span class="field-value" id="referralSource">-</span>
+          <!-- Session Details -->
+          <div class="client-section">
+            <h3 class="section-title">📋 Session Details</h3>
+            <div class="client-info" id="sessionInfo">
+              <!-- Will be populated dynamically -->
             </div>
           </div>
 
           <!-- Gallery Management -->
-          <div class="gallery-section">
-            <h4>📸 Gallery Management</h4>
-            <div class="gallery-status no-gallery" id="galleryStatus">
-              <div>📁 No Gallery Created</div>
-              <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Ready to upload photos and create client gallery</div>
-            </div>
-            <div class="gallery-actions">
-              <button class="action-btn primary" onclick="createGallery()">Create Gallery</button>
-              <button class="action-btn" onclick="uploadPhotos()">Upload Photos</button>
-              <button class="action-btn success" onclick="sendGalleryAccess()">Send Access</button>
+          <div class="client-section">
+            <h3 class="section-title">📸 Gallery Management</h3>
+            <div class="gallery-section">
+              <div class="gallery-actions">
+                <button class="action-btn gallery" onclick="createGallery()">
+                  ➕ Create Gallery
+                </button>
+                <button class="action-btn" onclick="uploadPhotos()">
+                  📷 Upload Photos
+                </button>
+                <button class="action-btn" onclick="viewGallery()">
+                  👁️ View Gallery
+                </button>
+                <button class="action-btn primary" onclick="sendCredentials()">
+                  📧 Send Access
+                </button>
+              </div>
+              <div class="gallery-status" id="galleryStatus">
+                <p>No gallery created yet for this session</p>
+              </div>
             </div>
           </div>
         </div>
@@ -892,43 +840,38 @@
   </main>
 
   <script>
-    // Check authentication
-    function checkAuth() {
-      const adminSession = localStorage.getItem('adminSession');
-      if (!adminSession) {
+    // Authentication check
+    function checkAuthentication() {
+      const isAuthenticated = localStorage.getItem('adminAuthenticated');
+      const loginTime = localStorage.getItem('adminLoginTime');
+      const adminUser = localStorage.getItem('adminUser');
+      
+      if (!isAuthenticated || !loginTime || !adminUser) {
         window.location.href = '/admin-login.html';
         return false;
       }
       
-      try {
-        const session = JSON.parse(adminSession);
-        const loginTime = new Date(session.loginTime);
-        const now = new Date();
-        const hoursSinceLogin = (now - loginTime) / (1000 * 60 * 60);
-        
-        // Session expires after 8 hours
-        if (hoursSinceLogin >= 8) {
-          localStorage.removeItem('adminSession');
-          window.location.href = '/admin-login.html';
-          return false;
-        }
-        
-        // Update admin info
-        document.getElementById('adminInfo').textContent = `Welcome, ${session.username}`;
-        return true;
-      } catch (e) {
-        localStorage.removeItem('adminSession');
-        window.location.href = '/admin-login.html';
+      // Check if session is still valid (24 hours)
+      const loginDate = new Date(loginTime);
+      const now = new Date();
+      const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
+      
+      if (hoursDiff >= 24) {
+        logout();
         return false;
       }
+      
+      // Update admin info display
+      document.getElementById('adminInfo').textContent = `Welcome, ${adminUser}`;
+      return true;
     }
 
-    // Handle logout
-    function handleLogout() {
-      if (confirm('Are you sure you want to logout?')) {
-        localStorage.removeItem('adminSession');
-        window.location.href = '/admin-login.html';
-      }
+    // Logout function
+    function logout() {
+      localStorage.removeItem('adminAuthenticated');
+      localStorage.removeItem('adminUser');
+      localStorage.removeItem('adminLoginTime');
+      window.location.href = '/admin-login.html';
     }
 
     // Mobile menu toggle
@@ -937,117 +880,56 @@
       nav.classList.toggle('active');
     }
 
-    // Calendar variables
+    // Calendar state
     let currentMonth = new Date();
     let selectedDate = null;
     let selectedDateElement = null;
-    
-    // Calendar data - will be populated from iCal feed + mock data
+    let calendarEvents = [];
     let bookedDates = [];
     let softHoldDates = [];
-    let calendarEvents = [];
     let calendarLoaded = false;
-    
-    // Mock client data for demo (in production, this would come from your database)
-    const mockClientData = {
-      "2024-12-15": {
+
+    // Sample client data (in real app, this would come from database/API)
+    const sampleClientData = {
+      '2024-12-15': {
         sessionData: {
-          session: "Full Session",
-          park: "Cheesman Park", 
-          selectedDateTime: "2024-12-15T18:00:00",
-          petCount: "2",
-          peopleCount: "1"
+          session: 'Full Session',
+          park: 'Cheesman Park',
+          selectedDateTime: '2024-12-15T18:00:00',
+          petCount: '2',
+          peopleCount: '1'
         },
         intakeData: {
           person1: {
-            name: "Sarah Johnson",
-            email: "sarah.johnson@email.com",
-            phone: "303-555-0123",
-            zip: "80206"
+            name: 'Sarah Johnson',
+            email: 'sarah.johnson@email.com',
+            phone: '303-555-0123',
+            zip: '80206'
           },
           pet1: {
-            name: "Buffy",
-            age: "3",
-            gender: "Female",
-            behavior: "Friendly but shy around strangers",
-            offLeash: "yes",
-            favoriteToy: "Tennis ball"
+            name: 'Buffy',
+            age: '3',
+            gender: 'Female',
+            behavior: 'Friendly and energetic, loves to play fetch',
+            offLeash: 'yes',
+            favoriteToy: 'Tennis ball'
           },
           pet2: {
-            name: "Max", 
-            age: "5",
-            gender: "Male",
-            behavior: "Very energetic, loves attention",
-            offLeash: "yes",
-            favoriteToy: "Frisbee"
+            name: 'Max',
+            age: '5',
+            gender: 'Male', 
+            behavior: 'Calm and well-behaved, good with commands',
+            offLeash: 'yes',
+            favoriteToy: 'Rope toy'
           },
-          specialRequests: "Please be patient with Buffy - she needs time to warm up",
-          photoStyle: "both",
-          referralSource: "Instagram"
+          specialRequests: 'Buffy can be shy at first, Max is great with directions',
+          photoStyle: 'both'
         },
-        galleryStatus: "none" // none, created, uploaded, sent
-      },
-      "2024-12-22": {
-        sessionData: {
-          session: "Mini Session",
-          park: "City Park",
-          selectedDateTime: "2024-12-22T18:00:00", 
-          petCount: "1",
-          peopleCount: "2"
-        },
-        intakeData: {
-          person1: {
-            name: "Mike & Lisa Chen",
-            email: "mike.chen@email.com",
-            phone: "720-555-0456",
-            zip: "80204"
-          },
-          pet1: {
-            name: "Luna",
-            age: "2", 
-            gender: "Female",
-            behavior: "Very social and loves everyone",
-            offLeash: "no",
-            favoriteToy: "Rope toy"
-          },
-          specialRequests: "Looking for holiday card photos",
-          photoStyle: "posed",
-          referralSource: "Google Search"
-        },
-        galleryStatus: "created"
-      },
-      "2025-01-05": {
-        sessionData: {
-          session: "Full Session",
-          park: "Cheesman Park",
-          selectedDateTime: "2025-01-05T18:00:00",
-          petCount: "1", 
-          peopleCount: "1"
-        },
-        intakeData: {
-          person1: {
-            name: "Emma Rodriguez",
-            email: "emma.r@email.com", 
-            phone: "303-555-0789",
-            zip: "80210"
-          },
-          pet1: {
-            name: "Charlie",
-            age: "1",
-            gender: "Male", 
-            behavior: "Puppy energy, very playful",
-            offLeash: "no",
-            favoriteToy: "Squeaky duck"
-          },
-          specialRequests: "First professional photos - want to capture his personality",
-          photoStyle: "candid",
-          referralSource: "Friend/Family"
-        },
-        galleryStatus: "uploaded"
+        hasGallery: false
       }
     };
 
-    // Your Session Availability calendar feed (same as availability page)
+    // Calendar data source
     const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
 
     // Parse iCal data (same as availability page)
@@ -1128,8 +1010,13 @@
       } catch (error) {
         console.error('Error fetching admin calendar data:', error);
         console.log('Using fallback data for admin...');
-        // Fallback data with mock sessions
-        bookedDates = ["2024-12-15", "2024-12-22", "2024-12-29", "2025-01-05"];
+        // Fallback data
+        bookedDates = [
+          "2024-12-15",
+          "2024-12-22", 
+          "2024-12-29",
+          "2025-01-05"
+        ];
         calendarLoaded = true;
         generateCalendar();
       }
@@ -1157,18 +1044,11 @@
         }
       });
       
-      // Add mock session dates if not already present
-      ["2024-12-15", "2024-12-22", "2025-01-05"].forEach(date => {
-        if (!bookedDates.includes(date)) {
-          bookedDates.push(date);
-        }
-      });
-      
       console.log('Admin processed booked dates:', bookedDates);
       console.log('Admin processed soft hold dates:', softHoldDates);
     }
 
-    // Generate calendar (same as availability but with admin click handlers)
+    // Generate calendar (using exact same logic as availability page)
     function generateCalendar() {
       const container = document.getElementById('calendarContainer');
       const title = document.getElementById('calendarTitle');
@@ -1223,10 +1103,8 @@
         const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const dayDate = new Date(year, month, day);
         
-        // Add click handler for admin functionality - only for booked sessions
-        if (bookedDates.includes(dateString)) {
-          dayElement.onclick = () => selectSession(dateString, dayElement);
-        }
+        // Add click handler for admin functionality
+        dayElement.onclick = () => selectDate(dateString, dayElement, dayDate);
         
         // Mark past dates
         if (dayDate < new Date()) {
@@ -1252,8 +1130,8 @@
       console.log('Admin calendar generated successfully');
     }
 
-    // Select session for admin view
-    function selectSession(dateString, element) {
+    // Select date and show client profile
+    function selectDate(dateString, element, dateObj) {
       // Remove previous selection
       document.querySelectorAll('.calendar-day.selected').forEach(el => {
         el.classList.remove('selected');
@@ -1265,236 +1143,207 @@
       selectedDate = dateString;
       selectedDateElement = element;
       
-      // Load client profile
-      loadClientProfile(dateString);
+      // Check if this date has a session
+      if (bookedDates.includes(dateString)) {
+        showClientProfile(dateString);
+      } else {
+        showDefaultPanel();
+      }
       
-      console.log('Admin selected session:', dateString);
+      console.log('Admin selected date:', dateString);
     }
 
-    // Load client profile data
-    function loadClientProfile(dateString) {
-      const clientData = mockClientData[dateString];
+    // Show client profile for selected session
+    function showClientProfile(dateString) {
+      const clientData = sampleClientData[dateString];
       
       if (!clientData) {
-        // No client data for this date
-        document.getElementById('welcomeState').style.display = 'block';
-        document.getElementById('clientProfile').style.display = 'none';
+        showDefaultPanel();
         return;
       }
       
-      // Hide welcome, show profile
-      document.getElementById('welcomeState').style.display = 'none';
-      document.getElementById('clientProfile').style.display = 'block';
+      // Hide default panel, show client panel
+      document.getElementById('defaultPanel').style.display = 'none';
+      document.getElementById('clientPanel').classList.add('active');
       
-      const { sessionData, intakeData, galleryStatus } = clientData;
-      
-      // Update profile header
-      document.getElementById('profileClientName').textContent = intakeData.person1.name;
-      const sessionDate = new Date(sessionData.selectedDateTime);
-      document.getElementById('profileSessionDate').textContent = sessionDate.toLocaleDateString('en-US', {
+      // Update session header
+      const sessionDate = new Date(dateString);
+      document.getElementById('sessionTitle').textContent = `${clientData.sessionData.session}`;
+      document.getElementById('sessionDate').textContent = sessionDate.toLocaleDateString('en-US', {
         weekday: 'long',
-        year: 'numeric', 
+        year: 'numeric',
         month: 'long',
         day: 'numeric'
-      });
+      }) + ' at 6:00 PM';
       
-      // Update session details
-      document.getElementById('sessionType').textContent = sessionData.session;
-      document.getElementById('sessionLocation').textContent = sessionData.park;
-      document.getElementById('sessionTime').textContent = sessionDate.toLocaleTimeString('en-US', {
-        hour: 'numeric',
-        minute: '2-digit'
-      });
-      document.getElementById('petCount').textContent = sessionData.petCount;
-      document.getElementById('peopleCount').textContent = sessionData.peopleCount;
-      
-      // Update client contact
-      document.getElementById('clientName').textContent = intakeData.person1.name;
-      document.getElementById('clientEmail').textContent = intakeData.person1.email;
-      document.getElementById('clientPhone').textContent = intakeData.person1.phone;
-      document.getElementById('clientZip').textContent = intakeData.person1.zip;
-      
-      // Update pet details
-      const petDetails = document.getElementById('petDetails');
-      petDetails.innerHTML = '';
-      
-      // Pet 1
-      const pet1Html = `
-        <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
-          <div style="font-weight: 600; color: var(--gold); margin-bottom: 0.5rem;">${intakeData.pet1.name}</div>
-          <div class="profile-field">
-            <span class="field-label">Age:</span>
-            <span class="field-value">${intakeData.pet1.age} years</span>
-          </div>
-          <div class="profile-field">
-            <span class="field-label">Gender:</span>
-            <span class="field-value">${intakeData.pet1.gender}</span>
-          </div>
-          <div class="profile-field">
-            <span class="field-label">Behavior:</span>
-            <span class="field-value">${intakeData.pet1.behavior}</span>
-          </div>
-          <div class="profile-field">
-            <span class="field-label">Off-Leash:</span>
-            <span class="field-value">${intakeData.pet1.offLeash === 'yes' ? 'Yes' : 'No'}</span>
-          </div>
-          <div class="profile-field">
-            <span class="field-label">Favorite Toy:</span>
-            <span class="field-value">${intakeData.pet1.favoriteToy}</span>
-          </div>
+      // Populate client information
+      const clientInfo = document.getElementById('clientInfo');
+      const person1 = clientData.intakeData.person1;
+      clientInfo.innerHTML = `
+        <div class="info-item">
+          <div class="info-label">Name</div>
+          <div class="info-value">${person1.name}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Email</div>
+          <div class="info-value">${person1.email}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Phone</div>
+          <div class="info-value">${person1.phone}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Zip Code</div>
+          <div class="info-value">${person1.zip}</div>
         </div>
       `;
-      petDetails.innerHTML += pet1Html;
       
-      // Pet 2 (if exists)
-      if (intakeData.pet2 && intakeData.pet2.name) {
-        const pet2Html = `
-          <div>
-            <div style="font-weight: 600; color: var(--gold); margin-bottom: 0.5rem;">${intakeData.pet2.name}</div>
-            <div class="profile-field">
-              <span class="field-label">Age:</span>
-              <span class="field-value">${intakeData.pet2.age} years</span>
+      // Populate pet information
+      const petInfo = document.getElementById('petInfo');
+      let petHtml = '';
+      
+      if (clientData.intakeData.pet1) {
+        const pet1 = clientData.intakeData.pet1;
+        petHtml += `
+          <div class="pet-card">
+            <div class="pet-name">${pet1.name}</div>
+            <div class="pet-details">
+              <div><strong>Age:</strong> ${pet1.age}</div>
+              <div><strong>Gender:</strong> ${pet1.gender}</div>
+              <div><strong>Off-leash:</strong> ${pet1.offLeash}</div>
+              <div><strong>Toy:</strong> ${pet1.favoriteToy}</div>
             </div>
-            <div class="profile-field">
-              <span class="field-label">Gender:</span>
-              <span class="field-value">${intakeData.pet2.gender}</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Behavior:</span>
-              <span class="field-value">${intakeData.pet2.behavior}</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Off-Leash:</span>
-              <span class="field-value">${intakeData.pet2.offLeash === 'yes' ? 'Yes' : 'No'}</span>
-            </div>
-            <div class="profile-field">
-              <span class="field-label">Favorite Toy:</span>
-              <span class="field-value">${intakeData.pet2.favoriteToy}</span>
+            <div style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+              <strong>Behavior:</strong> ${pet1.behavior}
             </div>
           </div>
         `;
-        petDetails.innerHTML += pet2Html;
       }
       
-      // Update session preferences  
-      document.getElementById('photoStyle').textContent = intakeData.photoStyle || '-';
-      document.getElementById('specialRequests').textContent = intakeData.specialRequests || 'None';
-      document.getElementById('referralSource').textContent = intakeData.referralSource || '-';
+      if (clientData.intakeData.pet2) {
+        const pet2 = clientData.intakeData.pet2;
+        petHtml += `
+          <div class="pet-card">
+            <div class="pet-name">${pet2.name}</div>
+            <div class="pet-details">
+              <div><strong>Age:</strong> ${pet2.age}</div>
+              <div><strong>Gender:</strong> ${pet2.gender}</div>
+              <div><strong>Off-leash:</strong> ${pet2.offLeash}</div>
+              <div><strong>Toy:</strong> ${pet2.favoriteToy}</div>
+            </div>
+            <div style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+              <strong>Behavior:</strong> ${pet2.behavior}
+            </div>
+          </div>
+        `;
+      }
+      
+      petInfo.innerHTML = petHtml;
+      
+      // Populate session details
+      const sessionInfo = document.getElementById('sessionInfo');
+      sessionInfo.innerHTML = `
+        <div class="info-item">
+          <div class="info-label">Session Type</div>
+          <div class="info-value">${clientData.sessionData.session}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Location</div>
+          <div class="info-value">${clientData.sessionData.park}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Photo Style</div>
+          <div class="info-value">${clientData.intakeData.photoStyle}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Special Requests</div>
+          <div class="info-value">${clientData.intakeData.specialRequests || 'None'}</div>
+        </div>
+      `;
       
       // Update gallery status
-      updateGalleryStatus(galleryStatus);
+      const galleryStatus = document.getElementById('galleryStatus');
+      if (clientData.hasGallery) {
+        galleryStatus.className = 'gallery-status has-gallery';
+        galleryStatus.innerHTML = `
+          <p>✅ Gallery created with 24 photos</p>
+          <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            Access: ${person1.phone.slice(-4)}${person1.zip} / ${clientData.intakeData.pet1.name.toLowerCase()}barks
+          </p>
+        `;
+      } else {
+        galleryStatus.className = 'gallery-status no-gallery';
+        galleryStatus.innerHTML = '<p>No gallery created yet for this session</p>';
+      }
     }
 
-    // Update gallery status display
-    function updateGalleryStatus(status) {
-      const galleryStatusEl = document.getElementById('galleryStatus');
-      
-      switch(status) {
-        case 'none':
-          galleryStatusEl.className = 'gallery-status no-gallery';
-          galleryStatusEl.innerHTML = `
-            <div>📁 No Gallery Created</div>
-            <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Ready to upload photos and create client gallery</div>
-          `;
-          break;
-        case 'created':
-          galleryStatusEl.className = 'gallery-status has-gallery';
-          galleryStatusEl.innerHTML = `
-            <div>✅ Gallery Created</div>
-            <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Gallery exists but no photos uploaded yet</div>
-          `;
-          break;
-        case 'uploaded':
-          galleryStatusEl.className = 'gallery-status has-gallery';
-          galleryStatusEl.innerHTML = `
-            <div>📸 Photos Uploaded</div>
-            <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Gallery ready to send to client</div>
-          `;
-          break;
-        case 'sent':
-          galleryStatusEl.className = 'gallery-status has-gallery';
-          galleryStatusEl.innerHTML = `
-            <div>✉️ Access Sent</div>
-            <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Client has been notified and can access gallery</div>
-          `;
-          break;
-      }
+    // Show default panel
+    function showDefaultPanel() {
+      document.getElementById('clientPanel').classList.remove('active');
+      document.getElementById('defaultPanel').style.display = 'block';
     }
 
     // Gallery management functions
     function createGallery() {
       if (!selectedDate) {
-        alert('Please select a session first');
+        alert('Please select a session date first');
         return;
       }
       
-      const clientData = mockClientData[selectedDate];
+      const clientData = sampleClientData[selectedDate];
       if (!clientData) {
         alert('No client data found for this session');
         return;
       }
       
-      const clientName = clientData.intakeData.person1.name;
-      const petNames = [clientData.intakeData.pet1.name];
-      if (clientData.intakeData.pet2?.name) {
-        petNames.push(clientData.intakeData.pet2.name);
-      }
-      
-      // Generate session credentials (demo)
-      const phone = clientData.intakeData.person1.phone;
-      const zip = clientData.intakeData.person1.zip;
-      const sessionId = phone.slice(-4) + zip; // Last 4 of phone + zip
+      const sessionId = clientData.intakeData.person1.phone.slice(-4) + clientData.intakeData.person1.zip;
       const password = clientData.intakeData.pet1.name.toLowerCase() + 'barks';
       
-      const message = `🎉 Gallery Created Successfully!\n\nClient: ${clientName}\nSession: ${selectedDate}\nPets: ${petNames.join(', ')}\n\nCredentials Generated:\nSession ID: ${sessionId}\nPassword: ${password}\n\nNext steps:\n1. Upload photos\n2. Send access details to client`;
+      alert(`🎉 Gallery Created!\n\nSession ID: ${sessionId}\nPassword: ${password}\n\nClients can now access their gallery with these credentials.`);
       
-      alert(message);
-      
-      // Update status
-      mockClientData[selectedDate].galleryStatus = 'created';
-      updateGalleryStatus('created');
+      // Update gallery status
+      clientData.hasGallery = true;
+      showClientProfile(selectedDate);
     }
 
     function uploadPhotos() {
       if (!selectedDate) {
-        alert('Please select a session first');
+        alert('Please select a session date first');
         return;
       }
       
-      alert('📸 Photo Upload Interface\n\nIn the full system, this would open:\n• Drag-and-drop photo upload\n• Batch processing and optimization\n• Automatic gallery organization\n• Progress tracking\n\nFor now, this is a demo placeholder.');
-      
-      // Update status to uploaded
-      if (mockClientData[selectedDate]) {
-        mockClientData[selectedDate].galleryStatus = 'uploaded';
-        updateGalleryStatus('uploaded');
-      }
+      // Simulate file upload dialog
+      alert('📸 Photo Upload\n\nIn the full version, this would open a drag-and-drop interface for uploading session photos. Features would include:\n\n• Bulk photo upload\n• Auto-resizing and optimization\n• Watermark removal for downloads\n• Automatic gallery organization');
     }
 
-    function sendGalleryAccess() {
+    function viewGallery() {
       if (!selectedDate) {
-        alert('Please select a session first');
+        alert('Please select a session date first');
         return;
       }
       
-      const clientData = mockClientData[selectedDate];
+      window.open('/gallery-login.html', '_blank');
+    }
+
+    function sendCredentials() {
+      if (!selectedDate) {
+        alert('Please select a session date first');
+        return;
+      }
+      
+      const clientData = sampleClientData[selectedDate];
       if (!clientData) {
         alert('No client data found for this session');
         return;
       }
       
-      const clientEmail = clientData.intakeData.person1.email;
-      const clientName = clientData.intakeData.person1.name;
+      const sessionId = clientData.intakeData.person1.phone.slice(-4) + clientData.intakeData.person1.zip;
+      const password = clientData.intakeData.pet1.name.toLowerCase() + 'barks';
       
-      const message = `✉️ Gallery Access Email Sent!\n\nTo: ${clientEmail}\nSubject: Your Pet Photography Gallery is Ready!\n\nThe email contains:\n• Gallery login link\n• Session credentials\n• Download instructions\n• Contact information\n\n${clientName} will be notified immediately.`;
-      
-      alert(message);
-      
-      // Update status
-      mockClientData[selectedDate].galleryStatus = 'sent';
-      updateGalleryStatus('sent');
+      alert(`📧 Email Sent!\n\nGallery access credentials sent to:\n${clientData.intakeData.person1.email}\n\nSession ID: ${sessionId}\nPassword: ${password}`);
     }
 
-    // Navigation functions
+    // Calendar navigation
     function previousMonth() {
       currentMonth.setMonth(currentMonth.getMonth() - 1);
       if (calendarLoaded) {
@@ -1509,24 +1358,34 @@
       }
     }
 
+    function refreshCalendar() {
+      console.log('Refreshing admin calendar...');
+      fetchCalendarData();
+    }
+
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Admin dashboard loaded, checking authentication...');
+      console.log('Admin dashboard loaded, initializing...');
       
       // Check authentication first
-      if (!checkAuth()) {
+      if (!checkAuthentication()) {
         return;
       }
       
-      console.log('Authentication verified, initializing dashboard...');
+      // Fetch calendar data
       fetchCalendarData();
     });
 
-    // Auto session refresh
-    setInterval(function() {
-      // Refresh session if still valid
-      checkAuth();
-    }, 300000); // Check every 5 minutes
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        showDefaultPanel();
+        // Clear selection
+        document.querySelectorAll('.calendar-day.selected').forEach(el => {
+          el.classList.remove('selected');
+        });
+      }
+    });
   </script>
 </body>
 </html>
