@@ -4,17 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Booking Confirmed | Picture This Pet</title>
-  <meta name="description" content="Your pet photography session has been successfully booked! Get ready for amazing photos of your furry friends.">
-  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+  <meta name="description" content="Your pet photography session has been successfully booked with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
-  <!-- Include Airtable Integration -->
-  <script src="airtable-integration.js"></script>
-
   <style>
-    /* [Keep all existing CSS styles from the previous success page - they're perfect] */
     :root {
       --orange: #F47C2C;
       --gold: #FDB75E;
@@ -66,12 +61,6 @@
       }
     }
 
-    @keyframes celebrateSuccess {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
     /* === HEADER STYLES === */
     header {
       width: 100%;
@@ -79,7 +68,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-image: url("assets/images/ani_bkgd_cool.png");
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
@@ -166,24 +155,6 @@
       transform: scale(1.1);
     }
 
-    .social-icons {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-left: 1rem;
-    }
-
-    .social-icon {
-      color: white;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .social-icon:hover {
-      color: var(--gold);
-      transform: scale(1.1);
-    }
-
     /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
@@ -198,13 +169,8 @@
 
     /* === SUCCESS SECTION === */
     .success-section {
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
-      text-align: center;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .success-header {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -215,208 +181,85 @@
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 2rem;
-      animation: celebrateSuccess 2s ease-in-out;
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
     }
 
-    .success-icon {
-      font-size: 4rem;
-      color: var(--available-green);
-      margin-bottom: 1rem;
-      animation: celebrateSuccess 2s ease-in-out infinite;
-    }
-
-    .success-header h1 {
+    .success-section h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
       color: white;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .success-header p {
-      font-size: 1.3rem;
+    .success-section p {
+      font-size: 1.2rem;
       line-height: 1.6;
+      margin-bottom: 1.5rem;
       color: rgba(255, 255, 255, 0.9);
+    }
+
+    .confirmation-details {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
       margin-bottom: 2rem;
-    }
-
-    .booking-id {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      padding: 1rem;
-      font-family: 'Courier New', monospace;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 1px;
-    }
-
-    .status-indicator {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-top: 1rem;
-    }
-
-    .status-indicator.airtable-success {
-      background: rgba(16, 185, 129, 0.2);
-      border: 1px solid rgba(16, 185, 129, 0.5);
-      color: #10b981;
-    }
-
-    .status-indicator.local-fallback {
-      background: rgba(245, 158, 11, 0.2);
-      border: 1px solid rgba(245, 158, 11, 0.5);
-      color: #f59e0b;
-    }
-
-    /* === BOOKING DETAILS === */
-    .booking-details {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .detail-card {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
-      color: white;
-      backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: left;
     }
 
-    .detail-card h3 {
-      font-family: 'Playfair Display', serif;
+    .confirmation-details h3 {
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: white;
-      text-align: center;
-    }
-
-    .detail-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.8rem;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .detail-item:last-child {
-      border-bottom: none;
-    }
-
-    .detail-label {
-      color: rgba(255, 255, 255, 0.8);
-      font-weight: 500;
-    }
-
-    .detail-value {
-      color: white;
-      font-weight: 600;
-      text-align: right;
-    }
-
-    /* === NEXT STEPS === */
-    .next-steps {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 2rem;
-    }
-
-    .next-steps h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      color: white;
-    }
-
-    .steps-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .steps-list li {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    .step-number {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      margin-right: 1rem;
-      flex-shrink: 0;
-    }
-
-    /* === SOCIAL SHARING === */
-    .social-sharing {
-      text-align: center;
-      margin-top: 2rem;
-    }
-
-    .social-sharing h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
       color: rgba(255, 255, 255, 0.9);
     }
 
-    .social-buttons {
+    .confirmation-item {
       display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .social-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
     }
 
-    .social-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
+    .confirmation-item .label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .confirmation-item .value {
+      color: white;
+      font-weight: 600;
+    }
+
+    .gallery-access {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .gallery-access h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--available-green);
+    }
+
+    .gallery-access p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .gallery-access .credential {
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .success-actions {
+      margin-top: 2rem;
     }
 
     .home-btn {
@@ -431,7 +274,6 @@
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
-      margin-top: 2rem;
     }
 
     .home-btn:hover {
@@ -439,26 +281,61 @@
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
-    /* === ERROR STATE === */
-    .error-state {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
+    /* === POP-UP STYLES === */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
       border-radius: 16px;
       padding: 2rem;
+      max-width: 500px;
+      width: 90%;
       text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .popup-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
       color: white;
-      margin: 2rem 0;
     }
 
-    .error-state h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #ef4444;
+    .popup-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
     }
 
-    .error-state p {
-      margin-bottom: 1rem;
-      opacity: 0.9;
+    .popup-content button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .popup-content button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
     /* === FOOTER STYLES === */
@@ -596,74 +473,67 @@
       .mobile-menu-btn {
         display: block;
       }
-
-      .social-icons {
-        gap: 0.5rem;
-        margin-left: 0.5rem;
-      }
-
-      .social-icon {
-        font-size: 1.2rem;
-      }
       
       main {
         margin-top: 80px;
         padding: 2rem 1rem;
       }
 
-      .success-header {
+      .success-section {
         padding: 2rem;
       }
 
-      .success-header h1 {
+      .success-section h2 {
         font-size: 2rem;
       }
 
-      .success-header p {
-        font-size: 1.1rem;
-      }
-
-      .success-icon {
-        font-size: 3rem;
-      }
-
-      .booking-details {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      .detail-card {
-        padding: 1.5rem;
-      }
-
-      .detail-card h3 {
-        font-size: 1.3rem;
-      }
-
-      .next-steps {
-        padding: 2rem;
-      }
-
-      .next-steps h2 {
-        font-size: 1.8rem;
-      }
-
-      .steps-list li {
+      .success-section p {
         font-size: 1rem;
       }
 
-      .social-buttons {
-        flex-direction: column;
-        align-items: center;
+      .confirmation-details {
+        padding: 1rem;
       }
 
-      .social-btn {
-        width: 200px;
-        justify-content: center;
+      .confirmation-details h3 {
+        font-size: 1.3rem;
+      }
+
+      .confirmation-item {
+        font-size: 0.9rem;
+      }
+
+      .gallery-access {
+        padding: 1rem;
+      }
+
+      .gallery-access h3 {
+        font-size: 1.3rem;
+      }
+
+      .gallery-access p {
+        font-size: 0.9rem;
       }
 
       .home-btn {
         padding: 0.8rem 2rem;
+        font-size: 1rem;
+      }
+
+      .popup-content {
+        padding: 1.5rem;
+      }
+
+      .popup-content h3 {
+        font-size: 1.5rem;
+      }
+
+      .popup-content p {
+        font-size: 1rem;
+      }
+
+      .popup-content button {
+        padding: 0.6rem 1.5rem;
         font-size: 1rem;
       }
 
@@ -702,76 +572,68 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/#session-builder-section" class="book-btn" aria-label="Book a session">Book Now</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
-    <div class="social-icons">
-      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
-        <i class="fab fa-instagram social-icon"></i>
-      </a>
-    </div>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
+    <!-- Success Section -->
     <div class="success-section">
-      <!-- Success Header -->
-      <div class="success-header">
-        <div class="success-icon">🎉</div>
-        <h1>Booking Confirmed!</h1>
-        <p>Your pet photography session has been successfully booked. We can't wait to capture amazing photos of your furry friends!</p>
-        <div class="booking-id" id="bookingIdDisplay">Booking ID: Loading...</div>
-        <div class="status-indicator" id="statusIndicator">Processing...</div>
-      </div>
-
-      <!-- Booking Details -->
-      <div class="booking-details" id="bookingDetails">
-        <!-- Will be populated by JavaScript -->
-      </div>
-
-      <!-- Next Steps -->
-      <div class="next-steps">
-        <h2>What Happens Next?</h2>
-        <ul class="steps-list">
-          <li>
-            <span class="step-number">1</span>
-            <span>You'll receive a confirmation email with all your session details within the next few minutes.</span>
-          </li>
-          <li>
-            <span class="step-number">2</span>
-            <span>Our photographer will contact you 24-48 hours before your session to confirm details and weather conditions.</span>
-          </li>
-          <li>
-            <span class="step-number">3</span>
-            <span>Arrive at your selected location on time with your pet(s) and any favorite toys or treats.</span>
-          </li>
-          <li>
-            <span class="step-number">4</span>
-            <span>Your edited photos will be delivered within 14 business days via email download link.</span>
-          </li>
-        </ul>
-
-        <!-- Social Sharing -->
-        <div class="social-sharing">
-          <h3>Share Your Excitement!</h3>
-          <div class="social-buttons">
-            <a href="https://instagram.com/picturethispet" target="_blank" class="social-btn">
-              📸 Follow Us on Instagram
-            </a>
-            <a href="mailto:info@picturethispet.co" class="social-btn">
-              📧 Contact Us
-            </a>
+      <h2>Booking Confirmed!</h2>
+      <p>Thank you for booking your pet photography session with Picture This Pet. We’re excited to capture your special moments!</p>
+      
+      <div class="confirmation-details">
+        <h3>Booking Details</h3>
+        <div id="confirmationDetails">
+          <div class="confirmation-item">
+            <span class="label">Session Type:</span>
+            <span class="value" id="sessionType">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Location:</span>
+            <span class="value" id="sessionLocation">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Date & Time:</span>
+            <span class="value" id="sessionDateTime">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Pets:</span>
+            <span class="value" id="petCount">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">People:</span>
+            <span class="value" id="peopleCount">—</span>
+          </div>
+          <div class="confirmation-item">
+            <span class="label">Total Paid:</span>
+            <span class="value" id="totalPaid">$0</span>
           </div>
         </div>
-
-        <a href="/" class="home-btn">Return to Home</a>
       </div>
 
-      <!-- Error State (Hidden by default) -->
-      <div class="error-state" id="errorState" style="display: none;">
-        <h3>Booking Data Not Found</h3>
-        <p>We couldn't retrieve your booking details, but your payment was processed successfully.</p>
-        <p>Please check your email for confirmation or contact us directly.</p>
-        <a href="mailto:info@picturethispet.co" class="home-btn">Contact Support</a>
+      <div class="gallery-access">
+        <h3>Gallery Access</h3>
+        <p>Your photos will be available in a private gallery after the session. Use the credentials below to access your gallery:</p>
+        <p><strong>Username:</strong> <span class="credential" id="galleryUsername">—</span></p>
+        <p><strong>Password:</strong> <span class="credential" id="galleryPassword">—</span></p>
+        <p>Please save these credentials, as you’ll need them to view and download your photos.</p>
+      </div>
+
+      <p>We’ll follow up with a confirmation email and additional details about your session soon. If you have any questions, feel free to <a href="/contact" style="color: var(--gold); text-decoration: underline;">contact us</a>.</p>
+
+      <div class="success-actions">
+        <a href="/" class="home-btn">Return to Home</a>
+      </div>
+    </div>
+
+    <!-- Pop-up for Invalid Booking -->
+    <div class="popup" id="invalidBookingPopup">
+      <div class="popup-content">
+        <h3>Booking Error</h3>
+        <p>We couldn’t find your booking or confirm your payment. Please try again or contact support.</p>
+        <button onclick="redirectHome()">Return to Home</button>
       </div>
     </div>
   </main>
@@ -780,8 +642,7 @@
     <div class="footer-container">
       <div class="footer-section">
         <h4>Contact Us</h4>
-        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+        <a href="/contact" aria-label="Contact us page">Contact Us</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -797,6 +658,8 @@
           <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
           <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
           <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
           <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
           <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
           <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
@@ -806,359 +669,262 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 08:45 PM MST, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 04:34 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
   <script>
-    // ===== AIRTABLE CONFIGURATION =====
-    // Connected to your Picture This Pet Airtable base
-    const AIRTABLE_CONFIG = {
-      baseId: 'applU3NCdDveC4G8a', // Your actual base ID
-      apiKey: 'patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3', // Your actual API token
-      apiUrl: 'https://api.airtable.com/v0'
-    };
-
     // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
 
-    // 🛡️ REDUNDANT DATA RECOVERY: Check all storage locations for booking data
-    function getBookingData() {
-      console.log('🛡️ Attempting to recover booking data from all storage locations...');
-      
-      let sessionData = null;
-      let recoverySource = 'none';
-      
-      // Try all storage locations in order of preference
-      const sources = [
-        () => ({ data: localStorage.getItem('ptpSessionData'), source: 'localStorage.ptpSessionData' }),
-        () => ({ data: localStorage.getItem('ptpSessionBackup'), source: 'localStorage.ptpSessionBackup' }),
-        () => ({ data: sessionStorage.getItem('ptpSessionData'), source: 'sessionStorage.ptpSessionData' }),
-        () => ({ data: sessionStorage.getItem('ptpSessionBackup'), source: 'sessionStorage.ptpSessionBackup' }),
-        () => {
-          // Check for payment intent ID backups
-          for (let key of Object.keys(localStorage)) {
-            if (key.startsWith('ptpBooking_')) {
-              return { data: localStorage.getItem(key), source: `localStorage.${key}` };
-            }
-          }
-          return { data: null, source: 'none' };
-        }
-      ];
-      
-      for (let getSource of sources) {
-        try {
-          const { data, source } = getSource();
-          if (data) {
-            sessionData = JSON.parse(data);
-            recoverySource = source;
-            console.log(`✅ Booking data recovered from: ${source}`);
-            break;
-          }
-        } catch (e) {
-          console.warn('Storage source failed, trying next...', e);
-        }
-      }
-      
-      if (!sessionData) {
-        console.error('❌ Could not recover booking data from any storage location');
-        return null;
-      }
-
-      // Log successful recovery
-      console.log('📊 Recovery successful:', {
-        source: recoverySource,
-        bookingId: sessionData.bookingId || 'Generated from session data',
-        hasPayment: !!sessionData.payment,
-        hasClient: !!sessionData.client,
-        hasPets: !!sessionData.pets
-      });
-
-      return sessionData;
+    // Smooth scroll to session builder (for Book Now)
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      window.location.href = '/index.html#session-builder-section';
     }
 
-    // Save booking to Airtable
-    async function saveBookingToAirtable(bookingData) {
-      const statusIndicator = document.getElementById('statusIndicator');
-      
+    // Redirect to home page
+    function redirectHome() {
+      window.location.href = '/';
+    }
+
+    // Log errors to Airtable for live testing
+    async function logErrorToAirtable(page, error, sessionData = {}) {
       try {
-        console.log('💾 Saving booking to Airtable:', bookingData);
-        statusIndicator.textContent = 'Saving to Airtable...';
-        
-        const airtableRecord = {
+        const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const errorRecord = {
           fields: {
-            bookingId: bookingData.bookingId,
-            timestamp: bookingData.timestamp,
-            status: bookingData.status || 'confirmed',
-            clientName: bookingData.client?.name || '',
-            clientEmail: bookingData.client?.email || '',
-            clientPhone: bookingData.client?.phone || '',
-            sessionType: bookingData.session?.type || bookingData.session,
-            sessionDate: bookingData.session?.date || bookingData.selectedDate,
-            sessionTime: bookingData.session?.time || bookingData.selectedTime,
-            location: bookingData.session?.location || bookingData.park,
-            petCount: parseInt(bookingData.session?.petCount || bookingData.petCount) || 1,
-            peopleCount: parseInt(bookingData.session?.peopleCount || bookingData.peopleCount) || 1,
-            paymentAmount: bookingData.payment?.amount || 0,
-            paymentStatus: bookingData.payment?.status || 'completed'
+            errorId: errorId,
+            timestamp: new Date().toISOString(),
+            page: page,
+            errorMessage: error.message || String(error),
+            errorStack: error.stack || 'No stack trace available',
+            userAgent: navigator.userAgent,
+            sessionData: JSON.stringify(sessionData)
           }
         };
-        
-        const response = await fetch(`${AIRTABLE_CONFIG.apiUrl}/${AIRTABLE_CONFIG.baseId}/Bookings`, {
+
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Errors', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`,
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(airtableRecord)
+          body: JSON.stringify(errorRecord)
         });
-        
-        if (!response.ok) {
-          throw new Error(`Airtable API error: ${response.status}`);
+
+        if (response.ok) {
+          console.log('✅ Error logged to Airtable:', errorRecord);
+        } else {
+          console.warn('⚠️ Failed to log error to Airtable:', response.status);
         }
-        
-        const result = await response.json();
-        console.log('✅ Booking saved to Airtable successfully:', result);
-        
-        statusIndicator.textContent = 'Saved to Airtable ✅';
-        statusIndicator.className = 'status-indicator airtable-success';
-        
-        return result;
-        
+      } catch (innerError) {
+        console.warn('⚠️ Failed to log error to Airtable:', innerError);
+      }
+    }
+
+    // Fetch booking record from Airtable
+    async function fetchBookingRecord(bookingId) {
+      try {
+        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings?filterByFormula={bookingId}="${bookingId}"`, {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.records.length === 0) {
+          throw new Error('Booking not found');
+        }
+
+        return data.records[0].fields;
       } catch (error) {
-        console.error('❌ Failed to save booking to Airtable:', error);
-        console.log('📱 Falling back to localStorage only...');
-        
-        statusIndicator.textContent = 'Saved Locally (Offline) ⚠️';
-        statusIndicator.className = 'status-indicator local-fallback';
-        
-        // Fallback to localStorage
-        let localBookings = JSON.parse(localStorage.getItem('ptpCompleteBookings')) || [];
-        localBookings.push(bookingData);
-        localStorage.setItem('ptpCompleteBookings', JSON.stringify(localBookings));
-        
+        console.error('Error fetching booking record:', error);
+        await logErrorToAirtable('success.html', error, { bookingId });
         return null;
       }
     }
 
-    // Clean up backup storage after successful processing
-    function cleanupBackupStorage() {
+    // Update the Calendar table to mark the slot as booked
+    async function updateCalendarSlot(dateTime, bookingId) {
       try {
-        // Keep primary storage, remove backups
-        localStorage.removeItem('ptpSessionBackup');
-        sessionStorage.removeItem('ptpSessionData');
-        sessionStorage.removeItem('ptpSessionBackup');
-        
-        // Remove payment intent backups
-        for (let key of Object.keys(localStorage)) {
-          if (key.startsWith('ptpBooking_')) {
-            localStorage.removeItem(key);
+        const date = dateTime.split('T')[0];
+        const time = dateTime.split('T')[1].substring(0, 5);
+        console.log('Updating calendar slot to booked:', date, time);
+
+        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar?filterByFormula=AND({date}="${date}", {time}="${time}", {bookingId}="${bookingId}")`, {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
           }
-        }
-        
-        console.log('🧹 Backup storage cleaned up');
-      } catch (e) {
-        console.warn('⚠️ Cleanup warning:', e);
-      }
-    }
-
-    // Display booking details
-    function displayBookingDetails(sessionData) {
-      const bookingIdDisplay = document.getElementById('bookingIdDisplay');
-      const bookingDetails = document.getElementById('bookingDetails');
-
-      // Generate or use existing booking ID
-      const bookingId = sessionData.bookingId || `PTP_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
-      // Display booking ID
-      bookingIdDisplay.textContent = `Booking ID: ${bookingId}`;
-
-      // Create booking details cards
-      const sessionCard = createDetailCard('Session Details', {
-        'Session Type': sessionData.session || '—',
-        'Location': sessionData.park || '—',
-        'Date & Time': sessionData.selectedDateTime || '—',
-        'Number of Pets': sessionData.petCount || '—',
-        'Number of People': sessionData.peopleCount || '—'
-      });
-
-      const clientCard = createDetailCard('Client Information', {
-        'Name': sessionData.client?.name || '—',
-        'Email': sessionData.client?.email || '—',
-        'Phone': sessionData.client?.phone || '—',
-        'Zip Code': sessionData.client?.address?.zip || '—'
-      });
-
-      const petCards = [];
-      if (sessionData.pets && sessionData.pets.length > 0) {
-        sessionData.pets.forEach((pet, index) => {
-          const petCard = createDetailCard(`Pet ${index + 1} Information`, {
-            'Name': pet.name || '—',
-            'Age': pet.age ? `${pet.age} years old` : '—',
-            'Gender': pet.gender || '—',
-            'Off-Leash': pet.offLeash ? 'Yes' : 'No',
-            'Favorite Toy': pet.favoriteToy || 'None specified'
-          });
-          petCards.push(petCard);
         });
-      }
 
-      const paymentCard = createDetailCard('Payment Details', {
-        'Amount Paid': sessionData.payment?.amount ? `$${sessionData.payment.amount}` : '—',
-        'Payment Status': sessionData.payment?.status || 'Completed',
-        'Payment Method': sessionData.payment?.method || 'Stripe',
-        'Transaction Date': sessionData.payment?.timestamp 
-          ? new Date(sessionData.payment.timestamp).toLocaleDateString() 
-          : new Date().toLocaleDateString()
-      });
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
 
-      // Add all cards to the page
-      bookingDetails.appendChild(sessionCard);
-      bookingDetails.appendChild(clientCard);
-      petCards.forEach(card => bookingDetails.appendChild(card));
-      bookingDetails.appendChild(paymentCard);
-    }
+        const data = await response.json();
+        if (data.records.length === 0) {
+          throw new Error('Calendar slot not found');
+        }
 
-    // Create a detail card
-    function createDetailCard(title, details) {
-      const card = document.createElement('div');
-      card.className = 'detail-card';
-
-      const cardTitle = document.createElement('h3');
-      cardTitle.textContent = title;
-      card.appendChild(cardTitle);
-
-      Object.entries(details).forEach(([label, value]) => {
-        const item = document.createElement('div');
-        item.className = 'detail-item';
-
-        const labelSpan = document.createElement('span');
-        labelSpan.className = 'detail-label';
-        labelSpan.textContent = label;
-
-        const valueSpan = document.createElement('span');
-        valueSpan.className = 'detail-value';
-        valueSpan.textContent = value;
-
-        item.appendChild(labelSpan);
-        item.appendChild(valueSpan);
-        card.appendChild(item);
-      });
-
-      return card;
-    }
-
-    // Save complete booking data to system
-    async function saveToSystem(sessionData) {
-      try {
-        // Generate final booking ID if needed
-        const bookingId = sessionData.bookingId || `PTP_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        
-        // Structure the complete booking data
-        const completeBookingData = {
-          bookingId: bookingId,
-          timestamp: new Date().toISOString(),
-          status: 'confirmed',
-          
-          // Session information
-          session: {
-            type: sessionData.session,
-            date: sessionData.selectedDate,
-            time: sessionData.selectedTime,
-            dateTime: sessionData.selectedDateTime,
-            location: sessionData.park,
-            petCount: parseInt(sessionData.petCount) || 1,
-            peopleCount: parseInt(sessionData.peopleCount) || 1
-          },
-          
-          // Client information
-          client: sessionData.client || {},
-          
-          // Pet information
-          pets: sessionData.pets || [],
-          
-          // Session preferences
-          preferences: sessionData.preferences || {},
-          
-          // Payment information
-          payment: {
-            amount: sessionData.payment?.amount || 0,
-            currency: sessionData.payment?.currency || 'USD',
-            status: 'completed',
-            method: sessionData.payment?.method || 'stripe',
-            paymentIntentId: sessionData.payment?.paymentIntentId,
-            timestamp: sessionData.payment?.timestamp || new Date().toISOString()
-          },
-          
-          // Additional metadata
-          referralSource: sessionData.referralSource,
-          isVaccinated: sessionData.isVaccinated
+        const recordId = data.records[0].id;
+        const updateRecord = {
+          fields: {
+            status: 'booked',
+            softHoldUntil: null // Clear soft hold
+          }
         };
 
-        // Save to Airtable (primary)
-        await saveBookingToAirtable(completeBookingData);
+        const updateResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar/${recordId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updateRecord)
+        });
 
-        // Also save to localStorage as backup
-        let existingBookings = JSON.parse(localStorage.getItem('ptpCompleteBookings')) || [];
-        existingBookings.push(completeBookingData);
-        localStorage.setItem('ptpCompleteBookings', JSON.stringify(existingBookings));
-
-        // Update marketing data with completion status
-        let marketingData = JSON.parse(localStorage.getItem('ptpMarketingData')) || {};
-        marketingData.bookingCompleted = true;
-        marketingData.bookingId = bookingId;
-        marketingData.completionTimestamp = new Date().toISOString();
-        localStorage.setItem('ptpMarketingData', JSON.stringify(marketingData));
-
-        console.log('✅ Complete booking data saved to all systems:', completeBookingData);
-        
-        // Dispatch event for real-time admin updates
-        window.dispatchEvent(new CustomEvent('bookingCompleted', { detail: completeBookingData }));
-        
-        return completeBookingData;
-        
+        if (updateResponse.ok) {
+          console.log('✅ Calendar slot updated to booked');
+        } else {
+          throw new Error(`Airtable error: ${updateResponse.status}`);
+        }
       } catch (error) {
-        console.error('❌ Error saving to system:', error);
-        return null;
+        console.error('Error updating calendar slot:', error);
+        await logErrorToAirtable('success.html', error, { dateTime, bookingId });
       }
     }
 
-    // Initialize success page
-    document.addEventListener('DOMContentLoaded', async function() {
-      console.log('🎉 Success page loaded - processing booking completion...');
+    // Generate unique gallery credentials
+    function generateGalleryCredentials(bookingId) {
+      const username = `ptp_${bookingId}_${Math.random().toString(36).substr(2, 8)}`;
+      const password = Math.random().toString(36).slice(2, 10);
+      return { username, password };
+    }
 
-      // Try to recover booking data
-      const sessionData = getBookingData();
+    // Update the Bookings record with gallery credentials and final status
+    async function updateBookingWithGalleryCredentials(bookingId, galleryCredentials) {
+      try {
+        console.log('Updating booking with gallery credentials:', bookingId);
 
-      if (sessionData) {
-        // Display the booking details
-        displayBookingDetails(sessionData);
-        
-        // Save to system (Airtable + localStorage)
-        const completeBooking = await saveToSystem(sessionData);
-        
-        if (completeBooking) {
-          // Clean up backup storage after successful processing
-          cleanupBackupStorage();
-          console.log('🎉 Booking process completed successfully!');
+        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings?filterByFormula={bookingId}="${bookingId}"`, {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
         }
-        
-        // Hide error state
-        document.getElementById('errorState').style.display = 'none';
-        
-      } else {
-        // Show error state if no data can be recovered
-        console.error('❌ No booking data found - showing error state');
-        document.getElementById('bookingDetails').style.display = 'none';
-        document.getElementById('errorState').style.display = 'block';
-        
-        const statusIndicator = document.getElementById('statusIndicator');
-        statusIndicator.textContent = 'Error: No booking data found';
-        statusIndicator.className = 'status-indicator local-fallback';
+
+        const data = await response.json();
+        if (data.records.length === 0) {
+          throw new Error('Booking not found');
+        }
+
+        const recordId = data.records[0].id;
+        const updateRecord = {
+          fields: {
+            status: 'confirmed', // Ensure status is confirmed
+            galleryUsername: galleryCredentials.username,
+            galleryPassword: galleryCredentials.password
+          }
+        };
+
+        const updateResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings/${recordId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updateRecord)
+        });
+
+        if (updateResponse.ok) {
+          console.log('✅ Booking updated with gallery credentials');
+        } else {
+          throw new Error(`Airtable error: ${updateResponse.status}`);
+        }
+      } catch (error) {
+        console.error('Error updating booking with gallery credentials:', error);
+        await logErrorToAirtable('success.html', error, { bookingId, galleryCredentials });
       }
+    }
+
+    // Display confirmation details
+    function displayConfirmationDetails(sessionData) {
+      document.getElementById('sessionType').textContent = sessionData.session || '—';
+      document.getElementById('sessionLocation').textContent = sessionData.park || '—';
+      document.getElementById('sessionDateTime').textContent = sessionData.selectedDateTime ? new Date(sessionData.selectedDateTime).toLocaleString() : '—';
+      document.getElementById('petCount').textContent = sessionData.petCount || '—';
+      document.getElementById('peopleCount').textContent = sessionData.peopleCount || '—';
+      document.getElementById('totalPaid').textContent = sessionData.payment ? `$${sessionData.payment.amount}` : '$0';
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('🎯 Success page loaded, finalizing booking...');
+
+      // Retrieve session data from localStorage
+      let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      
+      // Validate session data
+      if (!sessionData.bookingId || !sessionData.payment || sessionData.payment.status !== 'confirmed') {
+        // Fallback to Airtable if localStorage is unavailable
+        const bookingId = sessionData.bookingId;
+        if (bookingId) {
+          const bookingRecord = await fetchBookingRecord(bookingId);
+          if (bookingRecord && bookingRecord.sessionDataBackup) {
+            sessionData = JSON.parse(bookingRecord.sessionDataBackup);
+            if (bookingRecord.paymentStatus !== 'completed') {
+              document.getElementById('invalidBookingPopup').style.display = 'flex';
+              return;
+            }
+          } else {
+            document.getElementById('invalidBookingPopup').style.display = 'flex';
+            return;
+          }
+        } else {
+          document.getElementById('invalidBookingPopup').style.display = 'flex';
+          return;
+        }
+      }
+
+      // Verify payment status in Airtable (in case webhook updated it)
+      const bookingRecord = await fetchBookingRecord(sessionData.bookingId);
+      if (!bookingRecord || bookingRecord.paymentStatus !== 'completed') {
+        document.getElementById('invalidBookingPopup').style.display = 'flex';
+        return;
+      }
+
+      // Update the calendar slot to booked
+      await updateCalendarSlot(sessionData.selectedDateTime, sessionData.bookingId);
+
+      // Generate and save gallery credentials
+      const galleryCredentials = generateGalleryCredentials(sessionData.bookingId);
+      await updateBookingWithGalleryCredentials(sessionData.bookingId, galleryCredentials);
+
+      // Display gallery credentials
+      document.getElementById('galleryUsername').textContent = galleryCredentials.username;
+      document.getElementById('galleryPassword').textContent = galleryCredentials.password;
+
+      // Display confirmation details
+      displayConfirmationDetails(sessionData);
+
+      // Clear session data to prevent reuse
+      localStorage.removeItem('ptpSessionData');
+      localStorage.removeItem('ptpSessionBackup');
+      localStorage.removeItem(`ptpBooking_${sessionData.payment.paymentIntentId}`);
+      sessionStorage.removeItem('ptpSessionData');
+      sessionStorage.removeItem('ptpSessionBackup');
+      console.log('✅ Session data cleared after successful booking');
     });
   </script>
 </body>
