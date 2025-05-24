@@ -742,7 +742,336 @@
       100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* === MOBILE RESPONSIVE === */
+    /* === DOWNLOAD MODAL === */
+    .download-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 3000;
+      display: none;
+      opacity: 0;
+      transition: all 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .download-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .download-modal-container {
+      width: 100%;
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .download-modal-content {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .download-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .download-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: scale(1.1);
+    }
+
+    .download-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--available-green), #059669);
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .download-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .download-subtitle {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* === MODAL PHOTO PREVIEW === */
+    .modal-photo-preview {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .modal-preview-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-preview-photo:hover {
+      transform: scale(1.1);
+      border-color: var(--gold);
+    }
+
+    .modal-preview-more {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      font-weight: 600;
+    }
+
+    /* === DOWNLOAD OPTIONS === */
+    .modal-download-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .modal-option-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+
+    .modal-option-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .modal-option-card.selected {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--available-green);
+    }
+
+    .modal-option-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .modal-option-icon {
+      font-size: 1.5rem;
+    }
+
+    .modal-option-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.2rem;
+    }
+
+    .modal-option-subtitle {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .modal-option-details {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    /* === DOWNLOAD PROGRESS === */
+    .modal-download-progress {
+      display: none;
+      margin-bottom: 2rem;
+    }
+
+    .modal-progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .modal-progress-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .modal-progress-percentage {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--available-green);
+    }
+
+    .modal-progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .modal-progress-fill {
+      height: 100%;
+      background: linear-gradient(135deg, var(--available-green), #059669);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .modal-progress-details {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+    }
+
+    /* === SUCCESS STATE === */
+    .modal-success-state {
+      display: none;
+      text-align: center;
+    }
+
+    .modal-success-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: bounce 1s ease-out;
+    }
+
+    .modal-success-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--available-green);
+    }
+
+    .modal-success-message {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    /* === MODAL BUTTONS === */
+    .modal-action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .modal-download-btn {
+      background: linear-gradient(135deg, var(--available-green), #059669);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+
+    .modal-download-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    }
+
+    .modal-download-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .modal-download-btn.processing {
+      background: linear-gradient(135deg, var(--gallery-purple), var(--gallery-blue));
+      animation: bounce 2s infinite;
+    }
+
+    .modal-secondary-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 1rem 2.5rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
     @media (max-width: 768px) {
       .lightbox-header,
       .lightbox-footer {
@@ -909,6 +1238,102 @@
           <span class="stat-number" id="totalPhotos">42</span>
           <span class="stat-label">Total Photos</span>
         </div>
+
+  <!-- Download Modal -->
+  <div class="download-modal" id="downloadModal">
+    <div class="download-modal-container">
+      <div class="download-modal-content">
+        <button class="download-close" onclick="closeDownloadModal()" title="Close">✕</button>
+        
+        <!-- Initial State -->
+        <div id="downloadModalForm">
+          <div class="download-badge">📥 Ready to Download</div>
+          <h2 class="download-title">Download Your Photos</h2>
+          <p class="download-subtitle" id="downloadModalSubtitle">
+            You've selected photos from Buffy & Max's session. 
+            Choose your preferred download format below.
+          </p>
+
+          <!-- Photo Preview -->
+          <div class="modal-photo-preview" id="modalPhotoPreview">
+            <!-- Photos will be populated here -->
+          </div>
+
+          <!-- Download Options -->
+          <div class="modal-download-options">
+            <div class="modal-option-card selected" onclick="selectModalOption('high-res')" data-option="high-res">
+              <div class="modal-option-header">
+                <div class="modal-option-icon">🎯</div>
+                <div>
+                  <div class="modal-option-title">High Resolution</div>
+                  <div class="modal-option-subtitle">Print Quality</div>
+                </div>
+              </div>
+              <div class="modal-option-details">
+                Full resolution, print-ready images without watermarks.
+              </div>
+            </div>
+
+            <div class="modal-option-card" onclick="selectModalOption('web-res')" data-option="web-res">
+              <div class="modal-option-header">
+                <div class="modal-option-icon">💻</div>
+                <div>
+                  <div class="modal-option-title">Web Resolution</div>
+                  <div class="modal-option-subtitle">Social Media</div>
+                </div>
+              </div>
+              <div class="modal-option-details">
+                Optimized for social sharing and web use.
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="modal-action-buttons">
+            <button class="modal-download-btn" id="modalStartDownloadBtn" onclick="startModalDownload()">
+              Start Download
+            </button>
+            <button class="modal-secondary-btn" onclick="closeDownloadModal()">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress State -->
+        <div class="modal-download-progress" id="modalDownloadProgress">
+          <div class="modal-progress-header">
+            <div class="modal-progress-title">Preparing Your Download...</div>
+            <div class="modal-progress-percentage" id="modalProgressPercentage">0%</div>
+          </div>
+          <div class="modal-progress-bar">
+            <div class="modal-progress-fill" id="modalProgressFill"></div>
+          </div>
+          <div class="modal-progress-details" id="modalProgressDetails">
+            Initializing download process...
+          </div>
+        </div>
+
+        <!-- Success State -->
+        <div class="modal-success-state" id="modalSuccessState">
+          <div class="modal-success-icon">🎉</div>
+          <h3 class="modal-success-title">Download Complete!</h3>
+          <p class="modal-success-message">
+            Your photos have been successfully downloaded. 
+            Check your Downloads folder for the ZIP file.
+          </p>
+          
+          <div class="modal-action-buttons">
+            <button class="modal-download-btn" onclick="closeDownloadModal()">
+              Done
+            </button>
+            <button class="modal-secondary-btn" onclick="downloadModalAgain()">
+              Download Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
         <div class="stat-item">
           <span class="stat-number" id="favoriteCount">0</span>
           <span class="stat-label">Favorites</span>
@@ -1021,6 +1446,9 @@
     let currentFilter = 'all';
     let currentPhotoIndex = 0;
     let isZoomed = false;
+    
+    // Download modal state
+    let selectedDownloadOption = 'high-res';
 
     // Sample photo data (in real app, this would come from API)
     const samplePhotos = [
@@ -1222,23 +1650,202 @@
       }
     }
 
-    // Download selected photos
+    // Download selected photos (now opens modal)
     function downloadSelected() {
       if (selectedPhotos.size === 0) {
         alert('Please select photos to download');
         return;
       }
       
-      const selectedPhotoList = Array.from(selectedPhotos).map(id => {
-        const photo = photos.find(p => p.id === id);
-        return photo ? photo.title : `Photo ${id}`;
-      }).join(', ');
+      openDownloadModal();
+    }
+
+    // Open download modal
+    function openDownloadModal() {
+      const modal = document.getElementById('downloadModal');
+      const selectedPhotoData = Array.from(selectedPhotos).map(id => {
+        return photos.find(p => p.id === id);
+      }).filter(photo => photo);
       
-      // In a real app, this would trigger actual downloads
-      alert(`🎉 Download started!\n\nDownloading ${selectedPhotos.size} photo${selectedPhotos.size === 1 ? '' : 's'}:\n${selectedPhotoList}\n\nHigh-resolution files will be saved to your Downloads folder.`);
+      // Update modal content
+      updateModalPhotoPreview(selectedPhotoData);
+      updateModalSubtitle(selectedPhotoData.length);
       
-      // Clear selection after download
-      clearSelection();
+      // Show modal
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      // Reset to initial state
+      resetModalState();
+    }
+
+    // Close download modal
+    function closeDownloadModal() {
+      const modal = document.getElementById('downloadModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      resetModalState();
+    }
+
+    // Reset modal to initial state
+    function resetModalState() {
+      document.getElementById('downloadModalForm').style.display = 'block';
+      document.getElementById('modalDownloadProgress').style.display = 'none';
+      document.getElementById('modalSuccessState').style.display = 'none';
+      
+      // Reset progress
+      document.getElementById('modalProgressFill').style.width = '0%';
+      document.getElementById('modalProgressPercentage').textContent = '0%';
+      document.getElementById('modalProgressDetails').textContent = 'Initializing download process...';
+      
+      // Reset button
+      const downloadBtn = document.getElementById('modalStartDownloadBtn');
+      downloadBtn.disabled = false;
+      downloadBtn.textContent = 'Start Download';
+      downloadBtn.classList.remove('processing');
+    }
+
+    // Update modal photo preview
+    function updateModalPhotoPreview(selectedPhotoData) {
+      const previewContainer = document.getElementById('modalPhotoPreview');
+      const maxVisible = 6;
+      
+      previewContainer.innerHTML = '';
+      
+      // Show up to 6 photos
+      selectedPhotoData.slice(0, maxVisible).forEach(photo => {
+        const img = document.createElement('img');
+        img.src = photo.src + '?w=80&h=80&fit=crop';
+        img.className = 'modal-preview-photo';
+        img.alt = photo.title;
+        img.onclick = () => openLightbox(photo.id);
+        previewContainer.appendChild(img);
+      });
+      
+      // Show "+X more" if there are additional photos
+      if (selectedPhotoData.length > maxVisible) {
+        const moreDiv = document.createElement('div');
+        moreDiv.className = 'modal-preview-more';
+        moreDiv.textContent = `+${selectedPhotoData.length - maxVisible}`;
+        previewContainer.appendChild(moreDiv);
+      }
+    }
+
+    // Update modal subtitle
+    function updateModalSubtitle(count) {
+      const subtitle = document.getElementById('downloadModalSubtitle');
+      subtitle.textContent = `You've selected ${count} beautiful photo${count === 1 ? '' : 's'} from Buffy & Max's session. Choose your preferred download format below.`;
+    }
+
+    // Select download option in modal
+    function selectModalOption(option) {
+      selectedDownloadOption = option;
+      
+      // Update UI
+      document.querySelectorAll('.modal-option-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      document.querySelector(`[data-option="${option}"]`).classList.add('selected');
+    }
+
+    // Start download process in modal
+    function startModalDownload() {
+      const downloadBtn = document.getElementById('modalStartDownloadBtn');
+      
+      // Disable button and show processing state
+      downloadBtn.disabled = true;
+      downloadBtn.textContent = 'Processing...';
+      downloadBtn.classList.add('processing');
+      
+      // Hide form, show progress
+      document.getElementById('downloadModalForm').style.display = 'none';
+      document.getElementById('modalDownloadProgress').style.display = 'block';
+      
+      // Simulate download progress
+      simulateModalDownload();
+    }
+
+    // Simulate download progress in modal
+    function simulateModalDownload() {
+      const progressFill = document.getElementById('modalProgressFill');
+      const progressPercentage = document.getElementById('modalProgressPercentage');
+      const progressDetails = document.getElementById('modalProgressDetails');
+      
+      const selectedPhotoData = Array.from(selectedPhotos).map(id => {
+        return photos.find(p => p.id === id);
+      }).filter(photo => photo);
+      
+      let progress = 0;
+      const steps = [
+        { percent: 15, message: 'Validating selection...' },
+        { percent: 30, message: 'Processing high-resolution images...' },
+        { percent: 50, message: 'Removing watermarks...' },
+        { percent: 70, message: 'Optimizing file sizes...' },
+        { percent: 85, message: 'Creating ZIP archive...' },
+        { percent: 100, message: 'Download complete!' }
+      ];
+      
+      let stepIndex = 0;
+      
+      const interval = setInterval(() => {
+        if (stepIndex < steps.length) {
+          const step = steps[stepIndex];
+          progress = step.percent;
+          
+          progressFill.style.width = progress + '%';
+          progressPercentage.textContent = progress + '%';
+          progressDetails.textContent = step.message;
+          
+          stepIndex++;
+        } else {
+          clearInterval(interval);
+          setTimeout(showModalSuccess, 500);
+        }
+      }, 600);
+    }
+
+    // Show success state in modal
+    function showModalSuccess() {
+      document.getElementById('modalDownloadProgress').style.display = 'none';
+      document.getElementById('modalSuccessState').style.display = 'block';
+
+      // Trigger actual download
+      triggerModalDownload();
+      
+      // Clear selection after successful download
+      setTimeout(() => {
+        clearSelection();
+      }, 1000);
+    }
+
+    // Trigger the actual download in modal
+    function triggerModalDownload() {
+      const selectedPhotoData = Array.from(selectedPhotos).map(id => {
+        return photos.find(p => p.id === id);
+      }).filter(photo => photo);
+      
+      const fileName = `BuffyMax_Session_${selectedDownloadOption === 'high-res' ? 'HighRes' : 'WebRes'}_${new Date().toISOString().split('T')[0]}.zip`;
+      
+      // Create a dummy file for demonstration
+      const dummyContent = `# Photo Download - Buffy & Max Session\n\nDownload Date: ${new Date().toLocaleString()}\nResolution: ${selectedDownloadOption}\nPhotos Included: ${selectedPhotoData.length}\n\nPhoto List:\n${selectedPhotoData.map(photo => `- ${photo.title}`).join('\n')}\n\nThank you for choosing Picture This Pet!`;
+      
+      const blob = new Blob([dummyContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      
+      console.log(`✅ Download triggered: ${fileName}`);
+    }
+
+    // Download again from modal
+    function downloadModalAgain() {
+      resetModalState();
     }
 
     // Open lightbox (full implementation)
@@ -1413,6 +2020,21 @@
 
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
+      // Download modal controls
+      if (document.getElementById('downloadModal').classList.contains('active')) {
+        switch(e.key) {
+          case 'Escape':
+            closeDownloadModal();
+            break;
+          case 'Enter':
+            if (document.getElementById('downloadModalForm').style.display !== 'none') {
+              startModalDownload();
+            }
+            break;
+        }
+        return;
+      }
+      
       // Lightbox controls
       if (document.getElementById('lightbox').classList.contains('active')) {
         switch(e.key) {
@@ -1503,9 +2125,17 @@
       }
     }
 
-    // Prevent body scroll when lightbox is open
+    // Prevent body scroll when lightbox or download modal is open
     document.getElementById('lightbox').addEventListener('wheel', function(e) {
       e.preventDefault();
+    }, { passive: false });
+
+    document.getElementById('downloadModal').addEventListener('wheel', function(e) {
+      // Allow scrolling within the modal content, but prevent body scroll
+      const modalContent = document.querySelector('.download-modal-content');
+      if (!modalContent.contains(e.target)) {
+        e.preventDefault();
+      }
     }, { passive: false });
   </script>
 </body>
