@@ -78,7 +78,7 @@
     .admin-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto 1fr auto;
       min-height: 100vh;
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
@@ -169,6 +169,7 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
+      min-width: 80px; /* Ensure touch target size */
     }
 
     .logout-btn:hover {
@@ -211,6 +212,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
       border-left: 3px solid transparent;
+      min-height: 48px; /* Ensure touch target size */
     }
 
     .nav-item:hover {
@@ -243,7 +245,7 @@
     .admin-main {
       padding: 2rem;
       overflow-y: auto;
-      max-height: calc(100vh - 100px);
+      max-height: calc(100vh - 100px - 120px);
     }
 
     .view-section {
@@ -302,6 +304,8 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+      min-height: 48px; /* Ensure touch target size */
+      min-width: 80px; /* Ensure touch target width */
     }
 
     .btn-primary {
@@ -327,6 +331,8 @@
     .btn-small {
       padding: 0.5rem 1rem;
       font-size: 0.85rem;
+      min-height: 40px; /* Adjusted for smaller buttons */
+      min-width: 60px;
     }
 
     .btn-icon {
@@ -337,6 +343,8 @@
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
+      min-height: 40px;
+      min-width: 40px;
     }
 
     .btn-icon:hover {
@@ -823,6 +831,7 @@
       align-items: center;
       gap: 0.8rem;
       font-size: 0.9rem;
+      min-height: 48px; /* Ensure touch target size */
     }
 
     .context-menu-item:hover {
@@ -869,6 +878,7 @@
       width: 90%;
       max-height: 80vh;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
     }
 
     .modal-header {
@@ -892,6 +902,8 @@
       font-size: 1.5rem;
       cursor: pointer;
       transition: color 0.3s ease;
+      min-height: 40px;
+      min-width: 40px;
     }
 
     .modal-close:hover {
@@ -949,6 +961,7 @@
       width: 90%;
       max-height: 90vh;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
     }
 
     .session-details-section {
@@ -1006,6 +1019,80 @@
       resize: vertical;
     }
 
+    /* === FOOTER STYLES === */
+    footer {
+      grid-column: 1 / -1;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+      min-height: 40px; /* Ensure touch target size */
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
     /* === RESPONSIVE === */
     @media (max-width: 1024px) {
       .admin-layout {
@@ -1049,7 +1136,7 @@
     @media (max-width: 768px) {
       .admin-layout {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
+        grid-template-rows: auto auto 1fr auto;
       }
 
       .admin-sidebar {
@@ -1069,11 +1156,21 @@
 
       .mobile-menu-btn {
         display: block;
-        background: none;
-        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         color: white;
         font-size: 1.5rem;
         cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-menu-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
       }
 
       .header-title {
@@ -1103,6 +1200,62 @@
 
       .session-details-grid {
         grid-template-columns: 1fr;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .footer-section {
+        align-items: center;
+        text-align: center;
+      }
+
+      .payment-methods {
+        justify-content: center;
+      }
+
+      /* Improved Mobile Styles */
+      .form-input,
+      .form-select {
+        padding: 1rem; /* Larger touch area */
+        font-size: 1rem; /* Better readability */
+      }
+
+      .calendar-day {
+        min-height: 80px; /* More space for touch */
+        padding: 1rem 0.5rem;
+      }
+
+      .day-events {
+        font-size: 0.85rem; /* Improved readability */
+      }
+
+      .calendar-legend {
+        font-size: 0.95rem; /* Improved readability */
+        gap: 1rem;
+      }
+
+      .gallery-stat-label {
+        font-size: 0.9rem; /* Improved readability */
+      }
+
+      .nav-badge {
+        font-size: 0.85rem; /* Improved readability */
+      }
+
+      .activity-time,
+      .client-sessions {
+        font-size: 0.9rem; /* Improved readability */
       }
     }
   </style>
@@ -1401,141 +1554,16 @@
         </div>
       </div>
     </main>
-  </div>
 
-  <!-- Context Menu -->
-  <div class="context-menu" id="contextMenu">
-    <div class="context-menu-item" onclick="addSession()">
-      📸 Add Session
-    </div>
-    <div class="context-menu-item" onclick="blockDate()">
-      🚫 Block Date
-    </div>
-    <div class="context-menu-separator"></div>
-    <div class="context-menu-item" onclick="editSession()">
-      ✏️ Edit Session
-    </div>
-    <div class="context-menu-item" onclick="removeSession()">
-      🗑️ Remove Session
-    </div>
-    <div class="context-menu-separator"></div>
-    <div class="context-menu-item" onclick="viewSessionDetails()">
-      👁️ View Details
-    </div>
-  </div>
-
-  <!-- Session Modal -->
-  <div class="modal-overlay" id="sessionModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 class="modal-title" id="sessionModalTitle">Add New Session</h3>
-        <button class="modal-close" onclick="closeSessionModal()">×</button>
-      </div>
-      
-      <form id="sessionForm">
-        <div class="form-group">
-          <label class="form-label">Client Name</label>
-          <input type="text" class="form-input" id="clientName" placeholder="Enter client name" required>
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-section">
+          <h4>Contact Us</h4>
+          <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+          <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
         </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Date</label>
-            <input type="date" class="form-input" id="sessionDate" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Time</label>
-            <input type="time" class="form-input" id="sessionTime" required>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Session Type</label>
-          <select class="form-select" id="sessionType" required>
-            <option value="">Select session type</option>
-            <option value="Full Session">Full Session ($250)</option>
-            <option value="Mini Session">Mini Session ($150)</option>
-            <option value="Holiday Session">Holiday Session ($200)</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Location</label>
-          <select class="form-select" id="sessionLocation" required>
-            <option value="">Select location</option>
-            <option value="Cheesman Park">Cheesman Park</option>
-            <option value="Washington Park">Washington Park</option>
-            <option value="Sloan's Lake">Sloan's Lake</option>
-            <option value="City Park">City Park</option>
-            <option value="Client's Home">Client's Home</option>
-          </select>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Client Email</label>
-            <input type="email" class="form-input" id="clientEmail" placeholder="client@email.com">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Client Phone</label>
-            <input type="tel" class="form-input" id="clientPhone" placeholder="(303) 555-0123">
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Notes</label>
-          <textarea class="form-input" id="sessionNotes" placeholder="Special requests, pet names, etc." rows="3"></textarea>
-        </div>
-        
-        <div class="modal-actions">
-          <button type="button" class="btn btn-secondary" onclick="closeSessionModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Session</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Gallery Upload Modal -->
-  <div class="modal-overlay" id="galleryModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 class="modal-title">Create New Gallery</h3>
-        <button class="modal-close" onclick="closeGalleryModal()">×</button>
-      </div>
-      
-      <form id="galleryForm">
-        <div class="form-group">
-          <label class="form-label">Gallery Name</label>
-          <input type="text" class="form-input" id="galleryName" placeholder="Client Name - Session Type" required>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Session Date</label>
-            <input type="date" class="form-input" id="galleryDate" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Expiration Date</label>
-            <input type="date" class="form-input" id="galleryExpiration">
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Upload Photos</label>
-          <div class="upload-area" onclick="document.getElementById('photoUpload').click()">
-            <div class="upload-icon">📸</div>
-            <div class="upload-text">Drag & drop photos here</div>
-            <div class="upload-subtext">or click to browse (JPG, PNG, max 10MB each)</div>
-          </div>
-          <input type="file" id="photoUpload" multiple accept="image/*" style="display: none;">
-          <div id="uploadedPhotos" style="margin-top: 1rem;"></div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Gallery Password</label>
-            <input type="text" class="form-input" id="galleryPassword" placeholder="Auto-generated" readonly>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Session ID</label>
-            <input type="text" class="form-input" id="gallerySessionId" placeholder="
+        <div class="footer-section socials">
+          <h4>Connect</h4>
+          <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+          <a href="/subscribe" aria-label="Subscribe to
