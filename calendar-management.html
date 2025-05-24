@@ -1004,7 +1004,7 @@
         <div class="card-header">
           <h2 class="card-title">Calendar View 🗓️</h2>
           <div class="card-actions">
-            <button class="btn btn-primary btn-small" onclick="openBulkAvailabilityModal()">📅 Add Bulk Availability</button>
+            <button class="btn btn-primary btn-small" onclick="openBulkAvailabilityModal()">📅 Add Availability</button>
             <button class="btn btn-primary btn-small" onclick="openPopupEventModal()">🎉 Create Pop-Up Event</button>
             <button class="btn btn-secondary btn-small" onclick="openBlockDateModal()">🚫 Block Date</button>
           </div>
@@ -1047,11 +1047,11 @@
     </main>
   </div>
 
-  <!-- Bulk Availability Modal -->
+  <!-- Add Availability Modal -->
   <div class="modal-overlay" id="bulkAvailabilityModal">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="modal-title">Add Bulk Availability 📅</h3>
+        <h3 class="modal-title">Add Availability 📅</h3>
         <button class="modal-close" onclick="closeBulkAvailabilityModal()">×</button>
       </div>
       
@@ -1099,6 +1099,7 @@
               <label for="daySun">Sun</label>
             </div>
           </div>
+          <small style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">Leave unchecked to apply to all days in date range</small>
         </div>
         
         <div class="form-grid">
@@ -1108,41 +1109,46 @@
           </div>
           <div class="form-group">
             <label class="form-label">End Time ⏰</label>
-            <input type="time" class="form-input" id="bulkEndTime" value="17:00" required>
+            <input type="time" class="form-input" id="bulkEndTime" value="18:00" required>
           </div>
         </div>
         
         <div class="form-group">
-          <label class="form-label">Availability Type 📅</label>
-          <select class="form-select" id="bulkAvailabilityType" required>
-            <option value="open">Open Availability (Any session type can book)</option>
-            <option value="mini-only">Mini Sessions Only</option>
-            <option value="full-only">Full Sessions Only</option>
-            <option value="popup-only">Pop-Up Events Only</option>
+          <label class="form-label">Default Location 📍</label>
+          <select class="form-select" id="bulkLocation" required>
+            <option value="Cheesman Park">Cheesman Park</option>
+            <option value="City Park">City Park</option>
+            <option value="Washington Park">Washington Park</option>
+            <option value="Cherry Creek">Cherry Creek</option>
+            <option value="TBD">Location TBD</option>
           </select>
         </div>
         
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Default Location 📍</label>
-            <select class="form-select" id="bulkLocation" required>
-              <option value="Cheesman Park">Cheesman Park</option>
-              <option value="City Park">City Park</option>
-              <option value="Washington Park">Washington Park</option>
-              <option value="Cherry Creek">Cherry Creek</option>
-              <option value="TBD">Location TBD</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Slot Duration (minutes) ⏱️</label>
-            <input type="number" class="form-input" id="slotDuration" value="20" min="10" max="120" required>
-            <small style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">How long each bookable slot should be</small>
-          </div>
+        <div class="form-group">
+          <label class="form-label">Session Buffer Time ⏱️</label>
+          <select class="form-select" id="bufferTime" required>
+            <option value="30">30 minutes between sessions</option>
+            <option value="60" selected>1 hour between sessions (recommended)</option>
+            <option value="90">1.5 hours between sessions</option>
+            <option value="120">2 hours between sessions</option>
+          </select>
+          <small style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">Buffer time added automatically after each booked session</small>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+          <h4 style="color: var(--gold); margin-bottom: 0.5rem;">📋 How This Works:</h4>
+          <ul style="font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.5;">
+            <li>• Creates hourly booking slots (8 AM, 9 AM, 10 AM, etc.)</li>
+            <li>• Any session type can book any available slot</li>
+            <li>• When booked, automatically blocks session + buffer time</li>
+            <li>• Example: Mini (60 min) + 1hr buffer = next slot 2 hours later</li>
+            <li>• Only your created availability appears to clients</li>
+          </ul>
         </div>
         
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" onclick="closeBulkAvailabilityModal()">Cancel 🚫</button>
-          <button type="submit" class="btn btn-primary">Create Slots 📅</button>
+          <button type="submit" class="btn btn-primary">Create Availability 📅</button>
         </div>
       </form>
     </div>
@@ -1727,13 +1733,18 @@
         const dayEvents = calendarData.filter(slot => slot.date === dateString);
         
         // Classify day based on events
-        if (dayEvents.some(event => event.isBlocked)) {
+        const hasAvailable = dayEvents.some(event => event.status === 'available' && !event.isBlocked);
+        const hasBooked = dayEvents.some(event => event.status === 'booked');
+        const hasPopups = dayEvents.some(event => event.slotType === 'Pop-Up' || event.sessionType === 'Pop-Up');
+        const hasBlocked = dayEvents.some(event => event.isBlocked);
+        
+        if (hasBlocked) {
           dayElement.classList.add('blocked');
-        } else if (dayEvents.some(event => event.slotType === 'Pop-Up')) {
-          dayElement.classList.add('has-popups');
-        } else if (dayEvents.some(event => event.status === 'booked')) {
+        } else if (hasBooked) {
           dayElement.classList.add('has-bookings');
-        } else if (dayEvents.length > 0) {
+        } else if (hasPopups) {
+          dayElement.classList.add('has-popups');
+        } else if (hasAvailable) {
           dayElement.classList.add('has-events');
         }
         
@@ -1787,22 +1798,48 @@
     }
 
     function handleDayClick(dateString, dayEvents) {
+      const availableSlots = dayEvents.filter(e => e.status === 'available' && !e.isBlocked);
+      const bookedSessions = dayEvents.filter(e => e.status === 'booked');
+      const blockedSlots = dayEvents.filter(e => e.isBlocked);
+      
       if (dayEvents.length === 0) {
-        // No events, offer to add availability or create session
-        if (confirm(`No events on ${dateString}. Would you like to add availability?`)) {
+        // No events, offer to add availability
+        if (confirm(`No availability on ${dateString}.\n\nWould you like to create availability for this day?`)) {
           openBulkAvailabilityModal();
           document.getElementById('bulkStartDate').value = dateString;
           document.getElementById('bulkEndDate').value = dateString;
         }
-      } else if (dayEvents.length === 1 && dayEvents[0].status === 'booked') {
+      } else if (bookedSessions.length === 1 && availableSlots.length === 0 && blockedSlots.length === 0) {
         // Single booked session, open details
-        const booking = bookingsData.find(b => b.calendarSlot === dayEvents[0].id);
+        const booking = bookingsData.find(b => b.calendarSlot === bookedSessions[0].id);
         if (booking) {
-          openSessionDetailsModal(booking, dayEvents[0]);
+          openSessionDetailsModal(booking, bookedSessions[0]);
         }
       } else {
-        // Multiple events, show list
-        showDayEventsPopup(dateString, dayEvents);
+        // Multiple events or mixed types, show detailed summary
+        let summary = `📅 ${dateString} Summary:\n\n`;
+        
+        if (availableSlots.length > 0) {
+          const availabilityWindow = availableSlots[0].availabilityWindow || 'Unknown';
+          summary += `✅ Available: ${availableSlots.length} hourly slots (${availabilityWindow})\n`;
+        }
+        
+        if (bookedSessions.length > 0) {
+          summary += `📸 Booked: ${bookedSessions.length} session(s)\n`;
+          bookedSessions.forEach(session => {
+            const booking = bookingsData.find(b => b.calendarSlot === session.id);
+            const clientName = booking ? booking.client1Name : 'Unknown';
+            summary += `   • ${session.time} - ${clientName} (${session.sessionType})\n`;
+          });
+        }
+        
+        if (blockedSlots.length > 0) {
+          summary += `🚫 Blocked: ${blockedSlots.length} time slot(s)\n`;
+        }
+        
+        summary += `\nClick a booked session in the hover popup to view client details.`;
+        
+        alert(summary);
       }
     }
 
@@ -1885,11 +1922,25 @@
     // Modal functions
     function openBulkAvailabilityModal() {
       document.getElementById('bulkAvailabilityModal').style.display = 'flex';
+      
+      // Set default dates (today + 7 days)
+      const today = new Date();
+      const nextWeek = new Date(today);
+      nextWeek.setDate(today.getDate() + 7);
+      
+      document.getElementById('bulkStartDate').value = today.toISOString().split('T')[0];
+      document.getElementById('bulkEndDate').value = nextWeek.toISOString().split('T')[0];
     }
 
     function closeBulkAvailabilityModal() {
       document.getElementById('bulkAvailabilityModal').style.display = 'none';
       document.getElementById('bulkAvailabilityForm').reset();
+      
+      // Reset to default values
+      document.getElementById('bulkStartTime').value = '08:00';
+      document.getElementById('bulkEndTime').value = '18:00';
+      document.getElementById('bufferTime').value = '60';
+      document.getElementById('daySat').checked = true;
     }
 
     function openPopupEventModal() {
@@ -2330,59 +2381,50 @@
       
       const startTime = document.getElementById('bulkStartTime').value;
       const endTime = document.getElementById('bulkEndTime').value;
-      const availabilityType = document.getElementById('bulkAvailabilityType').value;
       const location = document.getElementById('bulkLocation').value;
-      const slotDuration = parseInt(document.getElementById('slotDuration').value);
+      const bufferMinutes = parseInt(document.getElementById('bufferTime').value);
       
       try {
         const slotsToCreate = [];
+        
+        // Calculate how many hours of availability
+        const start = new Date(`2025-01-01T${startTime}:00`);
+        const end = new Date(`2025-01-01T${endTime}:00`);
+        const totalHours = (end - start) / (1000 * 60 * 60);
+        
+        console.log(`Creating availability: ${startTime} to ${endTime} (${totalHours} hours)`);
+        console.log(`Buffer time: ${bufferMinutes} minutes between sessions`);
         
         for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
           if (daysToUse.includes(d.getDay())) {
             const dateString = d.toISOString().split('T')[0];
             
-            // Create time slots for this day
-            const start = new Date(`${dateString}T${startTime}:00`);
-            const end = new Date(`${dateString}T${endTime}:00`);
+            // Create hourly booking slots for this day
+            const dayStart = new Date(`${dateString}T${startTime}:00`);
+            const dayEnd = new Date(`${dateString}T${endTime}:00`);
             
-            for (let time = new Date(start); time < end; time.setMinutes(time.getMinutes() + slotDuration)) {
+            // Create hourly slots (8 AM, 9 AM, 10 AM, etc.)
+            for (let time = new Date(dayStart); time < dayEnd; time.setHours(time.getHours() + 1)) {
               const timeString = time.toTimeString().slice(0, 5);
-              const endTimeObj = new Date(time);
-              endTimeObj.setMinutes(endTimeObj.getMinutes() + slotDuration);
-              const endTimeString = endTimeObj.toTimeString().slice(0, 5);
               
-              // Determine session type based on availability type
-              let sessionType = 'Available Slot';
-              let slotType = 'Regular';
-              
-              switch(availabilityType) {
-                case 'mini-only':
-                  sessionType = 'Mini Session Available';
-                  break;
-                case 'full-only':
-                  sessionType = 'Full Session Available';
-                  break;
-                case 'popup-only':
-                  sessionType = 'Pop-Up Available';
-                  slotType = 'Pop-Up';
-                  break;
-                default:
-                  sessionType = 'Open Availability';
-              }
-              
+              // Each slot represents a potential session start time
+              // The actual booking system will handle session duration + buffer time
               slotsToCreate.push({
                 fields: {
-                  SlotType: slotType,
+                  SlotType: 'Available',
                   Location: location,
                   date: dateString,
                   time: timeString,
-                  endTime: endTimeString,
+                  endTime: timeString, // Will be calculated when booked
                   status: 'available',
-                  sessionType: sessionType,
-                  availabilityType: availabilityType,
-                  slotDuration: slotDuration,
-                  cushionTime: 0,
-                  isBlocked: false
+                  sessionType: 'Open Availability',
+                  bufferTime: bufferMinutes,
+                  isBlocked: false,
+                  isAvailable: true,
+                  availabilityWindow: `${startTime}-${endTime}`,
+                  // Store metadata for intelligent booking
+                  createdByAdmin: true,
+                  availabilityType: 'hourly-slot'
                 }
               });
             }
@@ -2410,13 +2452,18 @@
           console.log(`✅ Created batch ${Math.ceil((i + 1) / 10)} - ${totalCreated} slots total`);
         }
         
-        console.log(`✅ Created ${totalCreated} availability slots`);
-        alert(`✅ Successfully created ${totalCreated} availability slots!\n\nThese slots are now available for booking across all calendars on your site.`);
+        console.log(`✅ Created ${totalCreated} hourly availability slots`);
+        alert(`✅ Successfully created availability!\n\n📅 ${totalCreated} hourly booking slots created\n⏰ ${startTime} to ${endTime} daily\n🕐 ${bufferMinutes} min buffer between sessions\n\nClients can now book any session type during these times.`);
         closeBulkAvailabilityModal();
         await syncCalendarData();
         
+        // Show implementation notes
+        setTimeout(() => {
+          alert(`📋 Next Steps:\n\n1. These slots now appear on your homepage calendar\n2. When clients book, the system will:\n   • Block session duration + ${bufferMinutes} min buffer\n   • Show next available slot accordingly\n   • Prevent overlapping bookings\n\n3. You can add more buffer time by blocking specific periods\n4. Only admin-created availability shows to clients`);
+        }, 2000);
+        
       } catch (error) {
-        console.error('Error creating bulk availability:', error);
+        console.error('Error creating availability:', error);
         await logErrorToAirtable('calendar-management.html', error);
         alert('❌ Error creating availability slots. Please try again.');
       }
@@ -2817,25 +2864,178 @@
     // - Pop-up events should appear in the "Upcoming Pop-Up Events" section
     // - Blocked slots should prevent booking on client-side calendars
     // 
-    // BOOKING INTELLIGENCE:
-    // - Before allowing a booking, check if enough consecutive time exists
-    // - Mini Session (20 min) needs 20 min available slot
-    // - Full Session (60 min) needs 60 min available slot  
-    // - Don't allow booking if insufficient time remains in day
-    async function checkAvailabilityForBooking(date, sessionType, requestedDuration) {
-      // This function should be implemented to check if booking is possible
-      // Returns true/false and suggested alternative times if false
+    // INTELLIGENT BOOKING SYSTEM:
+    async function bookSessionWithBufferLogic(sessionDetails) {
+      // This function handles the smart booking logic
+      const { date, time, sessionType, clientData, bufferMinutes } = sessionDetails;
       
-      const daySlots = calendarData.filter(slot => 
+      // Get session duration from SessionTypes table
+      const sessionTypeData = sessionTypes.find(st => st.typeName === sessionType);
+      const sessionDuration = sessionTypeData ? sessionTypeData.duration : 60; // default 60 min
+      
+      console.log(`Booking ${sessionType}: ${sessionDuration} min + ${bufferMinutes} min buffer`);
+      
+      // Calculate total time to block (session + buffer)
+      const totalBlockTime = sessionDuration + bufferMinutes;
+      
+      // Create the booking record
+      const bookingData = {
+        fields: {
+          ...clientData,
+          sessionDate: `${date}T${time}:00`,
+          sessionType: sessionType
+        }
+      };
+      
+      // Create the calendar booking (main session)
+      const sessionEndTime = new Date(`${date}T${time}:00`);
+      sessionEndTime.setMinutes(sessionEndTime.getMinutes() + sessionDuration);
+      
+      const calendarData = {
+        fields: {
+          SlotType: 'Booked',
+          Location: sessionDetails.location || 'TBD',
+          date: date,
+          time: time,
+          endTime: sessionEndTime.toTimeString().slice(0, 5),
+          status: 'booked',
+          sessionType: sessionType,
+          bufferTime: bufferMinutes,
+          isBlocked: false
+        }
+      };
+      
+      // Create buffer time block (if buffer > 0)
+      const bufferBlocks = [];
+      if (bufferMinutes > 0) {
+        const bufferStart = new Date(sessionEndTime);
+        const bufferEnd = new Date(bufferStart);
+        bufferEnd.setMinutes(bufferEnd.getMinutes() + bufferMinutes);
+        
+        bufferBlocks.push({
+          fields: {
+            SlotType: 'Buffer',
+            Location: 'Buffer Time',
+            date: date,
+            time: bufferStart.toTimeString().slice(0, 5),
+            endTime: bufferEnd.toTimeString().slice(0, 5),
+            status: 'blocked',
+            sessionType: 'Buffer Time',
+            isBlocked: true,
+            bufferFor: sessionType
+          }
+        });
+      }
+      
+      // Execute all the creates
+      try {
+        // 1. Create booking
+        const bookingResponse = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(bookingData)
+        });
+        
+        const bookingResult = await bookingResponse.json();
+        
+        // 2. Create calendar session
+        calendarData.fields.bookingId = bookingResult.id;
+        const calendarResponse = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(calendarData)
+        });
+        
+        // 3. Create buffer blocks
+        if (bufferBlocks.length > 0) {
+          await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ records: bufferBlocks })
+          });
+        }
+        
+        console.log(`✅ Booked ${sessionType} with ${bufferMinutes}min buffer - Total blocked: ${totalBlockTime}min`);
+        return { success: true, bookingId: bookingResult.id };
+        
+      } catch (error) {
+        console.error('Error in intelligent booking:', error);
+        throw error;
+      }
+    }
+
+    // Check if booking is possible based on available time
+    async function checkBookingAvailability(date, startTime, sessionType, requestedBufferMinutes = null) {
+      // Get session duration
+      const sessionTypeData = sessionTypes.find(st => st.typeName === sessionType);
+      const sessionDuration = sessionTypeData ? sessionTypeData.duration : 60;
+      
+      // Get default buffer from availability or use requested
+      const daySlots = calendarData.filter(slot => slot.date === date && !slot.isBlocked);
+      const defaultBuffer = daySlots.length > 0 ? (daySlots[0].bufferTime || 60) : 60;
+      const bufferTime = requestedBufferMinutes || defaultBuffer;
+      
+      const totalTimeNeeded = sessionDuration + bufferTime;
+      
+      // Check if there's enough consecutive available time
+      const startDateTime = new Date(`${date}T${startTime}:00`);
+      const endDateTime = new Date(startDateTime);
+      endDateTime.setMinutes(endDateTime.getMinutes() + totalTimeNeeded);
+      
+      // Find any conflicting slots
+      const conflicts = calendarData.filter(slot => {
+        if (slot.date !== date) return false;
+        if (slot.status !== 'booked' && !slot.isBlocked) return false;
+        
+        const slotStart = new Date(`${date}T${slot.time}:00`);
+        const slotEnd = new Date(`${date}T${slot.endTime}:00`);
+        
+        // Check for overlap
+        return (startDateTime < slotEnd && endDateTime > slotStart);
+      });
+      
+      const canBook = conflicts.length === 0;
+      
+      if (!canBook) {
+        console.log(`❌ Cannot book ${sessionType} at ${startTime} - conflicts found:`, conflicts);
+        
+        // Find next available time
+        const nextAvailable = findNextAvailableSlot(date, sessionType, totalTimeNeeded);
+        return { canBook: false, conflicts, nextAvailable };
+      }
+      
+      console.log(`✅ Can book ${sessionType} at ${startTime} - ${totalTimeNeeded}min needed`);
+      return { canBook: true, sessionDuration, bufferTime, totalTimeNeeded };
+    }
+
+    function findNextAvailableSlot(date, sessionType, timeNeeded) {
+      // Logic to find the next available slot that can accommodate the session + buffer
+      // This would scan through available slots and find gaps big enough
+      // Implementation depends on your specific availability structure
+      
+      const availableSlots = calendarData.filter(slot => 
         slot.date === date && 
         slot.status === 'available' && 
         !slot.isBlocked
       ).sort((a, b) => a.time.localeCompare(b.time));
       
-      // Logic to check for consecutive available slots
-      // This ensures intelligent booking that respects time constraints
+      for (let slot of availableSlots) {
+        const check = checkBookingAvailability(date, slot.time, sessionType);
+        if (check.canBook) {
+          return slot.time;
+        }
+      }
       
-      return { canBook: true, alternatives: [] };
+      return null; // No available slots found
     }
 
     // Initialize the page
