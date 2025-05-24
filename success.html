@@ -10,7 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
+  <!-- Include Airtable Integration -->
+  <script src="airtable-integration.js"></script>
+
   <style>
+    /* [Keep all existing CSS styles from the previous success page - they're perfect] */
     :root {
       --orange: #F47C2C;
       --gold: #FDB75E;
@@ -248,6 +252,27 @@
       font-weight: 600;
       color: var(--gold);
       letter-spacing: 1px;
+    }
+
+    .status-indicator {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    .status-indicator.airtable-success {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      color: #10b981;
+    }
+
+    .status-indicator.local-fallback {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #f59e0b;
     }
 
     /* === BOOKING DETAILS === */
@@ -695,6 +720,7 @@
         <h1>Booking Confirmed!</h1>
         <p>Your pet photography session has been successfully booked. We can't wait to capture amazing photos of your furry friends!</p>
         <div class="booking-id" id="bookingIdDisplay">Booking ID: Loading...</div>
+        <div class="status-indicator" id="statusIndicator">Processing...</div>
       </div>
 
       <!-- Booking Details -->
@@ -771,8 +797,6 @@
           <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
           <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
           <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
           <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
           <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
           <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
@@ -787,6 +811,14 @@
   </footer>
 
   <script>
+    // ===== AIRTABLE CONFIGURATION =====
+    // Connected to your Picture This Pet Airtable base
+    const AIRTABLE_CONFIG = {
+      baseId: 'applU3NCdDveC4G8a', // Your actual base ID
+      apiKey: 'patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3', // Your actual API token
+      apiUrl: 'https://api.airtable.com/v0'
+    };
+
     // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
@@ -846,6 +878,70 @@
       });
 
       return sessionData;
+    }
+
+    // Save booking to Airtable
+    async function saveBookingToAirtable(bookingData) {
+      const statusIndicator = document.getElementById('statusIndicator');
+      
+      try {
+        console.log('💾 Saving booking to Airtable:', bookingData);
+        statusIndicator.textContent = 'Saving to Airtable...';
+        
+        const airtableRecord = {
+          fields: {
+            bookingId: bookingData.bookingId,
+            timestamp: bookingData.timestamp,
+            status: bookingData.status || 'confirmed',
+            clientName: bookingData.client?.name || '',
+            clientEmail: bookingData.client?.email || '',
+            clientPhone: bookingData.client?.phone || '',
+            sessionType: bookingData.session?.type || bookingData.session,
+            sessionDate: bookingData.session?.date || bookingData.selectedDate,
+            sessionTime: bookingData.session?.time || bookingData.selectedTime,
+            location: bookingData.session?.location || bookingData.park,
+            petCount: parseInt(bookingData.session?.petCount || bookingData.petCount) || 1,
+            peopleCount: parseInt(bookingData.session?.peopleCount || bookingData.peopleCount) || 1,
+            paymentAmount: bookingData.payment?.amount || 0,
+            paymentStatus: bookingData.payment?.status || 'completed'
+          }
+        };
+        
+        const response = await fetch(`${AIRTABLE_CONFIG.apiUrl}/${AIRTABLE_CONFIG.baseId}/Bookings`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(airtableRecord)
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Airtable API error: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        console.log('✅ Booking saved to Airtable successfully:', result);
+        
+        statusIndicator.textContent = 'Saved to Airtable ✅';
+        statusIndicator.className = 'status-indicator airtable-success';
+        
+        return result;
+        
+      } catch (error) {
+        console.error('❌ Failed to save booking to Airtable:', error);
+        console.log('📱 Falling back to localStorage only...');
+        
+        statusIndicator.textContent = 'Saved Locally (Offline) ⚠️';
+        statusIndicator.className = 'status-indicator local-fallback';
+        
+        // Fallback to localStorage
+        let localBookings = JSON.parse(localStorage.getItem('ptpCompleteBookings')) || [];
+        localBookings.push(bookingData);
+        localStorage.setItem('ptpCompleteBookings', JSON.stringify(localBookings));
+        
+        return null;
+      }
     }
 
     // Clean up backup storage after successful processing
@@ -955,13 +1051,13 @@
       return card;
     }
 
-    // Save complete booking data to admin system
-    function saveToAdminSystem(sessionData) {
+    // Save complete booking data to system
+    async function saveToSystem(sessionData) {
       try {
         // Generate final booking ID if needed
         const bookingId = sessionData.bookingId || `PTP_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         
-        // Structure the complete booking data for admin system
+        // Structure the complete booking data
         const completeBookingData = {
           bookingId: bookingId,
           timestamp: new Date().toISOString(),
@@ -1002,7 +1098,10 @@
           isVaccinated: sessionData.isVaccinated
         };
 
-        // Save to admin system localStorage
+        // Save to Airtable (primary)
+        await saveBookingToAirtable(completeBookingData);
+
+        // Also save to localStorage as backup
         let existingBookings = JSON.parse(localStorage.getItem('ptpCompleteBookings')) || [];
         existingBookings.push(completeBookingData);
         localStorage.setItem('ptpCompleteBookings', JSON.stringify(existingBookings));
@@ -1014,17 +1113,7 @@
         marketingData.completionTimestamp = new Date().toISOString();
         localStorage.setItem('ptpMarketingData', JSON.stringify(marketingData));
 
-        // Update lead data if it exists
-        let leadData = JSON.parse(localStorage.getItem('ptpAdminLeads')) || [];
-        const leadIndex = leadData.findIndex(lead => lead.email === completeBookingData.client?.email);
-        if (leadIndex !== -1) {
-          leadData[leadIndex].status = 'completed';
-          leadData[leadIndex].bookingId = bookingId;
-          leadData[leadIndex].completionTimestamp = new Date().toISOString();
-          localStorage.setItem('ptpAdminLeads', JSON.stringify(leadData));
-        }
-
-        console.log('✅ Complete booking data saved to admin system:', completeBookingData);
+        console.log('✅ Complete booking data saved to all systems:', completeBookingData);
         
         // Dispatch event for real-time admin updates
         window.dispatchEvent(new CustomEvent('bookingCompleted', { detail: completeBookingData }));
@@ -1032,13 +1121,13 @@
         return completeBookingData;
         
       } catch (error) {
-        console.error('❌ Error saving to admin system:', error);
+        console.error('❌ Error saving to system:', error);
         return null;
       }
     }
 
     // Initialize success page
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', async function() {
       console.log('🎉 Success page loaded - processing booking completion...');
 
       // Try to recover booking data
@@ -1048,8 +1137,8 @@
         // Display the booking details
         displayBookingDetails(sessionData);
         
-        // Save to admin system
-        const completeBooking = saveToAdminSystem(sessionData);
+        // Save to system (Airtable + localStorage)
+        const completeBooking = await saveToSystem(sessionData);
         
         if (completeBooking) {
           // Clean up backup storage after successful processing
@@ -1065,6 +1154,10 @@
         console.error('❌ No booking data found - showing error state');
         document.getElementById('bookingDetails').style.display = 'none';
         document.getElementById('errorState').style.display = 'block';
+        
+        const statusIndicator = document.getElementById('statusIndicator');
+        statusIndicator.textContent = 'Error: No booking data found';
+        statusIndicator.className = 'status-indicator local-fallback';
       }
     });
   </script>
