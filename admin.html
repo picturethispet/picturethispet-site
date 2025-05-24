@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studio Manager | Picture This Pet</title>
-  <meta name="description" content="Complete studio management dashboard for booking, clients, and galleries.">
+  <meta name="description" content="Complete studio management dashboard with Google Calendar and Sheets integration.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  
+
   <style>
     :root {
       --orange: #F47C2C;
@@ -26,26 +26,26 @@
       margin: 0;
       padding: 0;
     }
-
+    
     html, body {
       overflow-x: hidden;
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
     }
-
+    
     html::-webkit-scrollbar {
       width: 8px;
     }
-
+    
     html::-webkit-scrollbar-track {
       background: transparent;
     }
-
+    
     html::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.3);
       border-radius: 4px;
     }
-
+    
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
@@ -78,7 +78,7 @@
     .admin-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows: auto 1fr;
       min-height: 100vh;
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
@@ -86,8 +86,8 @@
       animation: moveBackground 30s ease-in-out infinite;
     }
 
-    /* === HEADER STYLES === */
-    header {
+    /* === HEADER === */
+    .admin-header {
       grid-column: 1 / -1;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -149,6 +149,10 @@
       background: var(--booked-red);
     }
 
+    .sync-indicator.connecting {
+      background: var(--soft-hold-yellow);
+    }
+
     .admin-user {
       background: rgba(255, 255, 255, 0.1);
       padding: 0.8rem 1.5rem;
@@ -169,7 +173,6 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      min-width: 80px;
     }
 
     .logout-btn:hover {
@@ -212,8 +215,6 @@
       cursor: pointer;
       transition: all 0.3s ease;
       border-left: 3px solid transparent;
-      min-height: 48px;
-      text-decoration: none;
     }
 
     .nav-item:hover {
@@ -246,7 +247,16 @@
     .admin-main {
       padding: 2rem;
       overflow-y: auto;
-      max-height: calc(100vh - 100px - 120px);
+      max-height: calc(100vh - 100px);
+    }
+
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+      animation: fadeInUp 0.5s ease-out;
     }
 
     /* === CARDS === */
@@ -296,8 +306,6 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      min-height: 48px;
-      min-width: 80px;
     }
 
     .btn-primary {
@@ -323,11 +331,15 @@
     .btn-small {
       padding: 0.5rem 1rem;
       font-size: 0.85rem;
-      min-height: 40px;
-      min-width: 60px;
     }
 
-    /* === DASHBOARD OVERVIEW === */
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* === DASHBOARD STATS === */
     .dashboard-stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -355,114 +367,409 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
-    .recent-activities {
+    /* === CALENDAR === */
+    .calendar-container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 350px;
       gap: 2rem;
     }
 
-    .activity-item {
+    .calendar-main {
       background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1rem;
+      border-radius: 16px;
+      padding: 1.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 1rem;
     }
 
-    .activity-header {
+    .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 2rem;
     }
 
-    .activity-title {
-      font-weight: 600;
+    .calendar-title {
+      font-size: 1.5rem;
+      font-weight: 700;
       color: white;
     }
 
-    .activity-time {
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.6);
+    .calendar-nav {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
     }
 
-    .activity-description {
+    .nav-button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .calendar-day-header {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
       font-size: 0.9rem;
       color: rgba(255, 255, 255, 0.8);
     }
 
-    /* === FOOTER STYLES === */
-    footer {
-      grid-column: 1 / -1;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2rem 1.5rem;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.9rem;
-    }
-
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-section {
+    .calendar-day {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.8rem 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 60px;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      font-weight: 500;
     }
 
-    .footer-section h4 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.2rem;
+    .calendar-day:hover:not(.past):not(.other-month) {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
+    }
+
+    .calendar-day.other-month {
+      color: rgba(255, 255, 255, 0.3);
+      cursor: default;
+    }
+
+    .calendar-day.past {
+      color: rgba(255, 255, 255, 0.3);
+      cursor: default;
+    }
+
+    .calendar-day.available {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
       color: white;
-      margin-bottom: 1rem;
     }
 
-    .footer-section a {
+    .calendar-day.booked {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .calendar-day.blocked {
+      background: rgba(100, 100, 100, 0.3);
+      border: 1px solid rgba(150, 150, 150, 0.5);
       color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s ease;
-      min-height: 40px;
     }
 
-    .footer-section a:hover {
-      color: var(--gold);
+    .calendar-day.soft-hold {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: rgba(255, 255, 255, 0.9);
     }
 
-    .payment-methods {
+    .calendar-day.selected {
+      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
+      border: 2px solid #ec4899;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .day-events {
+      font-size: 0.7rem;
+      margin-top: 2px;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .calendar-legend {
       display: flex;
+      gap: 1.5rem;
+      justify-content: center;
       flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
       gap: 0.5rem;
     }
 
-    .payment-icon {
-      width: 40px;
-      height: 25px;
-      object-fit: contain;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
     }
 
-    .payment-icon:hover {
-      opacity: 1;
-      transform: scale(1.1);
+    .legend-dot.available {
+      background: rgba(16, 185, 129, 0.7);
     }
 
-    .footer-bottom {
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    .legend-dot.booked {
+      background: rgba(239, 68, 68, 0.7);
+    }
+
+    .legend-dot.blocked {
+      background: rgba(100, 100, 100, 0.7);
+    }
+
+    .legend-dot.soft-hold {
+      background: rgba(245, 158, 11, 0.7);
+    }
+
+    /* === SESSION PANEL === */
+    .session-panel {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .session-panel h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .session-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* === FORMS === */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(253, 183, 94, 0.2);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* === LOADING STATES === */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .loading-spinner {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid var(--gold);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* === CONTEXT MENU === */
+    .context-menu {
+      position: fixed;
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 0.5rem 0;
+      min-width: 200px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: none;
+    }
+
+    .context-menu-item {
+      padding: 0.8rem 1.2rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .context-menu-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .context-menu-item.disabled {
+      color: rgba(255, 255, 255, 0.4);
+      cursor: not-allowed;
+    }
+
+    .context-menu-separator {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 0.5rem 0;
+    }
+
+    /* === MODALS === */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: white;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    /* === NOTIFICATIONS === */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--available-green);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      z-index: 4000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.error {
+      background: var(--booked-red);
+    }
+
+    .notification.warning {
+      background: var(--soft-hold-yellow);
     }
 
     /* === RESPONSIVE === */
@@ -488,19 +795,19 @@
         display: none;
       }
 
-      .dashboard-stats {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      .calendar-container {
+        grid-template-columns: 1fr;
       }
 
-      .recent-activities {
-        grid-template-columns: 1fr;
+      .dashboard-stats {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       }
     }
 
     @media (max-width: 768px) {
       .admin-layout {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr auto;
+        grid-template-rows: auto auto 1fr;
       }
 
       .admin-sidebar {
@@ -520,21 +827,11 @@
 
       .mobile-menu-btn {
         display: block;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: none;
+        border: none;
         color: white;
         font-size: 1.5rem;
         cursor: pointer;
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .mobile-menu-btn:hover {
-        background: rgba(255, 255, 255, 0.2);
       }
 
       .header-title {
@@ -545,34 +842,20 @@
         padding: 1rem;
       }
 
-      footer {
-        padding: 1.5rem 1rem;
-      }
-
-      .footer-container {
+      .form-row {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
       }
 
-      .footer-section {
-        align-items: center;
-        text-align: center;
-      }
-
-      .payment-methods {
-        justify-content: center;
-      }
-
-      /* Improved Mobile Styles */
-      .activity-time {
-        font-size: 0.9rem;
+      .modal {
+        padding: 1.5rem;
+        margin: 1rem;
       }
     }
   </style>
+
+  <!-- Google APIs -->
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://accounts.google.com/gsi/client"></script>
 </head>
 <body>
   <div class="admin-layout">
@@ -586,7 +869,7 @@
       <div class="header-right">
         <div class="sync-status">
           <div class="sync-indicator" id="syncIndicator"></div>
-          <span id="syncStatus">Google Connected</span>
+          <span id="syncStatus">Connecting...</span>
         </div>
         <div class="admin-user" id="adminUser">Welcome, Admin</div>
         <button class="logout-btn" onclick="logout()">Logout</button>
@@ -597,296 +880,1454 @@
     <nav class="admin-sidebar" id="adminSidebar">
       <div class="nav-section">
         <div class="nav-section-title">Overview</div>
-        <a href="admin.html" class="nav-item active">
+        <div class="nav-item active" onclick="showView('dashboard')">
           <span class="nav-icon">📊</span>
           <span>Dashboard</span>
-        </a>
-        <a href="calendar-management.html" class="nav-item">
+        </div>
+        <div class="nav-item" onclick="showView('calendar')">
           <span class="nav-icon">📅</span>
-          <span>Calendar Management</span>
+          <span>Calendar</span>
           <span class="nav-badge" id="calendarBadge">0</span>
-        </a>
+        </div>
       </div>
 
       <div class="nav-section">
         <div class="nav-section-title">Management</div>
-        <a href="client-session-management.html" class="nav-item">
+        <div class="nav-item" onclick="showView('sessions')">
+          <span class="nav-icon">📸</span>
+          <span>Sessions</span>
+        </div>
+        <div class="nav-item" onclick="showView('clients')">
           <span class="nav-icon">👥</span>
-          <span>Client & Session Management</span>
-        </a>
-        <a href="gallery-management.html" class="nav-item">
+          <span>Clients</span>
+        </div>
+        <div class="nav-item" onclick="showView('galleries')">
           <span class="nav-icon">🖼️</span>
-          <span>Gallery Management</span>
-          <span class="nav-badge" id="galleriesBadge">0</span>
-        </a>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Business</div>
-        <a href="business-management.html" class="nav-item">
-          <span class="nav-icon">📈</span>
-          <span>Business Management</span>
-        </a>
+          <span>Galleries</span>
+          <span class="nav-badge" id="galleryBadge">0</span>
+        </div>
       </div>
 
       <div class="nav-section">
         <div class="nav-section-title">System</div>
-        <a href="#" class="nav-item">
+        <div class="nav-item" onclick="showView('settings')">
           <span class="nav-icon">⚙️</span>
           <span>Settings</span>
-        </a>
+        </div>
       </div>
     </nav>
 
     <!-- Main Content -->
     <main class="admin-main">
       <!-- Dashboard View -->
-      <div class="dashboard-stats">
-        <div class="stat-card">
-          <div class="stat-number" id="sessionsThisMonth">0</div>
-          <div class="stat-label">Sessions This Month</div>
+      <div class="view-section active" id="dashboard-view">
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <div class="stat-number" id="monthlySessionsCount">0</div>
+            <div class="stat-label">Sessions This Month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="monthlyRevenue">$0</div>
+            <div class="stat-label">Monthly Revenue</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="activeGalleriesCount">0</div>
+            <div class="stat-label">Active Galleries</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalClientsCount">0</div>
+            <div class="stat-label">Total Clients</div>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-number" id="monthlyRevenue">$0</div>
-          <div class="stat-label">Monthly Revenue</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="activeGalleries">0</div>
-          <div class="stat-label">Active Galleries</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="totalClients">0</div>
-          <div class="stat-label">Total Clients</div>
+
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Getting Started</h2>
+            <button class="btn btn-secondary btn-small" onclick="checkSetup()">🔧 Check Setup</button>
+          </div>
+          
+          <div id="setupInstructions" style="display: none;">
+            <h3 style="color: var(--gold); margin-bottom: 1rem;">🚀 Google API Setup Required</h3>
+            <p style="margin-bottom: 1rem; line-height: 1.6;">To enable real-time syncing, you need to set up Google APIs:</p>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 12px; margin: 1rem 0;">
+              <h4 style="color: white; margin-bottom: 1rem;">📋 Setup Steps:</h4>
+              <ol style="line-height: 1.8; padding-left: 1.5rem;">
+                <li>Go to <a href="https://console.cloud.google.com" target="_blank" style="color: var(--gold);">Google Cloud Console</a></li>
+                <li>Create a new project or select existing</li>
+                <li>Enable <strong>Google Calendar API</strong> and <strong>Google Sheets API</strong></li>
+                <li>Create credentials (OAuth 2.0 Client ID)</li>
+                <li>Add your domain to authorized origins</li>
+                <li>Update the API configuration in this code</li>
+              </ol>
+            </div>
+            
+            <div style="background: rgba(245, 158, 11, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--soft-hold-yellow);">
+              <strong>💡 Current Status:</strong> Running in demo mode with sample data. Real syncing will work once APIs are configured.
+            </div>
+          </div>
+
+          <div id="welcomeMessage">
+            <h3 style="color: var(--gold); margin-bottom: 1rem;">Welcome to Your Studio Manager! 🎉</h3>
+            <p style="margin-bottom: 1rem; line-height: 1.6;">
+              Your complete photography business management system is ready. This dashboard integrates with Google Calendar and Google Sheets to provide real-time syncing of your sessions, clients, and galleries.
+            </p>
+            <div class="form-row" style="margin-top: 2rem;">
+              <button class="btn btn-primary" onclick="showView('calendar')">📅 Manage Calendar</button>
+              <button class="btn btn-secondary" onclick="showView('galleries')">🖼️ Create Gallery</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="recent-activities">
+      <!-- Calendar View -->
+      <div class="view-section" id="calendar-view">
         <div class="admin-card">
           <div class="card-header">
-            <h2 class="card-title">Recent Sessions</h2>
-            <a href="client-session-management.html" class="btn btn-secondary btn-small">View All</a>
+            <h2 class="card-title">Session Calendar</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small" onclick="syncWithGoogle()">🔄 Sync</button>
+              <button class="btn btn-primary btn-small" onclick="openSessionModal('add')">+ Add Session</button>
+            </div>
           </div>
-          <div id="recentSessionsList">
-            <!-- Recent sessions will be populated here -->
+
+          <div class="calendar-container">
+            <div class="calendar-main">
+              <div class="calendar-header">
+                <h3 class="calendar-title" id="calendarTitle">Loading...</h3>
+                <div class="calendar-nav">
+                  <button class="nav-button" onclick="previousMonth()">‹</button>
+                  <button class="nav-button" onclick="nextMonth()">›</button>
+                </div>
+              </div>
+
+              <div id="calendarContainer">
+                <div class="loading">
+                  <div class="loading-spinner"></div>
+                  <span>Loading calendar...</span>
+                </div>
+              </div>
+
+              <div class="calendar-legend">
+                <div class="legend-item">
+                  <div class="legend-dot available"></div>
+                  <span>Available</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot booked"></div>
+                  <span>Session Booked</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot blocked"></div>
+                  <span>Blocked</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot soft-hold"></div>
+                  <span>Soft Hold</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="session-panel">
+              <h3>Quick Actions</h3>
+              <div class="session-form">
+                <button class="btn btn-primary" onclick="openSessionModal('add')">📸 Add Session</button>
+                <button class="btn btn-secondary" onclick="openBlockModal()">🚫 Block Date</button>
+                <button class="btn btn-secondary" onclick="openFullCalendar()">📅 Full Calendar</button>
+                <button class="btn btn-secondary" onclick="exportCalendar()">📁 Export</button>
+              </div>
+
+              <div id="selectedDateInfo" style="display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <h4 style="margin-bottom: 1rem; color: var(--gold);">Selected Date</h4>
+                <div id="dateDetails"></div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
+      <!-- Sessions View -->
+      <div class="view-section" id="sessions-view">
         <div class="admin-card">
           <div class="card-header">
-            <h2 class="card-title">Pending Actions</h2>
-            <button class="btn btn-secondary btn-small" onclick="markAllPendingActionsRead()">Mark All Read</button>
+            <h2 class="card-title">Session Management</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small" onclick="refreshSessions()">🔄 Refresh</button>
+              <button class="btn btn-primary btn-small" onclick="openSessionModal('add')">+ New Session</button>
+            </div>
           </div>
-          <div id="pendingActionsList">
-            <!-- Pending actions will be populated here -->
+
+          <div id="sessionsList">
+            <div class="loading">
+              <div class="loading-spinner"></div>
+              <span>Loading sessions...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clients View -->
+      <div class="view-section" id="clients-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Client Management</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small" onclick="refreshClients()">🔄 Refresh</button>
+              <button class="btn btn-primary btn-small" onclick="openClientModal()">+ Add Client</button>
+            </div>
+          </div>
+
+          <div id="clientsList">
+            <div class="loading">
+              <div class="loading-spinner"></div>
+              <span>Loading clients...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Galleries View -->
+      <div class="view-section" id="galleries-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">Gallery Management</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small" onclick="refreshGalleries()">🔄 Refresh</button>
+              <button class="btn btn-primary btn-small" onclick="openGalleryModal()">+ Create Gallery</button>
+            </div>
+          </div>
+
+          <div id="galleriesList">
+            <div class="loading">
+              <div class="loading-spinner"></div>
+              <span>Loading galleries...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings View -->
+      <div class="view-section" id="settings-view">
+        <div class="admin-card">
+          <div class="card-header">
+            <h2 class="card-title">API Configuration</h2>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-small" onclick="saveSettings()">💾 Save Settings</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Google Sheets ID</label>
+            <input type="text" class="form-input" id="sheetsId" placeholder="Enter your Google Sheets ID">
+            <small style="color: rgba(255,255,255,0.6); font-size: 0.8rem;">
+              Found in your sheet URL: docs.google.com/spreadsheets/d/<strong>SHEET_ID</strong>/edit
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Google Calendar ID</label>
+            <input type="text" class="form-input" id="calendarId" placeholder="Enter your Google Calendar ID">
+            <small style="color: rgba(255,255,255,0.6); font-size: 0.8rem;">
+              Usually your email address or found in Calendar settings
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Google Client ID</label>
+            <input type="text" class="form-input" id="clientId" placeholder="Enter your OAuth Client ID">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Google API Key</label>
+            <input type="text" class="form-input" id="apiKey" placeholder="Enter your API Key">
+          </div>
+
+          <div style="background: rgba(16, 185, 129, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--available-green); margin-top: 2rem;">
+            <strong>✅ Setup Complete!</strong> Once you enter your API credentials above, the system will automatically sync with your Google Calendar and Sheets.
           </div>
         </div>
       </div>
     </main>
+  </div>
 
-    <!-- Footer -->
-    <footer>
-      <div class="footer-container">
-        <div class="footer-section">
-          <h4>Contact Us</h4>
-          <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-          <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+  <!-- Context Menu -->
+  <div class="context-menu" id="contextMenu">
+    <div class="context-menu-item" onclick="addSession()">
+      📸 Add Session
+    </div>
+    <div class="context-menu-item" onclick="blockDate()">
+      🚫 Block Date
+    </div>
+    <div class="context-menu-separator"></div>
+    <div class="context-menu-item" onclick="editSession()">
+      ✏️ Edit Session
+    </div>
+    <div class="context-menu-item" onclick="removeSession()">
+      🗑️ Remove Session
+    </div>
+    <div class="context-menu-separator"></div>
+    <div class="context-menu-item" onclick="viewSessionDetails()">
+      👁️ View Details
+    </div>
+  </div>
+
+  <!-- Session Modal -->
+  <div class="modal-overlay" id="sessionModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="sessionModalTitle">Add New Session</h3>
+        <button class="modal-close" onclick="closeSessionModal()">&times;</button>
+      </div>
+      
+      <form id="sessionForm">
+        <div class="form-group">
+          <label class="form-label">Client Name</label>
+          <input type="text" class="form-input" id="clientName" placeholder="Enter client name" required>
         </div>
-        <div class="footer-section socials">
-          <h4>Connect</h4>
-          <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-          <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-        </div>
-        <div class="footer-section">
-          <h4>We Accept</h4>
-          <div class="payment-methods">
-            <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-input" id="sessionDate" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Time</label>
+            <input type="time" class="form-input" id="sessionTime" value="18:00" required>
           </div>
         </div>
+        
+        <div class="form-group">
+          <label class="form-label">Session Type</label>
+          <select class="form-select" id="sessionType" required>
+            <option value="">Select session type</option>
+            <option value="Full Session">Full Session ($250)</option>
+            <option value="Mini Session">Mini Session ($150)</option>
+            <option value="Holiday Session">Holiday Session ($200)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <select class="form-select" id="sessionLocation" required>
+            <option value="">Select location</option>
+            <option value="Cheesman Park">Cheesman Park</option>
+            <option value="Washington Park">Washington Park</option>
+            <option value="Sloan's Lake">Sloan's Lake</option>
+            <option value="City Park">City Park</option>
+            <option value="Client's Home">Client's Home</option>
+          </select>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Client Email</label>
+            <input type="email" class="form-input" id="clientEmail" placeholder="client@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Client Phone</label>
+            <input type="tel" class="form-input" id="clientPhone" placeholder="(303) 555-0123">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <textarea class="form-input" id="sessionNotes" placeholder="Special requests, pet names, etc." rows="3"></textarea>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeSessionModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveSessionBtn">Save Session</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Gallery Modal -->
+  <div class="modal-overlay" id="galleryModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Gallery</h3>
+        <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
       </div>
-      <div class="footer-bottom">
-        <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 11:52 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
-      </div>
-    </footer>
+      
+      <form id="galleryForm">
+        <div class="form-group">
+          <label class="form-label">Gallery Name</label>
+          <input type="text" class="form-input" id="galleryName" placeholder="Client Name - Session Type" required>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Session Date</label>
+            <input type="date" class="form-input" id="galleryDate" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expiration Date</label>
+            <input type="date" class="form-input" id="galleryExpiration">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Session ID</label>
+            <input type="text" class="form-input" id="gallerySessionId" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gallery Password</label>
+            <input type="text" class="form-input" id="galleryPassword" readonly>
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeGalleryModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Gallery</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <script>
-    const API_URL = '[NEW_WEB_APP_URL]'; // Replace with the new URL after redeployment
+    // ===== CONFIGURATION =====
+    const CONFIG = {
+      // Google API Configuration (UPDATE THESE!)
+      GOOGLE_CLIENT_ID: 'YOUR_GOOGLE_CLIENT_ID_HERE',
+      GOOGLE_API_KEY: 'YOUR_GOOGLE_API_KEY_HERE',
+      GOOGLE_SHEETS_ID: 'YOUR_GOOGLE_SHEETS_ID_HERE',
+      GOOGLE_CALENDAR_ID: 'primary', // or your specific calendar ID
+      
+      // API Scopes
+      SCOPES: [
+        'https://www.googleapis.com/auth/calendar',
+        'https://www.googleapis.com/auth/spreadsheets'
+      ],
+      
+      // Sheet names
+      SHEETS: {
+        SESSIONS: 'Sessions',
+        CLIENTS: 'Clients', 
+        GALLERIES: 'Galleries'
+      }
+    };
 
-    let sessions = [];
-    let galleries = [];
-    let clients = [];
+    // ===== GLOBAL VARIABLES =====
+    let isGoogleAPIsLoaded = false;
+    let isUserSignedIn = false;
+    let currentView = 'dashboard';
+    let currentMonth = new Date();
+    let selectedDate = null;
+    let contextMenuTarget = null;
+    
+    // Data caches
+    let sessionsData = [];
+    let clientsData = [];
+    let galleriesData = [];
+    let calendarEvents = [];
 
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Page loaded, initializing...');
-      checkAuthentication();
-      fetchSessions();
-      fetchGalleries();
-      fetchClients();
-      updateDashboardStats();
-    });
-
-    // Check authentication
+    // ===== AUTHENTICATION & INITIALIZATION =====
+    
+    // Check admin authentication
     function checkAuthentication() {
       const isAuthenticated = localStorage.getItem('adminAuthenticated');
-      if (!isAuthenticated) {
-        console.log('Not authenticated, redirecting to login...');
+      const loginTime = localStorage.getItem('adminLoginTime');
+      const adminUser = localStorage.getItem('adminUser');
+      
+      if (!isAuthenticated || !loginTime || !adminUser) {
         window.location.href = '/admin-login.html';
-        return;
+        return false;
       }
-      const adminUser = localStorage.getItem('adminUser') || 'Admin';
+      
+      const loginDate = new Date(loginTime);
+      const now = new Date();
+      const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
+      
+      if (hoursDiff >= 24) {
+        logout();
+        return false;
+      }
+      
       document.getElementById('adminUser').textContent = `Welcome, ${adminUser}`;
-      console.log('Authenticated as:', adminUser);
+      return true;
     }
 
-    // Logout
     function logout() {
-      console.log('Logging out...');
       localStorage.removeItem('adminAuthenticated');
       localStorage.removeItem('adminUser');
       localStorage.removeItem('adminLoginTime');
       window.location.href = '/admin-login.html';
     }
 
-    // Toggle sidebar on mobile
+    // Initialize Google APIs
+    async function initializeGoogleAPIs() {
+      try {
+        updateSyncStatus('connecting');
+        
+        // Load Google APIs
+        await new Promise((resolve) => {
+          gapi.load('auth2:client', resolve);
+        });
+
+        // Initialize the API client
+        await gapi.client.init({
+          apiKey: CONFIG.GOOGLE_API_KEY,
+          clientId: CONFIG.GOOGLE_CLIENT_ID,
+          scope: CONFIG.SCOPES.join(' '),
+          discoveryDocs: [
+            'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+            'https://sheets.googleapis.com/$discovery/rest?version=v4'
+          ]
+        });
+
+        isGoogleAPIsLoaded = true;
+        
+        // Check if user is already signed in
+        const authInstance = gapi.auth2.getAuthInstance();
+        isUserSignedIn = authInstance.isSignedIn.get();
+        
+        if (isUserSignedIn) {
+          updateSyncStatus('connected');
+          showNotification('✅ Connected to Google APIs', 'success');
+          await loadAllData();
+        } else {
+          updateSyncStatus('disconnected');
+          // Auto-sign in for admin
+          await signIn();
+        }
+        
+      } catch (error) {
+        console.error('Error initializing Google APIs:', error);
+        updateSyncStatus('error');
+        showNotification('❌ Google API initialization failed. Using demo mode.', 'error');
+        loadSampleData();
+      }
+    }
+
+    // Sign in to Google
+    async function signIn() {
+      try {
+        const authInstance = gapi.auth2.getAuthInstance();
+        await authInstance.signIn();
+        isUserSignedIn = true;
+        updateSyncStatus('connected');
+        showNotification('✅ Signed in to Google successfully', 'success');
+        await loadAllData();
+      } catch (error) {
+        console.error('Sign-in error:', error);
+        updateSyncStatus('error');
+        showNotification('❌ Google sign-in failed. Using demo mode.', 'error');
+        loadSampleData();
+      }
+    }
+
+    // Update sync status indicator
+    function updateSyncStatus(status) {
+      const indicator = document.getElementById('syncIndicator');
+      const statusText = document.getElementById('syncStatus');
+      
+      indicator.className = 'sync-indicator';
+      
+      switch(status) {
+        case 'connecting':
+          indicator.classList.add('connecting');
+          statusText.textContent = 'Connecting...';
+          break;
+        case 'connected':
+          statusText.textContent = 'Google Connected';
+          break;
+        case 'disconnected':
+          indicator.classList.add('disconnected');
+          statusText.textContent = 'Disconnected';
+          break;
+        case 'error':
+          indicator.classList.add('disconnected');
+          statusText.textContent = 'API Error';
+          break;
+      }
+    }
+
+    // ===== DATA MANAGEMENT =====
+
+    // Load all data from Google Sheets and Calendar
+    async function loadAllData() {
+      try {
+        showNotification('🔄 Syncing data from Google...', 'info');
+        
+        await Promise.all([
+          loadSessionsFromSheets(),
+          loadClientsFromSheets(), 
+          loadGalleriesFromSheets(),
+          loadCalendarEvents()
+        ]);
+        
+        updateDashboardStats();
+        refreshCurrentView();
+        showNotification('✅ Data synced successfully', 'success');
+        
+      } catch (error) {
+        console.error('Error loading data:', error);
+        showNotification('❌ Sync failed. Using cached data.', 'error');
+        loadSampleData();
+      }
+    }
+
+    // Load sessions from Google Sheets
+    async function loadSessionsFromSheets() {
+      if (!isGoogleAPIsLoaded || !isUserSignedIn) {
+        return;
+      }
+      
+      try {
+        const response = await gapi.client.sheets.spreadsheets.values.get({
+          spreadsheetId: CONFIG.GOOGLE_SHEETS_ID,
+          range: `${CONFIG.SHEETS.SESSIONS}!A:J`
+        });
+        
+        const rows = response.result.values || [];
+        if (rows.length > 1) {
+          // Skip header row
+          sessionsData = rows.slice(1).map(row => ({
+            id: row[0] || '',
+            date: row[1] || '',
+            time: row[2] || '',
+            clientName: row[3] || '',
+            sessionType: row[4] || '',
+            location: row[5] || '',
+            email: row[6] || '',
+            phone: row[7] || '',
+            notes: row[8] || '',
+            status: row[9] || 'scheduled'
+          }));
+        }
+        
+      } catch (error) {
+        console.error('Error loading sessions:', error);
+      }
+    }
+
+    // Save session to Google Sheets
+    async function saveSessionToSheets(sessionData) {
+      if (!isGoogleAPIsLoaded || !isUserSignedIn) {
+        // Save to localStorage as fallback
+        let localSessions = JSON.parse(localStorage.getItem('adminSessions') || '[]');
+        localSessions.push({...sessionData, id: Date.now().toString()});
+        localStorage.setItem('adminSessions', JSON.stringify(localSessions));
+        return;
+      }
+      
+      try {
+        const sessionId = sessionData.id || Date.now().toString();
+        const row = [
+          sessionId,
+          sessionData.date,
+          sessionData.time,
+          sessionData.clientName,
+          sessionData.sessionType,
+          sessionData.location,
+          sessionData.email,
+          sessionData.phone,
+          sessionData.notes,
+          sessionData.status || 'scheduled'
+        ];
+        
+        await gapi.client.sheets.spreadsheets.values.append({
+          spreadsheetId: CONFIG.GOOGLE_SHEETS_ID,
+          range: `${CONFIG.SHEETS.SESSIONS}!A:J`,
+          valueInputOption: 'RAW',
+          resource: {
+            values: [row]
+          }
+        });
+        
+        // Also add to Google Calendar
+        await addToGoogleCalendar(sessionData);
+        
+        showNotification('✅ Session saved to Google Sheets & Calendar', 'success');
+        
+      } catch (error) {
+        console.error('Error saving session:', error);
+        showNotification('❌ Failed to save session', 'error');
+      }
+    }
+
+    // Add event to Google Calendar
+    async function addToGoogleCalendar(sessionData) {
+      if (!isGoogleAPIsLoaded || !isUserSignedIn) {
+        return;
+      }
+      
+      try {
+        const startDateTime = `${sessionData.date}T${sessionData.time}:00`;
+        const endTime = addHoursToTime(sessionData.time, sessionData.sessionType === 'Full Session' ? 2 : 1);
+        const endDateTime = `${sessionData.date}T${endTime}:00`;
+        
+        const event = {
+          summary: `${sessionData.sessionType} - ${sessionData.clientName}`,
+          description: `Location: ${sessionData.location}\nPhone: ${sessionData.phone}\nNotes: ${sessionData.notes}`,
+          start: {
+            dateTime: startDateTime,
+            timeZone: 'America/Denver'
+          },
+          end: {
+            dateTime: endDateTime,
+            timeZone: 'America/Denver'
+          },
+          location: sessionData.location
+        };
+        
+        await gapi.client.calendar.events.insert({
+          calendarId: CONFIG.GOOGLE_CALENDAR_ID,
+          resource: event
+        });
+        
+      } catch (error) {
+        console.error('Error adding to calendar:', error);
+      }
+    }
+
+    // Load calendar events
+    async function loadCalendarEvents() {
+      if (!isGoogleAPIsLoaded || !isUserSignedIn) {
+        return;
+      }
+      
+      try {
+        const timeMin = new Date();
+        timeMin.setMonth(timeMin.getMonth() - 1);
+        const timeMax = new Date();
+        timeMax.setMonth(timeMax.getMonth() + 2);
+        
+        const response = await gapi.client.calendar.events.list({
+          calendarId: CONFIG.GOOGLE_CALENDAR_ID,
+          timeMin: timeMin.toISOString(),
+          timeMax: timeMax.toISOString(),
+          singleEvents: true,
+          orderBy: 'startTime'
+        });
+        
+        calendarEvents = response.result.items || [];
+        
+      } catch (error) {
+        console.error('Error loading calendar events:', error);
+      }
+    }
+
+    // Load sample data for demo mode
+    function loadSampleData() {
+      sessionsData = [
+        {
+          id: '1',
+          date: '2024-12-22',
+          time: '18:00',
+          clientName: 'Sarah Johnson',
+          sessionType: 'Full Session',
+          location: 'Cheesman Park',
+          email: 'sarah@email.com',
+          phone: '(303) 555-0123',
+          notes: 'Two dogs - Buffy and Max',
+          status: 'scheduled'
+        },
+        {
+          id: '2', 
+          date: '2024-12-20',
+          time: '17:00',
+          clientName: 'Mike Chen',
+          sessionType: 'Mini Session',
+          location: 'City Park',
+          email: 'mike@email.com',
+          phone: '(303) 555-0456',
+          notes: 'One dog - Rocky',
+          status: 'completed'
+        }
+      ];
+      
+      clientsData = [
+        {
+          id: '1',
+          name: 'Sarah Johnson',
+          email: 'sarah@email.com',
+          phone: '(303) 555-0123',
+          address: 'Denver, CO',
+          pets: 'Buffy (3yo Female), Max (5yo Male)'
+        },
+        {
+          id: '2',
+          name: 'Mike Chen', 
+          email: 'mike@email.com',
+          phone: '(303) 555-0456',
+          address: 'Denver, CO',
+          pets: 'Rocky (2yo Male)'
+        }
+      ];
+      
+      galleriesData = [
+        {
+          id: '1',
+          name: 'Sarah Johnson - Full Session',
+          sessionDate: '2024-12-22',
+          status: 'pending',
+          sessionId: '0123',
+          password: 'buffybarks',
+          photos: 0
+        },
+        {
+          id: '2',
+          name: 'Mike Chen - Mini Session',
+          sessionDate: '2024-12-20', 
+          status: 'active',
+          sessionId: '0456',
+          password: 'rockybarks',
+          photos: 15
+        }
+      ];
+      
+      updateDashboardStats();
+      refreshCurrentView();
+    }
+
+    // Update dashboard statistics
+    function updateDashboardStats() {
+      const currentMonth = new Date().getMonth();
+      const currentYear = new Date().getFullYear();
+      
+      const monthlySessions = sessionsData.filter(session => {
+        const sessionDate = new Date(session.date);
+        return sessionDate.getMonth() === currentMonth && sessionDate.getFullYear() === currentYear;
+      });
+      
+      const monthlyRevenue = monthlySessions.reduce((total, session) => {
+        if (session.sessionType === 'Full Session') return total + 250;
+        if (session.sessionType === 'Mini Session') return total + 150;
+        if (session.sessionType === 'Holiday Session') return total + 200;
+        return total;
+      }, 0);
+      
+      const activeGalleries = galleriesData.filter(gallery => gallery.status === 'active').length;
+      
+      document.getElementById('monthlySessionsCount').textContent = monthlySessions.length;
+      document.getElementById('monthlyRevenue').textContent = `$${monthlyRevenue.toLocaleString()}`;
+      document.getElementById('activeGalleriesCount').textContent = activeGalleries;
+      document.getElementById('totalClientsCount').textContent = clientsData.length;
+      
+      // Update badges
+      document.getElementById('calendarBadge').textContent = monthlySessions.length;
+      document.getElementById('galleryBadge').textContent = galleriesData.filter(g => g.status === 'pending').length;
+    }
+
+    // ===== NAVIGATION =====
+    
+    function showView(viewName) {
+      // Update navigation
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.closest('.nav-item').classList.add('active');
+      
+      // Show view
+      document.querySelectorAll('.view-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(viewName + '-view').classList.add('active');
+      
+      currentView = viewName;
+      
+      // Initialize view-specific content
+      switch(viewName) {
+        case 'calendar':
+          initializeCalendar();
+          break;
+        case 'sessions':
+          renderSessions();
+          break;
+        case 'clients':
+          renderClients();
+          break;
+        case 'galleries':
+          renderGalleries();
+          break;
+        case 'dashboard':
+          checkSetup();
+          break;
+      }
+    }
+
     function toggleSidebar() {
-      console.log('Toggling sidebar...');
       const sidebar = document.getElementById('adminSidebar');
       sidebar.classList.toggle('open');
     }
 
-    // Fetch sessions
-    async function fetchSessions() {
-      try {
-        console.log('Fetching sessions from:', `${API_URL}?type=sessions`);
-        const response = await fetch(`${API_URL}?type=sessions`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        sessions = await response.json();
-        if (sessions.error) throw new Error(sessions.error);
-        console.log('Sessions fetched:', sessions);
-        updateDashboardStats();
-      } catch (error) {
-        console.error('Error fetching sessions:', error);
-        alert('Failed to load sessions. Please try again.');
-        sessions = [];
-        updateDashboardStats();
-      }
+    function refreshCurrentView() {
+      showView(currentView);
     }
 
-    // Fetch galleries
-    async function fetchGalleries() {
-      try {
-        console.log('Fetching galleries from:', `${API_URL}?type=galleries`);
-        const response = await fetch(`${API_URL}?type=galleries`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'galleries', action: 'get' })
-        });
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        galleries = await response.json();
-        if (galleries.error) throw new Error(galleries.error);
-        console.log('Galleries fetched:', galleries);
-        document.getElementById('galleriesBadge').textContent = galleries.length;
-        updateDashboardStats();
-      } catch (error) {
-        console.error('Error fetching galleries:', error);
-        alert('Failed to load galleries. Please try again.');
-        galleries = [];
-        document.getElementById('galleriesBadge').textContent = '0';
-        updateDashboardStats();
-      }
+    // ===== CALENDAR FUNCTIONS =====
+    
+    function initializeCalendar() {
+      generateCalendar();
     }
 
-    // Fetch clients
-    async function fetchClients() {
-      try {
-        console.log('Fetching clients from:', `${API_URL}?type=clients`);
-        const response = await fetch(`${API_URL}?type=clients`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        clients = await response.json();
-        if (clients.error) throw new Error(clients.error);
-        console.log('Clients fetched:', clients);
-        updateDashboardStats();
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-        alert('Failed to load clients. Please try again.');
-        clients = [];
-        updateDashboardStats();
-      }
-    }
-
-    // Update dashboard stats and recent activities
-    function updateDashboardStats() {
-      console.log('Updating dashboard stats...');
-      const sessionsThisMonth = sessions.filter(s => {
-        const sessionDate = new Date(s['Date']);
-        return sessionDate.getMonth() === new Date().getMonth() && sessionDate.getFullYear() === new Date().getFullYear();
-      }).length;
-      const monthlyRevenue = sessionsThisMonth * 100; // Example calculation
-      const activeGalleries = galleries.filter(g => new Date(g['Expiration Date']) >= new Date()).length;
+    function generateCalendar() {
+      const container = document.getElementById('calendarContainer');
+      const title = document.getElementById('calendarTitle');
       
-      document.getElementById('sessionsThisMonth').textContent = sessionsThisMonth;
-      document.getElementById('monthlyRevenue').textContent = `$${monthlyRevenue}`;
-      document.getElementById('activeGalleries').textContent = activeGalleries;
-      document.getElementById('totalClients').textContent = clients.length;
+      if (!container || !title) return;
+      
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      
+      title.textContent = new Intl.DateTimeFormat('en-US', { 
+        month: 'long', 
+        year: 'numeric' 
+      }).format(currentMonth);
 
-      // Update recent sessions
-      const recentSessionsList = document.getElementById('recentSessionsList');
-      if (recentSessionsList) {
-        recentSessionsList.innerHTML = sessions.slice(0, 3).map(session => `
-          <div class="activity-item">
-            <div class="activity-header">
-              <div class="activity-title">${session['Client Name']}</div>
-              <div class="activity-time">${session['Date']}</div>
-            </div>
-            <div class="activity-description">
-              ${session['Session Type']} at ${session['Location']}
-            </div>
-          </div>
-        `).join('') || '<p>No recent sessions.</p>';
+      container.innerHTML = '';
+      const grid = document.createElement('div');
+      grid.className = 'calendar-grid';
+
+      // Add day headers
+      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayHeaders.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day-header';
+        header.textContent = day;
+        grid.appendChild(header);
+      });
+
+      // Calculate calendar dates
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+      const startingDayOfWeek = firstDay.getDay();
+
+      // Add empty cells for days before month starts
+      for (let i = 0; i < startingDayOfWeek; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day other-month';
+        grid.appendChild(emptyDay);
       }
 
-      // Update pending actions (example)
-      const pendingActionsList = document.getElementById('pendingActionsList');
-      if (pendingActionsList) {
-        pendingActionsList.innerHTML = sessions.filter(s => s['Pending Actions'] && JSON.parse(s['Pending Actions']).length > 0).map(session => `
-          <div class="activity-item">
-            <div class="activity-header">
-              <div class="activity-title">${session['Client Name']}</div>
-              <div class="activity-time">${session['Date']}</div>
-            </div>
-            <div class="activity-description">
-              Pending: ${(session['Pending Actions'] ? JSON.parse(session['Pending Actions']) : []).join(', ')}
-            </div>
-          </div>
-        `).join('') || '<p>No pending actions.</p>';
+      // Add days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        
+        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayDate = new Date(year, month, day);
+        
+        // Set day number
+        const dayNumber = document.createElement('div');
+        dayNumber.textContent = day;
+        dayElement.appendChild(dayNumber);
+        
+        // Add session info
+        const sessions = getSessionsForDate(dateString);
+        if (sessions.length > 0) {
+          const eventDiv = document.createElement('div');
+          eventDiv.className = 'day-events';
+          eventDiv.textContent = sessions[0].clientName;
+          dayElement.appendChild(eventDiv);
+        }
+        
+        // Style based on date status
+        if (dayDate < new Date().setHours(0,0,0,0)) {
+          dayElement.classList.add('past');
+        } else {
+          const dateStatus = getDateStatus(dateString);
+          dayElement.classList.add(dateStatus);
+        }
+        
+        // Add click handler
+        dayElement.onclick = (e) => handleDateClick(e, dateString, dayElement);
+        
+        grid.appendChild(dayElement);
       }
-
-      // Update calendar badge
-      const sessionsThisMonthCount = sessions.filter(s => {
-        const sessionDate = new Date(s['Date']);
-        return sessionDate.getMonth() === new Date().getMonth() && sessionDate.getFullYear() === new Date().getFullYear();
-      }).length;
-      document.getElementById('calendarBadge').textContent = sessionsThisMonthCount;
+      
+      container.appendChild(grid);
     }
 
-    // Mark all pending actions as read (placeholder function)
-    function markAllPendingActionsRead() {
-      console.log('Marking all pending actions as read...');
-      alert('Mark all pending actions as read feature coming soon.');
+    function getSessionsForDate(dateString) {
+      return sessionsData.filter(session => session.date === dateString);
     }
+
+    function getDateStatus(dateString) {
+      const sessions = getSessionsForDate(dateString);
+      if (sessions.length === 0) return 'available';
+      return 'booked';
+    }
+
+    function handleDateClick(e, dateString, element) {
+      e.preventDefault();
+      
+      // Clear previous selection
+      document.querySelectorAll('.calendar-day.selected').forEach(el => {
+        el.classList.remove('selected');
+      });
+      
+      // Select current date
+      element.classList.add('selected');
+      selectedDate = dateString;
+      contextMenuTarget = { dateString, element };
+      
+      // Show context menu
+      showContextMenu(e, dateString);
+      
+      // Update selected date info
+      updateSelectedDateInfo(dateString);
+    }
+
+    function updateSelectedDateInfo(dateString) {
+      const infoPanel = document.getElementById('selectedDateInfo');
+      const details = document.getElementById('dateDetails');
+      
+      if (!infoPanel || !details) return;
+      
+      const sessions = getSessionsForDate(dateString);
+      const date = new Date(dateString);
+      
+      let detailsHtml = `<p><strong>Date:</strong> ${date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}</p>`;
+      
+      if (sessions.length > 0) {
+        detailsHtml += `<p><strong>Sessions:</strong></p>`;
+        sessions.forEach(session => {
+          detailsHtml += `<div style="margin: 0.5rem 0; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 6px;">
+            <strong>${session.clientName}</strong> - ${session.sessionType}<br>
+            <small>${session.time} at ${session.location}</small>
+          </div>`;
+        });
+      } else {
+        detailsHtml += `<p><strong>Status:</strong> Available for booking</p>`;
+      }
+      
+      details.innerHTML = detailsHtml;
+      infoPanel.style.display = 'block';
+    }
+
+    function previousMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() - 1);
+      generateCalendar();
+    }
+
+    function nextMonth() {
+      currentMonth.setMonth(currentMonth.getMonth() + 1);
+      generateCalendar();
+    }
+
+    // ===== CONTEXT MENU =====
+    
+    function showContextMenu(e, dateString) {
+      const menu = document.getElementById('contextMenu');
+      
+      // Position menu
+      menu.style.left = e.pageX + 'px';
+      menu.style.top = e.pageY + 'px';
+      menu.style.display = 'block';
+      
+      // Close menu when clicking elsewhere
+      setTimeout(() => {
+        document.addEventListener('click', closeContextMenu, { once: true });
+      }, 100);
+    }
+
+    function closeContextMenu() {
+      document.getElementById('contextMenu').style.display = 'none';
+    }
+
+    // Context menu actions
+    function addSession() {
+      closeContextMenu();
+      openSessionModal('add');
+    }
+
+    function blockDate() {
+      closeContextMenu();
+      showNotification('Block date functionality - would create blocking event', 'info');
+    }
+
+    function editSession() {
+      closeContextMenu();
+      const sessions = getSessionsForDate(selectedDate);
+      if (sessions.length > 0) {
+        openSessionModal('edit', sessions[0]);
+      }
+    }
+
+    function removeSession() {
+      closeContextMenu();
+      if (confirm('Are you sure you want to remove this session?')) {
+        showNotification('Session removed!', 'success');
+        generateCalendar();
+      }
+    }
+
+    function viewSessionDetails() {
+      closeContextMenu();
+      showNotification('View session details - would show detailed information', 'info');
+    }
+
+    // ===== MODAL FUNCTIONS =====
+    
+    function openSessionModal(mode = 'add', sessionData = null) {
+      const modal = document.getElementById('sessionModal');
+      const title = document.getElementById('sessionModalTitle');
+      
+      title.textContent = mode === 'edit' ? 'Edit Session' : 'Add New Session';
+      
+      if (selectedDate) {
+        document.getElementById('sessionDate').value = selectedDate;
+      }
+      
+      if (sessionData && mode === 'edit') {
+        document.getElementById('clientName').value = sessionData.clientName || '';
+        document.getElementById('sessionDate').value = sessionData.date || '';
+        document.getElementById('sessionTime').value = sessionData.time || '';
+        document.getElementById('sessionType').value = sessionData.sessionType || '';
+        document.getElementById('sessionLocation').value = sessionData.location || '';
+        document.getElementById('clientEmail').value = sessionData.email || '';
+        document.getElementById('clientPhone').value = sessionData.phone || '';
+        document.getElementById('sessionNotes').value = sessionData.notes || '';
+      }
+      
+      modal.style.display = 'flex';
+    }
+
+    function closeSessionModal() {
+      document.getElementById('sessionModal').style.display = 'none';
+      document.getElementById('sessionForm').reset();
+    }
+
+    function openGalleryModal() {
+      const modal = document.getElementById('galleryModal');
+      
+      // Auto-generate credentials
+      const sessionId = Math.floor(1000 + Math.random() * 9000);
+      const password = 'pet' + Math.floor(Math.random() * 100) + 'barks';
+      
+      document.getElementById('gallerySessionId').value = sessionId;
+      document.getElementById('galleryPassword').value = password;
+      
+      modal.style.display = 'flex';
+    }
+
+    function closeGalleryModal() {
+      document.getElementById('galleryModal').style.display = 'none';
+      document.getElementById('galleryForm').reset();
+    }
+
+    // ===== UTILITY FUNCTIONS =====
+    
+    function addHoursToTime(timeString, hours) {
+      const [h, m] = timeString.split(':');
+      const newHours = String(parseInt(h) + hours).padStart(2, '0');
+      return `${newHours}:${m}`;
+    }
+
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => notification.classList.add('show'), 100);
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    function syncWithGoogle() {
+      if (isGoogleAPIsLoaded && isUserSignedIn) {
+        loadAllData();
+      } else {
+        initializeGoogleAPIs();
+      }
+    }
+
+    function openFullCalendar() {
+      window.open('https://calendar.google.com/calendar/u/0/r/week', '_blank');
+    }
+
+    function exportCalendar() {
+      showNotification('📁 Export functionality - would download calendar data', 'info');
+    }
+
+    function checkSetup() {
+      const setupDiv = document.getElementById('setupInstructions');
+      const welcomeDiv = document.getElementById('welcomeMessage');
+      
+      if (CONFIG.GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID_HERE') {
+        setupDiv.style.display = 'block';
+        welcomeDiv.style.display = 'none';
+      } else {
+        setupDiv.style.display = 'none';
+        welcomeDiv.style.display = 'block';
+      }
+    }
+
+    // Placeholder functions for other views
+    function renderSessions() {
+      const container = document.getElementById('sessionsList');
+      container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><span>Loading sessions...</span></div>';
+      
+      setTimeout(() => {
+        let html = '';
+        sessionsData.forEach(session => {
+          html += `
+            <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="color: white; font-size: 1.1rem;">${session.clientName} - ${session.sessionType}</h3>
+                <span style="background: var(--available-green); color: white; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.7rem;">${session.status}</span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+                <div><strong>Date:</strong> ${session.date}</div>
+                <div><strong>Time:</strong> ${session.time}</div>
+                <div><strong>Location:</strong> ${session.location}</div>
+              </div>
+              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">
+                ${session.notes || 'No special notes'}
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary btn-small" onclick="openSessionModal('edit', ${JSON.stringify(session).replace(/"/g, '&quot;')})">📝 Edit</button>
+                <button class="btn btn-secondary btn-small">📧 Contact</button>
+                <button class="btn btn-primary btn-small">📸 Create Gallery</button>
+              </div>
+            </div>
+          `;
+        });
+        
+        if (html === '') {
+          html = '<p style="text-align: center; color: rgba(255,255,255,0.7); margin: 3rem 0;">No sessions found. Create your first session!</p>';
+        }
+        
+        container.innerHTML = html;
+      }, 500);
+    }
+
+    function renderClients() {
+      const container = document.getElementById('clientsList');
+      container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><span>Loading clients...</span></div>';
+      
+      setTimeout(() => {
+        let html = '';
+        clientsData.forEach(client => {
+          html += `
+            <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="color: white; font-size: 1.1rem;">${client.name}</h3>
+                <span style="background: var(--available-green); color: white; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.7rem;">Active</span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+                <div><strong>Email:</strong> ${client.email}</div>
+                <div><strong>Phone:</strong> ${client.phone}</div>
+                <div><strong>Location:</strong> ${client.address}</div>
+              </div>
+              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">
+                <strong>Pets:</strong> ${client.pets}
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary btn-small">📝 Edit</button>
+                <button class="btn btn-secondary btn-small">📧 Email</button>
+                <button class="btn btn-secondary btn-small">🖼️ Galleries</button>
+                <button class="btn btn-primary btn-small">📅 Book Session</button>
+              </div>
+            </div>
+          `;
+        });
+        
+        if (html === '') {
+          html = '<p style="text-align: center; color: rgba(255,255,255,0.7); margin: 3rem 0;">No clients found. Add your first client!</p>';
+        }
+        
+        container.innerHTML = html;
+      }, 500);
+    }
+
+    function renderGalleries() {
+      const container = document.getElementById('galleriesList');
+      container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><span>Loading galleries...</span></div>';
+      
+      setTimeout(() => {
+        let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">';
+        
+        galleriesData.forEach(gallery => {
+          const statusColor = gallery.status === 'active' ? 'var(--available-green)' : 
+                             gallery.status === 'pending' ? 'var(--soft-hold-yellow)' : 'var(--booked-red)';
+          
+          html += `
+            <div style="background: rgba(255,255,255,0.05); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="color: white; font-size: 1.1rem;">${gallery.name}</h3>
+                <span style="background: ${statusColor}; color: white; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.7rem; text-transform: capitalize;">${gallery.status}</span>
+              </div>
+              <div style="margin-bottom: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+                <div><strong>Session Date:</strong> ${gallery.sessionDate}</div>
+                <div><strong>Access:</strong> ${gallery.sessionId} / ${gallery.password}</div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; text-align: center;">
+                <div>
+                  <div style="font-size: 1.2rem; font-weight: 600; color: var(--gold);">${gallery.photos}</div>
+                  <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">Photos</div>
+                </div>
+                <div>
+                  <div style="font-size: 1.2rem; font-weight: 600; color: var(--gold);">0</div>
+                  <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">Views</div>
+                </div>
+                <div>
+                  <div style="font-size: 1.2rem; font-weight: 600; color: var(--gold);">$0</div>
+                  <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">Sales</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-primary btn-small">📸 Upload</button>
+                <button class="btn btn-secondary btn-small">👁️ View</button>
+                <button class="btn btn-secondary btn-small">⚙️ Settings</button>
+              </div>
+            </div>
+          `;
+        });
+        
+        html += '</div>';
+        
+        if (galleriesData.length === 0) {
+          html = '<p style="text-align: center; color: rgba(255,255,255,0.7); margin: 3rem 0;">No galleries found. Create your first gallery!</p>';
+        }
+        
+        container.innerHTML = html;
+      }, 500);
+    }
+
+    function refreshSessions() { loadAllData(); }
+    function refreshClients() { loadAllData(); }
+    function refreshGalleries() { loadAllData(); }
+
+    function saveSettings() {
+      CONFIG.GOOGLE_SHEETS_ID = document.getElementById('sheetsId').value;
+      CONFIG.GOOGLE_CALENDAR_ID = document.getElementById('calendarId').value || 'primary';
+      CONFIG.GOOGLE_CLIENT_ID = document.getElementById('clientId').value;
+      CONFIG.GOOGLE_API_KEY = document.getElementById('apiKey').value;
+      
+      localStorage.setItem('ptpAdminConfig', JSON.stringify(CONFIG));
+      showNotification('⚙️ Settings saved. Reload page to apply changes.', 'success');
+    }
+
+    // ===== EVENT HANDLERS =====
+    
+    // Form submission handlers
+    document.getElementById('sessionForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const saveBtn = document.getElementById('saveSessionBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+      
+      const formData = {
+        clientName: document.getElementById('clientName').value,
+        date: document.getElementById('sessionDate').value,
+        time: document.getElementById('sessionTime').value,
+        sessionType: document.getElementById('sessionType').value,
+        location: document.getElementById('sessionLocation').value,
+        email: document.getElementById('clientEmail').value,
+        phone: document.getElementById('clientPhone').value,
+        notes: document.getElementById('sessionNotes').value,
+        status: 'scheduled'
+      };
+      
+      try {
+        await saveSessionToSheets(formData);
+        await loadAllData();
+        closeSessionModal();
+        generateCalendar();
+      } catch (error) {
+        showNotification('❌ Error saving session', 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Session';
+      }
+    });
+
+    document.getElementById('galleryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        name: document.getElementById('galleryName').value,
+        sessionDate: document.getElementById('galleryDate').value,
+        expiration: document.getElementById('galleryExpiration').value,
+        sessionId: document.getElementById('gallerySessionId').value,
+        password: document.getElementById('galleryPassword').value,
+        status: 'pending',
+        photos: 0
+      };
+      
+      galleriesData.push({...formData, id: Date.now().toString()});
+      updateDashboardStats();
+      
+      showNotification('✅ Gallery created successfully!', 'success');
+      closeGalleryModal();
+      
+      if (currentView === 'galleries') {
+        renderGalleries();
+      }
+    });
+
+    // ===== INITIALIZATION =====
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Studio Manager loading...');
+      
+      if (!checkAuthentication()) {
+        return;
+      }
+      
+      // Load saved configuration
+      const savedConfig = localStorage.getItem('ptpAdminConfig');
+      if (savedConfig) {
+        Object.assign(CONFIG, JSON.parse(savedConfig));
+      }
+      
+      // Populate settings form
+      document.getElementById('sheetsId').value = CONFIG.GOOGLE_SHEETS_ID;
+      document.getElementById('calendarId').value = CONFIG.GOOGLE_CALENDAR_ID;
+      document.getElementById('clientId').value = CONFIG.GOOGLE_CLIENT_ID;
+      document.getElementById('apiKey').value = CONFIG.GOOGLE_API_KEY;
+      
+      // Initialize APIs or load sample data
+      if (CONFIG.GOOGLE_CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID_HERE' && 
+          CONFIG.GOOGLE_API_KEY !== 'YOUR_GOOGLE_API_KEY_HERE') {
+        initializeGoogleAPIs();
+      } else {
+        updateSyncStatus('disconnected');
+        loadSampleData();
+      }
+      
+      checkSetup();
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeContextMenu();
+        closeSessionModal();
+        closeGalleryModal();
+      }
+    });
+
+    // Close modals when clicking outside
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('modal-overlay')) {
+        e.target.style.display = 'none';
+      }
+    });
+
+    // Responsive handling
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 1024) {
+        document.getElementById('adminSidebar').classList.remove('open');
+      }
+    });
   </script>
 </body>
 </html>
