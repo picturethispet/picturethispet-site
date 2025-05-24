@@ -558,7 +558,7 @@
 
     /* === SESSION HOVER POPUP === */
     .session-popup {
-      position: absolute;
+      position: fixed;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -570,11 +570,11 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       min-width: 250px;
       max-width: 300px;
-      z-index: 2000;
+      z-index: 5000;
       pointer-events: none;
       opacity: 0;
       transform: translateY(-10px);
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
     }
 
     .session-popup.show {
@@ -974,6 +974,7 @@
           <h2 class="card-title">Calendar Overview 📊</h2>
           <div class="card-actions">
             <button class="btn btn-secondary btn-small" onclick="syncCalendarData()">🔄 Sync</button>
+            <button class="btn btn-secondary btn-small" onclick="testPopup()" style="background: var(--admin-purple);">🧪 Test Popup</button>
             <button class="btn btn-primary btn-small" onclick="exportCalendar()">📤 Export</button>
           </div>
         </div>
@@ -1748,10 +1749,19 @@
         // Add click handler
         dayElement.onclick = () => handleDayClick(dateString, dayEvents);
         
-        // Add hover handlers for booked sessions
-        if (dayEvents.some(event => event.status === 'booked' || event.slotType === 'Pop-Up')) {
-          dayElement.onmouseenter = (e) => showSessionPopup(e, dateString, dayEvents);
-          dayElement.onmouseleave = () => hideSessionPopup();
+        // Add hover handlers for booked sessions - DEBUG
+        const hasBookedEvents = dayEvents.some(event => event.status === 'booked' || event.slotType === 'Pop-Up');
+        if (hasBookedEvents) {
+          console.log('Adding hover handlers for:', dateString, dayEvents);
+          dayElement.style.cursor = 'pointer';
+          dayElement.addEventListener('mouseenter', (e) => {
+            console.log('Mouse entered day with events:', dateString);
+            showSessionPopup(e, dateString, dayEvents);
+          });
+          dayElement.addEventListener('mouseleave', () => {
+            console.log('Mouse left day');
+            hideSessionPopup();
+          });
         }
         
         calendarGrid.appendChild(dayElement);
@@ -1939,15 +1949,30 @@
 
     // Session popup functions
     function showSessionPopup(event, dateString, dayEvents) {
-      const popup = document.getElementById('sessionPopup');
-      const bookedEvents = dayEvents.filter(event => event.status === 'booked' || event.slotType === 'Pop-Up');
+      console.log('showSessionPopup called with:', dateString, dayEvents);
       
-      if (bookedEvents.length === 0) return;
+      const popup = document.getElementById('sessionPopup');
+      if (!popup) {
+        console.error('Session popup element not found!');
+        return;
+      }
+      
+      const bookedEvents = dayEvents.filter(event => event.status === 'booked' || event.slotType === 'Pop-Up');
+      console.log('Booked events found:', bookedEvents);
+      
+      if (bookedEvents.length === 0) {
+        console.log('No booked events found');
+        return;
+      }
       
       const mainEvent = bookedEvents[0];
       const booking = bookingsData.find(b => b.calendarSlot === mainEvent.id);
+      console.log('Found booking:', booking);
       
-      if (!booking) return;
+      if (!booking) {
+        console.log('No booking found for event');
+        return;
+      }
       
       currentSessionPopup = { event: mainEvent, booking: booking };
       
@@ -1984,10 +2009,13 @@
         ` : ''}
       `;
       
-      // Position popup
-      const rect = event.target.getBoundingClientRect();
-      popup.style.left = `${rect.left + window.scrollX}px`;
-      popup.style.top = `${rect.bottom + window.scrollY + 5}px`;
+      // Position popup near the mouse
+      popup.style.position = 'fixed';
+      popup.style.left = `${event.clientX + 10}px`;
+      popup.style.top = `${event.clientY + 10}px`;
+      
+      console.log('Showing popup at:', event.clientX, event.clientY);
+      popup.classList.add('show');
       
       // Adjust if popup goes off screen
       setTimeout(() => {
@@ -1996,16 +2024,17 @@
           popup.style.left = `${window.innerWidth - popupRect.width - 10}px`;
         }
         if (popupRect.bottom > window.innerHeight) {
-          popup.style.top = `${rect.top + window.scrollY - popupRect.height - 5}px`;
+          popup.style.top = `${event.clientY - popupRect.height - 10}px`;
         }
       }, 10);
-      
-      popup.classList.add('show');
     }
 
     function hideSessionPopup() {
+      console.log('hideSessionPopup called');
       const popup = document.getElementById('sessionPopup');
-      popup.classList.remove('show');
+      if (popup) {
+        popup.classList.remove('show');
+      }
       currentSessionPopup = null;
     }
 
@@ -2566,6 +2595,76 @@
       alert('📤 Calendar export functionality coming soon!');
     }
 
+    // Test function to debug popup
+    function testPopup() {
+      console.log('Testing popup...');
+      
+      // Create fake event data for testing
+      const fakeEvent = {
+        id: 'test',
+        date: '2025-05-24',
+        time: '10:00',
+        sessionType: 'Mini Session',
+        location: 'Cheesman Park',
+        status: 'booked',
+        slotType: 'Regular'
+      };
+      
+      const fakeBooking = {
+        id: 'test-booking',
+        client1Name: 'Test Client',
+        client1Email: 'test@example.com',
+        petCount: 1,
+        peopleCount: 1,
+        client1FirstPetName: 'Buddy'
+      };
+      
+      // Add fake data temporarily
+      currentSessionPopup = { event: fakeEvent, booking: fakeBooking };
+      
+      // Show popup at center of screen
+      const popup = document.getElementById('sessionPopup');
+      popup.style.position = 'fixed';
+      popup.style.left = '50%';
+      popup.style.top = '50%';
+      popup.style.transform = 'translate(-50%, -50%)';
+      
+      // Populate popup
+      document.getElementById('popupTitle').textContent = 'Test Client';
+      document.getElementById('popupStatus').textContent = 'Booked';
+      document.getElementById('popupStatus').className = 'session-popup-status booked';
+      
+      document.getElementById('popupDetails').innerHTML = `
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">📅</span>
+          <span>2025-05-24 at 10:00</span>
+        </div>
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">📸</span>
+          <span>Mini Session</span>
+        </div>
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">📍</span>
+          <span>Cheesman Park</span>
+        </div>
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">🐾</span>
+          <span>1 pet, 1 person</span>
+        </div>
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">🐕</span>
+          <span>Buddy</span>
+        </div>
+      `;
+      
+      popup.classList.add('show');
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        hideSessionPopup();
+      }, 5000);
+    }
+
     // Initialize the page
     document.addEventListener('DOMContentLoaded', async function() {
       console.log('Calendar management page loaded...');
@@ -2573,6 +2672,14 @@
       await fetchSessionTypes();
       await fetchCalendarData();
       await fetchBookingsData();
+      
+      // Debug: Log data after loading
+      setTimeout(() => {
+        console.log('Calendar data loaded:', calendarData.length, 'records');
+        console.log('Bookings data loaded:', bookingsData.length, 'records');
+        console.log('Sample calendar data:', calendarData.slice(0, 3));
+        console.log('Sample bookings data:', bookingsData.slice(0, 3));
+      }, 2000);
       
       // Close popup when clicking outside
       document.addEventListener('click', function(event) {
