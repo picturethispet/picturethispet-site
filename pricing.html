@@ -96,6 +96,12 @@
       height: 110px;
     }
 
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem; /* Consistent with admin pages */
+    }
+
     .desktop-logo {
       height: 100px;
     }
@@ -114,12 +120,12 @@
     .site-nav {
       display: flex;
       align-items: center;
+      gap: 1rem; /* Adjusted to match admin pages' .header-right gap */
       margin-left: auto;
     }
 
     .site-nav a {
       color: white;
-      margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
       font-size: 1rem;
@@ -137,7 +143,6 @@
       border-radius: 999px;
       font-weight: 600;
       text-decoration: none;
-      margin-left: 1rem;
       transition: all 0.3s ease;
     }
 
@@ -344,7 +349,7 @@
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2rem 1.5rem;
+      padding: 2rem 1.5rem; /* Standardized padding */
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
     }
@@ -352,7 +357,7 @@
     .footer-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
+      gap: 2rem; /* Standardized gap */
       max-width: 1200px;
       margin: 0 auto;
       margin-bottom: 1.5rem;
@@ -406,7 +411,7 @@
 
     .footer-bottom {
       text-align: center;
-      padding-top: 1.5rem;
+      padding-top: 1.5rem; /* Standardized padding */
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -439,12 +444,12 @@
       }
 
       .site-nav a {
-        margin: 0.5rem 0;
+        margin: 0.5rem 0; /* Standardized spacing for mobile */
         font-size: 1.2rem;
       }
 
       .book-btn {
-        margin: 0.5rem 0;
+        margin: 0.5rem 0; /* Standardized spacing for mobile */
       }
 
       .mobile-menu-btn {
@@ -482,7 +487,7 @@
 
       .footer-container {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 2rem; /* Standardized gap */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -502,9 +507,11 @@
 </head>
 <body>
   <header>
-    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
-    </a>
+    <div class="header-left">
+      <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+        <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      </a>
+    </div>
     <nav class="site-nav">
       <a href="/" aria-label="Home Page">Home</a>
       <a href="/locations" aria-label="Locations Page">Locations</a>
@@ -595,7 +602,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:13 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:26 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
