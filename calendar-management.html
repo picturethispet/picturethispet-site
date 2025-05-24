@@ -80,7 +80,7 @@
     .admin-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows: auto 1fr;
       min-height: 100vh;
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
@@ -247,8 +247,7 @@
     /* === MAIN CONTENT === */
     .admin-main {
       padding: 2rem;
-      overflow-y: auto;
-      max-height: calc(100vh - 100px - 120px);
+      padding-bottom: 4rem;
     }
 
     /* === CARDS === */
@@ -659,80 +658,6 @@
       color: white;
     }
 
-    /* === FOOTER STYLES === */
-    footer {
-      grid-column: 1 / -1;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2rem 1.5rem;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.9rem;
-    }
-
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-section {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .footer-section h4 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: white;
-      margin-bottom: 1rem;
-    }
-
-    .footer-section a {
-      color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s ease;
-      min-height: 40px;
-    }
-
-    .footer-section a:hover {
-      color: var(--gold);
-    }
-
-    .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .payment-icon {
-      width: 40px;
-      height: 25px;
-      object-fit: contain;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
-    }
-
-    .payment-icon:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    .footer-bottom {
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
     /* === RESPONSIVE === */
     @media (max-width: 1024px) {
       .admin-layout {
@@ -769,7 +694,7 @@
     @media (max-width: 768px) {
       .admin-layout {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr auto;
+        grid-template-rows: auto 1fr;
       }
 
       .admin-sidebar {
@@ -812,6 +737,7 @@
 
       .admin-main {
         padding: 1rem;
+        padding-bottom: 2rem;
       }
 
       .form-grid {
@@ -838,28 +764,6 @@
       .modal {
         padding: 1.5rem;
         margin: 1rem;
-      }
-
-      footer {
-        padding: 1.5rem 1rem;
-      }
-
-      .footer-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .footer-section {
-        align-items: center;
-        text-align: center;
-      }
-
-      .payment-methods {
-        justify-content: center;
       }
     }
   </style>
@@ -1006,43 +910,6 @@
         </div>
       </div>
     </main>
-
-    <!-- Footer -->
-    <footer>
-      <div class="footer-container">
-        <div class="footer-section">
-          <h4>Contact Us 📬</h4>
-          <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-          <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
-        </div>
-        <div class="footer-section socials">
-          <h4>Connect 🌐</h4>
-          <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-          <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-        </div>
-        <div class="footer-section">
-          <h4>We Accept 💳</h4>
-          <div class="payment-methods">
-            <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
-            <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 3:04 PM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How! 🤖</a></p>
-      </div>
-    </footer>
   </div>
 
   <!-- Bulk Availability Modal -->
