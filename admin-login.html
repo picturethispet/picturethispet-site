@@ -27,27 +27,23 @@
       padding: 0;
     }
     
-    html {
+    html, body {
+      height: 100%;
       overflow-x: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      scroll-behavior: smooth;
-    }
-    
-    html::-webkit-scrollbar {
-      width: 0;
-      height: 0;
     }
     
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background: none;
-      overflow-x: hidden;
-      min-height: 100vh;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      background-attachment: fixed;
       display: flex;
       align-items: center;
       justify-content: center;
+      min-height: 100vh;
+      padding: 2rem 1rem;
     }
 
     @keyframes moveBackground {
@@ -67,22 +63,102 @@
       }
     }
 
-    @keyframes adminPulse {
-      0%, 100% { opacity: 0.7; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.02); }
-    }
-
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
-      20%, 40%, 60%, 80% { transform: translateX(3px); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
     }
 
-    .form-help {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-top: 0.5rem;
-      line-height: 1.4;
+    /* === LOGIN CONTAINER === */
+    .login-container {
+      max-width: 400px;
+      width: 100%;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .admin-badge {
+      display: block;
+      text-align: center;
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      padding: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .login-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-subtitle {
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.5;
+    }
+
+    /* === FORM STYLES === */
+    .login-form {
+      width: 100%;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--admin-purple);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .form-group input.error {
+      border-color: var(--booked-red);
+      animation: shake 0.5s ease-in-out;
     }
 
     /* === BUTTONS === */
@@ -91,21 +167,20 @@
       background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
       color: white;
       border: none;
-      padding: 1.2rem 2rem;
+      padding: 1rem 2rem;
       border-radius: 12px;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
     }
 
     .login-button:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
     }
 
     .login-button:disabled {
@@ -114,18 +189,17 @@
     }
 
     .back-button {
+      width: 100%;
       background: rgba(255, 255, 255, 0.1);
       color: white;
       border: 2px solid rgba(255, 255, 255, 0.3);
       padding: 0.8rem 1.5rem;
       border-radius: 8px;
       font-size: 0.95rem;
-      font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
-      display: inline-block;
-      width: 100%;
+      display: block;
       text-align: center;
     }
 
@@ -135,93 +209,55 @@
       transform: translateY(-1px);
     }
 
-    /* === ERROR MESSAGES === */
+    /* === MESSAGES === */
+    .message {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      display: none;
+    }
+
     .error-message {
       background: rgba(239, 68, 68, 0.2);
       border: 1px solid rgba(239, 68, 68, 0.5);
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
       color: white;
-      font-size: 0.95rem;
-      text-align: center;
-      animation: fadeInUp 0.3s ease-out;
     }
 
     .success-message {
       background: rgba(16, 185, 129, 0.2);
       border: 1px solid rgba(16, 185, 129, 0.5);
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
       color: white;
-      font-size: 0.95rem;
-      text-align: center;
-      animation: fadeInUp 0.3s ease-out;
     }
 
-    /* === FOOTER === */
-    .login-footer {
-      text-align: center;
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .login-footer p {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.5;
-    }
-
-    .login-footer a {
-      color: var(--gold);
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .login-footer a:hover {
-      color: white;
-      text-decoration: underline;
-    }
-
-    /* === FEATURES PREVIEW === */
-    .features-preview {
+    /* === CREDENTIALS INFO === */
+    .credentials-info {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
-      padding: 1.5rem;
-      margin-top: 2rem;
-      text-align: left;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-align: center;
     }
 
-    .features-preview h4 {
+    .credentials-info h4 {
       color: var(--gold);
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .features-preview ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .features-preview li {
       margin-bottom: 0.5rem;
-      padding-left: 1.5rem;
-      position: relative;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 0.95rem;
     }
 
-    .features-preview li::before {
-      content: "🔧";
-      position: absolute;
-      left: 0;
+    .credentials-info code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: monospace;
+      color: white;
     }
 
-    /* === MOBILE RESPONSIVE === */
+    /* === RESPONSIVE === */
     @media (max-width: 768px) {
-      main {
+      body {
         padding: 1rem;
       }
 
@@ -236,165 +272,127 @@
       .login-subtitle {
         font-size: 1rem;
       }
-
-      .form-group input {
-        padding: 1rem;
-        font-size: 1rem;
-      }
-
-      .login-button {
-        padding: 1rem;
-        font-size: 1.1rem;
-      }
-
-      .features-preview {
-        padding: 1rem;
-      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <div class="login-container">
-      <div class="admin-badge">
-        🔐 Admin Access Required
-      </div>
+  <div class="login-container">
+    <div class="admin-badge">🔐 Admin Access</div>
 
-      <div class="login-card">
-        <h1 class="login-title">Admin Dashboard</h1>
-        <p class="login-subtitle">
-          Secure access to your photography business management system. 
-          Manage calendars, client data, and galleries all in one place.
-        </p>
+    <div class="login-card">
+      <h1 class="login-title">Admin Login</h1>
+      <p class="login-subtitle">
+        Access your photography business dashboard to manage sessions, clients, and galleries.
+      </p>
 
-        <div id="errorMessage" class="error-message" style="display: none;"></div>
-        <div id="successMessage" class="success-message" style="display: none;"></div>
+      <div id="errorMessage" class="message error-message"></div>
+      <div id="successMessage" class="message success-message"></div>
 
-        <form class="login-form" onsubmit="handleLogin(event)">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input 
-              type="text" 
-              id="username" 
-              name="username" 
-              placeholder="Enter your admin username"
-              required
-              autocomplete="username"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input 
-              type="password" 
-              id="password" 
-              name="password" 
-              placeholder="Enter your admin password"
-              required
-              autocomplete="current-password"
-            />
-            <div class="form-help">
-              Your secure admin credentials for dashboard access
-            </div>
-          </div>
-
-          <button type="submit" class="login-button" id="loginBtn">
-            Access Dashboard
-          </button>
-        </form>
-
-        <a href="/" class="back-button">← Back to Main Site</a>
-
-        <div class="features-preview">
-          <h4>📋 Admin Dashboard Features:</h4>
-          <ul>
-            <li>Calendar management with Google sync</li>
-            <li>Client session profiles & intake data</li>
-            <li>Photo gallery creation & management</li>
-            <li>Session booking & availability control</li>
-            <li>Client communication tools</li>
-          </ul>
+      <form class="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            placeholder="Enter admin username"
+            required
+            autocomplete="username"
+          />
         </div>
 
-        <div class="login-footer">
-          <p>
-            Secure admin portal for Picture This Pet business management.<br>
-            <a href="/contact">Need help accessing your account?</a>
-          </p>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Enter admin password"
+            required
+            autocomplete="current-password"
+          />
         </div>
+
+        <button type="submit" class="login-button" id="loginBtn">
+          Login to Dashboard
+        </button>
+      </form>
+
+      <a href="/" class="back-button">← Back to Main Site</a>
+
+      <div class="credentials-info">
+        <h4>🔑 Admin Credentials</h4>
+        <p>Username: <code>adminjustin</code></p>
+        <p>Password: <code>Buffy11011990!</code></p>
       </div>
     </div>
-  </main>
+  </div>
 
   <script>
-    // Admin credentials
-    const ADMIN_CREDENTIALS = {
-      username: 'adminjustin',
-      password: 'Buffy11011990!'
-    };
+    // Valid admin credentials
+    const VALID_USERNAME = 'adminjustin';
+    const VALID_PASSWORD = 'Buffy11011990!';
 
-    // Handle form submission
     function handleLogin(event) {
       event.preventDefault();
       
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
       const loginBtn = document.getElementById('loginBtn');
-      const errorMsg = document.getElementById('errorMessage');
-      const successMsg = document.getElementById('successMessage');
       
       // Clear previous messages
       hideMessages();
       
-      // Basic validation
+      // Validate inputs
       if (!username || !password) {
         showError('Please enter both username and password');
         return;
       }
       
-      // Disable button and show loading
+      // Show loading state
       loginBtn.disabled = true;
-      loginBtn.textContent = 'Authenticating...';
+      loginBtn.textContent = 'Logging in...';
       
-      // Simulate authentication delay for security
+      // Simulate authentication check
       setTimeout(() => {
-        if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-          // Success - set session and redirect
-          showSuccess('Authentication successful! Redirecting to dashboard...');
+        if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+          // Success
+          showSuccess('Login successful! Redirecting to dashboard...');
           
-          // Set admin session
+          // Store authentication
           localStorage.setItem('adminAuthenticated', 'true');
           localStorage.setItem('adminUser', username);
           localStorage.setItem('adminLoginTime', new Date().toISOString());
           
+          // Redirect after short delay
           setTimeout(() => {
-            // Redirect to admin dashboard
             window.location.href = '/admin-dashboard.html';
           }, 1500);
+          
         } else {
-          // Invalid credentials
+          // Failed
           showError('Invalid username or password. Please try again.');
           
-          // Add error animation to inputs
+          // Add error styling
           document.getElementById('username').classList.add('error');
           document.getElementById('password').classList.add('error');
           
+          // Clear password for security
+          document.getElementById('password').value = '';
+          
+          // Remove error styling after animation
           setTimeout(() => {
             document.getElementById('username').classList.remove('error');
             document.getElementById('password').classList.remove('error');
           }, 500);
-          
-          // Clear password field for security
-          document.getElementById('password').value = '';
         }
         
-        // Re-enable button
+        // Reset button
         loginBtn.disabled = false;
-        loginBtn.textContent = 'Access Dashboard';
-      }, 1200);
+        loginBtn.textContent = 'Login to Dashboard';
+      }, 1000);
     }
 
-    // Helper functions for messages
     function showError(message) {
       const errorMsg = document.getElementById('errorMessage');
       errorMsg.textContent = message;
@@ -412,180 +410,36 @@
       document.getElementById('successMessage').style.display = 'none';
     }
 
-    // Clear error states when user starts typing
+    // Clear messages when user types
     document.getElementById('username').addEventListener('input', hideMessages);
     document.getElementById('password').addEventListener('input', hideMessages);
 
-    // Add focus animations
-    document.querySelectorAll('input').forEach(input => {
-      input.addEventListener('focus', function() {
-        this.parentElement.style.transform = 'scale(1.02)';
-        this.parentElement.style.transition = 'all 0.3s ease';
-      });
-      
-      input.addEventListener('blur', function() {
-        this.parentElement.style.transform = 'scale(1)';
-      });
-    });
-
-    // Check if already authenticated on page load
+    // Check if already logged in
     document.addEventListener('DOMContentLoaded', function() {
       const isAuthenticated = localStorage.getItem('adminAuthenticated');
       const loginTime = localStorage.getItem('adminLoginTime');
       
       if (isAuthenticated === 'true' && loginTime) {
-        // Check if session is still valid (24 hours)
         const loginDate = new Date(loginTime);
         const now = new Date();
         const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
         
+        // If logged in within last 24 hours, redirect
         if (hoursDiff < 24) {
-          // Still authenticated, redirect to dashboard
-          showSuccess('You are already logged in. Redirecting...');
+          showSuccess('Already logged in. Redirecting...');
           setTimeout(() => {
             window.location.href = '/admin-dashboard.html';
           }, 1000);
-        } else {
-          // Session expired, clear storage
-          localStorage.removeItem('adminAuthenticated');
-          localStorage.removeItem('adminUser');
-          localStorage.removeItem('adminLoginTime');
         }
       }
     });
 
-    // Keyboard shortcuts
+    // Allow Enter key to submit
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && (e.target.id === 'username' || e.target.id === 'password')) {
-        e.preventDefault();
+      if (e.key === 'Enter') {
         document.getElementById('loginBtn').click();
       }
     });
   </script>
 </body>
-</html> === MAIN BACKGROUND === */
-    main {
-      width: 100%;
-      min-height: 100vh;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-    }
-
-    /* === LOGIN CONTAINER === */
-    .login-container {
-      max-width: 450px;
-      width: 100%;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .admin-badge {
-      display: block;
-      text-align: center;
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      color: white;
-      padding: 0.8rem 2rem;
-      border-radius: 25px;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      animation: adminPulse 4s ease-in-out infinite;
-    }
-
-    .login-card {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .login-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-    }
-
-    .login-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .login-subtitle {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    /* === FORM STYLES === */
-    .login-form {
-      text-align: left;
-    }
-
-    .form-group {
-      margin-bottom: 2rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.8rem;
-      font-weight: 600;
-      color: white;
-      font-size: 1.1rem;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 1rem 1.5rem;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1.1rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
-    }
-
-    .form-group input::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--admin-purple);
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
-    }
-
-    .form-group input.error {
-      border-color: var(--booked-red);
-      animation: shake 0.5s ease-in-out;
-    }
-
-    .form-help {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-top: 0.5rem;
-      line-height: 1.4;
-    }
-
-    /*
+</html>
