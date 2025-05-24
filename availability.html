@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Availability Calendar | Picture This Pet</title>
-  <meta name="description" content="View available dates for pet photography sessions.">
+  <title>Availability | Picture This Pet</title>
+  <meta name="description" content="View available slots for pet photography sessions with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -25,20 +25,40 @@
       padding: 0;
     }
     
-    html, body {
+    html {
       overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
     }
     
     body {
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
+      overflow-x: hidden;
     }
 
     @keyframes moveBackground {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* === HEADER STYLES === */
@@ -48,7 +68,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-image: url("assets/images/ani_bkgd_cool.png");
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
@@ -147,64 +167,10 @@
       position: relative;
     }
 
-    /* === PAGE HEADER === */
-    .page-header {
-      text-align: center;
-      margin-bottom: 4rem;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .page-title {
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 1rem;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .page-subtitle {
-      font-size: 1.3rem;
-      color: rgba(255, 255, 255, 0.9);
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    .info-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .info-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .info-card h3 {
-      color: var(--gold);
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .info-card p {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 0.95rem;
-    }
-
-    /* === CALENDAR SECTION === */
-    .calendar-section {
+    /* === AVAILABILITY SECTION === */
+    .availability-section {
       max-width: 1000px;
       margin: 0 auto;
-    }
-
-    .calendar-container {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -215,18 +181,44 @@
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .availability-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .availability-section p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* === CALENDAR === */
+    .calendar-container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
     }
 
     .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     .calendar-title {
-      font-size: 2.2rem;
-      font-weight: 700;
+      font-size: 1.8rem;
+      font-weight: 600;
       color: white;
     }
 
@@ -239,15 +231,14 @@
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
       color: white;
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-size: 1.2rem;
     }
 
     .nav-button:hover {
@@ -255,250 +246,131 @@
       transform: scale(1.05);
     }
 
-    /* === CALENDAR GRID === */
     .calendar-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 2px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
+      border-radius: 12px;
       overflow: hidden;
-      margin-bottom: 3rem;
     }
 
     .calendar-day-header {
       background: rgba(255, 255, 255, 0.15);
-      padding: 1.2rem 0.5rem;
+      padding: 1rem;
       text-align: center;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: rgba(255, 255, 255, 0.9);
     }
 
     .calendar-day {
       background: rgba(255, 255, 255, 0.05);
-      padding: 1.2rem 0.5rem;
+      padding: 1rem;
       text-align: center;
       min-height: 60px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 500;
+      transition: all 0.3s ease;
     }
 
     .calendar-day.other-month {
       color: rgba(255, 255, 255, 0.3);
     }
 
-    .calendar-day.past {
-      color: rgba(255, 255, 255, 0.3);
-      background: rgba(0, 0, 0, 0.1);
-    }
-
     .calendar-day.available {
       background: rgba(16, 185, 129, 0.2);
       border: 2px solid rgba(16, 185, 129, 0.5);
       color: white;
-      position: relative;
-    }
-
-    .calendar-day.available::after {
-      content: "✓";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
-      color: var(--available-green);
-      font-weight: bold;
     }
 
     .calendar-day.booked {
       background: rgba(239, 68, 68, 0.2);
       border: 2px solid rgba(239, 68, 68, 0.5);
       color: rgba(255, 255, 255, 0.7);
-      position: relative;
-    }
-
-    .calendar-day.booked::after {
-      content: "✕";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      font-size: 0.8rem;
-      color: var(--booked-red);
-      font-weight: bold;
     }
 
     .calendar-day.soft-hold {
       background: rgba(245, 158, 11, 0.2);
       border: 2px solid rgba(245, 158, 11, 0.5);
       color: rgba(255, 255, 255, 0.9);
-      position: relative;
     }
 
-    .calendar-day.soft-hold::after {
-      content: "?";
-      position: absolute;
-      top: 4px;
-      right: 6px;
+    .calendar-day .slot-info {
       font-size: 0.8rem;
-      color: var(--soft-hold-yellow);
-      font-weight: bold;
-    }
-
-    /* === LEGEND === */
-    .calendar-legend {
-      display: flex;
-      gap: 3rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-size: 1rem;
-      font-weight: 500;
-    }
-
-    .legend-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-    }
-
-    .legend-dot.available {
-      background: rgba(16, 185, 129, 0.7);
-      border-color: rgba(16, 185, 129, 0.5);
-    }
-
-    .legend-dot.booked {
-      background: rgba(239, 68, 68, 0.7);
-      border-color: rgba(239, 68, 68, 0.5);
-    }
-
-    .legend-dot.soft-hold {
-      background: rgba(245, 158, 11, 0.7);
-      border-color: rgba(245, 158, 11, 0.5);
-    }
-
-    .loading-indicator {
-      text-align: center;
-      padding: 2rem;
+      margin-top: 0.5rem;
       color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      margin: 2rem 0;
     }
 
-    .loading-indicator h3 {
-      margin-bottom: 1rem;
-      color: var(--gold);
-    }
-
-    /* === ACTION SECTION === */
-    .action-section {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 2.5rem;
+    /* === BOOK NOW BUTTON === */
+    .book-now-section {
       margin-top: 2rem;
-    }
-
-    .action-title {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 1rem;
-    }
-
-    .action-subtitle {
-      font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 2rem;
-      line-height: 1.6;
     }
 
     .book-now-btn {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       border: none;
-      padding: 1.2rem 3rem;
-      border-radius: 16px;
-      font-size: 1.3rem;
+      padding: 1rem 3rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
-      margin-right: 1rem;
     }
 
     .book-now-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(244, 124, 44, 0.4);
-    }
-
-    .contact-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 1.2rem 3rem;
-      border-radius: 16px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .contact-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-3px);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
     /* === FOOTER STYLES === */
     footer {
-      background-image: url("assets/images/ani_bkgd_cool.png");
+      background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 3rem 2rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: white;
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
     }
 
     .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
       max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .footer-section h4 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.2rem;
       color: white;
+      margin-bottom: 1rem;
     }
 
-    .footer-section p, .footer-section a {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 0.5rem;
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
       transition: color 0.3s ease;
     }
 
@@ -506,50 +378,29 @@
       color: var(--gold);
     }
 
-    .footer-section.socials a {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
     .payment-methods {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 1rem;
+      gap: 0.5rem;
     }
 
     .payment-icon {
       width: 40px;
       height: 25px;
       object-fit: contain;
-      opacity: 0;
-      animation: fadeIn 0.5s ease forwards;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
     }
 
-    .payment-icon:nth-child(1) { animation-delay: 0.5s; }
-    .payment-icon:nth-child(2) { animation-delay: 0.7s; }
-    .payment-icon:nth-child(3) { animation-delay: 0.9s; }
-    .payment-icon:nth-child(4) { animation-delay: 1.1s; }
-    .payment-icon:nth-child(5) { animation-delay: 1.3s; }
-    .payment-icon:nth-child(6) { animation-delay: 1.5s; }
-    .payment-icon:nth-child(7) { animation-delay: 1.7s; }
-    .payment-icon:nth-child(8) { animation-delay: 1.9s; }
-    .payment-icon:nth-child(9) { animation-delay: 2.1s; }
-    .payment-icon:nth-child(10) { animation-delay: 2.3s; }
-    .payment-icon:nth-child(11) { animation-delay: 2.5s; }
-    .payment-icon:nth-child(12) { animation-delay: 2.7s; }
-    .payment-icon:nth-child(13) { animation-delay: 2.9s; }
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
 
     .footer-bottom {
       text-align: center;
-      margin-top: 2rem;
-      padding-top: 1rem;
+      padding-top: 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .footer-bottom p {
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.5);
     }
 
     /* === RESPONSIVE === */
@@ -559,8 +410,8 @@
         padding: 0.5rem 1rem;
       }
       
-      .desktop-logo {
-        height: 48px;
+      .desktop-logo { 
+        height: 48px; 
       }
       
       .site-nav {
@@ -594,7 +445,7 @@
 
       .site-nav.active a[href="/"] { order: 1; }
       .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/ptp-locations.html"] { order: 3; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
       .site-nav.active a[href="/pricing"] { order: 4; }
       .site-nav.active a[href="/contact"] { order: 5; }
       .site-nav.active .book-btn { order: 6; }
@@ -614,135 +465,73 @@
       
       .mobile-menu-btn {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
       }
-
+      
       main {
         margin-top: 80px;
         padding: 2rem 1rem;
       }
 
-      .page-title {
-        font-size: 2.5rem;
+      .availability-section {
+        padding: 2rem;
       }
 
-      .page-subtitle {
-        font-size: 1.1rem;
+      .availability-section h2 {
+        font-size: 2rem;
+      }
+
+      .availability-section p {
+        font-size: 1rem;
       }
 
       .calendar-container {
-        padding: 2rem;
+        padding: 1rem;
       }
 
       .calendar-title {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
       }
 
       .calendar-day {
-        min-height: 45px;
-        font-size: 0.95rem;
-        padding: 1rem 0.3rem;
+        min-height: 80px;
+        font-size: 0.9rem;
+        padding: 0.8rem;
       }
 
       .calendar-day-header {
-        padding: 1rem 0.3rem;
-        font-size: 0.9rem;
+        padding: 0.8rem;
+        font-size: 0.8rem;
       }
 
-      .calendar-legend {
-        gap: 1.5rem;
+      .calendar-day .slot-info {
+        font-size: 0.7rem;
       }
 
-      .action-section {
-        padding: 2rem;
-      }
-
-      .book-now-btn,
-      .contact-btn {
-        display: block;
-        margin: 0.5rem auto;
-        width: 100%;
-        max-width: 300px;
-      }
-
-      .nav-button {
-        width: 40px;
-        height: 40px;
+      .book-now-btn {
+        padding: 0.8rem 2rem;
         font-size: 1rem;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
       }
 
       .footer-container {
         grid-template-columns: 1fr;
-        text-align: center;
+        gap: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
 
-      .footer-section.socials a {
-        display: inline-block;
-        margin: 0 0.5rem;
+      .footer-section {
+        align-items: center;
+        text-align: center;
       }
 
       .payment-methods {
         justify-content: center;
-      }
-    }
-
-    @media (min-width: 769px) {
-      .mobile-menu-btn { 
-        display: none !important; 
-      }
-    }
-
-    /* === ANIMATIONS === */
-    .calendar-container {
-      animation: slideInUp 0.8s ease-out;
-    }
-
-    .page-header {
-      animation: fadeInDown 0.8s ease-out;
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .calendar-day {
-      transition: all 0.3s ease;
-    }
-
-    .calendar-day:hover {
-      transform: scale(1.05);
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
       }
     }
   </style>
@@ -755,84 +544,35 @@
     <nav class="site-nav">
       <a href="/" aria-label="Home page">Home</a>
       <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/ptp-locations.html" aria-label="Locations page">Locations</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/" class="book-btn" aria-label="Book a session">Book Now</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <!-- Page Header -->
-    <div class="page-header">
-      <h1 class="page-title">Availability Calendar</h1>
-      <p class="page-subtitle">
-        Check our real-time availability for pet photography sessions. 
-        All dates shown are updated live and reflect current bookings.
-      </p>
+    <!-- Availability Section -->
+    <div class="availability-section">
+      <h2>Availability</h2>
+      <p>Check available slots for your pet photography session. Click "Book Now" to reserve your spot!</p>
       
-      <div class="info-cards">
-        <div class="info-card">
-          <h3>Live Calendar</h3>
-          <p>Real-time availability from our booking system</p>
-        </div>
-        <div class="info-card">
-          <h3>Session Times</h3>
-          <p>Sessions available at 6:00 PM (golden hour for best lighting)</p>
-        </div>
-        <div class="info-card">
-          <h3>Booking Window</h3>
-          <p>Sessions can be booked up to 3 months in advance</p>
-        </div>
-        <div class="info-card">
-          <h3>Weather Policy</h3>
-          <p>Outdoor sessions rescheduled for severe weather</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Calendar Section -->
-    <div class="calendar-section">
+      <!-- Calendar Display -->
       <div class="calendar-container">
         <div class="calendar-header">
-          <h2 class="calendar-title" id="calendarTitle">Loading...</h2>
+          <h3 class="calendar-title" id="calendar-title">Loading...</h3>
           <div class="calendar-nav">
             <button class="nav-button" onclick="previousMonth()">‹</button>
             <button class="nav-button" onclick="nextMonth()">›</button>
           </div>
         </div>
+        <div id="calendar-grid" class="calendar-grid"></div>
+      </div>
 
-        <div id="calendarContainer">
-          <div class="loading-indicator">
-            <h3>🔄 Loading Live Availability...</h3>
-            <p>Fetching real-time data from your Session Availability calendar</p>
-          </div>
-        </div>
-
-        <div class="calendar-legend">
-          <div class="legend-item">
-            <div class="legend-dot available"></div>
-            <span>Available</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot soft-hold"></div>
-            <span>Soft Hold</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot booked"></div>
-            <span>Fully Booked</span>
-          </div>
-        </div>
-
-        <div class="action-section">
-          <h3 class="action-title">Ready to Book Your Session?</h3>
-          <p class="action-subtitle">
-            See an available date that works for you? Start your booking process now or contact us for custom scheduling.
-          </p>
-          <a href="/" class="book-now-btn">Book Now</a>
-          <a href="/contact" class="contact-btn">Contact Us</a>
-        </div>
+      <!-- Book Now Button -->
+      <div class="book-now-section">
+        <a href="/index.html#session-builder-section" class="book-now-btn">Book Now</a>
       </div>
     </div>
   </main>
@@ -868,29 +608,28 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:40 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:44 PM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
   <script>
     let currentMonth = new Date();
-    
-    // Your Session Availability calendar feed
-    const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
-    
-    // Calendar data - will be populated from iCal feed
-    let bookedDates = [];
-    let softHoldDates = [];
-    let calendarEvents = [];
+    let calendarData = [];
 
     // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+      nav.classList.toggle('active');
+    }
+
+    // Smooth scroll to session builder (for Book Now)
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      window.location.href = '/index.html#session-builder-section';
     }
 
     // Log errors to Airtable for live testing
-    async function logErrorToAirtable(page, error, sessionData = {}) {
+    async function logErrorToAirtable(page, error, data = {}) {
       try {
         const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         const errorRecord = {
@@ -901,7 +640,7 @@
             errorMessage: error.message || String(error),
             errorStack: error.stack || 'No stack trace available',
             userAgent: navigator.userAgent,
-            sessionData: JSON.stringify(sessionData)
+            sessionData: JSON.stringify(data)
           }
         };
 
@@ -924,234 +663,120 @@
       }
     }
 
-    // Parse iCal data
-    function parseICalData(icsData) {
-      const events = [];
-      const lines = icsData.split('\n');
-      let currentEvent = {};
-      let inEvent = false;
-
-      for (let line of lines) {
-        line = line.trim();
-        
-        if (line === 'BEGIN:VEVENT') {
-          inEvent = true;
-          currentEvent = {};
-        } else if (line === 'END:VEVENT') {
-          if (currentEvent.dtstart && currentEvent.summary) {
-            events.push(currentEvent);
-          }
-          inEvent = false;
-        } else if (inEvent) {
-          if (line.startsWith('DTSTART')) {
-            const dateMatch = line.match(/DTSTART[^:]*:(\d{8}T?\d{0,6}Z?)/);
-            if (dateMatch) {
-              currentEvent.dtstart = parseDateFromICS(dateMatch[1]);
-            }
-          } else if (line.startsWith('DTEND')) {
-            const dateMatch = line.match(/DTEND[^:]*:(\d{8}T?\d{0,6}Z?)/);
-            if (dateMatch) {
-              currentEvent.dtend = parseDateFromICS(dateMatch[1]);
-            }
-          } else if (line.startsWith('SUMMARY:')) {
-            currentEvent.summary = line.substring(8);
-          }
-        }
-      }
-      return events;
-    }
-
-    // Parse date from ICS format
-    function parseDateFromICS(dateStr) {
-      if (dateStr.includes('T')) {
-        const year = dateStr.substring(0, 4);
-        const month = dateStr.substring(4, 6);
-        const day = dateStr.substring(6, 8);
-        const hour = dateStr.substring(9, 11) || '00';
-        const minute = dateStr.substring(11, 13) || '00';
-        return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
-      } else {
-        const year = dateStr.substring(0, 4);
-        const month = dateStr.substring(4, 6);
-        const day = dateStr.substring(6, 8);
-        return new Date(`${year}-${month}-${day}`);
-      }
-    }
-
-    // Fetch calendar data with safety mechanisms
+    // Fetch calendar data from Airtable
     async function fetchCalendarData() {
       try {
-        console.log('Fetching calendar data...');
-        const proxyUrl = 'https://gcal-cors-proxy.vercel.app?url=';
-        const response = await fetch(proxyUrl + encodeURIComponent(CALENDAR_FEED_URL));
-        
+        console.log('Fetching calendar data from Airtable...');
+        const today = new Date().toISOString().split('T')[0];
+        const threeMonthsLater = new Date();
+        threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
+        const endDate = threeMonthsLater.toISOString().split('T')[0];
+
+        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar?filterByFormula=AND({date} >= "${today}", {date} <= "${endDate}")`, {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const icsData = await response.text();
-        console.log('Calendar data fetched successfully');
-        
-        calendarEvents = parseICalData(icsData);
-        console.log('Parsed events:', calendarEvents);
-        
-        // Store calendar data redundantly
-        const calendarData = {
-          bookedDates: bookedDates,
-          softHoldDates: softHoldDates,
-          calendarEvents: calendarEvents,
-          fetchTimestamp: new Date().toISOString()
-        };
-        try {
-          localStorage.setItem('ptpCalendarData', JSON.stringify(calendarData));
-          localStorage.setItem('ptpCalendarBackup', JSON.stringify(calendarData));
-          sessionStorage.setItem('ptpCalendarData', JSON.stringify(calendarData));
-          sessionStorage.setItem('ptpCalendarBackup', JSON.stringify(calendarData));
-          console.log('✅ Calendar data saved redundantly in 4 locations');
-        } catch (e) {
-          console.warn('⚠️ Storage warning:', e);
-          await logErrorToAirtable('availability.html', e, calendarData);
+          throw new Error(`Airtable error: ${response.status}`);
         }
 
-        processCalendarEvents();
+        const data = await response.json();
+        calendarData = data.records.map(record => ({
+          id: record.id,
+          date: record.fields.date,
+          time: record.fields.time,
+          status: record.fields.status,
+          softHoldUntil: record.fields.softHoldUntil,
+          bookingId: record.fields.bookingId,
+          sessionType: record.fields.sessionType,
+          duration: record.fields.SessionDuration,
+          price: record.fields.SessionPrice,
+          description: record.fields.SessionDescription
+        }));
+
+        console.log('Calendar data fetched:', calendarData);
         generateCalendar();
-        
       } catch (error) {
         console.error('Error fetching calendar data:', error);
-        await logErrorToAirtable('availability.html', error, { calendarEvents });
-
-        console.log('Using fallback data...');
-        bookedDates = [
-          "2024-12-15",
-          "2024-12-22", 
-          "2024-12-29",
-          "2025-01-05",
-          "2025-01-12",
-          "2025-01-19"
-        ];
-        generateCalendar();
+        await logErrorToAirtable('availability.html', error);
+        document.getElementById('calendar-title').textContent = 'Error loading calendar';
       }
     }
 
-    // Process calendar events to determine availability
-    function processCalendarEvents() {
-      bookedDates = [];
-      softHoldDates = [];
-      
-      calendarEvents.forEach(event => {
-        if (event.dtstart) {
-          const eventDate = event.dtstart;
-          const dateString = `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
-          
-          const summary = (event.summary || '').toLowerCase();
-          
-          if (summary.includes('booked') || summary.includes('session') || summary.includes('appointment')) {
-            bookedDates.push(dateString);
-          } else if (summary.includes('hold') || summary.includes('pending') || summary.includes('maybe')) {
-            softHoldDates.push(dateString);
-          } else {
-            bookedDates.push(dateString);
-          }
-        }
-      });
-      
-      console.log('Processed booked dates:', bookedDates);
-      console.log('Processed soft hold dates:', softHoldDates);
-    }
-
-    // Generate calendar
+    // Generate calendar display
     function generateCalendar() {
-      const container = document.getElementById('calendarContainer');
-      const title = document.getElementById('calendarTitle');
+      const calendarGrid = document.getElementById('calendar-grid');
+      const calendarTitle = document.getElementById('calendar-title');
       
-      if (!container || !title) {
-        console.error('Calendar elements not found');
-        return;
-      }
-      
-      const year = currentMonth.getFullYear();
-      const month = currentMonth.getMonth();
-      
-      title.textContent = new Intl.DateTimeFormat('en-US', { 
-        month: 'long', 
-        year: 'numeric' 
-      }).format(currentMonth);
+      calendarGrid.innerHTML = '';
+      calendarTitle.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(currentMonth);
 
-      container.innerHTML = '';
-      const grid = document.createElement('div');
-      grid.className = 'calendar-grid';
-      grid.id = 'calendarGrid';
-
+      // Add day headers
       const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       dayHeaders.forEach(day => {
         const header = document.createElement('div');
         header.className = 'calendar-day-header';
         header.textContent = day;
-        grid.appendChild(header);
+        calendarGrid.appendChild(header);
       });
 
+      // Calculate calendar days
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
       const firstDay = new Date(year, month, 1);
       const lastDay = new Date(year, month + 1, 0);
       const daysInMonth = lastDay.getDate();
       const startingDayOfWeek = firstDay.getDay();
 
+      // Add empty days before the first day of the month
       for (let i = 0; i < startingDayOfWeek; i++) {
         const emptyDay = document.createElement('div');
         emptyDay.className = 'calendar-day other-month';
-        grid.appendChild(emptyDay);
+        calendarGrid.appendChild(emptyDay);
       }
 
+      // Add days of the month
       for (let day = 1; day <= daysInMonth; day++) {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
         dayElement.textContent = day;
-        
-        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const dayDate = new Date(year, month, day);
-        
-        if (dayDate < new Date()) {
-          dayElement.classList.add('past');
-        } else if (bookedDates.includes(dateString)) {
-          dayElement.classList.add('booked');
-        } else if (softHoldDates.includes(dateString)) {
-          dayElement.classList.add('soft-hold');
-        } else if (dayDate.getDay() !== 0) {
-          dayElement.classList.add('available');
+
+        const currentDate = new Date(year, month, day);
+        const dateString = currentDate.toISOString().split('T')[0];
+
+        // Find slots for this date
+        const slotsOnDay = calendarData.filter(slot => slot.date === dateString);
+
+        if (slotsOnDay.length > 0) {
+          const slot = slotsOnDay[0]; // Display the first slot
+          dayElement.classList.add(slot.status);
+          const infoElement = document.createElement('div');
+          infoElement.className = 'slot-info';
+          infoElement.textContent = `${slot.time} - ${slot.sessionType} (${slot.duration} mins)`;
+          dayElement.appendChild(infoElement);
         }
-        
-        grid.appendChild(dayElement);
+
+        calendarGrid.appendChild(dayElement);
       }
-      
-      container.appendChild(grid);
-      console.log('Availability calendar generated successfully');
     }
 
     // Navigation functions
     function previousMonth() {
       currentMonth.setMonth(currentMonth.getMonth() - 1);
-      if (document.getElementById('calendarGrid')) {
-        generateCalendar();
-      }
+      generateCalendar();
     }
 
     function nextMonth() {
       currentMonth.setMonth(currentMonth.getMonth() + 1);
-      if (document.getElementById('calendarGrid')) {
-        generateCalendar();
-      }
+      generateCalendar();
     }
 
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Availability page loaded, initializing...');
-      fetchCalendarData();
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', async function() {
+      await fetchCalendarData();
     });
-
-    // Auto-refresh calendar every 5 minutes to show real-time updates
-    setInterval(function() {
-      console.log('Auto-refreshing availability data...');
-      fetchCalendarData();
-    }, 300000); // 5 minutes
   </script>
 </body>
 </html>
