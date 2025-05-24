@@ -1,0 +1,869 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Built My Site | Picture This Pet</title>
+  <meta name="description" content="Discover how Picture This Pet was built from scratch using AI collaboration - from Squarespace limitations to custom features.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+      --ai-purple: #8b5cf6;
+      --ai-blue: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+      overflow-x: hidden;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes aiPulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    /* === HEADER STYLES === */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .book-btn {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      min-height: calc(100vh - 110px);
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
+    /* === HERO SECTION === */
+    .hero-section {
+      padding: 5rem 1rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .ai-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue));
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: aiPulse 3s ease-in-out infinite;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: white;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-content p {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* === STORY SECTION === */
+    .story-section {
+      padding: 4rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .story-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 3rem;
+      transition: all 0.3s ease;
+    }
+
+    .story-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .story-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .story-content {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.95);
+      text-align: left;
+    }
+
+    .story-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .story-content strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* === TIMELINE SECTION === */
+    .timeline-section {
+      padding: 4rem 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .timeline-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .timeline {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .timeline-item {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item:hover {
+      transform: translateX(10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .timeline-number {
+      position: absolute;
+      left: -1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: white;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.4);
+    }
+
+    .timeline-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+      margin-left: 2rem;
+    }
+
+    .timeline-item p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-left: 2rem;
+    }
+
+    /* === FEATURES SECTION === */
+    .features-section {
+      padding: 4rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* === CTA SECTION === */
+    .cta-section {
+      padding: 5rem 1rem;
+      text-align: center;
+    }
+
+    .cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cta-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .cta-content p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .cta-button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1rem 3rem;
+      border-radius: 999px;
+      font-size: 1.3rem;
+      font-weight: 900;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
+    }
+
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo { 
+        height: 48px; 
+      }
+      
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      main {
+        margin-top: 80px;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1.1rem;
+      }
+
+      .story-card,
+      .timeline-item,
+      .feature-card,
+      .cta-content {
+        padding: 2rem;
+      }
+
+      .story-card h2,
+      .timeline-title,
+      .features-title {
+        font-size: 2rem;
+      }
+
+      .timeline-item:hover {
+        transform: translateY(-5px);
+      }
+
+      .timeline-number {
+        position: relative;
+        left: 0;
+        top: 0;
+        transform: none;
+        margin-bottom: 1rem;
+        align-self: flex-start;
+      }
+
+      .timeline-item h3,
+      .timeline-item p {
+        margin-left: 0;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .payment-methods {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToBooking(event)">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="ai-badge">🤖 AI-Powered Development</div>
+        <h1>Built by AI, Owned by Me</h1>
+        <p>From Squarespace limitations to custom features, discover how AI collaboration transformed a simple idea into a fully-featured photography business platform.</p>
+      </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+      <div class="story-card">
+        <h2>The Journey from Template to Custom</h2>
+        <div class="story-content">
+          <p>This site began with a simple idea and a **Squarespace template**. While that platform got things off the ground, it didn't take long to hit its limits — both in design flexibility and the custom workflows I needed to support a growing creative business. I wanted more control, better automation, and a seamless experience that could scale with my vision.</p>
+          
+          <p>So I made the jump. With **no formal background in web development**, I turned to AI for help — specifically **ChatGPT, Claude.ai, and Grok**. Over time, we built every part of this site together: the custom photo session builder, the dynamic intake forms, the Stripe-powered checkout, and even the client galleries. Every page you see here was shaped through conversation, iteration, and problem-solving — not with a drag-and-drop tool, but with **code and logic written collaboratively, line by line**.</p>
+          
+          <p>I purchased my domain, routed it through **Cloudflare**, and set up the site infrastructure on **GitHub**. What started as a workaround turned into a full-on digital rebuild, powered by AI and a drive to do it better. This isn't just a site — **it's proof of what's possible when creativity and technology work side by side**.</p>
+          
+          <p>This platform now reflects not just the brand I envisioned, but **the process it took to get here**. Built from scratch, owned fully, and designed intentionally — by me and the AIs that helped along the way.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+      <h2 class="timeline-title">The Development Timeline</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-number">1</div>
+          <h3>The Squarespace Wall</h3>
+          <p>Started with a template but quickly hit limitations. Needed custom session builders, automated workflows, and dynamic pricing that Squarespace couldn't handle.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-number">2</div>
+          <h3>First AI Conversation</h3>
+          <p>Reached out to ChatGPT with a simple question: "How can I build a custom pet photography booking system?" That conversation changed everything.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-number">3</div>
+          <h3>Domain & Infrastructure</h3>
+          <p>Purchased the domain, set up Cloudflare for performance and security, and created a GitHub repository. The foundation was laid for something bigger.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-number">4</div>
+          <h3>Building the Session Builder</h3>
+          <p>Claude.ai helped architect the multi-step booking flow. We iterated through dozens of versions, refining the user experience and adding smart validation.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-number">5</div>
+          <h3>Stripe Integration</h3>
+          <p>Added secure payment processing with Stripe. Grok helped debug the webhook handling and ensure PCI compliance throughout the payment flow.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-number">6</div>
+          <h3>Calendar Automation</h3>
+          <p>Integrated Google Calendar API for real-time availability. Now bookings automatically sync, preventing double-bookings and streamlining schedule management.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-number">7</div>
+          <h3>Client Galleries</h3>
+          <p>Built password-protected client galleries with download tracking. Each client gets a personalized experience for viewing and downloading their photos.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-number">8</div>
+          <h3>Mobile Optimization</h3>
+          <p>Refined the mobile experience through countless iterations. Every tap, swipe, and interaction was tested and optimized for mobile-first booking.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <h2 class="features-title">What We Built Together</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🎯</span>
+          <h3>Smart Session Builder</h3>
+          <p>Multi-step booking flow with intelligent pricing, location selection, and custom validation that prevents booking conflicts.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">💳</span>
+          <h3>Secure Payments</h3>
+          <p>Full Stripe integration with support for cards, digital wallets, and BNPL options. PCI compliant and mobile-optimized checkout.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">📅</span>
+          <h3>Live Calendar Sync</h3>
+          <p>Real-time availability powered by Google Calendar API. Bookings sync instantly, preventing conflicts and automating schedule management.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">📱</span>
+          <h3>Mobile-First Design</h3>
+          <p>Responsive design that works perfectly on every device. Over 70% of bookings come from mobile, so we optimized every interaction.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">🖼️</span>
+          <h3>Client Galleries</h3>
+          <p>Password-protected photo galleries for each client. Download tracking, watermark removal, and personalized sharing experiences.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">⚡</span>
+          <h3>Performance Optimized</h3>
+          <p>Cloudflare CDN, image optimization, and lazy loading ensure lightning-fast page loads and perfect mobile experience.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2>Ready to Experience the Difference?</h2>
+        <p>This isn't just a website — it's a testament to what's possible when human creativity meets AI capability. Every feature was thoughtfully designed to make booking your pet photography session as smooth as possible.</p>
+        <a href="/" class="cta-button">Book Your Session</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 05:35 PM MST, May 23, 2025 | Built with AI collaboration ❤️</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Smooth scroll to booking
+    function scrollToBooking(e) {
+      e.preventDefault();
+      window.location.href = '/#session-builder-section';
+    }
+
+    // Add some interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate timeline items on scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.timeline-item').forEach(item => {
+        observer.observe(item);
+      });
+
+      document.querySelectorAll('.feature-card').forEach(item => {
+        observer.observe(item);
+      });
+    });
+  </script>
+</body>
+</html>
