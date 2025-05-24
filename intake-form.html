@@ -1022,7 +1022,7 @@
     <div class="popup" id="vaccinationPopup">
       <div class="popup-content">
         <h3>Vaccination Required</h3>
-        <p>We can’t serve you at this time. Please come back when your pet is fully vaccinated.</p>
+        <p>We can't serve you at this time. Please come back when your pet is fully vaccinated.</p>
         <button onclick="redirectHome()">Return to Home</button>
       </div>
     </div>
@@ -1055,7 +1055,7 @@
           <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
           <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
           <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="Paypal payment accepted" class="payment-icon" />
         </div>
       </div>
     </div>
@@ -1084,15 +1084,20 @@
 
     // Form submission handling
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Intake Form page loaded, initializing...');
+      console.log('🎯 Fixed Intake Form page loaded, initializing proper data flow...');
 
       const form = document.getElementById('intakeForm');
       const vaccinationInputs = document.getElementsByName('isVaccinated');
       const instagramTagInputs = document.getElementsByName('instagramTag');
       const submitBtn = document.getElementById('submitBtn');
       const popup = document.getElementById('vaccinationPopup');
+      
+      // 🎯 CRITICAL: Load existing session data to build upon
       let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
       let marketingData = JSON.parse(localStorage.getItem('ptpMarketingData')) || {};
+
+      console.log('Loaded existing session data:', sessionData);
+      console.log('Loaded existing marketing data:', marketingData);
 
       // Pre-fill email for Person 1
       const person1EmailInput = document.getElementById('person1Email');
@@ -1191,7 +1196,7 @@
         }
       });
 
-      // Form submission handling
+      // 🎯 CRITICAL: Form submission - APPEND to existing sessionData instead of creating separate object
       form.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -1201,60 +1206,86 @@
           return;
         }
 
-        // Collect form data
-        const formData = {
+        console.log('🎯 Form submitted, appending intake data to existing sessionData...');
+
+        // Collect intake form data
+        const intakeData = {
           isVaccinated: document.querySelector('input[name="isVaccinated"]:checked')?.value || '',
-          person1: {
+          client: {
+            // Primary person (always required)
             name: document.getElementById('person1Name').value,
             email: document.getElementById('person1Email').value,
             phone: document.getElementById('person1Phone').value,
-            zip: document.getElementById('person1Zip').value,
+            address: {
+              zip: document.getElementById('person1Zip').value
+            },
             instagram: document.getElementById('person1Instagram')?.value || ''
           },
-          person2: peopleCount === '2' ? {
-            name: document.getElementById('person2Name').value,
-            email: document.getElementById('person2Email').value,
-            phone: document.getElementById('person2Phone').value,
-            zip: document.getElementById('person2Zip').value,
-            instagram: document.getElementById('person2Instagram')?.value || ''
-          } : null,
-          pet1: {
-            name: document.getElementById('pet1Name').value,
-            age: document.getElementById('pet1Age').value,
-            birthdate: document.getElementById('pet1Birthdate').value,
-            gender: document.getElementById('pet1Gender').value,
-            favoriteToy: document.getElementById('pet1FavoriteToy').value,
-            offLeash: document.querySelector('input[name="pet1OffLeash"]:checked')?.value || '',
-            behavior: document.getElementById('pet1Behavior').value,
-            notes: document.getElementById('pet1Notes').value,
-            instagram: document.getElementById('pet1Instagram')?.value || ''
+          // Secondary person (conditional)
+          ...(peopleCount === '2' && {
+            client2: {
+              name: document.getElementById('person2Name').value,
+              email: document.getElementById('person2Email').value,
+              phone: document.getElementById('person2Phone').value,
+              address: {
+                zip: document.getElementById('person2Zip').value
+              },
+              instagram: document.getElementById('person2Instagram')?.value || ''
+            }
+          }),
+          pets: [
+            // Primary pet (always required)
+            {
+              name: document.getElementById('pet1Name').value,
+              age: document.getElementById('pet1Age').value,
+              birthdate: document.getElementById('pet1Birthdate').value,
+              gender: document.getElementById('pet1Gender').value,
+              favoriteToy: document.getElementById('pet1FavoriteToy').value,
+              offLeash: document.querySelector('input[name="pet1OffLeash"]:checked')?.value === 'yes',
+              behavior: document.getElementById('pet1Behavior').value,
+              notes: document.getElementById('pet1Notes').value,
+              instagram: document.getElementById('pet1Instagram')?.value || ''
+            },
+            // Secondary pet (conditional)
+            ...(petCount === '2' ? [{
+              name: document.getElementById('pet2Name').value,
+              age: document.getElementById('pet2Age').value,
+              birthdate: document.getElementById('pet2Birthdate').value,
+              gender: document.getElementById('pet2Gender').value,
+              favoriteToy: document.getElementById('pet2FavoriteToy').value,
+              offLeash: document.querySelector('input[name="pet2OffLeash"]:checked')?.value === 'yes',
+              behavior: document.getElementById('pet2Behavior').value,
+              notes: document.getElementById('pet2Notes').value,
+              instagram: document.getElementById('pet2Instagram')?.value || ''
+            }] : [])
+          ],
+          preferences: {
+            specialRequests: document.getElementById('specialRequests').value,
+            photoStyle: document.getElementById('photoStyle').value,
+            instagramTag: document.querySelector('input[name="instagramTag"]:checked')?.value === 'yes',
+            marketingConsent: document.getElementById('marketingConsent').checked
           },
-          pet2: petCount === '2' ? {
-            name: document.getElementById('pet2Name').value,
-            age: document.getElementById('pet2Age').value,
-            birthdate: document.getElementById('pet2Birthdate').value,
-            gender: document.getElementById('pet2Gender').value,
-            favoriteToy: document.getElementById('pet2FavoriteToy').value,
-            offLeash: document.querySelector('input[name="pet2OffLeash"]:checked')?.value || '',
-            behavior: document.getElementById('pet2Behavior').value,
-            notes: document.getElementById('pet2Notes').value,
-            instagram: document.getElementById('pet2Instagram')?.value || ''
-          } : null,
-          specialRequests: document.getElementById('specialRequests').value,
-          photoStyle: document.getElementById('photoStyle').value,
-          referralSource: document.getElementById('referralSource').value,
-          instagramTag: document.querySelector('input[name="instagramTag"]:checked')?.value || '',
-          marketingConsent: document.getElementById('marketingConsent').checked
+          referralSource: document.getElementById('referralSource').value
         };
 
-        // Save form data to localStorage as ptpIntakeData
-        localStorage.setItem('ptpIntakeData', JSON.stringify(formData));
+        // 🎯 CRITICAL: Merge intake data INTO existing sessionData (don't replace)
+        const updatedSessionData = {
+          ...sessionData, // Keep existing session builder + pick-a-date data
+          ...intakeData   // Add intake form data
+        };
 
-        // Update marketing data with email
-        marketingData.email = formData.person1.email;
+        console.log('🎯 Updated session data with intake form:', updatedSessionData);
+
+        // Save back to the SAME localStorage key
+        localStorage.setItem('ptpSessionData', JSON.stringify(updatedSessionData));
+
+        // Update marketing data with latest email
+        marketingData.email = intakeData.client.email;
         localStorage.setItem('ptpMarketingData', JSON.stringify(marketingData));
 
-        // Redirect to payment.html for summary and checkout
+        console.log('✅ Data flow maintained - redirecting to payment...');
+
+        // Redirect to payment page
         window.location.href = '/payment.html';
       });
     });
