@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Picture This Pet | Pet Photography in Denver</title>
   <meta name="description" content="Capture the magic of your furry friends with Picture This Pet, Denver's premier pet photography service. Book your session today!">
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -155,6 +156,24 @@
       transform: scale(1.1);
     }
 
+    .social-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+
+    .social-icon {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      color: var(--gold);
+      transform: scale(1.1);
+    }
+
     /* === HERO SECTION === */
     .hero-section {
       position: relative;
@@ -207,12 +226,49 @@
       text-decoration: none;
       display: inline-block;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 6px 20px rgba(244, 144, 44, 0.4);
     }
 
     .hero-cta:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
+    }
+
+    /* === UPCOMING POP-UP EVENTS SECTION === */
+    #upcoming-events-section {
+      padding: 5rem 1rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
+    .upcoming-events-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .upcoming-events-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .upcoming-events-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .events-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     /* === SESSION BUILDER SECTION === */
@@ -448,8 +504,8 @@
       background: rgba(255, 255, 255, 0.15);
     }
 
-    /* === INSTAGRAM REELS SECTION === */
-    #instagram-reels-section {
+    /* === INSTAGRAM POSTS SECTION === */
+    #instagram-posts-section {
       padding: 5rem 1rem;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -457,13 +513,13 @@
       animation: moveBackground 30s ease-in-out infinite;
     }
 
-    .instagram-reels-container {
+    .instagram-posts-container {
       max-width: 900px;
       margin: 0 auto;
       text-align: center;
     }
 
-    .instagram-reels-container h2 {
+    .instagram-posts-container h2 {
       font-family: 'Playfair Display', serif;
       font-size: 3rem;
       font-weight: 700;
@@ -472,23 +528,44 @@
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .instagram-reels-container p {
+    .instagram-posts-container p {
       font-size: 1.2rem;
       line-height: 1.6;
       color: rgba(255, 255, 255, 0.9);
       margin-bottom: 2rem;
     }
 
-    .reels-grid {
+    .posts-grid {
       display: flex;
       gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      justify-content: flex-start;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .reel-placeholder {
-      width: 250px;
-      height: 400px;
+    .posts-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .posts-grid::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .posts-grid::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+
+    .posts-grid::-webkit-scrollbar-thumb:hover {
+      background: var(--orange);
+    }
+
+    .post-placeholder {
+      width: 200px;
+      height: 200px;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 12px;
@@ -498,9 +575,11 @@
       font-size: 1rem;
       color: rgba(255, 255, 255, 0.7);
       transition: all 0.3s ease;
+      flex-shrink: 0;
+      scroll-snap-align: start;
     }
 
-    .reel-placeholder:hover {
+    .post-placeholder:hover {
       background: rgba(255, 255, 255, 0.15);
       transform: scale(1.02);
     }
@@ -640,6 +719,15 @@
       .mobile-menu-btn {
         display: block;
       }
+
+      .social-icons {
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+      }
+
+      .social-icon {
+        font-size: 1.2rem;
+      }
       
       .hero-section {
         margin-top: 80px;
@@ -661,6 +749,18 @@
       .hero-cta {
         padding: 0.8rem 2rem;
         font-size: 1.2rem;
+      }
+
+      #upcoming-events-section {
+        padding: 3rem 1rem;
+      }
+
+      .upcoming-events-container h2 {
+        font-size: 2rem;
+      }
+
+      .upcoming-events-container p {
+        font-size: 1rem;
       }
 
       #session-builder-section {
@@ -743,21 +843,21 @@
         padding-bottom: 3rem; /* Ensure enough space for content */
       }
 
-      #instagram-reels-section {
+      #instagram-posts-section {
         padding: 3rem 1rem;
       }
 
-      .instagram-reels-container h2 {
+      .instagram-posts-container h2 {
         font-size: 2rem;
       }
 
-      .instagram-reels-container p {
+      .instagram-posts-container p {
         font-size: 1rem;
       }
 
-      .reel-placeholder {
-        width: 200px;
-        height: 320px;
+      .post-placeholder {
+        width: 150px;
+        height: 150px;
         font-size: 0.9rem;
       }
 
@@ -798,6 +898,11 @@
       <a href="/contact" aria-label="Contact page">Contact</a>
       <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
+    <div class="social-icons">
+      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+        <i class="fab fa-instagram social-icon"></i>
+      </a>
+    </div>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
@@ -808,6 +913,16 @@
         <h1>Timeless Pet Photography in Denver</h1>
         <p>Capture the magic of your furry friends with Picture This Pet. Cherish every moment with stunning, professional photos.</p>
         <a href="#session-builder-section" class="hero-cta" onclick="scrollToSessionBuilder(event)">Book Your Session</a>
+      </div>
+    </section>
+
+    <!-- Upcoming Pop-Up Events Section -->
+    <section id="upcoming-events-section">
+      <div class="upcoming-events-container">
+        <h2>Upcoming Pop-Up Events</h2>
+        <div class="events-grid">
+          <p>No current events at this moment.</p>
+        </div>
       </div>
     </section>
 
@@ -990,15 +1105,32 @@
       </div>
     </section>
 
-    <!-- Instagram Reels Section -->
-    <section id="instagram-reels-section">
-      <div class="instagram-reels-container">
-        <h2>Our Latest Instagram Reels</h2>
+    <!-- Instagram Posts Section -->
+    <section id="instagram-posts-section">
+      <div class="instagram-posts-container">
+        <h2>Our Latest Instagram Posts</h2>
         <p>Check out some behind-the-scenes moments and adorable pet highlights from our recent sessions!</p>
-        <div class="reels-grid">
-          <div class="reel-placeholder">Instagram Reel 1<br>(Placeholder)</div>
-          <div class="reel-placeholder">Instagram Reel 2<br>(Placeholder)</div>
-          <div class="reel-placeholder">Instagram Reel 3<br>(Placeholder)</div>
+        <div class="posts-grid">
+          <div class="post-placeholder">Instagram Post 1<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 2<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 3<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 4<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 5<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 6<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 7<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 8<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 9<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 10<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 11<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 12<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 13<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 14<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 15<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 16<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 17<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 18<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 19<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 20<br>(Placeholder)</div>
         </div>
       </div>
     </section>
@@ -1036,7 +1168,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:30 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:44 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
