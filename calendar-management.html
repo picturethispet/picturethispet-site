@@ -520,7 +520,7 @@
       color: rgba(255, 255, 255, 0.9);
     }
 
-    .form-input, .form-select {
+    .form-input, .form-select, .form-textarea {
       width: 100%;
       padding: 0.8rem;
       font-size: 1rem;
@@ -530,9 +530,10 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 8px;
       transition: all 0.3s ease;
+      resize: vertical;
     }
 
-    .form-input:focus, .form-select:focus {
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
       outline: none;
       border-color: var(--gold);
       background: rgba(255, 255, 255, 0.15);
@@ -553,6 +554,124 @@
       width: 18px;
       height: 18px;
       cursor: pointer;
+    }
+
+    /* === SESSION HOVER POPUP === */
+    .session-popup {
+      position: absolute;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      padding: 1rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      min-width: 250px;
+      max-width: 300px;
+      z-index: 2000;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .session-popup.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .session-popup-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .session-popup-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .session-popup-status {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      margin-left: auto;
+    }
+
+    .session-popup-status.booked {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--booked-red);
+      border: 1px solid var(--booked-red);
+    }
+
+    .session-popup-status.popup {
+      background: rgba(167, 139, 250, 0.2);
+      color: var(--popup-event-purple);
+      border: 1px solid var(--popup-event-purple);
+    }
+
+    .session-popup-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .session-popup-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .session-popup-icon {
+      font-size: 1rem;
+      width: 18px;
+      text-align: center;
+    }
+
+    .session-popup-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .popup-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .popup-btn-primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+    }
+
+    .popup-btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(244, 124, 44, 0.3);
+    }
+
+    .popup-btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .popup-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     /* === MODALS === */
@@ -777,6 +896,21 @@
         <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo-small" />
         <h1 class="header-title">Calendar Management 📅</h1>
       </div>
+
+  <!-- Session Hover Popup -->
+  <div class="session-popup" id="sessionPopup">
+    <div class="session-popup-header">
+      <div class="session-popup-title" id="popupTitle">Session Details</div>
+      <div class="session-popup-status" id="popupStatus">Booked</div>
+    </div>
+    <div class="session-popup-details" id="popupDetails">
+      <!-- Details will be populated by JavaScript -->
+    </div>
+    <div class="session-popup-actions">
+      <button class="popup-btn popup-btn-secondary" onclick="editSessionQuick()">📝 Quick Edit</button>
+      <button class="popup-btn popup-btn-primary" onclick="openClientRecord()">👤 Client Record</button>
+    </div>
+  </div>
       <div class="header-right">
         <div class="sync-status">
           <div class="sync-indicator" id="syncIndicator"></div>
@@ -1096,6 +1230,133 @@
     </div>
   </div>
 
+  <!-- Client Record Modal -->
+  <div class="modal-overlay" id="clientRecordModal">
+    <div class="modal" style="max-width: 900px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Client Record 👤</h3>
+        <button class="modal-close" onclick="closeClientRecordModal()">×</button>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+        <!-- Client Information -->
+        <div>
+          <h4 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.2rem;">📋 Client Information</h4>
+          <div class="form-group">
+            <label class="form-label">Primary Client Name 👤</label>
+            <input type="text" class="form-input" id="clientRecordName1" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email 📧</label>
+            <input type="email" class="form-input" id="clientRecordEmail1" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone 📱</label>
+            <input type="tel" class="form-input" id="clientRecordPhone1" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Instagram 📸</label>
+            <input type="text" class="form-input" id="clientRecordInstagram1" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Zip Code 📍</label>
+            <input type="text" class="form-input" id="clientRecordZip1" readonly>
+          </div>
+          
+          <div id="secondClientInfo" style="margin-top: 1.5rem; display: none;">
+            <h5 style="color: var(--gold); margin-bottom: 0.5rem;">Second Client</h5>
+            <div class="form-group">
+              <label class="form-label">Name 👤</label>
+              <input type="text" class="form-input" id="clientRecordName2" readonly>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email 📧</label>
+              <input type="email" class="form-input" id="clientRecordEmail2" readonly>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone 📱</label>
+              <input type="tel" class="form-input" id="clientRecordPhone2" readonly>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Pet Information -->
+        <div>
+          <h4 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.2rem;">🐾 Pet Information</h4>
+          <div class="form-group">
+            <label class="form-label">Primary Pet Name 🐕</label>
+            <input type="text" class="form-input" id="petName1" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pet Breed 🎯</label>
+            <input type="text" class="form-input" id="petBreed1" placeholder="Add breed information">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pet Age 📅</label>
+            <input type="text" class="form-input" id="petAge1" placeholder="Add age information">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Special Notes 📝</label>
+            <textarea class="form-input" id="petNotes1" rows="3" placeholder="Behavioral notes, preferences, etc."></textarea>
+          </div>
+          
+          <div id="secondPetInfo" style="margin-top: 1.5rem; display: none;">
+            <h5 style="color: var(--gold); margin-bottom: 0.5rem;">Second Pet</h5>
+            <div class="form-group">
+              <label class="form-label">Pet Name 🐕</label>
+              <input type="text" class="form-input" id="petName2" readonly>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pet Breed 🎯</label>
+              <input type="text" class="form-input" id="petBreed2" placeholder="Add breed information">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pet Age 📅</label>
+              <input type="text" class="form-input" id="petAge2" placeholder="Add age information">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Session History -->
+      <div style="margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h4 style="color: var(--gold); font-size: 1.2rem;">📸 Session History</h4>
+          <button class="btn btn-primary btn-small" onclick="addNewSessionForClient()">➕ Add Session</button>
+        </div>
+        <div id="sessionHistoryList" style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1rem; max-height: 300px; overflow-y: auto;">
+          <!-- Session history will be populated here -->
+        </div>
+      </div>
+      
+      <!-- Client Preferences & Notes -->
+      <div style="margin-bottom: 2rem;">
+        <h4 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.2rem;">📋 Client Preferences & Notes</h4>
+        <div class="form-group">
+          <label class="form-label">Preferred Locations 📍</label>
+          <input type="text" class="form-input" id="preferredLocations" placeholder="Cheesman Park, City Park, etc.">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred Session Times ⏰</label>
+          <input type="text" class="form-input" id="preferredTimes" placeholder="Morning, Evening, Weekends, etc.">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Special Requests & Notes 📝</label>
+          <textarea class="form-input" id="clientNotes" rows="4" placeholder="Any special requests, accessibility needs, or important notes about the client or pets"></textarea>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="marketingConsentRecord">
+          <label for="marketingConsentRecord">Marketing consent granted 📬</label>
+        </div>
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" onclick="closeClientRecordModal()">Close 🚫</button>
+        <button type="button" class="btn btn-primary" onclick="updateClientRecord()">Save Updates 💾</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Session Details Modal -->
   <div class="modal-overlay" id="sessionDetailsModal">
     <div class="modal">
@@ -1229,6 +1490,8 @@
     let currentDate = new Date();
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
+    let currentSessionPopup = null;
+    let currentClientRecord = null;
 
     // Authentication and initialization
     function checkAuthentication() {
@@ -1485,6 +1748,12 @@
         // Add click handler
         dayElement.onclick = () => handleDayClick(dateString, dayEvents);
         
+        // Add hover handlers for booked sessions
+        if (dayEvents.some(event => event.status === 'booked' || event.slotType === 'Pop-Up')) {
+          dayElement.onmouseenter = (e) => showSessionPopup(e, dateString, dayEvents);
+          dayElement.onmouseleave = () => hideSessionPopup();
+        }
+        
         calendarGrid.appendChild(dayElement);
       }
     }
@@ -1666,6 +1935,278 @@
       
       client2Fields.style.display = peopleCount === '2' ? 'block' : 'none';
       client2PetField.style.display = petCount === '2' ? 'block' : 'none';
+    }
+
+    // Session popup functions
+    function showSessionPopup(event, dateString, dayEvents) {
+      const popup = document.getElementById('sessionPopup');
+      const bookedEvents = dayEvents.filter(event => event.status === 'booked' || event.slotType === 'Pop-Up');
+      
+      if (bookedEvents.length === 0) return;
+      
+      const mainEvent = bookedEvents[0];
+      const booking = bookingsData.find(b => b.calendarSlot === mainEvent.id);
+      
+      if (!booking) return;
+      
+      currentSessionPopup = { event: mainEvent, booking: booking };
+      
+      // Populate popup content
+      document.getElementById('popupTitle').textContent = booking.client1Name || 'Session';
+      
+      const statusElement = document.getElementById('popupStatus');
+      statusElement.textContent = mainEvent.slotType === 'Pop-Up' ? 'Pop-Up' : 'Booked';
+      statusElement.className = `session-popup-status ${mainEvent.slotType === 'Pop-Up' ? 'popup' : 'booked'}`;
+      
+      const detailsContainer = document.getElementById('popupDetails');
+      detailsContainer.innerHTML = `
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">📅</span>
+          <span>${dateString} at ${mainEvent.time}</span>
+        </div>
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">📸</span>
+          <span>${mainEvent.sessionType}</span>
+        </div>
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">📍</span>
+          <span>${mainEvent.location || 'Location TBD'}</span>
+        </div>
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">🐾</span>
+          <span>${booking.petCount} pet${booking.petCount > 1 ? 's' : ''}, ${booking.peopleCount} person${booking.peopleCount > 1 ? 's' : ''}</span>
+        </div>
+        ${booking.client1FirstPetName ? `
+        <div class="session-popup-detail">
+          <span class="session-popup-icon">🐕</span>
+          <span>${booking.client1FirstPetName}${booking.client2FirstPetName ? `, ${booking.client2FirstPetName}` : ''}</span>
+        </div>
+        ` : ''}
+      `;
+      
+      // Position popup
+      const rect = event.target.getBoundingClientRect();
+      popup.style.left = `${rect.left + window.scrollX}px`;
+      popup.style.top = `${rect.bottom + window.scrollY + 5}px`;
+      
+      // Adjust if popup goes off screen
+      setTimeout(() => {
+        const popupRect = popup.getBoundingClientRect();
+        if (popupRect.right > window.innerWidth) {
+          popup.style.left = `${window.innerWidth - popupRect.width - 10}px`;
+        }
+        if (popupRect.bottom > window.innerHeight) {
+          popup.style.top = `${rect.top + window.scrollY - popupRect.height - 5}px`;
+        }
+      }, 10);
+      
+      popup.classList.add('show');
+    }
+
+    function hideSessionPopup() {
+      const popup = document.getElementById('sessionPopup');
+      popup.classList.remove('show');
+      currentSessionPopup = null;
+    }
+
+    function editSessionQuick() {
+      if (currentSessionPopup) {
+        openSessionDetailsModal(currentSessionPopup.booking, currentSessionPopup.event);
+        hideSessionPopup();
+      }
+    }
+
+    function openClientRecord() {
+      if (currentSessionPopup) {
+        showClientRecordModal(currentSessionPopup.booking);
+        hideSessionPopup();
+      }
+    }
+
+    // Client record functions
+    function showClientRecordModal(booking) {
+      currentClientRecord = booking;
+      const modal = document.getElementById('clientRecordModal');
+      
+      // Populate client information
+      document.getElementById('clientRecordName1').value = booking.client1Name || '';
+      document.getElementById('clientRecordEmail1').value = booking.client1Email || '';
+      document.getElementById('clientRecordPhone1').value = booking.client1Phone || '';
+      document.getElementById('clientRecordInstagram1').value = booking.client1Instagram || '';
+      document.getElementById('clientRecordZip1').value = booking.client1Zip || '';
+      
+      // Second client info
+      const secondClientDiv = document.getElementById('secondClientInfo');
+      if (booking.client2Name) {
+        document.getElementById('clientRecordName2').value = booking.client2Name || '';
+        document.getElementById('clientRecordEmail2').value = booking.client2Email || '';
+        document.getElementById('clientRecordPhone2').value = booking.client2Phone || '';
+        secondClientDiv.style.display = 'block';
+      } else {
+        secondClientDiv.style.display = 'none';
+      }
+      
+      // Pet information
+      document.getElementById('petName1').value = booking.client1FirstPetName || '';
+      
+      const secondPetDiv = document.getElementById('secondPetInfo');
+      if (booking.client2FirstPetName) {
+        document.getElementById('petName2').value = booking.client2FirstPetName || '';
+        secondPetDiv.style.display = 'block';
+      } else {
+        secondPetDiv.style.display = 'none';
+      }
+      
+      // Marketing consent
+      document.getElementById('marketingConsentRecord').checked = booking.marketingConsent || false;
+      
+      // Load session history
+      loadSessionHistory(booking.client1Email);
+      
+      modal.style.display = 'flex';
+    }
+
+    function closeClientRecordModal() {
+      document.getElementById('clientRecordModal').style.display = 'none';
+      currentClientRecord = null;
+    }
+
+    async function loadSessionHistory(clientEmail) {
+      const historyContainer = document.getElementById('sessionHistoryList');
+      
+      // Find all bookings for this client
+      const clientBookings = bookingsData.filter(booking => 
+        booking.client1Email === clientEmail || booking.client2Email === clientEmail
+      );
+      
+      if (clientBookings.length === 0) {
+        historyContainer.innerHTML = '<p style="color: rgba(255,255,255,0.7); text-align: center;">No session history found</p>';
+        return;
+      }
+      
+      // Sort by date (newest first)
+      clientBookings.sort((a, b) => new Date(b.sessionDate) - new Date(a.sessionDate));
+      
+      let historyHTML = '';
+      clientBookings.forEach(booking => {
+        const calendarSlot = calendarData.find(slot => slot.id === booking.calendarSlot);
+        const sessionDate = new Date(booking.sessionDate).toLocaleDateString();
+        const sessionStatus = calendarSlot ? calendarSlot.status : 'unknown';
+        
+        let statusColor = '';
+        let statusText = '';
+        switch(sessionStatus) {
+          case 'booked':
+            statusColor = 'var(--booked-red)';
+            statusText = 'Upcoming';
+            break;
+          case 'completed':
+            statusColor = 'var(--available-green)';
+            statusText = 'Completed';
+            break;
+          default:
+            statusColor = 'var(--soft-hold-yellow)';
+            statusText = 'Pending';
+        }
+        
+        historyHTML += `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; margin-bottom: 0.5rem; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 3px solid ${statusColor};">
+            <div>
+              <div style="font-weight: 600; color: white;">${sessionDate} - ${calendarSlot?.sessionType || 'Session'}</div>
+              <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">${calendarSlot?.location || 'Location TBD'} • ${booking.petCount} pet(s), ${booking.peopleCount} person(s)</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="color: ${statusColor}; font-size: 0.8rem; font-weight: 600;">${statusText}</span>
+              <button class="popup-btn popup-btn-secondary" onclick="editSessionFromHistory('${booking.id}')">📝</button>
+            </div>
+          </div>
+        `;
+      });
+      
+      historyContainer.innerHTML = historyHTML;
+    }
+
+    function editSessionFromHistory(bookingId) {
+      const booking = bookingsData.find(b => b.id === bookingId);
+      const calendarSlot = calendarData.find(slot => slot.id === booking.calendarSlot);
+      
+      if (booking && calendarSlot) {
+        openSessionDetailsModal(booking, calendarSlot);
+      }
+    }
+
+    function addNewSessionForClient() {
+      if (currentClientRecord) {
+        // Pre-populate the session form with current client data
+        openSessionDetailsModal();
+        
+        // Fill in client information
+        document.getElementById('client1Name').value = currentClientRecord.client1Name || '';
+        document.getElementById('client1Email').value = currentClientRecord.client1Email || '';
+        document.getElementById('client1Phone').value = currentClientRecord.client1Phone || '';
+        document.getElementById('client1Instagram').value = currentClientRecord.client1Instagram || '';
+        document.getElementById('client2Name').value = currentClientRecord.client2Name || '';
+        document.getElementById('client2Email').value = currentClientRecord.client2Email || '';
+        document.getElementById('client2Phone').value = currentClientRecord.client2Phone || '';
+        document.getElementById('client2Instagram').value = currentClientRecord.client2Instagram || '';
+        document.getElementById('sessionPetCount').value = currentClientRecord.petCount || 1;
+        document.getElementById('sessionPeopleCount').value = currentClientRecord.peopleCount || 1;
+        document.getElementById('client1FirstPetName').value = currentClientRecord.client1FirstPetName || '';
+        document.getElementById('client2FirstPetName').value = currentClientRecord.client2FirstPetName || '';
+        document.getElementById('marketingConsent').checked = currentClientRecord.marketingConsent || false;
+        
+        updateClient2Fields();
+      }
+    }
+
+    async function updateClientRecord() {
+      if (!currentClientRecord) return;
+      
+      try {
+        // Get updated values
+        const updatedData = {
+          fields: {
+            // Client information updates (read-only fields won't be updated)
+            
+            // Extended client data - these would need new fields in Airtable
+            preferredLocations: document.getElementById('preferredLocations').value,
+            preferredTimes: document.getElementById('preferredTimes').value,
+            clientNotes: document.getElementById('clientNotes').value,
+            petBreed1: document.getElementById('petBreed1').value,
+            petAge1: document.getElementById('petAge1').value,
+            petNotes1: document.getElementById('petNotes1').value,
+            petBreed2: document.getElementById('petBreed2').value,
+            petAge2: document.getElementById('petAge2').value,
+            marketingConsent: document.getElementById('marketingConsentRecord').checked
+          }
+        };
+        
+        // Update the booking record with extended data
+        // Note: You may want to create a separate "Clients" table for extended client data
+        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings/${currentClientRecord.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedData)
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+        
+        console.log('✅ Client record updated successfully');
+        alert('✅ Client record updated successfully!');
+        
+        // Refresh data
+        await fetchBookingsData();
+        
+      } catch (error) {
+        console.error('Error updating client record:', error);
+        await logErrorToAirtable('calendar-management.html', error);
+        alert('❌ Error updating client record. Please try again.');
+      }
     }
 
     // Form submission handlers
@@ -2032,6 +2573,14 @@
       await fetchSessionTypes();
       await fetchCalendarData();
       await fetchBookingsData();
+      
+      // Close popup when clicking outside
+      document.addEventListener('click', function(event) {
+        const popup = document.getElementById('sessionPopup');
+        if (!popup.contains(event.target) && !event.target.closest('.calendar-day')) {
+          hideSessionPopup();
+        }
+      });
     });
   </script>
 </body>
