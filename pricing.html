@@ -120,35 +120,44 @@
     .site-nav {
       display: flex;
       align-items: center;
-      gap: 1rem; /* Adjusted to match admin pages' .header-right gap */
       margin-left: auto;
     }
 
-    .site-nav a {
-      color: white;
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem; /* Matches availability.html */
       text-decoration: none;
       font-weight: 600;
-      font-size: 1rem;
-      transition: color 0.3s ease;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
     }
 
-    .site-nav a:hover {
-      color: var(--gold);
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
     }
 
     .book-btn {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
-      padding: 0.6rem 1.2rem;
+      padding: 0.8rem 2rem;
+      border: none;
       border-radius: 999px;
-      font-weight: 600;
+      font-weight: 900;
+      font-size: 1.2rem;
       text-decoration: none;
+      margin-left: 1.5rem; /* Matches availability.html */
+      cursor: pointer;
       transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
 
     .mobile-menu-btn {
@@ -158,6 +167,11 @@
       color: white;
       font-size: 2rem;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
     }
 
     /* === MAIN CONTENT === */
@@ -443,13 +457,16 @@
         display: flex;
       }
 
-      .site-nav a {
+      .site-nav a:not(.book-btn) {
         margin: 0.5rem 0; /* Standardized spacing for mobile */
         font-size: 1.2rem;
+        padding: 0.5rem 1rem;
       }
 
       .book-btn {
         margin: 0.5rem 0; /* Standardized spacing for mobile */
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
       }
 
       .mobile-menu-btn {
@@ -602,7 +619,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:26 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:36 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
