@@ -164,10 +164,9 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
+      background-image: url('assets/images/parkphoto.jpg');
+      background-size: cover;
       background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
       margin-top: 110px;
     }
 
@@ -175,6 +174,9 @@
       max-width: 800px;
       padding: 0 1.5rem;
       animation: fadeInUp 1s ease-out;
+      background: rgba(0, 0, 0, 0.5); /* Slight overlay for readability */
+      border-radius: 16px;
+      padding: 2rem;
     }
 
     .hero-content h1 {
@@ -482,6 +484,10 @@
         height: calc(100vh - 80px);
       }
 
+      .hero-content {
+        padding: 1rem;
+      }
+
       .hero-content h1 {
         font-size: 2.5rem;
       }
@@ -546,8 +552,10 @@
         min-height: 200px; /* Reduced size for the next four questions */
       }
 
-      .session-builder-card#pet-behavior-policy-card {
-        min-height: 500px; /* Significantly increased vertical size */
+      .session-builder-card#pet-behavior-policy-card,
+      .session-builder-card#vaccination-policy-card,
+      .session-builder-card#cancellation-policy-card {
+        min-height: 500px; /* Increased vertical size for policy cards */
         padding-bottom: 3rem; /* Ensure enough space for content */
       }
 
@@ -663,6 +671,36 @@
             </ul>
             <p>By proceeding, you agree to these terms.</p>
           </div>
+          <button class="next-btn" onclick="showCard('vaccination-policy-card')">I Agree, Proceed</button>
+        </div>
+
+        <!-- Vaccination Policy Card -->
+        <div class="session-builder-card" id="vaccination-policy-card" style="display: none;">
+          <h3>Vaccination Policy</h3>
+          <div class="policy-content">
+            <p>We require all pets to be fully vaccinated to ensure the safety of everyone involved. Please review our vaccination policy:</p>
+            <ul>
+              <li>All pets must be vaccinated against rabies and other common diseases.</li>
+              <li>Proof of vaccination may be requested prior to the session.</li>
+              <li>Failure to provide proof may result in session cancellation.</li>
+            </ul>
+            <p>By proceeding, you confirm that your pet is vaccinated and agree to provide proof if requested.</p>
+          </div>
+          <button class="next-btn" onclick="showCard('cancellation-policy-card')">I Agree, Proceed</button>
+        </div>
+
+        <!-- Cancellation Policy Card -->
+        <div class="session-builder-card" id="cancellation-policy-card" style="display: none;">
+          <h3>Cancellation Policy</h3>
+          <div class="policy-content">
+            <p>We understand that plans can change. Please review our cancellation policy:</p>
+            <ul>
+              <li>Cancellations must be made at least 48 hours before the scheduled session to receive a full refund.</li>
+              <li>No refunds will be issued for cancellations within 48 hours of the session.</li>
+              <li>We reserve the right to cancel sessions due to unforeseen circumstances, in which case a full refund will be provided.</li>
+            </ul>
+            <p>By proceeding, you agree to these cancellation terms.</p>
+          </div>
           <a href="/ptp-pick-date-step-3.html" class="next-btn" onclick="saveSessionData()">I Agree, Proceed</a>
         </div>
       </div>
@@ -700,7 +738,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 05:30 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 05:35 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
