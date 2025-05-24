@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Booking Success | Picture This Pet</title>
+  <title>Booking Confirmed! | Picture This Pet</title>
   <meta name="description" content="Your pet photography session has been successfully booked!">
-  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&family=Lobster&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -18,9 +17,6 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
-      --pet-blue: #b3e5fc;
-      --pet-lavender: #e1bee7;
-      --neon-pink: #ff4081;
     }
 
     * {
@@ -65,24 +61,18 @@
       }
     }
 
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
     }
 
-    @keyframes glow {
-      0% { box-shadow: 0 0 5px rgba(255, 64, 129, 0.5); }
-      50% { box-shadow: 0 0 15px rgba(255, 64, 129, 0.8); }
-      100% { box-shadow: 0 0 5px rgba(255, 64, 129, 0.5); }
+    @keyframes checkmark {
+      0% { stroke-dashoffset: 100; }
+      100% { stroke-dashoffset: 0; }
     }
 
-    @keyframes footprintTrail {
-      0% { background-position: 0 0; }
-      100% { background-position: 40px 0; }
-    }
-
-    /* === HEADER STYLES === */
+    /* === HEADER === */
     header {
       width: 100%;
       display: flex;
@@ -172,28 +162,6 @@
       transition: all 0.3s ease;
     }
 
-    .mobile-menu-btn:hover {
-      transform: scale(1.1);
-    }
-
-    .social-icons {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-left: 1rem;
-    }
-
-    .social-icon {
-      color: white;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .social-icon:hover {
-      color: var(--gold);
-      transform: scale(1.1);
-    }
-
     /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
@@ -206,67 +174,113 @@
       position: relative;
     }
 
-    /* === PROGRESS INDICATOR === */
-    .progress-section {
+    /* === SUCCESS SECTION === */
+    .success-container {
+      max-width: 800px;
+      margin: 0 auto;
       text-align: center;
-      margin-bottom: 3rem;
       animation: fadeInUp 1s ease-out;
     }
 
-    .progress-steps {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
+    .success-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 4rem 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
     }
 
-    .progress-step {
-      width: 40px;
-      height: 40px;
+    .success-icon {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 2rem;
       border-radius: 50%;
+      background: linear-gradient(135deg, var(--available-green), #059669);
       display: flex;
       align-items: center;
       justify-content: center;
+      animation: bounce 2s infinite;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+    }
+
+    .success-icon svg {
+      width: 50px;
+      height: 50px;
+      stroke: white;
+      stroke-width: 3;
+      fill: none;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: checkmark 1s ease-out 0.5s forwards;
+    }
+
+    .success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .success-subtitle {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 3rem;
+    }
+
+    /* === BOOKING SUMMARY === */
+    .booking-summary {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+
+    .summary-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
       font-weight: 600;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: rgba(255, 255, 255, 0.7);
-      transition: all 0.3s ease;
-    }
-
-    .progress-step.completed {
-      background: var(--available-green);
-      border-color: var(--available-green);
+      margin-bottom: 1.5rem;
       color: white;
+      text-align: center;
     }
 
-    .progress-step.active {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-      color: white;
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .progress-line {
-      width: 60px;
-      height: 2px;
-      background: rgba(255, 255, 255, 0.3);
-      position: relative;
-    }
-
-    .progress-line.completed {
-      background: var(--available-green);
-    }
-
-    .progress-text {
-      color: white;
+    .summary-row:last-child {
+      border-bottom: none;
+      font-weight: 600;
       font-size: 1.1rem;
-      opacity: 0.9;
+      color: var(--gold);
     }
 
-    /* === SUCCESS SECTION === */
-    .success-section {
-      max-width: 800px;
-      margin: 0 auto;
+    .summary-label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .summary-value {
+      color: white;
+      font-weight: 500;
+    }
+
+    /* === NEXT STEPS === */
+    .next-steps {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -277,299 +291,126 @@
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .success-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .success-section p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
-    }
-
-    .confirmation-details {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .confirmation-details h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .confirmation-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
-    }
-
-    .confirmation-item .label {
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    .confirmation-item .value {
-      color: white;
-      font-weight: 600;
-    }
-
-    .next-steps {
-      background: linear-gradient(135deg, var(--pet-blue), var(--pet-lavender));
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M10 20a3 3 0 1 0-6 0 3 3 0 0 0 6 0zm6-6a3 3 0 1 0-6 0 3 3 0 0 0 6 0zm12 6a3 3 0 1 0-6 0 3 3 0 0 0 6 0zm-6 6a3 3 0 1 0-6 0 3 3 0 0 0 6 0z" fill="rgba(255,255,255,0.2)"/></svg>');
-      background-size: 40px 40px;
-      animation: footprintTrail 10s linear infinite;
+      text-align: left;
     }
 
     .next-steps h3 {
-      font-family: 'Lobster', cursive;
-      font-size: 2.5rem;
-      font-weight: 400;
-      margin-bottom: 2rem;
-      color: var(--neon-pink);
-      text-shadow: 0 0 15px rgba(255, 64, 129, 0.8), 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .next-steps h3::before {
-      content: '🐶 ';
-    }
-
-    .next-steps h3::after {
-      content: ' 🐾';
-    }
-
-    .next-step-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.3rem;
-      line-height: 1.6;
-      padding: 1rem 1.5rem;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      animation: float 3s infinite;
-      position: relative;
-      z-index: 1;
-    }
-
-    .next-step-item .emoji {
+      font-family: 'Playfair Display', serif;
       font-size: 2rem;
-      width: 50px;
-      height: 50px;
-      line-height: 50px;
-      text-align: center;
-      background: linear-gradient(135deg, var(--neon-pink), #ffd700);
-      border-radius: 50%;
-      margin-right: 1.5rem;
-      flex-shrink: 0;
-      animation: glow 2s infinite;
-    }
-
-    .next-step-item strong {
       font-weight: 700;
-      color: var(--neon-pink);
-    }
-
-    .next-step-item p {
-      color: #4B2E1E;
-    }
-
-    .next-step-item a {
-      color: var(--neon-pink);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .next-step-item a:hover {
-      color: #ffd700;
-    }
-
-    .next-step-item .directions-btn {
-      background: var(--neon-pink);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+      margin-bottom: 1.5rem;
       color: white;
-      font-weight: 600;
-      transition: background 0.3s ease, color 0.3s ease;
+      text-align: center;
     }
 
-    .next-step-item .directions-btn::before {
-      content: '🐾 ';
+    .steps-list {
+      list-style: none;
+      padding: 0;
     }
 
-    .next-step-item .directions-btn:hover {
-      background: #ffd700;
-      color: #4B2E1E;
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .contact-info {
-      margin-top: 2rem;
-    }
-
-    .contact-info p {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-    }
-
-    .contact-info a {
-      color: var(--gold);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .contact-info a:hover {
-      color: var(--orange);
-    }
-
-    .success-actions {
-      margin-top: 2rem;
-    }
-
-    .home-btn {
+    .step-number {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .step-content p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* === ACTION BUTTONS === */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
       border: none;
-      padding: 1rem 3rem;
       border-radius: 12px;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
-      display: inline-block;
-    }
-
-    .home-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    /* Fallback message styling */
-    .fallback-message {
-      max-width: 800px;
-      margin: 0 auto;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .fallback-message h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .fallback-message p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
-    }
-
-    /* === FOOTER STYLES === */
-    footer {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2rem 1.5rem;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.9rem;
-    }
-
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-section {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .footer-section h4 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: white;
-      margin-bottom: 1rem;
-    }
-
-    .footer-section a {
-      color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s ease;
-    }
-
-    .footer-section a:hover {
-      color: var(--gold);
-    }
-
-    .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
+      display: inline-flex;
+      align-items: center;
       gap: 0.5rem;
     }
 
-    .payment-icon {
-      width: 40px;
-      height: 25px;
-      object-fit: contain;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
+    .btn-primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
     }
 
-    .payment-icon:hover {
-      opacity: 1;
-      transform: scale(1.1);
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(244, 124, 44, 0.4);
     }
 
-    .footer-bottom {
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* === LOADING STATE === */
+    .processing {
+      display: none;
       text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid var(--gold);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* === RESPONSIVE === */
@@ -585,64 +426,10 @@
       
       .site-nav {
         display: none;
-        flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: 100% 100%;
-        background-position: center;
-        position: absolute;
-        top: 80px;
-        right: 0;
-        width: 100%;
-        text-align: right;
-        padding: 1rem;
-        z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
-      }
-      
-      .site-nav.active {
-        display: flex;
-      }
-      
-      .site-nav.active a {
-        display: block;
-        margin: 0.5rem 0;
-        font-size: 1.2rem;
-        color: white;
-        padding: 0.5rem 1rem;
-      }
-
-      .site-nav.active a[href="/"] { order: 1; }
-      .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/locations.html"] { order: 3; }
-      .site-nav.active a[href="/pricing"] { order: 4; }
-      .site-nav.active a[href="/contact"] { order: 5; }
-      .site-nav.active .book-btn { order: 6; }
-      
-      .book-btn {
-        background: linear-gradient(135deg, #F47C2C, #FDB75E);
-        color: white;
-        padding: 0.6rem 1.5rem;
-        border: none;
-        border-radius: 999px;
-        font-weight: 900;
-        font-size: 1rem;
-        margin-left: 0;
-        display: inline-block;
-        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
       }
       
       .mobile-menu-btn {
         display: block;
-      }
-      
-      .social-icons {
-        gap: 0.5rem;
-        margin-left: 0.5rem;
-      }
-
-      .social-icon {
-        font-size: 1.2rem;
       }
       
       main {
@@ -650,116 +437,30 @@
         padding: 2rem 1rem;
       }
 
-      .progress-steps {
-        gap: 0.5rem;
+      .success-card {
+        padding: 2rem 1.5rem;
       }
 
-      .progress-step {
-        width: 35px;
-        height: 35px;
-        font-size: 0.9rem;
-      }
-
-      .progress-line {
-        width: 40px;
-      }
-
-      .success-section {
-        padding: 2rem;
-      }
-
-      .success-section h2 {
+      .success-title {
         font-size: 2rem;
       }
 
-      .success-section p {
+      .success-subtitle {
         font-size: 1.1rem;
-      }
-
-      .confirmation-details {
-        padding: 1rem;
-      }
-
-      .confirmation-details h3 {
-        font-size: 1.3rem;
-      }
-
-      .confirmation-item {
-        font-size: 0.9rem;
       }
 
       .next-steps {
-        padding: 1.5rem;
-      }
-
-      .next-steps h3 {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .next-step-item {
-        font-size: 1.1rem;
-        margin-bottom: 1.2rem;
-        padding: 0.8rem;
-      }
-
-      .next-step-item .emoji {
-        font-size: 1.8rem;
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-        margin-right: 1rem;
-      }
-
-      .next-step-item .directions-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
-      }
-
-      .contact-info {
-        margin-top: 1.5rem;
-      }
-
-      .contact-info p {
-        font-size: 1rem;
-      }
-
-      .home-btn {
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
-      }
-
-      .fallback-message {
         padding: 2rem;
       }
 
-      .fallback-message h2 {
-        font-size: 2rem;
-      }
-
-      .fallback-message p {
-        font-size: 1rem;
-      }
-
-      footer {
-        padding: 1.5rem 1rem;
-      }
-
-      .footer-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        display: flex;
+      .action-buttons {
         flex-direction: column;
-        justify-content: center;
         align-items: center;
       }
 
-      .footer-section {
-        align-items: center;
-        text-align: center;
-      }
-
-      .payment-methods {
+      .btn {
+        width: 100%;
+        max-width: 300px;
         justify-content: center;
       }
     }
@@ -776,207 +477,415 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
+      <a href="/" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
-    <div class="social-icons">
-      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
-        <i class="fab fa-instagram social-icon"></i>
-      </a>
-    </div>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <!-- Progress Indicator -->
-    <div class="progress-section">
-      <div class="progress-steps">
-        <div class="progress-step completed">1</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">2</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">3</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">4</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step active">5</div>
-      </div>
-      <p class="progress-text">Booking Confirmed</p>
+    <!-- Processing State -->
+    <div class="processing" id="processingState">
+      <div class="spinner"></div>
+      <h3>Processing Your Booking...</h3>
+      <p>Please wait while we save your session details.</p>
     </div>
 
-    <!-- Fallback Message (if session data is missing) -->
-    <div id="fallback-message" class="fallback-message" style="display: none;">
-      <h2>Thank You! 🎉</h2>
-      <p>Your booking has been successfully completed. We’ll send you a confirmation email soon 📧. If you have any questions, feel free to <a href="mailto:info@picturethispet.co">email us</a>.</p>
-      <div class="success-actions">
-        <a href="/" class="home-btn">Back to Home</a>
-      </div>
-    </div>
+    <!-- Success State -->
+    <div class="success-container" id="successState" style="display: none;">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg viewBox="0 0 50 50">
+            <path d="M10 25 L20 35 L40 15" />
+          </svg>
+        </div>
+        
+        <h1 class="success-title">Booking Confirmed!</h1>
+        <p class="success-subtitle">
+          Thank you! Your pet photography session has been successfully booked and paid for. 
+          We can't wait to capture beautiful memories with your furry family!
+        </p>
 
-    <!-- Success Section -->
-    <div class="success-section" id="success-section">
-      <h2>Booking Successful! 🎉</h2>
-      <p>Thank you for booking your pet photography session with Picture This Pet. We’re excited to capture timeless memories for you and your furry friend!</p>
-      
-      <div class="confirmation-details">
-        <h3>Session Details</h3>
-        <div id="confirmationDetails">
-          <div class="confirmation-item">
-            <span class="label">Session Type:</span>
-            <span class="value" id="sessionType">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Location:</span>
-            <span class="value" id="sessionLocation">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Date & Time:</span>
-            <span class="value" id="sessionDateTime">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Pets:</span>
-            <span class="value" id="petCount">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">People:</span>
-            <span class="value" id="peopleCount">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Total Price:</span>
-            <span class="value" id="totalPrice">—</span>
-          </div>
+        <div class="booking-summary" id="bookingSummary">
+          <h3 class="summary-title">📋 Your Session Details</h3>
+          <!-- Will be populated by JavaScript -->
         </div>
       </div>
 
       <div class="next-steps">
-        <h3>What’s Next? 🚀</h3>
-        <div class="next-step-item">
-          <span class="emoji">🎉</span>
-          <p><strong>Your session is booked!</strong> You’re all set for a paws-itively amazing photo shoot!</p>
-        </div>
-        <div class="next-step-item">
-          <span class="emoji">📧</span>
-          <p><strong>We’ll email you a confirmation.</strong> Check your inbox (and spam/junk folder) for the details!</p>
-        </div>
-        <div class="next-step-item">
-          <span class="emoji">📸</span>
-          <p><strong>Keep an eye out!</strong> We’ll email you 2-3 days before your session with instructions on how to prepare.</p>
-        </div>
-        <div class="next-step-item">
-          <span class="emoji">🗺️</span>
-          <p><strong>Get Directions:</strong> Heading to <span id="parkName">—</span>? <a id="directionsLink" href="#" target="_blank" rel="noopener noreferrer" class="directions-btn">Click here for directions</a>.</p>
-        </div>
-        <div class="next-step-item">
-          <span class="emoji">🌧️</span>
-          <p><strong>Don’t worry about the weather!</strong> We’ll reschedule if there’s inclement weather—no stress!</p>
-        </div>
-        <div class="next-step-item">
-          <span class="emoji">📞</span>
-          <p><strong>Have questions?</strong> Hit us up anytime at <a href="mailto:info@picturethispet.co">info@picturethispet.co</a>!</p>
-        </div>
-      </div>
+        <h3>🎯 What Happens Next?</h3>
+        <ul class="steps-list">
+          <li class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Confirmation Email</h4>
+              <p>You'll receive a detailed confirmation email within the next few minutes with all your session information and preparation tips.</p>
+            </div>
+          </li>
+          
+          <li class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Session Reminder</h4>
+              <p>We'll send you a friendly reminder 24 hours before your session with location details and what to bring.</p>
+            </div>
+          </li>
+          
+          <li class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Session Day</h4>
+              <p>Meet us at the scheduled location and time. Come ready to have fun - we'll handle all the technical stuff!</p>
+            </div>
+          </li>
+          
+          <li class="step-item">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Photo Gallery</h4>
+              <p>Within 2 weeks, you'll receive access to your private online gallery with all your edited photos, ready to view and download.</p>
+            </div>
+          </li>
+        </ul>
 
-      <div class="contact-info">
-        <p>Follow us on Instagram for updates and sneak peeks!</p>
-        <p><a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer">@picturethispet</a></p>
-      </div>
-
-      <div class="success-actions">
-        <a href="/" class="home-btn">Back to Home</a>
+        <div class="action-buttons">
+          <a href="/" class="btn btn-primary">🏠 Back to Home</a>
+          <a href="/contact" class="btn btn-secondary">💬 Contact Us</a>
+          <button class="btn btn-secondary" onclick="downloadReceipt()">📄 Download Receipt</button>
+        </div>
       </div>
     </div>
   </main>
 
-  <footer>
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Contact Us</h4>
-        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
-      </div>
-      <div class="footer-section socials">
-        <h4>Connect</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-      </div>
-      <div class="footer-section">
-        <h4>We Accept</h4>
-        <div class="payment-methods">
-          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 09:29 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
-    </div>
-  </footer>
-
   <script>
-    // Mobile menu toggle
+    // ===== BOOKING DATA CAPTURE SYSTEM =====
+    
+    let completeBookingData = {};
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Success page loaded - processing booking...');
+      
+      // Show processing state
+      document.getElementById('processingState').style.display = 'block';
+      
+      // Simulate processing time (replace with actual processing)
+      setTimeout(() => {
+        processBookingData();
+      }, 2000);
+    });
+
+    function processBookingData() {
+      try {
+        console.log('🔄 Capturing all booking data...');
+        
+        // Step 1: Collect Session Builder Data
+        const sessionData = JSON.parse(localStorage.getItem('ptpSessionData') || '{}');
+        console.log('📊 Session Builder Data:', sessionData);
+        
+        // Step 2: Collect Marketing Data (email from session builder)
+        const marketingData = JSON.parse(localStorage.getItem('ptpMarketingData') || '{}');
+        console.log('📧 Marketing Data:', marketingData);
+        
+        // Step 3: Collect Selected Date/Time
+        const selectedDateTime = localStorage.getItem('selectedDateTime') || '';
+        console.log('📅 Selected Date/Time:', selectedDateTime);
+        
+        // Step 4: Collect Intake Form Data
+        const intakeData = JSON.parse(localStorage.getItem('ptpIntakeData') || '{}');
+        console.log('📝 Intake Data:', intakeData);
+        
+        // Step 5: Get Payment Info (from URL params or stripe data)
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentData = {
+          sessionId: urlParams.get('session_id'),
+          paymentIntent: urlParams.get('payment_intent'),
+          amount: calculateSessionPrice(sessionData),
+          status: 'completed',
+          timestamp: new Date().toISOString()
+        };
+        console.log('💳 Payment Data:', paymentData);
+        
+        // Step 6: Combine Everything into Complete Booking Record
+        completeBookingData = {
+          // Generate unique booking ID
+          bookingId: generateBookingId(),
+          timestamp: new Date().toISOString(),
+          
+          // Session Details
+          session: {
+            type: sessionData.session || 'Full Session',
+            location: sessionData.park || 'Cheesman Park',
+            date: selectedDateTime ? selectedDateTime.split('T')[0] : '',
+            time: selectedDateTime ? formatTime(selectedDateTime.split('T')[1]) : '6:00 PM',
+            petCount: parseInt(sessionData.petCount) || 1,
+            peopleCount: parseInt(sessionData.peopleCount) || 1
+          },
+          
+          // Client Information
+          client: {
+            name: intakeData.person1?.name || 'Client Name',
+            email: marketingData.email || intakeData.person1?.email || '',
+            phone: intakeData.person1?.phone || '',
+            zip: intakeData.person1?.zip || '',
+            address: intakeData.person1?.address || ''
+          },
+          
+          // Pet Information
+          pets: extractPetData(intakeData),
+          
+          // Session Preferences
+          preferences: {
+            specialRequests: intakeData.specialRequests || '',
+            photoStyle: intakeData.photoStyle || 'both'
+          },
+          
+          // Payment Information
+          payment: paymentData,
+          
+          // Business Status
+          status: 'confirmed',
+          galleryCreated: false,
+          reminderSent: false
+        };
+        
+        console.log('✅ Complete Booking Record:', completeBookingData);
+        
+        // Step 7: Save to Admin System
+        saveBookingToAdmin(completeBookingData);
+        
+        // Step 8: Display Success Page
+        displaySuccessPage();
+        
+        // Step 9: Clean up temporary data
+        cleanupTemporaryData();
+        
+      } catch (error) {
+        console.error('❌ Error processing booking:', error);
+        handleBookingError(error);
+      }
+    }
+
+    function calculateSessionPrice(sessionData) {
+      let basePrice = 0;
+      
+      switch(sessionData.session) {
+        case 'Full Session':
+          basePrice = 250;
+          break;
+        case 'Mini Session':
+          basePrice = 150;
+          break;
+        case 'Holiday Session':
+          basePrice = 200;
+          break;
+        default:
+          basePrice = 250;
+      }
+      
+      // Add costs for additional pets/people
+      const extraPets = Math.max(0, (parseInt(sessionData.petCount) || 1) - 1);
+      const extraPeople = Math.max(0, (parseInt(sessionData.peopleCount) || 1) - 1);
+      
+      basePrice += (extraPets * 50); // $50 per additional pet
+      basePrice += (extraPeople * 25); // $25 per additional person
+      
+      return basePrice;
+    }
+
+    function extractPetData(intakeData) {
+      const pets = [];
+      
+      // Extract pet1 data
+      if (intakeData.pet1) {
+        pets.push({
+          name: intakeData.pet1.name || '',
+          age: intakeData.pet1.age || '',
+          gender: intakeData.pet1.gender || '',
+          breed: intakeData.pet1.breed || '',
+          behavior: intakeData.pet1.behavior || '',
+          offLeash: intakeData.pet1.offLeash || 'no',
+          favoriteToy: intakeData.pet1.favoriteToy || ''
+        });
+      }
+      
+      // Extract pet2 data if exists
+      if (intakeData.pet2 && intakeData.pet2.name) {
+        pets.push({
+          name: intakeData.pet2.name || '',
+          age: intakeData.pet2.age || '',
+          gender: intakeData.pet2.gender || '',
+          breed: intakeData.pet2.breed || '',
+          behavior: intakeData.pet2.behavior || '',
+          offLeash: intakeData.pet2.offLeash || 'no',
+          favoriteToy: intakeData.pet2.favoriteToy || ''
+        });
+      }
+      
+      return pets;
+    }
+
+    function saveBookingToAdmin(bookingData) {
+      console.log('💾 Saving booking to admin system...');
+      
+      // Get existing bookings
+      const existingBookings = JSON.parse(localStorage.getItem('ptpAdminBookings') || '[]');
+      
+      // Add new booking
+      existingBookings.push(bookingData);
+      
+      // Save back to localStorage
+      localStorage.setItem('ptpAdminBookings', JSON.stringify(existingBookings));
+      
+      // Also save as separate session record for admin dashboard
+      const adminSessions = JSON.parse(localStorage.getItem('ptpAdminSessions') || '[]');
+      adminSessions.push({
+        id: bookingData.bookingId,
+        clientName: bookingData.client.name,
+        date: bookingData.session.date,
+        time: bookingData.session.time,
+        sessionType: bookingData.session.type,
+        location: bookingData.session.location,
+        email: bookingData.client.email,
+        phone: bookingData.client.phone,
+        pets: bookingData.pets.map(pet => pet.name).join(', '),
+        notes: bookingData.preferences.specialRequests,
+        status: 'scheduled',
+        price: bookingData.payment.amount,
+        created: bookingData.timestamp
+      });
+      localStorage.setItem('ptpAdminSessions', JSON.stringify(adminSessions));
+      
+      // Trigger data update event for admin dashboard
+      window.localStorage.setItem('ptpAdminLastUpdate', Date.now());
+      
+      console.log('✅ Booking saved to admin system');
+    }
+
+    function displaySuccessPage() {
+      console.log('🎉 Displaying success page...');
+      
+      // Hide processing, show success
+      document.getElementById('processingState').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
+      
+      // Populate booking summary
+      const summaryHtml = `
+        <div class="summary-row">
+          <span class="summary-label">Client Name:</span>
+          <span class="summary-value">${completeBookingData.client.name}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Session Type:</span>
+          <span class="summary-value">${completeBookingData.session.type}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Date & Time:</span>
+          <span class="summary-value">${formatDate(completeBookingData.session.date)} at ${completeBookingData.session.time}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Location:</span>
+          <span class="summary-value">${completeBookingData.session.location}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Pets:</span>
+          <span class="summary-value">${completeBookingData.pets.map(pet => pet.name).join(', ')}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Email:</span>
+          <span class="summary-value">${completeBookingData.client.email}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Total Paid:</span>
+          <span class="summary-value">$${completeBookingData.payment.amount}</span>
+        </div>
+      `;
+      
+      document.getElementById('bookingSummary').innerHTML = `
+        <h3 class="summary-title">📋 Your Session Details</h3>
+        ${summaryHtml}
+      `;
+      
+      console.log('✅ Success page displayed');
+    }
+
+    function cleanupTemporaryData() {
+      console.log('🧹 Cleaning up temporary data...');
+      
+      // Remove session builder data (booking is complete)
+      localStorage.removeItem('ptpSessionData');
+      localStorage.removeItem('ptpMarketingData');
+      localStorage.removeItem('selectedDateTime');
+      localStorage.removeItem('ptpIntakeData');
+      
+      console.log('✅ Temporary data cleaned up');
+    }
+
+    function handleBookingError(error) {
+      console.error('❌ Booking processing failed:', error);
+      
+      document.getElementById('processingState').innerHTML = `
+        <h3 style="color: var(--booked-red);">⚠️ Processing Error</h3>
+        <p>There was an issue processing your booking. Please contact us directly.</p>
+        <div style="margin-top: 2rem;">
+          <a href="/contact" class="btn btn-primary">Contact Support</a>
+        </div>
+      `;
+    }
+
+    // ===== UTILITY FUNCTIONS =====
+    
+    function generateBookingId() {
+      return 'PTP_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5).toUpperCase();
+    }
+
+    function formatTime(timeString) {
+      if (!timeString) return '6:00 PM';
+      
+      const [hours, minutes] = timeString.split(':');
+      const hour = parseInt(hours);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const displayHour = hour % 12 || 12;
+      
+      return `${displayHour}:${minutes} ${ampm}`;
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return 'Date TBD';
+      
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
+
+    function downloadReceipt() {
+      const receiptData = {
+        bookingId: completeBookingData.bookingId,
+        timestamp: completeBookingData.timestamp,
+        client: completeBookingData.client,
+        session: completeBookingData.session,
+        payment: completeBookingData.payment
+      };
+      
+      const dataStr = JSON.stringify(receiptData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `PTP-Receipt-${completeBookingData.bookingId}.json`;
+      link.click();
+      
+      console.log('📄 Receipt downloaded');
+    }
+
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
-
-    // Smooth scroll to session builder (for Book Now)
-    function scrollToSessionBuilder(e) {
-      e.preventDefault();
-      window.location.href = '/index.html#session-builder-section';
-    }
-
-    // Display session details
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Success page loaded, initializing...');
-
-      // Retrieve session data from localStorage
-      const sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
-
-      // Check if session data is missing
-      const successSection = document.getElementById('success-section');
-      const fallbackMessage = document.getElementById('fallback-message');
-      if (!sessionData.session || !sessionData.park || !sessionData.selectedDateTime || !sessionData.petCount || !sessionData.peopleCount) {
-        successSection.style.display = 'none';
-        fallbackMessage.style.display = 'block';
-        return;
-      }
-
-      // Populate session details
-      document.getElementById('sessionType').textContent = sessionData.session || '—';
-      document.getElementById('sessionLocation').textContent = sessionData.park || '—';
-      document.getElementById('parkName').textContent = sessionData.park || '—';
-      document.getElementById('sessionDateTime').textContent = sessionData.selectedDateTime || '—';
-      document.getElementById('petCount').textContent = sessionData.petCount || '—';
-      document.getElementById('peopleCount').textContent = sessionData.peopleCount || '—';
-
-      // Calculate total price
-      let total = 0;
-      if (sessionData.session === "Mini") total += 50;
-      if (sessionData.session === "Full") total += 100;
-      if (sessionData.petCount === "2") total += 40;
-      if (sessionData.peopleCount === "2") total += 20;
-      document.getElementById('totalPrice').textContent = `$${total}`;
-
-      // Set directions link based on park
-      const directionsLink = document.getElementById('directionsLink');
-      if (sessionData.park && sessionData.park.toLowerCase() === "cheesman") {
-        directionsLink.href = "https://maps.google.com/?q=Cheesman+Park,+Denver,+CO";
-      } else if (sessionData.park && sessionData.park.toLowerCase() === "city") {
-        directionsLink.href = "https://maps.google.com/?q=City+Park,+Denver,+CO";
-      } else {
-        directionsLink.style.display = 'none';
-      }
-    });
   </script>
 </body>
 </html>
