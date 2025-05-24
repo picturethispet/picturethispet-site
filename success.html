@@ -8,7 +8,7 @@
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&family=Lobster&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -18,6 +18,9 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
+      --pet-blue: #b3e5fc;
+      --pet-lavender: #e1bee7;
+      --neon-pink: #ff4081;
     }
 
     * {
@@ -60,6 +63,23 @@
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 5px rgba(255, 64, 129, 0.5); }
+      50% { box-shadow: 0 0 15px rgba(255, 64, 129, 0.8); }
+      100% { box-shadow: 0 0 5px rgba(255, 64, 129, 0.5); }
+    }
+
+    @keyframes footprintTrail {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 0; }
     }
 
     /* === HEADER STYLES === */
@@ -311,44 +331,97 @@
     }
 
     .next-steps {
-      background: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, var(--pet-blue), var(--pet-lavender));
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 2rem;
       margin-bottom: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      position: relative;
+      overflow: hidden;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M10 20a3 3 0 1 0-6 0 3 3 0 0 0 6 0zm6-6a3 3 0 1 0-6 0 3 3 0 0 0 6 0zm12 6a3 3 0 1 0-6 0 3 3 0 0 0 6 0zm-6 6a3 3 0 1 0-6 0 3 3 0 0 0 6 0z" fill="rgba(255,255,255,0.2)"/></svg>');
+      background-size: 40px 40px;
+      animation: footprintTrail 10s linear infinite;
     }
 
     .next-steps h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: white;
+      font-family: 'Lobster', cursive;
+      font-size: 2.5rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      color: var(--neon-pink);
+      text-shadow: 0 0 15px rgba(255, 64, 129, 0.8), 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .next-steps h3::before {
+      content: '🐶 ';
+    }
+
+    .next-steps h3::after {
+      content: ' 🐾';
     }
 
     .next-step-item {
       display: flex;
-      align-items: flex-start;
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
+      padding: 1rem 1.5rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      animation: float 3s infinite;
+      position: relative;
+      z-index: 1;
     }
 
     .next-step-item .emoji {
-      font-size: 1.5rem;
-      margin-right: 1rem;
+      font-size: 2rem;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--neon-pink), #ffd700);
+      border-radius: 50%;
+      margin-right: 1.5rem;
       flex-shrink: 0;
+      animation: glow 2s infinite;
+    }
+
+    .next-step-item strong {
+      font-weight: 700;
+      color: var(--neon-pink);
+    }
+
+    .next-step-item p {
+      color: #4B2E1E;
     }
 
     .next-step-item a {
-      color: var(--gold);
+      color: var(--neon-pink);
       text-decoration: none;
       transition: color 0.3s ease;
     }
 
     .next-step-item a:hover {
-      color: var(--orange);
+      color: #ffd700;
+    }
+
+    .next-step-item .directions-btn {
+      background: var(--neon-pink);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .next-step-item .directions-btn::before {
+      content: '🐾 ';
+    }
+
+    .next-step-item .directions-btn:hover {
+      background: #ffd700;
+      color: #4B2E1E;
     }
 
     .contact-info {
@@ -616,20 +689,31 @@
       }
 
       .next-steps {
-        padding: 1rem;
+        padding: 1.5rem;
       }
 
       .next-steps h3 {
-        font-size: 1.3rem;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
       }
 
       .next-step-item {
-        font-size: 1rem;
+        font-size: 1.1rem;
+        margin-bottom: 1.2rem;
+        padding: 0.8rem;
       }
 
       .next-step-item .emoji {
-        font-size: 1.2rem;
-        margin-right: 0.8rem;
+        font-size: 1.8rem;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        margin-right: 1rem;
+      }
+
+      .next-step-item .directions-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
       }
 
       .contact-info {
@@ -779,7 +863,7 @@
         </div>
         <div class="next-step-item">
           <span class="emoji">🗺️</span>
-          <p><strong>Get Directions:</strong> Heading to <span id="parkName">—</span>? <a id="directionsLink" href="#" target="_blank" rel="noopener noreferrer">Click here for directions</a>.</p>
+          <p><strong>Get Directions:</strong> Heading to <span id="parkName">—</span>? <a id="directionsLink" href="#" target="_blank" rel="noopener noreferrer" class="directions-btn">Click here for directions</a>.</p>
         </div>
         <div class="next-step-item">
           <span class="emoji">🌧️</span>
@@ -834,7 +918,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:55 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 09:29 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
