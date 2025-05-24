@@ -3,18 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calendar Management | Picture This Pet</title>
-  <meta name="description" content="Manage your studio calendar and events.">
+  <title>Calendar Management | Picture This Pet Admin</title>
+  <meta name="description" content="Manage calendar slots, sessions, and pop-up events for Picture This Pet photography business.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
-  
+
   <style>
     :root {
       --orange: #F47C2C;
@@ -25,7 +19,8 @@
       --soft-hold-yellow: #f59e0b;
       --admin-purple: #8b5cf6;
       --admin-blue: #3b82f6;
-      --popup-event-purple: #a78bfa; /* New color for pop-up events */
+      --popup-event-purple: #a78bfa;
+      --blocked-gray: #6b7280;
     }
 
     * {
@@ -350,57 +345,34 @@
       background: rgba(255, 255, 255, 0.2);
     }
 
-    /* === CALENDAR === */
+    /* === CALENDAR GRID === */
     .calendar-container {
-      display: grid;
-      grid-template-columns: 1fr 350px;
-      gap: 2rem;
-    }
-
-    .calendar-main {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 16px;
       padding: 1.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
     }
 
     .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .calendar-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: white;
+      margin-bottom: 1.5rem;
     }
 
     .calendar-nav {
       display: flex;
-      gap: 0.5rem;
       align-items: center;
+      gap: 1rem;
     }
 
-    .nav-button {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+    .calendar-month {
+      font-size: 1.5rem;
+      font-weight: 700;
       color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1.1rem;
-    }
-
-    .nav-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.05);
+      min-width: 200px;
+      text-align: center;
     }
 
     .calendar-grid {
@@ -408,108 +380,103 @@
       grid-template-columns: repeat(7, 1fr);
       gap: 1px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 1.5rem;
-    }
-
-    .calendar-day-header {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 1rem 0.5rem;
-      text-align: center;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.8);
     }
 
     .calendar-day {
       background: rgba(255, 255, 255, 0.05);
       padding: 0.8rem 0.5rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      min-height: 60px;
+      min-height: 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
       position: relative;
-      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    .calendar-day:hover:not(.past):not(.other-month) {
-      background: rgba(255, 255, 255, 0.15);
-      transform: scale(1.02);
+    .calendar-day:hover {
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .calendar-day.other-month {
-      color: rgba(255, 255, 255, 0.3);
-      cursor: default;
+      opacity: 0.3;
     }
 
-    .calendar-day.past {
-      color: rgba(255, 255, 255, 0.3);
-      cursor: default;
+    .calendar-day.today {
+      background: rgba(244, 124, 44, 0.2);
+      border: 2px solid var(--orange);
     }
 
-    .calendar-day.available {
-      background: rgba(16, 185, 129, 0.2);
-      border: 1px solid rgba(16, 185, 129, 0.5);
-      color: white;
+    .calendar-day.has-events {
+      background: rgba(16, 185, 129, 0.1);
+      border-left: 4px solid var(--available-green);
     }
 
-    .calendar-day.booked {
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid rgba(239, 68, 68, 0.5);
-      color: rgba(255, 255, 255, 0.9);
+    .calendar-day.has-bookings {
+      background: rgba(239, 68, 68, 0.1);
+      border-left: 4px solid var(--booked-red);
     }
 
-    .calendar-day.popup-event {
-      background: rgba(167, 139, 250, 0.2);
-      border: 1px solid rgba(167, 139, 250, 0.5);
-      color: rgba(255, 255, 255, 0.9);
+    .calendar-day.has-popups {
+      background: rgba(167, 139, 250, 0.1);
+      border-left: 4px solid var(--popup-event-purple);
     }
 
     .calendar-day.blocked {
-      background: rgba(100, 100, 100, 0.3);
-      border: 1px solid rgba(150, 150, 150, 0.5);
-      color: rgba(255, 255, 255, 0.7);
+      background: rgba(107, 114, 128, 0.2);
+      border-left: 4px solid var(--blocked-gray);
     }
 
-    .calendar-day.soft-hold {
-      background: rgba(245, 158, 11, 0.2);
-      border: 1px solid rgba(245, 158, 11, 0.5);
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .calendar-day.selected {
-      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
-      border: 2px solid #ec4899;
+    .day-number {
+      font-weight: 600;
+      font-size: 1rem;
       color: white;
-      transform: scale(1.05);
+      margin-bottom: 0.5rem;
     }
 
     .day-events {
-      font-size: 0.7rem;
-      margin-top: 2px;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      width: 100%;
     }
 
+    .event-dot {
+      width: 100%;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--available-green);
+    }
+
+    .event-dot.booked {
+      background: var(--booked-red);
+    }
+
+    .event-dot.popup {
+      background: var(--popup-event-purple);
+    }
+
+    .event-dot.blocked {
+      background: var(--blocked-gray);
+    }
+
+    /* === LEGEND === */
     .calendar-legend {
       display: flex;
       gap: 1.5rem;
       justify-content: center;
+      margin-top: 1rem;
       flex-wrap: wrap;
-      font-size: 0.85rem;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
     }
 
     .legend-dot {
@@ -519,134 +486,74 @@
     }
 
     .legend-dot.available {
-      background: rgba(16, 185, 129, 0.7);
+      background: var(--available-green);
     }
 
     .legend-dot.booked {
-      background: rgba(239, 68, 68, 0.7);
+      background: var(--booked-red);
     }
 
-    .legend-dot.popup-event {
-      background: rgba(167, 139, 250, 0.7);
+    .legend-dot.popup {
+      background: var(--popup-event-purple);
     }
 
     .legend-dot.blocked {
-      background: rgba(100, 100, 100, 0.7);
+      background: var(--blocked-gray);
     }
 
-    .legend-dot.soft-hold {
-      background: rgba(245, 158, 11, 0.7);
-    }
-
-    /* === SESSION PANEL === */
-    .session-panel {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .session-panel h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: white;
-    }
-
-    .session-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    /* === FORMS === */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .form-label {
       display: block;
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
       font-weight: 600;
-      color: white;
-      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: rgba(255, 255, 255, 0.9);
     }
 
-    .form-input {
+    .form-input, .form-select {
       width: 100%;
       padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
     }
 
     .form-input::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }
 
-    .form-input:focus {
-      outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 0 2px rgba(253, 183, 94, 0.2);
-    }
-
-    .form-select {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 0.9rem;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    /* === CONTEXT MENU === */
-    .context-menu {
-      position: fixed;
-      background: rgba(20, 20, 20, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      padding: 0.5rem 0;
-      min-width: 200px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      z-index: 2000;
-      display: none;
-    }
-
-    .context-menu-item {
-      padding: 0.8rem 1.2rem;
-      color: white;
-      cursor: pointer;
-      transition: all 0.2s ease;
+    .checkbox-group {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      font-size: 0.9rem;
-      min-height: 48px;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
     }
 
-    .context-menu-item:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .context-menu-item.disabled {
-      color: rgba(255, 255, 255, 0.4);
-      cursor: not-allowed;
-    }
-
-    .context-menu-separator {
-      height: 1px;
-      background: rgba(255, 255, 255, 0.1);
-      margin: 0.5rem 0;
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
     }
 
     /* === MODALS === */
@@ -674,7 +581,7 @@
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      max-width: 600px;
+      max-width: 700px;
       width: 90%;
       max-height: 80vh;
       overflow-y: auto;
@@ -715,6 +622,41 @@
       gap: 1rem;
       justify-content: flex-end;
       margin-top: 2rem;
+    }
+
+    /* === STATS === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .stat-card h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--gold);
+    }
+
+    .stat-card p {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
     }
 
     /* === FOOTER STYLES === */
@@ -814,8 +756,13 @@
         display: none;
       }
 
-      .calendar-container {
-        grid-template-columns: 1fr;
+      .calendar-day {
+        min-height: 60px;
+        padding: 0.5rem 0.3rem;
+      }
+
+      .day-number {
+        font-size: 0.8rem;
       }
     }
 
@@ -867,8 +814,25 @@
         padding: 1rem;
       }
 
-      .form-row {
+      .form-grid {
         grid-template-columns: 1fr;
+      }
+
+      .calendar-grid {
+        font-size: 0.8rem;
+      }
+
+      .calendar-day {
+        min-height: 50px;
+        padding: 0.3rem 0.2rem;
+      }
+
+      .day-number {
+        font-size: 0.7rem;
+      }
+
+      .calendar-legend {
+        font-size: 0.8rem;
       }
 
       .modal {
@@ -897,26 +861,6 @@
       .payment-methods {
         justify-content: center;
       }
-
-      .form-input,
-      .form-select {
-        padding: 1rem;
-        font-size: 1rem;
-      }
-
-      .calendar-day {
-        min-height: 80px;
-        padding: 1rem 0.5rem;
-      }
-
-      .day-events {
-        font-size: 0.85rem;
-      }
-
-      .calendar-legend {
-        font-size: 0.95rem;
-        gap: 1rem;
-      }
     }
   </style>
 </head>
@@ -927,7 +871,7 @@
       <div class="header-left">
         <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">☰</button>
         <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo-small" />
-        <h1 class="header-title">Calendar Management</h1>
+        <h1 class="header-title">Calendar Management 📅</h1>
       </div>
       <div class="header-right">
         <div class="sync-status">
@@ -986,69 +930,77 @@
 
     <!-- Main Content -->
     <main class="admin-main">
+      <!-- Calendar Stats -->
       <div class="admin-card">
         <div class="card-header">
-          <h2 class="card-title">Session Calendar</h2>
+          <h2 class="card-title">Calendar Overview 📊</h2>
           <div class="card-actions">
-            <button class="btn btn-secondary btn-small" onclick="syncCalendar()">🔄 Sync</button>
-            <button class="btn btn-primary btn-small" onclick="openSessionModal('add')">+ Add Session</button>
-            <button class="btn btn-primary btn-small" onclick="openPopupEventModal('add')">+ Add Pop-Up Event</button>
+            <button class="btn btn-secondary btn-small" onclick="syncCalendarData()">🔄 Sync</button>
+            <button class="btn btn-primary btn-small" onclick="exportCalendar()">📤 Export</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h4>Available Slots This Week 📅</h4>
+            <p id="available-slots">Loading...</p>
+          </div>
+          <div class="stat-card">
+            <h4>Booked Sessions This Week 📸</h4>
+            <p id="booked-sessions">Loading...</p>
+          </div>
+          <div class="stat-card">
+            <h4>Pop-Up Events This Week 🎉</h4>
+            <p id="popup-events">Loading...</p>
+          </div>
+          <div class="stat-card">
+            <h4>Blocked Days This Month 🚫</h4>
+            <p id="blocked-days">Loading...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendar View -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h2 class="card-title">Calendar View 🗓️</h2>
+          <div class="card-actions">
+            <button class="btn btn-primary btn-small" onclick="openBulkAvailabilityModal()">📅 Add Bulk Availability</button>
+            <button class="btn btn-primary btn-small" onclick="openPopupEventModal()">🎉 Create Pop-Up Event</button>
+            <button class="btn btn-secondary btn-small" onclick="openBlockDateModal()">🚫 Block Date</button>
           </div>
         </div>
 
         <div class="calendar-container">
-          <div class="calendar-main">
-            <div class="calendar-header">
-              <h3 class="calendar-title" id="calendarTitle">Loading...</h3>
-              <div class="calendar-nav">
-                <button class="nav-button" onclick="previousMonth()">‹</button>
-                <button class="nav-button" onclick="nextMonth()">›</button>
-              </div>
+          <div class="calendar-header">
+            <div class="calendar-nav">
+              <button class="btn-icon" onclick="changeMonth(-1)">←</button>
+              <div class="calendar-month" id="calendarMonth">May 2025</div>
+              <button class="btn-icon" onclick="changeMonth(1)">→</button>
             </div>
-
-            <div id="calendarContainer">
-              <div class="loading-indicator">
-                <p>Loading calendar data...</p>
-              </div>
-            </div>
-
-            <div class="calendar-legend">
-              <div class="legend-item">
-                <div class="legend-dot available"></div>
-                <span>Available</span>
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot booked"></div>
-                <span>Session Booked</span>
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot popup-event"></div>
-                <span>Pop-Up Event</span>
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot blocked"></div>
-                <span>Blocked</span>
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot soft-hold"></div>
-                <span>Soft Hold</span>
-              </div>
-            </div>
+            <button class="btn btn-secondary btn-small" onclick="goToToday()">📍 Today</button>
           </div>
 
-          <div class="session-panel">
-            <h3>Quick Actions</h3>
-            <div class="session-form">
-              <button class="btn btn-primary" onclick="openSessionModal('add')">📸 Add Session</button>
-              <button class="btn btn-primary" onclick="openPopupEventModal('add')">🎉 Add Pop-Up Event</button>
-              <button class="btn btn-secondary" onclick="openBlockModal()">🚫 Block Date</button>
-              <button class="btn btn-secondary" onclick="openFullCalendar()">📅 Full Calendar</button>
-              <button class="btn btn-secondary" onclick="exportCalendar()">📁 Export</button>
-            </div>
+          <div class="calendar-grid" id="calendarGrid">
+            <!-- Calendar days will be populated here -->
+          </div>
 
-            <div id="selectedDateInfo" style="display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-              <h4 style="margin-bottom: 1rem; color: var(--gold);">Selected Date</h4>
-              <div id="dateDetails"></div>
+          <div class="calendar-legend">
+            <div class="legend-item">
+              <div class="legend-dot available"></div>
+              <span>Available Slots</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot booked"></div>
+              <span>Booked Sessions</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot popup"></div>
+              <span>Pop-Up Events</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot blocked"></div>
+              <span>Blocked Dates</span>
             </div>
           </div>
         </div>
@@ -1059,17 +1011,17 @@
     <footer>
       <div class="footer-container">
         <div class="footer-section">
-          <h4>Contact Us</h4>
+          <h4>Contact Us 📬</h4>
           <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
           <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
         </div>
         <div class="footer-section socials">
-          <h4>Connect</h4>
+          <h4>Connect 🌐</h4>
           <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
           <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
         </div>
         <div class="footer-section">
-          <h4>We Accept</h4>
+          <h4>We Accept 💳</h4>
           <div class="payment-methods">
             <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
             <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
@@ -1088,130 +1040,108 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:22 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+        <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 3:04 PM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How! 🤖</a></p>
       </div>
     </footer>
   </div>
 
-  <!-- Context Menu -->
-  <div class="context-menu" id="contextMenu">
-    <div class="context-menu-item" onclick="addSession()">
-      📸 Add Session
-    </div>
-    <div class="context-menu-item" onclick="addPopupEvent()">
-      🎉 Add Pop-Up Event
-    </div>
-    <div class="context-menu-item" onclick="blockDate()">
-      🚫 Block Date
-    </div>
-    <div class="context-menu-separator"></div>
-    <div class="context-menu-item" onclick="editSession()">
-      ✏️ Edit Session
-    </div>
-    <div class="context-menu-item" onclick="editPopupEvent()">
-      ✏️ Edit Pop-Up Event
-    </div>
-    <div class="context-menu-item" onclick="removeSession()">
-      🗑️ Remove Session
-    </div>
-    <div class="context-menu-item" onclick="removePopupEvent()">
-      🗑️ Remove Pop-Up Event
-    </div>
-    <div class="context-menu-separator"></div>
-    <div class="context-menu-item" onclick="viewSessionDetails()">
-      👁️ View Session Details
-    </div>
-    <div class="context-menu-item" onclick="viewPopupEventDetails()">
-      👁️ View Pop-Up Event Details
-    </div>
-  </div>
-
-  <!-- Session Modal -->
-  <div class="modal-overlay" id="sessionModal">
+  <!-- Bulk Availability Modal -->
+  <div class="modal-overlay" id="bulkAvailabilityModal">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="modal-title" id="sessionModalTitle">Add New Session</h3>
-        <button class="modal-close" onclick="closeSessionModal()">×</button>
+        <h3 class="modal-title">Add Bulk Availability 📅</h3>
+        <button class="modal-close" onclick="closeBulkAvailabilityModal()">×</button>
       </div>
       
-      <form id="sessionForm">
-        <div class="form-group">
-          <label class="form-label">Session ID</label>
-          <input type="text" class="form-input" id="sessionId" placeholder="SESSXXX" required readonly>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Client Name</label>
-          <input type="text" class="form-input" id="clientName" placeholder="Enter client name" required>
-        </div>
-        
-        <div class="form-row">
+      <form id="bulkAvailabilityForm">
+        <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">Date</label>
-            <input type="date" class="form-input" id="sessionDate" required>
+            <label class="form-label">Start Date 📅</label>
+            <input type="date" class="form-input" id="bulkStartDate" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Time</label>
-            <input type="time" class="form-input" id="sessionTime" required>
+            <label class="form-label">End Date 📅</label>
+            <input type="date" class="form-input" id="bulkEndDate" required>
           </div>
         </div>
         
         <div class="form-group">
-          <label class="form-label">Session Type</label>
-          <select class="form-select" id="sessionType" required>
-            <option value="">Select session type</option>
-            <option value="Full Session">Full Session</option>
-            <option value="Mini Session">Mini Session</option>
-            <option value="Holiday Session">Holiday Session</option>
-          </select>
+          <label class="form-label">Days of Week 📆</label>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-top: 0.5rem;">
+            <div class="checkbox-group">
+              <input type="checkbox" id="dayMon" value="1">
+              <label for="dayMon">Mon</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="dayTue" value="2">
+              <label for="dayTue">Tue</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="dayWed" value="3">
+              <label for="dayWed">Wed</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="dayThu" value="4">
+              <label for="dayThu">Thu</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="dayFri" value="5">
+              <label for="dayFri">Fri</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="daySat" value="6" checked>
+              <label for="daySat">Sat</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="daySun" value="0">
+              <label for="daySun">Sun</label>
+            </div>
+          </div>
         </div>
         
-        <div class="form-group">
-          <label class="form-label">Location</label>
-          <select class="form-select" id="sessionLocation" required>
-            <option value="">Select location</option>
-            <option value="Cheesman Park">Cheesman Park</option>
-            <option value="Washington Park">Washington Park</option>
-            <option value="Sloan's Lake">Sloan's Lake</option>
-            <option value="City Park">City Park</option>
-            <option value="Client's Home">Client's Home</option>
-          </select>
-        </div>
-        
-        <div class="form-row">
+        <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">Client Email</label>
-            <input type="email" class="form-input" id="clientEmail" placeholder="client@email.com">
+            <label class="form-label">Start Time ⏰</label>
+            <select class="form-select" id="bulkStartTime" required>
+              <option value="06:00">6:00 AM</option>
+              <option value="08:00" selected>8:00 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="19:00">7:00 PM</option>
+            </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Client Phone</label>
-            <input type="tel" class="form-input" id="clientPhone" placeholder="(303) 555-0123">
+            <label class="form-label">End Time ⏰</label>
+            <select class="form-select" id="bulkEndTime" required>
+              <option value="10:00">10:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="17:00" selected>5:00 PM</option>
+              <option value="20:00">8:00 PM</option>
+              <option value="21:00">9:00 PM</option>
+            </select>
           </div>
         </div>
         
-        <div class="form-group">
-          <label class="form-label">Pet Count</label>
-          <select class="form-select" id="petCount" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">People Count</label>
-          <select class="form-select" id="peopleCount" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Notes</label>
-          <textarea class="form-input" id="sessionNotes" placeholder="Special requests, pet names, etc." rows="3"></textarea>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Session Type 📸</label>
+            <select class="form-select" id="bulkSessionType" required>
+              <option value="Mini Session">Mini Session (20 min)</option>
+              <option value="Full Session">Full Session (60 min)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Location 📍</label>
+            <select class="form-select" id="bulkLocation" required>
+              <option value="Cheesman Park">Cheesman Park</option>
+              <option value="City Park">City Park</option>
+            </select>
+          </div>
         </div>
         
         <div class="modal-actions">
-          <button type="button" class="btn btn-secondary" onclick="closeSessionModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Session</button>
+          <button type="button" class="btn btn-secondary" onclick="closeBulkAvailabilityModal()">Cancel 🚫</button>
+          <button type="submit" class="btn btn-primary">Create Slots 📅</button>
         </div>
       </form>
     </div>
@@ -1221,99 +1151,219 @@
   <div class="modal-overlay" id="popupEventModal">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="modal-title" id="popupEventModalTitle">Add New Pop-Up Event</h3>
+        <h3 class="modal-title">Create Pop-Up Event 🎉</h3>
         <button class="modal-close" onclick="closePopupEventModal()">×</button>
       </div>
       
       <form id="popupEventForm">
-        <div class="form-group">
-          <label class="form-label">Event ID</label>
-          <input type="text" class="form-input" id="popupEventId" placeholder="POPUPXXX" required readonly>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Event Name</label>
-          <input type="text" class="form-input" id="popupEventName" placeholder="e.g., Spring Pet Pop-Up" required>
-        </div>
-        
-        <div class="form-row">
+        <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">Date</label>
-            <input type="date" class="form-input" id="popupEventDate" required>
+            <label class="form-label">Event Date 📅</label>
+            <input type="date" class="form-input" id="popupDate" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Time</label>
-            <input type="time" class="form-input" id="popupEventTime" required>
+            <label class="form-label">Start Time ⏰</label>
+            <input type="time" class="form-input" id="popupStartTime" required>
           </div>
         </div>
         
-        <div class="form-group">
-          <label class="form-label">Location</label>
-          <select class="form-select" id="popupEventLocation" required>
-            <option value="">Select location</option>
-            <option value="Cheesman Park">Cheesman Park</option>
-            <option value="Washington Park">Washington Park</option>
-            <option value="Sloan's Lake">Sloan's Lake</option>
-            <option value="City Park">City Park</option>
-          </select>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Location 📍</label>
+            <select class="form-select" id="popupLocation" required>
+              <option value="Cheesman Park">Cheesman Park</option>
+              <option value="City Park">City Park</option>
+              <option value="Cherry Creek">Cherry Creek</option>
+              <option value="Washington Park">Washington Park</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Number of Slots 🎯</label>
+            <input type="number" class="form-input" id="popupSlots" min="1" max="20" value="10" required>
+          </div>
         </div>
         
         <div class="form-group">
-          <label class="form-label">Capacity</label>
-          <input type="number" class="form-input" id="popupEventCapacity" placeholder="e.g., 50" required>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Description</label>
-          <textarea class="form-input" id="popupEventDescription" placeholder="Event details..." rows="3" required></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Registration Link (Optional)</label>
-          <input type="url" class="form-input" id="popupEventRegistrationLink" placeholder="e.g., https://example.com/register">
+          <label class="form-label">Event Description 📝</label>
+          <input type="text" class="form-input" id="popupDescription" placeholder="e.g., Spring Pop-Up at Cheesman Park" required>
         </div>
         
         <div class="modal-actions">
-          <button type="button" class="btn btn-secondary" onclick="closePopupEventModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Pop-Up Event</button>
+          <button type="button" class="btn btn-secondary" onclick="closePopupEventModal()">Cancel 🚫</button>
+          <button type="submit" class="btn btn-primary">Create Event 🎉</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Block Date Modal -->
+  <div class="modal-overlay" id="blockDateModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Block Date 🚫</h3>
+        <button class="modal-close" onclick="closeBlockDateModal()">×</button>
+      </div>
+      
+      <form id="blockDateForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Start Date 📅</label>
+            <input type="date" class="form-input" id="blockStartDate" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">End Date 📅</label>
+            <input type="date" class="form-input" id="blockEndDate" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Reason 📝</label>
+          <input type="text" class="form-input" id="blockReason" placeholder="e.g., Personal time off, Equipment maintenance" required>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeBlockDateModal()">Cancel 🚫</button>
+          <button type="submit" class="btn btn-primary">Block Date 🚫</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Session Details Modal -->
+  <div class="modal-overlay" id="sessionDetailsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Session Details 📸</h3>
+        <button class="modal-close" onclick="closeSessionDetailsModal()">×</button>
+      </div>
+      
+      <form id="sessionDetailsForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Booking ID 🔍</label>
+            <input type="text" class="form-input" id="sessionBookingId" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Session Date 📅</label>
+            <input type="date" class="form-input" id="sessionDate" required>
+          </div>
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Session Time ⏰</label>
+            <input type="time" class="form-input" id="sessionTime" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Session Type 📸</label>
+            <select class="form-select" id="sessionType" required>
+              <option value="Mini Session">Mini Session</option>
+              <option value="Full Session">Full Session</option>
+              <option value="Pop-Up">Pop-Up Session</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Client 1 Name 👤</label>
+            <input type="text" class="form-input" id="client1Name" placeholder="Enter client name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Client 1 Email 📧</label>
+            <input type="email" class="form-input" id="client1Email" placeholder="client@email.com">
+          </div>
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Client 1 Phone 📱</label>
+            <input type="tel" class="form-input" id="client1Phone" placeholder="(303) 555-0123">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Client 1 Instagram 📸</label>
+            <input type="text" class="form-input" id="client1Instagram" placeholder="@username">
+          </div>
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Pet Count 🐾</label>
+            <select class="form-select" id="sessionPetCount" required>
+              <option value="1">1 Pet</option>
+              <option value="2">2 Pets</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">People Count 👥</label>
+            <select class="form-select" id="sessionPeopleCount" required>
+              <option value="1">1 Person</option>
+              <option value="2">2 People</option>
+            </select>
+          </div>
+        </div>
+        
+        <div id="client2Fields" style="display: none;">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Client 2 Name 👤</label>
+              <input type="text" class="form-input" id="client2Name" placeholder="Enter second client name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Client 2 Email 📧</label>
+              <input type="email" class="form-input" id="client2Email" placeholder="client2@email.com">
+            </div>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Client 2 Phone 📱</label>
+              <input type="tel" class="form-input" id="client2Phone" placeholder="(303) 555-0123">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Client 2 Instagram 📸</label>
+              <input type="text" class="form-input" id="client2Instagram" placeholder="@username">
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Client 1 First Pet Name 🐾</label>
+            <input type="text" class="form-input" id="client1FirstPetName" placeholder="Pet name">
+          </div>
+          <div class="form-group" id="client2PetField" style="display: none;">
+            <label class="form-label">Client 2 First Pet Name 🐾</label>
+            <input type="text" class="form-input" id="client2FirstPetName" placeholder="Pet name">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="marketingConsent">
+            <label for="marketingConsent">Marketing consent granted 📬</label>
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="deleteSession()" id="deleteSessionBtn" style="display: none;">🗑️ Delete</button>
+          <button type="button" class="btn btn-secondary" onclick="closeSessionDetailsModal()">Cancel 🚫</button>
+          <button type="submit" class="btn btn-primary">Save Session 💾</button>
         </div>
       </form>
     </div>
   </div>
 
   <script>
-    // Initialize Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyA0G6m-zD-2UAy6tpAMJw_908F67Fa-H7Q",
-      authDomain: "picturethispet-63ac3.firebaseapp.com",
-      projectId: "picturethispet-63ac3",
-      storageBucket: "picturethispet-63ac3.firebasestorage.app",
-      messagingSenderId: "933617656942",
-      appId: "1:933617656942:web:6c9d66dbb336d7d54d327f"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const storage = firebase.storage();
+    // Global variables
+    let calendarData = [];
+    let bookingsData = [];
+    let sessionTypes = [];
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
 
-    let sessions = [];
-    let popUpEvents = [];
-    let selectedDate = null;
-    let currentMonth = new Date().getMonth();
-    let currentYear = new Date().getFullYear();
-    let contextMenuSession = null;
-    let contextMenuPopupEvent = null;
-    let editingSessionRowIndex = null;
-    let editingPopupEventRowIndex = null;
-
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Page loaded, initializing...');
-      checkAuthentication();
-      loadSessions();
-      loadPopUpEvents();
-      renderCalendar();
-    });
-
-    // Check authentication
+    // Authentication and initialization
     function checkAuthentication() {
       const isAuthenticated = localStorage.getItem('adminAuthenticated');
       if (!isAuthenticated) {
@@ -1322,11 +1372,10 @@
         return;
       }
       const adminUser = localStorage.getItem('adminUser') || 'Admin';
-      document.getElementById('adminUser').textContent = `Welcome, ${adminUser}`;
+      document.getElementById('adminUser').textContent = `Welcome, ${adminUser} 👋`;
       console.log('Authenticated as:', adminUser);
     }
 
-    // Logout
     function logout() {
       console.log('Logging out...');
       localStorage.removeItem('adminAuthenticated');
@@ -1335,431 +1384,788 @@
       window.location.href = '/admin-login.html';
     }
 
-    // Toggle sidebar on mobile
     function toggleSidebar() {
       console.log('Toggling sidebar...');
       const sidebar = document.getElementById('adminSidebar');
       sidebar.classList.toggle('open');
     }
 
-    // Load sessions from Firestore
-    function loadSessions() {
-      db.collection("sessions").onSnapshot((snapshot) => {
-        sessions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), rowIndex: doc.id }));
-        renderCalendar();
-      }, (error) => {
-        console.error('Error loading sessions:', error);
-        alert('Failed to load sessions. Please try again.');
-        sessions = [];
-        renderCalendar();
-      });
-    }
+    // Error logging
+    async function logErrorToAirtable(page, error, data = {}) {
+      try {
+        const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const errorRecord = {
+          fields: {
+            errorId: errorId,
+            timestamp: new Date().toISOString(),
+            page: page,
+            errorMessage: error.message || String(error),
+            errorStack: error.stack || 'No stack trace available',
+            userAgent: navigator.userAgent,
+            sessionData: JSON.stringify(data)
+          }
+        };
 
-    // Load pop-up events from Firestore
-    function loadPopUpEvents() {
-      db.collection("popUpEvents").onSnapshot((snapshot) => {
-        popUpEvents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), rowIndex: doc.id }));
-        renderCalendar();
-      }, (error) => {
-        console.error('Error loading pop-up events:', error);
-        alert('Failed to load pop-up events. Please try again.');
-        popUpEvents = [];
-        renderCalendar();
-      });
-    }
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Errors', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(errorRecord)
+        });
 
-    // Render calendar
-    function renderCalendar() {
-      console.log('Rendering calendar for month:', currentMonth, 'year:', currentYear);
-      const calendarContainer = document.getElementById('calendarContainer');
-      const calendarTitle = document.getElementById('calendarTitle');
-      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-      const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
-
-      calendarTitle.textContent = new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long', year: 'numeric' });
-
-      let html = `
-        <div class="calendar-grid">
-          <div class="calendar-day-header">Sun</div>
-          <div class="calendar-day-header">Mon</div>
-          <div class="calendar-day-header">Tue</div>
-          <div class="calendar-day-header">Wed</div>
-          <div class="calendar-day-header">Thu</div>
-          <div class="calendar-day-header">Fri</div>
-          <div class="calendar-day-header">Sat</div>
-      `;
-
-      for (let i = firstDay - 1; i >= 0; i--) {
-        html += `<div class="calendar-day other-month">${prevMonthDays - i}</div>`;
-      }
-
-      const today = new Date();
-      for (let day = 1; day <= daysInMonth; day++) {
-        const date = new Date(currentYear, currentMonth, day);
-        const isPast = date < today && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
-        const session = Array.isArray(sessions) ? sessions.find(s => new Date(s['Date']).toDateString() === date.toDateString()) : null;
-        const popupEvent = Array.isArray(popUpEvents) ? popUpEvents.find(e => new Date(e['Date']).toDateString() === date.toDateString()) : null;
-        let className = isPast ? 'past' : '';
-        let events = '';
-
-        if (session) {
-          className = 'booked';
-          events = `<div class="day-events">${session['Session Type']} with ${session['Client Name']}</div>`;
-        } else if (popupEvent) {
-          className = 'popup-event';
-          events = `<div class="day-events">${popupEvent['Event Name']}</div>`;
+        if (response.ok) {
+          console.log('✅ Error logged to Airtable:', errorRecord);
         } else {
-          className = 'available';
+          console.warn('⚠️ Failed to log error to Airtable:', response.status);
         }
-
-        if (selectedDate && selectedDate.toDateString() === date.toDateString()) {
-          className += ' selected';
-        }
-
-        html += `
-          <div class="calendar-day ${className}" data-date="${date.toISOString()}" onclick="selectDate('${date.toISOString()}')">
-            ${day}
-            ${events}
-          </div>
-        `;
+      } catch (innerError) {
+        console.warn('⚠️ Failed to log error to Airtable:', innerError);
       }
-
-      const lastDay = new Date(currentYear, currentMonth, daysInMonth).getDay();
-      for (let i = 1; i <= 6 - lastDay; i++) {
-        html += `<div class="calendar-day other-month">${i}</div>`;
-      }
-
-      html += '</div>';
-      calendarContainer.innerHTML = html;
-
-      const sessionsThisMonth = Array.isArray(sessions) ? sessions.filter(s => {
-        const sessionDate = new Date(s['Date']);
-        return sessionDate.getMonth() === currentMonth && sessionDate.getFullYear() === currentYear;
-      }) : [];
-      const popupEventsThisMonth = Array.isArray(popUpEvents) ? popUpEvents.filter(e => {
-        const eventDate = new Date(e['Date']);
-        return eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
-      }) : [];
-      document.getElementById('calendarBadge').textContent = sessionsThisMonth.length + popupEventsThisMonth.length;
     }
 
-    // Navigate to previous month
-    function previousMonth() {
-      console.log('Navigating to previous month...');
-      currentMonth--;
+    // Data fetching functions
+    async function fetchCalendarData() {
+      try {
+        console.log('Fetching calendar data from Airtable...');
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        calendarData = data.records.map(record => ({
+          id: record.id,
+          date: record.fields.date,
+          time: record.fields.time,
+          endTime: record.fields.endTime,
+          status: record.fields.status,
+          bookingId: record.fields.bookingId,
+          sessionType: record.fields.sessionType,
+          cushionTime: record.fields.cushionTime || 0,
+          isBlocked: record.fields.isBlocked || false,
+          slotType: record.fields.SlotType || 'Regular',
+          location: record.fields.Location || ''
+        }));
+
+        console.log('Calendar data fetched:', calendarData);
+        updateCalendarStats();
+        renderCalendar();
+      } catch (error) {
+        console.error('Error fetching calendar data:', error);
+        await logErrorToAirtable('calendar-management.html', error);
+      }
+    }
+
+    async function fetchBookingsData() {
+      try {
+        console.log('Fetching bookings data from Airtable...');
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings', {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        bookingsData = data.records.map(record => ({
+          id: record.id,
+          bookingId: record.fields.bookingId,
+          client1Name: record.fields.client1Name,
+          client2Name: record.fields.client2Name,
+          client1Email: record.fields.client1Email,
+          client2Email: record.fields.client2Email,
+          client1Phone: record.fields.client1Phone,
+          client2Phone: record.fields.client2Phone,
+          client1Instagram: record.fields.client1Instagram,
+          client2Instagram: record.fields.client2Instagram,
+          client1Zip: record.fields.client1Zip,
+          client2Zip: record.fields.client2Zip,
+          client1FirstPetName: record.fields.client1FirstPetName,
+          client2FirstPetName: record.fields.client2FirstPetName,
+          marketingConsent: record.fields.marketingConsent,
+          petCount: record.fields.petCount,
+          peopleCount: record.fields.peopleCount,
+          sessionDate: record.fields.sessionDate,
+          calendarSlot: record.fields.calendarSlot ? record.fields.calendarSlot[0] : null
+        }));
+
+        console.log('Bookings data fetched:', bookingsData);
+        updateCalendarStats();
+      } catch (error) {
+        console.error('Error fetching bookings data:', error);
+        await logErrorToAirtable('calendar-management.html', error);
+      }
+    }
+
+    async function fetchSessionTypes() {
+      try {
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/SessionTypes', {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+        const data = await response.json();
+        sessionTypes = data.records.map(record => ({
+          id: record.id,
+          typeName: record.fields.typeName,
+          duration: record.fields.duration,
+          price: record.fields.price || 0
+        }));
+      } catch (error) {
+        console.error('Error fetching session types:', error);
+        await logErrorToAirtable('calendar-management.html', error);
+      }
+    }
+
+    // Calendar rendering functions
+    function renderCalendar() {
+      const calendarGrid = document.getElementById('calendarGrid');
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+      
+      document.getElementById('calendarMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+      
+      // Clear grid
+      calendarGrid.innerHTML = '';
+      
+      // Add day headers
+      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayHeaders.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day';
+        header.style.fontWeight = 'bold';
+        header.style.background = 'rgba(255, 255, 255, 0.1)';
+        header.textContent = day;
+        calendarGrid.appendChild(header);
+      });
+      
+      // Get first day of month and number of days
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const today = new Date();
+      
+      // Add empty cells for days before month starts
+      for (let i = 0; i < firstDay; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day other-month';
+        calendarGrid.appendChild(emptyDay);
+      }
+      
+      // Add days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        
+        const currentDate = new Date(currentYear, currentMonth, day);
+        const dateString = currentDate.toISOString().split('T')[0];
+        
+        // Check if it's today
+        if (currentDate.toDateString() === today.toDateString()) {
+          dayElement.classList.add('today');
+        }
+        
+        // Get events for this day
+        const dayEvents = calendarData.filter(slot => slot.date === dateString);
+        
+        // Classify day based on events
+        if (dayEvents.some(event => event.isBlocked)) {
+          dayElement.classList.add('blocked');
+        } else if (dayEvents.some(event => event.slotType === 'Pop-Up')) {
+          dayElement.classList.add('has-popups');
+        } else if (dayEvents.some(event => event.status === 'booked')) {
+          dayElement.classList.add('has-bookings');
+        } else if (dayEvents.length > 0) {
+          dayElement.classList.add('has-events');
+        }
+        
+        // Add day number
+        const dayNumber = document.createElement('div');
+        dayNumber.className = 'day-number';
+        dayNumber.textContent = day;
+        dayElement.appendChild(dayNumber);
+        
+        // Add event indicators
+        const eventsContainer = document.createElement('div');
+        eventsContainer.className = 'day-events';
+        
+        dayEvents.slice(0, 3).forEach(event => {
+          const eventDot = document.createElement('div');
+          eventDot.className = 'event-dot';
+          
+          if (event.isBlocked) {
+            eventDot.classList.add('blocked');
+          } else if (event.slotType === 'Pop-Up') {
+            eventDot.classList.add('popup');
+          } else if (event.status === 'booked') {
+            eventDot.classList.add('booked');
+          }
+          
+          eventsContainer.appendChild(eventDot);
+        });
+        
+        dayElement.appendChild(eventsContainer);
+        
+        // Add click handler
+        dayElement.onclick = () => handleDayClick(dateString, dayEvents);
+        
+        calendarGrid.appendChild(dayElement);
+      }
+    }
+
+    function handleDayClick(dateString, dayEvents) {
+      if (dayEvents.length === 0) {
+        // No events, offer to add availability or create session
+        if (confirm(`No events on ${dateString}. Would you like to add availability?`)) {
+          openBulkAvailabilityModal();
+          document.getElementById('bulkStartDate').value = dateString;
+          document.getElementById('bulkEndDate').value = dateString;
+        }
+      } else if (dayEvents.length === 1 && dayEvents[0].status === 'booked') {
+        // Single booked session, open details
+        const booking = bookingsData.find(b => b.calendarSlot === dayEvents[0].id);
+        if (booking) {
+          openSessionDetailsModal(booking, dayEvents[0]);
+        }
+      } else {
+        // Multiple events, show list
+        showDayEventsPopup(dateString, dayEvents);
+      }
+    }
+
+    function showDayEventsPopup(dateString, dayEvents) {
+      const eventsList = dayEvents.map(event => {
+        const booking = bookingsData.find(b => b.calendarSlot === event.id);
+        const time = event.time || '00:00';
+        let status = event.isBlocked ? 'Blocked' : event.status || 'available';
+        let clientInfo = booking ? ` - ${booking.client1Name}` : '';
+        return `${time} ${event.sessionType} (${status})${clientInfo}`;
+      }).join('\n');
+      
+      alert(`Events on ${dateString}:\n\n${eventsList}`);
+    }
+
+    // Navigation functions
+    function changeMonth(direction) {
+      currentMonth += direction;
       if (currentMonth < 0) {
         currentMonth = 11;
         currentYear--;
-      }
-      renderCalendar();
-    }
-
-    // Navigate to next month
-    function nextMonth() {
-      console.log('Navigating to next month...');
-      currentMonth++;
-      if (currentMonth > 11) {
+      } else if (currentMonth > 11) {
         currentMonth = 0;
         currentYear++;
       }
       renderCalendar();
     }
 
-    // Select a date on the calendar
-    function selectDate(dateStr) {
-      console.log('Selecting date:', dateStr);
-      selectedDate = new Date(dateStr);
+    function goToToday() {
+      const today = new Date();
+      currentMonth = today.getMonth();
+      currentYear = today.getFullYear();
       renderCalendar();
+    }
 
-      const dateDetails = document.getElementById('dateDetails');
-      const selectedDateInfo = document.getElementById('selectedDateInfo');
-      if (!dateDetails || !selectedDateInfo) {
-        console.error('Date details elements not found');
-        return;
-      }
-
-      const session = sessions.find(s => new Date(s['Date']).toDateString() === selectedDate.toDateString());
-      const popupEvent = popUpEvents.find(e => new Date(e['Date']).toDateString() === selectedDate.toDateString());
+    // Stats update function
+    function updateCalendarStats() {
+      const today = new Date();
+      const weekStart = new Date(today);
+      weekStart.setDate(today.getDate() - today.getDay());
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
       
-      if (session) {
-        dateDetails.innerHTML = `
-          <p><strong>Session:</strong> ${session['Session Type']} with ${session['Client Name']}</p>
-          <p><strong>Time:</strong> ${session['Time']}</p>
-          <p><strong>Location:</strong> ${session['Location']}</p>
-          <button class="btn btn-small btn-primary" onclick="viewSessionDetails('${session['id']}')">View Details</button>
-        `;
-      } else if (popupEvent) {
-        dateDetails.innerHTML = `
-          <p><strong>Pop-Up Event:</strong> ${popupEvent['Event Name']}</p>
-          <p><strong>Time:</strong> ${popupEvent['Time']}</p>
-          <p><strong>Location:</strong> ${popupEvent['Location']}</p>
-          <button class="btn btn-small btn-primary" onclick="viewPopupEventDetails('${popupEvent['id']}')">View Details</button>
-        `;
-      } else {
-        dateDetails.innerHTML = '<p>No session or event scheduled.</p>';
-      }
-      selectedDateInfo.style.display = 'block';
+      const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+      const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      
+      // Available slots this week
+      const availableThisWeek = calendarData.filter(slot => {
+        const slotDate = new Date(slot.date);
+        return slotDate >= weekStart && slotDate <= weekEnd && 
+               slot.status === 'available' && !slot.isBlocked;
+      }).length;
+      document.getElementById('available-slots').textContent = availableThisWeek;
+      
+      // Booked sessions this week
+      const bookedThisWeek = calendarData.filter(slot => {
+        const slotDate = new Date(slot.date);
+        return slotDate >= weekStart && slotDate <= weekEnd && slot.status === 'booked';
+      }).length;
+      document.getElementById('booked-sessions').textContent = bookedThisWeek;
+      
+      // Pop-up events this week
+      const popupsThisWeek = calendarData.filter(slot => {
+        const slotDate = new Date(slot.date);
+        return slotDate >= weekStart && slotDate <= weekEnd && slot.slotType === 'Pop-Up';
+      }).length;
+      document.getElementById('popup-events').textContent = popupsThisWeek;
+      
+      // Blocked days this month
+      const blockedThisMonth = calendarData.filter(slot => {
+        const slotDate = new Date(slot.date);
+        return slotDate >= monthStart && slotDate <= monthEnd && slot.isBlocked;
+      }).length;
+      document.getElementById('blocked-days').textContent = blockedThisMonth;
+      
+      // Update badge
+      document.getElementById('calendarBadge').textContent = calendarData.length;
     }
 
-    // Sync calendar (refresh data)
-    function syncCalendar() {
-      console.log('Syncing calendar...');
-      loadSessions();
-      loadPopUpEvents();
+    // Modal functions
+    function openBulkAvailabilityModal() {
+      document.getElementById('bulkAvailabilityModal').style.display = 'flex';
     }
 
-    // Open full calendar (placeholder)
-    function openFullCalendar() {
-      console.log('Opening full calendar...');
-      alert('Full calendar view coming soon.');
+    function closeBulkAvailabilityModal() {
+      document.getElementById('bulkAvailabilityModal').style.display = 'none';
+      document.getElementById('bulkAvailabilityForm').reset();
     }
 
-    // Export calendar (placeholder)
-    function exportCalendar() {
-      console.log('Exporting calendar...');
-      alert('Export calendar feature coming soon.');
+    function openPopupEventModal() {
+      document.getElementById('popupEventModal').style.display = 'flex';
     }
 
-    // Open session modal
-    function openSessionModal(mode, sessionId = null) {
-      console.log('Opening session modal in mode:', mode, 'for session:', sessionId);
-      const modal = document.getElementById('sessionModal');
-      const form = document.getElementById('sessionForm');
-      const title = document.getElementById('sessionModalTitle');
-      if (!modal || !form || !title) {
-        console.error('Session modal elements not found');
-        return;
-      }
-
-      title.textContent = mode === 'add' ? 'Add New Session' : 'Edit Session';
-      editingSessionRowIndex = null;
-
-      if (mode === 'add') {
-        form.reset();
-        document.getElementById('sessionId').value = `SESS${String(sessions.length + 1).padStart(3, '0')}`;
-        if (selectedDate) {
-          document.getElementById('sessionDate').value = selectedDate.toISOString().split('T')[0];
-        }
-      } else {
-        const session = sessions.find(s => s.id === sessionId);
-        if (session) {
-          document.getElementById('sessionId').value = session['Session ID'];
-          document.getElementById('clientName').value = session['Client Name'];
-          document.getElementById('clientEmail').value = session['Client Email'];
-          document.getElementById('clientPhone').value = session['Client Phone'];
-          document.getElementById('sessionType').value = session['Session Type'];
-          document.getElementById('sessionLocation').value = session['Location'];
-          document.getElementById('sessionDate').value = new Date(session['Date']).toISOString().split('T')[0];
-          document.getElementById('sessionTime').value = session['Time'];
-          document.getElementById('sessionNotes').value = session['Notes'];
-          document.getElementById('petCount').value = session['Pet Count'];
-          document.getElementById('peopleCount').value = session['People Count'];
-          editingSessionRowIndex = session.id;
-        }
-      }
-
-      modal.style.display = 'flex';
-    }
-
-    // Close session modal
-    function closeSessionModal() {
-      console.log('Closing session modal...');
-      const modal = document.getElementById('sessionModal');
-      if (modal) {
-        modal.style.display = 'none';
-      }
-    }
-
-    // Open pop-up event modal
-    function openPopupEventModal(mode, eventId = null) {
-      console.log('Opening pop-up event modal in mode:', mode, 'for event:', eventId);
-      const modal = document.getElementById('popupEventModal');
-      const form = document.getElementById('popupEventForm');
-      const title = document.getElementById('popupEventModalTitle');
-      if (!modal || !form || !title) {
-        console.error('Pop-up event modal elements not found');
-        return;
-      }
-
-      title.textContent = mode === 'add' ? 'Add New Pop-Up Event' : 'Edit Pop-Up Event';
-      editingPopupEventRowIndex = null;
-
-      if (mode === 'add') {
-        form.reset();
-        document.getElementById('popupEventId').value = `POPUP${String(popUpEvents.length + 1).padStart(3, '0')}`;
-        if (selectedDate) {
-          document.getElementById('popupEventDate').value = selectedDate.toISOString().split('T')[0];
-        }
-      } else {
-        const event = popUpEvents.find(e => e.id === eventId);
-        if (event) {
-          document.getElementById('popupEventId').value = event['Event ID'];
-          document.getElementById('popupEventName').value = event['Event Name'];
-          document.getElementById('popupEventDate').value = new Date(event['Date']).toISOString().split('T')[0];
-          document.getElementById('popupEventTime').value = event['Time'];
-          document.getElementById('popupEventLocation').value = event['Location'];
-          document.getElementById('popupEventCapacity').value = event['Capacity'];
-          document.getElementById('popupEventDescription').value = event['Description'];
-          document.getElementById('popupEventRegistrationLink').value = event['Registration Link'] || '';
-          editingPopupEventRowIndex = event.id;
-        }
-      }
-
-      modal.style.display = 'flex';
-    }
-
-    // Close pop-up event modal
     function closePopupEventModal() {
-      console.log('Closing pop-up event modal...');
-      const modal = document.getElementById('popupEventModal');
-      if (modal) {
-        modal.style.display = 'none';
-      }
+      document.getElementById('popupEventModal').style.display = 'none';
+      document.getElementById('popupEventForm').reset();
     }
 
-    // Open block modal (placeholder)
-    function openBlockModal() {
-      console.log('Opening block modal...');
-      alert('Block date feature coming soon.');
+    function openBlockDateModal() {
+      document.getElementById('blockDateModal').style.display = 'flex';
     }
 
-    // Context menu functions
-    function addSession() {
-      console.log('Adding session via context menu...');
-      openSessionModal('add');
+    function closeBlockDateModal() {
+      document.getElementById('blockDateModal').style.display = 'none';
+      document.getElementById('blockDateForm').reset();
     }
 
-    function addPopupEvent() {
-      console.log('Adding pop-up event via context menu...');
-      openPopupEventModal('add');
-    }
-
-    function blockDate() {
-      console.log('Blocking date via context menu...');
-      openBlockModal();
-    }
-
-    function editSession(sessionId = contextMenuSession) {
-      console.log('Editing session via context menu:', sessionId);
-      openSessionModal('edit', sessionId);
-    }
-
-    function editPopupEvent(eventId = contextMenuPopupEvent) {
-      console.log('Editing pop-up event via context menu:', eventId);
-      openPopupEventModal('edit', eventId);
-    }
-
-    function removeSession(sessionId = contextMenuSession) {
-      console.log('Removing session via context menu:', sessionId);
-      if (confirm('Are you sure you want to delete this session?')) {
-        db.collection("sessions").doc(sessionId).delete()
-          .then(() => {
-            closeContextMenu();
-          })
-          .catch(error => {
-            console.error('Error deleting session:', error);
-            alert('Error deleting session.');
-          });
-      }
-    }
-
-    function removePopupEvent(eventId = contextMenuPopupEvent) {
-      console.log('Removing pop-up event via context menu:', eventId);
-      if (confirm('Are you sure you want to delete this pop-up event?')) {
-        db.collection("popUpEvents").doc(eventId).delete()
-          .then(() => {
-            closeContextMenu();
-          })
-          .catch(error => {
-            console.error('Error deleting pop-up event:', error);
-            alert('Error deleting pop-up event.');
-          });
-      }
-    }
-
-    function viewSessionDetails(sessionId = contextMenuSession) {
-      console.log('Viewing session details via context menu:', sessionId);
-      const session = sessions.find(s => s.id === sessionId);
-      if (session) {
-        alert(`
-          Session Details:
-          - Session ID: ${session['Session ID']}
-          - Client Name: ${session['Client Name']}
-          - Date: ${session['Date']}
-          - Time: ${session['Time']}
-          - Location: ${session['Location']}
-          - Session Type: ${session['Session Type']}
-          - Pet Count: ${session['Pet Count']}
-          - People Count: ${session['People Count']}
-          - Notes: ${session['Notes'] || 'None'}
-        `);
-        closeContextMenu();
-      }
-    }
-
-    function viewPopupEventDetails(eventId = contextMenuPopupEvent) {
-      console.log('Viewing pop-up event details via context menu:', eventId);
-      const event = popUpEvents.find(e => e.id === eventId);
-      if (event) {
-        alert(`
-          Pop-Up Event Details:
-          - Event ID: ${event['Event ID']}
-          - Event Name: ${event['Event Name']}
-          - Date: ${event['Date']}
-          - Time: ${event['Time']}
-          - Location: ${event['Location']}
-          - Capacity: ${event['Capacity']}
-          - Description: ${event['Description']}
-          - Registration Link: ${event['Registration Link'] || 'None'}
-        `);
-        closeContextMenu();
-      }
-    }
-
-    function closeContextMenu() {
-      console.log('Closing context menu...');
-      const contextMenu = document.getElementById('contextMenu');
-      if (contextMenu) {
-        contextMenu.style.display = 'none';
-      }
-    }
-
-    // Show context menu on right-click
-    document.addEventListener('contextmenu', function(e) {
-      const calendarDay = e.target.closest('.calendar-day');
-      if (calendarDay && !calendarDay.classList.contains('other-month') && !calendarDay.classList.contains('past')) {
-        e.preventDefault();
-        const contextMenu = document.getElementById('contextMenu');
-        if (!contextMenu) {
-          console.error('Context menu element not found');
-          return;
-        }
-        contextMenu.style.display = 'block';
-        contextMenu.style.left = `${e.pageX}px`;
-        contextMenu.style.top = `${e.pageY}px`;
-
-        const date = new Date(calendarDay.dataset.date);
-        const session = sessions.find(s => new Date(s['Date']).toDateString() === date.toDateString());
-        const popupEvent = popUpEvents.find(e => new Date(e['Date']).toDateString() === date.toDateString());
-        contextMenuSession = session ? session.id : null;
-        contextMenuPopupEvent = popupEvent ? popupEvent.id : null;
-
-        document.querySelectorAll('.context-menu-item').forEach(item => {
-          if (item.textContent.includes('Edit Session') || item.textContent.includes('Remove Session') || item.textContent.includes('View Session Details')) {
-            item.classList.toggle('disabled', !contextMenuSession);
-          }
-          if (item.textContent.includes('Edit Pop-Up Event') || item.textContent.includes('Remove Pop-Up Event') || item.textContent.includes('View Pop-Up Event Details')) {
-            item.classList.toggle('disabled', !contextMenuPopupEvent);
-          }
-        });
+    function openSessionDetailsModal(booking = null, calendarSlot = null) {
+      const modal = document.getElementById('sessionDetailsModal');
+      const form = document.getElementById('sessionDetailsForm');
+      const deleteBtn = document.getElementById('deleteSessionBtn');
+      
+      if (booking && calendarSlot) {
+        // Editing existing session
+        document.getElementById('sessionBookingId').value = booking.bookingId || '';
+        document.getElementById('sessionDate').value = calendarSlot.date || '';
+        document.getElementById('sessionTime').value = calendarSlot.time || '';
+        document.getElementById('sessionType').value = calendarSlot.sessionType || '';
+        document.getElementById('client1Name').value = booking.client1Name || '';
+        document.getElementById('client1Email').value = booking.client1Email || '';
+        document.getElementById('client1Phone').value = booking.client1Phone || '';
+        document.getElementById('client1Instagram').value = booking.client1Instagram || '';
+        document.getElementById('client2Name').value = booking.client2Name || '';
+        document.getElementById('client2Email').value = booking.client2Email || '';
+        document.getElementById('client2Phone').value = booking.client2Phone || '';
+        document.getElementById('client2Instagram').value = booking.client2Instagram || '';
+        document.getElementById('sessionPetCount').value = booking.petCount || 1;
+        document.getElementById('sessionPeopleCount').value = booking.peopleCount || 1;
+        document.getElementById('client1FirstPetName').value = booking.client1FirstPetName || '';
+        document.getElementById('client2FirstPetName').value = booking.client2FirstPetName || '';
+        document.getElementById('marketingConsent').checked = booking.marketingConsent || false;
+        
+        deleteBtn.style.display = 'block';
+        deleteBtn.onclick = () => deleteSession(booking.id, calendarSlot.id);
       } else {
-        closeContextMenu();
+        // Creating new session
+        const newBookingId = `SESS_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        document.getElementById('sessionBookingId').value = newBookingId;
+        deleteBtn.style.display = 'none';
       }
-    });
+      
+      // Show/hide client 2 fields based on people count
+      updateClient2Fields();
+      
+      modal.style.display = 'flex';
+    }
 
-    // Close context menu on click elsewhere
-    document.addEventListener('click', closeContextMenu);
+    function closeSessionDetailsModal() {
+      document.getElementById('sessionDetailsModal').style.display = 'none';
+      document.getElementById('sessionDetailsForm').reset();
+    }
+
+    function updateClient2Fields() {
+      const peopleCount = document.getElementById('sessionPeopleCount').value;
+      const petCount = document.getElementById('sessionPetCount').value;
+      const client2Fields = document.getElementById('client2Fields');
+      const client2PetField = document.getElementById('client2PetField');
+      
+      client2Fields.style.display = peopleCount === '2' ? 'block' : 'none';
+      client2PetField.style.display = petCount === '2' ? 'block' : 'none';
+    }
+
+    // Form submission handlers
+    document.getElementById('bulkAvailabilityForm').onsubmit = async function(e) {
+      e.preventDefault();
+      
+      const startDate = new Date(document.getElementById('bulkStartDate').value);
+      const endDate = new Date(document.getElementById('bulkEndDate').value);
+      const selectedDays = [];
+      
+      // Get selected days of week
+      ['daySun', 'dayMon', 'dayTue', 'dayWed', 'dayThu', 'dayFri', 'daySat'].forEach((dayId, index) => {
+        if (document.getElementById(dayId).checked) {
+          selectedDays.push(index);
+        }
+      });
+      
+      const startTime = document.getElementById('bulkStartTime').value;
+      const endTime = document.getElementById('bulkEndTime').value;
+      const sessionType = document.getElementById('bulkSessionType').value;
+      const location = document.getElementById('bulkLocation').value;
+      
+      // Calculate session duration
+      const sessionTypeData = sessionTypes.find(st => st.typeName === sessionType);
+      const duration = sessionTypeData ? sessionTypeData.duration : 20;
+      
+      try {
+        const slotsToCreate = [];
+        
+        for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+          if (selectedDays.includes(d.getDay())) {
+            const dateString = d.toISOString().split('T')[0];
+            
+            // Create time slots for this day
+            const start = new Date(`${dateString}T${startTime}:00`);
+            const end = new Date(`${dateString}T${endTime}:00`);
+            
+            for (let time = new Date(start); time < end; time.setMinutes(time.getMinutes() + duration)) {
+              const timeString = time.toTimeString().slice(0, 5);
+              const endTimeObj = new Date(time);
+              endTimeObj.setMinutes(endTimeObj.getMinutes() + duration);
+              const endTimeString = endTimeObj.toTimeString().slice(0, 5);
+              
+              slotsToCreate.push({
+                fields: {
+                  SlotType: 'Regular',
+                  Location: location,
+                  date: dateString,
+                  time: timeString,
+                  endTime: endTimeString,
+                  status: 'available',
+                  sessionType: sessionType,
+                  cushionTime: 0,
+                  isBlocked: false
+                }
+              });
+            }
+          }
+        }
+        
+        // Create slots in batches of 10
+        for (let i = 0; i < slotsToCreate.length; i += 10) {
+          const batch = slotsToCreate.slice(i, i + 10);
+          const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ records: batch })
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Airtable error: ${response.status}`);
+          }
+        }
+        
+        console.log(`✅ Created ${slotsToCreate.length} availability slots`);
+        alert(`✅ Successfully created ${slotsToCreate.length} availability slots!`);
+        closeBulkAvailabilityModal();
+        await syncCalendarData();
+        
+      } catch (error) {
+        console.error('Error creating bulk availability:', error);
+        await logErrorToAirtable('calendar-management.html', error);
+        alert('❌ Error creating availability slots. Please try again.');
+      }
+    };
+
+    document.getElementById('popupEventForm').onsubmit = async function(e) {
+      e.preventDefault();
+      
+      const date = document.getElementById('popupDate').value;
+      const startTime = document.getElementById('popupStartTime').value;
+      const location = document.getElementById('popupLocation').value;
+      const numSlots = parseInt(document.getElementById('popupSlots').value);
+      const description = document.getElementById('popupDescription').value;
+      
+      try {
+        const slotsToCreate = [];
+        
+        for (let i = 0; i < numSlots; i++) {
+          const slotTime = new Date(`${date}T${startTime}:00`);
+          slotTime.setMinutes(slotTime.getMinutes() + (i * 20)); // 10 min session + 10 min prep
+          
+          const timeString = slotTime.toTimeString().slice(0, 5);
+          const endTime = new Date(slotTime);
+          endTime.setMinutes(endTime.getMinutes() + 10);
+          const endTimeString = endTime.toTimeString().slice(0, 5);
+          
+          slotsToCreate.push({
+            fields: {
+              SlotType: 'Pop-Up',
+              Location: location,
+              date: date,
+              time: timeString,
+              endTime: endTimeString,
+              status: 'available',
+              sessionType: 'Pop-Up',
+              cushionTime: 10,
+              isBlocked: false
+            }
+          });
+        }
+        
+        // Create pop-up slots
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ records: slotsToCreate })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+        
+        console.log(`✅ Created pop-up event with ${numSlots} slots`);
+        alert(`🎉 Successfully created pop-up event "${description}" with ${numSlots} slots!`);
+        closePopupEventModal();
+        await syncCalendarData();
+        
+      } catch (error) {
+        console.error('Error creating pop-up event:', error);
+        await logErrorToAirtable('calendar-management.html', error);
+        alert('❌ Error creating pop-up event. Please try again.');
+      }
+    };
+
+    document.getElementById('blockDateForm').onsubmit = async function(e) {
+      e.preventDefault();
+      
+      const startDate = new Date(document.getElementById('blockStartDate').value);
+      const endDate = new Date(document.getElementById('blockEndDate').value);
+      const reason = document.getElementById('blockReason').value;
+      
+      try {
+        const slotsToCreate = [];
+        
+        for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+          const dateString = d.toISOString().split('T')[0];
+          
+          slotsToCreate.push({
+            fields: {
+              SlotType: 'Blocked',
+              Location: reason,
+              date: dateString,
+              time: '00:00',
+              endTime: '23:59',
+              status: 'blocked',
+              sessionType: 'Blocked',
+              cushionTime: 0,
+              isBlocked: true
+            }
+          });
+        }
+        
+        // Create blocked slots
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ records: slotsToCreate })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+        
+        console.log(`✅ Blocked dates from ${startDate.toDateString()} to ${endDate.toDateString()}`);
+        alert(`🚫 Successfully blocked dates: ${reason}`);
+        closeBlockDateModal();
+        await syncCalendarData();
+        
+      } catch (error) {
+        console.error('Error blocking dates:', error);
+        await logErrorToAirtable('calendar-management.html', error);
+        alert('❌ Error blocking dates. Please try again.');
+      }
+    };
+
+    document.getElementById('sessionDetailsForm').onsubmit = async function(e) {
+      e.preventDefault();
+      
+      const bookingId = document.getElementById('sessionBookingId').value;
+      const sessionDate = document.getElementById('sessionDate').value;
+      const sessionTime = document.getElementById('sessionTime').value;
+      const sessionType = document.getElementById('sessionType').value;
+      
+      try {
+        // Create or update calendar slot
+        const calendarData = {
+          fields: {
+            SlotType: sessionType === 'Pop-Up' ? 'Pop-Up' : 'Regular',
+            Location: 'Cheesman Park', // Default location
+            date: sessionDate,
+            time: sessionTime,
+            endTime: sessionTime, // Will be calculated based on session type
+            status: 'booked',
+            bookingId: bookingId,
+            sessionType: sessionType,
+            cushionTime: sessionType === 'Pop-Up' ? 10 : 0,
+            isBlocked: false
+          }
+        };
+        
+        // Create booking record
+        const bookingData = {
+          fields: {
+            bookingId: bookingId,
+            client1Name: document.getElementById('client1Name').value,
+            client1Email: document.getElementById('client1Email').value,
+            client1Phone: document.getElementById('client1Phone').value,
+            client1Instagram: document.getElementById('client1Instagram').value,
+            client2Name: document.getElementById('client2Name').value || null,
+            client2Email: document.getElementById('client2Email').value || null,
+            client2Phone: document.getElementById('client2Phone').value || null,
+            client2Instagram: document.getElementById('client2Instagram').value || null,
+            client1FirstPetName: document.getElementById('client1FirstPetName').value,
+            client2FirstPetName: document.getElementById('client2FirstPetName').value || null,
+            petCount: parseInt(document.getElementById('sessionPetCount').value),
+            peopleCount: parseInt(document.getElementById('sessionPeopleCount').value),
+            marketingConsent: document.getElementById('marketingConsent').checked,
+            sessionDate: `${sessionDate}T${sessionTime}:00`
+          }
+        };
+        
+        // Create calendar slot first
+        const calendarResponse = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(calendarData)
+        });
+        
+        if (!calendarResponse.ok) {
+          throw new Error(`Calendar creation error: ${calendarResponse.status}`);
+        }
+        
+        const calendarResult = await calendarResponse.json();
+        
+        // Link booking to calendar slot
+        bookingData.fields.calendarSlot = [calendarResult.id];
+        
+        // Create booking
+        const bookingResponse = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(bookingData)
+        });
+        
+        if (!bookingResponse.ok) {
+          throw new Error(`Booking creation error: ${bookingResponse.status}`);
+        }
+        
+        console.log('✅ Session created successfully');
+        alert('✅ Session created successfully!');
+        closeSessionDetailsModal();
+        await syncCalendarData();
+        
+      } catch (error) {
+        console.error('Error creating session:', error);
+        await logErrorToAirtable('calendar-management.html', error);
+        alert('❌ Error creating session. Please try again.');
+      }
+    };
+
+    // Listen for people count changes
+    document.getElementById('sessionPeopleCount').onchange = updateClient2Fields;
+    document.getElementById('sessionPetCount').onchange = updateClient2Fields;
+
+    // Delete session function
+    async function deleteSession(bookingId, calendarId) {
+      if (!confirm('Are you sure you want to delete this session? This cannot be undone.')) {
+        return;
+      }
+      
+      try {
+        // Delete booking
+        if (bookingId) {
+          const bookingResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings/${bookingId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+            }
+          });
+          
+          if (!bookingResponse.ok) {
+            throw new Error(`Booking deletion error: ${bookingResponse.status}`);
+          }
+        }
+        
+        // Delete calendar slot
+        if (calendarId) {
+          const calendarResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar/${calendarId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+            }
+          });
+          
+          if (!calendarResponse.ok) {
+            throw new Error(`Calendar deletion error: ${calendarResponse.status}`);
+          }
+        }
+        
+        console.log('✅ Session deleted successfully');
+        alert('✅ Session deleted successfully!');
+        closeSessionDetailsModal();
+        await syncCalendarData();
+        
+      } catch (error) {
+        console.error('Error deleting session:', error);
+        await logErrorToAirtable('calendar-management.html', error);
+        alert('❌ Error deleting session. Please try again.');
+      }
+    }
+
+    // Utility functions
+    async function syncCalendarData() {
+      console.log('Syncing calendar data...');
+      await fetchCalendarData();
+      await fetchBookingsData();
+    }
+
+    function exportCalendar() {
+      // Export functionality - placeholder for now
+      alert('📤 Calendar export functionality coming soon!');
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('Calendar management page loaded...');
+      checkAuthentication();
+      await fetchSessionTypes();
+      await fetchCalendarData();
+      await fetchBookingsData();
+    });
   </script>
 </body>
 </html>
