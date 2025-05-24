@@ -164,7 +164,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      background-image: url('assets/images/parkphoto.jpg');
+      background-image: url('/images/spicemainpage.jpg');
       background-size: cover;
       background-position: center;
       margin-top: 110px;
@@ -330,6 +330,25 @@
     .session-builder-card .next-btn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+    }
+
+    .session-builder-card .back-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 1rem;
+    }
+
+    .session-builder-card .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
     }
 
     .session-builder-card .policy-content {
@@ -511,6 +530,7 @@
 
       .session-builder-container p {
         font-size: 1rem;
+        white-space: normal; /* Ensure text wraps */
       }
 
       .session-builder-card {
@@ -534,7 +554,8 @@
         font-size: 0.9rem;
       }
 
-      .session-builder-card .next-btn {
+      .session-builder-card .next-btn,
+      .session-builder-card .back-btn {
         padding: 0.8rem 2rem;
         font-size: 1rem;
       }
@@ -543,6 +564,10 @@
       .session-builder-card#start-journey-card {
         padding-bottom: 3rem; /* Increased padding at the bottom */
         min-height: 300px; /* Larger vertical size */
+      }
+
+      .session-builder-card#start-journey-card p {
+        white-space: normal; /* Allow text to wrap */
       }
 
       .session-builder-card#session-type-card,
@@ -609,7 +634,7 @@
         <!-- Start Journey Card -->
         <div class="session-builder-card" id="start-journey-card">
           <h3>Start Your Journey</h3>
-          <p>Ready to capture your pet’s personality? Let’s build your perfect photography session in just a few steps.</p>
+          <p>Ready to capture your pet’s personality?<br>Let’s build your perfect photography session in just a few steps.</p>
           <button class="next-btn" onclick="showCard('session-type-card')">Start Now</button>
         </div>
 
@@ -621,7 +646,6 @@
             <button class="option-btn" data-value="Mini">Mini Session</button>
             <button class="option-btn" data-value="Full">Full Session</button>
           </div>
-          <button class="next-btn" id="session-type-next" disabled onclick="showCard('location-card')">Next</button>
         </div>
 
         <!-- Location Card -->
@@ -632,7 +656,9 @@
             <button class="option-btn" data-value="Cheesman">Cheesman Park</button>
             <button class="option-btn" data-value="City">City Park</button>
           </div>
-          <button class="next-btn" id="location-next" disabled onclick="showCard('pet-count-card')">Next</button>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('session-type-card')">Back</button>
+          </div>
         </div>
 
         <!-- Pet Count Card -->
@@ -643,7 +669,9 @@
             <button class="option-btn" data-value="1">1 Pet</button>
             <button class="option-btn" data-value="2">2 Pets</button>
           </div>
-          <button class="next-btn" id="pet-count-next" disabled onclick="showCard('people-count-card')">Next</button>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('location-card')">Back</button>
+          </div>
         </div>
 
         <!-- People Count Card -->
@@ -654,7 +682,9 @@
             <button class="option-btn" data-value="1">1 Person</button>
             <button class="option-btn" data-value="2">2 People</button>
           </div>
-          <button class="next-btn" id="people-count-next" disabled onclick="showCard('pet-behavior-policy-card')">Next</button>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('pet-count-card')">Back</button>
+          </div>
         </div>
 
         <!-- Pet Behavior Policy Card -->
@@ -671,7 +701,10 @@
             </ul>
             <p>By proceeding, you agree to these terms.</p>
           </div>
-          <button class="next-btn" onclick="showCard('vaccination-policy-card')">I Agree, Proceed</button>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('people-count-card')">Back</button>
+            <button class="next-btn" onclick="showCard('vaccination-policy-card')">I Agree, Proceed</button>
+          </div>
         </div>
 
         <!-- Vaccination Policy Card -->
@@ -686,7 +719,10 @@
             </ul>
             <p>By proceeding, you confirm that your pet is vaccinated and agree to provide proof if requested.</p>
           </div>
-          <button class="next-btn" onclick="showCard('cancellation-policy-card')">I Agree, Proceed</button>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('pet-behavior-policy-card')">Back</button>
+            <button class="next-btn" onclick="showCard('cancellation-policy-card')">I Agree, Proceed</button>
+          </div>
         </div>
 
         <!-- Cancellation Policy Card -->
@@ -701,7 +737,10 @@
             </ul>
             <p>By proceeding, you agree to these cancellation terms.</p>
           </div>
-          <a href="/ptp-pick-date-step-3.html" class="next-btn" onclick="saveSessionData()">I Agree, Proceed</a>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('vaccination-policy-card')">Back</button>
+            <a href="/ptp-pick-date-step-3.html" class="next-btn" onclick="saveSessionData()">I Agree, Proceed</a>
+          </div>
         </div>
       </div>
     </section>
@@ -738,7 +777,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 05:35 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 05:43 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -768,16 +807,16 @@
       sessionBuilderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Handle option selection
-    function handleOptionSelection(optionGroup, nextButtonId) {
+    // Handle option selection with auto-advance
+    function handleOptionSelection(optionGroup, nextCardId) {
       const options = document.querySelectorAll(`#${optionGroup} .option-btn`);
-      const nextBtn = document.getElementById(nextButtonId);
 
       options.forEach(option => {
         option.addEventListener('click', function() {
           options.forEach(btn => btn.classList.remove('selected'));
           this.classList.add('selected');
-          nextBtn.disabled = false;
+          // Auto-advance to the next card
+          showCard(nextCardId);
         });
       });
     }
@@ -804,10 +843,10 @@
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Homepage loaded, initializing session builder...');
       
-      handleOptionSelection('session-type-card', 'session-type-next');
-      handleOptionSelection('location-card', 'location-next');
-      handleOptionSelection('pet-count-card', 'pet-count-next');
-      handleOptionSelection('people-count-card', 'people-count-next');
+      handleOptionSelection('session-type-card', 'location-card');
+      handleOptionSelection('location-card', 'pet-count-card');
+      handleOptionSelection('pet-count-card', 'people-count-card');
+      handleOptionSelection('people-count-card', 'pet-behavior-policy-card');
     });
   </script>
 </body>
