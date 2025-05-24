@@ -375,6 +375,56 @@
       margin-bottom: 0.5rem;
     }
 
+    .session-builder-card .session-details {
+      text-align: left;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.5rem;
+    }
+
+    .session-builder-card .session-details h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .session-builder-card .session-details p {
+      margin-bottom: 1rem;
+    }
+
+    .session-builder-card .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .session-builder-card .form-group label {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .session-builder-card .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .session-builder-card .form-group input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
     /* === FOOTER STYLES === */
     footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
@@ -573,6 +623,10 @@
         font-size: 1rem;
       }
 
+      .session-builder-card#email-capture-card {
+        min-height: 250px; /* Adjusted for mobile */
+      }
+
       /* Mobile-specific adjustments for session builder cards */
       .session-builder-card#start-journey-card {
         padding-bottom: 3rem; /* Increased padding at the bottom */
@@ -653,20 +707,43 @@
         <h2>Book Your Pet Photography Session</h2>
         <p>Let’s create a session that’s perfect for you and your pet. Answer a few quick questions to get started.</p>
 
-        <!-- Start Journey Card -->
+        <!-- Start Your Journey Card -->
         <div class="session-builder-card" id="start-journey-card">
           <h3>Start Your Journey</h3>
           <p>Ready to capture your pet’s personality?<br>Let’s build your perfect photography session in just a few steps.</p>
-          <button class="next-btn" onclick="showCard('session-type-card')">Start Now</button>
+          <button class="next-btn" onclick="showCard('email-capture-card')">Start Now</button>
+        </div>
+
+        <!-- Email Capture Card -->
+        <div class="session-builder-card" id="email-capture-card" style="display: none;">
+          <h3>What is your email to get started?</h3>
+          <p>We’ll use this to keep you updated on your booking.</p>
+          <div class="form-group">
+            <label for="user-email">Email Address *</label>
+            <input type="email" id="user-email" name="user-email" required placeholder="Enter your email address" />
+          </div>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('start-journey-card')">Back</button>
+            <button class="next-btn" id="email-next" onclick="saveEmailAndProceed()">Next</button>
+          </div>
         </div>
 
         <!-- Session Type Card -->
         <div class="session-builder-card" id="session-type-card" style="display: none;">
           <h3>Choose Your Session Type</h3>
           <p>Select the type of session that best suits your needs.</p>
+          <div class="session-details">
+            <h4>Mini Session</h4>
+            <p>30 minutes, includes 5 edited digital images, 1 pet and 1 person included. Additional pets or people at extra cost.</p>
+            <h4>Full Session</h4>
+            <p>60 minutes, includes 15 edited digital images, 1 pet and 1 person included. Additional pets or people at extra cost.</p>
+          </div>
           <div class="options">
             <button class="option-btn" data-value="Mini">Mini Session</button>
             <button class="option-btn" data-value="Full">Full Session</button>
+          </div>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('email-capture-card')">Back</button>
           </div>
         </div>
 
@@ -799,7 +876,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 05:57 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:12 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -827,6 +904,25 @@
       // Auto-scroll to the top of the session builder section
       const sessionBuilderSection = document.querySelector('#session-builder-section');
       sessionBuilderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Save email and proceed to the next card
+    function saveEmailAndProceed() {
+      const emailInput = document.getElementById('user-email');
+      const email = emailInput.value;
+
+      if (!email || !emailInput.checkValidity()) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      // Save email to localStorage under ptpMarketingData
+      let marketingData = JSON.parse(localStorage.getItem('ptpMarketingData')) || {};
+      marketingData.email = email;
+      localStorage.setItem('ptpMarketingData', JSON.stringify(marketingData));
+
+      // Proceed to the next card
+      showCard('session-type-card');
     }
 
     // Handle option selection with auto-advance
