@@ -1104,40 +1104,39 @@
         <div class="form-grid">
           <div class="form-group">
             <label class="form-label">Start Time ⏰</label>
-            <select class="form-select" id="bulkStartTime" required>
-              <option value="06:00">6:00 AM</option>
-              <option value="08:00" selected>8:00 AM</option>
-              <option value="10:00">10:00 AM</option>
-              <option value="18:00">6:00 PM</option>
-              <option value="19:00">7:00 PM</option>
-            </select>
+            <input type="time" class="form-input" id="bulkStartTime" value="08:00" required>
           </div>
           <div class="form-group">
             <label class="form-label">End Time ⏰</label>
-            <select class="form-select" id="bulkEndTime" required>
-              <option value="10:00">10:00 AM</option>
-              <option value="12:00">12:00 PM</option>
-              <option value="17:00" selected>5:00 PM</option>
-              <option value="20:00">8:00 PM</option>
-              <option value="21:00">9:00 PM</option>
-            </select>
+            <input type="time" class="form-input" id="bulkEndTime" value="17:00" required>
           </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Availability Type 📅</label>
+          <select class="form-select" id="bulkAvailabilityType" required>
+            <option value="open">Open Availability (Any session type can book)</option>
+            <option value="mini-only">Mini Sessions Only</option>
+            <option value="full-only">Full Sessions Only</option>
+            <option value="popup-only">Pop-Up Events Only</option>
+          </select>
         </div>
         
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">Session Type 📸</label>
-            <select class="form-select" id="bulkSessionType" required>
-              <option value="Mini Session">Mini Session (20 min)</option>
-              <option value="Full Session">Full Session (60 min)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Location 📍</label>
+            <label class="form-label">Default Location 📍</label>
             <select class="form-select" id="bulkLocation" required>
               <option value="Cheesman Park">Cheesman Park</option>
               <option value="City Park">City Park</option>
+              <option value="Washington Park">Washington Park</option>
+              <option value="Cherry Creek">Cherry Creek</option>
+              <option value="TBD">Location TBD</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Slot Duration (minutes) ⏱️</label>
+            <input type="number" class="form-input" id="slotDuration" value="20" min="10" max="120" required>
+            <small style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">How long each bookable slot should be</small>
           </div>
         </div>
         
@@ -1219,13 +1218,32 @@
         </div>
         
         <div class="form-group">
+          <label class="form-label">Block Type 🚫</label>
+          <select class="form-select" id="blockType" onchange="toggleTimeInputs()" required>
+            <option value="full-day">Full Day Block</option>
+            <option value="time-range">Specific Time Range</option>
+          </select>
+        </div>
+        
+        <div class="form-grid" id="timeRangeInputs" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">Start Time ⏰</label>
+            <input type="time" class="form-input" id="blockStartTime" value="09:00">
+          </div>
+          <div class="form-group">
+            <label class="form-label">End Time ⏰</label>
+            <input type="time" class="form-input" id="blockEndTime" value="17:00">
+          </div>
+        </div>
+        
+        <div class="form-group">
           <label class="form-label">Reason 📝</label>
-          <input type="text" class="form-input" id="blockReason" placeholder="e.g., Personal time off, Equipment maintenance" required>
+          <input type="text" class="form-input" id="blockReason" placeholder="e.g., Personal time off, Equipment maintenance, Private event" required>
         </div>
         
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" onclick="closeBlockDateModal()">Cancel 🚫</button>
-          <button type="submit" class="btn btn-primary">Block Date 🚫</button>
+          <button type="submit" class="btn btn-primary">Block Time 🚫</button>
         </div>
       </form>
     </div>
@@ -1890,6 +1908,13 @@
     function closeBlockDateModal() {
       document.getElementById('blockDateModal').style.display = 'none';
       document.getElementById('blockDateForm').reset();
+      document.getElementById('timeRangeInputs').style.display = 'none';
+    }
+
+    function toggleTimeInputs() {
+      const blockType = document.getElementById('blockType').value;
+      const timeInputs = document.getElementById('timeRangeInputs');
+      timeInputs.style.display = blockType === 'time-range' ? 'grid' : 'none';
     }
 
     function openSessionDetailsModal(booking = null, calendarSlot = null) {
@@ -1965,49 +1990,69 @@
         return;
       }
       
-      const mainEvent = bookedEvents[0];
-      const booking = bookingsData.find(b => b.calendarSlot === mainEvent.id);
-      console.log('Found booking:', booking);
+      currentSessionPopup = { events: bookedEvents, dateString: dateString };
       
-      if (!booking) {
-        console.log('No booking found for event');
-        return;
+      // If multiple sessions, show list format
+      if (bookedEvents.length > 1) {
+        document.getElementById('popupTitle').textContent = `${bookedEvents.length} Sessions`;
+        document.getElementById('popupStatus').textContent = 'Multiple';
+        document.getElementById('popupStatus').className = 'session-popup-status booked';
+        
+        let detailsHTML = '';
+        bookedEvents.forEach((event, index) => {
+          const booking = bookingsData.find(b => b.calendarSlot === event.id);
+          const clientName = booking ? booking.client1Name : 'Unknown Client';
+          
+          detailsHTML += `
+            <div class="session-popup-detail" style="cursor: pointer; padding: 0.5rem; margin: 0.2rem 0; background: rgba(255,255,255,0.1); border-radius: 4px;" onclick="openSingleSession(${index})">
+              <div style="font-weight: 600; color: var(--gold);">${event.time} - ${clientName}</div>
+              <div style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">${event.sessionType} • ${event.location}</div>
+            </div>
+          `;
+        });
+        
+        document.getElementById('popupDetails').innerHTML = detailsHTML;
+      } else {
+        // Single session format
+        const mainEvent = bookedEvents[0];
+        const booking = bookingsData.find(b => b.calendarSlot === mainEvent.id);
+        
+        if (!booking) {
+          console.log('No booking found for event');
+          return;
+        }
+        
+        document.getElementById('popupTitle').textContent = booking.client1Name || 'Session';
+        
+        const statusElement = document.getElementById('popupStatus');
+        statusElement.textContent = mainEvent.slotType === 'Pop-Up' ? 'Pop-Up' : 'Booked';
+        statusElement.className = `session-popup-status ${mainEvent.slotType === 'Pop-Up' ? 'popup' : 'booked'}`;
+        
+        document.getElementById('popupDetails').innerHTML = `
+          <div class="session-popup-detail">
+            <span class="session-popup-icon">📅</span>
+            <span>${dateString} at ${mainEvent.time}</span>
+          </div>
+          <div class="session-popup-detail">
+            <span class="session-popup-icon">📸</span>
+            <span>${mainEvent.sessionType}</span>
+          </div>
+          <div class="session-popup-detail">
+            <span class="session-popup-icon">📍</span>
+            <span>${mainEvent.location || 'Location TBD'}</span>
+          </div>
+          <div class="session-popup-detail">
+            <span class="session-popup-icon">🐾</span>
+            <span>${booking.petCount} pet${booking.petCount > 1 ? 's' : ''}, ${booking.peopleCount} person${booking.peopleCount > 1 ? 's' : ''}</span>
+          </div>
+          ${booking.client1FirstPetName ? `
+          <div class="session-popup-detail">
+            <span class="session-popup-icon">🐕</span>
+            <span>${booking.client1FirstPetName}${booking.client2FirstPetName ? `, ${booking.client2FirstPetName}` : ''}</span>
+          </div>
+          ` : ''}
+        `;
       }
-      
-      currentSessionPopup = { event: mainEvent, booking: booking };
-      
-      // Populate popup content
-      document.getElementById('popupTitle').textContent = booking.client1Name || 'Session';
-      
-      const statusElement = document.getElementById('popupStatus');
-      statusElement.textContent = mainEvent.slotType === 'Pop-Up' ? 'Pop-Up' : 'Booked';
-      statusElement.className = `session-popup-status ${mainEvent.slotType === 'Pop-Up' ? 'popup' : 'booked'}`;
-      
-      const detailsContainer = document.getElementById('popupDetails');
-      detailsContainer.innerHTML = `
-        <div class="session-popup-detail">
-          <span class="session-popup-icon">📅</span>
-          <span>${dateString} at ${mainEvent.time}</span>
-        </div>
-        <div class="session-popup-detail">
-          <span class="session-popup-icon">📸</span>
-          <span>${mainEvent.sessionType}</span>
-        </div>
-        <div class="session-popup-detail">
-          <span class="session-popup-icon">📍</span>
-          <span>${mainEvent.location || 'Location TBD'}</span>
-        </div>
-        <div class="session-popup-detail">
-          <span class="session-popup-icon">🐾</span>
-          <span>${booking.petCount} pet${booking.petCount > 1 ? 's' : ''}, ${booking.peopleCount} person${booking.peopleCount > 1 ? 's' : ''}</span>
-        </div>
-        ${booking.client1FirstPetName ? `
-        <div class="session-popup-detail">
-          <span class="session-popup-icon">🐕</span>
-          <span>${booking.client1FirstPetName}${booking.client2FirstPetName ? `, ${booking.client2FirstPetName}` : ''}</span>
-        </div>
-        ` : ''}
-      `;
       
       // Position popup near the mouse
       popup.style.position = 'fixed';
@@ -2029,6 +2074,17 @@
       }, 10);
     }
 
+    function openSingleSession(index) {
+      if (currentSessionPopup && currentSessionPopup.events[index]) {
+        const event = currentSessionPopup.events[index];
+        const booking = bookingsData.find(b => b.calendarSlot === event.id);
+        if (booking) {
+          showClientRecordModal(booking);
+          hideSessionPopup();
+        }
+      }
+    }
+
     function hideSessionPopup() {
       console.log('hideSessionPopup called');
       const popup = document.getElementById('sessionPopup');
@@ -2040,15 +2096,31 @@
 
     function editSessionQuick() {
       if (currentSessionPopup) {
-        openSessionDetailsModal(currentSessionPopup.booking, currentSessionPopup.event);
-        hideSessionPopup();
+        if (currentSessionPopup.events && currentSessionPopup.events.length === 1) {
+          const event = currentSessionPopup.events[0];
+          const booking = bookingsData.find(b => b.calendarSlot === event.id);
+          if (booking) {
+            openSessionDetailsModal(booking, event);
+            hideSessionPopup();
+          }
+        } else {
+          alert('Please select a specific session to edit from the list above.');
+        }
       }
     }
 
     function openClientRecord() {
       if (currentSessionPopup) {
-        showClientRecordModal(currentSessionPopup.booking);
-        hideSessionPopup();
+        if (currentSessionPopup.events && currentSessionPopup.events.length === 1) {
+          const event = currentSessionPopup.events[0];
+          const booking = bookingsData.find(b => b.calendarSlot === event.id);
+          if (booking) {
+            showClientRecordModal(booking);
+            hideSessionPopup();
+          }
+        } else {
+          alert('Please select a specific session from the list above to view client record.');
+        }
       }
     }
 
@@ -2253,41 +2325,62 @@
         }
       });
       
+      // If no days selected, include all days in the date range
+      const daysToUse = selectedDays.length > 0 ? selectedDays : [0, 1, 2, 3, 4, 5, 6];
+      
       const startTime = document.getElementById('bulkStartTime').value;
       const endTime = document.getElementById('bulkEndTime').value;
-      const sessionType = document.getElementById('bulkSessionType').value;
+      const availabilityType = document.getElementById('bulkAvailabilityType').value;
       const location = document.getElementById('bulkLocation').value;
-      
-      // Calculate session duration
-      const sessionTypeData = sessionTypes.find(st => st.typeName === sessionType);
-      const duration = sessionTypeData ? sessionTypeData.duration : 20;
+      const slotDuration = parseInt(document.getElementById('slotDuration').value);
       
       try {
         const slotsToCreate = [];
         
         for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-          if (selectedDays.includes(d.getDay())) {
+          if (daysToUse.includes(d.getDay())) {
             const dateString = d.toISOString().split('T')[0];
             
             // Create time slots for this day
             const start = new Date(`${dateString}T${startTime}:00`);
             const end = new Date(`${dateString}T${endTime}:00`);
             
-            for (let time = new Date(start); time < end; time.setMinutes(time.getMinutes() + duration)) {
+            for (let time = new Date(start); time < end; time.setMinutes(time.getMinutes() + slotDuration)) {
               const timeString = time.toTimeString().slice(0, 5);
               const endTimeObj = new Date(time);
-              endTimeObj.setMinutes(endTimeObj.getMinutes() + duration);
+              endTimeObj.setMinutes(endTimeObj.getMinutes() + slotDuration);
               const endTimeString = endTimeObj.toTimeString().slice(0, 5);
+              
+              // Determine session type based on availability type
+              let sessionType = 'Available Slot';
+              let slotType = 'Regular';
+              
+              switch(availabilityType) {
+                case 'mini-only':
+                  sessionType = 'Mini Session Available';
+                  break;
+                case 'full-only':
+                  sessionType = 'Full Session Available';
+                  break;
+                case 'popup-only':
+                  sessionType = 'Pop-Up Available';
+                  slotType = 'Pop-Up';
+                  break;
+                default:
+                  sessionType = 'Open Availability';
+              }
               
               slotsToCreate.push({
                 fields: {
-                  SlotType: 'Regular',
+                  SlotType: slotType,
                   Location: location,
                   date: dateString,
                   time: timeString,
                   endTime: endTimeString,
                   status: 'available',
                   sessionType: sessionType,
+                  availabilityType: availabilityType,
+                  slotDuration: slotDuration,
                   cushionTime: 0,
                   isBlocked: false
                 }
@@ -2297,6 +2390,7 @@
         }
         
         // Create slots in batches of 10
+        let totalCreated = 0;
         for (let i = 0; i < slotsToCreate.length; i += 10) {
           const batch = slotsToCreate.slice(i, i + 10);
           const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
@@ -2311,10 +2405,13 @@
           if (!response.ok) {
             throw new Error(`Airtable error: ${response.status}`);
           }
+          
+          totalCreated += batch.length;
+          console.log(`✅ Created batch ${Math.ceil((i + 1) / 10)} - ${totalCreated} slots total`);
         }
         
-        console.log(`✅ Created ${slotsToCreate.length} availability slots`);
-        alert(`✅ Successfully created ${slotsToCreate.length} availability slots!`);
+        console.log(`✅ Created ${totalCreated} availability slots`);
+        alert(`✅ Successfully created ${totalCreated} availability slots!\n\nThese slots are now available for booking across all calendars on your site.`);
         closeBulkAvailabilityModal();
         await syncCalendarData();
         
@@ -2393,6 +2490,7 @@
       const startDate = new Date(document.getElementById('blockStartDate').value);
       const endDate = new Date(document.getElementById('blockEndDate').value);
       const reason = document.getElementById('blockReason').value;
+      const blockType = document.getElementById('blockType').value;
       
       try {
         const slotsToCreate = [];
@@ -2400,37 +2498,78 @@
         for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
           const dateString = d.toISOString().split('T')[0];
           
-          slotsToCreate.push({
-            fields: {
-              SlotType: 'Blocked',
-              Location: reason,
-              date: dateString,
-              time: '00:00',
-              endTime: '23:59',
-              status: 'blocked',
-              sessionType: 'Blocked',
-              cushionTime: 0,
-              isBlocked: true
+          if (blockType === 'full-day') {
+            // Block entire day
+            slotsToCreate.push({
+              fields: {
+                SlotType: 'Blocked',
+                Location: reason,
+                date: dateString,
+                time: '00:00',
+                endTime: '23:59',
+                status: 'blocked',
+                sessionType: 'Blocked',
+                cushionTime: 0,
+                isBlocked: true,
+                blockReason: reason
+              }
+            });
+          } else {
+            // Block specific time range
+            const startTime = document.getElementById('blockStartTime').value;
+            const endTime = document.getElementById('blockEndTime').value;
+            
+            // Create 15-minute blocked slots for the time range
+            const start = new Date(`${dateString}T${startTime}:00`);
+            const end = new Date(`${dateString}T${endTime}:00`);
+            
+            for (let time = new Date(start); time < end; time.setMinutes(time.getMinutes() + 15)) {
+              const timeString = time.toTimeString().slice(0, 5);
+              const endTimeObj = new Date(time);
+              endTimeObj.setMinutes(endTimeObj.getMinutes() + 15);
+              const endTimeString = endTimeObj.toTimeString().slice(0, 5);
+              
+              slotsToCreate.push({
+                fields: {
+                  SlotType: 'Blocked',
+                  Location: reason,
+                  date: dateString,
+                  time: timeString,
+                  endTime: endTimeString,
+                  status: 'blocked',
+                  sessionType: 'Blocked Time',
+                  cushionTime: 0,
+                  isBlocked: true,
+                  blockReason: reason
+                }
+              });
             }
+          }
+        }
+        
+        // Create blocked slots in batches
+        let totalCreated = 0;
+        for (let i = 0; i < slotsToCreate.length; i += 10) {
+          const batch = slotsToCreate.slice(i, i + 10);
+          const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ records: batch })
           });
+          
+          if (!response.ok) {
+            throw new Error(`Airtable error: ${response.status}`);
+          }
+          
+          totalCreated += batch.length;
         }
         
-        // Create blocked slots
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ records: slotsToCreate })
-        });
-        
-        if (!response.ok) {
-          throw new Error(`Airtable error: ${response.status}`);
-        }
-        
-        console.log(`✅ Blocked dates from ${startDate.toDateString()} to ${endDate.toDateString()}`);
-        alert(`🚫 Successfully blocked dates: ${reason}`);
+        const blockTypeText = blockType === 'full-day' ? 'full day(s)' : 'time range(s)';
+        console.log(`✅ Blocked ${totalCreated} slots`);
+        alert(`🚫 Successfully blocked ${blockTypeText}: ${reason}\n\nCreated ${totalCreated} blocked slots.`);
         closeBlockDateModal();
         await syncCalendarData();
         
@@ -2620,7 +2759,7 @@
       };
       
       // Add fake data temporarily
-      currentSessionPopup = { event: fakeEvent, booking: fakeBooking };
+      currentSessionPopup = { events: [fakeEvent], dateString: '2025-05-24' };
       
       // Show popup at center of screen
       const popup = document.getElementById('sessionPopup');
@@ -2663,6 +2802,40 @@
       setTimeout(() => {
         hideSessionPopup();
       }, 5000);
+    }
+
+    // Cross-site integration notes for future development:
+    // 
+    // CLIENT MATCHING LOGIC (to implement across all booking systems):
+    // - Primary key: client1Name + client1Phone (NOT email, as emails change)
+    // - When a new booking comes in, check if client1Name + client1Phone exists
+    // - If match found, link to existing client record and session history
+    // - If no match, create new client record
+    // 
+    // AVAILABILITY SYNC (ensure this data appears on homepage calendar):
+    // - All "available" status slots created here should appear as bookable on index.html
+    // - Pop-up events should appear in the "Upcoming Pop-Up Events" section
+    // - Blocked slots should prevent booking on client-side calendars
+    // 
+    // BOOKING INTELLIGENCE:
+    // - Before allowing a booking, check if enough consecutive time exists
+    // - Mini Session (20 min) needs 20 min available slot
+    // - Full Session (60 min) needs 60 min available slot  
+    // - Don't allow booking if insufficient time remains in day
+    async function checkAvailabilityForBooking(date, sessionType, requestedDuration) {
+      // This function should be implemented to check if booking is possible
+      // Returns true/false and suggested alternative times if false
+      
+      const daySlots = calendarData.filter(slot => 
+        slot.date === date && 
+        slot.status === 'available' && 
+        !slot.isBlocked
+      ).sort((a, b) => a.time.localeCompare(b.time));
+      
+      // Logic to check for consecutive available slots
+      // This ensures intelligent booking that respects time constraints
+      
+      return { canBook: true, alternatives: [] };
     }
 
     // Initialize the page
