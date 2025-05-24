@@ -1,1 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Gallery Access | Picture This Pet</title>
+  <meta name="description" content="Access your private pet photography gallery. Enter your session details to view and download your beautiful photos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+      --gallery-purple: #8b5cf6;
+      --gallery-blue: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes galleryPulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+      20%, 40%, 60%, 80% { transform: translateX(2px); }
+    }
+
+    /* === HEADER STYLES === */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .book-btn {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      min-height: calc(100vh - 110px);
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    /* === LOGIN CONTAINER === */
+    .login-container {
+      max-width: 500px;
+      width: 100%;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .gallery-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gallery-purple), var(--gallery-blue));
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: galleryPulse 4s ease-in-out infinite;
+      display: block;
+      text-align: center;
+    }
+
+    .login-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .login-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-subtitle {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* === FORM STYLES === */
+    .login-form {
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--gallery-purple);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+
+    .form-group input.error {
+      border-color: var(--booked-red);
+      animation: shake 0.5s ease-in-out;
+    }
+
+    .form-help {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .form-help.example {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.8rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--gold);
+      margin-top: 0.8rem;
+    }
+
+    .form-help strong {
+      color: var(--gold);
+    }
+
+    /* === BUTTONS === */
+    .login-button {
+      width: 100%;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 1.2rem 2rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+
+    .login-button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
+    }
+
+    .login-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .help-button {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin: 0.5rem;
+    }
+
+    .help-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+    }
+
+    /* === ERROR MESSAGES === */
+    .error-message {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      color: white;
+      font-size: 0.95rem;
+      text-align: center;
+      animation: fadeInUp 0.3s ease-out;
+    }
+
+    .success-message {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      color: white;
+      font-size: 0.95rem;
+      text-align: center;
+      animation: fadeInUp 0.3s ease-out;
+    }
+
+    /* === HELP SECTION === */
+    .help-section {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .help-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .help-section p {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    /* === MOBILE RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo { 
+        height: 48px; 
+      }
+      
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
+
+      .book-btn {
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      main {
+        margin-top: 80px;
+        padding: 1rem;
+      }
+
+      .login-card {
+        padding: 2rem;
+      }
+
+      .login-title {
+        font-size: 2rem;
+      }
+
+      .login-subtitle {
+        font-size: 1rem;
+      }
+
+      .form-group input {
+        padding: 1rem;
+        font-size: 1rem;
+      }
+
+      .login-button {
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="/#session-builder-section" class="book-btn" aria-label="Book a session">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <div class="login-container">
+      <div class="gallery-badge">
+        📸 Private Client Gallery
+      </div>
+
+      <div class="login-card">
+        <h1 class="login-title">Welcome Back!</h1>
+        <p class="login-subtitle">
+          Your beautiful pet photos are ready to view and download. 
+          Enter your session details below to access your private gallery.
+        </p>
+
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+        <div id="successMessage" class="success-message" style="display: none;"></div>
+
+        <form class="login-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="sessionId">Session ID</label>
+            <input 
+              type="text" 
+              id="sessionId" 
+              name="sessionId" 
+              placeholder="Enter your session ID"
+              required
+              maxlength="20"
+              autocomplete="off"
+            />
+            <div class="form-help">
+              Enter the last 4 digits of your phone number followed by your zip code
+            </div>
+            <div class="form-help example">
+              <strong>Example:</strong> Phone ends in 7311, zip code 80206 → <strong>371180206</strong>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Gallery Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="Enter your gallery password"
+              required
+              maxlength="50"
+              autocomplete="off"
+            />
+            <div class="form-help">
+              Your first pet's name followed by "barks" (all lowercase, no spaces)
+            </div>
+            <div class="form-help example">
+              <strong>Example:</strong> Pet name is "Buffy" → <strong>buffybarks</strong>
+            </div>
+          </div>
+
+          <button type="submit" class="login-button" id="loginBtn">
+            Access My Gallery
+          </button>
+        </form>
+
+        <div class="help-section">
+          <h3>Need Help?</h3>
+          <p>Can't remember your session details? We're here to help!</p>
+          <a href="/contact" class="help-button">Contact Support</a>
+          <a href="mailto:hello@picturethispet.com?subject=Gallery Access Help" class="help-button">Email Us</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Sample valid credentials for testing
+    const validCredentials = {
+      '371180206': 'buffybarks'
+    };
+
+    // Handle form submission
+    function handleLogin(event) {
+      event.preventDefault();
+      
+      const sessionId = document.getElementById('sessionId').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const loginBtn = document.getElementById('loginBtn');
+      const errorMsg = document.getElementById('errorMessage');
+      const successMsg = document.getElementById('successMessage');
+      
+      // Clear previous messages
+      hideMessages();
+      
+      // Basic validation
+      if (!sessionId || !password) {
+        showError('Please fill in both fields');
+        return;
+      }
+      
+      // Disable button and show loading
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Verifying...';
+      
+      // Simulate authentication delay
+      setTimeout(() => {
+        if (validCredentials[sessionId] && validCredentials[sessionId] === password) {
+          // Success - redirect to gallery
+          showSuccess('Access granted! Redirecting to your gallery...');
+          
+          setTimeout(() => {
+            // In a real app, this would redirect to the actual gallery
+            // For now, we'll simulate with an alert
+            alert('🎉 Welcome to your gallery!\n\nIn the real application, this would redirect to your private photo gallery where you can:\n\n• View all your photos\n• Download high-resolution images\n• Share favorites with family\n• Order prints\n\nSession ID: ' + sessionId);
+            
+            // Reset form
+            document.getElementById('sessionId').value = '';
+            document.getElementById('password').value = '';
+            hideMessages();
+          }, 2000);
+        } else {
+          // Invalid credentials
+          showError('Invalid session ID or password. Please check your details and try again.');
+          
+          // Add error animation to inputs
+          document.getElementById('sessionId').classList.add('error');
+          document.getElementById('password').classList.add('error');
+          
+          setTimeout(() => {
+            document.getElementById('sessionId').classList.remove('error');
+            document.getElementById('password').classList.remove('error');
+          }, 500);
+        }
+        
+        // Re-enable button
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Access My Gallery';
+      }, 1500);
+    }
+
+    // Helper functions for messages
+    function showError(message) {
+      const errorMsg = document.getElementById('errorMessage');
+      errorMsg.textContent = message;
+      errorMsg.style.display = 'block';
+    }
+
+    function showSuccess(message) {
+      const successMsg = document.getElementById('successMessage');
+      successMsg.textContent = message;
+      successMsg.style.display = 'block';
+    }
+
+    function hideMessages() {
+      document.getElementById('errorMessage').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'none';
+    }
+
+    // Format session ID as user types (optional enhancement)
+    document.getElementById('sessionId').addEventListener('input', function(e) {
+      // Remove any non-numeric characters
+      let value = e.target.value.replace(/\D/g, '');
+      e.target.value = value;
+    });
+
+    // Convert password to lowercase as user types
+    document.getElementById('password').addEventListener('input', function(e) {
+      e.target.value = e.target.value.toLowerCase();
+    });
+
+    // Clear error states when user starts typing
+    document.getElementById('sessionId').addEventListener('input', hideMessages);
+    document.getElementById('password').addEventListener('input', hideMessages);
+
+    // Add some nice focus animations
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.style.transform = 'scale(1.02)';
+        this.parentElement.style.transition = 'all 0.3s ease';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.style.transform = 'scale(1)';
+      });
+    });
+  </script>
+</body>
+</html>
