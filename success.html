@@ -310,6 +310,47 @@
       font-weight: 600;
     }
 
+    .next-steps {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .next-steps h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .next-step-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .next-step-item .emoji {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+
+    .next-step-item a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .next-step-item a:hover {
+      color: var(--orange);
+    }
+
     .contact-info {
       margin-top: 2rem;
     }
@@ -394,7 +435,7 @@
       animation: moveBackground 30s ease-in-out infinite;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding: 2rem 1.5rem;
-      color: rgba(255, ifreworks, 255, 0.5);
+      color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
     }
 
@@ -574,6 +615,23 @@
         font-size: 0.9rem;
       }
 
+      .next-steps {
+        padding: 1rem;
+      }
+
+      .next-steps h3 {
+        font-size: 1.3rem;
+      }
+
+      .next-step-item {
+        font-size: 1rem;
+      }
+
+      .next-step-item .emoji {
+        font-size: 1.2rem;
+        margin-right: 0.8rem;
+      }
+
       .contact-info {
         margin-top: 1.5rem;
       }
@@ -663,8 +721,8 @@
 
     <!-- Fallback Message (if session data is missing) -->
     <div id="fallback-message" class="fallback-message" style="display: none;">
-      <h2>Thank You!</h2>
-      <p>Your booking has been successfully completed. We’ll contact you soon with the details. If you have any questions, feel free to <a href="mailto:info@picturethispet.co">email us</a>.</p>
+      <h2>Thank You! 🎉</h2>
+      <p>Your booking has been successfully completed. We’ll send you a confirmation email soon 📧. If you have any questions, feel free to <a href="mailto:info@picturethispet.co">email us</a>.</p>
       <div class="success-actions">
         <a href="/" class="home-btn">Back to Home</a>
       </div>
@@ -672,8 +730,8 @@
 
     <!-- Success Section -->
     <div class="success-section" id="success-section">
-      <h2>Booking Successful!</h2>
-      <p>Thank you for booking your pet photography session with Picture This Pet. We’re excited to capture timeless memories for you and your pet!</p>
+      <h2>Booking Successful! 🎉</h2>
+      <p>Thank you for booking your pet photography session with Picture This Pet. We’re excited to capture timeless memories for you and your furry friend!</p>
       
       <div class="confirmation-details">
         <h3>Session Details</h3>
@@ -721,8 +779,24 @@
         </div>
       </div>
 
+      <div class="next-steps">
+        <h3>What’s Next? 🚀</h3>
+        <div class="next-step-item">
+          <span class="emoji">📧</span>
+          <p><strong>Check Your Email:</strong> We’ve sent a confirmation to <span id="emailInline">—</span>. Be sure to check your spam/junk folder if you don’t see it!</p>
+        </div>
+        <div class="next-step-item">
+          <span class="emoji">📸</span>
+          <p><strong>Prepare for the Session:</strong> Bring your pet’s favorite treats 🍖, a leash 🐾, and ensure they’re well-rested for the best photos!</p>
+        </div>
+        <div class="next-step-item">
+          <span class="emoji">👀</span>
+          <p><strong>Keep a Lookout:</strong> Follow us on Instagram <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer">@picturethispet</a> for sneak peeks and updates! 📷</p>
+        </div>
+      </div>
+
       <div class="contact-info">
-        <p>We’ll send a confirmation email to the address provided. If you have any questions, feel free to reach out!</p>
+        <p>If you have any questions, feel free to reach out!</p>
         <p>Email: <a href="mailto:info@picturethispet.co">info@picturethispet.co</a></p>
         <p>Follow us on Instagram: <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer">@picturethispet</a></p>
       </div>
@@ -765,7 +839,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:44 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:47 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -817,6 +891,7 @@
       // Populate intake form details
       document.getElementById('clientName').textContent = intakeData.person1.name || '—';
       document.getElementById('email').textContent = intakeData.person1.email || '—';
+      document.getElementById('emailInline').textContent = intakeData.person1.email || 'your email';
       document.getElementById('phone').textContent = intakeData.person1.phone || '—';
       const petNames = [intakeData.pet1.name];
       if (intakeData.pet2 && intakeData.pet2.name) {
