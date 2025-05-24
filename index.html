@@ -504,6 +504,19 @@
       background: rgba(255, 255, 255, 0.15);
     }
 
+    /* === LEAD CAPTURE SUCCESS MESSAGE === */
+    .lead-capture-success {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+      color: #10b981;
+      font-weight: 600;
+      text-align: center;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
     /* === INSTAGRAM POSTS SECTION === */
     #instagram-posts-section {
       padding: 5rem 1rem;
@@ -930,19 +943,19 @@
     <section id="session-builder-section">
       <div class="session-builder-container">
         <h2>Book Your Pet Photography Session</h2>
-        <p>Let’s create a session that’s perfect for you and your pet. Answer a few quick questions to get started.</p>
+        <p>Let's create a session that's perfect for you and your pet. Answer a few quick questions to get started.</p>
 
         <!-- Start Your Journey Card -->
         <div class="session-builder-card" id="start-journey-card">
           <h3>Start Your Journey</h3>
-          <p>Ready to capture your pet’s personality?<br>Let’s build your perfect photography session in just a few steps.</p>
+          <p>Ready to capture your pet's personality?<br>Let's build your perfect photography session in just a few steps.</p>
           <button class="next-btn" onclick="showCard('email-capture-card')">Start Now</button>
         </div>
 
         <!-- Email Capture Card -->
         <div class="session-builder-card" id="email-capture-card" style="display: none;">
           <h3>What is your email to get started?</h3>
-          <p>We’ll use this to keep you updated on your booking.</p>
+          <p>We'll use this to keep you updated on your booking.</p>
           <div class="form-group">
             <label for="user-email">Email Address *</label>
             <input type="email" id="user-email" name="user-email" required placeholder="Enter your email address" />
@@ -991,7 +1004,7 @@
         <!-- Location Card -->
         <div class="session-builder-card" id="location-card" style="display: none;">
           <h3>Select Your Location</h3>
-          <p>Choose a scenic Denver park for your pet’s photo session.</p>
+          <p>Choose a scenic Denver park for your pet's photo session.</p>
           <div class="options">
             <button class="option-btn" data-value="Cheesman">Cheesman Park</button>
             <button class="option-btn" data-value="City">City Park</button>
@@ -1021,6 +1034,9 @@
           <div class="options">
             <button class="option-btn" data-value="1">1 Person</button>
             <button class="option-btn" data-value="2">2 People</button>
+          </div>
+          <div id="lead-capture-success" class="lead-capture-success" style="display: none;">
+            ✅ Great! We've saved your session preferences. Continue to complete your booking.
           </div>
           <div class="card-actions">
             <button class="back-btn" onclick="showCard('pet-count-card')">Back</button>
@@ -1093,7 +1109,7 @@
               <li>Edited digital images will be delivered within 14 business days after the session.</li>
               <li>The photographer retains copyright of all images but provides you with a personal use license.</li>
               <li>You are responsible for ensuring all participants are prepared and on time for the session.</li>
-              <li>Reshoots are at the photographer’s discretion and may incur additional fees.</li>
+              <li>Reshoots are at the photographer's discretion and may incur additional fees.</li>
             </ul>
             <p>By proceeding, you agree to these terms.</p>
           </div>
@@ -1217,7 +1233,67 @@
       showCard('session-type-card');
     }
 
-    // Handle option selection with auto-advance
+    // 🎯 CRITICAL: Early Lead Capture Function
+    function captureEarlyLead() {
+      const email = JSON.parse(localStorage.getItem('ptpMarketingData'))?.email || '';
+      const sessionType = document.querySelector('#session-type-card .option-btn.selected')?.dataset.value || '';
+      const location = document.querySelector('#location-card .option-btn.selected')?.dataset.value || '';
+      const petCount = document.querySelector('#pet-count-card .option-btn.selected')?.dataset.value || '';
+      const peopleCount = document.querySelector('#people-count-card .option-btn.selected')?.dataset.value || '';
+
+      if (!email) {
+        console.warn('No email found for lead capture');
+        return;
+      }
+
+      // Generate lead ID
+      const leadId = `LEAD_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      // Create lead data
+      const leadData = {
+        leadId: leadId,
+        email: email,
+        sessionType: sessionType,
+        location: location,
+        petCount: petCount,
+        peopleCount: peopleCount,
+        timestamp: new Date().toISOString(),
+        status: 'incomplete',
+        source: 'session_builder_step_4',
+        lastActivity: new Date().toISOString()
+      };
+
+      // Save to ptpAdminLeads
+      let existingLeads = JSON.parse(localStorage.getItem('ptpAdminLeads')) || [];
+      
+      // Check if lead already exists for this email
+      const existingLeadIndex = existingLeads.findIndex(lead => lead.email === email);
+      
+      if (existingLeadIndex !== -1) {
+        // Update existing lead
+        existingLeads[existingLeadIndex] = { ...existingLeads[existingLeadIndex], ...leadData };
+        console.log('🔄 Updated existing lead:', leadData);
+      } else {
+        // Add new lead
+        existingLeads.push(leadData);
+        console.log('✅ Captured new lead:', leadData);
+      }
+
+      localStorage.setItem('ptpAdminLeads', JSON.stringify(existingLeads));
+
+      // Show success message
+      const successMessage = document.getElementById('lead-capture-success');
+      successMessage.style.display = 'block';
+      
+      // Dispatch event for admin dashboard updates
+      window.dispatchEvent(new CustomEvent('leadCaptured', { detail: leadData }));
+      
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 3000);
+    }
+
+    // Handle option selection with auto-advance and lead capture
     function handleOptionSelection(optionGroup, nextCardId) {
       const options = document.querySelectorAll(`#${optionGroup} .option-btn`);
 
@@ -1225,13 +1301,19 @@
         option.addEventListener('click', function() {
           options.forEach(btn => btn.classList.remove('selected'));
           this.classList.add('selected');
+          
+          // 🎯 TRIGGER LEAD CAPTURE after people count selection
+          if (optionGroup === 'people-count-card') {
+            captureEarlyLead();
+          }
+          
           // Auto-advance to the next card
           showCard(nextCardId);
         });
       });
     }
 
-    // Save session data to localStorage
+    // Save session data to localStorage (final step)
     function saveSessionData() {
       const session = document.querySelector('#session-type-card .option-btn.selected')?.dataset.value || '';
       const park = document.querySelector('#location-card .option-btn.selected')?.dataset.value || '';
@@ -1251,12 +1333,12 @@
 
     // Initialize session builder
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Homepage loaded, initializing session builder...');
+      console.log('🚀 Enhanced session builder loaded with early lead capture...');
       
       handleOptionSelection('session-type-card', 'location-card');
       handleOptionSelection('location-card', 'pet-count-card');
       handleOptionSelection('pet-count-card', 'people-count-card');
-      handleOptionSelection('people-count-card', 'pet-behavior-policy-card');
+      handleOptionSelection('people-count-card', 'pet-behavior-policy-card'); // 🎯 Lead capture happens here
     });
   </script>
 </body>
