@@ -1060,7 +1060,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:34 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:47 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -1082,9 +1082,118 @@
       window.location.href = '/';
     }
 
-    // Form submission handling
+    // Log errors to Airtable for live testing
+    async function logErrorToAirtable(page, error, sessionData = {}) {
+      try {
+        const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const errorRecord = {
+          fields: {
+            errorId: errorId,
+            timestamp: new Date().toISOString(),
+            page: page,
+            errorMessage: error.message || String(error),
+            errorStack: error.stack || 'No stack trace available',
+            userAgent: navigator.userAgent,
+            sessionData: JSON.stringify(sessionData)
+          }
+        };
+
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Errors', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(errorRecord)
+        });
+
+        if (response.ok) {
+          console.log('✅ Error logged to Airtable:', errorRecord);
+        } else {
+          console.warn('⚠️ Failed to log error to Airtable:', response.status);
+        }
+      } catch (innerError) {
+        console.warn('⚠️ Failed to log error to Airtable:', innerError);
+      }
+    }
+
+    // Save intake data to Airtable
+    async function saveIntakeToAirtable(intakeData) {
+      try {
+        console.log('💾 Saving intake data to Airtable...');
+        
+        const airtableRecord = {
+          fields: {
+            bookingId: intakeData.bookingId || `BOOKING_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            timestamp: new Date().toISOString(),
+            status: 'intake_completed',
+            clientName: intakeData.client?.name || '',
+            clientEmail: intakeData.client?.email || '',
+            clientPhone: intakeData.client?.phone || '',
+            clientZip: intakeData.client?.address?.zip || '',
+            client2Name: intakeData.client2?.name || '',
+            client2Email: intakeData.client2?.email || '',
+            client2Phone: intakeData.client2?.phone || '',
+            client2Zip: intakeData.client2?.address?.zip || '',
+            pet1Name: intakeData.pets?.[0]?.name || '',
+            pet1Age: parseInt(intakeData.pets?.[0]?.age) || 0,
+            pet1Birthdate: intakeData.pets?.[0]?.birthdate || '',
+            pet1Gender: intakeData.pets?.[0]?.gender || '',
+            pet1FavoriteToy: intakeData.pets?.[0]?.favoriteToy || '',
+            pet1OffLeash: intakeData.pets?.[0]?.offLeash || false,
+            pet1Behavior: intakeData.pets?.[0]?.behavior || '',
+            pet1Notes: intakeData.pets?.[0]?.notes || '',
+            pet2Name: intakeData.pets?.[1]?.name || '',
+            pet2Age: parseInt(intakeData.pets?.[1]?.age) || 0,
+            pet2Birthdate: intakeData.pets?.[1]?.birthdate || '',
+            pet2Gender: intakeData.pets?.[1]?.gender || '',
+            pet2FavoriteToy: intakeData.pets?.[1]?.favoriteToy || '',
+            pet2OffLeash: intakeData.pets?.[1]?.offLeash || false,
+            pet2Behavior: intakeData.pets?.[1]?.behavior || '',
+            pet2Notes: intakeData.pets?.[1]?.notes || '',
+            sessionType: intakeData.session || '',
+            sessionDate: intakeData.selectedDateTime || '',
+            location: intakeData.park || '',
+            petCount: parseInt(intakeData.petCount) || 1,
+            peopleCount: parseInt(intakeData.peopleCount) || 1,
+            specialRequests: intakeData.preferences?.specialRequests || '',
+            photoStyle: intakeData.preferences?.photoStyle || '',
+            instagramTag: intakeData.preferences?.instagramTag || false,
+            pet1Instagram: intakeData.pets?.[0]?.instagram || '',
+            pet2Instagram: intakeData.pets?.[1]?.instagram || '',
+            person1Instagram: intakeData.client?.instagram || '',
+            person2Instagram: intakeData.client2?.instagram || '',
+            marketingConsent: intakeData.preferences?.marketingConsent || false,
+            referralSource: intakeData.referralSource || ''
+          }
+        };
+
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(airtableRecord)
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log('✅ Intake data saved to Airtable:', result);
+          return result;
+        } else {
+          throw new Error(`Airtable error: ${response.status}`);
+        }
+      } catch (error) {
+        console.error('❌ Failed to save intake data to Airtable:', error);
+        await logErrorToAirtable('intake-form.html', error, intakeData);
+        return null;
+      }
+    }
+
+    // Form submission handling with data transfer safety
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('🎯 Fixed Intake Form page loaded, initializing proper data flow...');
+      console.log('🎯 Intake Form page loaded with data transfer safety mechanisms...');
 
       const form = document.getElementById('intakeForm');
       const vaccinationInputs = document.getElementsByName('isVaccinated');
@@ -1092,12 +1201,27 @@
       const submitBtn = document.getElementById('submitBtn');
       const popup = document.getElementById('vaccinationPopup');
       
-      // 🎯 CRITICAL: Load existing session data to build upon
+      // Load existing session and marketing data
       let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
       let marketingData = JSON.parse(localStorage.getItem('ptpMarketingData')) || {};
 
       console.log('Loaded existing session data:', sessionData);
       console.log('Loaded existing marketing data:', marketingData);
+
+      // Ensure existing session data is stored redundantly
+      try {
+        if (Object.keys(sessionData).length > 0) {
+          const dataString = JSON.stringify(sessionData);
+          localStorage.setItem('ptpSessionBackup', dataString);
+          localStorage.setItem(`ptpBooking_${Date.now()}`, dataString);
+          sessionStorage.setItem('ptpSessionData', dataString);
+          sessionStorage.setItem('ptpSessionBackup', dataString);
+          console.log('✅ Existing session data saved redundantly in 4 locations');
+        }
+      } catch (error) {
+        console.error('Error saving session data:', error);
+        logErrorToAirtable('intake-form.html', error, sessionData);
+      }
 
       // Pre-fill email for Person 1
       const person1EmailInput = document.getElementById('person1Email');
@@ -1183,21 +1307,31 @@
         const input = document.getElementById(field);
         if (input) {
           input.addEventListener('input', function() {
-            marketingData[field] = input.value;
-            marketingData.sessionData = {
-              session: sessionData.session,
-              park: sessionData.park,
-              selectedDateTime: sessionData.selectedDateTime,
-              petCount: sessionData.petCount,
-              peopleCount: sessionData.peopleCount
-            };
-            localStorage.setItem('ptpMarketingData', JSON.stringify(marketingData));
+            try {
+              marketingData[field] = input.value;
+              marketingData.sessionData = {
+                session: sessionData.session,
+                park: sessionData.park,
+                selectedDateTime: sessionData.selectedDateTime,
+                petCount: sessionData.petCount,
+                peopleCount: sessionData.peopleCount
+              };
+              const dataString = JSON.stringify(marketingData);
+              localStorage.setItem('ptpMarketingData', dataString);
+              localStorage.setItem('ptpMarketingBackup', dataString);
+              sessionStorage.setItem('ptpMarketingData', dataString);
+              sessionStorage.setItem('ptpMarketingBackup', dataString);
+              console.log('✅ Marketing data saved redundantly in 4 locations');
+            } catch (error) {
+              console.error('Error saving marketing data:', error);
+              logErrorToAirtable('intake-form.html', error, marketingData);
+            }
           });
         }
       });
 
-      // 🎯 CRITICAL: Form submission - APPEND to existing sessionData instead of creating separate object
-      form.addEventListener('submit', function(e) {
+      // Form submission with data transfer safety
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
         // Validate form
@@ -1208,85 +1342,102 @@
 
         console.log('🎯 Form submitted, appending intake data to existing sessionData...');
 
-        // Collect intake form data
-        const intakeData = {
-          isVaccinated: document.querySelector('input[name="isVaccinated"]:checked')?.value || '',
-          client: {
-            // Primary person (always required)
-            name: document.getElementById('person1Name').value,
-            email: document.getElementById('person1Email').value,
-            phone: document.getElementById('person1Phone').value,
-            address: {
-              zip: document.getElementById('person1Zip').value
-            },
-            instagram: document.getElementById('person1Instagram')?.value || ''
-          },
-          // Secondary person (conditional)
-          ...(peopleCount === '2' && {
-            client2: {
-              name: document.getElementById('person2Name').value,
-              email: document.getElementById('person2Email').value,
-              phone: document.getElementById('person2Phone').value,
+        try {
+          // Collect intake form data
+          const intakeData = {
+            isVaccinated: document.querySelector('input[name="isVaccinated"]:checked')?.value || '',
+            client: {
+              name: document.getElementById('person1Name').value,
+              email: document.getElementById('person1Email').value,
+              phone: document.getElementById('person1Phone').value,
               address: {
-                zip: document.getElementById('person2Zip').value
+                zip: document.getElementById('person1Zip').value
               },
-              instagram: document.getElementById('person2Instagram')?.value || ''
-            }
-          }),
-          pets: [
-            // Primary pet (always required)
-            {
-              name: document.getElementById('pet1Name').value,
-              age: document.getElementById('pet1Age').value,
-              birthdate: document.getElementById('pet1Birthdate').value,
-              gender: document.getElementById('pet1Gender').value,
-              favoriteToy: document.getElementById('pet1FavoriteToy').value,
-              offLeash: document.querySelector('input[name="pet1OffLeash"]:checked')?.value === 'yes',
-              behavior: document.getElementById('pet1Behavior').value,
-              notes: document.getElementById('pet1Notes').value,
-              instagram: document.getElementById('pet1Instagram')?.value || ''
+              instagram: document.getElementById('person1Instagram')?.value || ''
             },
-            // Secondary pet (conditional)
-            ...(petCount === '2' ? [{
-              name: document.getElementById('pet2Name').value,
-              age: document.getElementById('pet2Age').value,
-              birthdate: document.getElementById('pet2Birthdate').value,
-              gender: document.getElementById('pet2Gender').value,
-              favoriteToy: document.getElementById('pet2FavoriteToy').value,
-              offLeash: document.querySelector('input[name="pet2OffLeash"]:checked')?.value === 'yes',
-              behavior: document.getElementById('pet2Behavior').value,
-              notes: document.getElementById('pet2Notes').value,
-              instagram: document.getElementById('pet2Instagram')?.value || ''
-            }] : [])
-          ],
-          preferences: {
-            specialRequests: document.getElementById('specialRequests').value,
-            photoStyle: document.getElementById('photoStyle').value,
-            instagramTag: document.querySelector('input[name="instagramTag"]:checked')?.value === 'yes',
-            marketingConsent: document.getElementById('marketingConsent').checked
-          },
-          referralSource: document.getElementById('referralSource').value
-        };
+            ...(peopleCount === '2' && {
+              client2: {
+                name: document.getElementById('person2Name').value,
+                email: document.getElementById('person2Email').value,
+                phone: document.getElementById('person2Phone').value,
+                address: {
+                  zip: document.getElementById('person2Zip').value
+                },
+                instagram: document.getElementById('person2Instagram')?.value || ''
+              }
+            }),
+            pets: [
+              {
+                name: document.getElementById('pet1Name').value,
+                age: document.getElementById('pet1Age').value,
+                birthdate: document.getElementById('pet1Birthdate').value,
+                gender: document.getElementById('pet1Gender').value,
+                favoriteToy: document.getElementById('pet1FavoriteToy').value,
+                offLeash: document.querySelector('input[name="pet1OffLeash"]:checked')?.value === 'yes',
+                behavior: document.getElementById('pet1Behavior').value,
+                notes: document.getElementById('pet1Notes').value,
+                instagram: document.getElementById('pet1Instagram')?.value || ''
+              },
+              ...(petCount === '2' ? [{
+                name: document.getElementById('pet2Name').value,
+                age: document.getElementById('pet2Age').value,
+                birthdate: document.getElementById('pet2Birthdate').value,
+                gender: document.getElementById('pet2Gender').value,
+                favoriteToy: document.getElementById('pet2FavoriteToy').value,
+                offLeash: document.querySelector('input[name="pet2OffLeash"]:checked')?.value === 'yes',
+                behavior: document.getElementById('pet2Behavior').value,
+                notes: document.getElementById('pet2Notes').value,
+                instagram: document.getElementById('pet2Instagram')?.value || ''
+              }] : [])
+            ],
+            preferences: {
+              specialRequests: document.getElementById('specialRequests').value,
+              photoStyle: document.getElementById('photoStyle').value,
+              instagramTag: document.querySelector('input[name="instagramTag"]:checked')?.value === 'yes',
+              marketingConsent: document.getElementById('marketingConsent').checked
+            },
+            referralSource: document.getElementById('referralSource').value
+          };
 
-        // 🎯 CRITICAL: Merge intake data INTO existing sessionData (don't replace)
-        const updatedSessionData = {
-          ...sessionData, // Keep existing session builder + pick-a-date data
-          ...intakeData   // Add intake form data
-        };
+          // Merge intake data into existing sessionData
+          const updatedSessionData = {
+            ...sessionData,
+            ...intakeData
+          };
 
-        console.log('🎯 Updated session data with intake form:', updatedSessionData);
+          console.log('🎯 Updated session data with intake form:', updatedSessionData);
 
-        // Save back to the SAME localStorage key
-        localStorage.setItem('ptpSessionData', JSON.stringify(updatedSessionData));
+          // Save to Airtable
+          await saveIntakeToAirtable(updatedSessionData);
 
-        // Update marketing data with latest email
-        marketingData.email = intakeData.client.email;
-        localStorage.setItem('ptpMarketingData', JSON.stringify(marketingData));
+          // Save redundantly to localStorage and sessionStorage
+          const dataString = JSON.stringify(updatedSessionData);
+          localStorage.setItem('ptpSessionData', dataString);
+          localStorage.setItem('ptpSessionBackup', dataString);
+          localStorage.setItem(`ptpBooking_${Date.now()}`, dataString);
+          sessionStorage.setItem('ptpSessionData', dataString);
+          sessionStorage.setItem('ptpSessionBackup', dataString);
+          console.log('✅ Session data saved redundantly in 5 locations');
 
-        console.log('✅ Data flow maintained - redirecting to payment...');
+          // Update marketing data with latest email
+          marketingData.email = intakeData.client.email;
+          const marketingString = JSON.stringify(marketingData);
+          localStorage.setItem('ptpMarketingData', marketingString);
+          localStorage.setItem('ptpMarketingBackup', marketingString);
+          sessionStorage.setItem('ptpMarketingData', marketingString);
+          sessionStorage.setItem('ptpMarketingBackup', marketingString);
+          console.log('✅ Marketing data saved redundantly in 4 locations');
 
-        // Redirect to payment page
-        window.location.href = '/payment.html';
+          console.log('✅ Data flow maintained - redirecting to payment...');
+
+          // Redirect to payment page
+          window.location.href = '/payment.html';
+        } catch (error) {
+          console.error('Error during form submission:', error);
+          await logErrorToAirtable('intake-form.html', error, sessionData);
+          // Optionally, show an error message to the user
+          alert('An error occurred while submitting the form. Please try again.');
+        }
       });
     });
   </script>
