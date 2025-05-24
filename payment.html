@@ -732,8 +732,24 @@
 
       console.log('🎯 Updated session data with payment info:', updatedSessionData);
 
-      // Save back to localStorage
-      localStorage.setItem('ptpSessionData', JSON.stringify(updatedSessionData));
+      // 🛡️ REDUNDANT DATA PROTECTION: Save in multiple places to survive Stripe redirect
+      const dataString = JSON.stringify(updatedSessionData);
+      
+      try {
+        // Primary storage
+        localStorage.setItem('ptpSessionData', dataString);
+        
+        // Backup storage methods
+        localStorage.setItem('ptpSessionBackup', dataString);
+        localStorage.setItem(`ptpBooking_${paymentIntentId}`, dataString);
+        sessionStorage.setItem('ptpSessionData', dataString);
+        sessionStorage.setItem('ptpSessionBackup', dataString);
+        
+        console.log('✅ Data saved redundantly in 5 locations for Stripe protection');
+        
+      } catch (e) {
+        console.warn('⚠️ Storage warning:', e);
+      }
 
       console.log('✅ Payment data saved - redirecting to Stripe...');
 
