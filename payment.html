@@ -624,7 +624,7 @@
 
       <div class="summary-actions">
         <a href="/intake-form.html" class="edit-btn">Edit Details</a>
-        <a href="#" id="checkout-btn" class="checkout-btn">Proceed to Checkout</a>
+        <a href="#" id="checkout-btn" class="checkout-btn" onclick="proceedToCheckout(event)">Proceed to Checkout</a>
       </div>
     </div>
   </main>
@@ -660,7 +660,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 04:41 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 08:45 PM MST, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -676,6 +676,11 @@
       e.preventDefault();
       window.location.href = '/#session-builder-section';
     }
+
+    // Global variables for session data and calculated total
+    let sessionData = {};
+    let calculatedTotal = 0;
+    let stripeCheckoutLink = '';
 
     // Start the 15-minute countdown timer
     function startCountdown() {
@@ -697,15 +702,56 @@
       }, 1000);
     }
 
+    // 🎯 CRITICAL: Save payment data before redirecting to Stripe
+    function proceedToCheckout(e) {
+      e.preventDefault();
+      
+      console.log('🎯 Proceeding to checkout - saving payment data first...');
+      
+      // Generate payment intent ID for tracking
+      const paymentIntentId = `pi_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      // 🎯 CRITICAL: Append payment data to existing sessionData
+      const paymentData = {
+        payment: {
+          amount: calculatedTotal,
+          currency: 'USD',
+          status: 'pending',
+          paymentIntentId: paymentIntentId,
+          stripeCheckoutUrl: stripeCheckoutLink,
+          timestamp: new Date().toISOString(),
+          method: 'stripe'
+        }
+      };
+
+      // Merge payment data into existing session data
+      const updatedSessionData = {
+        ...sessionData,  // Keep all existing data
+        ...paymentData   // Add payment information
+      };
+
+      console.log('🎯 Updated session data with payment info:', updatedSessionData);
+
+      // Save back to localStorage
+      localStorage.setItem('ptpSessionData', JSON.stringify(updatedSessionData));
+
+      console.log('✅ Payment data saved - redirecting to Stripe...');
+
+      // Now redirect to Stripe
+      window.location.href = stripeCheckoutLink;
+    }
+
     // Display session details and handle checkout redirect
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Payment Summary page loaded, initializing...');
+      console.log('🎯 Fixed Payment Summary page loaded, initializing proper data flow...');
 
       // Start the countdown timer
       startCountdown();
 
-      // Retrieve session data from localStorage
-      const sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      // 🎯 CRITICAL: Retrieve existing session data to build upon
+      sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      
+      console.log('Loaded session data for payment:', sessionData);
 
       // Populate session details
       document.getElementById('sessionType').textContent = sessionData.session || '—';
@@ -715,71 +761,77 @@
       document.getElementById('peopleCount').textContent = sessionData.peopleCount || '—';
 
       // Calculate total price
-      let total = 0;
-      if (sessionData.session === "Mini") total += 50;
-      if (sessionData.session === "Full") total += 100;
-      if (sessionData.petCount === "2") total += 40;
-      if (sessionData.peopleCount === "2") total += 20;
-      document.getElementById('totalPrice').textContent = `$${total}`;
+      calculatedTotal = 0;
+      if (sessionData.session === "Mini") calculatedTotal += 50;
+      if (sessionData.session === "Full") calculatedTotal += 100;
+      if (sessionData.petCount === "2") calculatedTotal += 40;
+      if (sessionData.peopleCount === "2") calculatedTotal += 20;
+      
+      document.getElementById('totalPrice').textContent = `$${calculatedTotal}`;
 
       // Determine the correct Stripe Checkout link based on session details
-      const checkoutBtn = document.getElementById('checkout-btn');
       const sessionType = sessionData.session?.toLowerCase();
       const location = sessionData.park?.toLowerCase();
       const petCount = sessionData.petCount;
       const peopleCount = sessionData.peopleCount;
 
-      let checkoutLink = '#'; // Default fallback
+      stripeCheckoutLink = '#'; // Default fallback
 
       // Map session details to Stripe Checkout links
       if (sessionType === "full") {
         if (location === "cheesman") {
           if (petCount === "1" && peopleCount === "1") {
-            checkoutLink = "https://buy.stripe.com/4gw6ry0Wz0bXe1G147";
+            stripeCheckoutLink = "https://buy.stripe.com/4gw6ry0Wz0bXe1G147";
           } else if (petCount === "2" && peopleCount === "1") {
-            checkoutLink = "https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08";
+            stripeCheckoutLink = "https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08";
           } else if (petCount === "1" && peopleCount === "2") {
-            checkoutLink = "https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c";
+            stripeCheckoutLink = "https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c";
           } else if (petCount === "2" && peopleCount === "2") {
-            checkoutLink = "https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d";
+            stripeCheckoutLink = "https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d";
           }
         } else if (location === "city") {
           if (petCount === "1" && peopleCount === "1") {
-            checkoutLink = "https://buy.stripe.com/00gg28eNp9Mx9Lq9AE";
+            stripeCheckoutLink = "https://buy.stripe.com/00gg28eNp9Mx9Lq9AE";
           } else if (petCount === "2" && peopleCount === "1") {
-            checkoutLink = "https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07";
+            stripeCheckoutLink = "https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07";
           } else if (petCount === "1" && peopleCount === "2") {
-            checkoutLink = "https://buy.stripe.com/14A8wR8d12921VD80B9bO0e";
+            stripeCheckoutLink = "https://buy.stripe.com/14A8wR8d12921VD80B9bO0e";
           } else if (petCount === "2" && peopleCount === "2") {
-            checkoutLink = "https://buy.stripe.com/6oU28tdxl29243Lft39bO0f";
+            stripeCheckoutLink = "https://buy.stripe.com/6oU28tdxl29243Lft39bO0f";
           }
         }
       } else if (sessionType === "mini") {
         if (location === "cheesman") {
           if (petCount === "1" && peopleCount === "1") {
-            checkoutLink = "https://buy.stripe.com/eVag28fRtgaVe1GcMN";
+            stripeCheckoutLink = "https://buy.stripe.com/eVag28fRtgaVe1GcMN";
           } else if (petCount === "2" && peopleCount === "1") {
-            checkoutLink = "https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05";
+            stripeCheckoutLink = "https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05";
           } else if (petCount === "1" && peopleCount === "2") {
-            checkoutLink = "https://buy.stripe.com/8x24gB64T292eIpbcN9bO09";
+            stripeCheckoutLink = "https://buy.stripe.com/8x24gB64T292eIpbcN9bO09";
           } else if (petCount === "2" && peopleCount === "2") {
-            checkoutLink = "https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g";
+            stripeCheckoutLink = "https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g";
           }
         } else if (location === "city") {
           if (petCount === "1" && peopleCount === "1") {
-            checkoutLink = "https://buy.stripe.com/9AQ6ry7kX8It3n28wy";
+            stripeCheckoutLink = "https://buy.stripe.com/9AQ6ry7kX8It3n28wy";
           } else if (petCount === "2" && peopleCount === "1") {
-            checkoutLink = "https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06";
+            stripeCheckoutLink = "https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06";
           } else if (petCount === "1" && peopleCount === "2") {
-            checkoutLink = "https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b";
+            stripeCheckoutLink = "https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b";
           } else if (petCount === "2" && peopleCount === "2") {
-            checkoutLink = "https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a";
+            stripeCheckoutLink = "https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a";
           }
         }
       }
 
-      // Set the checkout link on the button
-      checkoutBtn.href = checkoutLink;
+      console.log('🎯 Calculated payment details:', {
+        total: calculatedTotal,
+        stripeLink: stripeCheckoutLink,
+        sessionType: sessionType,
+        location: location,
+        petCount: petCount,
+        peopleCount: peopleCount
+      });
     });
   </script>
 </body>
