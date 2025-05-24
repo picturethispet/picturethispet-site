@@ -376,31 +376,45 @@
     }
 
     .session-builder-card .session-details {
-      text-align: left;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      gap: 1rem;
       margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
-    .session-builder-card .session-details h4 {
+    .session-builder-card .session-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 1rem;
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      text-align: left;
+    }
+
+    .session-builder-card .session-box h4 {
       font-size: 1.2rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
       color: white;
     }
 
-    .session-builder-card .session-details ul {
+    .session-builder-card .session-box ul {
       list-style-type: none;
       padding-left: 0;
       margin-bottom: 1rem;
     }
 
-    .session-builder-card .session-details li {
+    .session-builder-card .session-box li {
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .session-builder-card .form-group {
@@ -636,6 +650,17 @@
         min-height: 250px; /* Adjusted for mobile */
       }
 
+      /* Stack session boxes vertically on mobile */
+      .session-builder-card .session-details {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .session-builder-card .session-box {
+        min-width: 100%;
+        max-width: 100%;
+      }
+
       /* Mobile-specific adjustments for session builder cards */
       .session-builder-card#start-journey-card {
         padding-bottom: 3rem; /* Increased padding at the bottom */
@@ -655,7 +680,8 @@
 
       .session-builder-card#pet-behavior-policy-card,
       .session-builder-card#vaccination-policy-card,
-      .session-builder-card#cancellation-policy-card {
+      .session-builder-card#cancellation-policy-card,
+      .session-builder-card#photo-service-agreement-card {
         min-height: 500px; /* Increased vertical size for policy cards */
         padding-bottom: 3rem; /* Ensure enough space for content */
       }
@@ -742,22 +768,26 @@
           <h3>Choose Your Session Type</h3>
           <p>Select the type of session that best suits your needs.</p>
           <div class="session-details">
-            <h4>Mini Session</h4>
-            <ul>
-              <li>⏰ 30 minutes</li>
-              <li>📸 Includes 5 edited digital images</li>
-              <li>🐾 1 pet included</li>
-              <li>👤 1 person included</li>
-              <li>💵 Additional pets or people at extra cost</li>
-            </ul>
-            <h4>Full Session</h4>
-            <ul>
-              <li>⏰ 60 minutes</li>
-              <li>📸 Includes 15 edited digital images</li>
-              <li>🐾 1 pet included</li>
-              <li>👤 1 person included</li>
-              <li>💵 Additional pets or people at extra cost</li>
-            </ul>
+            <div class="session-box">
+              <h4>Mini Session</h4>
+              <ul>
+                <li>⏰ 30 minutes</li>
+                <li>📸 Includes 5 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
+            <div class="session-box">
+              <h4>Full Session</h4>
+              <ul>
+                <li>⏰ 60 minutes</li>
+                <li>📸 Includes 15 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
           </div>
           <div class="options">
             <button class="option-btn" data-value="Mini">Mini Session</button>
@@ -859,6 +889,26 @@
           </div>
           <div class="card-actions">
             <button class="back-btn" onclick="showCard('vaccination-policy-card')">Back</button>
+            <button class="next-btn" onclick="showCard('photo-service-agreement-card')">I Agree, Proceed</button>
+          </div>
+        </div>
+
+        <!-- Photo Service Agreement Card -->
+        <div class="session-builder-card" id="photo-service-agreement-card" style="display: none;">
+          <h3>Photo Service Agreement</h3>
+          <div class="policy-content">
+            <p>Please review our photo service agreement to understand your rights and responsibilities:</p>
+            <ul>
+              <li>You grant Picture This Pet a non-exclusive license to use the photos for promotional purposes.</li>
+              <li>Edited digital images will be delivered within 14 business days after the session.</li>
+              <li>The photographer retains copyright of all images but provides you with a personal use license.</li>
+              <li>You are responsible for ensuring all participants are prepared and on time for the session.</li>
+              <li>Reshoots are at the photographer’s discretion and may incur additional fees.</li>
+            </ul>
+            <p>By proceeding, you agree to these terms.</p>
+          </div>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('cancellation-policy-card')">Back</button>
             <a href="/ptp-pick-date-step-3.html" class="next-btn" onclick="saveSessionData()">I Agree, Proceed</a>
           </div>
         </div>
@@ -897,7 +947,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:15 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:21 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
