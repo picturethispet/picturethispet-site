@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Intake Form | Picture This Pet</title>
-  <meta name="description" content="Complete the intake form to provide details for your pet photography session.">
+  <meta name="description" content="Complete your pet photography session booking with Picture This Pet by providing details about your pet(s) and preferences.">
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -155,79 +156,57 @@
       transform: scale(1.1);
     }
 
-    /* === MAIN CONTENT === */
-    main {
-      margin-top: 110px;
-      min-height: calc(100vh - 110px);
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      padding: 4rem 1rem;
-      position: relative;
-    }
-
-    /* === PROGRESS INDICATOR === */
-    .progress-section {
-      text-align: center;
-      margin-bottom: 3rem;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .progress-steps {
+    .social-icons {
       display: flex;
-      justify-content: center;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 1rem;
+      margin-left: 1rem;
     }
 
-    .progress-step {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: rgba(255, 255, 255, 0.7);
+    .social-icon {
+      color: white;
+      font-size: 1.5rem;
       transition: all 0.3s ease;
     }
 
-    .progress-step.completed {
-      background: var(--available-green);
-      border-color: var(--available-green);
-      color: white;
+    .social-icon:hover {
+      color: var(--gold);
+      transform: scale(1.1);
     }
 
-    .progress-step.active {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-      color: white;
+    /* === INTAKE FORM SECTION === */
+    #intake-form-section {
+      padding: 5rem 1rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      margin-top: 110px;
     }
 
-    .progress-line {
-      width: 60px;
-      height: 2px;
-      background: rgba(255, 255, 255, 0.3);
-      position: relative;
-    }
-
-    .progress-line.completed {
-      background: var(--available-green);
-    }
-
-    .progress-text {
-      color: white;
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-
-    /* === FORM SECTION === */
-    .form-section {
-      max-width: 800px;
+    .intake-form-container {
+      max-width: 900px;
       margin: 0 auto;
+      text-align: center;
+    }
+
+    .intake-form-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .intake-form-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .intake-form-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -238,33 +217,42 @@
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
     }
 
-    .form-section h2 {
+    .intake-form-card h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
       color: white;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .form-group {
+    .intake-form-card p {
+      font-size: 1.1rem;
+      line-height: 1.6;
       margin-bottom: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
     }
 
-    .form-group label {
+    .intake-form-card .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .intake-form-card .form-group label {
       display: block;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
       color: rgba(255, 255, 255, 0.9);
     }
 
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
+    .intake-form-card .form-group input,
+    .intake-form-card .form-group select,
+    .intake-form-card .form-group textarea {
       width: 100%;
       padding: 0.8rem;
       font-size: 1rem;
@@ -276,102 +264,55 @@
       transition: all 0.3s ease;
     }
 
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
+    .intake-form-card .form-group input:focus,
+    .intake-form-card .form-group select:focus,
+    .intake-form-card .form-group textarea:focus {
       outline: none;
       border-color: var(--gold);
       background: rgba(255, 255, 255, 0.15);
     }
 
-    .form-group textarea {
+    .intake-form-card .form-group textarea {
       resize: vertical;
       min-height: 100px;
     }
 
-    .form-group select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-      background-repeat: no-repeat;
-      background-position-x: 98%;
-      background-position-y: 50%;
-    }
-
-    .form-group.vaccination-group {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .form-group.vaccination-group label {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-
-    .form-group .radio-buttons {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .form-group .radio-buttons label {
-      font-size: 1.1rem;
-      font-weight: 400;
-      margin-bottom: 0;
+    .intake-form-card .form-group.checkbox-group {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
-    .form-group .radio-buttons input[type="radio"] {
+    .intake-form-card .form-group.checkbox-group label {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    .intake-form-card .form-group.checkbox-group input[type="checkbox"] {
       width: auto;
-      margin: 0;
-      transform: scale(1.5);
     }
 
-    .form-group .radio-buttons label:hover {
-      color: var(--gold);
-      cursor: pointer;
+    .intake-form-card .form-section {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .form-group .subtext {
-      font-size: 0.9rem;
-      font-style: italic;
-      color: rgba(255, 255, 255, 0.7);
-      margin-top: 0.5rem;
-      text-align: center;
+    .intake-form-card .form-section:last-child {
+      border-bottom: none;
     }
 
-    .form-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-card h3 {
+    .intake-form-card .form-section h4 {
       font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .form-actions {
-      text-align: center;
-      margin-top: 2rem;
-    }
-
-    .submit-btn {
+    .intake-form-card .submit-btn {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       border: none;
@@ -385,12 +326,17 @@
       display: inline-block;
     }
 
-    .submit-btn:hover {
+    .intake-form-card .submit-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
-    .back-btn {
+    .intake-form-card .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .intake-form-card .back-btn {
       background: rgba(255, 255, 255, 0.1);
       color: rgba(255, 255, 255, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.3);
@@ -404,66 +350,16 @@
       margin-right: 1rem;
     }
 
-    .back-btn:hover {
+    .intake-form-card .back-btn:hover {
       background: rgba(255, 255, 255, 0.2);
       color: white;
     }
 
-    /* === POP-UP STYLES === */
-    .popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 2000;
-      align-items: center;
+    .intake-form-card .card-actions {
+      display: flex;
       justify-content: center;
-    }
-
-    .popup-content {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 2rem;
-      max-width: 500px;
-      width: 90%;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .popup-content h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .popup-content p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .popup-content button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      padding: 0.8rem 2rem;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .popup-content button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+      gap: 1rem;
+      margin-top: 1rem;
     }
 
     /* === FOOTER STYLES === */
@@ -485,6 +381,12 @@
       max-width: 1200px;
       margin: 0 auto;
       margin-bottom: 1.5rem;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .footer-section h4 {
@@ -595,91 +497,59 @@
       .mobile-menu-btn {
         display: block;
       }
-      
-      main {
-        margin-top: 80px;
-        padding: 2rem 1rem;
-      }
 
-      .progress-steps {
+      .social-icons {
         gap: 0.5rem;
+        margin-left: 0.5rem;
       }
 
-      .progress-step {
-        width: 35px;
-        height: 35px;
-        font-size: 0.9rem;
-      }
-
-      .progress-line {
-        width: 40px;
-      }
-
-      .form-section {
-        padding: 2rem;
-      }
-
-      .form-section h2 {
-        font-size: 2rem;
-      }
-
-      .form-group label {
-        font-size: 1.1rem;
-      }
-
-      .form-group input,
-      .form-group textarea,
-      .form-group select {
-        font-size: 0.9rem;
-        padding: 0.6rem;
-      }
-
-      .form-group.vaccination-group {
-        padding: 1rem;
-      }
-
-      .form-group.vaccination-group label {
+      .social-icon {
         font-size: 1.2rem;
       }
 
-      .form-group .radio-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
+      #intake-form-section {
+        padding: 3rem 1rem;
+        margin-top: 80px;
       }
 
-      .form-group .subtext {
-        font-size: 0.8rem;
+      .intake-form-container h2 {
+        font-size: 2rem;
       }
 
-      .form-card h3 {
-        font-size: 1.3rem;
-      }
-
-      .submit-btn {
-        padding: 0.8rem 2rem;
+      .intake-form-container p {
         font-size: 1rem;
+        white-space: normal;
       }
 
-      .back-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.9rem;
+      .intake-form-card {
+        padding: 2rem;
       }
 
-      .popup-content {
-        padding: 1.5rem;
-      }
-
-      .popup-content h3 {
+      .intake-form-card h3 {
         font-size: 1.5rem;
       }
 
-      .popup-content p {
+      .intake-form-card p {
+        font-size: 0.9rem;
+      }
+
+      .intake-form-card .form-group label {
         font-size: 1rem;
       }
 
-      .popup-content button {
-        padding: 0.6rem 1.5rem;
+      .intake-form-card .form-group input,
+      .intake-form-card .form-group select,
+      .intake-form-card .form-group textarea {
+        font-size: 0.9rem;
+      }
+
+      .intake-form-card .form-section h4 {
+        font-size: 1.2rem;
+      }
+
+      .intake-form-card .submit-btn,
+      .intake-form-card .back-btn {
+        padding: 0.8rem 2rem;
         font-size: 1rem;
       }
 
@@ -690,6 +560,15 @@
       .footer-container {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .footer-section {
+        align-items: center;
+        text-align: center;
       }
 
       .payment-methods {
@@ -711,241 +590,96 @@
       <a href="/contact" aria-label="Contact page">Contact</a>
       <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
+    <div class="social-icons">
+      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+        <i class="fab fa-instagram social-icon"></i>
+      </a>
+    </div>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <!-- Progress Indicator -->
-    <div class="progress-section">
-      <div class="progress-steps">
-        <div class="progress-step completed">1</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">2</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">3</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step active">4</div>
-        <div class="progress-line"></div>
-        <div class="progress-step">5</div>
-      </div>
-      <p class="progress-text">Intake Form</p>
-    </div>
+    <!-- Intake Form Section -->
+    <section id="intake-form-section">
+      <div class="intake-form-container">
+        <h2>Intake Form</h2>
+        <p>Please provide details about your pet(s) and session preferences to finalize your booking.</p>
 
-    <!-- Form Section -->
-    <div class="form-section">
-      <h2>Intake Form</h2>
-      <form id="intakeForm">
-        <!-- Vaccination Question -->
-        <div class="form-group vaccination-group" id="vaccinationGroup">
-          <label for="isVaccinated">Is your pet vaccinated?</label>
-          <div class="radio-buttons">
-            <label><input type="radio" name="isVaccinated" value="yes" required> Yes</label>
-            <label><input type="radio" name="isVaccinated" value="no"> No</label>
-          </div>
-          <p class="subtext">Must provide records if requested</p>
-        </div>
-
-        <!-- Client Information (Person 1 - Required) -->
-        <div class="form-card" id="clientInfo1" style="display: none;">
-          <h3>Client Information (Person 1)</h3>
-          <div class="form-group">
-            <label for="person1Name">Name *</label>
-            <input type="text" id="person1Name" name="person1Name" required placeholder="Enter your full name" />
-          </div>
-          <div class="form-group">
-            <label for="person1Email">Email Address *</label>
-            <input type="email" id="person1Email" name="person1Email" required placeholder="Enter your email address" />
-          </div>
-          <div class="form-group">
-            <label for="person1Phone">Phone Number *</label>
-            <input type="tel" id="person1Phone" name="person1Phone" required placeholder="Enter your phone number" />
-          </div>
-          <div class="form-group">
-            <label for="person1Zip">Zip Code *</label>
-            <input type="text" id="person1Zip" name="person1Zip" required placeholder="Enter your zip code" />
-          </div>
-        </div>
-
-        <!-- Client Information (Person 2 - Conditional) -->
-        <div class="form-card" id="clientInfo2" style="display: none;">
-          <h3>Client Information (Person 2)</h3>
-          <div class="form-group">
-            <label for="person2Name">Name</label>
-            <input type="text" id="person2Name" name="person2Name" placeholder="Enter full name" />
-          </div>
-          <div class="form-group">
-            <label for="person2Email">Email Address</label>
-            <input type="email" id="person2Email" name="person2Email" placeholder="Enter email address" />
-          </div>
-          <div class="form-group">
-            <label for="person2Phone">Phone Number</label>
-            <input type="tel" id="person2Phone" name="person2Phone" placeholder="Enter phone number" />
-          </div>
-          <div class="form-group">
-            <label for="person2Zip">Zip Code</label>
-            <input type="text" id="person2Zip" name="person2Zip" placeholder="Enter zip code" />
-          </div>
-        </div>
-
-        <!-- Pet Information (Pet 1 - Required) -->
-        <div class="form-card" id="petInfo1" style="display: none;">
-          <h3>Pet Information (Pet 1)</h3>
-          <div class="form-group">
-            <label for="pet1Name">Pet's Name *</label>
-            <input type="text" id="pet1Name" name="pet1Name" required placeholder="Enter your pet's name" />
-          </div>
-          <div class="form-group">
-            <label for="pet1Age">Age *</label>
-            <input type="number" id="pet1Age" name="pet1Age" required placeholder="Enter pet's age" min="0" />
-          </div>
-          <div class="form-group">
-            <label for="pet1Birthdate">Birthdate *</label>
-            <input type="date" id="pet1Birthdate" name="pet1Birthdate" required />
-          </div>
-          <div class="form-group">
-            <label for="pet1Gender">Gender *</label>
-            <select id="pet1Gender" name="pet1Gender" required>
-              <option value="">Select gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="pet1FavoriteToy">Favorite Toy</label>
-            <input type="text" id="pet1FavoriteToy" name="pet1FavoriteToy" placeholder="E.g., squeaky ball" />
-          </div>
-          <div class="form-group">
-            <label for="pet1OffLeash">Can your pet be off-leash? *</label>
-            <div class="radio-buttons">
-              <label><input type="radio" name="pet1OffLeash" value="yes" required> Yes</label>
-              <label><input type="radio" name="pet1OffLeash" value="no"> No</label>
+        <div class="intake-form-card">
+          <h3>Complete Your Booking</h3>
+          <form id="intake-form">
+            <!-- Customer Information -->
+            <div class="form-section">
+              <h4>Customer Information</h4>
+              <div class="form-group">
+                <label for="customer-name">Full Name *</label>
+                <input type="text" id="customer-name" name="customer-name" required placeholder="Enter your full name" />
+              </div>
+              <div class="form-group">
+                <label for="customer-email">Email Address *</label>
+                <input type="email" id="customer-email" name="customer-email" required placeholder="Enter your email address" />
+              </div>
+              <div class="form-group">
+                <label for="customer-phone">Phone Number *</label>
+                <input type="tel" id="customer-phone" name="customer-phone" required placeholder="Enter your phone number" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="pet1Behavior">Behavior Description *</label>
-            <textarea id="pet1Behavior" name="pet1Behavior" required placeholder="Describe your pet's behavior (e.g., friendly, shy, energetic)"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="pet1Notes">Additional Notes</label>
-            <textarea id="pet1Notes" name="pet1Notes" placeholder="Any special requests or notes about this pet?"></textarea>
-          </div>
-        </div>
 
-        <!-- Pet Information (Pet 2 - Conditional) -->
-        <div class="form-card" id="petInfo2" style="display: none;">
-          <h3>Pet Information (Pet 2)</h3>
-          <div class="form-group">
-            <label for="pet2Name">Pet's Name</label>
-            <input type="text" id="pet2Name" name="pet2Name" placeholder="Enter your pet's name" />
-          </div>
-          <div class="form-group">
-            <label for="pet2Age">Age</label>
-            <input type="number" id="pet2Age" name="pet2Age" placeholder="Enter pet's age" min="0" />
-          </div>
-          <div class="form-group">
-            <label for="pet2Birthdate">Birthdate</label>
-            <input type="date" id="pet2Birthdate" name="pet2Birthdate" />
-          </div>
-          <div class="form-group">
-            <label for="pet2Gender">Gender</label>
-            <select id="pet2Gender" name="pet2Gender">
-              <option value="">Select gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="pet2FavoriteToy">Favorite Toy</label>
-            <input type="text" id="pet2FavoriteToy" name="pet2FavoriteToy" placeholder="E.g., squeaky ball" />
-          </div>
-          <div class="form-group">
-            <label for="pet2OffLeash">Can your pet be off-leash?</label>
-            <div class="radio-buttons">
-              <label><input type="radio" name="pet2OffLeash" value="yes"> Yes</label>
-              <label><input type="radio" name="pet2OffLeash" value="no"> No</label>
+            <!-- Pet Information -->
+            <div class="form-section" id="pet-info-section">
+              <h4>Pet Information</h4>
+              <!-- Pet inputs will be dynamically generated here -->
             </div>
-          </div>
-          <div class="form-group">
-            <label for="pet2Behavior">Behavior Description</label>
-            <textarea id="pet2Behavior" name="pet2Behavior" placeholder="Describe your pet's behavior (e.g., friendly, shy, energetic)"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="pet2Notes">Additional Notes</label>
-            <textarea id="pet2Notes" name="pet2Notes" placeholder="Any special requests or notes about this pet?"></textarea>
-          </div>
-        </div>
 
-        <!-- Referral Source -->
-        <div class="form-group" id="referralGroup" style="display: none;">
-          <label for="referralSource">How did you hear about us? *</label>
-          <select id="referralSource" name="referralSource" required>
-            <option value="">Select an option</option>
-            <option value="Social Media">Social Media</option>
-            <option value="Friend/Family">Friend/Family</option>
-            <option value="Google Search">Google Search</option>
-            <option value="Advertisement">Advertisement</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
+            <!-- People Information -->
+            <div class="form-section" id="people-info-section">
+              <h4>People Attending</h4>
+              <!-- People inputs will be dynamically generated here -->
+            </div>
 
-        <!-- Instagram Tagging Question -->
-        <div class="form-group" id="instagramTagGroup" style="display: none;">
-          <label for="instagramTag">Would you or your pet like to be tagged on Instagram? *</label>
-          <div class="radio-buttons">
-            <label><input type="radio" name="instagramTag" value="yes" required> Yes</label>
-            <label><input type="radio" name="instagramTag" value="no"> No</label>
-          </div>
-        </div>
+            <!-- Session Preferences -->
+            <div class="form-section">
+              <h4>Session Preferences</h4>
+              <div class="form-group">
+                <label for="special-requests">Special Requests</label>
+                <textarea id="special-requests" name="special-requests" placeholder="Any special requests or notes for the session?"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="photo-style">Preferred Photo Style</label>
+                <select id="photo-style" name="photo-style">
+                  <option value="candid">Candid</option>
+                  <option value="posed">Posed</option>
+                  <option value="both">Both</option>
+                </select>
+              </div>
+            </div>
 
-        <!-- Instagram Handles (Pet 1) -->
-        <div class="form-group" id="pet1InstagramGroup" style="display: none;">
-          <label for="pet1Instagram">Instagram Handle for Pet 1</label>
-          <input type="text" id="pet1Instagram" name="pet1Instagram" placeholder="@pet1handle" />
-        </div>
+            <!-- Consent -->
+            <div class="form-section">
+              <h4>Consent</h4>
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="marketing-consent" name="marketing-consent" required />
+                <label for="marketing-consent">I agree to allow Picture This Pet to use photos from this session for marketing purposes *</label>
+              </div>
+            </div>
 
-        <!-- Instagram Handles (Pet 2 - Conditional) -->
-        <div class="form-group" id="pet2InstagramGroup" style="display: none;">
-          <label for="pet2Instagram">Instagram Handle for Pet 2</label>
-          <input type="text" id="pet2Instagram" name="pet2Instagram" placeholder="@pet2handle" />
+            <!-- Form Actions -->
+            <div class="card-actions">
+              <a href="/ptp-pick-date-step-3.html" class="back-btn">Back</a>
+              <button type="submit" class="submit-btn">Submit and Proceed to Payment</button>
+            </div>
+          </form>
         </div>
-
-        <!-- Instagram Handles (Person 1) -->
-        <div class="form-group" id="person1InstagramGroup" style="display: none;">
-          <label for="person1Instagram">Instagram Handle for Person 1</label>
-          <input type="text" id="person1Instagram" name="person1Instagram" placeholder="@person1handle" />
-        </div>
-
-        <!-- Instagram Handles (Person 2 - Conditional) -->
-        <div class="form-group" id="person2InstagramGroup" style="display: none;">
-          <label for="person2Instagram">Instagram Handle for Person 2</label>
-          <input type="text" id="person2Instagram" name="person2Instagram" placeholder="@person2handle" />
-        </div>
-
-        <!-- Form Actions -->
-        <div class="form-actions">
-          <a href="/ptp-pick-date-step-3.html" class="back-btn" aria-label="Go back to pick a date">← Back</a>
-          <button type="submit" class="submit-btn" id="submitBtn" style="display: none;">Continue to Payment →</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- Pop-up for Vaccination Requirement -->
-    <div class="popup" id="vaccinationPopup">
-      <div class="popup-content">
-        <h3>Vaccination Required</h3>
-        <p>We can’t serve you at this time. Please come back when your pet is fully vaccinated.</p>
-        <button onclick="redirectHome()">Return to Home</button>
       </div>
-    </div>
+    </section>
   </main>
 
   <footer>
     <div class="footer-container">
       <div class="footer-section">
         <h4>Contact Us</h4>
-        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -972,7 +706,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 04:07 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:12 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -983,172 +717,109 @@
       nav.classList.toggle('active');
     }
 
-    // Smooth scroll to session builder (for Book Now)
+    // Smooth scroll to session builder (used by Book Now button in header)
     function scrollToSessionBuilder(e) {
       e.preventDefault();
-      window.location.href = '/#session-builder-section';
+      window.location.href = '/index.html#session-builder-section';
     }
 
-    // Redirect to home page
-    function redirectHome() {
-      window.location.href = '/';
-    }
-
-    // Form submission handling
+    // Load session data and pre-fill form
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Intake Form page loaded, initializing...');
+      console.log('Intake form loaded, initializing...');
 
-      const form = document.getElementById('intakeForm');
-      const vaccinationInputs = document.getElementsByName('isVaccinated');
-      const instagramTagInputs = document.getElementsByName('instagramTag');
-      const submitBtn = document.getElementById('submitBtn');
-      const popup = document.getElementById('vaccinationPopup');
-      let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
-      let marketingData = JSON.parse(localStorage.getItem('ptpMarketingData')) || {};
-
-      // Dynamically show/hide pet and client information based on session data
-      const petCount = sessionData.petCount || '1';
-      const peopleCount = sessionData.peopleCount || '1';
-
-      // Show/hide pet cards
-      if (petCount === '1') {
-        document.getElementById('petInfo2').style.display = 'none';
+      // Load marketing data (email)
+      const marketingData = JSON.parse(localStorage.getItem('ptpMarketingData')) || {};
+      const emailInput = document.getElementById('customer-email');
+      if (marketingData.email) {
+        emailInput.value = marketingData.email;
       }
 
-      // Show/hide client cards
-      if (peopleCount === '1') {
-        document.getElementById('clientInfo2').style.display = 'none';
+      // Load session data (pet count, people count)
+      const sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      const petCount = parseInt(sessionData.petCount) || 1;
+      const peopleCount = parseInt(sessionData.peopleCount) || 1;
+
+      // Dynamically generate pet input fields
+      const petInfoSection = document.getElementById('pet-info-section');
+      for (let i = 1; i <= petCount; i++) {
+        const petDiv = document.createElement('div');
+        petDiv.className = 'form-group';
+        petDiv.innerHTML = `
+          <h5>Pet ${i}</h5>
+          <label for="pet-name-${i}">Pet Name *</label>
+          <input type="text" id="pet-name-${i}" name="pet-name-${i}" required placeholder="Enter pet's name" />
+          <label for="pet-breed-${i}">Breed *</label>
+          <input type="text" id="pet-breed-${i}" name="pet-breed-${i}" required placeholder="Enter pet's breed" />
+          <label for="pet-age-${i}">Age *</label>
+          <input type="number" id="pet-age-${i}" name="pet-age-${i}" required placeholder="Enter pet's age" min="0" />
+          <label for="pet-behavior-${i}">Behavior Notes</label>
+          <textarea id="pet-behavior-${i}" name="pet-behavior-${i}" placeholder="Any behavior notes or special needs?"></textarea>
+        `;
+        petInfoSection.appendChild(petDiv);
       }
 
-      // Show remaining questions only if vaccination is "Yes"
-      vaccinationInputs.forEach(input => {
-        input.addEventListener('change', function() {
-          if (input.value === 'yes') {
-            document.getElementById('clientInfo1').style.display = 'block';
-            if (peopleCount === '2') {
-              document.getElementById('clientInfo2').style.display = 'block';
-            }
-            document.getElementById('petInfo1').style.display = 'block';
-            if (petCount === '2') {
-              document.getElementById('petInfo2').style.display = 'block';
-            }
-            document.getElementById('referralGroup').style.display = 'block';
-            document.getElementById('instagramTagGroup').style.display = 'block';
-            submitBtn.style.display = 'inline-block';
-            popup.style.display = 'none';
-          } else if (input.value === 'no') {
-            popup.style.display = 'flex';
-            document.getElementById('clientInfo1').style.display = 'none';
-            document.getElementById('clientInfo2').style.display = 'none';
-            document.getElementById('petInfo1').style.display = 'none';
-            document.getElementById('petInfo2').style.display = 'none';
-            document.getElementById('referralGroup').style.display = 'none';
-            document.getElementById('instagramTagGroup').style.display = 'none';
-            document.getElementById('pet1InstagramGroup').style.display = 'none';
-            document.getElementById('pet2InstagramGroup').style.display = 'none';
-            document.getElementById('person1InstagramGroup').style.display = 'none';
-            document.getElementById('person2InstagramGroup').style.display = 'none';
-            submitBtn.style.display = 'none';
-          }
-        });
-      });
+      // Dynamically generate people input fields
+      const peopleInfoSection = document.getElementById('people-info-section');
+      for (let i = 1; i <= peopleCount; i++) {
+        const personDiv = document.createElement('div');
+        personDiv.className = 'form-group';
+        personDiv.innerHTML = `
+          <label for="person-name-${i}">Person ${i} Name *</label>
+          <input type="text" id="person-name-${i}" name="person-name-${i}" required placeholder="Enter person's name" />
+        `;
+        peopleInfoSection.appendChild(personDiv);
+      }
 
-      // Show/hide Instagram handle fields based on tagging preference
-      instagramTagInputs.forEach(input => {
-        input.addEventListener('change', function() {
-          if (input.value === 'yes') {
-            document.getElementById('pet1InstagramGroup').style.display = 'block';
-            if (petCount === '2') {
-              document.getElementById('pet2InstagramGroup').style.display = 'block';
-            }
-            document.getElementById('person1InstagramGroup').style.display = 'block';
-            if (peopleCount === '2') {
-              document.getElementById('person2InstagramGroup').style.display = 'block';
-            }
-          } else {
-            document.getElementById('pet1InstagramGroup').style.display = 'none';
-            document.getElementById('pet2InstagramGroup').style.display = 'none';
-            document.getElementById('person1InstagramGroup').style.display = 'none';
-            document.getElementById('person2InstagramGroup').style.display = 'none';
-          }
-        });
-      });
-
-      // Save marketing data as soon as key fields are entered
-      const marketingFields = ['person1Name', 'person1Email', 'person1Phone', 'pet1Name'];
-      marketingFields.forEach(field => {
-        const input = document.getElementById(field);
-        if (input) {
-          input.addEventListener('input', function() {
-            marketingData[field] = input.value;
-            marketingData.sessionData = {
-              session: sessionData.session,
-              park: sessionData.park,
-              selectedDateTime: sessionData.selectedDateTime,
-              petCount: sessionData.petCount,
-              peopleCount: sessionData.peopleCount
-            };
-            localStorage.setItem('ptpMarketingData', JSON.stringify(marketingData));
-          });
-        }
-      });
-
-      // Form submission handling
-      form.addEventListener('submit', function(e) {
+      // Handle form submission
+      const intakeForm = document.getElementById('intake-form');
+      intakeForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
+        // Validate form
+        if (!intakeForm.checkValidity()) {
+          intakeForm.reportValidity();
+          return;
+        }
+
         // Collect form data
-        const formData = {
-          isVaccinated: document.querySelector('input[name="isVaccinated"]:checked')?.value || '',
-          person1: {
-            name: document.getElementById('person1Name').value,
-            email: document.getElementById('person1Email').value,
-            phone: document.getElementById('person1Phone').value,
-            zip: document.getElementById('person1Zip').value,
-            instagram: document.getElementById('person1Instagram')?.value || ''
-          },
-          person2: peopleCount === '2' ? {
-            name: document.getElementById('person2Name').value,
-            email: document.getElementById('person2Email').value,
-            phone: document.getElementById('person2Phone').value,
-            zip: document.getElementById('person2Zip').value,
-            instagram: document.getElementById('person2Instagram')?.value || ''
-          } : null,
-          pet1: {
-            name: document.getElementById('pet1Name').value,
-            age: document.getElementById('pet1Age').value,
-            birthdate: document.getElementById('pet1Birthdate').value,
-            gender: document.getElementById('pet1Gender').value,
-            favoriteToy: document.getElementById('pet1FavoriteToy').value,
-            offLeash: document.querySelector('input[name="pet1OffLeash"]:checked')?.value || '',
-            behavior: document.getElementById('pet1Behavior').value,
-            notes: document.getElementById('pet1Notes').value,
-            instagram: document.getElementById('pet1Instagram')?.value || ''
-          },
-          pet2: petCount === '2' ? {
-            name: document.getElementById('pet2Name').value,
-            age: document.getElementById('pet2Age').value,
-            birthdate: document.getElementById('pet2Birthdate').value,
-            gender: document.getElementById('pet2Gender').value,
-            favoriteToy: document.getElementById('pet2FavoriteToy').value,
-            offLeash: document.querySelector('input[name="pet2OffLeash"]:checked')?.value || '',
-            behavior: document.getElementById('pet2Behavior').value,
-            notes: document.getElementById('pet2Notes').value,
-            instagram: document.getElementById('pet2Instagram')?.value || ''
-          } : null,
-          referralSource: document.getElementById('referralSource').value,
-          instagramTag: document.querySelector('input[name="instagramTag"]:checked')?.value || ''
+        const intakeData = {
+          customerName: document.getElementById('customer-name').value,
+          customerEmail: document.getElementById('customer-email').value,
+          customerPhone: document.getElementById('customer-phone').value,
+          pets: [],
+          people: [],
+          specialRequests: document.getElementById('special-requests').value,
+          photoStyle: document.getElementById('photo-style').value,
+          marketingConsent: document.getElementById('marketing-consent').checked
         };
 
-        // Save form data to localStorage
-        sessionData.intakeForm = formData;
-        localStorage.setItem('ptpSessionData', JSON.stringify(sessionData));
+        // Collect pet data
+        for (let i = 1; i <= petCount; i++) {
+          intakeData.pets.push({
+            name: document.getElementById(`pet-name-${i}`).value,
+            breed: document.getElementById(`pet-breed-${i}`).value,
+            age: document.getElementById(`pet-age-${i}`).value,
+            behaviorNotes: document.getElementById(`pet-behavior-${i}`).value
+          });
+        }
 
-        // Clear marketing data after successful submission
-        localStorage.removeItem('ptpMarketingData');
+        // Collect people data
+        for (let i = 1; i <= peopleCount; i++) {
+          intakeData.people.push({
+            name: document.getElementById(`person-name-${i}`).value
+          });
+        }
 
-        // Redirect to payment.html for summary and checkout
-        window.location.href = 'payment.html';
+        // Save to localStorage
+        localStorage.setItem('ptpIntakeData', JSON.stringify(intakeData));
+
+        // Update marketing data with email (in case it was changed)
+        let marketingData = JSON.parse(localStorage.getItem('ptpMarketingData')) || {};
+        marketingData.email = intakeData.customerEmail;
+        localStorage.setItem('ptpMarketingData', JSON.stringify(marketingData));
+
+        // Redirect to payment page
+        window.location.href = '/payment.html';
       });
     });
   </script>
