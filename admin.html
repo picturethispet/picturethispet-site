@@ -69,6 +69,11 @@
       }
     }
 
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
     /* === LAYOUT === */
     .admin-layout {
       display: grid;
@@ -81,8 +86,8 @@
       animation: moveBackground 30s ease-in-out infinite;
     }
 
-    /* === HEADER === */
-    .admin-header {
+    /* === HEADER STYLES === */
+    header {
       grid-column: 1 / -1;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -142,11 +147,6 @@
 
     .sync-indicator.disconnected {
       background: var(--booked-red);
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
     }
 
     .admin-user {
@@ -943,6 +943,69 @@
       color: rgba(255, 255, 255, 0.6);
     }
 
+    /* === SESSION DETAILS MODAL === */
+    .session-details-modal {
+      max-width: 800px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .session-details-section {
+      margin-bottom: 2rem;
+    }
+
+    .session-details-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .session-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .session-detail-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .session-detail-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.3rem;
+    }
+
+    .session-detail-value {
+      font-size: 1rem;
+      color: white;
+      font-weight: 500;
+    }
+
+    .session-detail-value input,
+    .session-detail-value textarea,
+    .session-detail-value select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .session-detail-value textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
     /* === RESPONSIVE === */
     @media (max-width: 1024px) {
       .admin-layout {
@@ -975,6 +1038,10 @@
       }
 
       .recent-activities {
+        grid-template-columns: 1fr;
+      }
+
+      .session-details-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -1033,6 +1100,10 @@
         padding: 1.5rem;
         margin: 1rem;
       }
+
+      .session-details-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -1066,7 +1137,7 @@
         <div class="nav-item" onclick="showView('calendar')">
           <span class="nav-icon">📅</span>
           <span>Calendar</span>
-          <span class="nav-badge">3</span>
+          <span class="nav-badge" id="calendarBadge">0</span>
         </div>
       </div>
 
@@ -1083,7 +1154,7 @@
         <div class="nav-item" onclick="showView('galleries')">
           <span class="nav-icon">🖼️</span>
           <span>Galleries</span>
-          <span class="nav-badge">2</span>
+          <span class="nav-badge" id="galleriesBadge">0</span>
         </div>
       </div>
 
@@ -1118,19 +1189,19 @@
       <div class="view-section active" id="dashboard-view">
         <div class="dashboard-stats">
           <div class="stat-card">
-            <div class="stat-number">12</div>
+            <div class="stat-number" id="sessionsThisMonth">0</div>
             <div class="stat-label">Sessions This Month</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">$3,200</div>
+            <div class="stat-number" id="monthlyRevenue">$0</div>
             <div class="stat-label">Monthly Revenue</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">8</div>
+            <div class="stat-number" id="activeGalleries">0</div>
             <div class="stat-label">Active Galleries</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">24</div>
+            <div class="stat-number" id="totalClients">0</div>
             <div class="stat-label">Total Clients</div>
           </div>
         </div>
@@ -1141,54 +1212,18 @@
               <h2 class="card-title">Recent Sessions</h2>
               <button class="btn btn-secondary btn-small" onclick="showView('sessions')">View All</button>
             </div>
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Sarah Johnson - Full Session</div>
-                <div class="activity-time">Today, 6:00 PM</div>
-              </div>
-              <div class="activity-description">Cheesman Park • 2 pets • Gallery pending</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Mike Chen - Mini Session</div>
-                <div class="activity-time">Dec 20, 5:00 PM</div>
-              </div>
-              <div class="activity-description">City Park • 1 pet • Gallery delivered</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Lisa Rodriguez - Full Session</div>
-                <div class="activity-time">Dec 18, 4:30 PM</div>
-              </div>
-              <div class="activity-description">Sloan's Lake • 1 pet • Photos uploaded</div>
+            <div id="recentSessionsList">
+              <!-- Recent sessions will be populated here -->
             </div>
           </div>
 
           <div class="admin-card">
             <div class="card-header">
               <h2 class="card-title">Pending Actions</h2>
-              <button class="btn btn-secondary btn-small">Mark All Read</button>
+              <button class="btn btn-secondary btn-small" onclick="markAllPendingActionsRead()">Mark All Read</button>
             </div>
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Upload Photos</div>
-                <div class="activity-time">Sarah Johnson</div>
-              </div>
-              <div class="activity-description">Session completed, awaiting photo upload</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Send Gallery Access</div>
-                <div class="activity-time">Mike Chen</div>
-              </div>
-              <div class="activity-description">Gallery ready, send client credentials</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-header">
-                <div class="activity-title">Invoice Due</div>
-                <div class="activity-time">Lisa Rodriguez</div>
-              </div>
-              <div class="activity-description">Payment pending for Full Session</div>
+            <div id="pendingActionsList">
+              <!-- Pending actions will be populated here -->
             </div>
           </div>
         </div>
@@ -1270,66 +1305,8 @@
             </div>
           </div>
 
-          <div class="client-list">
-            <div class="client-item">
-              <div class="client-header">
-                <div class="client-name">Sarah Johnson - Full Session</div>
-                <div class="client-badge">Today</div>
-              </div>
-              <div class="client-details">
-                <div><strong>Time:</strong> 6:00 PM</div>
-                <div><strong>Location:</strong> Cheesman Park</div>
-                <div><strong>Pets:</strong> Buffy, Max</div>
-              </div>
-              <div class="client-sessions">
-                Session Type: Full Session ($250) • 2 pets • Special requests: Buffy can be shy at first
-              </div>
-              <div class="client-actions">
-                <button class="btn btn-secondary btn-small">📝 Edit</button>
-                <button class="btn btn-secondary btn-small">📧 Contact</button>
-                <button class="btn btn-primary btn-small">📸 Create Gallery</button>
-              </div>
-            </div>
-
-            <div class="client-item">
-              <div class="client-header">
-                <div class="client-name">Mike Chen - Mini Session</div>
-                <div class="client-badge" style="background: var(--available-green);">Completed</div>
-              </div>
-              <div class="client-details">
-                <div><strong>Date:</strong> Dec 20, 2024</div>
-                <div><strong>Location:</strong> City Park</div>
-                <div><strong>Pets:</strong> Rocky</div>
-              </div>
-              <div class="client-sessions">
-                Session Type: Mini Session ($150) • 1 pet • Gallery delivered • Payment complete
-              </div>
-              <div class="client-actions">
-                <button class="btn btn-secondary btn-small">📝 Edit</button>
-                <button class="btn btn-secondary btn-small">👁️ View Gallery</button>
-                <button class="btn btn-secondary btn-small">💰 Invoice</button>
-              </div>
-            </div>
-
-            <div class="client-item">
-              <div class="client-header">
-                <div class="client-name">Lisa Rodriguez - Full Session</div>
-                <div class="client-badge" style="background: var(--soft-hold-yellow);">Processing</div>
-              </div>
-              <div class="client-details">
-                <div><strong>Date:</strong> Dec 18, 2024</div>
-                <div><strong>Location:</strong> Sloan's Lake</div>
-                <div><strong>Pets:</strong> Luna</div>
-              </div>
-              <div class="client-sessions">
-                Session Type: Full Session ($250) • 1 pet • Photos uploaded • Gallery pending
-              </div>
-              <div class="client-actions">
-                <button class="btn btn-secondary btn-small">📝 Edit</button>
-                <button class="btn btn-secondary btn-small">🖼️ Manage Gallery</button>
-                <button class="btn btn-primary btn-small">📧 Send Access</button>
-              </div>
-            </div>
+          <div class="client-list" id="sessionsList">
+            <!-- Sessions will be populated here -->
           </div>
         </div>
       </div>
@@ -1345,69 +1322,8 @@
             </div>
           </div>
 
-          <div class="client-list">
-            <div class="client-item">
-              <div class="client-header">
-                <div class="client-name">Sarah Johnson</div>
-                <div class="client-badge">Active</div>
-              </div>
-              <div class="client-details">
-                <div><strong>Email:</strong> sarah.johnson@email.com</div>
-                <div><strong>Phone:</strong> (303) 555-0123</div>
-                <div><strong>Location:</strong> Denver, CO 80206</div>
-              </div>
-              <div class="client-sessions">
-                <strong>Pets:</strong> Buffy (3yo Female), Max (5yo Male) • <strong>Last Session:</strong> Today • <strong>Total Sessions:</strong> 1
-              </div>
-              <div class="client-actions">
-                <button class="btn btn-secondary btn-small">📝 Edit</button>
-                <button class="btn btn-secondary btn-small">📧 Email</button>
-                <button class="btn btn-secondary btn-small">🖼️ Galleries</button>
-                <button class="btn btn-primary btn-small">📅 Book Session</button>
-              </div>
-            </div>
-
-            <div class="client-item">
-              <div class="client-header">
-                <div class="client-name">Mike Chen</div>
-                <div class="client-badge">Active</div>
-              </div>
-              <div class="client-details">
-                <div><strong>Email:</strong> mike.chen@email.com</div>
-                <div><strong>Phone:</strong> (303) 555-0456</div>
-                <div><strong>Location:</strong> Denver, CO 80210</div>
-              </div>
-              <div class="client-sessions">
-                <strong>Pets:</strong> Rocky (2yo Male) • <strong>Last Session:</strong> Dec 20, 2024 • <strong>Total Sessions:</strong> 2
-              </div>
-              <div class="client-actions">
-                <button class="btn btn-secondary btn-small">📝 Edit</button>
-                <button class="btn btn-secondary btn-small">📧 Email</button>
-                <button class="btn btn-secondary btn-small">🖼️ Galleries</button>
-                <button class="btn btn-primary btn-small">📅 Book Session</button>
-              </div>
-            </div>
-
-            <div class="client-item">
-              <div class="client-header">
-                <div class="client-name">Lisa Rodriguez</div>
-                <div class="client-badge">Active</div>
-              </div>
-              <div class="client-details">
-                <div><strong>Email:</strong> lisa.rodriguez@email.com</div>
-                <div><strong>Phone:</strong> (303) 555-0789</div>
-                <div><strong>Location:</strong> Denver, CO 80218</div>
-              </div>
-              <div class="client-sessions">
-                <strong>Pets:</strong> Luna (4yo Female) • <strong>Last Session:</strong> Dec 18, 2024 • <strong>Total Sessions:</strong> 1
-              </div>
-              <div class="client-actions">
-                <button class="btn btn-secondary btn-small">📝 Edit</button>
-                <button class="btn btn-secondary btn-small">📧 Email</button>
-                <button class="btn btn-secondary btn-small">🖼️ Galleries</button>
-                <button class="btn btn-primary btn-small">📅 Book Session</button>
-              </div>
-            </div>
+          <div class="client-list" id="clientsList">
+            <!-- Clients will be populated here -->
           </div>
         </div>
       </div>
@@ -1423,99 +1339,8 @@
             </div>
           </div>
 
-          <div class="gallery-grid">
-            <div class="gallery-card">
-              <div class="gallery-header">
-                <div class="gallery-title">Sarah Johnson - Full Session</div>
-                <div class="gallery-status pending">Pending</div>
-              </div>
-              <div class="gallery-info">
-                <div><strong>Session Date:</strong> Dec 22, 2024</div>
-                <div><strong>Created:</strong> Today</div>
-                <div><strong>Access:</strong> 0123 / buffybarks</div>
-              </div>
-              <div class="gallery-stats">
-                <div class="gallery-stat">
-                  <div class="gallery-stat-number">0</div>
-                  <div class="gallery-stat-label">Photos</div>
-                </div>
-                <div class="gallery-stat">
-                  <div class="gallery-stat-number">0</div>
-                  <div class="gallery-stat-label">Views</div>
-                </div>
-                <div class="gallery-stat">
-                  <div class="gallery-stat-number">$0</div>
-                  <div class="gallery-stat-label">Sales</div>
-                </div>
-              </div>
-              <div class="gallery-actions">
-                <button class="btn btn-primary btn-small">📸 Upload Photos</button>
-                <button class="btn btn-secondary btn-small">⚙️ Settings</button>
-                <button class="btn btn-secondary btn-small">📧 Send Access</button>
-              </div>
-            </div>
-
-            <div class="gallery-card">
-              <div class="gallery-header">
-                <div class="gallery-title">Mike Chen - Mini Session</div>
-                <div class="gallery-status">Active</div>
-              </div>
-              <div class="gallery-info">
-                <div><strong>Session Date:</strong> Dec 20, 2024</div>
-                <div><strong>Created:</strong> Dec 21, 2024</div>
-                <div><strong>Access:</strong> 0456 / rockybarks</div>
-              </div>
-              <div class="gallery-stats">
-                <div class="gallery-stat">
-                  <div class="gallery-stat-number">15</div>
-                  <div class="gallery-stat-label">Photos</div>
-                </div>
-                <div class="gallery-stat">
-                  <div class="gallery-stat-number">24</div>
-                  <div class="gallery-stat-label">Views</div>
-                </div>
-                <div class="gallery-stat">
-                  <div class="gallery-stat-number">$45</div>
-                  <div class="gallery-stat-label">Sales</div>
-                </div>
-              </div>
-              <div class="gallery-actions">
-                <button class="btn btn-secondary btn-small">👁️ View Gallery</button>
-                <button class="btn btn-secondary btn-small">⚙️ Settings</button>
-                <button class="btn btn-secondary btn-small">📊 Analytics</button>
-              </div>
-            </div>
-
-            <div class="gallery-card">
-              <div class="gallery-header">
-                <div class="gallery-title">Lisa Rodriguez - Full Session</div>
-                <div class="gallery-status">Active</div>
-              </div>
-              <div class="gallery-info">
-                <div><strong>Session Date:</strong> Dec 18, 2024</div>
-                <div><strong>Created:</strong> Dec 19, 2024</div>
-                <div><strong>Access:</strong> 0789 / lunabarks</div>
-              </div>
-              <div class="gallery-stats">
-                <div class="gallery-stat">
-                  <div class="gallery-stat-number">22</div>
-                  <div class="gallery-stat-label">Photos</div>
-                </div>
-                <div class="gallery-stat">
-                  <div class="gallery-stat-number">18</div>
-                  <div class="gallery-stat-label">Views</div>
-                </div>
-                <div class="gallery-stat">
-                  <div class="gallery-stat-number">$120</div>
-                  <div class="gallery-stat-label">Sales</div>
-                </div>
-              </div>
-              <div class="gallery-actions">
-                <button class="btn btn-secondary btn-small">👁️ View Gallery</button>
-                <button class="btn btn-secondary btn-small">⚙️ Settings</button>
-                <button class="btn btn-secondary btn-small">📊 Analytics</button>
-              </div>
-            </div>
+          <div class="gallery-grid" id="galleriesList">
+            <!-- Galleries will be populated here -->
           </div>
         </div>
       </div>
@@ -1604,7 +1429,7 @@
     <div class="modal">
       <div class="modal-header">
         <h3 class="modal-title" id="sessionModalTitle">Add New Session</h3>
-        <button class="modal-close" onclick="closeSessionModal()">&times;</button>
+        <button class="modal-close" onclick="closeSessionModal()">×</button>
       </div>
       
       <form id="sessionForm">
@@ -1675,7 +1500,7 @@
     <div class="modal">
       <div class="modal-header">
         <h3 class="modal-title">Create New Gallery</h3>
-        <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
+        <button class="modal-close" onclick="closeGalleryModal()">×</button>
       </div>
       
       <form id="galleryForm">
@@ -1703,6 +1528,7 @@
             <div class="upload-subtext">or click to browse (JPG, PNG, max 10MB each)</div>
           </div>
           <input type="file" id="photoUpload" multiple accept="image/*" style="display: none;">
+          <div id="uploadedPhotos" style="margin-top: 1rem;"></div>
         </div>
         
         <div class="form-row">
@@ -1712,428 +1538,4 @@
           </div>
           <div class="form-group">
             <label class="form-label">Session ID</label>
-            <input type="text" class="form-input" id="gallerySessionId" placeholder="Auto-generated" readonly>
-          </div>
-        </div>
-        
-        <div class="modal-actions">
-          <button type="button" class="btn btn-secondary" onclick="closeGalleryModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary">Create Gallery</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    // Global variables
-    let currentView = 'dashboard';
-    let currentMonth = new Date();
-    let selectedDate = null;
-    let contextMenuTarget = null;
-    let calendarEvents = [];
-    let localEvents = {};
-
-    // Authentication check
-    function checkAuthentication() {
-      const isAuthenticated = localStorage.getItem('adminAuthenticated');
-      const loginTime = localStorage.getItem('adminLoginTime');
-      const adminUser = localStorage.getItem('adminUser');
-      
-      if (!isAuthenticated || !loginTime || !adminUser) {
-        window.location.href = '/admin-login.html';
-        return false;
-      }
-      
-      const loginDate = new Date(loginTime);
-      const now = new Date();
-      const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
-      
-      if (hoursDiff >= 24) {
-        logout();
-        return false;
-      }
-      
-      document.getElementById('adminUser').textContent = `Welcome, ${adminUser}`;
-      return true;
-    }
-
-    function logout() {
-      localStorage.removeItem('adminAuthenticated');
-      localStorage.removeItem('adminUser');
-      localStorage.removeItem('adminLoginTime');
-      window.location.href = '/admin-login.html';
-    }
-
-    // Navigation
-    function showView(viewName) {
-      // Update navigation
-      document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-      });
-      event.target.closest('.nav-item').classList.add('active');
-      
-      // Show view
-      document.querySelectorAll('.view-section').forEach(section => {
-        section.classList.remove('active');
-      });
-      document.getElementById(viewName + '-view').classList.add('active');
-      
-      currentView = viewName;
-      
-      // Initialize view-specific content
-      if (viewName === 'calendar') {
-        initializeCalendar();
-      }
-    }
-
-    function toggleSidebar() {
-      const sidebar = document.getElementById('adminSidebar');
-      sidebar.classList.toggle('open');
-    }
-
-    // Calendar functions
-    function initializeCalendar() {
-      generateCalendar();
-    }
-
-    function generateCalendar() {
-      const container = document.getElementById('calendarContainer');
-      const title = document.getElementById('calendarTitle');
-      
-      if (!container || !title) return;
-      
-      const year = currentMonth.getFullYear();
-      const month = currentMonth.getMonth();
-      
-      title.textContent = new Intl.DateTimeFormat('en-US', { 
-        month: 'long', 
-        year: 'numeric' 
-      }).format(currentMonth);
-
-      container.innerHTML = '';
-      const grid = document.createElement('div');
-      grid.className = 'calendar-grid';
-
-      // Add day headers
-      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      dayHeaders.forEach(day => {
-        const header = document.createElement('div');
-        header.className = 'calendar-day-header';
-        header.textContent = day;
-        grid.appendChild(header);
-      });
-
-      // Calculate calendar dates
-      const firstDay = new Date(year, month, 1);
-      const lastDay = new Date(year, month + 1, 0);
-      const daysInMonth = lastDay.getDate();
-      const startingDayOfWeek = firstDay.getDay();
-
-      // Add empty cells for days before month starts
-      for (let i = 0; i < startingDayOfWeek; i++) {
-        const emptyDay = document.createElement('div');
-        emptyDay.className = 'calendar-day other-month';
-        grid.appendChild(emptyDay);
-      }
-
-      // Add days of the month
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dayElement = document.createElement('div');
-        dayElement.className = 'calendar-day';
-        
-        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const dayDate = new Date(year, month, day);
-        
-        // Set day number
-        const dayNumber = document.createElement('div');
-        dayNumber.textContent = day;
-        dayElement.appendChild(dayNumber);
-        
-        // Add sample events
-        const sampleEvents = getSampleEventsForDate(dateString);
-        if (sampleEvents.length > 0) {
-          const eventDiv = document.createElement('div');
-          eventDiv.className = 'day-events';
-          eventDiv.textContent = sampleEvents[0];
-          dayElement.appendChild(eventDiv);
-        }
-        
-        // Style based on date status
-        if (dayDate < new Date().setHours(0,0,0,0)) {
-          dayElement.classList.add('past');
-        } else {
-          const dateStatus = getSampleDateStatus(dateString);
-          dayElement.classList.add(dateStatus);
-        }
-        
-        // Add click handler
-        dayElement.onclick = (e) => handleDateClick(e, dateString, dayElement);
-        
-        grid.appendChild(dayElement);
-      }
-      
-      container.appendChild(grid);
-    }
-
-    function getSampleEventsForDate(dateString) {
-      const sampleData = {
-        '2024-12-22': ['Sarah - Full Session'],
-        '2024-12-20': ['Mike - Mini Session'],
-        '2024-12-18': ['Lisa - Full Session'],
-        '2025-01-05': ['Block - Vacation'],
-        '2025-01-12': ['John - Holiday Session']
-      };
-      return sampleData[dateString] || [];
-    }
-
-    function getSampleDateStatus(dateString) {
-      const events = getSampleEventsForDate(dateString);
-      if (events.length === 0) return 'available';
-      if (events[0].includes('Block')) return 'blocked';
-      if (events[0].includes('Session')) return 'booked';
-      return 'available';
-    }
-
-    function handleDateClick(e, dateString, element) {
-      e.preventDefault();
-      
-      // Clear previous selection
-      document.querySelectorAll('.calendar-day.selected').forEach(el => {
-        el.classList.remove('selected');
-      });
-      
-      // Select current date
-      element.classList.add('selected');
-      selectedDate = dateString;
-      contextMenuTarget = { dateString, element };
-      
-      // Show context menu
-      showContextMenu(e, dateString);
-      
-      // Update selected date info
-      updateSelectedDateInfo(dateString);
-    }
-
-    function updateSelectedDateInfo(dateString) {
-      const infoPanel = document.getElementById('selectedDateInfo');
-      const details = document.getElementById('dateDetails');
-      
-      if (!infoPanel || !details) return;
-      
-      const events = getSampleEventsForDate(dateString);
-      const date = new Date(dateString);
-      
-      let detailsHtml = `<p><strong>Date:</strong> ${date.toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })}</p>`;
-      
-      if (events.length > 0) {
-        detailsHtml += `<p><strong>Events:</strong> ${events.join(', ')}</p>`;
-      } else {
-        detailsHtml += `<p><strong>Status:</strong> Available</p>`;
-      }
-      
-      details.innerHTML = detailsHtml;
-      infoPanel.style.display = 'block';
-    }
-
-    function showContextMenu(e, dateString) {
-      const menu = document.getElementById('contextMenu');
-      
-      // Position menu
-      menu.style.left = e.pageX + 'px';
-      menu.style.top = e.pageY + 'px';
-      menu.style.display = 'block';
-      
-      // Close menu when clicking elsewhere
-      setTimeout(() => {
-        document.addEventListener('click', closeContextMenu, { once: true });
-      }, 100);
-    }
-
-    function closeContextMenu() {
-      document.getElementById('contextMenu').style.display = 'none';
-    }
-
-    // Context menu actions
-    function addSession() {
-      closeContextMenu();
-      openSessionModal('add');
-    }
-
-    function blockDate() {
-      closeContextMenu();
-      alert('Block date functionality - would open block date modal');
-    }
-
-    function editSession() {
-      closeContextMenu();
-      openSessionModal('edit');
-    }
-
-    function removeSession() {
-      closeContextMenu();
-      if (confirm('Are you sure you want to remove this session?')) {
-        alert('Session removed!');
-        generateCalendar();
-      }
-    }
-
-    function viewSessionDetails() {
-      closeContextMenu();
-      alert('View session details - would show detailed session information');
-    }
-
-    // Calendar navigation
-    function previousMonth() {
-      currentMonth.setMonth(currentMonth.getMonth() - 1);
-      generateCalendar();
-    }
-
-    function nextMonth() {
-      currentMonth.setMonth(currentMonth.getMonth() + 1);
-      generateCalendar();
-    }
-
-    function syncCalendar() {
-      alert('Syncing with Google Calendar...');
-      // Add actual sync logic here
-    }
-
-    function openFullCalendar() {
-      window.open('https://calendar.google.com/calendar/u/0/r/week', '_blank');
-    }
-
-    function exportCalendar() {
-      alert('Exporting calendar data...');
-      // Add export logic here
-    }
-
-    // Modal functions
-    function openSessionModal(mode = 'add', dateString = null) {
-      const modal = document.getElementById('sessionModal');
-      const title = document.getElementById('sessionModalTitle');
-      
-      title.textContent = mode === 'edit' ? 'Edit Session' : 'Add New Session';
-      
-      if (selectedDate) {
-        document.getElementById('sessionDate').value = selectedDate;
-      }
-      
-      modal.style.display = 'flex';
-    }
-
-    function closeSessionModal() {
-      document.getElementById('sessionModal').style.display = 'none';
-      document.getElementById('sessionForm').reset();
-    }
-
-    function openGalleryModal() {
-      const modal = document.getElementById('galleryModal');
-      
-      // Auto-generate credentials
-      const sessionId = Math.floor(1000 + Math.random() * 9000);
-      const password = 'petname' + Math.floor(Math.random() * 100) + 'barks';
-      
-      document.getElementById('gallerySessionId').value = sessionId;
-      document.getElementById('galleryPassword').value = password;
-      
-      modal.style.display = 'flex';
-    }
-
-    function closeGalleryModal() {
-      document.getElementById('galleryModal').style.display = 'none';
-      document.getElementById('galleryForm').reset();
-    }
-
-    // Form handlers
-    document.getElementById('sessionForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const formData = {
-        clientName: document.getElementById('clientName').value,
-        date: document.getElementById('sessionDate').value,
-        time: document.getElementById('sessionTime').value,
-        type: document.getElementById('sessionType').value,
-        location: document.getElementById('sessionLocation').value,
-        email: document.getElementById('clientEmail').value,
-        phone: document.getElementById('clientPhone').value,
-        notes: document.getElementById('sessionNotes').value
-      };
-      
-      console.log('Session data:', formData);
-      alert('Session saved successfully!');
-      closeSessionModal();
-      
-      if (currentView === 'calendar') {
-        generateCalendar();
-      }
-    });
-
-    document.getElementById('galleryForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const formData = {
-        name: document.getElementById('galleryName').value,
-        date: document.getElementById('galleryDate').value,
-        expiration: document.getElementById('galleryExpiration').value,
-        password: document.getElementById('galleryPassword').value,
-        sessionId: document.getElementById('gallerySessionId').value
-      };
-      
-      console.log('Gallery data:', formData);
-      alert('Gallery created successfully!');
-      closeGalleryModal();
-    });
-
-    // File upload handling
-    document.getElementById('photoUpload').addEventListener('change', function(e) {
-      const files = e.target.files;
-      if (files.length > 0) {
-        const fileNames = Array.from(files).map(f => f.name).join(', ');
-        alert(`Selected ${files.length} file(s): ${fileNames}`);
-      }
-    });
-
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Studio Manager loaded, initializing...');
-      
-      if (!checkAuthentication()) {
-        return;
-      }
-      
-      // Initialize calendar if on calendar view
-      if (currentView === 'calendar') {
-        initializeCalendar();
-      }
-    });
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeContextMenu();
-        closeSessionModal();
-        closeGalleryModal();
-      }
-    });
-
-    // Close modals when clicking outside
-    document.addEventListener('click', function(e) {
-      if (e.target.classList.contains('modal-overlay')) {
-        e.target.style.display = 'none';
-      }
-    });
-
-    // Responsive sidebar handling
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 1024) {
-        document.getElementById('adminSidebar').classList.remove('open');
-      }
-    });
-  </script>
-</body>
-</html>
+            <input type="text" class="form-input" id="gallerySessionId" placeholder="
