@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Booking Success | Picture This Pet</title>
   <meta name="description" content="Your pet photography session has been successfully booked!">
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -155,6 +156,24 @@
       transform: scale(1.1);
     }
 
+    .social-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+
+    .social-icon {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      color: var(--gold);
+      transform: scale(1.1);
+    }
+
     /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
@@ -239,6 +258,7 @@
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       text-align: center;
+      animation: fadeInUp 1s ease-out;
     }
 
     .success-section h2 {
@@ -253,7 +273,7 @@
     .success-section p {
       font-size: 1.2rem;
       line-height: 1.6;
-      opacity: 0.9;
+      color: rgba(255, 255, 255, 0.9);
       margin-bottom: 2rem;
     }
 
@@ -266,10 +286,11 @@
     }
 
     .confirmation-details h3 {
+      font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: rgba(255, 255, 255, 0.9);
+      color: white;
     }
 
     .confirmation-item {
@@ -287,6 +308,25 @@
     .confirmation-item .value {
       color: white;
       font-weight: 600;
+    }
+
+    .contact-info {
+      margin-top: 2rem;
+    }
+
+    .contact-info p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: var(--orange);
     }
 
     .success-actions {
@@ -312,6 +352,40 @@
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
+    /* Fallback message styling */
+    .fallback-message {
+      max-width: 800px;
+      margin: 0 auto;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .fallback-message h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .fallback-message p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
     /* === FOOTER STYLES === */
     footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
@@ -320,7 +394,7 @@
       animation: moveBackground 30s ease-in-out infinite;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding: 2rem 1.5rem;
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, ifreworks, 255, 0.5);
       font-size: 0.9rem;
     }
 
@@ -331,6 +405,12 @@
       max-width: 1200px;
       margin: 0 auto;
       margin-bottom: 1.5rem;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .footer-section h4 {
@@ -442,6 +522,15 @@
         display: block;
       }
       
+      .social-icons {
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+      }
+
+      .social-icon {
+        font-size: 1.2rem;
+      }
+      
       main {
         margin-top: 80px;
         padding: 2rem 1rem;
@@ -485,8 +574,28 @@
         font-size: 0.9rem;
       }
 
+      .contact-info {
+        margin-top: 1.5rem;
+      }
+
+      .contact-info p {
+        font-size: 1rem;
+      }
+
       .home-btn {
         padding: 0.8rem 2rem;
+        font-size: 1rem;
+      }
+
+      .fallback-message {
+        padding: 2rem;
+      }
+
+      .fallback-message h2 {
+        font-size: 2rem;
+      }
+
+      .fallback-message p {
         font-size: 1rem;
       }
 
@@ -497,6 +606,15 @@
       .footer-container {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .footer-section {
+        align-items: center;
+        text-align: center;
       }
 
       .payment-methods {
@@ -518,6 +636,11 @@
       <a href="/contact" aria-label="Contact page">Contact</a>
       <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
+    <div class="social-icons">
+      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+        <i class="fab fa-instagram social-icon"></i>
+      </a>
+    </div>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
@@ -538,8 +661,17 @@
       <p class="progress-text">Booking Confirmed</p>
     </div>
 
+    <!-- Fallback Message (if session data is missing) -->
+    <div id="fallback-message" class="fallback-message" style="display: none;">
+      <h2>Thank You!</h2>
+      <p>Your booking has been successfully completed. We’ll contact you soon with the details. If you have any questions, feel free to <a href="mailto:info@picturethispet.co">email us</a>.</p>
+      <div class="success-actions">
+        <a href="/" class="home-btn">Back to Home</a>
+      </div>
+    </div>
+
     <!-- Success Section -->
-    <div class="success-section">
+    <div class="success-section" id="success-section">
       <h2>Booking Successful!</h2>
       <p>Thank you for booking your pet photography session with Picture This Pet. We’re excited to capture timeless memories for you and your pet!</p>
       
@@ -571,8 +703,8 @@
             <span class="value" id="totalPrice">—</span>
           </div>
           <div class="confirmation-item">
-            <span class="label">Owner's Name:</span>
-            <span class="value" id="ownerName">—</span>
+            <span class="label">Client Name:</span>
+            <span class="value" id="clientName">—</span>
           </div>
           <div class="confirmation-item">
             <span class="label">Email:</span>
@@ -583,10 +715,16 @@
             <span class="value" id="phone">—</span>
           </div>
           <div class="confirmation-item">
-            <span class="label">Pet's Name:</span>
-            <span class="value" id="petName">—</span>
+            <span class="label">Pet Name(s):</span>
+            <span class="value" id="petNames">—</span>
           </div>
         </div>
+      </div>
+
+      <div class="contact-info">
+        <p>We’ll send a confirmation email to the address provided. If you have any questions, feel free to reach out!</p>
+        <p>Email: <a href="mailto:info@picturethispet.co">info@picturethispet.co</a></p>
+        <p>Follow us on Instagram: <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer">@picturethispet</a></p>
       </div>
 
       <div class="success-actions">
@@ -599,7 +737,8 @@
     <div class="footer-container">
       <div class="footer-section">
         <h4>Contact Us</h4>
-        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -626,7 +765,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:25 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:44 PM MST, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -640,7 +779,7 @@
     // Smooth scroll to session builder (for Book Now)
     function scrollToSessionBuilder(e) {
       e.preventDefault();
-      window.location.href = '/#session-builder-section';
+      window.location.href = '/index.html#session-builder-section';
     }
 
     // Display session details
@@ -649,6 +788,16 @@
 
       // Retrieve session data from localStorage
       const sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      const intakeData = JSON.parse(localStorage.getItem('ptpIntakeData')) || {};
+
+      // Check if session data is missing
+      const successSection = document.getElementById('success-section');
+      const fallbackMessage = document.getElementById('fallback-message');
+      if (!sessionData.session || !sessionData.park || !sessionData.selectedDateTime || !sessionData.petCount || !sessionData.peopleCount || !intakeData.person1) {
+        successSection.style.display = 'none';
+        fallbackMessage.style.display = 'block';
+        return;
+      }
 
       // Populate session details
       document.getElementById('sessionType').textContent = sessionData.session || '—';
@@ -666,11 +815,14 @@
       document.getElementById('totalPrice').textContent = `$${total}`;
 
       // Populate intake form details
-      const intakeForm = sessionData.intakeForm || {};
-      document.getElementById('ownerName').textContent = intakeForm.ownerName || '—';
-      document.getElementById('email').textContent = intakeForm.email || '—';
-      document.getElementById('phone').textContent = intakeForm.phone || '—';
-      document.getElementById('petName').textContent = intakeForm.petName || '—';
+      document.getElementById('clientName').textContent = intakeData.person1.name || '—';
+      document.getElementById('email').textContent = intakeData.person1.email || '—';
+      document.getElementById('phone').textContent = intakeData.person1.phone || '—';
+      const petNames = [intakeData.pet1.name];
+      if (intakeData.pet2 && intakeData.pet2.name) {
+        petNames.push(intakeData.pet2.name);
+      }
+      document.getElementById('petNames').textContent = petNames.join(', ') || '—';
     });
   </script>
 </body>
