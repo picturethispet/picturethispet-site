@@ -9,6 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+  
   <style>
     :root {
       --orange: #F47C2C;
@@ -926,7 +932,7 @@
       <div class="header-right">
         <div class="sync-status">
           <div class="sync-indicator" id="syncIndicator"></div>
-          <span id="syncStatus">Google Connected</span>
+          <span id="syncStatus">Connected</span>
         </div>
         <div class="admin-user" id="adminUser">Welcome, Admin</div>
         <button class="logout-btn" onclick="logout()">Logout</button>
@@ -1082,7 +1088,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 12:06 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+        <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:22 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
       </div>
     </footer>
   </div>
@@ -1275,7 +1281,19 @@
   </div>
 
   <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvwOKiiKl8E79AMJca2Ki4AXtPfM--H4GNBVsEjJwlDLg8d2w/exec';
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyA0G6m-zD-2UAy6tpAMJw_908F67Fa-H7Q",
+      authDomain: "picturethispet-63ac3.firebaseapp.com",
+      projectId: "picturethispet-63ac3",
+      storageBucket: "picturethispet-63ac3.firebasestorage.app",
+      messagingSenderId: "933617656942",
+      appId: "1:933617656942:web:6c9d66dbb336d7d54d327f"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
     let sessions = [];
     let popUpEvents = [];
     let selectedDate = null;
@@ -1290,8 +1308,8 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Page loaded, initializing...');
       checkAuthentication();
-      fetchSessions();
-      fetchPopUpEvents();
+      loadSessions();
+      loadPopUpEvents();
       renderCalendar();
     });
 
@@ -1324,40 +1342,30 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
       sidebar.classList.toggle('open');
     }
 
-    // Fetch sessions
-    async function fetchSessions() {
-      try {
-        console.log('Fetching sessions from:', `${API_URL}?type=sessions`);
-        const response = await fetch(`${API_URL}?type=sessions`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        sessions = await response.json();
-        if (sessions.error) throw new Error(sessions.error);
-        console.log('Sessions fetched:', sessions);
+    // Load sessions from Firestore
+    function loadSessions() {
+      db.collection("sessions").onSnapshot((snapshot) => {
+        sessions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), rowIndex: doc.id }));
         renderCalendar();
-      } catch (error) {
-        console.error('Error fetching sessions:', error);
+      }, (error) => {
+        console.error('Error loading sessions:', error);
         alert('Failed to load sessions. Please try again.');
         sessions = [];
         renderCalendar();
-      }
+      });
     }
 
-    // Fetch pop-up events
-    async function fetchPopUpEvents() {
-      try {
-        console.log('Fetching pop-up events from:', `${API_URL}?type=popUpEvents`);
-        const response = await fetch(`${API_URL}?type=popUpEvents`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        popUpEvents = await response.json();
-        if (popUpEvents.error) throw new Error(popUpEvents.error);
-        console.log('Pop-up events fetched:', popUpEvents);
+    // Load pop-up events from Firestore
+    function loadPopUpEvents() {
+      db.collection("popUpEvents").onSnapshot((snapshot) => {
+        popUpEvents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), rowIndex: doc.id }));
         renderCalendar();
-      } catch (error) {
-        console.error('Error fetching pop-up events:', error);
+      }, (error) => {
+        console.error('Error loading pop-up events:', error);
         alert('Failed to load pop-up events. Please try again.');
         popUpEvents = [];
         renderCalendar();
-      }
+      });
     }
 
     // Render calendar
@@ -1382,18 +1390,16 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
           <div class="calendar-day-header">Sat</div>
       `;
 
-      // Add days from previous month
       for (let i = firstDay - 1; i >= 0; i--) {
         html += `<div class="calendar-day other-month">${prevMonthDays - i}</div>`;
       }
 
-      // Add days for current month
       const today = new Date();
       for (let day = 1; day <= daysInMonth; day++) {
         const date = new Date(currentYear, currentMonth, day);
         const isPast = date < today && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
-        const session = sessions.find(s => new Date(s['Date']).toDateString() === date.toDateString());
-        const popupEvent = popUpEvents.find(e => new Date(e['Date']).toDateString() === date.toDateString());
+        const session = Array.isArray(sessions) ? sessions.find(s => new Date(s['Date']).toDateString() === date.toDateString()) : null;
+        const popupEvent = Array.isArray(popUpEvents) ? popUpEvents.find(e => new Date(e['Date']).toDateString() === date.toDateString()) : null;
         let className = isPast ? 'past' : '';
         let events = '';
 
@@ -1419,7 +1425,6 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
         `;
       }
 
-      // Add days from next month
       const lastDay = new Date(currentYear, currentMonth, daysInMonth).getDay();
       for (let i = 1; i <= 6 - lastDay; i++) {
         html += `<div class="calendar-day other-month">${i}</div>`;
@@ -1428,15 +1433,14 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
       html += '</div>';
       calendarContainer.innerHTML = html;
 
-      // Update calendar badge
-      const sessionsThisMonth = sessions.filter(s => {
+      const sessionsThisMonth = Array.isArray(sessions) ? sessions.filter(s => {
         const sessionDate = new Date(s['Date']);
         return sessionDate.getMonth() === currentMonth && sessionDate.getFullYear() === currentYear;
-      });
-      const popupEventsThisMonth = popUpEvents.filter(e => {
+      }) : [];
+      const popupEventsThisMonth = Array.isArray(popUpEvents) ? popUpEvents.filter(e => {
         const eventDate = new Date(e['Date']);
         return eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
-      });
+      }) : [];
       document.getElementById('calendarBadge').textContent = sessionsThisMonth.length + popupEventsThisMonth.length;
     }
 
@@ -1483,14 +1487,14 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
           <p><strong>Session:</strong> ${session['Session Type']} with ${session['Client Name']}</p>
           <p><strong>Time:</strong> ${session['Time']}</p>
           <p><strong>Location:</strong> ${session['Location']}</p>
-          <button class="btn btn-small btn-primary" onclick="viewSessionDetails('${session['Session ID']}')">View Details</button>
+          <button class="btn btn-small btn-primary" onclick="viewSessionDetails('${session['id']}')">View Details</button>
         `;
       } else if (popupEvent) {
         dateDetails.innerHTML = `
           <p><strong>Pop-Up Event:</strong> ${popupEvent['Event Name']}</p>
           <p><strong>Time:</strong> ${popupEvent['Time']}</p>
           <p><strong>Location:</strong> ${popupEvent['Location']}</p>
-          <button class="btn btn-small btn-primary" onclick="viewPopupEventDetails('${popupEvent['Event ID']}')">View Details</button>
+          <button class="btn btn-small btn-primary" onclick="viewPopupEventDetails('${popupEvent['id']}')">View Details</button>
         `;
       } else {
         dateDetails.innerHTML = '<p>No session or event scheduled.</p>';
@@ -1498,11 +1502,11 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
       selectedDateInfo.style.display = 'block';
     }
 
-    // Sync calendar
+    // Sync calendar (refresh data)
     function syncCalendar() {
       console.log('Syncing calendar...');
-      fetchSessions();
-      fetchPopUpEvents();
+      loadSessions();
+      loadPopUpEvents();
     }
 
     // Open full calendar (placeholder)
@@ -1538,7 +1542,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
           document.getElementById('sessionDate').value = selectedDate.toISOString().split('T')[0];
         }
       } else {
-        const session = sessions.find(s => s['Session ID'] === sessionId);
+        const session = sessions.find(s => s.id === sessionId);
         if (session) {
           document.getElementById('sessionId').value = session['Session ID'];
           document.getElementById('clientName').value = session['Client Name'];
@@ -1551,7 +1555,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
           document.getElementById('sessionNotes').value = session['Notes'];
           document.getElementById('petCount').value = session['Pet Count'];
           document.getElementById('peopleCount').value = session['People Count'];
-          editingSessionRowIndex = session.rowIndex;
+          editingSessionRowIndex = session.id;
         }
       }
 
@@ -1588,7 +1592,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
           document.getElementById('popupEventDate').value = selectedDate.toISOString().split('T')[0];
         }
       } else {
-        const event = popUpEvents.find(e => e['Event ID'] === eventId);
+        const event = popUpEvents.find(e => e.id === eventId);
         if (event) {
           document.getElementById('popupEventId').value = event['Event ID'];
           document.getElementById('popupEventName').value = event['Event Name'];
@@ -1598,7 +1602,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
           document.getElementById('popupEventCapacity').value = event['Capacity'];
           document.getElementById('popupEventDescription').value = event['Description'];
           document.getElementById('popupEventRegistrationLink').value = event['Registration Link'] || '';
-          editingPopupEventRowIndex = event.rowIndex;
+          editingPopupEventRowIndex = event.id;
         }
       }
 
@@ -1649,71 +1653,34 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
     function removeSession(sessionId = contextMenuSession) {
       console.log('Removing session via context menu:', sessionId);
       if (confirm('Are you sure you want to delete this session?')) {
-        const session = sessions.find(s => s['Session ID'] === sessionId);
-        if (session) {
-          fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              type: 'sessions',
-              action: 'delete',
-              rowIndex: session.rowIndex,
-              session: session
-            })
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.status === 'success') {
-              sessions = sessions.filter(s => s['Session ID'] !== sessionId);
-              renderCalendar();
-              closeContextMenu();
-            } else {
-              alert('Failed to delete session.');
-            }
+        db.collection("sessions").doc(sessionId).delete()
+          .then(() => {
+            closeContextMenu();
           })
           .catch(error => {
             console.error('Error deleting session:', error);
             alert('Error deleting session.');
           });
-        }
       }
     }
 
     function removePopupEvent(eventId = contextMenuPopupEvent) {
       console.log('Removing pop-up event via context menu:', eventId);
       if (confirm('Are you sure you want to delete this pop-up event?')) {
-        const event = popUpEvents.find(e => e['Event ID'] === eventId);
-        if (event) {
-          fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              type: 'popUpEvents',
-              action: 'delete',
-              rowIndex: event.rowIndex
-            })
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.status === 'success') {
-              popUpEvents = popUpEvents.filter(e => e['Event ID'] !== eventId);
-              renderCalendar();
-              closeContextMenu();
-            } else {
-              alert('Failed to delete pop-up event.');
-            }
+        db.collection("popUpEvents").doc(eventId).delete()
+          .then(() => {
+            closeContextMenu();
           })
           .catch(error => {
             console.error('Error deleting pop-up event:', error);
             alert('Error deleting pop-up event.');
           });
-        }
       }
     }
 
     function viewSessionDetails(sessionId = contextMenuSession) {
       console.log('Viewing session details via context menu:', sessionId);
-      const session = sessions.find(s => s['Session ID'] === sessionId);
+      const session = sessions.find(s => s.id === sessionId);
       if (session) {
         alert(`
           Session Details:
@@ -1733,7 +1700,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
 
     function viewPopupEventDetails(eventId = contextMenuPopupEvent) {
       console.log('Viewing pop-up event details via context menu:', eventId);
-      const event = popUpEvents.find(e => e['Event ID'] === eventId);
+      const event = popUpEvents.find(e => e.id === eventId);
       if (event) {
         alert(`
           Pop-Up Event Details:
@@ -1775,8 +1742,8 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
         const date = new Date(calendarDay.dataset.date);
         const session = sessions.find(s => new Date(s['Date']).toDateString() === date.toDateString());
         const popupEvent = popUpEvents.find(e => new Date(e['Date']).toDateString() === date.toDateString());
-        contextMenuSession = session ? session['Session ID'] : null;
-        contextMenuPopupEvent = popupEvent ? popupEvent['Event ID'] : null;
+        contextMenuSession = session ? session.id : null;
+        contextMenuPopupEvent = popupEvent ? popupEvent.id : null;
 
         document.querySelectorAll('.context-menu-item').forEach(item => {
           if (item.textContent.includes('Edit Session') || item.textContent.includes('Remove Session') || item.textContent.includes('View Session Details')) {
@@ -1793,112 +1760,6 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwRZDxuvO0HYo1C_NYrjuvw
 
     // Close context menu on click elsewhere
     document.addEventListener('click', closeContextMenu);
-
-    // Save session
-    document.getElementById('sessionForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      console.log('Saving session...');
-      const session = {
-        'Session ID': document.getElementById('sessionId').value,
-        'Client Name': document.getElementById('clientName').value,
-        'Client Email': document.getElementById('clientEmail').value,
-        'Client Phone': document.getElementById('clientPhone').value,
-        'Session Type': document.getElementById('sessionType').value,
-        'Location': document.getElementById('sessionLocation').value,
-        'Date': document.getElementById('sessionDate').value,
-        'Time': document.getElementById('sessionTime').value,
-        'Notes': document.getElementById('sessionNotes').value,
-        'Status': 'booked',
-        'Pet Count': document.getElementById('petCount').value,
-        'People Count': document.getElementById('peopleCount').value,
-        'Payment Status': 'Pending',
-        'Price': '',
-        'Intake Data': JSON.stringify({}),
-        'Pending Actions': JSON.stringify([])
-      };
-
-      const action = editingSessionRowIndex ? 'update' : 'add';
-      const payload = {
-        type: 'sessions',
-        action: action,
-        session: session,
-        rowIndex: editingSessionRowIndex
-      };
-
-      fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
-          if (action === 'add') {
-            sessions.push({ ...session, rowIndex: sessions.length + 2 });
-          } else {
-            const index = sessions.findIndex(s => s['Session ID'] === session['Session ID']);
-            sessions[index] = { ...session, rowIndex: editingSessionRowIndex };
-          }
-          renderCalendar();
-          closeSessionModal();
-        } else {
-          alert('Failed to save session.');
-        }
-      })
-      .catch(error => {
-        console.error('Error saving session:', error);
-        alert('Error saving session.');
-      });
-    });
-
-    // Save pop-up event
-    document.getElementById('popupEventForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      console.log('Saving pop-up event...');
-      const popupEvent = {
-        'Event ID': document.getElementById('popupEventId').value,
-        'Event Name': document.getElementById('popupEventName').value,
-        'Date': document.getElementById('popupEventDate').value,
-        'Time': document.getElementById('popupEventTime').value,
-        'Location': document.getElementById('popupEventLocation').value,
-        'Capacity': document.getElementById('popupEventCapacity').value,
-        'Description': document.getElementById('popupEventDescription').value,
-        'Registration Link': document.getElementById('popupEventRegistrationLink').value
-      };
-
-      const action = editingPopupEventRowIndex ? 'update' : 'add';
-      const payload = {
-        type: 'popUpEvents',
-        action: action,
-        event: popupEvent,
-        rowIndex: editingPopupEventRowIndex
-      };
-
-      fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
-          if (action === 'add') {
-            popUpEvents.push({ ...popupEvent, rowIndex: popUpEvents.length + 2 });
-          } else {
-            const index = popUpEvents.findIndex(e => e['Event ID'] === popupEvent['Event ID']);
-            popUpEvents[index] = { ...popupEvent, rowIndex: editingPopupEventRowIndex };
-          }
-          renderCalendar();
-          closePopupEventModal();
-        } else {
-          alert('Failed to save pop-up event.');
-        }
-      })
-      .catch(error => {
-        console.error('Error saving pop-up event:', error);
-        alert('Error saving pop-up event.');
-      });
-    });
   </script>
 </body>
 </html>
