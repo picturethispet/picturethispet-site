@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Calendar | Picture This Pet</title>
-  <meta name="description" content="Manage session availability and bookings with beautiful interface.">
+  <title>Admin Dashboard | Picture This Pet</title>
+  <meta name="description" content="Complete admin dashboard for managing sessions, clients, and galleries.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -18,6 +18,7 @@
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
       --admin-purple: #8b5cf6;
+      --admin-blue: #3b82f6;
     }
 
     * {
@@ -28,10 +29,25 @@
     
     html, body {
       overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    html::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    html::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
     }
     
     body {
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background: none;
     }
@@ -40,6 +56,17 @@
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* === HEADER === */
@@ -78,51 +105,40 @@
       height: 100px;
     }
     
-    .site-nav {
+    .admin-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
-    }
-    
-    .site-nav a {
-      color: white;
-      margin-left: 1rem;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    
-    .book-btn {
-      background: url("assets/images/ani_bkgd_warm.png");
-      background-size: cover;
-      background-position: center;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      padding: 0.8rem 2rem;
-      border: 2px solid transparent;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background-clip: text;
-      position: relative;
+      gap: 1rem;
     }
 
-    .book-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url("assets/images/ani_bkgd_warm.png");
-      background-size: cover;
-      background-position: center;
-      border-radius: 999px;
-      opacity: 0.15;
-      z-index: -1;
+    .admin-info {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .logout-btn {
+      background: rgba(239, 68, 68, 0.2);
+      color: white;
+      border: 2px solid rgba(239, 68, 68, 0.5);
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logout-btn:hover {
+      background: rgba(239, 68, 68, 0.3);
+      border-color: rgba(239, 68, 68, 0.7);
+      transform: translateY(-1px);
     }
     
     .mobile-menu-btn {
@@ -137,110 +153,57 @@
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 4rem 1rem;
+      padding: 2rem 1rem;
       position: relative;
+    }
+
+    /* === DASHBOARD LAYOUT === */
+    .dashboard-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 2rem;
+      align-items: start;
     }
 
     /* === PAGE HEADER === */
     .page-header {
       text-align: center;
-      margin-bottom: 4rem;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .page-title {
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 1rem;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .page-subtitle {
-      font-size: 1.3rem;
-      color: rgba(255, 255, 255, 0.9);
-      line-height: 1.6;
       margin-bottom: 2rem;
+      grid-column: 1 / -1;
     }
 
     .admin-badge {
       display: inline-block;
-      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
       color: white;
       padding: 0.5rem 1.5rem;
       border-radius: 25px;
       font-size: 0.9rem;
       font-weight: 600;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    .admin-controls {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .admin-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .admin-card:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .admin-card.primary {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-    }
-
-    .admin-card.primary:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(244, 124, 44, 0.4);
-    }
-
-    .admin-card h3 {
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
       color: white;
-      font-size: 1.1rem;
       margin-bottom: 0.5rem;
-      font-weight: 600;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    .admin-card p {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 0.95rem;
-      line-height: 1.4;
-    }
-
-    .admin-card.primary h3,
-    .admin-card.primary p {
-      color: white;
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
     }
 
     /* === CALENDAR SECTION === */
     .calendar-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 400px;
-      gap: 3rem;
-      align-items: start;
-    }
-
-    .calendar-container {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -261,6 +224,7 @@
     }
 
     .calendar-title {
+      font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
       font-weight: 700;
       color: white;
@@ -299,7 +263,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 16px;
       overflow: hidden;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     .calendar-day-header {
@@ -361,18 +325,22 @@
     .calendar-day.booked {
       background: rgba(239, 68, 68, 0.2);
       border: 2px solid rgba(239, 68, 68, 0.5);
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.9);
       position: relative;
+      cursor: pointer;
     }
 
     .calendar-day.booked::after {
-      content: "✕";
+      content: "📸";
       position: absolute;
       top: 4px;
       right: 6px;
       font-size: 0.8rem;
-      color: var(--booked-red);
-      font-weight: bold;
+    }
+
+    .calendar-day.booked:hover {
+      background: rgba(239, 68, 68, 0.3);
+      border-color: rgba(239, 68, 68, 0.7);
     }
 
     .calendar-day.soft-hold {
@@ -393,8 +361,8 @@
     }
 
     .calendar-day.selected {
-      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
-      border: 2px solid #ec4899;
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
+      border: 2px solid var(--admin-blue);
       color: white;
       transform: scale(1.05);
     }
@@ -439,12 +407,12 @@
     }
 
     .legend-dot.selected {
-      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
-      border-color: #ec4899;
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
+      border-color: var(--admin-blue);
     }
 
-    /* === ADMIN PANEL === */
-    .admin-panel {
+    /* === CLIENT PANEL === */
+    .client-panel {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -456,51 +424,174 @@
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       height: fit-content;
+      max-height: 80vh;
+      overflow-y: auto;
     }
 
     .panel-title {
+      font-family: 'Playfair Display', serif;
       font-size: 1.8rem;
       font-weight: 700;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       text-align: center;
       color: white;
     }
 
-    .panel-section {
-      margin-bottom: 2rem;
+    /* === WELCOME STATE === */
+    .welcome-state {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .welcome-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+
+    .welcome-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .welcome-text {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+
+    /* === CLIENT PROFILE === */
+    .client-profile {
+      display: none;
+    }
+
+    .profile-header {
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
+      border-radius: 16px;
       padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .profile-header h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-header .session-date {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .profile-section {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .panel-section h3 {
+    .profile-section h4 {
       font-size: 1.2rem;
       font-weight: 600;
       margin-bottom: 1rem;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .profile-field {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-field:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      font-weight: 600;
       color: rgba(255, 255, 255, 0.9);
+      min-width: 100px;
+    }
+
+    .field-value {
+      color: rgba(255, 255, 255, 0.8);
+      text-align: right;
+      flex: 1;
+    }
+
+    /* === GALLERY MANAGEMENT === */
+    .gallery-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .gallery-section h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .gallery-status {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-status.no-gallery {
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+    }
+
+    .gallery-status.has-gallery {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+    }
+
+    .gallery-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .action-btn {
       background: rgba(255, 255, 255, 0.1);
       color: white;
       border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 0.8rem 1.5rem;
-      border-radius: 12px;
-      font-size: 1rem;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
-      margin: 0.5rem 0.5rem 0.5rem 0;
       text-align: center;
+      flex: 1;
+      min-width: 120px;
     }
 
     .action-btn:hover {
       background: rgba(255, 255, 255, 0.2);
       border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
     }
 
     .action-btn.primary {
@@ -509,20 +600,20 @@
     }
 
     .action-btn.primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(244, 124, 44, 0.3);
     }
 
-    .action-btn.danger {
-      background: linear-gradient(135deg, var(--booked-red), #dc2626);
-      border-color: #dc2626;
+    .action-btn.success {
+      background: linear-gradient(135deg, var(--available-green), #059669);
+      border-color: var(--available-green);
     }
 
-    .action-btn.danger:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+    .action-btn.success:hover {
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
     }
 
+    /* === LOADING STATES === */
     .loading-indicator {
       text-align: center;
       padding: 2rem;
@@ -537,63 +628,14 @@
       color: var(--admin-purple);
     }
 
-    .selected-date-info {
-      background: linear-gradient(135deg, var(--admin-purple), #ec4899);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .selected-date-info h4 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .event-form {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.8rem;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1rem;
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--admin-purple);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
     /* === RESPONSIVE === */
+    @media (max-width: 1200px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
     @media (max-width: 768px) {
       header {
         height: 80px;
@@ -604,8 +646,26 @@
         height: 48px;
       }
       
-      .site-nav {
+      .admin-nav {
         display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        gap: 1rem;
+      }
+      
+      .admin-nav.active {
+        display: flex;
       }
       
       .mobile-menu-btn {
@@ -619,28 +679,15 @@
 
       main {
         margin-top: 80px;
-        padding: 2rem 1rem;
+        padding: 1rem;
       }
 
       .page-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
       }
 
-      .page-subtitle {
-        font-size: 1.1rem;
-      }
-
-      .calendar-section {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .admin-controls {
-        grid-template-columns: 1fr;
-      }
-
-      .calendar-container,
-      .admin-panel {
+      .calendar-section,
+      .client-panel {
         padding: 2rem;
       }
 
@@ -659,14 +706,18 @@
         font-size: 0.9rem;
       }
 
-      .calendar-legend {
-        gap: 1.5rem;
-      }
-
       .nav-button {
         width: 40px;
         height: 40px;
         font-size: 1rem;
+      }
+
+      .gallery-actions {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        min-width: auto;
       }
     }
   </style>
@@ -674,53 +725,28 @@
 <body>
   <header>
     <a href="/" class="logo-link">
-      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
-    <nav class="site-nav">
-      <a href="/">Home</a>
-      <a href="/availability.html">Availability</a>
-      <a href="#">Locations</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
-      <a href="#" class="book-btn">Book Now</a>
+    <nav class="admin-nav">
+      <div class="admin-info" id="adminInfo">Welcome, Justin</div>
+      <button class="logout-btn" onclick="handleLogout()">Logout</button>
     </nav>
     <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <!-- Page Header -->
-    <div class="page-header">
-      <div class="admin-badge">🔒 Admin Access</div>
-      <h1 class="page-title">Session Calendar Admin</h1>
-      <p class="page-subtitle">
-        Manage your session availability with the same beautiful interface your clients see. 
-        Click dates to add events, manage bookings, and control your schedule.
-      </p>
-      
-      <div class="admin-controls">
-        <div class="admin-card primary" onclick="window.open('https://calendar.google.com/calendar/u/0/r/week', '_blank')">
-          <h3>📅 Full Google Calendar</h3>
-          <p>Open complete calendar interface in new tab</p>
-        </div>
-        <div class="admin-card" onclick="refreshCalendar()">
-          <h3>🔄 Refresh Data</h3>
-          <p>Reload calendar from live feed</p>
-        </div>
-        <div class="admin-card" onclick="window.open('/availability.html', '_blank')">
-          <h3>👁️ Public View</h3>
-          <p>See what clients see on availability page</p>
-        </div>
-        <div class="admin-card" onclick="window.open('/ptp-pick-date-step-3.html', '_blank')">
-          <h3>🧪 Test Booking</h3>
-          <p>Test the full booking flow</p>
-        </div>
+    <div class="dashboard-container">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="admin-badge">🔐 Admin Dashboard</div>
+        <h1 class="page-title">Business Management</h1>
+        <p class="page-subtitle">
+          Complete control over your photography business. Manage sessions, view client profiles, and upload galleries.
+        </p>
       </div>
-    </div>
 
-    <!-- Calendar Section -->
-    <div class="calendar-section">
-      <!-- Calendar Container -->
-      <div class="calendar-container">
+      <!-- Calendar Section -->
+      <div class="calendar-section">
         <div class="calendar-header">
           <h2 class="calendar-title" id="calendarTitle">Loading...</h2>
           <div class="calendar-nav">
@@ -747,7 +773,7 @@
           </div>
           <div class="legend-item">
             <div class="legend-dot booked"></div>
-            <span>Booked</span>
+            <span>Session Booked</span>
           </div>
           <div class="legend-item">
             <div class="legend-dot selected"></div>
@@ -756,75 +782,108 @@
         </div>
       </div>
 
-      <!-- Admin Panel -->
-      <div class="admin-panel">
-        <h2 class="panel-title">📋 Admin Controls</h2>
+      <!-- Client Panel -->
+      <div class="client-panel">
+        <!-- Welcome State -->
+        <div class="welcome-state" id="welcomeState">
+          <div class="welcome-icon">👋</div>
+          <h2 class="panel-title">Welcome, Justin!</h2>
+          <h3 class="welcome-title">Click a Session to Begin</h3>
+          <p class="welcome-text">
+            Select any booked session from the calendar to view complete client profiles, 
+            session details, and manage photo galleries.
+          </p>
+        </div>
 
-        <!-- Selected Date Info -->
-        <div id="selectedDatePanel" style="display: none;">
-          <div class="selected-date-info">
-            <h4 id="selectedDateDisplay">No date selected</h4>
-            <p>Click a date to manage events</p>
+        <!-- Client Profile -->
+        <div class="client-profile" id="clientProfile">
+          <div class="profile-header">
+            <h3 id="profileClientName">Loading...</h3>
+            <div class="session-date" id="profileSessionDate">Session Date</div>
           </div>
-        </div>
 
-        <!-- Quick Actions -->
-        <div class="panel-section">
-          <h3>Quick Actions</h3>
-          <button class="action-btn primary" onclick="addSessionBlock()">➕ Add Session Block</button>
-          <button class="action-btn" onclick="markUnavailable()">🚫 Mark Unavailable</button>
-          <button class="action-btn danger" onclick="removeEvent()">🗑️ Remove Event</button>
-        </div>
-
-        <!-- Event Form -->
-        <div class="panel-section" id="eventFormSection" style="display: none;">
-          <h3>Add Event</h3>
-          <div class="event-form">
-            <div class="form-group">
-              <label for="eventType">Event Type</label>
-              <select id="eventType">
-                <option value="session">Photography Session</option>
-                <option value="unavailable">Unavailable</option>
-                <option value="hold">Soft Hold</option>
-                <option value="personal">Personal</option>
-              </select>
+          <!-- Session Details -->
+          <div class="profile-section">
+            <h4>📅 Session Information</h4>
+            <div class="profile-field">
+              <span class="field-label">Type:</span>
+              <span class="field-value" id="sessionType">-</span>
             </div>
-            <div class="form-group">
-              <label for="eventTime">Time</label>
-              <input type="time" id="eventTime" value="18:00">
+            <div class="profile-field">
+              <span class="field-label">Location:</span>
+              <span class="field-value" id="sessionLocation">-</span>
             </div>
-            <div class="form-group">
-              <label for="eventTitle">Title</label>
-              <input type="text" id="eventTitle" placeholder="Session with...">
+            <div class="profile-field">
+              <span class="field-label">Time:</span>
+              <span class="field-value" id="sessionTime">-</span>
             </div>
-            <div class="form-group">
-              <label for="eventNotes">Notes</label>
-              <textarea id="eventNotes" rows="3" placeholder="Additional details..."></textarea>
+            <div class="profile-field">
+              <span class="field-label">Pet Count:</span>
+              <span class="field-value" id="petCount">-</span>
             </div>
-            <button class="action-btn primary" onclick="saveEvent()">💾 Save Event</button>
-            <button class="action-btn" onclick="cancelEvent()">❌ Cancel</button>
+            <div class="profile-field">
+              <span class="field-label">People Count:</span>
+              <span class="field-value" id="peopleCount">-</span>
+            </div>
           </div>
-        </div>
 
-        <!-- Recent Activity -->
-        <div class="panel-section">
-          <h3>Recent Activity</h3>
-          <div id="recentActivity">
-            <p style="color: rgba(255,255,255,0.7); font-style: italic;">No recent changes</p>
-          </div>
-        </div>
-
-        <!-- Calendar Stats -->
-        <div class="panel-section">
-          <h3>This Month</h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: center;">
-            <div>
-              <div style="font-size: 2rem; color: var(--available-green);" id="availableCount">0</div>
-              <div style="font-size: 0.9rem; opacity: 0.8;">Available</div>
+          <!-- Client Contact -->
+          <div class="profile-section">
+            <h4>👤 Client Contact</h4>
+            <div class="profile-field">
+              <span class="field-label">Name:</span>
+              <span class="field-value" id="clientName">-</span>
             </div>
-            <div>
-              <div style="font-size: 2rem; color: var(--booked-red);" id="bookedCount">0</div>
-              <div style="font-size: 0.9rem; opacity: 0.8;">Booked</div>
+            <div class="profile-field">
+              <span class="field-label">Email:</span>
+              <span class="field-value" id="clientEmail">-</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Phone:</span>
+              <span class="field-value" id="clientPhone">-</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Zip Code:</span>
+              <span class="field-value" id="clientZip">-</span>
+            </div>
+          </div>
+
+          <!-- Pet Information -->
+          <div class="profile-section">
+            <h4>🐕 Pet Information</h4>
+            <div id="petDetails">
+              <!-- Pet details will be populated here -->
+            </div>
+          </div>
+
+          <!-- Session Preferences -->
+          <div class="profile-section">
+            <h4>📝 Session Notes</h4>
+            <div class="profile-field">
+              <span class="field-label">Photo Style:</span>
+              <span class="field-value" id="photoStyle">-</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Special Requests:</span>
+              <span class="field-value" id="specialRequests">-</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Referral Source:</span>
+              <span class="field-value" id="referralSource">-</span>
+            </div>
+          </div>
+
+          <!-- Gallery Management -->
+          <div class="gallery-section">
+            <h4>📸 Gallery Management</h4>
+            <div class="gallery-status no-gallery" id="galleryStatus">
+              <div>📁 No Gallery Created</div>
+              <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Ready to upload photos and create client gallery</div>
+            </div>
+            <div class="gallery-actions">
+              <button class="action-btn primary" onclick="createGallery()">Create Gallery</button>
+              <button class="action-btn" onclick="uploadPhotos()">Upload Photos</button>
+              <button class="action-btn success" onclick="sendGalleryAccess()">Send Access</button>
             </div>
           </div>
         </div>
@@ -832,223 +891,164 @@
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer style="text-align: center; padding: 1rem; background-image: url('assets/images/ani_bkgd_cool.png'); background-size: 100% 100%; background-position: center; animation: moveBackground 30s ease-in-out infinite; border-top: 1px solid rgba(255,255,255,0.1);">
-    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">© 2024 PictureThisPet Admin Panel. All rights reserved. | v2.0.0</p>
-  </footer>
-
   <script>
-    // Google Calendar API Configuration
-    const CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'; // You'll need to set this up
-    const API_KEY = 'YOUR_GOOGLE_API_KEY'; // You'll need to set this up
-    const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
-    const SCOPES = 'https://www.googleapis.com/auth/calendar';
-    
-    // Your Session Availability calendar ID (extracted from your iCal URL)
-    const CALENDAR_ID = '093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51@group.calendar.google.com';
-    const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
-    
-    let currentMonth = new Date();
-    let selectedDate = null;
-    let selectedDateElement = null;
-    let isGoogleAPIReady = false;
-    let isSignedIn = false;
-    
-    // Calendar data - will be populated from iCal feed
-    let bookedDates = [];
-    let softHoldDates = [];
-    let calendarEvents = [];
-    let calendarLoaded = false;
-
-    // Initialize Google API
-    async function initializeGoogleAPI() {
-      try {
-        await gapi.load('auth2', () => {
-          gapi.auth2.init({
-            client_id: CLIENT_ID,
-          });
-        });
-        
-        await gapi.load('client', async () => {
-          await gapi.client.init({
-            apiKey: API_KEY,
-            clientId: CLIENT_ID,
-            discoveryDocs: [DISCOVERY_DOC],
-            scope: SCOPES
-          });
-          
-          isGoogleAPIReady = true;
-          const authInstance = gapi.auth2.getAuthInstance();
-          isSignedIn = authInstance.isSignedIn.get();
-          
-          updateAuthStatus();
-          console.log('Google Calendar API initialized');
-        });
-      } catch (error) {
-        console.error('Error initializing Google API:', error);
-        showAPISetupInstructions();
-      }
-    }
-
-    // Update authentication status in UI
-    function updateAuthStatus() {
-      const authSection = document.getElementById('authSection');
-      if (!authSection) return;
-      
-      if (!isGoogleAPIReady) {
-        authSection.innerHTML = `
-          <div style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
-            <h4 style="color: #ef4444; margin-bottom: 0.5rem;">⚠️ API Setup Required</h4>
-            <p style="color: rgba(255,255,255,0.9); font-size: 0.9rem; line-height: 1.4;">
-              To enable real calendar management, you need to set up Google Calendar API credentials. 
-              <a href="#" onclick="showAPISetupInstructions()" style="color: var(--gold);">Click here for setup instructions</a>
-            </p>
-          </div>
-        `;
-      } else if (!isSignedIn) {
-        authSection.innerHTML = `
-          <div style="background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.5); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
-            <h4 style="color: var(--soft-hold-yellow); margin-bottom: 0.5rem;">🔑 Sign In Required</h4>
-            <p style="color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-bottom: 1rem;">
-              Sign in to your Google account to manage calendar events
-            </p>
-            <button class="action-btn primary" onclick="signIn()">🔐 Sign In to Google</button>
-          </div>
-        `;
-      } else {
-        authSection.innerHTML = `
-          <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
-            <h4 style="color: var(--available-green); margin-bottom: 0.5rem;">✅ Connected</h4>
-            <p style="color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-bottom: 1rem;">
-              You're signed in and ready to manage calendar events
-            </p>
-            <button class="action-btn" onclick="signOut()">🔓 Sign Out</button>
-          </div>
-        `;
-      }
-    }
-
-    // Show API setup instructions
-    function showAPISetupInstructions() {
-      const instructions = `
-        🔧 **Google Calendar API Setup Instructions:**
-        
-        1. **Go to Google Cloud Console:** https://console.cloud.google.com/
-        2. **Create a new project** (or select existing)
-        3. **Enable Calendar API:**
-           - Go to "APIs & Services" → "Library"
-           - Search "Google Calendar API" → Enable it
-        4. **Create Credentials:**
-           - Go to "APIs & Services" → "Credentials"
-           - Click "Create Credentials" → "API Key"
-           - Copy your API Key
-        5. **Set up OAuth:**
-           - Click "Create Credentials" → "OAuth 2.0 Client ID"
-           - Choose "Web application"
-           - Add your domain to "Authorized origins"
-           - Copy your Client ID
-        6. **Update the code:**
-           - Replace 'YOUR_GOOGLE_CLIENT_ID' with your Client ID
-           - Replace 'YOUR_GOOGLE_API_KEY' with your API Key
-        
-        **Need help?** The setup takes about 5-10 minutes. Once complete, you'll have full calendar control!
-      `;
-      
-      alert(instructions);
-    }
-
-    // Authentication functions
-    async function signIn() {
-      if (!isGoogleAPIReady) {
-        showAPISetupInstructions();
-        return;
-      }
-      
-      try {
-        const authInstance = gapi.auth2.getAuthInstance();
-        await authInstance.signIn();
-        isSignedIn = true;
-        updateAuthStatus();
-        addRecentActivity('Signed in to Google Calendar');
-      } catch (error) {
-        console.error('Sign in error:', error);
-        alert('Sign in failed. Please try again.');
-      }
-    }
-
-    async function signOut() {
-      if (!isGoogleAPIReady) return;
-      
-      try {
-        const authInstance = gapi.auth2.getAuthInstance();
-        await authInstance.signOut();
-        isSignedIn = false;
-        updateAuthStatus();
-        addRecentActivity('Signed out from Google Calendar');
-      } catch (error) {
-        console.error('Sign out error:', error);
-      }
-    }
-
-    // Real Calendar API Functions
-    async function createCalendarEvent(eventData) {
-      if (!isGoogleAPIReady || !isSignedIn) {
-        alert('Please sign in first to create calendar events');
+    // Check authentication
+    function checkAuth() {
+      const adminSession = localStorage.getItem('adminSession');
+      if (!adminSession) {
+        window.location.href = '/admin-login.html';
         return false;
       }
       
       try {
-        const event = {
-          summary: eventData.title,
-          start: {
-            dateTime: eventData.startDateTime,
-            timeZone: 'America/Denver'
-          },
-          end: {
-            dateTime: eventData.endDateTime,
-            timeZone: 'America/Denver'
-          },
-          description: eventData.notes || ''
-        };
+        const session = JSON.parse(adminSession);
+        const loginTime = new Date(session.loginTime);
+        const now = new Date();
+        const hoursSinceLogin = (now - loginTime) / (1000 * 60 * 60);
         
-        const response = await gapi.client.calendar.events.insert({
-          calendarId: CALENDAR_ID,
-          resource: event
-        });
+        // Session expires after 8 hours
+        if (hoursSinceLogin >= 8) {
+          localStorage.removeItem('adminSession');
+          window.location.href = '/admin-login.html';
+          return false;
+        }
         
-        console.log('Event created:', response.result);
-        return response.result;
-      } catch (error) {
-        console.error('Error creating event:', error);
-        throw error;
-      }
-    }
-
-    async function deleteCalendarEvent(eventId) {
-      if (!isGoogleAPIReady || !isSignedIn) {
-        alert('Please sign in first to delete calendar events');
-        return false;
-      }
-      
-      try {
-        await gapi.client.calendar.events.delete({
-          calendarId: CALENDAR_ID,
-          eventId: eventId
-        });
-        
-        console.log('Event deleted:', eventId);
+        // Update admin info
+        document.getElementById('adminInfo').textContent = `Welcome, ${session.username}`;
         return true;
-      } catch (error) {
-        console.error('Error deleting event:', error);
-        throw error;
+      } catch (e) {
+        localStorage.removeItem('adminSession');
+        window.location.href = '/admin-login.html';
+        return false;
+      }
+    }
+
+    // Handle logout
+    function handleLogout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('adminSession');
+        window.location.href = '/admin-login.html';
       }
     }
 
     // Mobile menu toggle
     function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+      const nav = document.querySelector('.admin-nav');
+      nav.classList.toggle('active');
     }
+
+    // Calendar variables
+    let currentMonth = new Date();
+    let selectedDate = null;
+    let selectedDateElement = null;
+    
+    // Calendar data - will be populated from iCal feed + mock data
+    let bookedDates = [];
+    let softHoldDates = [];
+    let calendarEvents = [];
+    let calendarLoaded = false;
+    
+    // Mock client data for demo (in production, this would come from your database)
+    const mockClientData = {
+      "2024-12-15": {
+        sessionData: {
+          session: "Full Session",
+          park: "Cheesman Park", 
+          selectedDateTime: "2024-12-15T18:00:00",
+          petCount: "2",
+          peopleCount: "1"
+        },
+        intakeData: {
+          person1: {
+            name: "Sarah Johnson",
+            email: "sarah.johnson@email.com",
+            phone: "303-555-0123",
+            zip: "80206"
+          },
+          pet1: {
+            name: "Buffy",
+            age: "3",
+            gender: "Female",
+            behavior: "Friendly but shy around strangers",
+            offLeash: "yes",
+            favoriteToy: "Tennis ball"
+          },
+          pet2: {
+            name: "Max", 
+            age: "5",
+            gender: "Male",
+            behavior: "Very energetic, loves attention",
+            offLeash: "yes",
+            favoriteToy: "Frisbee"
+          },
+          specialRequests: "Please be patient with Buffy - she needs time to warm up",
+          photoStyle: "both",
+          referralSource: "Instagram"
+        },
+        galleryStatus: "none" // none, created, uploaded, sent
+      },
+      "2024-12-22": {
+        sessionData: {
+          session: "Mini Session",
+          park: "City Park",
+          selectedDateTime: "2024-12-22T18:00:00", 
+          petCount: "1",
+          peopleCount: "2"
+        },
+        intakeData: {
+          person1: {
+            name: "Mike & Lisa Chen",
+            email: "mike.chen@email.com",
+            phone: "720-555-0456",
+            zip: "80204"
+          },
+          pet1: {
+            name: "Luna",
+            age: "2", 
+            gender: "Female",
+            behavior: "Very social and loves everyone",
+            offLeash: "no",
+            favoriteToy: "Rope toy"
+          },
+          specialRequests: "Looking for holiday card photos",
+          photoStyle: "posed",
+          referralSource: "Google Search"
+        },
+        galleryStatus: "created"
+      },
+      "2025-01-05": {
+        sessionData: {
+          session: "Full Session",
+          park: "Cheesman Park",
+          selectedDateTime: "2025-01-05T18:00:00",
+          petCount: "1", 
+          peopleCount: "1"
+        },
+        intakeData: {
+          person1: {
+            name: "Emma Rodriguez",
+            email: "emma.r@email.com", 
+            phone: "303-555-0789",
+            zip: "80210"
+          },
+          pet1: {
+            name: "Charlie",
+            age: "1",
+            gender: "Male", 
+            behavior: "Puppy energy, very playful",
+            offLeash: "no",
+            favoriteToy: "Squeaky duck"
+          },
+          specialRequests: "First professional photos - want to capture his personality",
+          photoStyle: "candid",
+          referralSource: "Friend/Family"
+        },
+        galleryStatus: "uploaded"
+      }
+    };
+
+    // Your Session Availability calendar feed (same as availability page)
+    const CALENDAR_FEED_URL = 'https://calendar.google.com/calendar/ical/093785ac4fc4bc53250acaa7df418b5b8716de067a84d27861ecb39c75d91a51%40group.calendar.google.com/public/basic.ics';
 
     // Parse iCal data (same as availability page)
     function parseICalData(icsData) {
@@ -1108,7 +1108,6 @@
     async function fetchCalendarData() {
       try {
         console.log('Fetching admin calendar data...');
-        // Use dedicated Google Calendar CORS proxy
         const proxyUrl = 'https://gcal-cors-proxy.vercel.app?url=';
         const response = await fetch(proxyUrl + encodeURIComponent(CALENDAR_FEED_URL));
         
@@ -1125,21 +1124,14 @@
         processCalendarEvents();
         calendarLoaded = true;
         generateCalendar();
-        updateStats();
         
       } catch (error) {
         console.error('Error fetching admin calendar data:', error);
         console.log('Using fallback data for admin...');
-        // Fallback data
-        bookedDates = [
-          "2024-12-15",
-          "2024-12-22", 
-          "2024-12-29",
-          "2025-01-05"
-        ];
+        // Fallback data with mock sessions
+        bookedDates = ["2024-12-15", "2024-12-22", "2024-12-29", "2025-01-05"];
         calendarLoaded = true;
         generateCalendar();
-        updateStats();
       }
     }
 
@@ -1165,11 +1157,18 @@
         }
       });
       
+      // Add mock session dates if not already present
+      ["2024-12-15", "2024-12-22", "2025-01-05"].forEach(date => {
+        if (!bookedDates.includes(date)) {
+          bookedDates.push(date);
+        }
+      });
+      
       console.log('Admin processed booked dates:', bookedDates);
       console.log('Admin processed soft hold dates:', softHoldDates);
     }
 
-    // Generate calendar (same as availability but with click handlers)
+    // Generate calendar (same as availability but with admin click handlers)
     function generateCalendar() {
       const container = document.getElementById('calendarContainer');
       const title = document.getElementById('calendarTitle');
@@ -1224,14 +1223,16 @@
         const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const dayDate = new Date(year, month, day);
         
-        // Add click handler for admin functionality
-        dayElement.onclick = () => selectDate(dateString, dayElement, dayDate);
+        // Add click handler for admin functionality - only for booked sessions
+        if (bookedDates.includes(dateString)) {
+          dayElement.onclick = () => selectSession(dateString, dayElement);
+        }
         
         // Mark past dates
         if (dayDate < new Date()) {
           dayElement.classList.add('past');
         }
-        // Mark booked dates
+        // Mark booked dates (sessions)
         else if (bookedDates.includes(dateString)) {
           dayElement.classList.add('booked');
         }
@@ -1251,8 +1252,8 @@
       console.log('Admin calendar generated successfully');
     }
 
-    // Select date for admin actions
-    function selectDate(dateString, element, dateObj) {
+    // Select session for admin view
+    function selectSession(dateString, element) {
       // Remove previous selection
       document.querySelectorAll('.calendar-day.selected').forEach(el => {
         el.classList.remove('selected');
@@ -1264,169 +1265,233 @@
       selectedDate = dateString;
       selectedDateElement = element;
       
-      // Format the date for display
-      const formattedDate = new Intl.DateTimeFormat('en-US', {
+      // Load client profile
+      loadClientProfile(dateString);
+      
+      console.log('Admin selected session:', dateString);
+    }
+
+    // Load client profile data
+    function loadClientProfile(dateString) {
+      const clientData = mockClientData[dateString];
+      
+      if (!clientData) {
+        // No client data for this date
+        document.getElementById('welcomeState').style.display = 'block';
+        document.getElementById('clientProfile').style.display = 'none';
+        return;
+      }
+      
+      // Hide welcome, show profile
+      document.getElementById('welcomeState').style.display = 'none';
+      document.getElementById('clientProfile').style.display = 'block';
+      
+      const { sessionData, intakeData, galleryStatus } = clientData;
+      
+      // Update profile header
+      document.getElementById('profileClientName').textContent = intakeData.person1.name;
+      const sessionDate = new Date(sessionData.selectedDateTime);
+      document.getElementById('profileSessionDate').textContent = sessionDate.toLocaleDateString('en-US', {
         weekday: 'long',
-        year: 'numeric',
+        year: 'numeric', 
         month: 'long',
         day: 'numeric'
-      }).format(dateObj);
+      });
       
-      // Show selected date panel
-      document.getElementById('selectedDatePanel').style.display = 'block';
-      document.getElementById('selectedDateDisplay').textContent = formattedDate;
+      // Update session details
+      document.getElementById('sessionType').textContent = sessionData.session;
+      document.getElementById('sessionLocation').textContent = sessionData.park;
+      document.getElementById('sessionTime').textContent = sessionDate.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit'
+      });
+      document.getElementById('petCount').textContent = sessionData.petCount;
+      document.getElementById('peopleCount').textContent = sessionData.peopleCount;
       
-      console.log('Admin selected date:', dateString);
-    }
-
-    // Update calendar stats
-    function updateStats() {
-      const year = currentMonth.getFullYear();
-      const month = currentMonth.getMonth();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      // Update client contact
+      document.getElementById('clientName').textContent = intakeData.person1.name;
+      document.getElementById('clientEmail').textContent = intakeData.person1.email;
+      document.getElementById('clientPhone').textContent = intakeData.person1.phone;
+      document.getElementById('clientZip').textContent = intakeData.person1.zip;
       
-      let availableCount = 0;
-      let bookedCount = 0;
+      // Update pet details
+      const petDetails = document.getElementById('petDetails');
+      petDetails.innerHTML = '';
       
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const dayDate = new Date(year, month, day);
-        
-        if (dayDate >= new Date() && dayDate.getDay() !== 0) {
-          if (bookedDates.includes(dateString) || softHoldDates.includes(dateString)) {
-            bookedCount++;
-          } else {
-            availableCount++;
-          }
-        }
+      // Pet 1
+      const pet1Html = `
+        <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <div style="font-weight: 600; color: var(--gold); margin-bottom: 0.5rem;">${intakeData.pet1.name}</div>
+          <div class="profile-field">
+            <span class="field-label">Age:</span>
+            <span class="field-value">${intakeData.pet1.age} years</span>
+          </div>
+          <div class="profile-field">
+            <span class="field-label">Gender:</span>
+            <span class="field-value">${intakeData.pet1.gender}</span>
+          </div>
+          <div class="profile-field">
+            <span class="field-label">Behavior:</span>
+            <span class="field-value">${intakeData.pet1.behavior}</span>
+          </div>
+          <div class="profile-field">
+            <span class="field-label">Off-Leash:</span>
+            <span class="field-value">${intakeData.pet1.offLeash === 'yes' ? 'Yes' : 'No'}</span>
+          </div>
+          <div class="profile-field">
+            <span class="field-label">Favorite Toy:</span>
+            <span class="field-value">${intakeData.pet1.favoriteToy}</span>
+          </div>
+        </div>
+      `;
+      petDetails.innerHTML += pet1Html;
+      
+      // Pet 2 (if exists)
+      if (intakeData.pet2 && intakeData.pet2.name) {
+        const pet2Html = `
+          <div>
+            <div style="font-weight: 600; color: var(--gold); margin-bottom: 0.5rem;">${intakeData.pet2.name}</div>
+            <div class="profile-field">
+              <span class="field-label">Age:</span>
+              <span class="field-value">${intakeData.pet2.age} years</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Gender:</span>
+              <span class="field-value">${intakeData.pet2.gender}</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Behavior:</span>
+              <span class="field-value">${intakeData.pet2.behavior}</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Off-Leash:</span>
+              <span class="field-value">${intakeData.pet2.offLeash === 'yes' ? 'Yes' : 'No'}</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Favorite Toy:</span>
+              <span class="field-value">${intakeData.pet2.favoriteToy}</span>
+            </div>
+          </div>
+        `;
+        petDetails.innerHTML += pet2Html;
       }
       
-      document.getElementById('availableCount').textContent = availableCount;
-      document.getElementById('bookedCount').textContent = bookedCount;
+      // Update session preferences  
+      document.getElementById('photoStyle').textContent = intakeData.photoStyle || '-';
+      document.getElementById('specialRequests').textContent = intakeData.specialRequests || 'None';
+      document.getElementById('referralSource').textContent = intakeData.referralSource || '-';
+      
+      // Update gallery status
+      updateGalleryStatus(galleryStatus);
     }
 
-    // REAL Admin action functions with Google Calendar API
-    async function addSessionBlock() {
+    // Update gallery status display
+    function updateGalleryStatus(status) {
+      const galleryStatusEl = document.getElementById('galleryStatus');
+      
+      switch(status) {
+        case 'none':
+          galleryStatusEl.className = 'gallery-status no-gallery';
+          galleryStatusEl.innerHTML = `
+            <div>📁 No Gallery Created</div>
+            <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Ready to upload photos and create client gallery</div>
+          `;
+          break;
+        case 'created':
+          galleryStatusEl.className = 'gallery-status has-gallery';
+          galleryStatusEl.innerHTML = `
+            <div>✅ Gallery Created</div>
+            <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Gallery exists but no photos uploaded yet</div>
+          `;
+          break;
+        case 'uploaded':
+          galleryStatusEl.className = 'gallery-status has-gallery';
+          galleryStatusEl.innerHTML = `
+            <div>📸 Photos Uploaded</div>
+            <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Gallery ready to send to client</div>
+          `;
+          break;
+        case 'sent':
+          galleryStatusEl.className = 'gallery-status has-gallery';
+          galleryStatusEl.innerHTML = `
+            <div>✉️ Access Sent</div>
+            <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Client has been notified and can access gallery</div>
+          `;
+          break;
+      }
+    }
+
+    // Gallery management functions
+    function createGallery() {
       if (!selectedDate) {
-        alert('Please select a date first');
+        alert('Please select a session first');
         return;
       }
       
-      if (!isGoogleAPIReady || !isSignedIn) {
-        alert('Please sign in to Google Calendar first');
+      const clientData = mockClientData[selectedDate];
+      if (!clientData) {
+        alert('No client data found for this session');
         return;
       }
       
-      document.getElementById('eventFormSection').style.display = 'block';
-      document.getElementById('eventType').value = 'session';
-      document.getElementById('eventTitle').value = 'Photography Session';
+      const clientName = clientData.intakeData.person1.name;
+      const petNames = [clientData.intakeData.pet1.name];
+      if (clientData.intakeData.pet2?.name) {
+        petNames.push(clientData.intakeData.pet2.name);
+      }
+      
+      // Generate session credentials (demo)
+      const phone = clientData.intakeData.person1.phone;
+      const zip = clientData.intakeData.person1.zip;
+      const sessionId = phone.slice(-4) + zip; // Last 4 of phone + zip
+      const password = clientData.intakeData.pet1.name.toLowerCase() + 'barks';
+      
+      const message = `🎉 Gallery Created Successfully!\n\nClient: ${clientName}\nSession: ${selectedDate}\nPets: ${petNames.join(', ')}\n\nCredentials Generated:\nSession ID: ${sessionId}\nPassword: ${password}\n\nNext steps:\n1. Upload photos\n2. Send access details to client`;
+      
+      alert(message);
+      
+      // Update status
+      mockClientData[selectedDate].galleryStatus = 'created';
+      updateGalleryStatus('created');
     }
 
-    async function markUnavailable() {
+    function uploadPhotos() {
       if (!selectedDate) {
-        alert('Please select a date first');
+        alert('Please select a session first');
         return;
       }
       
-      if (!isGoogleAPIReady || !isSignedIn) {
-        alert('Please sign in to Google Calendar first');
-        return;
-      }
+      alert('📸 Photo Upload Interface\n\nIn the full system, this would open:\n• Drag-and-drop photo upload\n• Batch processing and optimization\n• Automatic gallery organization\n• Progress tracking\n\nFor now, this is a demo placeholder.');
       
-      document.getElementById('eventFormSection').style.display = 'block';
-      document.getElementById('eventType').value = 'unavailable';
-      document.getElementById('eventTitle').value = 'Unavailable';
+      // Update status to uploaded
+      if (mockClientData[selectedDate]) {
+        mockClientData[selectedDate].galleryStatus = 'uploaded';
+        updateGalleryStatus('uploaded');
+      }
     }
 
-    async function removeEvent() {
+    function sendGalleryAccess() {
       if (!selectedDate) {
-        alert('Please select a date first');
+        alert('Please select a session first');
         return;
       }
       
-      if (!isGoogleAPIReady || !isSignedIn) {
-        alert('Please sign in to Google Calendar first');
+      const clientData = mockClientData[selectedDate];
+      if (!clientData) {
+        alert('No client data found for this session');
         return;
       }
       
-      if (confirm(`Remove all events from ${selectedDate}?`)) {
-        try {
-          // In a real implementation, you'd need to get the event IDs first
-          // This is a simplified version
-          alert('Event removal feature requires additional API setup to list existing events. For now, please use the full Google Calendar interface.');
-          addRecentActivity(`Attempted to remove events from ${selectedDate}`);
-        } catch (error) {
-          console.error('Error removing events:', error);
-          alert('Error removing events. Please try again.');
-        }
-      }
-    }
-
-    async function saveEvent() {
-      const eventType = document.getElementById('eventType').value;
-      const eventTime = document.getElementById('eventTime').value;
-      const eventTitle = document.getElementById('eventTitle').value;
-      const eventNotes = document.getElementById('eventNotes').value;
+      const clientEmail = clientData.intakeData.person1.email;
+      const clientName = clientData.intakeData.person1.name;
       
-      if (!selectedDate || !eventTitle) {
-        alert('Please select a date and enter a title');
-        return;
-      }
+      const message = `✉️ Gallery Access Email Sent!\n\nTo: ${clientEmail}\nSubject: Your Pet Photography Gallery is Ready!\n\nThe email contains:\n• Gallery login link\n• Session credentials\n• Download instructions\n• Contact information\n\n${clientName} will be notified immediately.`;
       
-      if (!isGoogleAPIReady || !isSignedIn) {
-        alert('Please sign in to Google Calendar first');
-        return;
-      }
+      alert(message);
       
-      try {
-        // Create ISO datetime strings
-        const startDateTime = `${selectedDate}T${eventTime}:00`;
-        const endTime = eventTime.split(':');
-        const endHour = parseInt(endTime[0]) + 1; // 1 hour duration
-        const endDateTime = `${selectedDate}T${String(endHour).padStart(2, '0')}:${endTime[1]}:00`;
-        
-        const eventData = {
-          title: eventTitle,
-          startDateTime: startDateTime,
-          endDateTime: endDateTime,
-          notes: eventNotes
-        };
-        
-        const result = await createCalendarEvent(eventData);
-        
-        if (result) {
-          alert(`✅ Event created successfully!\n\nTitle: ${eventTitle}\nDate: ${selectedDate}\nTime: ${eventTime}`);
-          addRecentActivity(`Created "${eventTitle}" on ${selectedDate}`);
-          
-          // Refresh calendar data
-          setTimeout(() => {
-            refreshCalendar();
-          }, 2000); // Wait 2 seconds for Google to sync
-          
-          cancelEvent();
-        }
-      } catch (error) {
-        console.error('Error creating event:', error);
-        alert('❌ Error creating event. Please check your permissions and try again.');
-      }
-    }
-
-    function cancelEvent() {
-      document.getElementById('eventFormSection').style.display = 'none';
-      document.getElementById('eventTitle').value = '';
-      document.getElementById('eventNotes').value = '';
-    }
-
-    function addRecentActivity(activity) {
-      const container = document.getElementById('recentActivity');
-      const time = new Date().toLocaleTimeString();
-      container.innerHTML = `<p style="color: rgba(255,255,255,0.9); margin-bottom: 0.5rem;">${activity}</p><p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">at ${time}</p>` + container.innerHTML;
-    }
-
-    function refreshCalendar() {
-      console.log('Refreshing admin calendar...');
-      fetchCalendarData();
-      addRecentActivity('Refreshed calendar data');
+      // Update status
+      mockClientData[selectedDate].galleryStatus = 'sent';
+      updateGalleryStatus('sent');
     }
 
     // Navigation functions
@@ -1434,7 +1499,6 @@
       currentMonth.setMonth(currentMonth.getMonth() - 1);
       if (calendarLoaded) {
         generateCalendar();
-        updateStats();
       }
     }
 
@@ -1442,34 +1506,27 @@
       currentMonth.setMonth(currentMonth.getMonth() + 1);
       if (calendarLoaded) {
         generateCalendar();
-        updateStats();
       }
     }
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Admin calendar page loaded, initializing...');
+      console.log('Admin dashboard loaded, checking authentication...');
       
-      // Initialize Google API
-      if (CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID' && API_KEY !== 'YOUR_GOOGLE_API_KEY') {
-        initializeGoogleAPI();
-      } else {
-        updateAuthStatus(); // Show setup instructions
+      // Check authentication first
+      if (!checkAuth()) {
+        return;
       }
       
+      console.log('Authentication verified, initializing dashboard...');
       fetchCalendarData();
     });
 
-    // Add keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-      if (e.altKey && e.key === 'r') {
-        e.preventDefault();
-        refreshCalendar();
-      }
-    });
+    // Auto session refresh
+    setInterval(function() {
+      // Refresh session if still valid
+      checkAuth();
+    }, 300000); // Check every 5 minutes
   </script>
-  
-  <!-- Google APIs -->
-  <script src="https://apis.google.com/js/api.js"></script>
 </body>
 </html>
