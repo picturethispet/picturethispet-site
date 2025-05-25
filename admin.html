@@ -731,7 +731,7 @@
     function checkAuthentication() {
       const isAuthenticated = localStorage.getItem('adminAuthenticated');
       if (!isAuthenticated) {
-        window.location.href = '/portal-login.html'; // Updated to portal-login.html
+        window.location.href = '/portal';
         return;
       }
       const adminUser = localStorage.getItem('adminUser') || 'Admin';
@@ -742,7 +742,9 @@
       localStorage.removeItem('adminAuthenticated');
       localStorage.removeItem('adminUser');
       localStorage.removeItem('adminLoginTime');
-      window.location.href = '/portal-login.html'; // Updated to portal-login.html
+      localStorage.removeItem('clientAuthenticated');
+      localStorage.removeItem('clientLoginTime');
+      window.location.href = '/portal';
     }
 
     function toggleSidebar() {
