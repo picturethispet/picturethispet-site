@@ -355,10 +355,11 @@
 
     .options {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
+      flex-direction: column; /* Explicitly stack options vertically */
+      gap: 0.5rem;
       margin-bottom: 1rem;
       justify-content: flex-start;
+      width: 100%;
     }
 
     .option-btn {
@@ -582,7 +583,7 @@
       }
 
       .options {
-        gap: 0.5rem;
+        gap: 0.4rem;
       }
 
       .option-btn {
@@ -728,7 +729,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:28 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:34 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -945,7 +946,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated cart.html with chat-style UI and friendly responses...');
+      console.log('🚀 Updated cart.html with vertically stacked options...');
 
       // Load brief info from session storage
       const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
