@@ -302,6 +302,34 @@
       border: none;
     }
 
+    .chat-input {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .chat-input input {
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      min-height: 44px;
+      width: 100%;
+    }
+
+    .chat-input input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
     .options {
       display: flex;
       flex-wrap: wrap;
@@ -343,7 +371,7 @@
       background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 1.28rem 0.96rem; /* Matches index.html */
+      padding: 1.28rem 0.96rem;
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
       position: relative;
@@ -354,10 +382,10 @@
     .footer-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.28rem; /* Matches index.html */
+      gap: 1.28rem;
       max-width: 1200px;
       margin: 0 auto;
-      margin-bottom: 0.96rem; /* Matches index.html */
+      margin-bottom: 0.96rem;
     }
 
     .footer-section {
@@ -412,7 +440,7 @@
 
     .footer-bottom {
       text-align: center;
-      padding-top: 0.96rem; /* Matches index.html */
+      padding-top: 0.96rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -421,7 +449,7 @@
     }
 
     .footer-bottom a {
-      white-space: nowrap; /* Matches index.html */
+      white-space: nowrap;
       color: var(--gold);
       text-decoration: underline;
     }
@@ -521,6 +549,11 @@
         font-size: 0.9rem;
       }
 
+      .chat-input input {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+      }
+
       .options {
         gap: 0.5rem;
       }
@@ -533,13 +566,13 @@
       }
 
       footer {
-        padding: 1rem 0.8rem; /* Matches index.html */
+        padding: 1rem 0.8rem;
         background-attachment: scroll;
       }
 
       .footer-container {
         grid-template-columns: 1fr;
-        gap: 1rem; /* Matches index.html */
+        gap: 1rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -556,11 +589,11 @@
       }
 
       .footer-bottom {
-        padding-top: 0.8rem; /* Matches index.html */
+        padding-top: 0.8rem;
       }
 
       .footer-bottom p {
-        font-size: 0.8rem; /* Matches index.html */
+        font-size: 0.8rem;
       }
     }
 
@@ -573,6 +606,11 @@
         font-size: 0.85rem;
       }
 
+      .chat-input input {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+      }
+
       .option-btn {
         padding: 0.6rem;
         font-size: 0.85rem;
@@ -581,7 +619,7 @@
       }
 
       .footer-bottom p {
-        font-size: 0.7rem; /* Matches index.html */
+        font-size: 0.7rem;
       }
     }
   </style>
@@ -656,7 +694,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:18 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:23 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -676,18 +714,12 @@
       {
         id: 'first-name',
         text: "What’s your first name?",
-        type: 'options',
-        options: [
-          { value: 'first-name', display: '<input type="text" id="first-name-input" placeholder="Enter your first name..." />' }
-        ]
+        type: 'input'
       },
       {
         id: 'pet-name',
         text: "Nice to meet you! What’s your pet’s name?",
-        type: 'options',
-        options: [
-          { value: 'pet-name', display: '<input type="text" id="pet-name-input" placeholder="Enter your pet’s name..." />' }
-        ]
+        type: 'input'
       },
       {
         id: 'session-type',
@@ -756,45 +788,53 @@
     }
 
     // Add message to chat
-    function addMessage(sender, text, options = []) {
+    function addMessage(sender, text, options = [], type = 'options') {
       const messagesContainer = document.getElementById('chat-messages');
       const messageDiv = document.createElement('div');
       messageDiv.className = `chat-message ${sender}`;
       messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
 
-      if (options.length > 0) {
-        const inputContainer = document.getElementById('chat-input');
-        inputContainer.innerHTML = '';
+      const inputContainer = document.getElementById('chat-input');
+      inputContainer.innerHTML = ''; // Clear previous content
 
+      if (type === 'input') {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = `${currentQuestionIndex}-input`;
+        input.placeholder = text.includes('first name') ? 'Enter your first name...' : 'Enter your pet’s name...';
+        inputContainer.appendChild(input);
+
+        const submitButton = document.createElement('button');
+        submitButton.className = 'option-btn';
+        submitButton.textContent = 'Submit';
+        submitButton.onclick = () => {
+          const value = input.value.trim();
+          if (!value) {
+            alert(`Please enter your ${text.includes('first name') ? 'first name' : 'pet’s name'}.`);
+            return;
+          }
+          selectOption(text.includes('first name') ? 'first-name' : 'pet-name', value);
+        };
+        inputContainer.appendChild(submitButton);
+
+        input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            const value = input.value.trim();
+            if (!value) {
+              alert(`Please enter your ${text.includes('first name') ? 'first name' : 'pet’s name'}.`);
+              return;
+            }
+            selectOption(text.includes('first name') ? 'first-name' : 'pet-name', value);
+          }
+        });
+      } else if (options.length > 0) {
         const optionsDiv = document.createElement('div');
         optionsDiv.className = 'options';
         options.forEach(option => {
           const button = document.createElement('button');
           button.className = 'option-btn';
           button.innerHTML = option.display;
-          if (option.value === 'first-name' || option.value === 'pet-name') {
-            button.onclick = () => {
-              const inputField = document.getElementById(option.value + '-input');
-              const value = inputField.value.trim();
-              if (!value) {
-                alert(`Please enter your ${option.value === 'first-name' ? 'first name' : 'pet’s name'}.`);
-                return;
-              }
-              selectOption(option.value, value);
-            };
-            inputField.addEventListener('keypress', function(e) {
-              if (e.key === 'Enter') {
-                const value = inputField.value.trim();
-                if (!value) {
-                  alert(`Please enter your ${option.value === 'first-name' ? 'first name' : 'pet’s name'}.`);
-                  return;
-                }
-                selectOption(option.value, value);
-              }
-            });
-          } else {
-            button.onclick = () => selectOption(option.value);
-          }
+          button.onclick = () => selectOption(option.value);
           optionsDiv.appendChild(button);
         });
         inputContainer.appendChild(optionsDiv);
@@ -828,9 +868,7 @@
       } else if (currentQuestion.id === 'vaccinated') {
         sessionData.vaccinated = value;
         if (value === 'No') {
-          addMessage('bot', 'Sorry, please come back when your pets are vaccinated.');
-          const inputContainer = document.getElementById('chat-input');
-          inputContainer.innerHTML = ''; // Clear options to end interaction
+          addMessage('bot', 'Sorry, please come back when your pets are vaccinated.', [], 'none');
           return;
         }
       }
@@ -844,9 +882,9 @@
       currentQuestionIndex++;
       if (currentQuestionIndex < chatQuestions.length) {
         const nextQuestion = chatQuestions[currentQuestionIndex];
-        addMessage('bot', nextQuestion.text, nextQuestion.options);
+        addMessage('bot', nextQuestion.text, nextQuestion.options, nextQuestion.type);
       } else {
-        addMessage('bot', 'Great! Let’s move on to select a date and time for your session.');
+        addMessage('bot', 'Great! Let’s move on to select a date and time for your session.', [], 'none');
         const inputContainer = document.getElementById('chat-input');
         inputContainer.innerHTML = '';
 
@@ -861,7 +899,7 @@
             window.location.href = '/intake.html';
           } catch (error) {
             console.error('Error saving cart data:', error);
-            addMessage('bot', 'Oops, something went wrong. Please try again.');
+            addMessage('bot', 'Oops, something went wrong. Please try again.', [], 'none');
           }
         };
         const messagesContainer = document.getElementById('chat-messages');
@@ -878,14 +916,14 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated cart.html with vaccination flow and new footer size...');
+      console.log('🚀 Fixed cart.html chat display and advancing...');
 
       // Load brief info from session storage
       const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
       sessionData.email = briefInfo.email || '';
 
       // Start chat
-      addMessage('bot', chatQuestions[0].text, chatQuestions[0].options);
+      addMessage('bot', chatQuestions[0].text, [], chatQuestions[0].type);
     });
   </script>
 </body>
