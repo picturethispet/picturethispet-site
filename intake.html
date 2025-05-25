@@ -839,7 +839,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:26 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 02:34 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -937,15 +937,6 @@
       }
 
       messagesContainer.appendChild(messageDiv);
-
-      // If the message is a user response (not options), append it separately
-      if (sender === 'user' && type !== 'options') {
-        const userMessageDiv = document.createElement('div');
-        userMessageDiv.className = 'chat-message user';
-        userMessageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
-        messagesContainer.appendChild(userMessageDiv);
-      }
-
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
       // Disable input if chat is not active
@@ -1151,7 +1142,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated intake.html with calendar and time slots stacked under bot message on left...');
+      console.log('🚀 Updated intake.html with calendar and time slots correctly stacked under bot message on left...');
 
       // Load session data from session storage
       const cartData = JSON.parse(sessionStorage.getItem('cartData') || '{}');
