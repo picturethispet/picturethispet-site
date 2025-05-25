@@ -282,10 +282,6 @@
       justify-content: flex-end; /* User messages on the right */
     }
 
-    .chat-message.options {
-      justify-content: flex-end; /* Options on the right (user interaction) */
-    }
-
     .chat-message.bot .message-bubble {
       background: rgba(255, 255, 255, 0.1);
       color: white;
@@ -361,6 +357,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      margin-top: 0.5rem;
       margin-bottom: 1rem;
       justify-content: flex-start;
       width: 100%;
@@ -397,6 +394,7 @@
       padding: 1rem;
       max-width: 100%;
       text-align: center;
+      margin-top: 0.5rem;
     }
 
     .calendar-header {
@@ -841,7 +839,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:21 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:26 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -924,12 +922,8 @@
         messageDiv.appendChild(calendarDiv);
       }
 
-      messagesContainer.appendChild(messageDiv);
-
-      // If there are options, display them in a separate message on the right
+      // If there are options, display them under the bot's message on the left
       if (options.length > 0 && isChatActive) {
-        const optionsDiv = document.createElement('div');
-        optionsDiv.className = 'chat-message options';
         const optionsContainer = document.createElement('div');
         optionsContainer.className = 'options';
         options.forEach(option => {
@@ -939,8 +933,17 @@
           button.onclick = () => selectOption(option.value);
           optionsContainer.appendChild(button);
         });
-        optionsDiv.appendChild(optionsContainer);
-        messagesContainer.appendChild(optionsDiv);
+        messageDiv.appendChild(optionsContainer);
+      }
+
+      messagesContainer.appendChild(messageDiv);
+
+      // If the message is a user response (not options), append it separately
+      if (sender === 'user' && type !== 'options') {
+        const userMessageDiv = document.createElement('div');
+        userMessageDiv.className = 'chat-message user';
+        userMessageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
+        messagesContainer.appendChild(userMessageDiv);
       }
 
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -966,9 +969,9 @@
 
       let html = `
         <div class="calendar-header">
-          <button onclick="prevMonth()">&lt;</button>
+          <button onclick="prevMonth()"><</button>
           <span>${monthNames[calendarMonth]} ${calendarYear}</span>
-          <button onclick="nextMonth()">&gt;</button>
+          <button onclick="nextMonth()">></button>
         </div>
         <div class="calendar-grid">
           <div class="calendar-day header">Sun</div>
@@ -1148,7 +1151,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated intake.html with full calendar UI and smart booking logic...');
+      console.log('🚀 Updated intake.html with calendar and time slots stacked under bot message on left...');
 
       // Load session data from session storage
       const cartData = JSON.parse(sessionStorage.getItem('cartData') || '{}');
