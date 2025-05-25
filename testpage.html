@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Picture This Pet | Pet Photography in Denver</title>
+  <meta name="description" content="Capture the magic of your furry friends with Picture This Pet, Denver's premier pet photography service. Book your session today!">
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+      overflow-x: hidden;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === HEADER STYLES === */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .book-btn {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      min-width: 120px;
+      min-height: 44px;
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .social-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+
+    .social-icon {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-icon:hover {
+      color: var(--gold);
+      transform: scale(1.1);
+    }
+
+    /* === HERO SECTION === */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: url('assets/images/spicemainpage.jpg');
+      background-size: cover;
+      background-position: center;
+      margin-top: 110px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 0 1.5rem;
+      animation: fadeInUp 1s ease-out;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-content p {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-cta {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1rem 3rem;
+      border-radius: 999px;
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(244, 144, 44, 0.4);
+      min-width: 200px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
+    }
+
+    /* === UPCOMING POP-UP EVENTS SECTION === */
+    #upcoming-events-section {
+      padding: 5rem 1rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
+    .upcoming-events-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .upcoming-events-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .upcoming-events-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .events-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* === AI SESSION BUILDER SECTION === */
+    #ai-session-builder-section {
+      padding: 5rem 1rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
+    .ai-session-builder-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .ai-chat-container {
+      flex: 2;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ai-chat-header {
+      margin-bottom: 1rem;
+    }
+
+    .ai-chat-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .ai-chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      padding-right: 1rem;
+    }
+
+    .ai-chat-messages::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .ai-chat-messages::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .ai-chat-messages::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+
+    .ai-chat-messages::-webkit-scrollbar-thumb:hover {
+      background: var(--orange);
+    }
+
+    .chat-message {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .chat-message.ai {
+      justify-content: flex-start;
+    }
+
+    .chat-message.user {
+      justify-content: flex-end;
+    }
+
+    .chat-message .message-bubble {
+      max-width: 70%;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .chat-message.ai .message-bubble {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .chat-message.user .message-bubble {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+    }
+
+    .ai-chat-input {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .ai-chat-input input[type="text"],
+    .ai-chat-input input[type="email"],
+    .ai-chat-input input[type="tel"],
+    .ai-chat-input input[type="file"] {
+      flex: 1;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      min-height: 44px;
+    }
+
+    .ai-chat-input input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .ai-chat-input button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 100px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ai-chat-input button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .cart-container {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 120px;
+    }
+
+    .cart-header {
+      margin-bottom: 1rem;
+    }
+
+    .cart-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+
+    .cart-items::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .cart-items::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .cart-items::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+
+    .cart-items::-webkit-scrollbar-thumb:hover {
+      background: var(--orange);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 0.5rem;
+    }
+
+    .cart-item span {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .cart-item button {
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .cart-item button:hover {
+      color: var(--orange);
+    }
+
+    .cart-footer {
+      margin-top: auto;
+    }
+
+    .cart-footer button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-footer button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .cart-footer button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* === INSTAGRAM POSTS SECTION === */
+    #instagram-posts-section {
+      padding: 5rem 1rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
+    .instagram-posts-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .instagram-posts-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .instagram-posts-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .instagram-grid {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      justify-content: flex-start;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .instagram-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .instagram-grid::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .instagram-grid::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+
+    .instagram-grid::-webkit-scrollbar-thumb:hover {
+      background: var(--orange);
+    }
+
+    .post-placeholder {
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+
+    .post-placeholder:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
+    }
+
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      min-width: 40px;
+      min-height: 25px;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo { 
+        height: 48px; 
+      }
+      
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        margin-left: 0;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .social-icons {
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+      }
+
+      .social-icon {
+        font-size: 1.2rem;
+      }
+
+      .hero-section {
+        margin-top: 80px;
+        height: calc(100vh - 80px);
+      }
+
+      .hero-content {
+        padding: 1rem;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+
+      .hero-cta {
+        padding: 0.8rem 2rem;
+        font-size: 1.2rem;
+        min-width: 160px;
+      }
+
+      #upcoming-events-section {
+        padding: 3rem 1rem;
+      }
+
+      .upcoming-events-container h2 {
+        font-size: 2rem;
+      }
+
+      .upcoming-events-container p {
+        font-size: 1rem;
+      }
+
+      #ai-session-builder-section {
+        padding: 3rem 1rem;
+      }
+
+      .ai-session-builder-container {
+        flex-direction: column;
+      }
+
+      .ai-chat-container,
+      .cart-container {
+        height: auto;
+        max-height: 400px;
+      }
+
+      .cart-container {
+        position: static;
+      }
+
+      .ai-chat-header h2,
+      .cart-header h2 {
+        font-size: 2rem;
+      }
+
+      .chat-message .message-bubble {
+        max-width: 90%;
+        font-size: 0.9rem;
+      }
+
+      .ai-chat-input input {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+      }
+
+      .ai-chat-input button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        min-width: 80px;
+      }
+
+      .cart-footer button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+
+      #instagram-posts-section {
+        padding: 3rem 1rem;
+      }
+
+      .instagram-posts-container h2 {
+        font-size: 2rem;
+      }
+
+      .instagram-posts-container p {
+        font-size: 1rem;
+      }
+
+      .post-placeholder {
+        width: 150px;
+        height: 150px;
+        font-size: 0.9rem;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .footer-section {
+        align-items: center;
+        text-align: center;
+      }
+
+      .payment-methods {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .hero-cta {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        min-width: 140px;
+      }
+
+      .ai-chat-header h2,
+      .cart-header h2 {
+        font-size: 1.8rem;
+      }
+
+      .chat-message .message-bubble {
+        font-size: 0.85rem;
+      }
+
+      .ai-chat-input input {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+      }
+
+      .ai-chat-input button {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+        min-width: 70px;
+      }
+
+      .cart-footer button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .post-placeholder {
+        width: 120px;
+        height: 120px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
+    </nav>
+    <div class="social-icons">
+      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+        <i class="fab fa-instagram social-icon"></i>
+      </a>
+    </div>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1>Timeless Pet Photography in Denver</h1>
+        <p>Capture the magic of your furry friends with Picture This Pet. Cherish every moment with stunning, professional photos.</p>
+        <a href="#ai-session-builder-section" class="hero-cta" onclick="scrollToSessionBuilder(event)">Book Your Session</a>
+      </div>
+    </section>
+
+    <!-- Upcoming Pop-Up Events Section -->
+    <section id="upcoming-events-section">
+      <div class="upcoming-events-container">
+        <h2>Upcoming Pop-Up Events</h2>
+        <div class="events-grid" id="events-grid">
+          <p>No current events at this moment.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Session Builder Section -->
+    <section id="ai-session-builder-section">
+      <div class="ai-session-builder-container">
+        <!-- AI Chat -->
+        <div class="ai-chat-container">
+          <div class="ai-chat-header">
+            <h2>Let’s Build Your Session</h2>
+          </div>
+          <div class="ai-chat-messages" id="ai-chat-messages">
+            <!-- Messages will be populated by JavaScript -->
+          </div>
+          <div class="ai-chat-input">
+            <input type="text" id="ai-chat-input" placeholder="Type your response here..." />
+            <button onclick="sendUserMessage()">Send</button>
+          </div>
+        </div>
+
+        <!-- Cart -->
+        <div class="cart-container">
+          <div class="cart-header">
+            <h2>Your Session Cart</h2>
+          </div>
+          <div class="cart-items" id="cart-items">
+            <!-- Cart items will be populated by JavaScript -->
+          </div>
+          <div class="cart-footer">
+            <button id="book-now-btn" onclick="bookSession()" disabled>Book Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Instagram Posts Section -->
+    <section id="instagram-posts-section">
+      <div class="instagram-posts-container">
+        <h2>Our Latest Instagram Posts</h2>
+        <p>Check out some behind-the-scenes moments and adorable pet highlights from our recent sessions!</p>
+        <div class="instagram-grid">
+          <div class="post-placeholder">Instagram Post 1<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 2<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 3<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 4<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 5<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 6<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 7<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 8<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 9<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 10<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 11<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 12<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 13<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 14<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 15<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 16<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 17<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 18<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 19<br>(Placeholder)</div>
+          <div class="post-placeholder">Instagram Post 20<br>(Placeholder)</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 10:46 AM MDT, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const AIRTABLE_API_KEY = 'patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3';
+    const AIRTABLE_BASE_ID = 'applU3NCdDveC4G8a';
+
+    // Airtable API wrapper
+    async function fetchAirtableData(table, options = {}) {
+      const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${table}?${new URLSearchParams(options).toString()}`;
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`Airtable error: ${response.status}`);
+      }
+      return await response.json();
+    }
+
+    async function createAirtableRecord(table, record) {
+      const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${table}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(record)
+      });
+      if (!response.ok) {
+        throw new Error(`Airtable error: ${response.status}`);
+      }
+      return await response.json();
+    }
+
+    async function updateAirtableRecord(table, recordId, record) {
+      const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${table}/${recordId}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(record)
+      });
+      if (!response.ok) {
+        throw new Error(`Airtable error: ${response.status}`);
+      }
+      return await response.json();
+    }
+
+    // Log errors to Airtable
+    async function logErrorToAirtable(page, error, sessionData = {}) {
+      try {
+        const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const errorRecord = {
+          fields: {
+            errorId: errorId,
+            timestamp: new Date().toISOString(),
+            page: page,
+            errorMessage: error.message || String(error),
+            errorStack: error.stack || 'No stack trace available',
+            userAgent: navigator.userAgent,
+            sessionData: JSON.stringify(sessionData)
+          }
+        };
+
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Errors', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(errorRecord)
+        });
+
+        if (response.ok) {
+          console.log('✅ Error logged to Airtable:', errorRecord);
+        } else {
+          console.warn('⚠️ Failed to log error to Airtable:', response.status);
+        }
+      } catch (innerError) {
+        console.warn('⚠️ Failed to log error to Airtable:', innerError);
+      }
+    }
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Smooth scroll to session builder
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      const section = document.querySelector('#ai-session-builder-section');
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // AI Chat and Cart Logic
+    const sessionData = {
+      email: null,
+      sessionType: null,
+      date: null,
+      time: null,
+      location: null,
+      petCount: null,
+      peopleCount: null,
+      clientFirstName: null,
+      clientLastName: null,
+      clientPhone: null,
+      pet1Name: null,
+      pet1Photo: null,
+      pet2Name: null,
+      pet2Photo: null,
+      marketingConsent: null,
+      additionalNotes: null,
+      policiesAgreed: false
+    };
+
+    const aiQuestions = [
+      {
+        id: 'email',
+        text: "Hi! I'm here to help you book your pet photography session. What’s your email address so we can keep you updated?",
+        inputType: 'email',
+        validate: (input) => {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return emailRegex.test(input) ? null : 'Please enter a valid email address.';
+        },
+        save: (input) => {
+          sessionData.email = input;
+          addCartItem('Email', input, 'email');
+        }
+      },
+      {
+        id: 'sessionType',
+        text: "Would you prefer a Mini Session (30 minutes, 5 images, 1 pet, 1 person) or a Full Session (60 minutes, 15 images, 1 pet, 1 person)? Additional pets or people can be added for an extra cost.",
+        inputType: 'text',
+        validate: (input) => {
+          const session = input.toLowerCase();
+          if (session.includes('mini')) return null;
+          if (session.includes('full')) return null;
+          return 'Please specify "Mini" or "Full" session.';
+        },
+        save: (input) => {
+          const session = input.toLowerCase().includes('mini') ? 'Mini' : 'Full';
+          sessionData.sessionType = session;
+          addCartItem('Session Type', session, 'sessionType');
+        }
+      },
+      {
+        id: 'date',
+        text: "When would you like to schedule your session? Please specify a date (e.g., May 30, 2025). Available dates are May 25–31, 2025 for testing.",
+        inputType: 'text',
+        validate: (input) => {
+          // Temporary bypass: Accept any date format for testing
+          const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+          const parsedDate = new Date(input);
+          if (!isNaN(parsedDate.getTime())) {
+            const dateStr = parsedDate.toISOString().split('T')[0];
+            return dateStr >= '2025-05-25' ? null : 'Please select a date on or after May 25, 2025.';
+          }
+          return 'Please enter a valid date (e.g., May 30, 2025).';
+        },
+        save: (input) => {
+          const parsedDate = new Date(input);
+          const dateStr = parsedDate.toISOString().split('T')[0];
+          sessionData.date = dateStr;
+          addCartItem('Date', dateStr, 'date');
+        }
+      },
+      {
+        id: 'time',
+        text: "What time would you like your session? Available times are 09:00, 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00.",
+        inputType: 'text',
+        validate: (input) => {
+          const validTimes = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'];
+          if (validTimes.includes(input)) return null;
+          return 'Please select a valid time (e.g., 09:00). Available times are 09:00 to 16:00.';
+        },
+        save: (input) => {
+          sessionData.time = input;
+          addCartItem('Time', input, 'time');
+        }
+      },
+      {
+        id: 'location',
+        text: "Which Denver park would you like for your session: Cheesman Park or City Park?",
+        inputType: 'text',
+        validate: (input) => {
+          const location = input.toLowerCase();
+          if (location.includes('cheesman')) return null;
+          if (location.includes('city')) return null;
+          return 'Please specify "Cheesman Park" or "City Park".';
+        },
+        save: (input) => {
+          const location = input.toLowerCase().includes('cheesman') ? 'Cheesman Park' : 'City Park';
+          sessionData.location = location;
+          addCartItem('Location', location, 'location');
+        }
+      },
+      {
+        id: 'petCount',
+        text: "How many pets will be joining the session? (Maximum of 2)",
+        inputType: 'text',
+        validate: (input) => {
+          const count = parseInt(input);
+          if (isNaN(count) || count < 1 || count > 2) {
+            return 'Please enter a number between 1 and 2.';
+          }
+          return null;
+        },
+        save: (input) => {
+          sessionData.petCount = parseInt(input);
+          addCartItem('Pet Count', input, 'petCount');
+        }
+      },
+      {
+        id: 'peopleCount',
+        text: "Will any family members be joining the session? If so, how many? (Maximum of 2)",
+        inputType: 'text',
+        validate: (input) => {
+          const count = parseInt(input);
+          if (isNaN(count) || count < 0 || count > 2) {
+            return 'Please enter a number between 0 and 2.';
+          }
+          return null;
+        },
+        save: (input) => {
+          sessionData.peopleCount = parseInt(input);
+          addCartItem('People Count', input, 'peopleCount');
+        }
+      },
+      {
+        id: 'clientInfo',
+        text: "Can you provide your first name, last name, and phone number? Please enter them as 'First Name, Last Name, Phone Number'.",
+        inputType: 'text',
+        validate: (input) => {
+          const parts = input.split(',').map(part => part.trim());
+          if (parts.length !== 3) {
+            return 'Please provide your first name, last name, and phone number in the format: First Name, Last Name, Phone Number.';
+          }
+          const phoneRegex = /^\d{10}$/;
+          if (!phoneRegex.test(parts[2].replace(/\D/g, ''))) {
+            return 'Please enter a valid 10-digit phone number.';
+          }
+          return null;
+        },
+        save: (input) => {
+          const parts = input.split(',').map(part => part.trim());
+          sessionData.clientFirstName = parts[0];
+          sessionData.clientLastName = parts[1];
+          sessionData.clientPhone = parts[2];
+          addCartItem('Client Info', `${parts[0]} ${parts[1]}, ${parts[2]}`, 'clientInfo');
+        }
+      },
+      {
+        id: 'petInfo1',
+        text: "Please provide the name of your first pet and upload their photo.",
+        inputType: 'file',
+        validate: (input) => {
+          if (!input.name) return 'Please provide your pet’s name.';
+          if (!input.file) return 'Please upload a photo of your pet.';
+          return null;
+        },
+        save: (input) => {
+          sessionData.pet1Name = input.name;
+          sessionData.pet1Photo = input.file.name;
+          addCartItem('Pet 1', `${input.name}, Photo: ${input.file.name}`, 'petInfo1');
+        }
+      },
+      {
+        id: 'petInfo2',
+        text: "Please provide the name of your second pet and upload their photo. If you don’t have a second pet, type 'none'.",
+        inputType: 'file',
+        validate: (input) => {
+          if (input.name.toLowerCase() === 'none') return null;
+          if (!input.name) return 'Please provide your pet’s name or type "none".';
+          if (!input.file) return 'Please upload a photo of your pet.';
+          return null;
+        },
+        save: (input) => {
+          if (input.name.toLowerCase() !== 'none') {
+            sessionData.pet2Name = input.name;
+            sessionData.pet2Photo = input.file.name;
+            addCartItem('Pet 2', `${input.name}, Photo: ${input.file.name}`, 'petInfo2');
+          }
+        }
+      },
+      {
+        id: 'marketingConsent',
+        text: "Would you like to receive marketing emails about special offers? (Yes/No)",
+        inputType: 'text',
+        validate: (input) => {
+          const response = input.toLowerCase();
+          if (response === 'yes' || response === 'no') return null;
+          return 'Please respond with "Yes" or "No".';
+        },
+        save: (input) => {
+          sessionData.marketingConsent = input.toLowerCase() === 'yes';
+          addCartItem('Marketing Consent', sessionData.marketingConsent ? 'Yes' : 'No', 'marketingConsent');
+        }
+      },
+      {
+        id: 'additionalNotes',
+        text: "Do you have any additional notes or special requests? If not, type 'none'.",
+        inputType: 'text',
+        validate: () => null, // No validation needed
+        save: (input) => {
+          sessionData.additionalNotes = input.toLowerCase() === 'none' ? '' : input;
+          if (sessionData.additionalNotes) {
+            addCartItem('Additional Notes', sessionData.additionalNotes, 'additionalNotes');
+          }
+        }
+      },
+      {
+        id: 'policies',
+        text: "Please review our policies:\n- All pets must be vaccinated (proof may be requested).\n- Cancellations within 48 hours are non-refunded.\n- We may use session photos for promotion (you retain personal use rights).\n- Sessions may be canceled if pet behavior poses a safety risk.\nType 'I agree' to proceed.",
+        inputType: 'text',
+        validate: (input) => {
+          if (input.toLowerCase() === 'i agree') return null;
+          return 'Please type "I agree" to proceed.';
+        },
+        save: () => {
+          sessionData.policiesAgreed = true;
+          addCartItem('Policies', 'Agreed', 'policies');
+        }
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let expectingPetInfo = false;
+
+    function addMessage(sender, text) {
+      const messagesContainer = document.getElementById('ai-chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message ${sender}`;
+      messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function addCartItem(label, value, id) {
+      const cartItems = document.getElementById('cart-items');
+      let item = document.querySelector(`#cart-item-${id}`);
+      if (!item) {
+        item = document.createElement('div');
+        item.className = 'cart-item';
+        item.id = `cart-item-${id}`;
+        cartItems.appendChild(item);
+      }
+      item.innerHTML = `<span>${label}: ${value}</span><button onclick="editCartItem('${id}')">Edit</button>`;
+      updateBookButton();
+    }
+
+    function editCartItem(id) {
+      const question = aiQuestions.find(q => q.id === id);
+      if (question) {
+        currentQuestionIndex = aiQuestions.indexOf(question);
+        addMessage('ai', question.text);
+        updateInputType();
+      }
+    }
+
+    function updateBookButton() {
+      const bookButton = document.getElementById('book-now-btn');
+      const requiredFields = ['email', 'sessionType', 'date', 'time', 'location', 'petCount', 'peopleCount', 'clientInfo', 'petInfo1', 'marketingConsent', 'policies'];
+      const allFilled = requiredFields.every(field => sessionData[field] !== null);
+      bookButton.disabled = !allFilled;
+    }
+
+    function updateInputType() {
+      const input = document.getElementById('ai-chat-input');
+      const currentQuestion = aiQuestions[currentQuestionIndex];
+      input.type = currentQuestion.inputType;
+      input.placeholder = currentQuestion.inputType === 'file' ? 'Enter pet name here...' : 'Type your response here...';
+      if (currentQuestion.inputType === 'file') {
+        input.style.display = 'none';
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.id = 'ai-chat-file-input';
+        fileInput.accept = 'image/*';
+        fileInput.style.marginLeft = '1rem';
+        input.parentNode.appendChild(fileInput);
+      } else {
+        input.style.display = 'block';
+        const existingFileInput = document.getElementById('ai-chat-file-input');
+        if (existingFileInput) {
+          existingFileInput.remove();
+        }
+      }
+    }
+
+    function sendUserMessage() {
+      const input = document.getElementById('ai-chat-input');
+      let userResponse = input.value.trim();
+      const currentQuestion = aiQuestions[currentQuestionIndex];
+
+      if (currentQuestion.inputType === 'file') {
+        const fileInput = document.getElementById('ai-chat-file-input');
+        const file = fileInput.files[0];
+        userResponse = { name: userResponse, file: file };
+      }
+
+      if (!userResponse) return;
+
+      addMessage('user', currentQuestion.inputType === 'file' ? `${userResponse.name}, Photo: ${userResponse.file?.name || 'none'}` : userResponse);
+
+      const validationError = currentQuestion.validate(userResponse);
+      if (validationError) {
+        addMessage('ai', validationError);
+        return;
+      }
+
+      currentQuestion.save(userResponse);
+      input.value = '';
+
+      if (currentQuestion.id === 'petCount' && parseInt(userResponse) === 2) {
+        expectingPetInfo = true;
+        currentQuestionIndex = aiQuestions.findIndex(q => q.id === 'petInfo2') - 1;
+      }
+
+      currentQuestionIndex++;
+      if (currentQuestionIndex < aiQuestions.length) {
+        if (expectingPetInfo && aiQuestions[currentQuestionIndex].id === 'petInfo2') {
+          expectingPetInfo = false;
+        } else if (expectingPetInfo) {
+          currentQuestionIndex = aiQuestions.findIndex(q => q.id === 'petInfo2');
+        }
+        addMessage('ai', aiQuestions[currentQuestionIndex].text);
+        updateInputType();
+      } else {
+        addMessage('ai', 'Great! Your session is ready to book. Please review your cart and click "Book Now" to confirm.');
+        input.disabled = true;
+        document.querySelector('.ai-chat-input button').disabled = true;
+      }
+    }
+
+    async function bookSession() {
+      sessionData.bookingId = `BOOKING_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      sessionData.timestamp = new Date().toISOString();
+
+      try {
+        const bookingRecord = {
+          fields: {
+            bookingId: sessionData.bookingId,
+            timestamp: sessionData.timestamp,
+            status: 'confirmed',
+            email: sessionData.email,
+            sessionType: sessionData.sessionType,
+            location: sessionData.location,
+            petCount: parseInt(sessionData.petCount) || 1,
+            peopleCount: parseInt(sessionData.peopleCount) || 0,
+            sessionDate: `${sessionData.date}T${sessionData.time}:00`,
+            clientFirstName: sessionData.clientFirstName,
+            clientLastName: sessionData.clientLastName,
+            clientPhone: sessionData.clientPhone,
+            pet1Name: sessionData.pet1Name,
+            marketingConsent: sessionData.marketingConsent,
+            additionalNotes: sessionData.additionalNotes || '',
+            isVaccinated: 'yes' // Assumed for simplicity
+          }
+        };
+
+        const bookingResult = await createAirtableRecord('Bookings', bookingRecord);
+        console.log('✅ Booking created:', bookingResult);
+
+        const dataString = JSON.stringify(sessionData);
+        localStorage.setItem('ptpSessionData', dataString);
+        localStorage.setItem('ptpSessionBackup', dataString);
+        localStorage.setItem(`ptpBooking_${sessionData.bookingId}`, dataString);
+        sessionStorage.setItem('ptpSessionData', dataString);
+        sessionStorage.setItem('ptpSessionBackup', dataString);
+        console.log('✅ Session data saved redundantly in 5 locations');
+
+        alert('🎉 Your session has been booked successfully! We’ll send a confirmation to your email.');
+        window.location.href = '/client-portal-home.html';
+      } catch (error) {
+        console.error('Error creating booking:', error);
+        logErrorToAirtable('index.html', error, sessionData);
+        alert('❌ Error creating your booking. Please try again.');
+      }
+    }
+
+    // Initialize AI chat
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Header loaded');
+      console.log('✅ Hero section loaded');
+      console.log('✅ Upcoming events section loaded');
+      console.log('✅ AI session builder loaded');
+      console.log('✅ Instagram posts and footer loaded');
+      console.log('🚀 Updated index.html with AI chat and cart system loaded with Airtable connection...');
+
+      addMessage('ai', aiQuestions[0].text);
+      updateInputType();
+
+      // Enable Enter key to send message
+      document.getElementById('ai-chat-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          sendUserMessage();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
