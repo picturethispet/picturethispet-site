@@ -127,8 +127,11 @@
   </div>
 
   <script>
+    console.log("Portal page loaded successfully");
+
     // Login as Admin
     function loginAsAdmin() {
+      console.log("Logging in as Admin");
       // Set admin authentication flag
       localStorage.setItem('adminAuthenticated', 'true');
       localStorage.setItem('adminUser', 'Admin');
@@ -142,6 +145,7 @@
 
     // Login as Client
     function loginAsClient() {
+      console.log("Logging in as Client");
       // Set client authentication flag
       localStorage.setItem('clientAuthenticated', 'true');
       localStorage.setItem('clientLoginTime', new Date().toISOString());
@@ -150,7 +154,7 @@
       localStorage.removeItem('adminUser');
       localStorage.removeItem('adminLoginTime');
       // Redirect to client portal
-      window.location.href = '/client-portal-home.html'; // Updated to correct path
+      window.location.href = '/client-portal-home.html';
     }
   </script>
 </body>
