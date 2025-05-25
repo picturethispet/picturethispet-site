@@ -304,14 +304,14 @@
 
     .chat-input {
       display: flex;
-      flex-direction: column;
       gap: 1rem;
       align-items: center;
+      flex-wrap: wrap;
       width: 100%;
-      max-width: 500px;
     }
 
     .chat-input input {
+      flex: 1;
       padding: 0.8rem;
       font-size: 1rem;
       font-family: 'Inter', sans-serif;
@@ -330,31 +330,52 @@
       background: rgba(255, 255, 255, 0.15);
     }
 
+    .chat-input button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 100px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+    }
+
+    .chat-input button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
     .options {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-top: 1rem;
-      justify-content: center;
+      margin-bottom: 1rem;
+      justify-content: flex-start;
     }
 
     .option-btn {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 1rem;
-      border-radius: 12px;
-      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
       color: white;
       cursor: pointer;
       transition: all 0.3s ease;
       text-align: center;
-      min-width: 200px;
-      min-height: 100px;
+      min-width: 120px;
+      min-height: 40px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: center;
     }
 
     .option-btn:hover {
@@ -554,15 +575,21 @@
         font-size: 0.9rem;
       }
 
+      .chat-input button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        min-width: 80px;
+      }
+
       .options {
         gap: 0.5rem;
       }
 
       .option-btn {
-        padding: 0.8rem;
-        font-size: 0.9rem;
-        min-width: 150px;
-        min-height: 80px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        min-width: 100px;
+        min-height: 36px;
       }
 
       footer {
@@ -611,11 +638,17 @@
         font-size: 0.85rem;
       }
 
-      .option-btn {
-        padding: 0.6rem;
+      .chat-input button {
+        padding: 0.5rem 0.8rem;
         font-size: 0.85rem;
-        min-width: 120px;
-        min-height: 70px;
+        min-width: 70px;
+      }
+
+      .option-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        min-width: 90px;
+        min-height: 32px;
       }
 
       .footer-bottom p {
@@ -650,13 +683,14 @@
     <section class="chat-section">
       <div class="chat-container">
         <div class="chat-header">
-          <h2>Build Your Session</h2>
+          <h2>Let’s Build Your Pet Session! 🐾</h2>
         </div>
         <div class="chat-messages" id="chat-messages">
           <!-- Chat messages will be populated by JavaScript -->
         </div>
         <div class="chat-input" id="chat-input">
-          <!-- Options will be populated by JavaScript -->
+          <input type="text" id="chat-input-text" placeholder="Type your response here... 😊" />
+          <button onclick="sendUserMessage()">Send</button>
         </div>
       </div>
     </section>
@@ -694,7 +728,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:23 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:28 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -702,6 +736,7 @@
     // Session data
     let sessionData = {};
     let currentQuestionIndex = 0;
+    let isChatActive = true;
 
     // Scalable session types configuration
     const sessionTypes = [
@@ -713,17 +748,17 @@
     const chatQuestions = [
       {
         id: 'first-name',
-        text: "What’s your first name?",
-        type: 'input'
+        text: "What’s your first name? 😊",
+        type: 'text'
       },
       {
         id: 'pet-name',
-        text: "Nice to meet you! What’s your pet’s name?",
-        type: 'input'
+        text: "Nice to meet you! What’s your pet’s name? 🐾",
+        type: 'text'
       },
       {
         id: 'session-type',
-        text: "Let’s start by choosing your session type. Which would you like?",
+        text: "Let’s pick a session type for your furry friend! 📸 Which one would you like?",
         type: 'options',
         options: sessionTypes.map(type => ({
           value: type.name,
@@ -732,7 +767,7 @@
       },
       {
         id: 'location',
-        text: "Great! Now, where would you like to have your session? We currently offer sessions at Cheesman Park or City Park.",
+        text: "Awesome choice! 🌟 Where would you like to have your session? We offer Cheesman Park or City Park.",
         type: 'options',
         options: [
           { value: 'Cheesman Park', display: 'Cheesman Park 🌳' },
@@ -741,7 +776,7 @@
       },
       {
         id: 'pet-count',
-        text: "How many pets will be joining the session? (Maximum of 2)",
+        text: "How many pets will be joining the session? (Up to 2) 🐕🐾",
         type: 'options',
         options: [
           { value: '1', display: '1 🐾' },
@@ -750,7 +785,7 @@
       },
       {
         id: 'people-count',
-        text: "Will any family members be joining the session? (Maximum of 2)",
+        text: "Will any family members be joining the session? (Up to 2) 👨‍👩‍👧",
         type: 'options',
         options: [
           { value: '0', display: '0 👤' },
@@ -760,7 +795,7 @@
       },
       {
         id: 'vaccinated',
-        text: "Are all pets vaccinated? Proof may be requested.",
+        text: "Are all your pets vaccinated? We may ask for proof! 💉",
         type: 'options',
         options: [
           { value: 'Yes', display: 'Yes ✅' },
@@ -794,40 +829,7 @@
       messageDiv.className = `chat-message ${sender}`;
       messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
 
-      const inputContainer = document.getElementById('chat-input');
-      inputContainer.innerHTML = ''; // Clear previous content
-
-      if (type === 'input') {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.id = `${currentQuestionIndex}-input`;
-        input.placeholder = text.includes('first name') ? 'Enter your first name...' : 'Enter your pet’s name...';
-        inputContainer.appendChild(input);
-
-        const submitButton = document.createElement('button');
-        submitButton.className = 'option-btn';
-        submitButton.textContent = 'Submit';
-        submitButton.onclick = () => {
-          const value = input.value.trim();
-          if (!value) {
-            alert(`Please enter your ${text.includes('first name') ? 'first name' : 'pet’s name'}.`);
-            return;
-          }
-          selectOption(text.includes('first name') ? 'first-name' : 'pet-name', value);
-        };
-        inputContainer.appendChild(submitButton);
-
-        input.addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') {
-            const value = input.value.trim();
-            if (!value) {
-              alert(`Please enter your ${text.includes('first name') ? 'first name' : 'pet’s name'}.`);
-              return;
-            }
-            selectOption(text.includes('first name') ? 'first-name' : 'pet-name', value);
-          }
-        });
-      } else if (options.length > 0) {
+      if (options.length > 0 && isChatActive) {
         const optionsDiv = document.createElement('div');
         optionsDiv.className = 'options';
         options.forEach(option => {
@@ -837,25 +839,50 @@
           button.onclick = () => selectOption(option.value);
           optionsDiv.appendChild(button);
         });
-        inputContainer.appendChild(optionsDiv);
+        messageDiv.appendChild(optionsDiv);
       }
 
       messagesContainer.appendChild(messageDiv);
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+      // Disable input if chat is not active
+      const input = document.getElementById('chat-input-text');
+      const sendButton = document.querySelector('.chat-input button');
+      if (!isChatActive) {
+        input.disabled = true;
+        sendButton.disabled = true;
+      }
+    }
+
+    // Send user message
+    function sendUserMessage() {
+      if (!isChatActive) return;
+
+      const input = document.getElementById('chat-input-text');
+      const userResponse = input.value.trim();
+      if (!userResponse) return;
+
+      const currentQuestion = chatQuestions[currentQuestionIndex];
+      if (currentQuestion.type === 'text') {
+        if (currentQuestion.id === 'first-name') {
+          sessionData.firstName = userResponse;
+        } else if (currentQuestion.id === 'pet-name') {
+          sessionData.petName = userResponse;
+        }
+        addMessage('user', userResponse);
+        input.value = '';
+        proceedToNextQuestion();
+      }
     }
 
     // Select option from buttons
-    function selectOption(value, inputValue = null) {
+    function selectOption(value) {
+      if (!isChatActive) return;
+
       const currentQuestion = chatQuestions[currentQuestionIndex];
       let displayValue = value;
 
-      if (currentQuestion.id === 'first-name') {
-        displayValue = inputValue;
-        sessionData.firstName = inputValue;
-      } else if (currentQuestion.id === 'pet-name') {
-        displayValue = inputValue;
-        sessionData.petName = inputValue;
-      } else if (currentQuestion.id === 'session-type') {
+      if (currentQuestion.id === 'session-type') {
         const selectedSession = sessionTypes.find(type => type.name === value);
         sessionData.sessionType = value;
         sessionData.sessionDuration = selectedSession.duration;
@@ -868,7 +895,8 @@
       } else if (currentQuestion.id === 'vaccinated') {
         sessionData.vaccinated = value;
         if (value === 'No') {
-          addMessage('bot', 'Sorry, please come back when your pets are vaccinated.', [], 'none');
+          addMessage('bot', 'Sorry, please come back when your pets are vaccinated. 🐾', [], 'none');
+          isChatActive = false;
           return;
         }
       }
@@ -884,7 +912,7 @@
         const nextQuestion = chatQuestions[currentQuestionIndex];
         addMessage('bot', nextQuestion.text, nextQuestion.options, nextQuestion.type);
       } else {
-        addMessage('bot', 'Great! Let’s move on to select a date and time for your session.', [], 'none');
+        addMessage('bot', 'Great job! Let’s move on to pick a date and time for your session. 📅', [], 'none');
         const inputContainer = document.getElementById('chat-input');
         inputContainer.innerHTML = '';
 
@@ -899,7 +927,7 @@
             window.location.href = '/intake.html';
           } catch (error) {
             console.error('Error saving cart data:', error);
-            addMessage('bot', 'Oops, something went wrong. Please try again.', [], 'none');
+            addMessage('bot', 'Oops, something went wrong. Please try again. 😓', [], 'none');
           }
         };
         const messagesContainer = document.getElementById('chat-messages');
@@ -908,6 +936,7 @@
         buttonDiv.appendChild(continueButton);
         messagesContainer.appendChild(buttonDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        isChatActive = false;
       }
     }
 
@@ -916,7 +945,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Fixed cart.html chat display and advancing...');
+      console.log('🚀 Updated cart.html with chat-style UI and friendly responses...');
 
       // Load brief info from session storage
       const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
@@ -924,6 +953,13 @@
 
       // Start chat
       addMessage('bot', chatQuestions[0].text, [], chatQuestions[0].type);
+
+      // Add event listener for Enter key
+      document.getElementById('chat-input-text').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          sendUserMessage();
+        }
+      });
     });
   </script>
 </body>
