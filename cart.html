@@ -198,7 +198,7 @@
       min-height: calc(100vh - 110px - 200px);
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* Align to top for mobile scrolling */
+      align-items: flex-start;
       padding-top: 110px;
       padding-bottom: 20px;
     }
@@ -275,15 +275,15 @@
     }
 
     .chat-message.bot {
-      justify-content: flex-end; /* Bot messages on the right */
+      justify-content: flex-start; /* Bot messages on the left */
     }
 
     .chat-message.user {
-      justify-content: flex-start; /* User messages on the left */
+      justify-content: flex-end; /* User messages on the right */
     }
 
     .chat-message.options {
-      justify-content: flex-start; /* Options on the left */
+      justify-content: flex-end; /* Options on the right (user interaction) */
     }
 
     .chat-message.bot .message-bubble {
@@ -553,7 +553,7 @@
       }
 
       main {
-        min-height: auto; /* Allow page to grow with chat content */
+        min-height: auto;
         padding-top: 80px;
         padding-bottom: 20px;
       }
@@ -564,18 +564,18 @@
 
       .chat-container {
         padding: 1.5rem;
-        max-height: none; /* Remove max-height to allow growth */
-        height: auto; /* Let container grow with content */
+        max-height: none;
+        height: auto;
       }
 
       .chat-messages {
-        flex: none; /* Remove flex growth */
-        overflow-y: visible; /* Remove internal scrolling */
+        flex: none;
+        overflow-y: visible;
         padding-right: 0;
       }
 
       .chat-messages::-webkit-scrollbar {
-        display: none; /* Hide scrollbar on mobile */
+        display: none;
       }
 
       .chat-header h2 {
@@ -588,7 +588,7 @@
       }
 
       .chat-input {
-        margin-top: 1rem; /* Ensure input moves down with chat */
+        margin-top: 1rem;
       }
 
       .chat-input input {
@@ -749,7 +749,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:50 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 02:06 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -761,8 +761,26 @@
 
     // Scalable session types configuration
     const sessionTypes = [
-      { name: 'Mini', duration: 60, images: 5, pets: 1, people: 1, extraCost: 'Additional person is an extra charge' },
-      { name: 'Full', duration: 90, images: 10, pets: 1, people: 1, extraCost: 'Additional person is an extra charge' }
+      {
+        name: 'Mini',
+        duration: 60,
+        images: 5,
+        pets: 1,
+        people: 1,
+        extraCost: 'Additional person/pet at extra cost',
+        downloads: 'digital downloads',
+        gallery: 'online gallery'
+      },
+      {
+        name: 'Full',
+        duration: 90,
+        images: 10,
+        pets: 1,
+        people: 1,
+        extraCost: 'Additional person/pet at extra cost',
+        downloads: 'digital downloads',
+        gallery: 'online gallery'
+      }
     ];
 
     // Chat questions
@@ -783,7 +801,7 @@
         type: 'options',
         options: sessionTypes.map(type => ({
           value: type.name,
-          display: `${type.name} 📸 ${type.images} photos ⏰ ${type.duration} mins<br>${type.extraCost}`
+          display: `${type.name} 📸 ${type.images} photos ⏰ up to ${type.duration} mins 🐾 1 pet 👤 1 person 💾 ${type.downloads} 🖼️ ${type.gallery}<br>${type.extraCost}`
         }))
       },
       {
@@ -851,7 +869,7 @@
       messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
       messagesContainer.appendChild(messageDiv);
 
-      // If there are options, display them in a separate message on the left
+      // If there are options, display them in a separate message on the right (user side)
       if (options.length > 0 && isChatActive) {
         const optionsDiv = document.createElement('div');
         optionsDiv.className = 'chat-message options';
@@ -937,7 +955,7 @@
         const nextQuestion = chatQuestions[currentQuestionIndex];
         addMessage('bot', nextQuestion.text, nextQuestion.options, nextQuestion.type);
       } else {
-        addMessage('bot', 'Great job! Let’s move on to pick a date and time for your session. 📅', [], 'none');
+        addMessage('bot', 'Great! Let’s move on to select a date and time for your session. 📅', [], 'none');
         const inputContainer = document.getElementById('chat-input');
         inputContainer.innerHTML = '';
 
@@ -970,7 +988,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated cart.html with dynamic mobile chat growth...');
+      console.log('🚀 Updated cart.html with enhanced session type info and reversed chat alignment...');
 
       // Load brief info from session storage
       const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
