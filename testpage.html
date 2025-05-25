@@ -263,15 +263,256 @@
       box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
     }
 
+    /* === SECTION CONTAINER STYLES === */
+    .section-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+      margin-bottom: 2rem;
+    }
+
+    .section-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-container h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .section-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    /* === ABOUT US SECTION === */
+    #about-section {
+      padding: 5rem 1rem;
+    }
+
+    /* === SERVICES SECTION === */
+    #services-section {
+      padding: 0 1rem 5rem 1rem;
+    }
+
+    .services-grid {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .service-card ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 1rem;
+    }
+
+    .service-card li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* === UPCOMING POP-UP EVENTS SECTION === */
+    #upcoming-events-section {
+      padding: 0 1rem 5rem 1rem;
+    }
+
+    .events-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* === TESTIMONIALS SECTION === */
+    #testimonials-section {
+      padding: 0 1rem 5rem 1rem;
+    }
+
+    .testimonials-grid {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .testimonial-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .testimonial-card .author {
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      text-align: right;
+    }
+
+    /* === CALL TO ACTION SECTION === */
+    #cta-section {
+      padding: 0 1rem 5rem 1rem;
+    }
+
+    .cta-button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1rem 3rem;
+      border-radius: 999px;
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(244, 144, 44, 0.4);
+      min-width: 200px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
+    }
+
+    /* === INSTAGRAM POSTS SECTION === */
+    #instagram-posts-section {
+      padding: 0 1rem 5rem 1rem;
+    }
+
+    .instagram-grid {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      justify-content: flex-start;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .instagram-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .instagram-grid::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .instagram-grid::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+
+    .instagram-grid::-webkit-scrollbar-thumb:hover {
+      background: var(--orange);
+    }
+
+    .post-placeholder {
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+
+    .post-placeholder:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
+    }
+
     /* === CHAT SECTION === */
     .chat-section {
-      padding: 5rem 1rem;
+      padding: 0 1rem 5rem 1rem;
     }
 
     .chat-container {
       max-width: 900px;
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.05);
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      background-color: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 16px;
       padding: 2rem;
@@ -578,8 +819,69 @@
         min-width: 160px;
       }
 
-      .chat-section {
+      #about-section {
         padding: 3rem 1rem;
+      }
+
+      #services-section,
+      #upcoming-events-section,
+      #testimonials-section,
+      #cta-section,
+      #instagram-posts-section,
+      .chat-section {
+        padding: 0 1rem 3rem 1rem;
+      }
+
+      .section-container {
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        background-attachment: scroll;
+      }
+
+      .section-container h2 {
+        font-size: 2rem;
+      }
+
+      .section-container h3 {
+        font-size: 1.5rem;
+      }
+
+      .section-container p {
+        font-size: 1rem;
+      }
+
+      .services-grid,
+      .testimonials-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .service-card,
+      .testimonial-card {
+        min-width: 100%;
+        max-width: 100%;
+      }
+
+      .service-card h3,
+      .testimonial-card h3 {
+        font-size: 1.5rem;
+      }
+
+      .service-card li,
+      .testimonial-card p {
+        font-size: 0.9rem;
+      }
+
+      .cta-button {
+        padding: 0.8rem 2rem;
+        font-size: 1.2rem;
+        min-width: 160px;
+      }
+
+      .post-placeholder {
+        width: 150px;
+        height: 150px;
+        font-size: 0.9rem;
       }
 
       .chat-container {
@@ -648,6 +950,36 @@
         min-width: 140px;
       }
 
+      .section-container h2 {
+        font-size: 1.8rem;
+      }
+
+      .section-container h3 {
+        font-size: 1.3rem;
+      }
+
+      .service-card h3,
+      .testimonial-card h3 {
+        font-size: 1.3rem;
+      }
+
+      .service-card li,
+      .testimonial-card p {
+        font-size: 0.85rem;
+      }
+
+      .cta-button {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        min-width: 140px;
+      }
+
+      .post-placeholder {
+        width: 120px;
+        height: 120px;
+        font-size: 0.8rem;
+      }
+
       .chat-header h2 {
         font-size: 1.8rem;
       }
@@ -700,21 +1032,129 @@
       </div>
     </section>
 
-    <!-- Chat Section -->
-    <section id="chat-section" class="chat-section">
-      <div class="chat-container">
-        <div class="chat-header">
-          <h2>Start Your Journey</h2>
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+      <!-- About Us Section -->
+      <section id="about-section">
+        <div class="section-container">
+          <h2>About Picture This Pet</h2>
+          <p>At Picture This Pet, we specialize in creating timeless memories of your furry companions. Based in Denver, our professional photographers are passionate about capturing the unique personality of your pets in stunning, high-quality images. Whether it’s a playful pup or a curious kitten, we’re here to make every moment unforgettable.</p>
         </div>
-        <div class="chat-messages" id="chat-messages">
-          <!-- Chat messages will be populated by JavaScript -->
+      </section>
+
+      <!-- Services Section -->
+      <section id="services-section">
+        <div class="section-container">
+          <h2>Our Services</h2>
+          <p>We offer a range of photography sessions tailored to your needs. Choose the perfect package for you and your pet.</p>
+          <div class="services-grid">
+            <div class="service-card">
+              <h3>Mini Session</h3>
+              <ul>
+                <li>⏰ 60 minutes</li>
+                <li>📸 Includes 5 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
+            <div class="service-card">
+              <h3>Full Session</h3>
+              <ul>
+                <li>⏰ 90 minutes</li>
+                <li>📸 Includes 15 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="chat-input" id="chat-input">
-          <input type="text" id="chat-input-text" placeholder="Type your response here..." />
-          <button onclick="sendUserMessage()">Send</button>
+      </section>
+
+      <!-- Upcoming Pop-Up Events Section -->
+      <section id="upcoming-events-section">
+        <div class="section-container">
+          <h2>Upcoming Pop-Up Events</h2>
+          <div class="events-grid" id="events-grid">
+            <p>No current events at this moment.</p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section id="testimonials-section">
+        <div class="section-container">
+          <h2>What Our Clients Say</h2>
+          <p>We’re proud to have captured cherished memories for pet owners across Denver. Here’s what they have to say.</p>
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <p>"Picture This Pet captured my dog Max’s personality perfectly! The photos are stunning, and the session was so much fun."</p>
+              <div class="author">— Sarah M.</div>
+            </div>
+            <div class="testimonial-card">
+              <p>"I booked a Mini Session for my cat Luna, and the results were beyond my expectations. Highly recommend!"</p>
+              <div class="author">— James T.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call to Action Section -->
+      <section id="cta-section">
+        <div class="section-container">
+          <h2>Are You Ready to Book?</h2>
+          <p>Let’s create lasting memories with your pet. Book your session today and let us capture the magic!</p>
+          <a href="#chat-section" class="cta-button" onclick="scrollToForm(event)">Book Now</a>
+        </div>
+      </section>
+
+      <!-- Instagram Posts Section -->
+      <section id="instagram-posts-section">
+        <div class="section-container">
+          <h2>Our Latest Instagram Posts</h2>
+          <p>Check out some behind-the-scenes moments and adorable pet highlights from our recent sessions!</p>
+          <div class="instagram-grid">
+            <div class="post-placeholder">Instagram Post 1<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 2<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 3<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 4<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 5<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 6<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 7<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 8<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 9<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 10<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 11<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 12<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 13<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 14<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 15<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 16<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 17<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 18<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 19<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 20<br>(Placeholder)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chat Section (Start Your Journey / Intake Part One) -->
+      <section id="chat-section" class="chat-section">
+        <div class="chat-container">
+          <div class="chat-header">
+            <h2>Start Your Journey</h2>
+          </div>
+          <div class="chat-messages" id="chat-messages">
+            <!-- Chat messages will be populated by JavaScript -->
+          </div>
+          <div class="chat-input" id="chat-input">
+            <input type="text" id="chat-input-text" placeholder="Type your response here..." />
+            <button onclick="sendUserMessage()">Send</button>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer>
@@ -749,7 +1189,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:05 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:10 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -876,9 +1316,15 @@
     document.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Header loaded');
       console.log('✅ Hero section loaded');
+      console.log('✅ About section loaded');
+      console.log('✅ Services section loaded');
+      console.log('✅ Upcoming events section loaded');
+      console.log('✅ Testimonials section loaded');
+      console.log('✅ Call to action section loaded');
+      console.log('✅ Instagram posts loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Simplified index.html loaded with chat interface...');
+      console.log('🚀 Updated index.html with restored sections and fixed background...');
 
       addMessage('bot', chatQuestions[0].text);
       updateInputType();
