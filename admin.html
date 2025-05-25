@@ -363,6 +363,71 @@
       color: white;
     }
 
+    /* === WEEKLY CALENDAR === */
+    .weekly-calendar {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .calendar-day {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .calendar-day:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .calendar-day.today {
+      background: rgba(244, 124, 44, 0.2);
+      border: 2px solid var(--orange);
+    }
+
+    .calendar-day.has-bookings {
+      background: rgba(239, 68, 68, 0.1);
+      border-left: 4px solid var(--booked-red);
+    }
+
+    .day-number {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+      margin-bottom: 0.3rem;
+    }
+
+    .day-events {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      width: 100%;
+    }
+
+    .event-dot {
+      width: 100%;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--booked-red);
+    }
+
     /* === RECENT BOOKINGS === */
     .recent-bookings {
       background: rgba(255, 255, 255, 0.05);
@@ -381,6 +446,7 @@
       background: rgba(255, 255, 255, 0.05);
       border-radius: 8px;
       border-left: 3px solid var(--available-green);
+      cursor: pointer;
     }
 
     .booking-item.booked {
@@ -444,6 +510,15 @@
       .nav-section-title {
         display: none;
       }
+
+      .calendar-day {
+        min-height: 50px;
+        padding: 0.3rem 0.2rem;
+      }
+
+      .day-number {
+        font-size: 0.8rem;
+      }
     }
 
     @media (max-width: 768px) {
@@ -497,6 +572,19 @@
 
       .stats-grid {
         grid-template-columns: 1fr;
+      }
+
+      .calendar-grid {
+        font-size: 0.8rem;
+      }
+
+      .calendar-day {
+        min-height: 40px;
+        padding: 0.2rem 0.1rem;
+      }
+
+      .day-number {
+        font-size: 0.7rem;
       }
     }
   </style>
@@ -600,6 +688,22 @@
         </div>
       </div>
 
+      <!-- Weekly Calendar View -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h2 class="card-title">Upcoming Bookings (This Week) 🗓️</h2>
+          <div class="card-actions">
+            <a href="calendar-management.html" class="btn btn-primary btn-small">View Calendar 📅</a>
+          </div>
+        </div>
+
+        <div class="weekly-calendar">
+          <div class="calendar-grid" id="weeklyCalendar">
+            <!-- Weekly calendar will be populated here -->
+          </div>
+        </div>
+      </div>
+
       <!-- Recent Bookings -->
       <div class="admin-card">
         <div class="card-header">
@@ -667,6 +771,7 @@
           location: record.fields.location ? record.fields.location[0] : null
         }));
         updateDashboard();
+        renderWeeklyCalendar();
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }
@@ -689,6 +794,7 @@
           location: record.fields.location ? record.fields.location[0] : null
         }));
         updateDashboard();
+        renderWeeklyCalendar();
       } catch (error) {
         console.error('Error fetching calendar:', error);
       }
@@ -758,7 +864,7 @@
         const slot = calendarData.find(s => s.id === booking.calendarSlot);
         const location = locations.find(loc => loc.id === booking.location);
         return `
-          <div class="booking-item ${booking.status === 'booked' ? 'booked' : ''} ${booking.bookingSource === 'On-the-Spot' ? 'on-the-spot' : ''}">
+          <div class="booking-item ${booking.status === 'booked' ? 'booked' : ''} ${booking.bookingSource === 'On-the-Spot' ? 'on-the-spot' : ''}" onclick="viewClientRecord('${booking.id}')">
             <div class="booking-details">
               <div class="client-name">${booking.client1Name}</div>
               <div class="session-info">${slot ? `${slot.date} at ${slot.time}` : 'Unknown Date'} • ${location ? location.locationName : 'Unknown Location'}</div>
@@ -767,6 +873,69 @@
           </div>
         `;
       }).join('');
+    }
+
+    // Render weekly calendar
+    function renderWeeklyCalendar() {
+      const calendarGrid = document.getElementById('weeklyCalendar');
+      calendarGrid.innerHTML = '';
+
+      const today = new Date();
+      const weekStart = new Date(today);
+      weekStart.setDate(today.getDate() - today.getDay());
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+
+      // Add day headers
+      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayHeaders.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day';
+        header.style.fontWeight = 'bold';
+        header.style.background = 'rgba(255, 255, 255, 0.1)';
+        header.textContent = day;
+        calendarGrid.appendChild(header);
+      });
+
+      // Add days of the week
+      for (let i = 0; i < 7; i++) {
+        const day = new Date(weekStart);
+        day.setDate(weekStart.getDate() + i);
+        const dateString = day.toISOString().split('T')[0];
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+
+        if (day.toDateString() === today.toDateString()) {
+          dayElement.classList.add('today');
+        }
+
+        const dayEvents = calendarData.filter(slot => slot.date === dateString && slot.status === 'booked');
+        if (dayEvents.length > 0) {
+          dayElement.classList.add('has-bookings');
+        }
+
+        const dayNumber = document.createElement('div');
+        dayNumber.className = 'day-number';
+        dayNumber.textContent = day.getDate();
+        dayElement.appendChild(dayNumber);
+
+        const eventsContainer = document.createElement('div');
+        eventsContainer.className = 'day-events';
+        dayEvents.slice(0, 3).forEach(event => {
+          const eventDot = document.createElement('div');
+          eventDot.className = 'event-dot';
+          eventsContainer.appendChild(eventDot);
+        });
+        dayElement.appendChild(eventsContainer);
+
+        calendarGrid.appendChild(dayElement);
+      }
+    }
+
+    // Navigate to client record
+    function viewClientRecord(bookingId) {
+      localStorage.setItem('selectedBookingId', bookingId);
+      window.location.href = 'client-session-management.html';
     }
 
     // Sync data
@@ -779,10 +948,16 @@
       ]);
     }
 
+    // Live view - Refresh every 30 seconds
+    function startLiveView() {
+      syncData();
+      setInterval(syncData, 30000);
+    }
+
     // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
       checkAuthentication();
-      syncData();
+      startLiveView();
     });
   </script>
 </body>
