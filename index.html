@@ -564,7 +564,7 @@
       background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 1.6rem 1.2rem; /* Reduced by 20% */
+      padding: 1.28rem 0.96rem; /* Further reduced by 20% */
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
       position: relative;
@@ -575,10 +575,10 @@
     .footer-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.6rem; /* Reduced by 20% */
+      gap: 1.28rem; /* Further reduced by 20% */
       max-width: 1200px;
       margin: 0 auto;
-      margin-bottom: 1.2rem; /* Reduced by 20% */
+      margin-bottom: 0.96rem; /* Further reduced by 20% */
     }
 
     .footer-section {
@@ -633,8 +633,18 @@
 
     .footer-bottom {
       text-align: center;
-      padding-top: 1.2rem; /* Reduced by 20% */
+      padding-top: 0.96rem; /* Further reduced by 20% */
       border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+      display: inline-block;
+    }
+
+    .footer-bottom a {
+      white-space: nowrap; /* Prevent breaking of the AI link */
+      color: var(--gold);
+      text-decoration: underline;
     }
 
     /* === RESPONSIVE === */
@@ -813,13 +823,13 @@
       }
 
       footer {
-        padding: 1.3rem 1rem; /* Reduced by 20% */
+        padding: 1rem 0.8rem; /* Further reduced by 20% */
         background-attachment: scroll;
       }
 
       .footer-container {
         grid-template-columns: 1fr;
-        gap: 1.3rem; /* Reduced by 20% */
+        gap: 1rem; /* Further reduced by 20% */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -833,6 +843,14 @@
 
       .payment-methods {
         justify-content: center;
+      }
+
+      .footer-bottom {
+        padding-top: 0.8rem; /* Further reduced by 20% */
+      }
+
+      .footer-bottom p {
+        font-size: 0.8rem; /* Slightly reduced font size for better fit */
       }
     }
 
@@ -889,6 +907,10 @@
         padding: 0.5rem 0.8rem;
         font-size: 0.85rem;
         min-width: 70px;
+      }
+
+      .footer-bottom p {
+        font-size: 0.7rem; /* Further reduced for mobile */
       }
     }
   </style>
@@ -1069,7 +1091,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:09 PM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:13 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -1121,7 +1143,7 @@
       console.log('✅ Instagram posts loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated index.html with simplified chat section and adjusted footer padding...');
+      console.log('🚀 Updated index.html with further reduced footer size and mobile text fix...');
 
       document.getElementById('chat-input-text').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
