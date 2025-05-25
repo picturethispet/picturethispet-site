@@ -9,7 +9,895 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/styles.css" /> <!-- Shared styles -->
+
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+      overflow-x: hidden;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === HEADER STYLES === */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .book-btn {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .social-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+
+    .social-icon {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      color: var(--gold);
+      transform: scale(1.1);
+    }
+
+    /* === HERO SECTION === */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: url('assets/images/spicemainpage.jpg');
+      background-size: cover;
+      background-position: center;
+      margin-top: 110px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 0 1.5rem;
+      animation: fadeInUp 1s ease-out;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-content p {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-cta {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1rem 3rem;
+      border-radius: 999px;
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(244, 144, 44, 0.4);
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
+    }
+
+    /* === UPCOMING POP-UP EVENTS SECTION === */
+    #upcoming-events-section {
+      padding: 5rem 1rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
+    .upcoming-events-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .upcoming-events-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .upcoming-events-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .events-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* === SESSION BUILDER SECTION === */
+    #session-builder-section {
+      padding: 5rem 1rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
+    .session-builder-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .session-builder-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .session-builder-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .session-builder-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .session-builder-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .session-builder-card p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .session-builder-card .options {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .session-builder-card .option-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .session-builder-card .option-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .session-builder-card .option-btn.selected {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .session-builder-card .next-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .session-builder-card .next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .session-builder-card .next-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .session-builder-card .back-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 1rem;
+    }
+
+    .session-builder-card .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .session-builder-card .card-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .session-builder-card .policy-content {
+      text-align: left;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .session-builder-card .policy-content ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .session-builder-card .policy-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .session-builder-card .session-details {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .session-builder-card .session-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 1rem;
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      text-align: left;
+    }
+
+    .session-builder-card .session-box h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .session-builder-card .session-box ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 1rem;
+    }
+
+    .session-builder-card .session-box li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .session-builder-card .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .session-builder-card .form-group label {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .session-builder-card .form-group input,
+    .session-builder-card .form-group select {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .session-builder-card .form-group input:focus,
+    .session-builder-card .form-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* === LEAD CAPTURE SUCCESS MESSAGE === */
+    .lead-capture-success {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+      color: #10b981;
+      font-weight: 600;
+      text-align: center;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    /* === INSTAGRAM POSTS SECTION === */
+    #instagram-posts-section {
+      padding: 5rem 1rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+    }
+
+    .instagram-posts-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .instagram-posts-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .instagram-posts-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .posts-grid {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      justify-content: flex-start;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .posts-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .posts-grid::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .posts-grid::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+
+    .posts-grid::-webkit-scrollbar-thumb:hover {
+      background: var(--orange);
+    }
+
+    .post-placeholder {
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+
+    .post-placeholder:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
+    }
+
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo { 
+        height: 48px; 
+      }
+      
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .social-icons {
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+      }
+
+      .social-icon {
+        font-size: 1.2rem;
+      }
+      
+      .hero-section {
+        margin-top: 80px;
+        height: calc(100vh - 80px);
+      }
+
+      .hero-content {
+        padding: 1rem;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+
+      .hero-cta {
+        padding: 0.8rem 2rem;
+        font-size: 1.2rem;
+      }
+
+      #upcoming-events-section {
+        padding: 3rem 1rem;
+      }
+
+      .upcoming-events-container h2 {
+        font-size: 2rem;
+      }
+
+      .upcoming-events-container p {
+        font-size: 1rem;
+      }
+
+      #session-builder-section {
+        padding: 3rem 1rem;
+      }
+
+      .session-builder-container h2 {
+        font-size: 2rem;
+      }
+
+      .session-builder-container p {
+        font-size: 1rem;
+        white-space: normal;
+      }
+
+      .session-builder-card {
+        padding: 2rem;
+      }
+
+      .session-builder-card h3 {
+        font-size: 1.5rem;
+      }
+
+      .session-builder-card p {
+        font-size: 0.9rem;
+      }
+
+      .session-builder-card .options {
+        gap: 1rem;
+      }
+
+      .session-builder-card .option-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .session-builder-card .next-btn,
+      .session-builder-card .back-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+      }
+
+      .session-builder-card#email-capture-card {
+        min-height: 250px;
+      }
+
+      .session-builder-card .session-details {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .session-builder-card .session-box {
+        min-width: 100%;
+        max-width: 100%;
+      }
+
+      .session-builder-card#start-journey-card {
+        padding-bottom: 3rem;
+        min-height: 300px;
+      }
+
+      .session-builder-card#start-journey-card p {
+        white-space: normal;
+      }
+
+      .session-builder-card#session-type-card,
+      .session-builder-card#datetime-card,
+      .session-builder-card#location-card,
+      .session-builder-card#pet-count-card,
+      .session-builder-card#people-count-card {
+        min-height: 200px;
+      }
+
+      .session-builder-card#pet-behavior-policy-card,
+      .session-builder-card#vaccination-policy-card,
+      .session-builder-card#cancellation-policy-card,
+      .session-builder-card#photo-service-agreement-card {
+        min-height: 500px;
+        padding-bottom: 3rem;
+      }
+
+      #instagram-posts-section {
+        padding: 3rem 1rem;
+      }
+
+      .instagram-posts-container h2 {
+        font-size: 2rem;
+      }
+
+      .instagram-posts-container p {
+        font-size: 1rem;
+      }
+
+      .post-placeholder {
+        width: 150px;
+        height: 150px;
+        font-size: 0.9rem;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .footer-section {
+        align-items: center;
+        text-align: center;
+      }
+
+      .payment-methods {
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -100,13 +988,12 @@
           <p>Choose an available date and time for your session.</p>
           <div class="form-group">
             <label for="session-date">Date *</label>
-            <input type="date" id="session-date" name="session-date" required />
+            <input type="date" id="session-date" name="session-date" required min="2025-05-24" />
           </div>
           <div class="form-group">
             <label for="session-time">Time *</label>
             <select id="session-time" name="session-time" required>
               <option value="">Select a time</option>
-              <!-- Times will be populated dynamically -->
             </select>
           </div>
           <div class="card-actions">
@@ -301,8 +1188,89 @@
     </div>
   </footer>
 
-  <script src="/scripts/shared.js"></script>
   <script>
+    const AIRTABLE_API_KEY = 'patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3';
+    const AIRTABLE_BASE_ID = 'applU3NCdDveC4G8a';
+
+    // Airtable API wrapper
+    async function fetchAirtableData(table, options = {}) {
+      const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${table}?${new URLSearchParams(options).toString()}`;
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`Airtable error: ${response.status}`);
+      }
+      return await response.json();
+    }
+
+    async function createAirtableRecord(table, record) {
+      const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${table}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(record)
+      });
+      if (!response.ok) {
+        throw new Error(`Airtable error: ${response.status}`);
+      }
+      return await response.json();
+    }
+
+    async function updateAirtableRecord(table, recordId, record) {
+      const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${table}/${recordId}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(record)
+      });
+      if (!response.ok) {
+        throw new Error(`Airtable error: ${response.status}`);
+      }
+      return await response.json();
+    }
+
+    // Log errors to Airtable
+    async function logErrorToAirtable(page, error, sessionData = {}) {
+      try {
+        const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const errorRecord = {
+          fields: {
+            errorId: errorId,
+            timestamp: new Date().toISOString(),
+            page: page,
+            errorMessage: error.message || String(error),
+            errorStack: error.stack || 'No stack trace available',
+            userAgent: navigator.userAgent,
+            sessionData: JSON.stringify(sessionData)
+          }
+        };
+
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Errors', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(errorRecord)
+        });
+
+        if (response.ok) {
+          console.log('✅ Error logged to Airtable:', errorRecord);
+        } else {
+          console.warn('⚠️ Failed to log error to Airtable:', response.status);
+        }
+      } catch (innerError) {
+        console.warn('⚠️ Failed to log error to Airtable:', innerError);
+      }
+    }
+
     // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
@@ -335,7 +1303,32 @@
         const sessionOptions = document.getElementById('session-type-options');
 
         if (!data.records || data.records.length === 0) {
-          sessionDetails.innerHTML = '<p>No session types available at this time.</p>';
+          sessionDetails.innerHTML = `
+            <div class="session-box">
+              <h4>Mini Session</h4>
+              <ul>
+                <li>⏰ 30 minutes</li>
+                <li>📸 Includes 5 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
+            <div class="session-box">
+              <h4>Full Session</h4>
+              <ul>
+                <li>⏰ 60 minutes</li>
+                <li>📸 Includes 15 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
+          `;
+          sessionOptions.innerHTML = `
+            <button class="option-btn" data-value="Mini">Mini Session</button>
+            <button class="option-btn" data-value="Full">Full Session</button>
+          `;
           return;
         }
 
@@ -358,7 +1351,32 @@
       } catch (error) {
         console.error('Error fetching session types:', error);
         logErrorToAirtable('index.html', error);
-        document.getElementById('session-details').innerHTML = '<p>Error loading session types. Please try again later.</p>';
+        document.getElementById('session-details').innerHTML = `
+          <div class="session-box">
+            <h4>Mini Session</h4>
+            <ul>
+              <li>⏰ 30 minutes</li>
+              <li>📸 Includes 5 edited digital images</li>
+              <li>🐾 1 pet included</li>
+              <li>👤 1 person included</li>
+              <li>💵 Additional pets or people at extra cost</li>
+            </ul>
+          </div>
+          <div class="session-box">
+            <h4>Full Session</h4>
+            <ul>
+              <li>⏰ 60 minutes</li>
+              <li>📸 Includes 15 edited digital images</li>
+              <li>🐾 1 pet included</li>
+              <li>👤 1 person included</li>
+              <li>💵 Additional pets or people at extra cost</li>
+            </ul>
+          </div>
+        `;
+        document.getElementById('session-type-options').innerHTML = `
+          <button class="option-btn" data-value="Mini">Mini Session</button>
+          <button class="option-btn" data-value="Full">Full Session</button>
+        `;
       }
     }
 
@@ -369,7 +1387,10 @@
         const locationOptions = document.getElementById('location-options');
 
         if (!data.records || data.records.length === 0) {
-          locationOptions.innerHTML = '<p>No locations available at this time.</p>';
+          locationOptions.innerHTML = `
+            <button class="option-btn" data-value="Cheesman">Cheesman Park</button>
+            <button class="option-btn" data-value="City">City Park</button>
+          `;
           return;
         }
 
@@ -379,7 +1400,10 @@
       } catch (error) {
         console.error('Error fetching locations:', error);
         logErrorToAirtable('index.html', error);
-        document.getElementById('location-options').innerHTML = '<p>Error loading locations. Please try again later.</p>';
+        document.getElementById('location-options').innerHTML = `
+          <button class="option-btn" data-value="Cheesman">Cheesman Park</button>
+          <button class="option-btn" data-value="City">City Park</button>
+        `;
       }
     }
 
@@ -405,7 +1429,7 @@
       } catch (error) {
         console.error('Error fetching available times:', error);
         logErrorToAirtable('index.html', error);
-        alert('Error loading available times. Please try again.');
+        document.getElementById('session-time').innerHTML = '<option value="">Select a time</option><option value="" disabled>Error loading times</option>';
       }
     }
 
@@ -558,24 +1582,12 @@
         console.log('✅ Booking created:', bookingResult);
 
         // Update the calendar slot to booked
-        const updateSlotResponse = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Calendar/${slotId}`, {
-          method: 'PATCH',
-          headers: {
-            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            fields: {
-              status: 'booked',
-              bookingId: [bookingResult.id]
-            }
-          })
+        await updateAirtableRecord('Calendar', slotId, {
+          fields: {
+            status: 'booked',
+            bookingId: [bookingResult.id]
+          }
         });
-
-        if (!updateSlotResponse.ok) {
-          throw new Error('Failed to update calendar slot.');
-        }
-
         console.log('✅ Calendar slot updated to booked');
 
         // Save redundantly to localStorage and sessionStorage
