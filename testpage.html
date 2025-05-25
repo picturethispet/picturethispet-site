@@ -42,10 +42,15 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background-image: url('assets/images/ani_bkgd_warm.png'); /* Warm tone for entire body */
-      background-size: 100% 100%;
+      background-size: cover; /* Cover the entire viewport */
       background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
+      background-attachment: fixed; /* Ensure background is visible behind all elements */
+      background-repeat: no-repeat; /* Prevent tiling */
+      background-color: #f5d7b2; /* Fallback warm color in case image fails */
       overflow-x: hidden;
+      min-height: 100vh; /* Ensure body takes full height */
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes moveBackground {
@@ -73,8 +78,9 @@
       align-items: center;
       padding: 0.01rem 1.5rem;
       background-image: url('assets/images/ani_bkgd_warm.png'); /* Match body warm tone */
-      background-size: 100% 100%;
+      background-size: cover;
       background-position: center;
+      background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -187,6 +193,11 @@
     }
 
     /* === MAIN CONTENT WRAPPER === */
+    main {
+      flex: 1; /* Ensure main takes available space, pushing footer to bottom */
+      min-height: calc(100vh - 110px); /* Account for header height */
+    }
+
     .main-content {
       /* Background image removed; handled by body */
     }
@@ -488,13 +499,17 @@
     /* === FOOTER STYLES === */
     footer {
       background-image: url('assets/images/ani_bkgd_warm.png'); /* Match body warm tone */
-      background-size: 100% 100%;
+      background-size: cover;
       background-position: center;
+      background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding: 2rem 1.5rem;
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
+      position: relative;
+      z-index: 1000; /* Ensure footer is above other elements */
+      width: 100%;
     }
 
     .footer-container {
@@ -576,9 +591,10 @@
       .site-nav {
         display: none;
         flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_warm.png'); /* Match body warm tone */
-        background-size: 100% 100%;
+        background-image: url('assets/images/ani_bkgd_warm.png');
+        background-size: cover;
         background-position: center;
+        background-attachment: fixed;
         position: absolute;
         top: 80px;
         right: 0;
@@ -956,7 +972,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 10:36 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 10:40 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -976,8 +992,9 @@
       console.log('✅ Upcoming events section loaded');
       console.log('✅ Testimonials section loaded');
       console.log('✅ Call to action section loaded');
-      console.log('✅ Instagram posts and footer loaded');
-      console.log('🚀 Updated index.html loaded...');
+      console.log('✅ Instagram posts loaded');
+      console.log('✅ Footer loaded');
+      console.log('🚀 Updated index.html loaded with warm tone background and fixed footer...');
     });
   </script>
 </body>
