@@ -135,7 +135,7 @@
       position: relative;
       display: inline-block;
       box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-      min-width: 120px; /* Ensure touch target size */
+      min-width: 120px;
       min-height: 44px;
     }
 
@@ -316,6 +316,54 @@
       margin-bottom: 2rem;
     }
 
+    /* === PROGRESS INDICATOR === */
+    .progress-section {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.active {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .progress-line {
+      width: 60px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .progress-text {
+      color: white;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* === SESSION BUILDER CARDS === */
     .session-builder-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -444,23 +492,6 @@
       flex-wrap: wrap;
     }
 
-    .session-builder-card .policy-content {
-      text-align: left;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .session-builder-card .policy-content ul {
-      list-style-type: disc;
-      padding-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .session-builder-card .policy-content li {
-      margin-bottom: 0.5rem;
-    }
-
     .session-builder-card .session-details {
       display: flex;
       gap: 1rem;
@@ -517,7 +548,8 @@
     }
 
     .session-builder-card .form-group input,
-    .session-builder-card .form-group select {
+    .session-builder-card .form-group select,
+    .session-builder-card .form-group textarea {
       width: 100%;
       padding: 0.8rem;
       font-size: 1rem;
@@ -531,10 +563,95 @@
     }
 
     .session-builder-card .form-group input:focus,
-    .session-builder-card .form-group select:focus {
+    .session-builder-card .form-group select:focus,
+    .session-builder-card .form-group textarea:focus {
       outline: none;
       border-color: var(--gold);
       background: rgba(255, 255, 255, 0.15);
+    }
+
+    .session-builder-card .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .session-builder-card .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position-x: 98%;
+      background-position-y: 50%;
+    }
+
+    .form-group.vaccination-group {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .form-group.vaccination-group label {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .form-group .radio-buttons {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-group .radio-buttons label {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group .radio-buttons input[type="radio"] {
+      width: auto;
+      margin: 0;
+      transform: scale(1.5);
+    }
+
+    .form-group .radio-buttons label:hover {
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .form-group .subtext {
+      font-size: 0.9rem;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .form-group.checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group.checkbox-group label {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    .form-group.checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
     }
 
     /* === LEAD CAPTURE SUCCESS MESSAGE === */
@@ -549,6 +666,85 @@
       text-align: center;
       animation: fadeInUp 0.5s ease-out;
       overflow-wrap: break-word;
+    }
+
+    /* === POLICY CARD CONTENT === */
+    .policy-content {
+      text-align: left;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .policy-content p {
+      margin-bottom: 1rem;
+    }
+
+    .policy-content ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .policy-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* === POP-UP STYLES === */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .popup-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .popup-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .popup-content button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .popup-content button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
     /* === INSTAGRAM POSTS SECTION === */
@@ -582,7 +778,7 @@
       margin-bottom: 2rem;
     }
 
-    .posts-grid {
+    .instagram-grid {
       display: flex;
       gap: 1rem;
       overflow-x: auto;
@@ -592,21 +788,21 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    .posts-grid::-webkit-scrollbar {
+    .instagram-grid::-webkit-scrollbar {
       height: 8px;
     }
 
-    .posts-grid::-webkit-scrollbar-track {
+    .instagram-grid::-webkit-scrollbar-track {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 4px;
     }
 
-    .posts-grid::-webkit-scrollbar-thumb {
+    .instagram-grid::-webkit-scrollbar-thumb {
       background: var(--gold);
       border-radius: 4px;
     }
 
-    .posts-grid::-webkit-scrollbar-thumb:hover {
+    .instagram-grid::-webkit-scrollbar-thumb:hover {
       background: var(--orange);
     }
 
@@ -784,7 +980,7 @@
       .social-icon {
         font-size: 1.2rem;
       }
-      
+
       .hero-section {
         margin-top: 80px;
         height: calc(100vh - 80px);
@@ -830,7 +1026,24 @@
 
       .session-builder-container p {
         font-size: 1rem;
-        white-space: normal;
+      }
+
+      .progress-steps {
+        gap: 0.5rem;
+      }
+
+      .progress-step {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+
+      .progress-line {
+        width: 40px;
+      }
+
+      .progress-text {
+        font-size: 1rem;
       }
 
       .session-builder-card {
@@ -862,14 +1075,6 @@
         min-width: 120px;
       }
 
-      .session-builder-card#email-capture-card {
-        min-height: 250px;
-      }
-
-      .session-builder-card#datetime-card {
-        min-height: 200px;
-      }
-
       .session-builder-card .session-details {
         flex-direction: column;
         align-items: center;
@@ -880,29 +1085,57 @@
         max-width: 100%;
       }
 
-      .session-builder-card#start-journey-card {
-        padding-bottom: 3rem;
-        min-height: 300px;
+      .session-builder-card .form-group label {
+        font-size: 1rem;
       }
 
-      .session-builder-card#start-journey-card p {
-        white-space: normal;
+      .session-builder-card .form-group input,
+      .session-builder-card .form-group select,
+      .session-builder-card .form-group textarea {
+        padding: 0.6rem;
+        font-size: 0.9rem;
       }
 
-      .session-builder-card#session-type-card,
-      .session-builder-card#datetime-card,
-      .session-builder-card#location-card,
-      .session-builder-card#pet-count-card,
-      .session-builder-card#people-count-card {
-        min-height: 200px;
+      .form-group.vaccination-group {
+        padding: 1rem;
       }
 
-      .session-builder-card#pet-behavior-policy-card,
-      .session-builder-card#vaccination-policy-card,
-      .session-builder-card#cancellation-policy-card,
-      .session-builder-card#photo-service-agreement-card {
-        min-height: 500px;
-        padding-bottom: 3rem;
+      .form-group.vaccination-group label {
+        font-size: 1.2rem;
+      }
+
+      .form-group .radio-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .form-group .subtext {
+        font-size: 0.8rem;
+      }
+
+      .policy-content ul {
+        padding-left: 1rem;
+      }
+
+      .policy-content li {
+        font-size: 0.9rem;
+      }
+
+      .popup-content {
+        padding: 1.5rem;
+      }
+
+      .popup-content h3 {
+        font-size: 1.5rem;
+      }
+
+      .popup-content p {
+        font-size: 1rem;
+      }
+
+      .popup-content button {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
       }
 
       #instagram-posts-section {
@@ -987,6 +1220,17 @@
         min-width: 100px;
       }
 
+      .session-builder-card .form-group label {
+        font-size: 0.9rem;
+      }
+
+      .session-builder-card .form-group input,
+      .session-builder-card .form-group select,
+      .session-builder-card .form-group textarea {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+      }
+
       .post-placeholder {
         width: 120px;
         height: 120px;
@@ -1042,6 +1286,32 @@
         <h2>Book Your Pet Photography Session</h2>
         <p>Let's create a session that's perfect for you and your pet. Answer a few quick questions to get started.</p>
 
+        <!-- Progress Indicator -->
+        <div class="progress-section">
+          <div class="progress-steps">
+            <div class="progress-step active">1</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">2</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">3</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">4</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">5</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">6</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">7</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">8</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">9</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">10</div>
+          </div>
+          <p class="progress-text">Email Capture</p>
+        </div>
+
         <!-- Start Your Journey Card -->
         <div class="session-builder-card" id="start-journey-card">
           <h3>Start Your Journey</h3>
@@ -1068,10 +1338,30 @@
           <h3>Choose Your Session Type</h3>
           <p>Select the type of session that best suits your needs.</p>
           <div class="session-details" id="session-details">
-            <!-- Session types will be populated dynamically -->
+            <div class="session-box">
+              <h4>Mini Session</h4>
+              <ul>
+                <li>⏰ 30 minutes</li>
+                <li>📸 Includes 5 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
+            <div class="session-box">
+              <h4>Full Session</h4>
+              <ul>
+                <li>⏰ 60 minutes</li>
+                <li>📸 Includes 15 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
           </div>
           <div class="options" id="session-type-options">
-            <!-- Options will be populated dynamically -->
+            <button class="option-btn" data-value="Mini">Mini Session</button>
+            <button class="option-btn" data-value="Full">Full Session</button>
           </div>
           <div class="card-actions">
             <button class="back-btn" onclick="showCard('email-capture-card')">Back</button>
@@ -1084,12 +1374,20 @@
           <p>Choose an available date and time for your session.</p>
           <div class="form-group">
             <label for="session-date">Date *</label>
-            <input type="date" id="session-date" name="session-date" required min="2025-05-24" />
+            <input type="date" id="session-date" name="session-date" required min="2025-05-25" max="2025-05-31" />
           </div>
           <div class="form-group">
             <label for="session-time">Time *</label>
             <select id="session-time" name="session-time" required>
               <option value="">Select a time</option>
+              <option value="09:00">09:00</option>
+              <option value="10:00">10:00</option>
+              <option value="11:00">11:00</option>
+              <option value="12:00">12:00</option>
+              <option value="13:00">13:00</option>
+              <option value="14:00">14:00</option>
+              <option value="15:00">15:00</option>
+              <option value="16:00">16:00</option>
             </select>
           </div>
           <div class="card-actions">
@@ -1103,7 +1401,8 @@
           <h3>Select Your Location</h3>
           <p>Choose a scenic Denver park for your pet's photo session.</p>
           <div class="options" id="location-options">
-            <!-- Locations will be populated dynamically -->
+            <button class="option-btn" data-value="Cheesman">Cheesman Park</button>
+            <button class="option-btn" data-value="City">City Park</button>
           </div>
           <div class="card-actions">
             <button class="back-btn" onclick="showCard('datetime-card')">Back</button>
@@ -1139,22 +1438,134 @@
           </div>
         </div>
 
+        <!-- Vaccination Check Card -->
+        <div class="session-builder-card" id="vaccination-check-card" style="display: none;">
+          <h3>Is your pet vaccinated?</h3>
+          <p>We require all pets to be vaccinated for safety.</p>
+          <div class="form-group vaccination-group">
+            <label for="isVaccinated">Is your pet vaccinated? *</label>
+            <div class="radio-buttons">
+              <label><input type="radio" name="isVaccinated" value="yes" required> Yes</label>
+              <label><input type="radio" name="isVaccinated" value="no"> No</label>
+            </div>
+            <p class="subtext">Must provide records if requested</p>
+          </div>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('people-count-card')">Back</button>
+            <button class="next-btn" onclick="validateVaccinationAndProceed()">Next</button>
+          </div>
+        </div>
+
+        <!-- Client Info Card -->
+        <div class="session-builder-card" id="client-info-card" style="display: none;">
+          <h3>Tell Us About Yourself</h3>
+          <p>We need a few details to confirm your booking.</p>
+          <div class="form-group">
+            <label for="client-first-name">First Name *</label>
+            <input type="text" id="client-first-name" name="client-first-name" required placeholder="Enter your first name" />
+          </div>
+          <div class="form-group">
+            <label for="client-last-name">Last Name *</label>
+            <input type="text" id="client-last-name" name="client-last-name" required placeholder="Enter your last name" />
+          </div>
+          <div class="form-group">
+            <label for="client-phone">Phone Number *</label>
+            <input type="tel" id="client-phone" name="client-phone" required placeholder="Enter your phone number" />
+          </div>
+          <div id="client-info-2-group" style="display: none;">
+            <div class="form-group">
+              <label for="client-first-name-2">First Name (Person 2)</label>
+              <input type="text" id="client-first-name-2" name="client-first-name-2" placeholder="Enter first name" />
+            </div>
+            <div class="form-group">
+              <label for="client-last-name-2">Last Name (Person 2)</label>
+              <input type="text" id="client-last-name-2" name="client-last-name-2" placeholder="Enter last name" />
+            </div>
+            <div class="form-group">
+              <label for="client-phone-2">Phone Number (Person 2)</label>
+              <input type="tel" id="client-phone-2" name="client-phone-2" placeholder="Enter phone number" />
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('vaccination-check-card')">Back</button>
+            <button class="next-btn" onclick="saveClientInfoAndProceed()">Next</button>
+          </div>
+        </div>
+
+        <!-- Pet Info Card -->
+        <div class="session-builder-card" id="pet-info-card" style="display: none;">
+          <h3>Tell Us About Your Pet(s)</h3>
+          <p>Please provide the name(s) and photo(s) of the pet(s) joining the session.</p>
+          <div class="form-group">
+            <label for="pet-name-1">Pet 1 Name *</label>
+            <input type="text" id="pet-name-1" name="pet-name-1" required placeholder="Enter your pet's name" />
+          </div>
+          <div class="form-group">
+            <label for="pet-photo-1">Pet 1 Photo *</label>
+            <input type="file" id="pet-photo-1" name="pet-photo-1" required accept="image/*" />
+          </div>
+          <div id="pet-name-2-group" style="display: none;">
+            <div class="form-group">
+              <label for="pet-name-2">Pet 2 Name</label>
+              <input type="text" id="pet-name-2" name="pet-name-2" placeholder="Enter your pet's name" />
+            </div>
+          </div>
+          <div id="pet-photo-2-group" style="display: none;">
+            <div class="form-group">
+              <label for="pet-photo-2">Pet 2 Photo</label>
+              <input type="file" id="pet-photo-2" name="pet-photo-2" accept="image/*" />
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('client-info-card')">Back</button>
+            <button class="next-btn" onclick="savePetInfoAndProceed()">Next</button>
+          </div>
+        </div>
+
+        <!-- Marketing Consent Card -->
+        <div class="session-builder-card" id="marketing-consent-card" style="display: none;">
+          <h3>Marketing Consent</h3>
+          <p>We'd love to keep you updated on special offers and events. Do you consent to receiving marketing emails?</p>
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="marketing-consent" name="marketing-consent" required />
+            <label for="marketing-consent">Yes, I'd like to receive marketing emails.</label>
+          </div>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('pet-info-card')">Back</button>
+            <button class="next-btn" onclick="saveMarketingConsentAndProceed()">Next</button>
+          </div>
+        </div>
+
+        <!-- Additional Notes Card -->
+        <div class="session-builder-card" id="additional-notes-card" style="display: none;">
+          <h3>Any Additional Notes?</h3>
+          <p>Let us know if you have any special requests or information about your pet(s).</p>
+          <div class="form-group">
+            <label for="additional-notes">Notes (Optional)</label>
+            <textarea id="additional-notes" name="additional-notes" placeholder="Any special requests or notes about your pet(s)?"></textarea>
+          </div>
+          <div class="card-actions">
+            <button class="back-btn" onclick="showCard('marketing-consent-card')">Back</button>
+            <button class="next-btn" onclick="saveAdditionalNotesAndProceed()">Next</button>
+          </div>
+        </div>
+
         <!-- Pet Behavior Policy Card -->
         <div class="session-builder-card" id="pet-behavior-policy-card" style="display: none;">
           <h3>Pet Behavior Policy</h3>
           <div class="policy-content">
             <p>We want to ensure a safe and enjoyable experience for everyone. Please review our pet behavior policy:</p>
             <ul>
-              <li>All pets must be vaccinated, and proof may be requested.</li>
+              <li>All pets must be vaccinated.</li>
               <li>Pets should be comfortable around other animals and people.</li>
-              <li>If your pet is off-leash, they must have reliable recall.</li>
-              <li>Any aggressive behavior must be disclosed prior to the session.</li>
-              <li>We reserve the right to cancel the session if safety is a concern.</li>
+              <li>If off-leash, pets must have reliable recall.</li>
+              <li>Disclose any aggressive behavior prior to the session.</li>
+              <li>We reserve the right to cancel the session if the pet's behavior poses a safety risk.</li>
             </ul>
             <p>By proceeding, you agree to these terms.</p>
           </div>
           <div class="card-actions">
-            <button class="back-btn" onclick="showCard('people-count-card')">Back</button>
+            <button class="back-btn" onclick="showCard('additional-notes-card')">Back</button>
             <button class="next-btn" onclick="showCard('vaccination-policy-card')">I Agree, Proceed</button>
           </div>
         </div>
@@ -1165,9 +1576,9 @@
           <div class="policy-content">
             <p>We require all pets to be fully vaccinated to ensure the safety of everyone involved. Please review our vaccination policy:</p>
             <ul>
-              <li>All pets must be vaccinated against rabies and other common diseases.</li>
+              <li>Pets must be vaccinated against rabies and other common diseases.</li>
               <li>Proof of vaccination may be requested prior to the session.</li>
-              <li>Failure to provide proof may result in session cancellation.</li>
+              <li>Failure to provide proof may result in session cancellation without refund.</li>
             </ul>
             <p>By proceeding, you confirm that your pet is vaccinated and agree to provide proof if requested.</p>
           </div>
@@ -1183,9 +1594,9 @@
           <div class="policy-content">
             <p>We understand that plans can change. Please review our cancellation policy:</p>
             <ul>
-              <li>Cancellations must be made at least 48 hours before the scheduled session to receive a full refund.</li>
-              <li>No refunds will be issued for cancellations within 48 hours of the session.</li>
-              <li>We reserve the right to cancel sessions due to unforeseen circumstances, in which case a full refund will be provided.</li>
+              <li>Cancellations with at least 48 hours' notice are eligible for a full refund.</li>
+              <li>Cancellations within 48 hours of the session are non-refunded.</li>
+              <li>We reserve the right to cancel sessions due to unforeseen circumstances, with a full refund provided.</li>
             </ul>
             <p>By proceeding, you agree to these cancellation terms.</p>
           </div>
@@ -1201,11 +1612,11 @@
           <div class="policy-content">
             <p>Please review our photo service agreement to understand your rights and responsibilities:</p>
             <ul>
-              <li>You grant Picture This Pet a non-exclusive license to use the photos for promotional purposes.</li>
-              <li>Edited digital images will be delivered within 14 business days after the session.</li>
-              <li>The photographer retains copyright of all images but provides you with a personal use license.</li>
-              <li>You are responsible for ensuring all participants are prepared and on time for the session.</li>
-              <li>Reshoots are at the photographer's discretion and may incur additional fees.</li>
+              <li>You grant Picture This Pet a non-exclusive license to use session photos for promotional purposes.</li>
+              <li>Edited images will be delivered within 14 business days.</li>
+              <li>Photographer retains copyright; you receive a personal use license.</li>
+              <li>Client is responsible for ensuring participants are prepared for the session.</li>
+              <li>Reshoots are at our discretion and may incur additional fees.</li>
             </ul>
             <p>By proceeding, you agree to these terms.</p>
           </div>
@@ -1222,7 +1633,7 @@
       <div class="instagram-posts-container">
         <h2>Our Latest Instagram Posts</h2>
         <p>Check out some behind-the-scenes moments and adorable pet highlights from our recent sessions!</p>
-        <div class="posts-grid">
+        <div class="instagram-grid">
           <div class="post-placeholder">Instagram Post 1<br>(Placeholder)</div>
           <div class="post-placeholder">Instagram Post 2<br>(Placeholder)</div>
           <div class="post-placeholder">Instagram Post 3<br>(Placeholder)</div>
@@ -1247,6 +1658,15 @@
       </div>
     </section>
   </main>
+
+  <!-- Vaccination Popup -->
+  <div class="popup" id="vaccination-popup">
+    <div class="popup-content">
+      <h3>Vaccination Required</h3>
+      <p>We can't serve you at this time. Please come back when your pet is fully vaccinated.</p>
+      <button onclick="redirectHome()">Return to Home</button>
+    </div>
+  </div>
 
   <footer>
     <div class="footer-container">
@@ -1280,7 +1700,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 04:06 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:46 PM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -1391,144 +1811,6 @@
       sessionBuilderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Fetch session types from Airtable and populate options
-    async function fetchSessionTypes() {
-      try {
-        const data = await fetchAirtableData('SessionTypes', { filterByFormula: '{isActive}=1' });
-        const sessionDetails = document.getElementById('session-details');
-        const sessionOptions = document.getElementById('session-type-options');
-
-        if (!data.records || data.records.length === 0) {
-          sessionDetails.innerHTML = `
-            <div class="session-box">
-              <h4>Mini Session</h4>
-              <ul>
-                <li>⏰ 30 minutes</li>
-                <li>📸 Includes 5 edited digital images</li>
-                <li>🐾 1 pet included</li>
-                <li>👤 1 person included</li>
-                <li>💵 Additional pets or people at extra cost</li>
-              </ul>
-            </div>
-            <div class="session-box">
-              <h4>Full Session</h4>
-              <ul>
-                <li>⏰ 60 minutes</li>
-                <li>📸 Includes 15 edited digital images</li>
-                <li>🐾 1 pet included</li>
-                <li>👤 1 person included</li>
-                <li>💵 Additional pets or people at extra cost</li>
-              </ul>
-            </div>
-          `;
-          sessionOptions.innerHTML = `
-            <button class="option-btn" data-value="Mini">Mini Session</button>
-            <button class="option-btn" data-value="Full">Full Session</button>
-          `;
-          return;
-        }
-
-        sessionDetails.innerHTML = data.records.map(record => `
-          <div class="session-box">
-            <h4>${record.fields.typeName}</h4>
-            <ul>
-              <li>⏰ ${record.fields.duration} minutes</li>
-              <li>📸 Includes ${record.fields.numImages} edited digital images</li>
-              <li>🐾 1 pet included</li>
-              <li>👤 1 person included</li>
-              <li>💵 Additional pets or people at extra cost</li>
-            </ul>
-          </div>
-        `).join('');
-
-        sessionOptions.innerHTML = data.records.map(record => `
-          <button class="option-btn" data-value="${record.fields.typeName}">${record.fields.typeName}</button>
-        `).join('');
-      } catch (error) {
-        console.error('Error fetching session types:', error);
-        logErrorToAirtable('index.html', error);
-        document.getElementById('session-details').innerHTML = `
-          <div class="session-box">
-            <h4>Mini Session</h4>
-            <ul>
-              <li>⏰ 30 minutes</li>
-              <li>📸 Includes 5 edited digital images</li>
-              <li>🐾 1 pet included</li>
-              <li>👤 1 person included</li>
-              <li>💵 Additional pets or people at extra cost</li>
-            </ul>
-          </div>
-          <div class="session-box">
-            <h4>Full Session</h4>
-            <ul>
-              <li>⏰ 60 minutes</li>
-              <li>📸 Includes 15 edited digital images</li>
-              <li>🐾 1 pet included</li>
-              <li>👤 1 person included</li>
-              <li>💵 Additional pets or people at extra cost</li>
-            </ul>
-          </div>
-        `;
-        document.getElementById('session-type-options').innerHTML = `
-          <button class="option-btn" data-value="Mini">Mini Session</button>
-          <button class="option-btn" data-value="Full">Full Session</button>
-        `;
-      }
-    }
-
-    // Fetch locations from Airtable and populate options
-    async function fetchLocations() {
-      try {
-        const data = await fetchAirtableData('Locations');
-        const locationOptions = document.getElementById('location-options');
-
-        if (!data.records || data.records.length === 0) {
-          locationOptions.innerHTML = `
-            <button class="option-btn" data-value="Cheesman">Cheesman Park</button>
-            <button class="option-btn" data-value="City">City Park</button>
-          `;
-          return;
-        }
-
-        locationOptions.innerHTML = data.records.map(record => `
-          <button class="option-btn" data-value="${record.fields.locationName}">${record.fields.locationName}</button>
-        `).join('');
-      } catch (error) {
-        console.error('Error fetching locations:', error);
-        logErrorToAirtable('index.html', error);
-        document.getElementById('location-options').innerHTML = `
-          <button class="option-btn" data-value="Cheesman">Cheesman Park</button>
-          <button class="option-btn" data-value="City">City Park</button>
-        `;
-      }
-    }
-
-    // Fetch available times for a selected date
-    async function fetchAvailableTimes(date) {
-      try {
-        const timeSelect = document.getElementById('session-time');
-        timeSelect.innerHTML = '<option value="">Select a time</option>';
-
-        const data = await fetchAirtableData('Calendar', {
-          filterByFormula: `AND({date}="${date}", {status}="available", {isBlocked}=0, {isAvailable}=1)`
-        });
-
-        if (!data.records || data.records.length === 0) {
-          timeSelect.innerHTML += '<option value="" disabled>No available times for this date</option>';
-          return;
-        }
-
-        const times = [...new Set(data.records.map(record => record.fields.time))].sort();
-        timeSelect.innerHTML += times.map(time => `
-          <option value="${time}">${time}</option>
-        `).join('');
-      } catch (error) {
-        console.error('Error fetching available times:', error);
-        logErrorToAirtable('index.html', error);
-        document.getElementById('session-time').innerHTML = '<option value="">Select a time</option><option value="" disabled>Error loading times</option>';
-      }
-    }
-
     // Save email and proceed to the next card
     function saveEmailAndProceed() {
       const emailInput = document.getElementById('user-email');
@@ -1597,6 +1879,161 @@
       showCard('location-card');
     }
 
+    // Validate vaccination and proceed
+    function validateVaccinationAndProceed() {
+      const vaccinated = document.querySelector('input[name="isVaccinated"]:checked');
+      
+      if (!vaccinated) {
+        alert('Please select whether your pet is vaccinated.');
+        return;
+      }
+
+      if (vaccinated.value === 'no') {
+        document.getElementById('vaccination-popup').style.display = 'flex';
+        return;
+      }
+
+      let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      sessionData.isVaccinated = vaccinated.value;
+
+      try {
+        const dataString = JSON.stringify(sessionData);
+        localStorage.setItem('ptpSessionData', dataString);
+        localStorage.setItem('ptpSessionBackup', dataString);
+        sessionStorage.setItem('ptpSessionData', dataString);
+        sessionStorage.setItem('ptpSessionBackup', dataString);
+        console.log('✅ Vaccination status saved');
+      } catch (error) {
+        console.error('Error saving vaccination status:', error);
+        logErrorToAirtable('index.html', error, sessionData);
+      }
+
+      showCard('client-info-card');
+    }
+
+    // Save client info and proceed
+    function saveClientInfoAndProceed() {
+      const firstName = document.getElementById('client-first-name').value;
+      const lastName = document.getElementById('client-last-name').value;
+      const phone = document.getElementById('client-phone').value;
+
+      if (!firstName || !lastName || !phone) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      sessionData.clientFirstName = firstName;
+      sessionData.clientLastName = lastName;
+      sessionData.clientPhone = phone;
+
+      // Check if person 2 fields are visible and filled
+      const person2Group = document.getElementById('client-info-2-group');
+      if (person2Group.style.display !== 'none') {
+        sessionData.client2FirstName = document.getElementById('client-first-name-2').value;
+        sessionData.client2LastName = document.getElementById('client-last-name-2').value;
+        sessionData.client2Phone = document.getElementById('client-phone-2').value;
+      }
+
+      try {
+        const dataString = JSON.stringify(sessionData);
+        localStorage.setItem('ptpSessionData', dataString);
+        localStorage.setItem('ptpSessionBackup', dataString);
+        sessionStorage.setItem('ptpSessionData', dataString);
+        sessionStorage.setItem('ptpSessionBackup', dataString);
+        console.log('✅ Client info saved');
+      } catch (error) {
+        console.error('Error saving client info:', error);
+        logErrorToAirtable('index.html', error, sessionData);
+      }
+
+      showCard('pet-info-card');
+    }
+
+    // Save pet info and proceed
+    function savePetInfoAndProceed() {
+      const petName1 = document.getElementById('pet-name-1').value;
+      const petPhoto1 = document.getElementById('pet-photo-1').files[0];
+
+      if (!petName1 || !petPhoto1) {
+        alert('Please provide pet name and photo.');
+        return;
+      }
+
+      let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      sessionData.pet1Name = petName1;
+      sessionData.pet1Photo = petPhoto1.name;
+
+      // Check if pet 2 fields are visible
+      const pet2NameGroup = document.getElementById('pet-name-2-group');
+      const pet2PhotoGroup = document.getElementById('pet-photo-2-group');
+      if (pet2NameGroup.style.display !== 'none') {
+        sessionData.pet2Name = document.getElementById('pet-name-2').value;
+        const pet2Photo = document.getElementById('pet-photo-2').files[0];
+        if (pet2Photo) {
+          sessionData.pet2Photo = pet2Photo.name;
+        }
+      }
+
+      try {
+        const dataString = JSON.stringify(sessionData);
+        localStorage.setItem('ptpSessionData', dataString);
+        localStorage.setItem('ptpSessionBackup', dataString);
+        sessionStorage.setItem('ptpSessionData', dataString);
+        sessionStorage.setItem('ptpSessionBackup', dataString);
+        console.log('✅ Pet info saved');
+      } catch (error) {
+        console.error('Error saving pet info:', error);
+        logErrorToAirtable('index.html', error, sessionData);
+      }
+
+      showCard('marketing-consent-card');
+    }
+
+    // Save marketing consent and proceed
+    function saveMarketingConsentAndProceed() {
+      const marketingConsent = document.getElementById('marketing-consent').checked;
+
+      let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      sessionData.marketingConsent = marketingConsent;
+
+      try {
+        const dataString = JSON.stringify(sessionData);
+        localStorage.setItem('ptpSessionData', dataString);
+        localStorage.setItem('ptpSessionBackup', dataString);
+        sessionStorage.setItem('ptpSessionData', dataString);
+        sessionStorage.setItem('ptpSessionBackup', dataString);
+        console.log('✅ Marketing consent saved');
+      } catch (error) {
+        console.error('Error saving marketing consent:', error);
+        logErrorToAirtable('index.html', error, sessionData);
+      }
+
+      showCard('additional-notes-card');
+    }
+
+    // Save additional notes and proceed
+    function saveAdditionalNotesAndProceed() {
+      const additionalNotes = document.getElementById('additional-notes').value;
+
+      let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
+      sessionData.additionalNotes = additionalNotes;
+
+      try {
+        const dataString = JSON.stringify(sessionData);
+        localStorage.setItem('ptpSessionData', dataString);
+        localStorage.setItem('ptpSessionBackup', dataString);
+        sessionStorage.setItem('ptpSessionData', dataString);
+        sessionStorage.setItem('ptpSessionBackup', dataString);
+        console.log('✅ Additional notes saved');
+      } catch (error) {
+        console.error('Error saving additional notes:', error);
+        logErrorToAirtable('index.html', error, sessionData);
+      }
+
+      showCard('pet-behavior-policy-card');
+    }
+
     // Handle option selection with auto-advance
     function handleOptionSelection(optionGroup, nextCardId) {
       const options = document.querySelectorAll(`#${optionGroup} .option-btn`);
@@ -1609,9 +2046,29 @@
           let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
           if (optionGroup === 'session-type-card') sessionData.session = this.dataset.value;
           if (optionGroup === 'location-card') sessionData.park = this.dataset.value;
-          if (optionGroup === 'pet-count-card') sessionData.petCount = this.dataset.value;
+          if (optionGroup === 'pet-count-card') {
+            sessionData.petCount = this.dataset.value;
+            // Show/hide pet 2 fields
+            const pet2NameGroup = document.getElementById('pet-name-2-group');
+            const pet2PhotoGroup = document.getElementById('pet-photo-2-group');
+            if (this.dataset.value === '2') {
+              pet2NameGroup.style.display = 'block';
+              pet2PhotoGroup.style.display = 'block';
+            } else {
+              pet2NameGroup.style.display = 'none';
+              pet2PhotoGroup.style.display = 'none';
+            }
+          }
           if (optionGroup === 'people-count-card') {
             sessionData.peopleCount = this.dataset.value;
+            // Show/hide person 2 fields
+            const person2Group = document.getElementById('client-info-2-group');
+            if (this.dataset.value === '2') {
+              person2Group.style.display = 'block';
+            } else {
+              person2Group.style.display = 'none';
+            }
+            // Show success message
             const successMessage = document.getElementById('lead-capture-success');
             successMessage.style.display = 'block';
             setTimeout(() => {
@@ -1639,25 +2096,10 @@
     // Save session data and create booking after agreement
     async function saveSessionDataAndCreateBooking() {
       let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
-      sessionData.session = document.querySelector('#session-type-card .option-btn.selected')?.dataset.value || '';
-      sessionData.park = document.querySelector('#location-card .option-btn.selected')?.dataset.value || '';
-      sessionData.petCount = document.querySelector('#pet-count-card .option-btn.selected')?.dataset.value || '';
-      sessionData.peopleCount = document.querySelector('#people-count-card .option-btn.selected')?.dataset.value || '';
       sessionData.bookingId = `BOOKING_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       sessionData.timestamp = new Date().toISOString();
 
       try {
-        // Fetch the selected slot to get its ID
-        const slotData = await fetchAirtableData('Calendar', {
-          filterByFormula: `AND({date}="${sessionData.selectedDate}", {time}="${sessionData.selectedTime}", {status}="available", {isBlocked}=0, {isAvailable}=1)`
-        });
-
-        if (!slotData.records || slotData.records.length === 0) {
-          throw new Error('Selected slot is no longer available.');
-        }
-
-        const slotId = slotData.records[0].id;
-
         // Create booking in Airtable
         const bookingRecord = {
           fields: {
@@ -1670,21 +2112,18 @@
             petCount: parseInt(sessionData.petCount) || 1,
             peopleCount: parseInt(sessionData.peopleCount) || 1,
             sessionDate: sessionData.sessionDate,
-            calendarSlot: [slotId]
+            clientFirstName: sessionData.clientFirstName,
+            clientLastName: sessionData.clientLastName,
+            clientPhone: sessionData.clientPhone,
+            pet1Name: sessionData.pet1Name,
+            marketingConsent: sessionData.marketingConsent,
+            additionalNotes: sessionData.additionalNotes || '',
+            isVaccinated: sessionData.isVaccinated
           }
         };
 
         const bookingResult = await createAirtableRecord('Bookings', bookingRecord);
         console.log('✅ Booking created:', bookingResult);
-
-        // Update the calendar slot to booked
-        await updateAirtableRecord('Calendar', slotId, {
-          fields: {
-            status: 'booked',
-            bookingId: [bookingResult.id]
-          }
-        });
-        console.log('✅ Calendar slot updated to booked');
 
         // Save redundantly to localStorage and sessionStorage
         const dataString = JSON.stringify(sessionData);
@@ -1695,7 +2134,7 @@
         sessionStorage.setItem('ptpSessionBackup', dataString);
         console.log('✅ Session data saved redundantly in 5 locations');
 
-        alert('🎉 Your session has been booked successfully! We’ll send a confirmation to your email.');
+        alert('🎉 Your session has been booked successfully! We'll send a confirmation to your email.');
         window.location.href = '/client-portal-home.html';
 
       } catch (error) {
@@ -1705,21 +2144,29 @@
       }
     }
 
+    // Redirect to home page
+    function redirectHome() {
+      window.location.href = '/';
+    }
+
     // Initialize page
     document.addEventListener('DOMContentLoaded', async function() {
-      console.log('🚀 Session builder loaded with Airtable connection...');
+      console.log('✅ Header loaded');
+      console.log('✅ Hero section loaded');
+      console.log('✅ Upcoming events section loaded');
+      console.log('✅ Session builder container and initial card loaded');
+      console.log('✅ Progress indicator and email capture card loaded');
+      console.log('✅ Session type and date/time cards loaded');
+      console.log('✅ Location, pet count, people count, and vaccination check cards loaded');
+      console.log('✅ Client info, pet info, marketing consent, and additional notes cards loaded');
+      console.log('✅ Policy cards, Instagram posts, and footer loaded');
+      console.log('🚀 Complete index.html session builder loaded with Airtable connection...');
 
-      await fetchSessionTypes();
-      await fetchLocations();
-
-      document.getElementById('session-date').addEventListener('change', function() {
-        fetchAvailableTimes(this.value);
-      });
-
+      // Initialize option handling
       handleOptionSelection('session-type-card', 'datetime-card');
       handleOptionSelection('location-card', 'pet-count-card');
       handleOptionSelection('pet-count-card', 'people-count-card');
-      handleOptionSelection('people-count-card', 'pet-behavior-policy-card');
+      handleOptionSelection('people-count-card', 'vaccination-check-card');
     });
   </script>
 </body>
