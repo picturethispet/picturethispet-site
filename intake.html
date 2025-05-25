@@ -195,7 +195,7 @@
     /* === MAIN CONTENT WRAPPER === */
     main {
       flex: 1;
-      min-height: calc(100vh - 110px - 200px);
+      min-height: auto; /* Allow page to grow with chat content */
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -224,7 +224,7 @@
       border-radius: 16px;
       padding: 2rem;
       height: auto;
-      max-height: 500px;
+      max-height: none; /* Remove max-height to allow growth */
       display: flex;
       flex-direction: column;
     }
@@ -243,28 +243,14 @@
     }
 
     .chat-messages {
-      flex: 1;
-      overflow-y: auto;
+      flex: none; /* Remove flex growth */
+      overflow-y: visible; /* Remove internal scrolling */
       margin-bottom: 1rem;
-      padding-right: 1rem;
+      padding-right: 0;
     }
 
     .chat-messages::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .chat-messages::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-    }
-
-    .chat-messages::-webkit-scrollbar-thumb {
-      background: var(--gold);
-      border-radius: 4px;
-    }
-
-    .chat-messages::-webkit-scrollbar-thumb:hover {
-      background: var(--orange);
+      display: none; /* Hide scrollbar */
     }
 
     .chat-message {
@@ -308,6 +294,7 @@
       align-items: center;
       flex-wrap: wrap;
       width: 100%;
+      margin-top: 1rem; /* Ensure input moves down with chat */
     }
 
     .chat-input input {
@@ -621,9 +608,7 @@
       }
 
       main {
-        min-height: auto;
         padding-top: 80px;
-        padding-bottom: 20px;
       }
 
       .chat-section {
@@ -632,18 +617,6 @@
 
       .chat-container {
         padding: 1.5rem;
-        max-height: none;
-        height: auto;
-      }
-
-      .chat-messages {
-        flex: none;
-        overflow-y: visible;
-        padding-right: 0;
-      }
-
-      .chat-messages::-webkit-scrollbar {
-        display: none;
       }
 
       .chat-header h2 {
@@ -653,10 +626,6 @@
       .chat-message .message-bubble {
         max-width: 90%;
         font-size: 0.9rem;
-      }
-
-      .chat-input {
-        margin-top: 1rem;
       }
 
       .chat-input input {
@@ -839,7 +808,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 02:34 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 02:39 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -946,6 +915,12 @@
         input.disabled = true;
         sendButton.disabled = true;
       }
+
+      // Scroll the entire page to the bottom to ensure the latest message is visible
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      });
     }
 
     // Generate calendar UI
@@ -1134,6 +1109,12 @@
         messagesContainer.appendChild(buttonDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
         isChatActive = false;
+
+        // Scroll the entire page to the bottom
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
       }
     }
 
@@ -1142,7 +1123,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated intake.html with calendar and time slots correctly stacked under bot message on left...');
+      console.log('🚀 Updated intake.html with desktop chat scrolling to match mobile...');
 
       // Load session data from session storage
       const cartData = JSON.parse(sessionStorage.getItem('cartData') || '{}');
