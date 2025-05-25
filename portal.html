@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal | Picture This Pet</title>
-  <meta name="description" content="Secure portal for Picture This Pet admin and client access.">
+  <title>Portal Login | Picture This Pet</title>
+  <meta name="description" content="Login to your Picture This Pet client portal or admin dashboard.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -17,10 +17,8 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
-      --admin-purple: #8b5cf6;
-      --admin-blue: #3b82f6;
-      --gallery-purple: #8b5cf6;
-      --gallery-blue: #3b82f6;
+      --client-blue: #3b82f6;
+      --client-purple: #8b5cf6;
     }
 
     * {
@@ -28,24 +26,23 @@
       margin: 0;
       padding: 0;
     }
-    
-    html {
+
+    html, body {
       overflow-x: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      scroll-behavior: smooth;
+      height: 100%;
     }
-    
-    html::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-    }
-    
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background: none;
-      overflow-x: hidden;
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      background-attachment: fixed;
+      animation: moveBackground 30s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       min-height: 100vh;
     }
 
@@ -66,231 +63,48 @@
       }
     }
 
-    @keyframes loginPulse {
-      0%, 100% { opacity: 0.7; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.02); }
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-      20%, 40%, 60%, 80% { transform: translateX(2px); }
-    }
-
-    @keyframes successBounce {
-      0%, 20%, 53%, 80%, 100% { transform: translateY(0); }
-      40%, 43% { transform: translateY(-8px); }
-      70% { transform: translateY(-4px); }
-      90% { transform: translateY(-2px); }
-    }
-
-    /* === HEADER STYLES === */
-    header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.01rem 1.5rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-      height: 110px;
-    }
-    
-    .desktop-logo {
-      height: 100px;
-    }
-
-    .logo-link {
-      display: flex;
-      align-items: center;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .logo-link:hover {
-      opacity: 0.8;
-      transform: scale(1.02);
-    }
-    
-    .site-nav {
-      display: flex;
-      align-items: center;
-      margin-left: auto;
-    }
-    
-    .site-nav a:not(.book-btn) {
-      margin-left: 1rem;
-      text-decoration: none;
-      font-weight: 600;
-      color: white;
-      transition: all 0.3s ease;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-    }
-
-    .site-nav a:not(.book-btn):hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-1px);
-    }
-    
-    .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
-      color: white;
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-    }
-
-    .book-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
-    }
-    
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu-btn:hover {
-      transform: scale(1.1);
-    }
-
-    /* === MAIN CONTENT === */
-    main {
-      margin-top: 110px;
-      min-height: calc(100vh - 110px);
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
     }
 
     /* === LOGIN CONTAINER === */
     .login-container {
-      max-width: 500px;
-      width: 100%;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .login-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      padding: 0.8rem 2rem;
-      border-radius: 25px;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      animation: loginPulse 4s ease-in-out infinite;
-      display: block;
-      text-align: center;
-    }
-
-    .login-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
       padding: 3rem;
       color: white;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 450px;
+      width: 90%;
       text-align: center;
-      transition: all 0.3s ease;
+      animation: fadeInUp 0.8s ease-out;
     }
 
-    .login-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    .logo {
+      height: 80px;
+      margin-bottom: 2rem;
     }
 
     .login-title {
       font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       color: white;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .login-subtitle {
       font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    /* === USER TYPE SELECTOR === */
-    .user-type-selector {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.5rem;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .user-type-option {
-      flex: 1;
-      padding: 0.8rem 1rem;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
       color: rgba(255, 255, 255, 0.8);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .user-type-option:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .user-type-option.active {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-      color: white;
-      transform: translateY(-1px);
-    }
-
-    .user-type-option.admin.active {
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      border-color: var(--admin-purple);
+      margin-bottom: 2.5rem;
+      line-height: 1.5;
     }
 
     /* === FORM STYLES === */
@@ -299,698 +113,663 @@
     }
 
     .form-group {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
-    .form-group label {
+    .form-label {
       display: block;
-      margin-bottom: 0.8rem;
+      font-size: 1rem;
       font-weight: 600;
-      color: white;
-      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: rgba(255, 255, 255, 0.9);
     }
 
-    .form-group input {
+    .form-input {
       width: 100%;
-      padding: 1rem 1.5rem;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
       color: white;
-      font-size: 1.1rem;
-      font-weight: 500;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
       transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
     }
 
-    .form-group input::placeholder {
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 3px rgba(253, 183, 94, 0.2);
+    }
+
+    .form-input::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }
 
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--orange);
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 20px rgba(244, 124, 44, 0.2);
-    }
-
-    .form-group input.admin-focus:focus {
-      border-color: var(--admin-purple);
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
-    }
-
-    .form-group input.error {
-      border-color: var(--booked-red);
-      animation: shake 0.5s ease-in-out;
-    }
-
-    .form-help {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-top: 0.5rem;
-      line-height: 1.4;
-    }
-
-    .form-help.client-help {
-      background: rgba(244, 124, 44, 0.1);
-      padding: 0.8rem;
-      border-radius: 8px;
-      border-left: 3px solid var(--orange);
-      margin-top: 0.8rem;
-    }
-
-    .form-help.admin-help {
-      background: rgba(139, 92, 246, 0.1);
-      padding: 0.8rem;
-      border-radius: 8px;
-      border-left: 3px solid var(--admin-purple);
-      margin-top: 0.8rem;
-    }
-
-    .form-help strong {
-      color: var(--gold);
-    }
-
-    .form-help.admin-help strong {
-      color: var(--admin-purple);
-    }
-
-    /* === BUTTONS === */
-    .login-button {
+    .login-btn {
       width: 100%;
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       border: none;
-      padding: 1.2rem 2rem;
+      padding: 1rem 2rem;
       border-radius: 12px;
-      font-size: 1.2rem;
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      margin-bottom: 1rem;
     }
 
-    .login-button:hover:not(:disabled) {
+    .login-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.4);
     }
 
-    .login-button.admin-mode {
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
-    }
-
-    .login-button.admin-mode:hover:not(:disabled) {
-      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
-    }
-
-    .login-button:disabled {
+    .login-btn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+      transform: none;
     }
 
-    .help-button {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    /* === FORGOT PASSWORD === */
+    .forgot-password {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .forgot-link {
+      color: var(--gold);
       text-decoration: none;
-      display: inline-block;
-      margin: 0.5rem;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
     }
 
-    .help-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-1px);
+    .forgot-link:hover {
+      color: var(--orange);
+      text-decoration: underline;
     }
 
-    /* === ERROR/SUCCESS MESSAGES === */
+    /* === SUCCESS/ERROR MESSAGES === */
     .message {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .message.success {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--available-green);
+      color: var(--available-green);
+    }
+
+    .message.error {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid var(--booked-red);
+      color: var(--booked-red);
+    }
+
+    .message.info {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid var(--client-blue);
+      color: var(--client-blue);
+    }
+
+    /* === RESET PASSWORD FORM === */
+    .reset-form {
+      display: none;
+    }
+
+    .reset-form.active {
+      display: block;
+    }
+
+    .login-form.hidden {
+      display: none;
+    }
+
+    .back-link {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: white;
+    }
+
+    /* === AUTO-LOGIN INDICATOR === */
+    .auto-login {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid var(--client-blue);
       border-radius: 8px;
       padding: 1rem;
       margin-bottom: 1.5rem;
-      font-size: 0.95rem;
-      text-align: center;
-      animation: fadeInUp 0.3s ease-out;
+      animation: pulse 2s infinite;
     }
 
-    .error-message {
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid rgba(239, 68, 68, 0.5);
-      color: white;
-    }
-
-    .success-message {
-      background: rgba(16, 185, 129, 0.2);
-      border: 1px solid rgba(16, 185, 129, 0.5);
-      color: white;
-      animation: successBounce 0.6s ease-out;
-    }
-
-    .info-message {
-      background: rgba(244, 124, 44, 0.2);
-      border: 1px solid rgba(244, 124, 44, 0.5);
-      color: white;
-    }
-
-    /* === DEMO CREDENTIALS === */
-    .demo-section {
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-    }
-
-    .demo-section h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .demo-credentials {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .demo-card {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1.5rem;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .demo-card:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-2px);
-    }
-
-    .demo-card.client {
-      border-left: 3px solid var(--orange);
-    }
-
-    .demo-card.admin {
-      border-left: 3px solid var(--admin-purple);
-    }
-
-    .demo-card-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: white;
+    .auto-login h3 {
+      color: var(--client-blue);
       margin-bottom: 0.5rem;
     }
 
-    .demo-card-creds {
-      font-family: monospace;
-      font-size: 0.9rem;
+    .auto-login p {
       color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+
+    /* === LOADING SPINNER === */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* === INFO SECTION === */
+    .login-info {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .login-info h3 {
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .login-info ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .login-info li {
+      margin-bottom: 0.8rem;
+      padding-left: 1.5rem;
+      position: relative;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
       line-height: 1.4;
     }
 
-    .demo-card-desc {
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.6);
-      margin-top: 0.5rem;
+    .login-info li::before {
+      content: "🐾";
+      position: absolute;
+      left: 0;
+      top: 0;
     }
 
-    /* === MOBILE RESPONSIVE === */
+    /* === RESPONSIVE === */
     @media (max-width: 768px) {
-      header {
-        height: 80px;
-        padding: 0.5rem 1rem;
-      }
-      
-      .desktop-logo { 
-        height: 48px; 
-      }
-      
-      .site-nav {
-        display: none;
-        flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: 100% 100%;
-        background-position: center;
-        position: absolute;
-        top: 80px;
-        right: 0;
-        width: 100%;
-        text-align: right;
-        padding: 1rem;
-        z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
-      }
-      
-      .site-nav.active {
-        display: flex;
-      }
-      
-      .mobile-menu-btn {
-        display: block;
-      }
-      
-      main {
-        margin-top: 80px;
-        padding: 1rem;
-      }
-
-      .login-card {
+      .login-container {
         padding: 2rem;
+        margin: 1rem;
       }
 
       .login-title {
         font-size: 2rem;
       }
 
-      .demo-credentials {
-        grid-template-columns: 1fr;
+      .login-subtitle {
+        font-size: 1rem;
       }
 
-      .user-type-selector {
-        flex-direction: column;
-        gap: 0.5rem;
+      .form-input {
+        padding: 0.8rem;
+      }
+
+      .login-btn {
+        padding: 0.8rem 1.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
-    </a>
-    <nav class="site-nav">
-      <a href="/" aria-label="Home page">Home</a>
-      <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations.html" aria-label="Locations page">Locations</a>
-      <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/#session-builder-section" class="book-btn" aria-label="Book a session">Book Now</a>
-    </nav>
-    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
-  </header>
-
-  <main>
-    <div class="login-container">
-      <div class="login-badge">
-        🔐 Secure Access Portal
-      </div>
-
-      <div class="login-card">
-        <h1 class="login-title">Welcome Back!</h1>
-        <p class="login-subtitle">
-          Access your personalized dashboard to manage galleries, bookings, and more.
-        </p>
-
-        <div id="errorMessage" class="message error-message" style="display: none;"></div>
-        <div id="successMessage" class="message success-message" style="display: none;"></div>
-        <div id="infoMessage" class="message info-message" style="display: none;"></div>
-
-        <!-- User Type Selector -->
-        <div class="user-type-selector">
-          <div class="user-type-option active" data-type="client" onclick="selectUserType('client', this)">
-            👤 Client Portal
-          </div>
-          <div class="user-type-option admin" data-type="admin" onclick="selectUserType('admin', this)">
-            🛡️ Admin Portal
-          </div>
-        </div>
-
-        <form class="login-form" onsubmit="handleLogin(event)">
-          <div class="form-group">
-            <label for="username" id="usernameLabel">Email Address</label>
-            <input 
-              type="text" 
-              id="username" 
-              name="username" 
-              placeholder="Enter your email address"
-              required
-              maxlength="100"
-              autocomplete="username"
-            />
-            <div class="form-help client-help" id="usernameHelp">
-              Use the email address from your session booking
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="password" id="passwordLabel">Gallery Password</label>
-            <input 
-              type="password" 
-              id="password" 
-              name="password" 
-              placeholder="Enter your gallery password"
-              required
-              maxlength="100"
-              autocomplete="current-password"
-            />
-            <div class="form-help client-help" id="passwordHelp">
-              <strong>Format:</strong> Your first pet's name followed by "barks" (all lowercase)
-            </div>
-          </div>
-
-          <button type="submit" class="login-button" id="loginBtn">
-            🚀 Access My Dashboard
-          </button>
-        </form>
-
-        <div class="demo-section">
-          <h3>Demo Credentials</h3>
-          <p style="color: rgba(255,255,255,0.8); margin-bottom: 1rem;">Try these sample accounts to explore the system</p>
-          
-          <div class="demo-credentials">
-            <div class="demo-card client" onclick="fillDemoCredentials('client')">
-              <div class="demo-card-title">👤 Client Demo</div>
-              <div class="demo-card-creds">
-                clientjustin<br>
-                Buffy1990!
-              </div>
-              <div class="demo-card-desc">View galleries, bookings & book new sessions</div>
-            </div>
-            
-            <div class="demo-card admin" onclick="fillDemoCredentials('admin')">
-              <div class="demo-card-title">🛡️ Admin Demo</div>
-              <div class="demo-card-creds">
-                adminjustin<br>
-                Buffy1990!
-              </div>
-              <div class="demo-card-desc">Full admin access to galleries & business management</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="login-container">
+    <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo" />
+    <h1 class="login-title">Welcome Back! 🐾</h1>
+    <p class="login-subtitle">Access your client portal or admin dashboard</p>
+    
+    <!-- Auto-login notification (hidden by default) -->
+    <div class="auto-login" id="autoLoginNotice" style="display: none;">
+      <h3>🎉 Auto-Login Detected</h3>
+      <p>Redirecting you to your portal...</p>
     </div>
-  </main>
+
+    <!-- Messages -->
+    <div id="messageContainer"></div>
+    
+    <!-- Main Login Form -->
+    <form class="login-form" id="loginForm">
+      <div class="form-group">
+        <label class="form-label" for="username">Username 👤</label>
+        <input 
+          type="text" 
+          class="form-input" 
+          id="username" 
+          placeholder="Enter your username"
+          required 
+        />
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="password">Password 🔐</label>
+        <input 
+          type="password" 
+          class="form-input" 
+          id="password" 
+          placeholder="Enter your password"
+          required 
+        />
+      </div>
+      
+      <button type="submit" class="login-btn" id="loginBtn">
+        <span id="loginText">Login</span>
+        <span id="loginSpinner" class="loading" style="display: none;"></span>
+      </button>
+      
+      <div class="forgot-password">
+        <a href="#" class="forgot-link" onclick="showResetForm()">Forgot Password? 🔑</a>
+      </div>
+    </form>
+
+    <!-- Password Reset Form -->
+    <form class="reset-form" id="resetForm">
+      <a href="#" class="back-link" onclick="showLoginForm()">← Back to Login</a>
+      
+      <div class="form-group">
+        <label class="form-label" for="resetEmail">Email Address 📧</label>
+        <input 
+          type="email" 
+          class="form-input" 
+          id="resetEmail" 
+          placeholder="Enter your email address"
+          required 
+        />
+      </div>
+      
+      <button type="submit" class="login-btn" id="resetBtn">
+        <span id="resetText">Reset Password</span>
+        <span id="resetSpinner" class="loading" style="display: none;"></span>
+      </button>
+    </form>
+
+    <!-- Login Info -->
+    <div class="login-info">
+      <h3>How to Access Your Portal 📋</h3>
+      <ul>
+        <li><strong>Clients:</strong> Use credentials from your booking confirmation</li>
+        <li><strong>Username:</strong> Last 4 digits of phone + zip code</li>
+        <li><strong>Password:</strong> Your pet's name + "bark"</li>
+        <li><strong>Admins:</strong> Use your admin credentials</li>
+        <li><strong>Need Help?</strong> Use "Forgot Password" above</li>
+      </ul>
+    </div>
+  </div>
 
   <script>
-    // Credential systems
-    const validCredentials = {
-      // Admin credentials
-      admin: {
-        'adminjustin': 'Buffy1990!'
-      },
-      // Client credentials (username -> password mapping)
-      client: {
-        'clientjustin': 'Buffy1990!',
-        'sarah.johnson@email.com': 'buffybarks',
-        'mike.chen@email.com': 'lunabarks',
-        'emma.rodriguez@email.com': 'rockybarks',
-        'lisa.rodriguez@email.com': 'charliebarks',
-        'james.wilson@email.com': 'mollybarks'
-      }
-    };
+    // Global variables
+    let isAutoLogin = false;
 
-    // Current user type
-    let currentUserType = 'client';
-
-    // Initialize page
+    // Check for auto-login credentials on page load
     document.addEventListener('DOMContentLoaded', function() {
-      checkExistingSession();
-      setupEventListeners();
+      console.log('Portal page loaded, checking for auto-login...');
+      
+      // Check URL parameters for auto-login
+      const urlParams = new URLSearchParams(window.location.search);
+      const autoUsername = urlParams.get('username');
+      const autoPassword = urlParams.get('password');
+      
+      if (autoUsername && autoPassword) {
+        console.log('Auto-login credentials detected');
+        performAutoLogin(autoUsername, autoPassword);
+      } else {
+        // Check localStorage for existing session
+        checkExistingSession();
+      }
     });
 
-    // Mobile menu toggle
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('active');
+    // Auto-login function
+    async function performAutoLogin(username, password) {
+      isAutoLogin = true;
+      document.getElementById('autoLoginNotice').style.display = 'block';
+      
+      // Fill form fields
+      document.getElementById('username').value = username;
+      document.getElementById('password').value = password;
+      
+      // Wait a moment for user to see the notice
+      setTimeout(() => {
+        login(username, password);
+      }, 1500);
     }
 
-    // Check if user is already logged in
+    // Check for existing session
     function checkExistingSession() {
-      const adminAuth = localStorage.getItem('adminAuthenticated');
-      const clientAuth = localStorage.getItem('clientAuthenticated');
+      const clientUsername = localStorage.getItem('clientUsername');
+      const clientPassword = localStorage.getItem('clientPassword');
+      const adminUser = localStorage.getItem('adminAuthenticated');
       
-      if (adminAuth && localStorage.getItem('adminUser')) {
-        const loginTime = localStorage.getItem('adminLoginTime');
-        const sessionAge = Date.now() - parseInt(loginTime || '0');
-        const sessionLimit = 8 * 60 * 60 * 1000; // 8 hours
-        
-        if (sessionAge < sessionLimit) {
-          showInfo('Admin session active. Redirecting to dashboard...');
-          setTimeout(() => {
-            window.location.href = 'admin.html';
-          }, 1500);
-          return;
-        }
-      }
-      
-      if (clientAuth && localStorage.getItem('clientUser')) {
-        const loginTime = localStorage.getItem('clientLoginTime');
-        const sessionAge = Date.now() - parseInt(loginTime || '0');
-        const sessionLimit = 24 * 60 * 60 * 1000; // 24 hours for clients
-        
-        if (sessionAge < sessionLimit) {
-          showInfo('Client session active. Redirecting to your portal...');
-          setTimeout(() => {
-            window.location.href = 'client-portal-home.html';
-          }, 1500);
-          return;
-        }
+      if (clientUsername && clientPassword && clientPassword.includes('bark')) {
+        console.log('Existing client session found');
+        showMessage('Existing client session found. Redirecting...', 'info');
+        setTimeout(() => {
+          window.location.href = '/client-portal-home';
+        }, 1000);
+      } else if (adminUser) {
+        console.log('Existing admin session found');
+        showMessage('Existing admin session found. Redirecting...', 'info');
+        setTimeout(() => {
+          window.location.href = '/admin';
+        }, 1000);
       }
     }
 
-    // Setup event listeners
-    function setupEventListeners() {
-      // Auto-focus username field
-      document.getElementById('username').focus();
-      
-      // Clear messages when user starts typing
-      document.getElementById('username').addEventListener('input', hideMessages);
-      document.getElementById('password').addEventListener('input', hideMessages);
-      
-      // Update input focus styles based on user type
-      const inputs = document.querySelectorAll('input');
-      inputs.forEach(input => {
-        input.addEventListener('focus', function() {
-          if (currentUserType === 'admin') {
-            this.classList.add('admin-focus');
-          } else {
-            this.classList.remove('admin-focus');
-          }
-        });
-      });
-    }
-
-    // Select user type
-    function selectUserType(type, element) {
-      currentUserType = type;
-      
-      // Update UI
-      document.querySelectorAll('.user-type-option').forEach(option => {
-        option.classList.remove('active');
-      });
-      element.classList.add('active');
-      
-      // Update form labels and placeholders
-      const usernameLabel = document.getElementById('usernameLabel');
-      const usernameInput = document.getElementById('username');
-      const usernameHelp = document.getElementById('usernameHelp');
-      const passwordLabel = document.getElementById('passwordLabel');
-      const passwordInput = document.getElementById('password');
-      const passwordHelp = document.getElementById('passwordHelp');
-      const loginBtn = document.getElementById('loginBtn');
-      
-      if (type === 'admin') {
-        usernameLabel.textContent = 'Admin Username';
-        usernameInput.placeholder = 'Enter your admin username';
-        usernameInput.type = 'text';
-        usernameHelp.textContent = 'Use your assigned admin username';
-        usernameHelp.className = 'form-help admin-help';
-        
-        passwordLabel.textContent = 'Admin Password';
-        passwordInput.placeholder = 'Enter your secure admin password';
-        passwordHelp.innerHTML = '<strong>Security:</strong> Admin sessions expire after 8 hours for security';
-        passwordHelp.className = 'form-help admin-help';
-        
-        loginBtn.textContent = '🛡️ Access Admin Dashboard';
-        loginBtn.classList.add('admin-mode');
-      } else {
-        usernameLabel.textContent = 'Username';
-        usernameInput.placeholder = 'Enter your username';
-        usernameInput.type = 'text';
-        usernameHelp.textContent = 'Use your assigned client username';
-        usernameHelp.className = 'form-help client-help';
-        
-        passwordLabel.textContent = 'Password';
-        passwordInput.placeholder = 'Enter your password';
-        passwordHelp.innerHTML = '<strong>Secure Access:</strong> Your personal client password';
-        passwordHelp.className = 'form-help client-help';
-        
-        loginBtn.textContent = '🚀 Access My Dashboard';
-        loginBtn.classList.remove('admin-mode');
-      }
-      
-      // Clear form
-      usernameInput.value = '';
-      passwordInput.value = '';
-      hideMessages();
-    }
-
-    // Fill demo credentials
-    function fillDemoCredentials(type) {
-      if (type === 'admin') {
-        selectUserType('admin', document.querySelector('[data-type="admin"]'));
-        document.getElementById('username').value = 'adminjustin';
-        document.getElementById('password').value = 'Buffy1990!';
-      } else {
-        selectUserType('client', document.querySelector('[data-type="client"]'));
-        document.getElementById('username').value = 'clientjustin';
-        document.getElementById('password').value = 'Buffy1990!';
-      }
-      
-      showInfo(`Demo credentials filled for ${type} account. Click login to continue.`);
-    }
-
-    // Handle form submission
-    function handleLogin(event) {
-      event.preventDefault();
+    // Main login form handler
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
       
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
-      const loginBtn = document.getElementById('loginBtn');
       
-      // Clear previous messages
-      hideMessages();
-      
-      // Basic validation
       if (!username || !password) {
-        showError('Please enter both username/email and password');
+        showMessage('Please enter both username and password.', 'error');
         return;
       }
       
-      // Disable button and show loading
-      loginBtn.disabled = true;
-      loginBtn.textContent = currentUserType === 'admin' ? '🛡️ Authenticating...' : '🚀 Authenticating...';
-      
-      // Simulate authentication delay
-      setTimeout(() => {
-        authenticateUser(username, password);
-      }, 1000 + Math.random() * 1000);
-    }
+      login(username, password);
+    });
 
-    // Authenticate user
-    function authenticateUser(username, password) {
-      const loginBtn = document.getElementById('loginBtn');
-      const credentials = validCredentials[currentUserType];
+    // Login function
+    async function login(username, password) {
+      setLoading(true);
+      clearMessages();
       
-      // Check credentials
-      if (credentials[username] && credentials[username] === password) {
-        // Successful login
-        if (currentUserType === 'admin') {
-          // Admin login
-          localStorage.setItem('adminAuthenticated', 'true');
-          localStorage.setItem('adminUser', username);
-          localStorage.setItem('adminLoginTime', Date.now().toString());
-          
-          showSuccess(`Welcome, ${username}! Redirecting to admin dashboard...`);
-          
-          setTimeout(() => {
-            window.location.href = 'admin.html';
-          }, 2000);
-        } else {
+      try {
+        console.log('Attempting login for username:', username);
+        
+        if (password.includes('bark')) {
           // Client login
-          localStorage.setItem('clientAuthenticated', 'true');
-          localStorage.setItem('clientUser', username);
-          localStorage.setItem('clientLoginTime', Date.now().toString());
-          
-          const firstName = username.includes('@') 
-            ? username.split('@')[0].split('.')[0] 
-            : username.replace('client', '');
-          const capitalizedName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
-          
-          showSuccess(`Welcome back, ${capitalizedName}! Redirecting to your portal...`);
-          
-          setTimeout(() => {
-            window.location.href = 'client-portal-home.html';
-          }, 2000);
+          await validateClientLogin(username, password);
+        } else {
+          // Admin login
+          await validateAdminLogin(username, password);
         }
-      } else {
-        // Failed login
-        showError('Invalid credentials. Please check your login details and try again.');
         
-        // Add error animation to inputs
-        document.getElementById('username').classList.add('error');
-        document.getElementById('password').classList.add('error');
+      } catch (error) {
+        console.error('Login error:', error);
+        await logErrorToAirtable('portal.html', error, { username });
+        showMessage('Login failed. Please check your credentials and try again.', 'error');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // Validate client login
+    async function validateClientLogin(username, password) {
+      console.log('Validating client login...');
+      
+      // Check if client exists in Clients table
+      const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Clients?filterByFormula=AND({username}='${username}',{password}='${password}')`, {
+        headers: {
+          'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Client validation error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.records.length === 0) {
+        throw new Error('Invalid client credentials');
+      }
+
+      const clientRecord = data.records[0];
+      
+      // Store client session
+      localStorage.setItem('clientUsername', username);
+      localStorage.setItem('clientPassword', password);
+      localStorage.setItem('clientEmail', clientRecord.fields.clientEmail);
+      localStorage.setItem('clientLoginTime', new Date().toISOString());
+      
+      console.log('✅ Client login successful');
+      showMessage('Login successful! Redirecting to your client portal...', 'success');
+      
+      // Clear URL parameters to prevent auto-login loop
+      if (isAutoLogin) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+      
+      setTimeout(() => {
+        window.location.href = '/client-portal-home';
+      }, 1500);
+    }
+
+    // Validate admin login
+    async function validateAdminLogin(username, password) {
+      console.log('Validating admin login...');
+      
+      // Simple admin validation (you can enhance this with Airtable if needed)
+      const validAdminCredentials = [
+        { username: 'admin', password: 'admin123' },
+        { username: 'photographer', password: 'photo2025' },
+        { username: 'owner', password: 'ptp_owner' }
+      ];
+      
+      const isValidAdmin = validAdminCredentials.some(cred => 
+        cred.username === username && cred.password === password
+      );
+      
+      if (!isValidAdmin) {
+        throw new Error('Invalid admin credentials');
+      }
+      
+      // Store admin session
+      localStorage.setItem('adminAuthenticated', 'true');
+      localStorage.setItem('adminUser', username);
+      localStorage.setItem('adminLoginTime', new Date().toISOString());
+      
+      console.log('✅ Admin login successful');
+      showMessage('Admin login successful! Redirecting to dashboard...', 'success');
+      
+      setTimeout(() => {
+        window.location.href = '/admin';
+      }, 1500);
+    }
+
+    // Password reset form handler
+    document.getElementById('resetForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('resetEmail').value.trim();
+      
+      if (!email) {
+        showMessage('Please enter your email address.', 'error');
+        return;
+      }
+      
+      resetPassword(email);
+    });
+
+    // Reset password function
+    async function resetPassword(email) {
+      setResetLoading(true);
+      clearMessages();
+      
+      try {
+        console.log('Attempting password reset for email:', email);
         
+        // Find client by email
+        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Clients?filterByFormula={clientEmail}='${email}'`, {
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Client lookup error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        if (data.records.length === 0) {
+          showMessage('No account found with that email address.', 'error');
+          return;
+        }
+
+        const clientRecord = data.records[0];
+        
+        // Generate temporary password
+        const tempPassword = `TempPass${Math.floor(Math.random() * 999)}bark`;
+        
+        // Update client record with temporary password
+        const updateResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Clients/${clientRecord.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            fields: {
+              password: tempPassword
+            }
+          })
+        });
+
+        if (!updateResponse.ok) {
+          throw new Error(`Password update error: ${updateResponse.status}`);
+        }
+
+        console.log('✅ Password reset successful');
+        showMessage(`Password reset successful!\n\nYour temporary password is: ${tempPassword}\n\nPlease save this and login with your username and this temporary password.`, 'success');
+        
+        // Auto-fill the login form
         setTimeout(() => {
-          document.getElementById('username').classList.remove('error');
-          document.getElementById('password').classList.remove('error');
-        }, 500);
+          showLoginForm();
+          document.getElementById('username').value = clientRecord.fields.username;
+          document.getElementById('password').value = tempPassword;
+          document.getElementById('password').focus();
+        }, 3000);
         
-        // Clear password field
-        document.getElementById('password').value = '';
-        document.getElementById('password').focus();
+      } catch (error) {
+        console.error('Password reset error:', error);
+        await logErrorToAirtable('portal.html', error, { email });
+        showMessage('Password reset failed. Please try again or contact support.', 'error');
+      } finally {
+        setResetLoading(false);
       }
+    }
+
+    // UI Helper functions
+    function showResetForm() {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('resetForm').classList.add('active');
+      clearMessages();
+      document.getElementById('resetEmail').focus();
+    }
+
+    function showLoginForm() {
+      document.getElementById('resetForm').classList.remove('active');
+      document.getElementById('loginForm').classList.remove('hidden');
+      clearMessages();
+      document.getElementById('username').focus();
+    }
+
+    function setLoading(isLoading) {
+      const btn = document.getElementById('loginBtn');
+      const text = document.getElementById('loginText');
+      const spinner = document.getElementById('loginSpinner');
       
-      // Re-enable button
-      loginBtn.disabled = false;
-      loginBtn.textContent = currentUserType === 'admin' ? '🛡️ Access Admin Dashboard' : '🚀 Access My Dashboard';
+      btn.disabled = isLoading;
+      text.style.display = isLoading ? 'none' : 'inline';
+      spinner.style.display = isLoading ? 'inline-block' : 'none';
     }
 
-    // Message display functions
-    function showError(message) {
-      const errorMsg = document.getElementById('errorMessage');
-      errorMsg.textContent = message;
-      errorMsg.style.display = 'block';
+    function setResetLoading(isLoading) {
+      const btn = document.getElementById('resetBtn');
+      const text = document.getElementById('resetText');
+      const spinner = document.getElementById('resetSpinner');
+      
+      btn.disabled = isLoading;
+      text.style.display = isLoading ? 'none' : 'inline';
+      spinner.style.display = isLoading ? 'inline-block' : 'none';
     }
 
-    function showSuccess(message) {
-      const successMsg = document.getElementById('successMessage');
-      successMsg.textContent = message;
-      successMsg.style.display = 'block';
-    }
-
-    function showInfo(message) {
-      const infoMsg = document.getElementById('infoMessage');
-      infoMsg.textContent = message;
-      infoMsg.style.display = 'block';
-    }
-
-    function hideMessages() {
-      document.getElementById('errorMessage').style.display = 'none';
-      document.getElementById('successMessage').style.display = 'none';
-      document.getElementById('infoMessage').style.display = 'none';
-    }
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !document.getElementById('loginBtn').disabled) {
-        handleLogin(e);
+    function showMessage(message, type) {
+      const container = document.getElementById('messageContainer');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${type}`;
+      messageDiv.textContent = message;
+      container.appendChild(messageDiv);
+      
+      // Auto-remove error messages after 5 seconds
+      if (type === 'error') {
+        setTimeout(() => {
+          if (messageDiv.parentNode) {
+            messageDiv.parentNode.removeChild(messageDiv);
+          }
+        }, 5000);
       }
-      
-      // Quick switch between user types
-      if (e.altKey) {
-        if (e.key === '1') {
-          selectUserType('client', document.querySelector('[data-type="client"]'));
-        } else if (e.key === '2') {
-          selectUserType('admin', document.querySelector('[data-type="admin"]'));
+    }
+
+    function clearMessages() {
+      document.getElementById('messageContainer').innerHTML = '';
+    }
+
+    // Error logging
+    async function logErrorToAirtable(page, error, data = {}) {
+      try {
+        const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const errorRecord = {
+          fields: {
+            errorId: errorId,
+            timestamp: new Date().toISOString(),
+            page: page,
+            errorMessage: error.message || String(error),
+            errorStack: error.stack || 'No stack trace available',
+            userAgent: navigator.userAgent,
+            sessionData: JSON.stringify(data)
+          }
+        };
+
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Errors', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(errorRecord)
+        });
+
+        if (response.ok) {
+          console.log('✅ Error logged to Airtable:', errorRecord);
         }
+      } catch (innerError) {
+        console.warn('⚠️ Failed to log error to Airtable:', innerError);
       }
-    });
-
-    // Auto-clear form errors after typing
-    document.getElementById('username').addEventListener('input', function() {
-      this.classList.remove('error');
-      hideMessages();
-    });
-
-    document.getElementById('password').addEventListener('input', function() {
-      this.classList.remove('error');
-      hideMessages();
-    });
+    }
   </script>
 </body>
 </html>
