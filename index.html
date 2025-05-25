@@ -135,6 +135,8 @@
       position: relative;
       display: inline-block;
       box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      min-width: 120px; /* Ensure touch target size */
+      min-height: 44px;
     }
 
     .book-btn:hover {
@@ -150,6 +152,8 @@
       font-size: 2rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
     }
 
     .mobile-menu-btn:hover {
@@ -167,6 +171,11 @@
       color: white;
       font-size: 1.5rem;
       transition: all 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .social-icon:hover {
@@ -227,6 +236,11 @@
       display: inline-block;
       transition: all 0.3s ease;
       box-shadow: 0 6px 20px rgba(244, 144, 44, 0.4);
+      min-width: 200px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .hero-cta:hover {
@@ -351,6 +365,11 @@
       color: white;
       cursor: pointer;
       transition: all 0.3s ease;
+      min-width: 120px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .session-builder-card .option-btn:hover {
@@ -376,6 +395,11 @@
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
+      min-width: 150px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .session-builder-card .next-btn:hover {
@@ -400,6 +424,11 @@
       text-decoration: none;
       display: inline-block;
       margin-right: 1rem;
+      min-width: 100px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .session-builder-card .back-btn:hover {
@@ -412,6 +441,7 @@
       justify-content: center;
       gap: 1rem;
       margin-top: 1rem;
+      flex-wrap: wrap;
     }
 
     .session-builder-card .policy-content {
@@ -497,6 +527,7 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 8px;
       transition: all 0.3s ease;
+      min-height: 44px;
     }
 
     .session-builder-card .form-group input:focus,
@@ -517,6 +548,7 @@
       font-weight: 600;
       text-align: center;
       animation: fadeInUp 0.5s ease-out;
+      overflow-wrap: break-word;
     }
 
     /* === INSTAGRAM POSTS SECTION === */
@@ -640,6 +672,9 @@
       display: block;
       margin-bottom: 0.5rem;
       transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
     }
 
     .footer-section a:hover {
@@ -658,6 +693,8 @@
       object-fit: contain;
       opacity: 0.7;
       transition: opacity 0.3s ease;
+      min-width: 40px;
+      min-height: 25px;
     }
 
     .payment-icon:hover {
@@ -709,6 +746,10 @@
         font-size: 1.2rem;
         color: white;
         padding: 0.5rem 1rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
       }
 
       .site-nav.active a[href="/"] { order: 1; }
@@ -764,6 +805,7 @@
       .hero-cta {
         padding: 0.8rem 2rem;
         font-size: 1.2rem;
+        min-width: 160px;
       }
 
       #upcoming-events-section {
@@ -810,16 +852,22 @@
       .session-builder-card .option-btn {
         padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
+        min-width: 100px;
       }
 
       .session-builder-card .next-btn,
       .session-builder-card .back-btn {
         padding: 0.8rem 2rem;
         font-size: 1rem;
+        min-width: 120px;
       }
 
       .session-builder-card#email-capture-card {
         min-height: 250px;
+      }
+
+      .session-builder-card#datetime-card {
+        min-height: 200px;
       }
 
       .session-builder-card .session-details {
@@ -895,6 +943,54 @@
 
       .payment-methods {
         justify-content: center;
+      }
+    }
+
+    /* Additional media query for very small screens */
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .hero-cta {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        min-width: 140px;
+      }
+
+      .session-builder-card {
+        padding: 1.5rem;
+      }
+
+      .session-builder-card h3 {
+        font-size: 1.3rem;
+      }
+
+      .session-builder-card p {
+        font-size: 0.85rem;
+      }
+
+      .session-builder-card .option-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        min-width: 90px;
+      }
+
+      .session-builder-card .next-btn,
+      .session-builder-card .back-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+        min-width: 100px;
+      }
+
+      .post-placeholder {
+        width: 120px;
+        height: 120px;
+        font-size: 0.8rem;
       }
     }
   </style>
