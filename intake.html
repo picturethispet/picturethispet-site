@@ -1257,9 +1257,7 @@
       const currentQuestion = chatQuestions[currentQuestionIndex];
       if (currentQuestion.type === 'text') {
         // Store user responses in sessionData
-        if (currentQuestion.id === 'first-name') {
-          sessionData.firstName = userResponse;
-        } else if (currentQuestion.id === 'last-name') {
+        if (currentQuestion.id === 'last-name') {
           sessionData.lastName = userResponse;
         } else if (currentQuestion.id === 'email') {
           sessionData.email = userResponse;
@@ -1322,16 +1320,24 @@
       currentQuestionIndex++;
       if (currentQuestionIndex < chatQuestions.length) {
         const nextQuestion = chatQuestions[currentQuestionIndex];
-        addMessage('bot', nextQuestion.text, nextQuestion.options, nextQuestion.type);
+        let questionText = nextQuestion.text;
+        
+        // Replace [PET_NAME] with actual pet name if needed
+        if (nextQuestion.usesPetName && nextQuestion.petIndex !== undefined) {
+          const petName = sessionData.pets[nextQuestion.petIndex]?.name || 'your pet';
+          questionText = questionText.replace('[PET_NAME]', petName);
+        }
+        
+        addMessage('bot', questionText, nextQuestion.options, nextQuestion.type);
       } else {
         // Chat complete - show summary button
-        addMessage('bot', 'Perfect! All set! Let\'s review your session details. ✅', [], 'none');
+        addMessage('bot', 'Perfect! All set! Let\'s review your session details and pick a date. ✅', [], 'none');
         const inputContainer = document.getElementById('chat-input');
         inputContainer.innerHTML = '';
         
         const continueButton = document.createElement('button');
         continueButton.className = 'book-btn';
-        continueButton.textContent = 'Continue to Summary';
+        continueButton.textContent = 'Continue to Date Selection';
         continueButton.onclick = () => {
           try {
             // Save data redundantly for reliability
@@ -1388,25 +1394,20 @@
         
         // Build dynamic chat questions based on session data
         chatQuestions = [
-          // Client information
-          {
-            id: 'first-name',
-            text: `Let's confirm your details. What is your first name? (Current: ${sessionData.firstName || 'Not provided'}) 👤`,
-            type: 'text'
-          },
+          // Client information (only ask what we don't have)
           {
             id: 'last-name',
-            text: `What is your last name? (Current: ${sessionData.lastName || 'Not provided'}) 👤`,
+            text: `Great! Let's continue with your information. What is your last name? 👤`,
             type: 'text'
           },
           {
             id: 'email',
-            text: `What is your email address? (Current: ${sessionData.email || 'Not provided'}) 📧`,
+            text: `What is your email address? 📧`,
             type: 'text'
           },
           {
             id: 'phone-number',
-            text: `What is your phone number? (Current: ${sessionData.phoneNumber || 'Not provided'}) 📱`,
+            text: `What is your phone number? 📱`,
             type: 'text'
           },
           {
@@ -1414,9 +1415,7 @@
             text: "How would you prefer to be contacted for confirmations and updates? 📞",
             type: 'options',
             options: [
-              { value: 'Email', display: 'Email 📧' },
-              { value: 'Phone', display: 'Phone 📱' },
-              { value: 'Text', display: 'Text 💬' }
+              { value: 'Email', display: 'Email 📧' }
             ]
           },
           {
@@ -1435,31 +1434,41 @@
         // Add pet-specific questions dynamically
         for (let i = 0; i < numberOfPets; i++) {
           const petNum = i + 1;
+          const ordinal = petNum === 1 ? 'first' : petNum === 2 ? 'second' : `${petNum}th`;
+          
           chatQuestions.push(
             {
               id: `pet-name-${i}`,
-              text: `Let's go over Pet ${petNum}'s information. What is Pet ${petNum}'s name? 🐾`,
+              text: `Let's go over your ${ordinal} pet's information. What is your ${ordinal} pet's name? 🐾`,
               type: 'text'
             },
             {
               id: `pet-age-${i}`,
-              text: `How old is Pet ${petNum}? 🎂`,
-              type: 'text'
+              text: `How old is [PET_NAME]? 🎂`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: i
             },
             {
               id: `pet-breed-${i}`,
-              text: `What is Pet ${petNum}'s breed? 🐶🐱`,
-              type: 'text'
+              text: `What breed is [PET_NAME]? 🐶🐱`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: i
             },
             {
               id: `pet-temperament-${i}`,
-              text: `How would you describe Pet ${petNum}'s temperament? (e.g., shy, energetic, calm) 🐾`,
-              type: 'text'
+              text: `How would you describe [PET_NAME]'s temperament? (e.g., shy, energetic, calm) 🐾`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: i
             },
             {
               id: `pet-health-concerns-${i}`,
-              text: `Does Pet ${petNum} have any health concerns or mobility issues we should be aware of? 🩺`,
-              type: 'text'
+              text: `Does [PET_NAME] have any health concerns, mobility issues, or allergies that we should be aware of? 🩺`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: i
             }
           );
         }
@@ -1484,8 +1493,17 @@
           }
         );
         
-        // Start the chat flow
+        // Start the chat flow (skip first name since we already have it)
         addMessage('bot', chatQuestions[0].text, [], chatQuestions[0].type);
+        
+        console.log('🎯 Session data loaded:', {
+          firstName: sessionData.firstName,
+          petName: sessionData.petName,
+          sessionType: sessionData.sessionType,
+          location: sessionData.location,
+          petCount: sessionData.petCount,
+          peopleCount: sessionData.peopleCount
+        });
         
         // Add Enter key listener for text input
         document.getElementById('chat-input-text').addEventListener('keypress', function(e) {
