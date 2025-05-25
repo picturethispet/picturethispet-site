@@ -302,79 +302,37 @@
       border: none;
     }
 
-    .chat-input {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .chat-input input,
-    .chat-input select {
-      flex: 1;
-      padding: 0.8rem;
-      font-size: 16px;
-      font-family: 'Inter', sans-serif;
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      min-height: 44px;
-      width: 100%;
-    }
-
-    .chat-input input:focus,
-    .chat-input select:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .chat-input button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      min-width: 100px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: auto;
-    }
-
-    .chat-input button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
     .options {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
+      gap: 1rem;
+      margin-top: 1rem;
+      justify-content: center;
     }
 
     .option-btn {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
+      padding: 1rem;
+      border-radius: 12px;
+      font-size: 1rem;
       color: white;
       cursor: pointer;
       transition: all 0.3s ease;
+      text-align: center;
+      min-width: 200px;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .option-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
 
     /* === FOOTER STYLES === */
@@ -554,33 +512,15 @@
         font-size: 0.9rem;
       }
 
-      .chat-input {
-        flex-direction: row;
-        gap: 0.5rem;
-        padding: 0.5rem 0;
-      }
-
-      .chat-input input,
-      .chat-input select {
-        padding: 0.6rem;
-        font-size: 16px;
-        min-width: 0;
-        flex: 1;
-      }
-
-      .chat-input button {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-        min-width: 80px;
-      }
-
       .options {
-        gap: 0.3rem;
+        gap: 0.5rem;
       }
 
       .option-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.85rem;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        min-width: 150px;
+        min-height: 80px;
       }
 
       footer {
@@ -616,21 +556,11 @@
         font-size: 0.85rem;
       }
 
-      .chat-input input,
-      .chat-input select {
-        padding: 0.5rem;
-        font-size: 16px;
-      }
-
-      .chat-input button {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.85rem;
-        min-width: 70px;
-      }
-
       .option-btn {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
+        padding: 0.6rem;
+        font-size: 0.85rem;
+        min-width: 120px;
+        min-height: 70px;
       }
     }
   </style>
@@ -667,8 +597,7 @@
           <!-- Chat messages will be populated by JavaScript -->
         </div>
         <div class="chat-input" id="chat-input">
-          <input type="text" id="chat-input-text" placeholder="Type your response here..." />
-          <button onclick="sendUserMessage()">Send</button>
+          <!-- Options will be populated by JavaScript -->
         </div>
       </div>
     </section>
@@ -706,7 +635,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:55 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:00 PM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -717,8 +646,8 @@
 
     // Scalable session types configuration
     const sessionTypes = [
-      { name: 'Mini', duration: 60, images: 5, pets: 1, people: 1, extraCost: 'Additional pets or people at extra cost' },
-      { name: 'Full', duration: 90, images: 10, pets: 1, people: 1, extraCost: 'Additional pets or people at extra cost' }
+      { name: 'Mini', duration: 60, images: 5, pets: 1, people: 1, extraCost: 'Additional person is an extra charge' },
+      { name: 'Full', duration: 90, images: 10, pets: 1, people: 1, extraCost: 'Additional person is an extra charge' }
       // Add more session types here in the future
     ];
 
@@ -728,7 +657,10 @@
         id: 'session-type',
         text: "Let’s start by choosing your session type. Which would you like?",
         type: 'options',
-        options: sessionTypes.map(type => type.name),
+        options: sessionTypes.map(type => ({
+          value: type.name,
+          display: `${type.name} 📸 ${type.images} photos ⏰ ${type.duration} mins<br>${type.extraCost}`
+        })),
         save: (input) => {
           const selectedSession = sessionTypes.find(type => type.name === input);
           sessionData.sessionType = input;
@@ -738,8 +670,11 @@
       {
         id: 'location',
         text: "Great! Now, where would you like to have your session? We currently offer sessions at Cheesman Park or City Park.",
-        type: 'select',
-        options: ['Cheesman Park', 'City Park'],
+        type: 'options',
+        options: [
+          { value: 'Cheesman Park', display: 'Cheesman Park 🌳' },
+          { value: 'City Park', display: 'City Park 🌳' }
+        ],
         save: (input) => {
           sessionData.location = input;
         }
@@ -747,8 +682,11 @@
       {
         id: 'pet-count',
         text: "How many pets will be joining the session? (Maximum of 2)",
-        type: 'select',
-        options: ['1', '2'],
+        type: 'options',
+        options: [
+          { value: '1', display: '1 🐾' },
+          { value: '2', display: '2 🐾' }
+        ],
         save: (input) => {
           sessionData.petCount = input;
         }
@@ -756,8 +694,12 @@
       {
         id: 'people-count',
         text: "Will any family members be joining the session? (Maximum of 2)",
-        type: 'select',
-        options: ['0', '1', '2'],
+        type: 'options',
+        options: [
+          { value: '0', display: '0 👤' },
+          { value: '1', display: '1 👤' },
+          { value: '2', display: '2 👤' }
+        ],
         save: (input) => {
           sessionData.peopleCount = input;
         }
@@ -766,7 +708,10 @@
         id: 'vaccinated',
         text: "Are all pets vaccinated? Proof may be requested.",
         type: 'options',
-        options: ['Yes', 'No'],
+        options: [
+          { value: 'Yes', display: 'Yes ✅' },
+          { value: 'No', display: 'No ❌' }
+        ],
         save: (input) => {
           sessionData.vaccinated = input;
         }
@@ -804,8 +749,8 @@
         options.forEach(option => {
           const button = document.createElement('button');
           button.className = 'option-btn';
-          button.textContent = option;
-          button.onclick = () => selectOption(option);
+          button.innerHTML = option.display;
+          button.onclick = () => selectOption(option.value);
           optionsDiv.appendChild(button);
         });
         messageDiv.appendChild(optionsDiv);
@@ -816,56 +761,6 @@
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    // Update input type
-    function updateInputType() {
-      const inputContainer = document.getElementById('chat-input');
-      inputContainer.innerHTML = ''; // Clear existing input
-
-      const currentQuestion = chatQuestions[currentQuestionIndex];
-      if (currentQuestion.type === 'text' || currentQuestion.type === 'email') {
-        const input = document.createElement('input');
-        input.type = currentQuestion.inputType;
-        input.id = 'chat-input-text';
-        input.placeholder = `Type your ${currentQuestion.inputType === 'email' ? 'email address' : 'response'} here...`;
-        inputContainer.appendChild(input);
-
-        const sendButton = document.createElement('button');
-        sendButton.textContent = 'Send';
-        sendButton.onclick = sendUserMessage;
-        inputContainer.appendChild(sendButton);
-
-        input.addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') {
-            sendUserMessage();
-          }
-        });
-      } else if (currentQuestion.type === 'select') {
-        const select = document.createElement('select');
-        select.id = 'chat-input-select';
-        const defaultOption = document.createElement('option');
-        defaultOption.value = '';
-        defaultOption.textContent = 'Select an option';
-        defaultOption.disabled = true;
-        defaultOption.selected = true;
-        select.appendChild(defaultOption);
-
-        currentQuestion.options.forEach(option => {
-          const opt = document.createElement('option');
-          opt.value = option;
-          opt.textContent = option;
-          select.appendChild(opt);
-        });
-        inputContainer.appendChild(select);
-
-        const sendButton = document.createElement('button');
-        sendButton.textContent = 'Send';
-        sendButton.onclick = sendUserMessage;
-        inputContainer.appendChild(sendButton);
-
-        select.addEventListener('change', sendUserMessage);
-      }
-    }
-
     // Select option from buttons
     function selectOption(option) {
       addMessage('user', option);
@@ -874,45 +769,12 @@
       proceedToNextQuestion();
     }
 
-    // Send user message
-    function sendUserMessage() {
-      let userResponse;
-      const currentQuestion = chatQuestions[currentQuestionIndex];
-      if (currentQuestion.type === 'select') {
-        const select = document.getElementById('chat-input-select');
-        userResponse = select.value;
-      } else {
-        const input = document.getElementById('chat-input-text');
-        userResponse = input.value.trim();
-      }
-
-      if (!userResponse || (currentQuestion.type === 'select' && userResponse === '')) return;
-
-      addMessage('user', userResponse);
-
-      if (currentQuestion.type !== 'options') {
-        const validationError = currentQuestion.validate ? currentQuestion.validate(userResponse) : null;
-        if (validationError) {
-          addMessage('bot', validationError);
-          return;
-        }
-        currentQuestion.save(userResponse);
-      }
-
-      proceedToNextQuestion();
-    }
-
     // Proceed to the next question
     function proceedToNextQuestion() {
       currentQuestionIndex++;
       if (currentQuestionIndex < chatQuestions.length) {
         const nextQuestion = chatQuestions[currentQuestionIndex];
-        if (nextQuestion.type === 'options') {
-          addMessage('bot', nextQuestion.text, nextQuestion.options);
-        } else {
-          addMessage('bot', nextQuestion.text);
-          updateInputType();
-        }
+        addMessage('bot', nextQuestion.text, nextQuestion.options);
       } else {
         addMessage('bot', 'Great! Let’s move on to select a date and time for your session.');
         const continueButton = document.createElement('button');
@@ -935,8 +797,6 @@
         buttonDiv.appendChild(continueButton);
         messagesContainer.appendChild(buttonDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-        document.getElementById('chat-input').style.display = 'none';
       }
     }
 
@@ -945,7 +805,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 cart.html updated with centered chat container...');
+      console.log('🚀 cart.html updated with button-based chat interface...');
 
       // Load brief info from session storage
       const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
