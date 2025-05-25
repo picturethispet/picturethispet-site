@@ -135,6 +135,7 @@
       localStorage.setItem('adminLoginTime', new Date().toISOString());
       // Clear any client authentication
       localStorage.removeItem('clientAuthenticated');
+      localStorage.removeItem('clientLoginTime');
       // Redirect to admin dashboard
       window.location.href = '/admin.html';
     }
@@ -149,20 +150,8 @@
       localStorage.removeItem('adminUser');
       localStorage.removeItem('adminLoginTime');
       // Redirect to client portal
-      window.location.href = '/client-home.html';
+      window.location.href = '/client-portal-home.html'; // Updated to correct path
     }
-
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', function() {
-      // Check if already authenticated
-      const isAdminAuthenticated = localStorage.getItem('adminAuthenticated');
-      const isClientAuthenticated = localStorage.getItem('clientAuthenticated');
-      if (isAdminAuthenticated) {
-        window.location.href = '/admin.html';
-      } else if (isClientAuthenticated) {
-        window.location.href = '/client-home.html';
-      }
-    });
   </script>
 </body>
 </html>
