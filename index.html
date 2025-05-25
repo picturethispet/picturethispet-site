@@ -1363,7 +1363,7 @@
           <h3>Start Your Journey</h3>
           <p>Ready to capture your pet's personality?<br>Let's build your perfect photography session in just a few steps.</p>
           <div class="card-actions single-button">
-            <button class="single-action-btn" onclick="showCard('email-capture-card')">Start Now</button>
+            <button type="button" class="single-action-btn" onclick="handleStartNow()" id="start-now-btn">Start Now</button>
           </div>
         </div>
 
@@ -1848,34 +1848,87 @@
       section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    // Handle Start Now button click with enhanced debugging
+    function handleStartNow() {
+      console.log('🚀 START NOW BUTTON CLICKED!');
+      
+      try {
+        // Check if email capture card exists
+        const emailCard = document.getElementById('email-capture-card');
+        if (!emailCard) {
+          console.error('❌ Email capture card not found!');
+          return;
+        }
+        console.log('✅ Email capture card found');
+        
+        // Call showCard function
+        console.log('🎯 Calling showCard with email-capture-card');
+        showCard('email-capture-card');
+        
+      } catch (error) {
+        console.error('❌ Error in handleStartNow:', error);
+        alert('Error starting session builder. Please refresh the page.');
+      }
+    }
+
+    // Show specific session builder card and auto-scroll to top
     // Show specific session builder card and auto-scroll to top
     function showCard(cardId) {
-      console.log('🎯 Showing card:', cardId);
+      console.log('🎯 showCard function called with cardId:', cardId);
       
-      // Debug: Check if the function is being called
-      if (cardId === 'email-capture-card') {
-        console.log('🎯 Start Now button clicked - transitioning to email capture');
-      }
-      
-      const cards = document.querySelectorAll('.session-builder-card');
-      if (cards.length === 0) {
-        console.error('❌ No session builder cards found!');
-        return;
-      }
-      
-      cards.forEach(card => {
-        const isTargetCard = card.id === cardId;
-        card.style.display = isTargetCard ? 'block' : 'none';
-        if (isTargetCard) {
-          console.log('✅ Card displayed:', cardId);
+      try {
+        // Debug: Check if the function is being called
+        if (cardId === 'email-capture-card') {
+          console.log('🎯 Transitioning to email capture card');
         }
-      });
+        
+        const cards = document.querySelectorAll('.session-builder-card');
+        console.log('🎯 Found', cards.length, 'total cards');
+        
+        if (cards.length === 0) {
+          console.error('❌ No session builder cards found!');
+          return;
+        }
+        
+        let targetCardFound = false;
+        let cardsHidden = 0;
+        
+        cards.forEach((card, index) => {
+          const isTargetCard = card.id === cardId;
+          const oldDisplay = card.style.display;
+          
+          if (isTargetCard) {
+            card.style.display = 'block';
+            targetCardFound = true;
+            console.log(`✅ Card ${index + 1} (${card.id}) - SHOWN (was: ${oldDisplay})`);
+          } else {
+            card.style.display = 'none';
+            cardsHidden++;
+            console.log(`🔒 Card ${index + 1} (${card.id}) - hidden (was: ${oldDisplay})`);
+          }
+        });
+        
+        console.log(`📊 Summary: ${targetCardFound ? 'Target found' : 'Target NOT found'}, ${cardsHidden} cards hidden`);
+        
+        if (!targetCardFound) {
+          console.error(`❌ Target card '${cardId}' not found!`);
+          return;
+        }
 
-      const sessionBuilderSection = document.querySelector('#session-builder-section');
-      if (sessionBuilderSection) {
-        sessionBuilderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        console.error('❌ Session builder section not found!');
+        // Scroll to section
+        const sessionBuilderSection = document.querySelector('#session-builder-section');
+        if (sessionBuilderSection) {
+          console.log('🎯 Scrolling to session builder section');
+          sessionBuilderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          console.error('❌ Session builder section not found!');
+        }
+        
+        console.log('✅ Card transition completed successfully');
+        
+      } catch (error) {
+        console.error('❌ Error in showCard function:', error);
+        alert('Error switching cards. Please refresh the page.');
       }
     }
 
@@ -2239,14 +2292,60 @@
 
       // Ensure only the start journey card is visible initially
       const allCards = document.querySelectorAll('.session-builder-card');
-      allCards.forEach(card => {
+      console.log('🎯 Initializing', allCards.length, 'cards');
+      
+      allCards.forEach((card, index) => {
         if (card.id === 'start-journey-card') {
           card.style.display = 'block';
-          console.log('✅ Start journey card set to visible');
+          console.log(`✅ Card ${index + 1} (${card.id}) - set to visible`);
         } else {
           card.style.display = 'none';
+          console.log(`🔒 Card ${index + 1} (${card.id}) - set to hidden`);
         }
       });
+
+      // Add backup event listener for Start Now button
+      const startBtn = document.getElementById('start-now-btn');
+      if (startBtn) {
+        console.log('✅ Start Now button found, adding backup event listener');
+        startBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          console.log('🚀 START NOW - Event listener triggered!');
+          handleStartNow();
+        });
+        
+        // Test button click programmatically
+        console.log('🧪 Testing button accessibility...');
+        if (startBtn.onclick) {
+          console.log('✅ Button has onclick handler');
+        } else {
+          console.warn('⚠️ Button missing onclick handler');
+        }
+      } else {
+        console.error('❌ Start Now button NOT found!');
+      }
+
+      // Make functions globally accessible for debugging
+      window.showCard = showCard;
+      window.handleStartNow = handleStartNow;
+      console.log('✅ Functions made globally accessible for debugging');
+
+      // Add manual test function
+      window.testStartButton = function() {
+        console.log('🧪 MANUAL TEST: Testing Start Now button functionality');
+        const btn = document.getElementById('start-now-btn');
+        if (btn) {
+          console.log('✅ Button found, simulating click...');
+          btn.click();
+        } else {
+          console.error('❌ Button not found!');
+        }
+      };
+
+      console.log('🧪 DEBUGGING HELP:');
+      console.log('   Type "testStartButton()" to test the button');
+      console.log('   Type "showCard(\'email-capture-card\')" to test card switching');
+      console.log('   Type "handleStartNow()" to test the start function');
 
       // Debug: Check if cards are properly loaded
       const cards = document.querySelectorAll('.session-builder-card');
