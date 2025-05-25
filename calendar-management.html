@@ -2284,7 +2284,7 @@
       }
     };
     
-    // Debug function to test availability creation
+    // Debug function to test availability creation and check Airtable schema
     function debugCheckboxes() {
       console.log('🔍 DEBUGGING CALENDAR SYSTEM...');
       console.log('📊 Current Data State:');
@@ -2293,24 +2293,75 @@
       console.log('  - Selected date:', selectedCalendarDate);
       console.log('  - Bulk mode:', isBulkMode);
       
-      // Test form data
-      openSetAvailabilityModal();
+      // STEP 1: Analyze existing calendar data to understand field structure
+      if (calendarData.length > 0) {
+        console.log('🔍 EXISTING CALENDAR RECORD ANALYSIS:');
+        console.log('Sample record fields:', Object.keys(calendarData[0]));
+        console.log('Sample record data:', calendarData[0]);
+        
+        // Show field names in alert for easy copying
+        const fieldNames = Object.keys(calendarData[0]);
+        alert(`🔍 CURRENT AIRTABLE FIELD NAMES:\n\n${fieldNames.join('\n')}\n\nCheck console for full record details.\n\nCompare these names with what we're trying to send in the API call.`);
+      } else {
+        console.log('⚠️ No existing calendar data to analyze');
+        alert('⚠️ No existing calendar data found.\n\nPlease check:\n1. Your Airtable base has records in the Calendar table\n2. The API key has read permissions\n3. The table name is exactly "Calendar"');
+      }
       
-      setTimeout(() => {
-        // Auto-fill test data
-        document.getElementById('availabilityStartDate').value = '2025-05-30';
-        document.getElementById('availabilityEndDate').value = '2025-05-30';
-        document.getElementById('availabilityStartTime').value = '08:00';
-        document.getElementById('availabilityEndTime').value = '21:00';
-        document.getElementById('availabilityLocation').value = 'City Park';
-        document.getElementById('availabilityBufferTime').value = '60';
+      // STEP 2: Test a minimal record creation
+      console.log('🧪 Testing minimal record creation...');
+      testMinimalRecordCreation();
+    }
+    
+    // Test creating a minimal record to isolate field issues
+    async function testMinimalRecordCreation() {
+      try {
+        console.log('🧪 Attempting to create minimal test record...');
         
-        // Show smart availability for Friday
-        showSmartAvailability('2025-05-30');
+        // Try the simplest possible record first
+        const minimalRecord = {
+          fields: {
+            date: '2025-05-30',
+            time: '10:00',
+            status: 'available'
+          }
+        };
         
-        console.log('✅ Test data filled - now you can test form submission');
-        alert('🔍 Debug mode activated!\n\n✅ Form pre-filled with test data:\n• Date: Friday, May 30, 2025\n• Time: 8 AM to 9 PM (13 hours)\n• Location: City Park\n• Buffer: 60 minutes\n\nYou can now test the "Create Availability" button to see if it creates 13 slots.');
-      }, 500);
+        console.log('📤 Sending minimal record:', minimalRecord);
+        
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(minimalRecord)
+        });
+        
+        console.log('📥 Response status:', response.status);
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('❌ API Error:', errorText);
+          alert(`❌ MINIMAL RECORD TEST FAILED:\n\nStatus: ${response.status}\nError: ${errorText}\n\nThis helps identify if it's a permissions issue or field name issue.`);
+        } else {
+          const result = await response.json();
+          console.log('✅ Minimal record created successfully:', result);
+          alert('✅ MINIMAL RECORD TEST PASSED!\n\nThe API connection works. The issue is likely with field names in the full record.\n\nCheck console for details.');
+          
+          // Clean up test record
+          await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar/${result.id}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
+            }
+          });
+          console.log('🧹 Test record cleaned up');
+        }
+        
+      } catch (error) {
+        console.error('❌ Test failed:', error);
+        alert(`❌ CONNECTION TEST FAILED:\n\nError: ${error.message}\n\nThis suggests a fundamental connection issue.`);
+      }
     }
     
     // Utility functions
