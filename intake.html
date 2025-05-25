@@ -272,20 +272,19 @@
       border-radius: 16px 16px 4px 16px;
     }
     
-    /* === CALENDAR CONTAINER - CENTERED === */
+    /* === CALENDAR CONTAINER === */
     .calendar-container {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 12px;
       padding: 1.5rem;
-      margin: 1rem auto;
+      margin-top: 0.5rem;
       max-width: 400px;
       width: 100%;
       text-align: center;
-      align-self: center; /* Center the calendar */
     }
     
-    /* === OPTIONS CONTAINER - BETTER LAYOUT === */
+    /* === OPTIONS CONTAINER === */
     .options {
       display: flex;
       flex-wrap: wrap;
@@ -327,7 +326,7 @@
       border: 2px dashed rgba(255, 255, 255, 0.3);
       border-radius: 12px;
       padding: 2rem;
-      margin: 1rem auto;
+      margin-top: 0.5rem;
       max-width: 500px;
       width: 100%;
       text-align: center;
@@ -871,7 +870,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 02:39 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.2 | Last updated: 01:52 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
   <script>
@@ -1296,9 +1295,7 @@
         continueButton.onclick = () => {
           try {
             const dataString = JSON.stringify(sessionData);
-            const dataString2 = JSON.stringify(sessionData); // redundant storage
-            localStorage.setItem('intakeData', dataString);
-            sessionStorage.setItem('intakeData', dataString2);
+            sessionStorage.setItem('intakeData', dataString);
             console.log('✅ Intake data saved:', sessionData);
             window.location.href = '/summary.html';
           } catch (error) {
