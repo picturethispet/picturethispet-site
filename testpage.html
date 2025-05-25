@@ -41,7 +41,10 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background: none;
+      background-image: url('assets/images/ani_bkgd_warm.png'); /* Warm tone for entire body */
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
       overflow-x: hidden;
     }
 
@@ -69,7 +72,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-image: url('assets/images/ani_bkgd_warm.png'); /* Match body warm tone */
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
@@ -183,14 +186,19 @@
       transform: scale(1.1);
     }
 
+    /* === MAIN CONTENT WRAPPER === */
+    .main-content {
+      /* Background image removed; handled by body */
+    }
+
     /* === HERO SECTION === */
     .hero-section {
       position: relative;
       width: 100%;
       height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: flex-end;
       text-align: center;
       background-image: url('assets/images/spicemainpage.jpg');
       background-size: cover;
@@ -199,28 +207,28 @@
     }
 
     .hero-content {
-      max-width: 800px;
-      padding: 0 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto 2rem auto;
       animation: fadeInUp 1s ease-out;
       background: rgba(0, 0, 0, 0.5);
       border-radius: 16px;
-      padding: 2rem;
+      padding: 1.5rem 2rem;
     }
 
     .hero-content h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 4rem;
+      font-size: 3.5rem;
       font-weight: 700;
       line-height: 1.2;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       color: white;
       text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .hero-content p {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       line-height: 1.6;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       color: rgba(255, 255, 255, 0.9);
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
@@ -228,16 +236,16 @@
     .hero-cta {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
-      padding: 1rem 3rem;
+      padding: 0.8rem 2rem;
       border-radius: 999px;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       font-weight: 900;
       text-decoration: none;
       display: inline-block;
       transition: all 0.3s ease;
       box-shadow: 0 6px 20px rgba(244, 144, 44, 0.4);
-      min-width: 200px;
-      min-height: 48px;
+      min-width: 180px;
+      min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -248,22 +256,25 @@
       box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
     }
 
-    /* === ABOUT US SECTION === */
-    #about-section {
-      padding: 5rem 1rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-    }
-
-    .about-container {
+    /* === SECTION CONTAINER STYLES === */
+    .section-container {
       max-width: 900px;
       margin: 0 auto;
       text-align: center;
+      background-image: url('assets/images/ani_bkgd_cool.png'); /* Cool tone for sections */
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+      margin-bottom: 2rem;
     }
 
-    .about-container h2 {
+    .section-container h2 {
       font-family: 'Playfair Display', serif;
       font-size: 3rem;
       font-weight: 700;
@@ -272,42 +283,21 @@
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .about-container p {
+    .section-container p {
       font-size: 1.2rem;
       line-height: 1.6;
       color: rgba(255, 255, 255, 0.9);
       margin-bottom: 2rem;
+    }
+
+    /* === ABOUT US SECTION === */
+    #about-section {
+      padding: 5rem 1rem;
     }
 
     /* === SERVICES SECTION === */
     #services-section {
-      padding: 5rem 1rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-    }
-
-    .services-container {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .services-container h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .services-container p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
+      padding: 0 1rem 5rem 1rem;
     }
 
     .services-grid {
@@ -360,33 +350,7 @@
 
     /* === UPCOMING POP-UP EVENTS SECTION === */
     #upcoming-events-section {
-      padding: 5rem 1rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-    }
-
-    .upcoming-events-container {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .upcoming-events-container h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .upcoming-events-container p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
+      padding: 0 1rem 5rem 1rem;
     }
 
     .events-grid {
@@ -397,33 +361,7 @@
 
     /* === TESTIMONIALS SECTION === */
     #testimonials-section {
-      padding: 5rem 1rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-    }
-
-    .testimonials-container {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .testimonials-container h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .testimonials-container p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
+      padding: 0 1rem 5rem 1rem;
     }
 
     .testimonials-grid {
@@ -467,33 +405,7 @@
 
     /* === CALL TO ACTION SECTION === */
     #cta-section {
-      padding: 5rem 1rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-    }
-
-    .cta-container {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .cta-container h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .cta-container p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
+      padding: 0 1rem 5rem 1rem;
     }
 
     .cta-button {
@@ -521,33 +433,7 @@
 
     /* === INSTAGRAM POSTS SECTION === */
     #instagram-posts-section {
-      padding: 5rem 1rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-    }
-
-    .instagram-posts-container {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .instagram-posts-container h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .instagram-posts-container p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
+      padding: 0 1rem 5rem 1rem;
     }
 
     .instagram-grid {
@@ -601,7 +487,7 @@
 
     /* === FOOTER STYLES === */
     footer {
-      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-image: url('assets/images/ani_bkgd_warm.png'); /* Match body warm tone */
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
@@ -690,7 +576,7 @@
       .site-nav {
         display: none;
         flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-image: url('assets/images/ani_bkgd_warm.png'); /* Match body warm tone */
         background-size: 100% 100%;
         background-position: center;
         position: absolute;
@@ -752,7 +638,9 @@
       }
 
       .hero-content {
-        padding: 1rem;
+        max-width: 90%;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
       }
 
       .hero-content h1 {
@@ -760,37 +648,38 @@
       }
 
       .hero-content p {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
       }
 
       .hero-cta {
-        padding: 0.8rem 2rem;
-        font-size: 1.2rem;
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
         min-width: 160px;
       }
 
-      #about-section,
+      #about-section {
+        padding: 3rem 1rem;
+      }
+
       #services-section,
       #upcoming-events-section,
       #testimonials-section,
       #cta-section,
       #instagram-posts-section {
-        padding: 3rem 1rem;
+        padding: 0 1rem 3rem 1rem;
       }
 
-      .about-container h2,
-      .services-container h2,
-      .upcoming-events-container h2,
-      .testimonials-container h2,
-      .cta-container h2 {
+      .section-container {
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .section-container h2 {
         font-size: 2rem;
       }
 
-      .about-container p,
-      .services-container p,
-      .upcoming-events-container p,
-      .testimonials-container p,
-      .cta-container p {
+      .section-container p {
         font-size: 1rem;
       }
 
@@ -857,20 +746,17 @@
       }
 
       .hero-content p {
-        font-size: 1rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem;
       }
 
       .hero-cta {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.9rem;
         min-width: 140px;
       }
 
-      .about-container h2,
-      .services-container h2,
-      .upcoming-events-container h2,
-      .testimonials-container h2,
-      .cta-container h2 {
+      .section-container h2 {
         font-size: 1.8rem;
       }
 
@@ -929,110 +815,113 @@
       </div>
     </section>
 
-    <!-- About Us Section -->
-    <section id="about-section">
-      <div class="about-container">
-        <h2>About Picture This Pet</h2>
-        <p>At Picture This Pet, we specialize in creating timeless memories of your furry companions. Based in Denver, our professional photographers are passionate about capturing the unique personality of your pets in stunning, high-quality images. Whether it’s a playful pup or a curious kitten, we’re here to make every moment unforgettable.</p>
-      </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services-section">
-      <div class="services-container">
-        <h2>Our Services</h2>
-        <p>We offer a range of photography sessions tailored to your needs. Choose the perfect package for you and your pet.</p>
-        <div class="services-grid">
-          <div class="service-card">
-            <h3>Mini Session</h3>
-            <ul>
-              <li>⏰ 30 minutes</li>
-              <li>📸 Includes 5 edited digital images</li>
-              <li>🐾 1 pet included</li>
-              <li>👤 1 person included</li>
-              <li>💵 Additional pets or people at extra cost</li>
-            </ul>
-          </div>
-          <div class="service-card">
-            <h3>Full Session</h3>
-            <ul>
-              <li>⏰ 60 minutes</li>
-              <li>📸 Includes 15 edited digital images</li>
-              <li>🐾 1 pet included</li>
-              <li>👤 1 person included</li>
-              <li>💵 Additional pets or people at extra cost</li>
-            </ul>
-          </div>
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+      <!-- About Us Section -->
+      <section id="about-section">
+        <div class="section-container">
+          <h2>About Picture This Pet</h2>
+          <p>At Picture This Pet, we specialize in creating timeless memories of your furry companions. Based in Denver, our professional photographers are passionate about capturing the unique personality of your pets in stunning, high-quality images. Whether it’s a playful pup or a curious kitten, we’re here to make every moment unforgettable.</p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Upcoming Pop-Up Events Section -->
-    <section id="upcoming-events-section">
-      <div class="upcoming-events-container">
-        <h2>Upcoming Pop-Up Events</h2>
-        <div class="events-grid" id="events-grid">
-          <p>No current events at this moment.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials-section">
-      <div class="testimonials-container">
-        <h2>What Our Clients Say</h2>
-        <p>We’re proud to have captured cherished memories for pet owners across Denver. Here’s what they have to say.</p>
-        <div class="testimonials-grid">
-          <div class="testimonial-card">
-            <p>"Picture This Pet captured my dog Max’s personality perfectly! The photos are stunning, and the session was so much fun."</p>
-            <div class="author">— Sarah M.</div>
-          </div>
-          <div class="testimonial-card">
-            <p>"I booked a Mini Session for my cat Luna, and the results were beyond my expectations. Highly recommend!"</p>
-            <div class="author">— James T.</div>
+      <!-- Services Section -->
+      <section id="services-section">
+        <div class="section-container">
+          <h2>Our Services</h2>
+          <p>We offer a range of photography sessions tailored to your needs. Choose the perfect package for you and your pet.</p>
+          <div class="services-grid">
+            <div class="service-card">
+              <h3>Mini Session</h3>
+              <ul>
+                <li>⏰ 30 minutes</li>
+                <li>📸 Includes 5 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
+            <div class="service-card">
+              <h3>Full Session</h3>
+              <ul>
+                <li>⏰ 60 minutes</li>
+                <li>📸 Includes 15 edited digital images</li>
+                <li>🐾 1 pet included</li>
+                <li>👤 1 person included</li>
+                <li>💵 Additional pets or people at extra cost</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Call to Action Section -->
-    <section id="cta-section">
-      <div class="cta-container">
-        <h2>Are You Ready to Book?</h2>
-        <p>Let’s create lasting memories with your pet. Book your session today and let us capture the magic!</p>
-        <a href="/cart.html" class="cta-button">Book Now</a>
-      </div>
-    </section>
-
-    <!-- Instagram Posts Section -->
-    <section id="instagram-posts-section">
-      <div class="instagram-posts-container">
-        <h2>Our Latest Instagram Posts</h2>
-        <p>Check out some behind-the-scenes moments and adorable pet highlights from our recent sessions!</p>
-        <div class="instagram-grid">
-          <div class="post-placeholder">Instagram Post 1<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 2<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 3<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 4<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 5<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 6<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 7<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 8<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 9<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 10<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 11<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 12<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 13<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 14<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 15<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 16<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 17<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 18<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 19<br>(Placeholder)</div>
-          <div class="post-placeholder">Instagram Post 20<br>(Placeholder)</div>
+      <!-- Upcoming Pop-Up Events Section -->
+      <section id="upcoming-events-section">
+        <div class="section-container">
+          <h2>Upcoming Pop-Up Events</h2>
+          <div class="events-grid" id="events-grid">
+            <p>No current events at this moment.</p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section id="testimonials-section">
+        <div class="section-container">
+          <h2>What Our Clients Say</h2>
+          <p>We’re proud to have captured cherished memories for pet owners across Denver. Here’s what they have to say.</p>
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <p>"Picture This Pet captured my dog Max’s personality perfectly! The photos are stunning, and the session was so much fun."</p>
+              <div class="author">— Sarah M.</div>
+            </div>
+            <div class="testimonial-card">
+              <p>"I booked a Mini Session for my cat Luna, and the results were beyond my expectations. Highly recommend!"</p>
+              <div class="author">— James T.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call to Action Section -->
+      <section id="cta-section">
+        <div class="section-container">
+          <h2>Are You Ready to Book?</h2>
+          <p>Let’s create lasting memories with your pet. Book your session today and let us capture the magic!</p>
+          <a href="/cart.html" class="cta-button">Book Now</a>
+        </div>
+      </section>
+
+      <!-- Instagram Posts Section -->
+      <section id="instagram-posts-section">
+        <div class="section-container">
+          <h2>Our Latest Instagram Posts</h2>
+          <p>Check out some behind-the-scenes moments and adorable pet highlights from our recent sessions!</p>
+          <div class="instagram-grid">
+            <div class="post-placeholder">Instagram Post 1<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 2<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 3<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 4<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 5<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 6<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 7<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 8<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 9<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 10<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 11<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 12<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 13<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 14<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 15<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 16<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 17<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 18<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 19<br>(Placeholder)</div>
+            <div class="post-placeholder">Instagram Post 20<br>(Placeholder)</div>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer>
@@ -1067,7 +956,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 10:27 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 10:36 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
