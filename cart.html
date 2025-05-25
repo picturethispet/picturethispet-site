@@ -195,17 +195,26 @@
     /* === MAIN CONTENT WRAPPER === */
     main {
       flex: 1;
-      min-height: calc(100vh - 110px);
+      min-height: calc(100vh - 110px - 200px); /* Subtract header and footer heights */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 110px; /* Ensure content isn't hidden under the fixed header */
+      padding-bottom: 20px; /* Add some space above the footer */
     }
 
     /* === CHAT SECTION === */
     .chat-section {
-      padding: 5rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 1rem;
     }
 
     .chat-container {
       max-width: 900px;
-      margin: 0 auto;
+      width: 100%;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -214,7 +223,8 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 16px;
       padding: 2rem;
-      height: 500px;
+      height: auto;
+      max-height: 500px;
       display: flex;
       flex-direction: column;
     }
@@ -229,6 +239,7 @@
       font-weight: 700;
       color: white;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      text-align: center;
     }
 
     .chat-messages {
@@ -520,13 +531,17 @@
         font-size: 1.2rem;
       }
 
+      main {
+        min-height: calc(100vh - 80px - 200px); /* Adjust for mobile header height */
+        padding-top: 80px; /* Adjust for mobile header */
+      }
+
       .chat-section {
-        padding: 3rem 1rem;
+        padding: 1rem;
       }
 
       .chat-container {
         padding: 1.5rem;
-        height: auto;
         max-height: 400px;
       }
 
@@ -691,7 +706,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:52 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:55 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -930,7 +945,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 cart.html loaded with scalable session builder...');
+      console.log('🚀 cart.html updated with centered chat container...');
 
       // Load brief info from session storage
       const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
