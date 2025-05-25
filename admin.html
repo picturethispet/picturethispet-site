@@ -337,7 +337,7 @@
     }
 
     .stat-card {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 245, 0.1);
       border-radius: 12px;
       padding: 1.5rem;
       text-align: center;
@@ -731,7 +731,7 @@
     function checkAuthentication() {
       const isAuthenticated = localStorage.getItem('adminAuthenticated');
       if (!isAuthenticated) {
-        window.location.href = '/admin-login.html';
+        window.location.href = '/portal-login.html'; // Updated to portal-login.html
         return;
       }
       const adminUser = localStorage.getItem('adminUser') || 'Admin';
@@ -742,7 +742,7 @@
       localStorage.removeItem('adminAuthenticated');
       localStorage.removeItem('adminUser');
       localStorage.removeItem('adminLoginTime');
-      window.location.href = '/admin-login.html';
+      window.location.href = '/portal-login.html'; // Updated to portal-login.html
     }
 
     function toggleSidebar() {
