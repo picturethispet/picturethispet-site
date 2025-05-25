@@ -85,10 +85,14 @@
       left: 0;
       z-index: 1000;
       height: 110px;
+      overflow: hidden; /* Prevent overflow from affecting layout */
     }
     
     .desktop-logo {
       height: 100px;
+      max-width: 100%; /* Constrain width to container */
+      width: auto; /* Allow proportional scaling */
+      object-fit: contain; /* Maintain aspect ratio */
     }
     .logo-link {
       display: flex;
@@ -526,20 +530,352 @@
     }
     .calendar-day.selectable {
       cursor: pointer;
-      background: rgba(255, 255,  Huntington Beach, CA 92648
-      Phone: (714) 536-8487
-      Email: info@picturethispet.co
-      Website: https://picturethispet.co
-
-    **Connect**:
-    - Instagram: [https://instagram.com/picturethispet](https://instagram.com/picturethispet)
-    - Subscribe: [/subscribe](#)
-
-    **We Accept**:
-    - Visa, MasterCard, Amex, Discover, Apple Pay, Google Pay, Samsung Pay, Amazon Pay, Klarna, Affirm, Afterpay, Cash App, PayPal
-
-    **Footer Bottom**:
-    - © 2025 PictureThisPet. All rights reserved. | v4.1.2 | Last updated: 01:52 PM MST, May 25, 2025 | [AI built my site. Find out How!](/site-creation)
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .calendar-day.selectable:hover {
+      background: var(--gold);
+      color: var(--dark-brown);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(253, 183, 94, 0.3);
+    }
+    
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.28rem 0.96rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1000;
+      width: 100%;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.28rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 0.96rem;
+    }
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      min-width: 40px;
+      min-height: 25px;
+    }
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 0.96rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .footer-bottom p {
+      display: inline-block;
+    }
+    .footer-bottom a {
+      white-space: nowrap;
+      color: var(--gold);
+      text-decoration: underline;
+    }
+    
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+        background-attachment: scroll;
+      }
+      
+      .desktop-logo { 
+        height: 48px; 
+      }
+      
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        min-width: 100px;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      .social-icons {
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+      }
+      .social-icon {
+        font-size: 1.2rem;
+      }
+      main {
+        padding-top: 80px;
+      }
+      .chat-section {
+        padding: 1rem;
+      }
+      .chat-container {
+        padding: 1.5rem;
+      }
+      .chat-header h2 {
+        font-size: 2rem;
+      }
+      .message-bubble {
+        max-width: 85%;
+        font-size: 0.9rem;
+        padding: 0.8rem 1rem;
+      }
+      .chat-input input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+      .chat-input button {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+        min-width: 80px;
+      }
+      .options {
+        gap: 0.6rem;
+        max-width: 100%;
+      }
+      .option-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        min-width: 100px;
+        min-height: 40px;
+      }
+      .calendar-container {
+        padding: 1rem;
+        max-width: 100%;
+      }
+      .calendar-header span {
+        font-size: 1rem;
+      }
+      .calendar-day {
+        padding: 0.5rem 0.3rem;
+        font-size: 0.8rem;
+        min-height: 36px;
+      }
+      .photo-upload-container {
+        padding: 1.5rem;
+        max-width: 100%;
+      }
+      .upload-icon {
+        font-size: 2rem;
+      }
+      footer {
+        padding: 1rem 0.8rem;
+        background-attachment: scroll;
+      }
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .footer-section {
+        align-items: center;
+        text-align: center;
+      }
+      .payment-methods {
+        justify-content: center;
+      }
+      .footer-bottom {
+        padding-top: 0.8rem;
+      }
+      .footer-bottom p {
+        font-size: 0.8rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .chat-header h2 {
+        font-size: 1.8rem;
+      }
+      .message-bubble {
+        font-size: 0.85rem;
+      }
+      .chat-input input {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+      }
+      .chat-input button {
+        padding: 0.7rem 0.8rem;
+        font-size: 0.85rem;
+        min-width: 70px;
+      }
+      .option-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        min-width: 90px;
+        min-height: 36px;
+      }
+      .calendar-header span {
+        font-size: 0.9rem;
+      }
+      .calendar-day {
+        padding: 0.4rem 0.2rem;
+        font-size: 0.7rem;
+        min-height: 32px;
+      }
+      .footer-bottom p {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="/index.html#chat-section" class="book-btn" aria-label="Book a session" onclick="scrollToForm(event)">Book Now</a>
+    </nav>
+    <div class="social-icons">
+      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+        <i class="fab fa-instagram social-icon"></i>
+      </a>
+    </div>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+  <main>
+    <!-- Chat Section -->
+    <section class="chat-section">
+      <div class="chat-container">
+        <div class="chat-header">
+          <h2>Let's Schedule Your Session! 📅</h2>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <!-- Chat messages will be populated by JavaScript -->
+        </div>
+        <div class="chat-input" id="chat-input">
+          <input type="text" id="chat-input-text" placeholder="Type your response here... 😊" />
+          <button onclick="sendUserMessage()">Send</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.4 | Last updated: 02:06 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+    </div>
   </footer>
   <script>
     // Session data
