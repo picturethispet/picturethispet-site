@@ -1756,6 +1756,108 @@
     const AIRTABLE_API_KEY = 'patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3';
     const AIRTABLE_BASE_ID = 'applU3NCdDveC4G8a';
 
+    // === GLOBAL FUNCTIONS (Available Immediately) ===
+    
+    // Handle Start Now button click with enhanced debugging
+    function handleStartNow() {
+      console.log('🚀 START NOW BUTTON CLICKED!');
+      
+      try {
+        // Check if email capture card exists
+        const emailCard = document.getElementById('email-capture-card');
+        if (!emailCard) {
+          console.error('❌ Email capture card not found!');
+          return;
+        }
+        console.log('✅ Email capture card found');
+        
+        // Call showCard function
+        console.log('🎯 Calling showCard with email-capture-card');
+        showCard('email-capture-card');
+        
+      } catch (error) {
+        console.error('❌ Error in handleStartNow:', error);
+        alert('Error starting session builder. Please refresh the page.');
+      }
+    }
+
+    // Show specific session builder card and auto-scroll to top
+    function showCard(cardId) {
+      console.log('🎯 showCard function called with cardId:', cardId);
+      
+      try {
+        // Debug: Check if the function is being called
+        if (cardId === 'email-capture-card') {
+          console.log('🎯 Transitioning to email capture card');
+        }
+        
+        const cards = document.querySelectorAll('.session-builder-card');
+        console.log('🎯 Found', cards.length, 'total cards');
+        
+        if (cards.length === 0) {
+          console.error('❌ No session builder cards found!');
+          return;
+        }
+        
+        let targetCardFound = false;
+        let cardsHidden = 0;
+        
+        cards.forEach((card, index) => {
+          const isTargetCard = card.id === cardId;
+          const oldDisplay = card.style.display;
+          
+          if (isTargetCard) {
+            card.style.display = 'block';
+            targetCardFound = true;
+            console.log(`✅ Card ${index + 1} (${card.id}) - SHOWN (was: ${oldDisplay})`);
+          } else {
+            card.style.display = 'none';
+            cardsHidden++;
+            console.log(`🔒 Card ${index + 1} (${card.id}) - hidden (was: ${oldDisplay})`);
+          }
+        });
+        
+        console.log(`📊 Summary: ${targetCardFound ? 'Target found' : 'Target NOT found'}, ${cardsHidden} cards hidden`);
+        
+        if (!targetCardFound) {
+          console.error(`❌ Target card '${cardId}' not found!`);
+          return;
+        }
+
+        // Scroll to section
+        const sessionBuilderSection = document.querySelector('#session-builder-section');
+        if (sessionBuilderSection) {
+          console.log('🎯 Scrolling to session builder section');
+          sessionBuilderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          console.error('❌ Session builder section not found!');
+        }
+        
+        console.log('✅ Card transition completed successfully');
+        
+      } catch (error) {
+        console.error('❌ Error in showCard function:', error);
+        alert('Error switching cards. Please refresh the page.');
+      }
+    }
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Smooth scroll to session builder
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      const section = document.querySelector('#session-builder-section');
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // === AIRTABLE FUNCTIONS ===
+
+    // === AIRTABLE FUNCTIONS ===
+
     // Airtable API wrapper
     async function fetchAirtableData(table, options = {}) {
       const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${table}?${new URLSearchParams(options).toString()}`;
@@ -1931,6 +2033,8 @@
         alert('Error switching cards. Please refresh the page.');
       }
     }
+
+    // === SESSION BUILDER FUNCTIONS ===
 
     // Save email and proceed to the next card
     function saveEmailAndProceed() {
@@ -2324,11 +2428,6 @@
       } else {
         console.error('❌ Start Now button NOT found!');
       }
-
-      // Make functions globally accessible for debugging
-      window.showCard = showCard;
-      window.handleStartNow = handleStartNow;
-      console.log('✅ Functions made globally accessible for debugging');
 
       // Add manual test function
       window.testStartButton = function() {
