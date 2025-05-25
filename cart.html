@@ -272,22 +272,7 @@
       display: flex;
       align-items: flex-start;
       gap: 0.5rem;
-    }
-
-    .chat-message.bot {
-      justify-content: flex-start;
-    }
-
-    .chat-message.user {
-      justify-content: flex-end;
-    }
-
-    .chat-message .message-bubble {
-      max-width: 70%;
-      padding: 0.8rem 1.2rem;
-      border-radius: 12px;
-      font-size: 1rem;
-      line-height: 1.5;
+      justify-content: flex-start; /* Align all messages to the left */
     }
 
     .chat-message.bot .message-bubble {
@@ -300,6 +285,14 @@
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       border: none;
+    }
+
+    .chat-message .message-bubble {
+      max-width: 70%;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      line-height: 1.5;
     }
 
     .chat-input {
@@ -355,7 +348,7 @@
 
     .options {
       display: flex;
-      flex-direction: column; /* Explicitly stack options vertically */
+      flex-direction: column; /* Stack options vertically */
       gap: 0.5rem;
       margin-bottom: 1rem;
       justify-content: flex-start;
@@ -729,7 +722,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:34 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:40 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -946,7 +939,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated cart.html with vertically stacked options...');
+      console.log('🚀 Updated cart.html with fully vertical chat flow...');
 
       // Load brief info from session storage
       const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
