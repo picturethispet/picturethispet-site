@@ -1254,35 +1254,58 @@
       const userResponse = input.value.trim();
       if (!userResponse) return;
       
+      console.log('🎯 Sending user message:', userResponse);
+      console.log('🎯 Current question index:', currentQuestionIndex);
+      console.log('🎯 Current question:', chatQuestions[currentQuestionIndex]);
+      
       const currentQuestion = chatQuestions[currentQuestionIndex];
       if (currentQuestion.type === 'text') {
-        // Store user responses in sessionData
-        if (currentQuestion.id === 'last-name') {
-          sessionData.lastName = userResponse;
-        } else if (currentQuestion.id === 'email') {
-          sessionData.email = userResponse;
-        } else if (currentQuestion.id === 'phone-number') {
-          sessionData.phoneNumber = userResponse;
-        } else if (currentQuestion.id.startsWith('pet-name-')) {
-          const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-          sessionData.pets[petIndex].name = userResponse;
-        } else if (currentQuestion.id.startsWith('pet-age-')) {
-          const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-          sessionData.pets[petIndex].age = userResponse;
-        } else if (currentQuestion.id.startsWith('pet-breed-')) {
-          const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-          sessionData.pets[petIndex].breed = userResponse;
-        } else if (currentQuestion.id.startsWith('pet-temperament-')) {
-          const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-          sessionData.pets[petIndex].temperament = userResponse;
-        } else if (currentQuestion.id.startsWith('pet-health-concerns-')) {
-          const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-          sessionData.pets[petIndex].healthConcerns = userResponse;
+        try {
+          // Store user responses in sessionData
+          if (currentQuestion.id === 'last-name') {
+            sessionData.lastName = userResponse;
+            console.log('✅ Stored last name:', userResponse);
+          } else if (currentQuestion.id === 'email') {
+            sessionData.email = userResponse;
+            console.log('✅ Stored email:', userResponse);
+          } else if (currentQuestion.id === 'phone-number') {
+            sessionData.phoneNumber = userResponse;
+            console.log('✅ Stored phone:', userResponse);
+          } else if (currentQuestion.id.startsWith('pet-name-')) {
+            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
+            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
+            sessionData.pets[petIndex].name = userResponse;
+            console.log('✅ Stored pet name:', userResponse, 'for pet', petIndex);
+          } else if (currentQuestion.id.startsWith('pet-age-')) {
+            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
+            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
+            sessionData.pets[petIndex].age = userResponse;
+            console.log('✅ Stored pet age:', userResponse, 'for pet', petIndex);
+          } else if (currentQuestion.id.startsWith('pet-breed-')) {
+            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
+            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
+            sessionData.pets[petIndex].breed = userResponse;
+            console.log('✅ Stored pet breed:', userResponse, 'for pet', petIndex);
+          } else if (currentQuestion.id.startsWith('pet-temperament-')) {
+            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
+            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
+            sessionData.pets[petIndex].temperament = userResponse;
+            console.log('✅ Stored pet temperament:', userResponse, 'for pet', petIndex);
+          } else if (currentQuestion.id.startsWith('pet-health-concerns-')) {
+            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
+            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
+            sessionData.pets[petIndex].healthConcerns = userResponse;
+            console.log('✅ Stored pet health concerns:', userResponse, 'for pet', petIndex);
+          }
+          
+          addMessage('user', userResponse);
+          input.value = '';
+          console.log('🎯 About to proceed to next question...');
+          proceedToNextQuestion();
+        } catch (error) {
+          console.error('❌ Error in sendUserMessage:', error);
+          logErrorToAirtable('intake.html', error, sessionData);
         }
-        
-        addMessage('user', userResponse);
-        input.value = '';
-        proceedToNextQuestion();
       }
     }
     
