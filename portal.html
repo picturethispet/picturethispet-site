@@ -70,14 +70,50 @@
       color: rgba(255, 255, 255, 0.7);
     }
 
-    .portal-options {
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-actions {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      margin-top: 1.5rem;
       gap: 1rem;
     }
 
     .btn {
-      padding: 0.8rem 2rem;
+      padding: 0.8rem 1.5rem;
       border: none;
       border-radius: 8px;
       font-size: 1rem;
@@ -86,10 +122,9 @@
       transition: all 0.3s ease;
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
+      flex: 1;
+      text-align: center;
       text-decoration: none;
-      display: inline-block;
-      width: 100%;
-      max-width: 200px;
     }
 
     .btn:hover {
@@ -106,9 +141,19 @@
         font-size: 1.8rem;
       }
 
+      .form-input {
+        font-size: 0.9rem;
+        padding: 0.7rem;
+      }
+
       .btn {
         font-size: 0.9rem;
-        padding: 0.7rem 1.5rem;
+        padding: 0.7rem 1rem;
+      }
+
+      .form-actions {
+        flex-direction: column;
+        gap: 0.5rem;
       }
     }
   </style>
@@ -117,12 +162,22 @@
   <div class="container">
     <div class="header">
       <h1>Portal Login 🔑</h1>
-      <p>Choose your role to continue</p>
+      <p>Access your Picture This Pet account 📸</p>
     </div>
 
-    <div class="portal-options">
-      <a href="#" class="btn" onclick="loginAsAdmin()">Admin 🔑</a>
-      <a href="#" class="btn" onclick="loginAsClient()">Client 👤</a>
+    <div class="form-group">
+      <label class="form-label">Username 👤</label>
+      <input type="text" class="form-input" id="username" placeholder="Enter username (optional)" disabled>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Password 🔒</label>
+      <input type="password" class="form-input" id="password" placeholder="Enter password (optional)" disabled>
+    </div>
+
+    <div class="form-actions">
+      <a href="#" class="btn" onclick="loginAsAdmin()">Admin Access 🔑</a>
+      <a href="#" class="btn" onclick="loginAsClient()">Client Access 👤</a>
     </div>
   </div>
 
@@ -139,7 +194,7 @@
       // Clear any client authentication
       localStorage.removeItem('clientAuthenticated');
       localStorage.removeItem('clientLoginTime');
-      // Redirect to admin dashboard
+      console.log("Redirecting to /admin.html");
       window.location.href = '/admin.html';
     }
 
@@ -153,7 +208,7 @@
       localStorage.removeItem('adminAuthenticated');
       localStorage.removeItem('adminUser');
       localStorage.removeItem('adminLoginTime');
-      // Redirect to client portal
+      console.log("Redirecting to /client-portal-home.html");
       window.location.href = '/client-portal-home.html';
     }
   </script>
