@@ -70,45 +70,10 @@
       color: rgba(255, 255, 255, 0.7);
     }
 
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 0.5rem;
-      text-align: left;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 0.8rem;
-      font-size: 1rem;
-      font-family: 'Inter', sans-serif;
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .form-input::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .form-actions {
+    .portal-options {
       display: flex;
-      justify-content: center;
-      margin-top: 1.5rem;
+      flex-direction: column;
+      gap: 1rem;
     }
 
     .btn {
@@ -121,6 +86,8 @@
       transition: all 0.3s ease;
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
+      text-decoration: none;
+      display: inline-block;
       width: 100%;
       max-width: 200px;
     }
@@ -139,11 +106,6 @@
         font-size: 1.8rem;
       }
 
-      .form-input {
-        font-size: 0.9rem;
-        padding: 0.7rem;
-      }
-
       .btn {
         font-size: 0.9rem;
         padding: 0.7rem 1.5rem;
@@ -155,47 +117,50 @@
   <div class="container">
     <div class="header">
       <h1>Portal Login 🔑</h1>
-      <p>Access your Picture This Pet account</p>
+      <p>Choose your role to continue</p>
     </div>
 
-    <form id="portalLoginForm">
-      <div class="form-group">
-        <label class="form-label">Username</label>
-        <input type="text" class="form-input" id="username" placeholder="Enter username (optional)" disabled>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-input" id="password" placeholder="Enter password (optional)" disabled>
-      </div>
-
-      <div class="form-actions">
-        <button type="submit" class="btn">Enter 🚪</button>
-      </div>
-    </form>
+    <div class="portal-options">
+      <a href="#" class="btn" onclick="loginAsAdmin()">Admin 🔑</a>
+      <a href="#" class="btn" onclick="loginAsClient()">Client 👤</a>
+    </div>
   </div>
 
   <script>
-    // Form submission handler
-    document.getElementById('portalLoginForm').onsubmit = function(e) {
-      e.preventDefault();
-
-      // Temporarily bypass credentials - set admin as authenticated
+    // Login as Admin
+    function loginAsAdmin() {
+      // Set admin authentication flag
       localStorage.setItem('adminAuthenticated', 'true');
       localStorage.setItem('adminUser', 'Admin');
       localStorage.setItem('adminLoginTime', new Date().toISOString());
-
+      // Clear any client authentication
+      localStorage.removeItem('clientAuthenticated');
       // Redirect to admin dashboard
-      // Note: In the future, this will check if the password contains "bark" to redirect to client side
       window.location.href = '/admin.html';
-    };
+    }
+
+    // Login as Client
+    function loginAsClient() {
+      // Set client authentication flag
+      localStorage.setItem('clientAuthenticated', 'true');
+      localStorage.setItem('clientLoginTime', new Date().toISOString());
+      // Clear any admin authentication
+      localStorage.removeItem('adminAuthenticated');
+      localStorage.removeItem('adminUser');
+      localStorage.removeItem('adminLoginTime');
+      // Redirect to client portal
+      window.location.href = '/client-home.html';
+    }
 
     // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
       // Check if already authenticated
-      const isAuthenticated = localStorage.getItem('adminAuthenticated');
-      if (isAuthenticated) {
+      const isAdminAuthenticated = localStorage.getItem('adminAuthenticated');
+      const isClientAuthenticated = localStorage.getItem('clientAuthenticated');
+      if (isAdminAuthenticated) {
         window.location.href = '/admin.html';
+      } else if (isClientAuthenticated) {
+        window.location.href = '/client-home.html';
       }
     });
   </script>
