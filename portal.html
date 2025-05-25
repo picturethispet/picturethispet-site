@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Client Portal | Picture This Pet</title>
-  <meta name="description" content="Client portal for Picture This Pet photography business.">
+  <title>Welcome | Picture This Pet</title>
+  <meta name="description" content="Welcome to Picture This Pet - Professional pet photography portal access.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -14,13 +14,6 @@
       --orange: #F47C2C;
       --gold: #FDB75E;
       --dark-brown: #4B2E1E;
-      --available-green: #10b981;
-      --booked-red: #ef4444;
-      --soft-hold-yellow: #f59e0b;
-      --admin-purple: #8b5cf6;
-      --admin-blue: #3b82f6;
-      --popup-event-purple: #a78bfa;
-      --blocked-gray: #6b7280;
     }
 
     * {
@@ -32,27 +25,8 @@
     html, body {
       height: 100%;
       overflow-x: hidden;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-    }
-
-    html::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    html::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    html::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
-    }
-
-    body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background: none;
     }
 
     @keyframes moveBackground {
@@ -64,7 +38,7 @@
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -72,216 +46,438 @@
       }
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+    @keyframes gentleBounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-5px);
+      }
+      60% {
+        transform: translateY(-3px);
+      }
     }
 
-    /* === LAYOUT === */
-    .client-layout {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      min-height: 100vh;
+    @keyframes pawPrint {
+      0%, 100% {
+        transform: scale(1) rotate(0deg);
+      }
+      50% {
+        transform: scale(1.1) rotate(5deg);
+      }
+    }
+
+    body {
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      min-height: 100vh;
     }
 
-    /* === HEADER STYLES === */
-    header {
-      grid-column: 1 / -1;
+    .welcome-container {
+      width: 100%;
+      max-width: 480px;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 1000;
+      backdrop-filter: blur(15px);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      animation: fadeInUp 0.8s ease-out;
     }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
+    .logo-section {
+      margin-bottom: 2rem;
+      animation: gentleBounce 2s ease-in-out infinite;
     }
 
-    .logo-small {
-      height: 50px;
+    .logo {
+      height: 80px;
+      width: auto;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
     }
 
-    .header-title {
+    .welcome-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .welcome-header h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      color: white;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
     }
 
-    .header-right {
+    .welcome-header .subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .welcome-header .tagline {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-style: italic;
+    }
+
+    .portal-selection {
+      margin-bottom: 2rem;
+    }
+
+    .selection-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .portal-options {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 1rem;
     }
 
-    .client-user {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.8rem 1.5rem;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .logout-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.7rem 1.2rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
+    .portal-btn {
+      padding: 1.2rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      min-width: 80px;
-    }
-
-    .logout-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    /* === MAIN CONTENT === */
-    .client-main {
-      padding: 2rem;
-      padding-bottom: 4rem;
-    }
-
-    /* === CARDS === */
-    .client-card {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 2rem;
-    }
-
-    .card-header {
+      text-decoration: none;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      justify-content: center;
+      gap: 0.8rem;
+      min-height: 64px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
+    .portal-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .portal-btn:hover::before {
+      left: 100%;
+    }
+
+    .admin-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
+      border: 2px solid transparent;
     }
 
-    .welcome-message {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: rgba(255, 255, 255, 0.9);
+    .admin-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(244, 124, 44, 0.4);
+      background: linear-gradient(135deg, #e6672a, #f4b555);
     }
 
-    .placeholder-text {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.7);
+    .client-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
     }
 
-    @media (max-width: 768px) {
-      header {
-        padding: 1rem;
+    .client-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-icon {
+      font-size: 1.4rem;
+      animation: pawPrint 3s ease-in-out infinite;
+    }
+
+    .btn-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .btn-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .btn-description {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    .footer-note {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.4;
+    }
+
+    .footer-note .heart {
+      color: var(--gold);
+      animation: pawPrint 2s ease-in-out infinite;
+    }
+
+    /* Loading state */
+    .portal-btn.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .portal-btn.loading .btn-icon {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 560px) {
+      .welcome-container {
+        padding: 2.5rem 2rem;
+        max-width: 90%;
       }
 
-      .header-title {
-        font-size: 1.4rem;
+      .welcome-header h1 {
+        font-size: 1.9rem;
       }
 
-      .client-main {
-        padding: 1rem;
-        padding-bottom: 2rem;
-      }
-
-      .client-card {
-        padding: 1.5rem;
-      }
-
-      .card-title {
-        font-size: 1.5rem;
-      }
-
-      .welcome-message {
+      .welcome-header .subtitle {
         font-size: 1rem;
       }
 
-      .placeholder-text {
-        font-size: 0.9rem;
+      .portal-btn {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
       }
 
-      .logout-btn {
-        font-size: 0.8rem;
-        padding: 0.5rem 1rem;
+      .btn-title {
+        font-size: 1rem;
       }
+
+      .btn-description {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .welcome-container {
+        padding: 2rem 1.5rem;
+      }
+
+      .welcome-header h1 {
+        font-size: 1.7rem;
+      }
+
+      .logo {
+        height: 60px;
+      }
+
+      .portal-options {
+        gap: 0.8rem;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus states for keyboard navigation */
+    .portal-btn:focus {
+      outline: 3px solid var(--gold);
+      outline-offset: 2px;
     }
   </style>
 </head>
 <body>
-  <div class="client-layout">
-    <!-- Header -->
-    <header>
-      <div class="header-left">
-        <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo-small" />
-        <h1 class="header-title">Client Portal 🐾</h1>
-      </div>
-      <div class="header-right">
-        <div class="client-user" id="clientUser">Welcome, Client 👤</div>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-      </div>
-    </header>
+  <div class="welcome-container">
+    <div class="logo-section">
+      <img src="assets/images/headerlogowarm.png" alt="Picture This Pet Logo" class="logo" />
+    </div>
 
-    <!-- Main Content -->
-    <main class="client-main">
-      <div class="client-card">
-        <div class="card-header">
-          <h2 class="card-title">Welcome! 📸</h2>
-        </div>
-        <div class="welcome-message">
-          Welcome to your Picture This Pet client portal! 📸
-        </div>
-        <p class="placeholder-text">
-          This is a placeholder for your client portal. Here you will be able to view your upcoming sessions, past sessions, and book new sessions. 🐕
-        </p>
+    <div class="welcome-header">
+      <h1>Welcome to Picture This Pet! 🐾</h1>
+      <p class="subtitle">Capturing precious moments with your furry family</p>
+      <p class="tagline">Professional pet photography made simple</p>
+    </div>
+
+    <div class="portal-selection">
+      <p class="selection-title">Choose your access portal</p>
+      
+      <div class="portal-options">
+        <button class="portal-btn admin-btn" onclick="loginAsAdmin()" id="adminBtn">
+          <span class="btn-icon">🔑</span>
+          <div class="btn-text">
+            <span class="btn-title">Business Portal</span>
+            <span class="btn-description">Admin dashboard & management tools</span>
+          </div>
+        </button>
+
+        <button class="portal-btn client-btn" onclick="loginAsClient()" id="clientBtn">
+          <span class="btn-icon">📸</span>
+          <div class="btn-text">
+            <span class="btn-title">Client Portal</span>
+            <span class="btn-description">Book sessions & view your photos</span>
+          </div>
+        </button>
       </div>
-    </main>
+    </div>
+
+    <div class="footer-note">
+      Made with <span class="heart">🧡</span> for pet lovers everywhere<br>
+      <strong>Picture This Pet Photography</strong>
+    </div>
   </div>
 
   <script>
-    console.log("Client portal home page loaded successfully");
+    console.log("🐾 Picture This Pet Portal loaded successfully");
 
-    function logout() {
-      console.log("Logging out from client portal");
-      localStorage.removeItem('clientAuthenticated');
-      localStorage.removeItem('clientLoginTime');
-      localStorage.removeItem('adminAuthenticated');
-      localStorage.removeItem('adminUser');
-      localStorage.removeItem('adminLoginTime');
-      console.log("Redirecting to /portal");
-      window.location.href = '/portal';
+    // Add some friendly logging
+    console.log("🎯 Portal ready for pet photography magic!");
+
+    // Enhanced login functions with better UX
+    function setLoadingState(buttonId, isLoading) {
+      const button = document.getElementById(buttonId);
+      if (isLoading) {
+        button.classList.add('loading');
+        button.querySelector('.btn-icon').textContent = '⏳';
+      } else {
+        button.classList.remove('loading');
+      }
     }
+
+    // Login as Admin with enhanced UX
+    async function loginAsAdmin() {
+      console.log("🔑 Initiating admin login...");
+      
+      setLoadingState('adminBtn', true);
+      
+      // Add a small delay for better UX (shows loading state)
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      try {
+        // Set admin authentication
+        localStorage.setItem('adminAuthenticated', 'true');
+        localStorage.setItem('adminUser', 'Admin');
+        localStorage.setItem('adminLoginTime', new Date().toISOString());
+        
+        // Clear any client authentication
+        localStorage.removeItem('clientAuthenticated');
+        localStorage.removeItem('clientLoginTime');
+        
+        console.log("✅ Admin authentication successful");
+        console.log("🚀 Redirecting to admin dashboard...");
+        
+        // Redirect to admin dashboard
+        window.location.href = '/admin.html';
+        
+      } catch (error) {
+        console.error("❌ Admin login error:", error);
+        setLoadingState('adminBtn', false);
+        document.getElementById('adminBtn').querySelector('.btn-icon').textContent = '🔑';
+        
+        // You could add error handling here
+        alert('Login failed. Please try again.');
+      }
+    }
+
+    // Login as Client with enhanced UX
+    async function loginAsClient() {
+      console.log("👤 Initiating client login...");
+      
+      setLoadingState('clientBtn', true);
+      
+      // Add a small delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      try {
+        // Set client authentication
+        localStorage.setItem('clientAuthenticated', 'true');
+        localStorage.setItem('clientLoginTime', new Date().toISOString());
+        
+        // Clear any admin authentication
+        localStorage.removeItem('adminAuthenticated');
+        localStorage.removeItem('adminUser');
+        localStorage.removeItem('adminLoginTime');
+        
+        console.log("✅ Client authentication successful");
+        console.log("🎨 Redirecting to client portal...");
+        
+        // Redirect to client portal
+        window.location.href = '/client-portal-home.html';
+        
+      } catch (error) {
+        console.error("❌ Client login error:", error);
+        setLoadingState('clientBtn', false);
+        document.getElementById('clientBtn').querySelector('.btn-icon').textContent = '📸';
+        
+        // You could add error handling here
+        alert('Login failed. Please try again.');
+      }
+    }
+
+    // Add keyboard navigation support
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        const focusedElement = document.activeElement;
+        if (focusedElement.classList.contains('portal-btn')) {
+          event.preventDefault();
+          focusedElement.click();
+        }
+      }
+    });
+
+    // Add some delightful console messages
+    console.log(`
+    🐾 Welcome to Picture This Pet! 🐾
+    
+    🎯 Ready to capture some amazing pet moments?
+    📸 Choose your portal above to get started!
+    
+    Made with 🧡 for pet lovers everywhere
+    `);
+
+    // Optional: Add page performance tracking
+    window.addEventListener('load', function() {
+      console.log("⚡ Portal page fully loaded and ready!");
+    });
   </script>
 </body>
 </html>
