@@ -42,13 +42,13 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background-image: url('assets/images/ani_bkgd_warm.png'); /* Warm tone for entire body */
-      background-size: cover; /* Cover the entire viewport */
+      background-size: cover;
       background-position: center;
-      background-attachment: fixed; /* Ensure background is visible behind all elements */
-      background-repeat: no-repeat; /* Prevent tiling */
-      background-color: #f5d7b2; /* Fallback warm color in case image fails */
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-color: #f5d7b2; /* Fallback warm color */
       overflow-x: hidden;
-      min-height: 100vh; /* Ensure body takes full height */
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
@@ -77,7 +77,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-image: url('assets/images/ani_bkgd_warm.png'); /* Match body warm tone */
+      background-image: url('assets/images/ani_bkgd_cool.png'); /* Cool tone for header */
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -194,8 +194,8 @@
 
     /* === MAIN CONTENT WRAPPER === */
     main {
-      flex: 1; /* Ensure main takes available space, pushing footer to bottom */
-      min-height: calc(100vh - 110px); /* Account for header height */
+      flex: 1;
+      min-height: calc(100vh - 110px);
     }
 
     .main-content {
@@ -498,7 +498,7 @@
 
     /* === FOOTER STYLES === */
     footer {
-      background-image: url('assets/images/ani_bkgd_warm.png'); /* Match body warm tone */
+      background-image: url('assets/images/ani_bkgd_cool.png'); /* Cool tone for footer */
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -508,7 +508,7 @@
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
       position: relative;
-      z-index: 1000; /* Ensure footer is above other elements */
+      z-index: 1000;
       width: 100%;
     }
 
@@ -582,6 +582,7 @@
       header {
         height: 80px;
         padding: 0.5rem 1rem;
+        background-attachment: scroll; /* Fixed background can cause issues on mobile */
       }
       
       .desktop-logo { 
@@ -591,10 +592,10 @@
       .site-nav {
         display: none;
         flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_warm.png');
+        background-image: url('assets/images/ani_bkgd_cool.png');
         background-size: cover;
         background-position: center;
-        background-attachment: fixed;
+        background-attachment: scroll;
         position: absolute;
         top: 80px;
         right: 0;
@@ -689,6 +690,7 @@
       .section-container {
         padding: 2rem;
         margin-bottom: 1.5rem;
+        background-attachment: scroll; /* Fixed background can cause issues on mobile */
       }
 
       .section-container h2 {
@@ -735,6 +737,7 @@
 
       footer {
         padding: 1.5rem 1rem;
+        background-attachment: scroll; /* Fixed background can cause issues on mobile */
       }
 
       .footer-container {
@@ -972,7 +975,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 10:40 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:44 AM MDT, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -994,7 +997,7 @@
       console.log('✅ Call to action section loaded');
       console.log('✅ Instagram posts loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated index.html loaded with warm tone background and fixed footer...');
+      console.log('🚀 Updated index.html loaded with corrected background tones...');
     });
   </script>
 </body>
