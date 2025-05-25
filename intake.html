@@ -275,15 +275,15 @@
     }
 
     .chat-message.bot {
-      justify-content: flex-end; /* Bot messages on the right */
+      justify-content: flex-start; /* Bot messages on the left */
     }
 
     .chat-message.user {
-      justify-content: flex-start; /* User messages on the left */
+      justify-content: flex-end; /* User messages on the right */
     }
 
     .chat-message.options {
-      justify-content: flex-start; /* Options on the left */
+      justify-content: flex-end; /* Options on the right (user interaction) */
     }
 
     .chat-message.bot .message-bubble {
@@ -359,7 +359,7 @@
 
     .options {
       display: flex;
-      flex-direction: column; /* Stack options vertically */
+      flex-direction: column;
       gap: 0.5rem;
       margin-bottom: 1rem;
       justify-content: flex-start;
@@ -387,6 +387,76 @@
       background: linear-gradient(135deg, var(--orange), var(--gold));
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    /* === CALENDAR STYLES === */
+    .calendar-container {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .calendar-header button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .calendar-header button:hover {
+      color: var(--gold);
+    }
+
+    .calendar-header span {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+    }
+
+    .calendar-day {
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .calendar-day.header {
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .calendar-day.disabled {
+      color: rgba(255, 255, 255, 0.3);
+      cursor: not-allowed;
+    }
+
+    .calendar-day.selectable {
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .calendar-day.selectable:hover {
+      background: var(--gold);
+      color: var(--dark-brown);
     }
 
     /* === FOOTER STYLES === */
@@ -613,6 +683,19 @@
         min-height: 36px;
       }
 
+      .calendar-container {
+        padding: 0.5rem;
+      }
+
+      .calendar-header span {
+        font-size: 1rem;
+      }
+
+      .calendar-day {
+        padding: 0.3rem;
+        font-size: 0.8rem;
+      }
+
       footer {
         padding: 1rem 0.8rem;
         background-attachment: scroll;
@@ -670,6 +753,15 @@
         font-size: 0.8rem;
         min-width: 90px;
         min-height: 32px;
+      }
+
+      .calendar-header span {
+        font-size: 0.9rem;
+      }
+
+      .calendar-day {
+        padding: 0.2rem;
+        font-size: 0.7rem;
       }
 
       .footer-bottom p {
@@ -749,7 +841,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 02:00 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:21 PM MST, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -758,6 +850,8 @@
     let sessionData = {};
     let currentQuestionIndex = 0;
     let isChatActive = true;
+    let calendarYear = 2025;
+    let calendarMonth = 4; // May (0-based index)
 
     // Mock availability data (for simplicity, assume no sessions are booked initially)
     const bookedSessions = {
@@ -776,12 +870,12 @@
     const chatQuestions = [
       {
         id: 'date',
-        text: "Let’s pick a date for your session! 📅 What day would you like?",
-        type: 'text'
+        text: "Let’s pick a date for your session! 📅 Please select a date from the calendar below.",
+        type: 'calendar'
       },
       {
         id: 'time',
-        text: "Great! Now, let’s choose a time. Here are the available slots for your session. 🕒",
+        text: "", // Will be dynamically set
         type: 'options',
         options: [] // Will be populated dynamically
       },
@@ -821,9 +915,18 @@
       const messageDiv = document.createElement('div');
       messageDiv.className = `chat-message ${sender}`;
       messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
+
+      // If type is 'calendar', add the calendar UI
+      if (type === 'calendar' && isChatActive) {
+        const calendarDiv = document.createElement('div');
+        calendarDiv.className = 'calendar-container';
+        calendarDiv.innerHTML = generateCalendar();
+        messageDiv.appendChild(calendarDiv);
+      }
+
       messagesContainer.appendChild(messageDiv);
 
-      // If there are options, display them in a separate message on the left
+      // If there are options, display them in a separate message on the right
       if (options.length > 0 && isChatActive) {
         const optionsDiv = document.createElement('div');
         optionsDiv.className = 'chat-message options';
@@ -851,6 +954,88 @@
       }
     }
 
+    // Generate calendar UI
+    function generateCalendar() {
+      const date = new Date(calendarYear, calendarMonth);
+      const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+      const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
+
+      let html = `
+        <div class="calendar-header">
+          <button onclick="prevMonth()">&lt;</button>
+          <span>${monthNames[calendarMonth]} ${calendarYear}</span>
+          <button onclick="nextMonth()">&gt;</button>
+        </div>
+        <div class="calendar-grid">
+          <div class="calendar-day header">Sun</div>
+          <div class="calendar-day header">Mon</div>
+          <div class="calendar-day header">Tue</div>
+          <div class="calendar-day header">Wed</div>
+          <div class="calendar-day header">Thu</div>
+          <div class="calendar-day header">Fri</div>
+          <div class="calendar-day header">Sat</div>
+      `;
+
+      // Add empty slots for days before the first day of the month
+      for (let i = 0; i < firstDay; i++) {
+        html += `<div class="calendar-day"></div>`;
+      }
+
+      // Add days of the month
+      const today = new Date('2025-05-25');
+      const minDate = new Date('2025-05-26');
+      for (let day = 1; day <= daysInMonth; day++) {
+        const currentDate = new Date(calendarYear, calendarMonth, day);
+        const isDisabled = currentDate < minDate;
+        const className = isDisabled ? 'disabled' : 'selectable';
+        html += `<div class="calendar-day ${className}" ${!isDisabled ? `onclick="selectDate('${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}')"` : ''}>${day}</div>`;
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    // Navigate to previous month
+    function prevMonth() {
+      calendarMonth--;
+      if (calendarMonth < 0) {
+        calendarMonth = 11;
+        calendarYear--;
+      }
+      const calendarContainer = document.querySelector('.calendar-container');
+      calendarContainer.innerHTML = generateCalendar();
+    }
+
+    // Navigate to next month
+    function nextMonth() {
+      calendarMonth++;
+      if (calendarMonth > 11) {
+        calendarMonth = 0;
+        calendarYear++;
+      }
+      const calendarContainer = document.querySelector('.calendar-container');
+      calendarContainer.innerHTML = generateCalendar();
+    }
+
+    // Select a date from the calendar
+    function selectDate(date) {
+      sessionData.date = date;
+      const timeQuestion = chatQuestions.find(q => q.id === 'time');
+      timeQuestion.text = `Great! Here are the available appointments for ${date} 🕒`;
+      timeQuestion.options = getAvailableTimeSlots(date);
+      if (timeQuestion.options.length === 0) {
+        addMessage('bot', `Sorry, no time slots are available on ${date} at your chosen location. Please pick another date. 📅`, [], 'calendar');
+        currentQuestionIndex--;
+        return;
+      }
+      addMessage('user', date);
+      proceedToNextQuestion();
+    }
+
     // Send user message
     function sendUserMessage() {
       if (!isChatActive) return;
@@ -861,29 +1046,7 @@
 
       const currentQuestion = chatQuestions[currentQuestionIndex];
       if (currentQuestion.type === 'text') {
-        if (currentQuestion.id === 'date') {
-          // Validate date format (YYYY-MM-DD)
-          const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-          if (!dateRegex.test(userResponse)) {
-            addMessage('bot', 'Please enter the date in YYYY-MM-DD format (e.g., 2025-05-26). 📅');
-            return;
-          }
-          const selectedDate = new Date(userResponse);
-          const minDate = new Date('2025-05-26');
-          if (selectedDate < minDate) {
-            addMessage('bot', 'Please select a future date (from 2025-05-26 onwards). 📅');
-            return;
-          }
-          sessionData.date = userResponse;
-          // Populate time slots for the next question
-          const timeQuestion = chatQuestions.find(q => q.id === 'time');
-          timeQuestion.options = getAvailableTimeSlots(sessionData.date);
-          if (timeQuestion.options.length === 0) {
-            addMessage('bot', 'Sorry, no time slots are available on that date at your chosen location. Please pick another date. 📅');
-            currentQuestionIndex--;
-            return;
-          }
-        } else if (currentQuestion.id === 'pet-breed') {
+        if (currentQuestion.id === 'pet-breed') {
           sessionData.petBreed = userResponse;
         } else if (currentQuestion.id === 'special-requests') {
           sessionData.specialRequests = userResponse;
@@ -985,7 +1148,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Intake.html created with date picker and smart booking logic...');
+      console.log('🚀 Updated intake.html with full calendar UI and smart booking logic...');
 
       // Load session data from session storage
       const cartData = JSON.parse(sessionStorage.getItem('cartData') || '{}');
