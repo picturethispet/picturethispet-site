@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Build Your Session | Picture This Pet</title>
+  <meta name="description" content="Build your pet photography session with Picture This Pet.">
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background-image: url('assets/images/main_background_allsystem.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-color: #f5d7b2;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === HEADER STYLES === */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .book-btn {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      min-width: 120px;
+      min-height: 44px;
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .social-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+
+    .social-icon {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-icon:hover {
+      color: var(--gold);
+      transform: scale(1.1);
+    }
+
+    /* === MAIN CONTENT WRAPPER === */
+    main {
+      flex: 1;
+      min-height: calc(100vh - 110px);
+    }
+
+    /* === CHAT SECTION === */
+    .chat-section {
+      padding: 5rem 1rem;
+    }
+
+    .chat-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      margin-bottom: 1rem;
+    }
+
+    .chat-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      padding-right: 1rem;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .chat-messages::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb:hover {
+      background: var(--orange);
+    }
+
+    .chat-message {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .chat-message.bot {
+      justify-content: flex-start;
+    }
+
+    .chat-message.user {
+      justify-content: flex-end;
+    }
+
+    .chat-message .message-bubble {
+      max-width: 70%;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .chat-message.bot .message-bubble {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .chat-message.user .message-bubble {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .chat-input input,
+    .chat-input select {
+      flex: 1;
+      padding: 0.8rem;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      min-height: 44px;
+      width: 100%;
+    }
+
+    .chat-input input:focus,
+    .chat-input select:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .chat-input button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 100px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+    }
+
+    .chat-input button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .option-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .option-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      min-width: 40px;
+      min-height: 25px;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+        background-attachment: scroll;
+      }
+      
+      .desktop-logo { 
+        height: 48px; 
+      }
+      
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        margin-left: 0;
+        min-width: 100px;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .social-icons {
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+      }
+
+      .social-icon {
+        font-size: 1.2rem;
+      }
+
+      .chat-section {
+        padding: 3rem 1rem;
+      }
+
+      .chat-container {
+        padding: 1.5rem;
+        height: auto;
+        max-height: 400px;
+      }
+
+      .chat-header h2 {
+        font-size: 2rem;
+      }
+
+      .chat-message .message-bubble {
+        max-width: 90%;
+        font-size: 0.9rem;
+      }
+
+      .chat-input {
+        flex-direction: row;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+      }
+
+      .chat-input input,
+      .chat-input select {
+        padding: 0.6rem;
+        font-size: 16px;
+        min-width: 0;
+        flex: 1;
+      }
+
+      .chat-input button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        min-width: 80px;
+      }
+
+      .options {
+        gap: 0.3rem;
+      }
+
+      .option-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
+        background-attachment: scroll;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .footer-section {
+        align-items: center;
+        text-align: center;
+      }
+
+      .payment-methods {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .chat-header h2 {
+        font-size: 1.8rem;
+      }
+
+      .chat-message .message-bubble {
+        font-size: 0.85rem;
+      }
+
+      .chat-input input,
+      .chat-input select {
+        padding: 0.5rem;
+        font-size: 16px;
+      }
+
+      .chat-input button {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+        min-width: 70px;
+      }
+
+      .option-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="/index.html#chat-section" class="book-btn" aria-label="Book a session" onclick="scrollToForm(event)">Book Now</a>
+    </nav>
+    <div class="social-icons">
+      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+        <i class="fab fa-instagram social-icon"></i>
+      </a>
+    </div>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Chat Section -->
+    <section class="chat-section">
+      <div class="chat-container">
+        <div class="chat-header">
+          <h2>Build Your Session</h2>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <!-- Chat messages will be populated by JavaScript -->
+        </div>
+        <div class="chat-input" id="chat-input">
+          <input type="text" id="chat-input-text" placeholder="Type your response here..." />
+          <button onclick="sendUserMessage()">Send</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:52 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Session data
+    let sessionData = {};
+    let currentQuestionIndex = 0;
+
+    // Scalable session types configuration
+    const sessionTypes = [
+      { name: 'Mini', duration: 60, images: 5, pets: 1, people: 1, extraCost: 'Additional pets or people at extra cost' },
+      { name: 'Full', duration: 90, images: 10, pets: 1, people: 1, extraCost: 'Additional pets or people at extra cost' }
+      // Add more session types here in the future
+    ];
+
+    // Chat questions
+    const chatQuestions = [
+      {
+        id: 'session-type',
+        text: "Let’s start by choosing your session type. Which would you like?",
+        type: 'options',
+        options: sessionTypes.map(type => type.name),
+        save: (input) => {
+          const selectedSession = sessionTypes.find(type => type.name === input);
+          sessionData.sessionType = input;
+          sessionData.sessionDuration = selectedSession.duration; // Store duration for later calendar logic
+        }
+      },
+      {
+        id: 'location',
+        text: "Great! Now, where would you like to have your session? We currently offer sessions at Cheesman Park or City Park.",
+        type: 'select',
+        options: ['Cheesman Park', 'City Park'],
+        save: (input) => {
+          sessionData.location = input;
+        }
+      },
+      {
+        id: 'pet-count',
+        text: "How many pets will be joining the session? (Maximum of 2)",
+        type: 'select',
+        options: ['1', '2'],
+        save: (input) => {
+          sessionData.petCount = input;
+        }
+      },
+      {
+        id: 'people-count',
+        text: "Will any family members be joining the session? (Maximum of 2)",
+        type: 'select',
+        options: ['0', '1', '2'],
+        save: (input) => {
+          sessionData.peopleCount = input;
+        }
+      },
+      {
+        id: 'vaccinated',
+        text: "Are all pets vaccinated? Proof may be requested.",
+        type: 'options',
+        options: ['Yes', 'No'],
+        save: (input) => {
+          sessionData.vaccinated = input;
+        }
+      }
+    ];
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Smooth scroll to form
+    function scrollToForm(e) {
+      e.preventDefault();
+      const section = document.querySelector('#chat-section');
+      const offset = 100;
+      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: sectionPosition - offset,
+        behavior: 'smooth'
+      });
+    }
+
+    // Add message to chat
+    function addMessage(sender, text, options = []) {
+      const messagesContainer = document.getElementById('chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message ${sender}`;
+      let messageContent = `<div class="message-bubble">${text}</div>`;
+
+      if (options.length > 0) {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        options.forEach(option => {
+          const button = document.createElement('button');
+          button.className = 'option-btn';
+          button.textContent = option;
+          button.onclick = () => selectOption(option);
+          optionsDiv.appendChild(button);
+        });
+        messageDiv.appendChild(optionsDiv);
+      }
+
+      messageDiv.innerHTML = messageContent;
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Update input type
+    function updateInputType() {
+      const inputContainer = document.getElementById('chat-input');
+      inputContainer.innerHTML = ''; // Clear existing input
+
+      const currentQuestion = chatQuestions[currentQuestionIndex];
+      if (currentQuestion.type === 'text' || currentQuestion.type === 'email') {
+        const input = document.createElement('input');
+        input.type = currentQuestion.inputType;
+        input.id = 'chat-input-text';
+        input.placeholder = `Type your ${currentQuestion.inputType === 'email' ? 'email address' : 'response'} here...`;
+        inputContainer.appendChild(input);
+
+        const sendButton = document.createElement('button');
+        sendButton.textContent = 'Send';
+        sendButton.onclick = sendUserMessage;
+        inputContainer.appendChild(sendButton);
+
+        input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            sendUserMessage();
+          }
+        });
+      } else if (currentQuestion.type === 'select') {
+        const select = document.createElement('select');
+        select.id = 'chat-input-select';
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Select an option';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        select.appendChild(defaultOption);
+
+        currentQuestion.options.forEach(option => {
+          const opt = document.createElement('option');
+          opt.value = option;
+          opt.textContent = option;
+          select.appendChild(opt);
+        });
+        inputContainer.appendChild(select);
+
+        const sendButton = document.createElement('button');
+        sendButton.textContent = 'Send';
+        sendButton.onclick = sendUserMessage;
+        inputContainer.appendChild(sendButton);
+
+        select.addEventListener('change', sendUserMessage);
+      }
+    }
+
+    // Select option from buttons
+    function selectOption(option) {
+      addMessage('user', option);
+      const currentQuestion = chatQuestions[currentQuestionIndex];
+      currentQuestion.save(option);
+      proceedToNextQuestion();
+    }
+
+    // Send user message
+    function sendUserMessage() {
+      let userResponse;
+      const currentQuestion = chatQuestions[currentQuestionIndex];
+      if (currentQuestion.type === 'select') {
+        const select = document.getElementById('chat-input-select');
+        userResponse = select.value;
+      } else {
+        const input = document.getElementById('chat-input-text');
+        userResponse = input.value.trim();
+      }
+
+      if (!userResponse || (currentQuestion.type === 'select' && userResponse === '')) return;
+
+      addMessage('user', userResponse);
+
+      if (currentQuestion.type !== 'options') {
+        const validationError = currentQuestion.validate ? currentQuestion.validate(userResponse) : null;
+        if (validationError) {
+          addMessage('bot', validationError);
+          return;
+        }
+        currentQuestion.save(userResponse);
+      }
+
+      proceedToNextQuestion();
+    }
+
+    // Proceed to the next question
+    function proceedToNextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < chatQuestions.length) {
+        const nextQuestion = chatQuestions[currentQuestionIndex];
+        if (nextQuestion.type === 'options') {
+          addMessage('bot', nextQuestion.text, nextQuestion.options);
+        } else {
+          addMessage('bot', nextQuestion.text);
+          updateInputType();
+        }
+      } else {
+        addMessage('bot', 'Great! Let’s move on to select a date and time for your session.');
+        const continueButton = document.createElement('button');
+        continueButton.className = 'book-btn';
+        continueButton.textContent = 'Continue';
+        continueButton.onclick = () => {
+          try {
+            const dataString = JSON.stringify(sessionData);
+            sessionStorage.setItem('cartData', dataString);
+            console.log('✅ Cart data saved:', sessionData);
+            window.location.href = '/intake.html';
+          } catch (error) {
+            console.error('Error saving cart data:', error);
+            addMessage('bot', 'Oops, something went wrong. Please try again.');
+          }
+        };
+        const messagesContainer = document.getElementById('chat-messages');
+        const buttonDiv = document.createElement('div');
+        buttonDiv.className = 'chat-message bot';
+        buttonDiv.appendChild(continueButton);
+        messagesContainer.appendChild(buttonDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        document.getElementById('chat-input').style.display = 'none';
+      }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Header loaded');
+      console.log('✅ Chat section loaded');
+      console.log('✅ Footer loaded');
+      console.log('🚀 cart.html loaded with scalable session builder...');
+
+      // Load brief info from session storage
+      const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
+      sessionData.email = briefInfo.email || '';
+      sessionData.firstName = briefInfo.firstName || '';
+      sessionData.petName = briefInfo.petName || '';
+
+      // Start chat
+      addMessage('bot', chatQuestions[0].text, chatQuestions[0].options);
+    });
+  </script>
+</body>
+</html>
