@@ -198,7 +198,7 @@
       min-height: calc(100vh - 110px - 200px);
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start; /* Align to top for mobile scrolling */
       padding-top: 110px;
       padding-bottom: 20px;
     }
@@ -207,7 +207,7 @@
     .chat-section {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       width: 100%;
       padding: 1rem;
     }
@@ -272,7 +272,18 @@
       display: flex;
       align-items: flex-start;
       gap: 0.5rem;
-      justify-content: flex-start; /* Align all messages to the left */
+    }
+
+    .chat-message.bot {
+      justify-content: flex-end; /* Bot messages on the right */
+    }
+
+    .chat-message.user {
+      justify-content: flex-start; /* User messages on the left */
+    }
+
+    .chat-message.options {
+      justify-content: flex-start; /* Options on the left */
     }
 
     .chat-message.bot .message-bubble {
@@ -542,8 +553,9 @@
       }
 
       main {
-        min-height: calc(100vh - 80px - 200px);
+        min-height: auto; /* Allow page to grow with chat content */
         padding-top: 80px;
+        padding-bottom: 20px;
       }
 
       .chat-section {
@@ -552,7 +564,18 @@
 
       .chat-container {
         padding: 1.5rem;
-        max-height: 400px;
+        max-height: none; /* Remove max-height to allow growth */
+        height: auto; /* Let container grow with content */
+      }
+
+      .chat-messages {
+        flex: none; /* Remove flex growth */
+        overflow-y: visible; /* Remove internal scrolling */
+        padding-right: 0;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+        display: none; /* Hide scrollbar on mobile */
       }
 
       .chat-header h2 {
@@ -562,6 +585,10 @@
       .chat-message .message-bubble {
         max-width: 90%;
         font-size: 0.9rem;
+      }
+
+      .chat-input {
+        margin-top: 1rem; /* Ensure input moves down with chat */
       }
 
       .chat-input input {
@@ -722,7 +749,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:40 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 01:50 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -822,21 +849,25 @@
       const messageDiv = document.createElement('div');
       messageDiv.className = `chat-message ${sender}`;
       messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
+      messagesContainer.appendChild(messageDiv);
 
+      // If there are options, display them in a separate message on the left
       if (options.length > 0 && isChatActive) {
         const optionsDiv = document.createElement('div');
-        optionsDiv.className = 'options';
+        optionsDiv.className = 'chat-message options';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className = 'options';
         options.forEach(option => {
           const button = document.createElement('button');
           button.className = 'option-btn';
           button.innerHTML = option.display;
           button.onclick = () => selectOption(option.value);
-          optionsDiv.appendChild(button);
+          optionsContainer.appendChild(button);
         });
-        messageDiv.appendChild(optionsDiv);
+        optionsDiv.appendChild(optionsContainer);
+        messagesContainer.appendChild(optionsDiv);
       }
 
-      messagesContainer.appendChild(messageDiv);
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
       // Disable input if chat is not active
@@ -939,7 +970,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated cart.html with fully vertical chat flow...');
+      console.log('🚀 Updated cart.html with dynamic mobile chat growth...');
 
       // Load brief info from session storage
       const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
