@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Picture This Pet | Pet Photography in Denver</title>
   <meta name="description" content="Capture the magic of your furry friends with Picture This Pet, Denver's premier pet photography service. Book your session today!">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
@@ -41,12 +41,12 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background-image: url('assets/images/ani_bkgd_warm.png'); /* Warm tone for entire body */
+      background-image: url('assets/images/main_background_allsystem.png');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
       background-repeat: no-repeat;
-      background-color: #f5d7b2; /* Fallback warm color */
+      background-color: #f5d7b2;
       overflow-x: hidden;
       min-height: 100vh;
       display: flex;
@@ -418,96 +418,20 @@
       text-align: right;
     }
 
-    /* === CALL TO ACTION SECTION === */
-    #cta-section {
+    /* === COMBINED CHAT SECTION === */
+    #chat-section {
       padding: 0 1rem 5rem 1rem;
     }
 
-    .cta-button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      padding: 1rem 3rem;
-      border-radius: 999px;
-      font-size: 1.5rem;
-      font-weight: 900;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(244, 144, 44, 0.4);
-      min-width: 200px;
-      min-height: 48px;
+    #chat-section .section-container {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-    }
-
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
-    }
-
-    /* === INSTAGRAM POSTS SECTION === */
-    #instagram-posts-section {
-      padding: 0 1rem 5rem 1rem;
-    }
-
-    .instagram-grid {
-      display: flex;
-      gap: 1rem;
-      overflow-x: auto;
-      padding-bottom: 1rem;
-      justify-content: flex-start;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .instagram-grid::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .instagram-grid::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-    }
-
-    .instagram-grid::-webkit-scrollbar-thumb {
-      background: var(--gold);
-      border-radius: 4px;
-    }
-
-    .instagram-grid::-webkit-scrollbar-thumb:hover {
-      background: var(--orange);
-    }
-
-    .post-placeholder {
-      width: 200px;
-      height: 200px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.7);
-      transition: all 0.3s ease;
-      flex-shrink: 0;
-      scroll-snap-align: start;
-    }
-
-    .post-placeholder:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: scale(1.02);
-    }
-
-    /* === CHAT SECTION === */
-    .chat-section {
-      padding: 0 1rem 5rem 1rem;
     }
 
     .chat-container {
+      width: 100%;
       max-width: 900px;
-      margin: 0 auto;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -597,12 +521,13 @@
       display: flex;
       gap: 1rem;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .chat-input input {
       flex: 1;
       padding: 0.8rem;
-      font-size: 1rem;
+      font-size: 16px;
       font-family: 'Inter', sans-serif;
       color: white;
       background: rgba(255, 255, 255, 0.1);
@@ -610,6 +535,7 @@
       border-radius: 8px;
       transition: all 0.3s ease;
       min-height: 44px;
+      width: 100%;
     }
 
     .chat-input input:focus {
@@ -633,11 +559,66 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      width: auto;
     }
 
     .chat-input button:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+
+    /* === INSTAGRAM POSTS SECTION === */
+    #instagram-posts-section {
+      padding: 0 1rem 5rem 1rem;
+    }
+
+    .instagram-grid {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      justify-content: flex-start;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .instagram-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .instagram-grid::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .instagram-grid::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+
+    .instagram-grid::-webkit-scrollbar-thumb:hover {
+      background: var(--orange);
+    }
+
+    .post-placeholder {
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+
+    .post-placeholder:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
     }
 
     /* === FOOTER STYLES === */
@@ -778,6 +759,7 @@
         padding: 0.6rem 1.5rem;
         font-size: 1rem;
         margin-left: 0;
+        min-width: 100px;
       }
       
       .mobile-menu-btn {
@@ -801,7 +783,7 @@
       .hero-content {
         max-width: 90%;
         padding: 1rem 1.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 3rem;
       }
 
       .hero-content h1 {
@@ -826,9 +808,8 @@
       #services-section,
       #upcoming-events-section,
       #testimonials-section,
-      #cta-section,
-      #instagram-posts-section,
-      .chat-section {
+      #chat-section,
+      #instagram-posts-section {
         padding: 0 1rem 3rem 1rem;
       }
 
@@ -872,12 +853,6 @@
         font-size: 0.9rem;
       }
 
-      .cta-button {
-        padding: 0.8rem 2rem;
-        font-size: 1.2rem;
-        min-width: 160px;
-      }
-
       .post-placeholder {
         width: 150px;
         height: 150px;
@@ -899,9 +874,17 @@
         font-size: 0.9rem;
       }
 
+      .chat-input {
+        flex-direction: row;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+      }
+
       .chat-input input {
         padding: 0.6rem;
-        font-size: 0.9rem;
+        font-size: 16px;
+        min-width: 0;
+        flex: 1;
       }
 
       .chat-input button {
@@ -968,12 +951,6 @@
         font-size: 0.85rem;
       }
 
-      .cta-button {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
-        min-width: 140px;
-      }
-
       .post-placeholder {
         width: 120px;
         height: 120px;
@@ -990,7 +967,7 @@
 
       .chat-input input {
         padding: 0.5rem;
-        font-size: 0.85rem;
+        font-size: 16px;
       }
 
       .chat-input button {
@@ -1012,7 +989,7 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToForm(event)">Book Now</a>
+      <a href="#chat-section" class="book-btn" aria-label="Book a session" onclick="scrollToForm(event)">Book Now</a>
     </nav>
     <div class="social-icons">
       <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
@@ -1100,12 +1077,20 @@
         </div>
       </section>
 
-      <!-- Call to Action Section -->
-      <section id="cta-section">
+      <!-- Combined Chat Section -->
+      <section id="chat-section">
         <div class="section-container">
           <h2>Are You Ready to Book?</h2>
           <p>Let’s create lasting memories with your pet. Book your session today and let us capture the magic!</p>
-          <a href="#chat-section" class="cta-button" onclick="scrollToForm(event)">Book Now</a>
+          <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+              <!-- Chat messages will be populated by JavaScript -->
+            </div>
+            <div class="chat-input" id="chat-input">
+              <input type="text" id="chat-input-text" placeholder="Type your response here..." />
+              <button onclick="sendUserMessage()">Send</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1135,22 +1120,6 @@
             <div class="post-placeholder">Instagram Post 18<br>(Placeholder)</div>
             <div class="post-placeholder">Instagram Post 19<br>(Placeholder)</div>
             <div class="post-placeholder">Instagram Post 20<br>(Placeholder)</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Chat Section (Start Your Journey / Intake Part One) -->
-      <section id="chat-section" class="chat-section">
-        <div class="chat-container">
-          <div class="chat-header">
-            <h2>Start Your Journey</h2>
-          </div>
-          <div class="chat-messages" id="chat-messages">
-            <!-- Chat messages will be populated by JavaScript -->
-          </div>
-          <div class="chat-input" id="chat-input">
-            <input type="text" id="chat-input-text" placeholder="Type your response here..." />
-            <button onclick="sendUserMessage()">Send</button>
           </div>
         </div>
       </section>
@@ -1189,7 +1158,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:10 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 11:23 AM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -1204,7 +1173,12 @@
     function scrollToForm(e) {
       e.preventDefault();
       const section = document.querySelector('#chat-section');
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const offset = 100; // Adjust this value to show a bit of the body background above the section
+      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: sectionPosition - offset,
+        behavior: 'smooth'
+      });
     }
 
     // Chat logic
@@ -1288,7 +1262,7 @@
       } else {
         addMessage('bot', 'Great! Let’s continue with your session details.');
         const continueButton = document.createElement('button');
-        continueButton.className = 'next-btn';
+        continueButton.className = 'book-btn';
         continueButton.textContent = 'Continue';
         continueButton.onclick = () => {
           try {
@@ -1320,11 +1294,10 @@
       console.log('✅ Services section loaded');
       console.log('✅ Upcoming events section loaded');
       console.log('✅ Testimonials section loaded');
-      console.log('✅ Call to action section loaded');
+      console.log('✅ Combined chat section loaded');
       console.log('✅ Instagram posts loaded');
-      console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 Updated index.html with restored sections and fixed background...');
+      console.log('🚀 Updated index.html with combined chat section and updated Book Now links...');
 
       addMessage('bot', chatQuestions[0].text);
       updateInputType();
