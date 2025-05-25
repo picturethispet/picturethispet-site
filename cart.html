@@ -635,7 +635,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:00 PM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 12:03 PM MST, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -660,12 +660,7 @@
         options: sessionTypes.map(type => ({
           value: type.name,
           display: `${type.name} 📸 ${type.images} photos ⏰ ${type.duration} mins<br>${type.extraCost}`
-        })),
-        save: (input) => {
-          const selectedSession = sessionTypes.find(type => type.name === input);
-          sessionData.sessionType = input;
-          sessionData.sessionDuration = selectedSession.duration; // Store duration for later calendar logic
-        }
+        }))
       },
       {
         id: 'location',
@@ -674,10 +669,7 @@
         options: [
           { value: 'Cheesman Park', display: 'Cheesman Park 🌳' },
           { value: 'City Park', display: 'City Park 🌳' }
-        ],
-        save: (input) => {
-          sessionData.location = input;
-        }
+        ]
       },
       {
         id: 'pet-count',
@@ -686,10 +678,7 @@
         options: [
           { value: '1', display: '1 🐾' },
           { value: '2', display: '2 🐾' }
-        ],
-        save: (input) => {
-          sessionData.petCount = input;
-        }
+        ]
       },
       {
         id: 'people-count',
@@ -699,10 +688,7 @@
           { value: '0', display: '0 👤' },
           { value: '1', display: '1 👤' },
           { value: '2', display: '2 👤' }
-        ],
-        save: (input) => {
-          sessionData.peopleCount = input;
-        }
+        ]
       },
       {
         id: 'vaccinated',
@@ -711,10 +697,7 @@
         options: [
           { value: 'Yes', display: 'Yes ✅' },
           { value: 'No', display: 'No ❌' }
-        ],
-        save: (input) => {
-          sessionData.vaccinated = input;
-        }
+        ]
       }
     ];
 
@@ -741,9 +724,12 @@
       const messagesContainer = document.getElementById('chat-messages');
       const messageDiv = document.createElement('div');
       messageDiv.className = `chat-message ${sender}`;
-      let messageContent = `<div class="message-bubble">${text}</div>`;
+      messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
 
       if (options.length > 0) {
+        const inputContainer = document.getElementById('chat-input');
+        inputContainer.innerHTML = ''; // Clear previous options
+
         const optionsDiv = document.createElement('div');
         optionsDiv.className = 'options';
         options.forEach(option => {
@@ -753,19 +739,33 @@
           button.onclick = () => selectOption(option.value);
           optionsDiv.appendChild(button);
         });
-        messageDiv.appendChild(optionsDiv);
+        inputContainer.appendChild(optionsDiv);
       }
 
-      messageDiv.innerHTML = messageContent;
       messagesContainer.appendChild(messageDiv);
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
     // Select option from buttons
-    function selectOption(option) {
-      addMessage('user', option);
+    function selectOption(value) {
+      addMessage('user', value);
       const currentQuestion = chatQuestions[currentQuestionIndex];
-      currentQuestion.save(option);
+
+      // Save the selected value based on the question
+      if (currentQuestion.id === 'session-type') {
+        const selectedSession = sessionTypes.find(type => type.name === value);
+        sessionData.sessionType = value;
+        sessionData.sessionDuration = selectedSession.duration; // Store duration for later calendar logic
+      } else if (currentQuestion.id === 'location') {
+        sessionData.location = value;
+      } else if (currentQuestion.id === 'pet-count') {
+        sessionData.petCount = value;
+      } else if (currentQuestion.id === 'people-count') {
+        sessionData.peopleCount = value;
+      } else if (currentQuestion.id === 'vaccinated') {
+        sessionData.vaccinated = value;
+      }
+
       proceedToNextQuestion();
     }
 
@@ -777,6 +777,9 @@
         addMessage('bot', nextQuestion.text, nextQuestion.options);
       } else {
         addMessage('bot', 'Great! Let’s move on to select a date and time for your session.');
+        const inputContainer = document.getElementById('chat-input');
+        inputContainer.innerHTML = ''; // Clear options
+
         const continueButton = document.createElement('button');
         continueButton.className = 'book-btn';
         continueButton.textContent = 'Continue';
@@ -805,7 +808,7 @@
       console.log('✅ Header loaded');
       console.log('✅ Chat section loaded');
       console.log('✅ Footer loaded');
-      console.log('🚀 cart.html updated with button-based chat interface...');
+      console.log('🚀 cart.html rebuilt with functional button-based chat interface...');
 
       // Load brief info from session storage
       const briefInfo = JSON.parse(sessionStorage.getItem('briefInfo') || '{}');
