@@ -486,13 +486,54 @@
       hideMessages();
       
       try {
-        // Check if password contains "bark" for client/admin routing
+        console.log('Authenticating user:', username);
+        console.log('Password contains bark:', password.toLowerCase().includes('bark'));
+        
+        // Check specific admin credentials first
+        if (username === 'adminjustin' && password === 'Buffy1990!') {
+          localStorage.setItem('adminAuthenticated', 'true');
+          localStorage.setItem('adminUser', 'Justin (Admin)');
+          localStorage.setItem('adminLoginTime', new Date().toISOString());
+          
+          showSuccessMessage('Welcome back, Justin! Redirecting to admin dashboard...');
+          
+          setTimeout(() => {
+            window.location.href = '/admin.html';
+          }, 1500);
+          return;
+        }
+        
+        // Check specific client credentials  
+        if (username === 'clientjustin' && password === 'Buffybark') {
+          console.log('✅ Matched specific client credentials');
+          localStorage.setItem('clientAuthenticated', 'true');
+          localStorage.setItem('clientData', JSON.stringify({
+            username: 'clientjustin',
+            email: 'justin@picturethispet.com',
+            id: 'hardcoded_client_justin'
+          }));
+          localStorage.setItem('clientLoginTime', new Date().toISOString());
+          
+          showSuccessMessage('Welcome back, Justin! Redirecting to your client portal...');
+          
+          setTimeout(() => {
+            window.location.href = '/client-portal-home.html';
+          }, 1500);
+          return;
+        }
+        
+        console.log('Specific client credentials did not match');
+        
+        // Check if password contains "bark" for client routing
         const isClient = password.toLowerCase().includes('bark');
+        console.log('Is client (contains bark):', isClient);
         
         if (isClient) {
+          console.log('Trying Airtable client authentication...');
           // Client authentication - check Clients table
           const clientAuth = await authenticateClient(username, password);
           if (clientAuth.success) {
+            console.log('✅ Airtable client authentication successful');
             // Store client session data
             localStorage.setItem('clientAuthenticated', 'true');
             localStorage.setItem('clientData', JSON.stringify(clientAuth.clientData));
@@ -504,9 +545,11 @@
               window.location.href = '/client-portal-home.html';
             }, 1500);
             return;
+          } else {
+            console.log('❌ Airtable client authentication failed');
           }
         } else {
-          // Admin authentication - simple check for now
+          // Admin authentication - fallback to original admin creds
           if (username === 'admin' && password === 'admin123') {
             localStorage.setItem('adminAuthenticated', 'true');
             localStorage.setItem('adminUser', 'Admin');
@@ -522,6 +565,9 @@
         }
         
         // If we get here, authentication failed
+        console.log('❌ All authentication methods failed');
+        console.log('Username entered:', `"${username}"`);
+        console.log('Password entered:', `"${password}"`);
         showErrorMessage('Invalid username or password. Please check your credentials and try again.');
         
       } catch (error) {
