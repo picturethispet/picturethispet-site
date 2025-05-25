@@ -619,6 +619,101 @@
     .footer-bottom p {
       display: inline-block;
     }
+    /* === SUMMARY MODAL === */
+    .summary-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .summary-modal-content {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+      color: white;
+    }
+
+    .summary-modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .summary-details {
+      text-align: left;
+      margin-bottom: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+    }
+
+    .summary-item:last-child {
+      margin-bottom: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 0.8rem;
+      font-weight: 600;
+    }
+
+    .summary-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .modal-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(244, 124, 44, 0.3);
+    }
+
+    .modal-btn.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-bottom p {
+      display: inline-block;
+    }
+
     .footer-bottom a {
       white-space: nowrap;
       color: var(--gold);
@@ -773,6 +868,25 @@
       .footer-bottom p {
         font-size: 0.8rem;
       }
+
+      .summary-modal-content {
+        padding: 1.5rem;
+        max-width: 95%;
+      }
+
+      .summary-modal h3 {
+        font-size: 1.5rem;
+      }
+
+      .summary-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .modal-btn {
+        width: 100%;
+        padding: 0.6rem 1rem;
+      }
     }
     @media (max-width: 480px) {
       .chat-header h2 {
@@ -806,6 +920,24 @@
       }
       .footer-bottom p {
         font-size: 0.7rem;
+      }
+
+      .summary-modal-content {
+        padding: 1rem;
+      }
+
+      .summary-modal h3 {
+        font-size: 1.3rem;
+      }
+
+      .summary-details {
+        padding: 1rem;
+      }
+
+      .summary-item {
+        font-size: 0.9rem;
+        flex-direction: column;
+        gap: 0.2rem;
       }
     }
   </style>
@@ -846,6 +978,20 @@
         </div>
       </div>
     </section>
+
+    <!-- Summary Modal -->
+    <div class="summary-modal" id="summaryModal">
+      <div class="summary-modal-content">
+        <h3>Booking Summary</h3>
+        <div class="summary-details" id="modalSummaryDetails">
+          <!-- Summary content will be populated by JavaScript -->
+        </div>
+        <div class="summary-actions">
+          <button class="modal-btn secondary" onclick="editBooking()">Edit Details</button>
+          <button class="modal-btn" onclick="proceedToSummary()">Continue to Summary</button>
+        </div>
+      </div>
+    </div>
   </main>
   <footer>
     <div class="footer-container">
@@ -889,7 +1035,6 @@
     let isChatActive = true;
     let calendarYear = 2025;
     let calendarMonth = 4; // May (0-based index)
-    let uploadedPhotos = [];
     let chatQuestions = [];
     let currentPetIndex = 0;
     
@@ -919,6 +1064,14 @@
             errorStack: error.stack || 'No stack trace available',
             userAgent: navigator.userAgent,
             sessionData: JSON.stringify(sessionData)
+          } else if (currentQuestion.id.startsWith('pet-social-')) {
+            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
+            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
+            sessionData.pets[petIndex].socialMedia = userResponse;
+            console.log('✅ Stored pet social media:', userResponse, 'for pet', petIndex);
+          } else if (currentQuestion.id === 'people-social') {
+            sessionData.peopleSocialMedia = userResponse;
+            console.log('✅ Stored people social media:', userResponse);
           }
         };
 
@@ -974,14 +1127,15 @@
         messageDiv.appendChild(calendarDiv);
       }
       
-      // Photo upload UI
+      // Photo upload UI for individual pets
       if (type === 'photo-upload' && isChatActive) {
         const uploadDiv = document.createElement('div');
         uploadDiv.className = 'photo-upload-container';
-        uploadDiv.innerHTML = generatePhotoUpload();
+        const currentQuestion = chatQuestions[currentQuestionIndex];
+        uploadDiv.innerHTML = generatePhotoUpload(currentQuestion.petIndex);
         messageDiv.appendChild(uploadDiv);
         
-        setTimeout(() => initializePhotoUpload(), 100);
+        setTimeout(() => initializePhotoUpload(currentQuestion.petIndex), 100);
       }
       
       // Options buttons (centered under bot messages)
@@ -1023,10 +1177,10 @@
       return `
         <div class="upload-area" onclick="document.getElementById('photo-input').click()">
           <div class="upload-icon">📸</div>
-          <div class="upload-text">Click or drag photos here</div>
-          <div class="upload-subtext">Upload up to 5 photos of your pet(s)</div>
-          <input type="file" id="photo-input" class="file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
-          <button class="upload-btn" type="button">Choose Photos</button>
+          <div class="upload-text">Click or drag photo here</div>
+          <div class="upload-subtext">Upload 1 photo of your pet</div>
+          <input type="file" id="photo-input" class="file-input" accept="image/*" onchange="handleFileSelect(event)">
+          <button class="upload-btn" type="button">Choose Photo</button>
         </div>
         <div class="uploaded-photos" id="uploaded-photos"></div>
         <div style="margin-top: 1rem;">
@@ -1067,30 +1221,31 @@
     
     // Process uploaded files
     function handleFiles(files) {
-      const maxFiles = 5;
-      const currentCount = uploadedPhotos.length;
+      // Only allow 1 photo
+      if (uploadedPhotos.length >= 1) {
+        alert('You can only upload 1 photo. Please remove the current photo first.');
+        return;
+      }
       
-      for (let i = 0; i < Math.min(files.length, maxFiles - currentCount); i++) {
-        const file = files[i];
+      if (files.length > 0) {
+        const file = files[0]; // Only take the first file
         
         if (file.type.startsWith('image/')) {
           const reader = new FileReader();
           reader.onload = function(e) {
             const photo = {
-              id: Date.now() + i,
+              id: Date.now(),
               file: file,
               dataUrl: e.target.result,
               name: file.name
             };
-            uploadedPhotos.push(photo);
+            uploadedPhotos = [photo]; // Replace any existing photo
             displayUploadedPhotos();
           };
           reader.readAsDataURL(file);
+        } else {
+          alert('Please upload an image file.');
         }
-      }
-      
-      if (files.length + currentCount > maxFiles) {
-        alert(`You can only upload up to ${maxFiles} photos. Only the first ${maxFiles - currentCount} photos were added.`);
       }
     }
     
@@ -1328,10 +1483,21 @@
             time: timeSlots[startIndex + i]
           });
         }
+        
+        // Show summary modal after time selection
+        showSummaryModal();
+        return; // Don't proceed to next question, wait for modal action
+        
       } else if (currentQuestion.id === 'preferred-contact') {
         sessionData.preferredContact = value;
       } else if (currentQuestion.id === 'referral-source') {
         sessionData.referralSource = value;
+      } else if (currentQuestion.id.startsWith('pet-social-')) {
+        const petIndex = parseInt(currentQuestion.id.split('-')[2]);
+        if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
+        sessionData.pets[petIndex].socialMedia = value;
+      } else if (currentQuestion.id === 'people-social') {
+        sessionData.peopleSocialMedia = value;
       }
       
       addMessage('user', displayValue);
@@ -1353,47 +1519,102 @@
         
         addMessage('bot', questionText, nextQuestion.options, nextQuestion.type);
       } else {
-        // Chat complete - show summary button
-        addMessage('bot', 'Perfect! All set! Let\'s review your session details. ✅', [], 'none');
-        const inputContainer = document.getElementById('chat-input');
-        inputContainer.innerHTML = '';
-        
-        const continueButton = document.createElement('button');
-        continueButton.className = 'book-btn';
-        continueButton.textContent = 'Continue to Summary';
-        continueButton.onclick = () => {
-          try {
-            // Save data redundantly for reliability
-            const dataString = JSON.stringify(sessionData);
-            const dataString2 = JSON.stringify(sessionData);
-            localStorage.setItem('intakeData', dataString);
-            sessionStorage.setItem('intakeData', dataString2);
-            console.log('✅ Intake data saved:', sessionData);
-            window.location.href = '/summary.html';
-          } catch (error) {
-            console.error('Error saving intake data:', error);
-            logErrorToAirtable('intake.html', error, sessionData);
-            addMessage('bot', 'Oops, something went wrong. Please try again. 😓', [], 'none');
-          }
-        };
-        
-        const messagesContainer = document.getElementById('chat-messages');
-        const buttonDiv = document.createElement('div');
-        buttonDiv.className = 'chat-message bot';
-        buttonDiv.style.alignItems = 'center';
-        buttonDiv.appendChild(continueButton);
-        messagesContainer.appendChild(buttonDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        isChatActive = false;
-        
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: 'smooth'
-        });
+        // Chat complete - this should not happen now since time selection shows modal
+        console.log('✅ All questions completed - this should show modal instead');
       }
     }
     
-    // Initialize page on load
+    // Show summary modal after time selection
+    function showSummaryModal() {
+      const modal = document.getElementById('summaryModal');
+      const summaryDetails = document.getElementById('modalSummaryDetails');
+      
+      // Build summary content
+      let summaryHTML = `
+        <div class="summary-item">
+          <span>Client:</span>
+          <span>${sessionData.firstName} ${sessionData.lastName || ''}</span>
+        </div>
+        <div class="summary-item">
+          <span>Email:</span>
+          <span>${sessionData.email || 'Not provided'}</span>
+        </div>
+        <div class="summary-item">
+          <span>Phone:</span>
+          <span>${sessionData.phoneNumber || 'Not provided'}</span>
+        </div>
+        <div class="summary-item">
+          <span>Session:</span>
+          <span>${sessionData.sessionType} (${sessionData.sessionDuration} min)</span>
+        </div>
+        <div class="summary-item">
+          <span>Location:</span>
+          <span>${sessionData.location}</span>
+        </div>
+        <div class="summary-item">
+          <span>Date & Time:</span>
+          <span>${sessionData.date} at ${sessionData.time}</span>
+        </div>
+      `;
+      
+      // Add pet details
+      if (sessionData.pets && sessionData.pets.length > 0) {
+        sessionData.pets.forEach((pet, index) => {
+          if (pet.name) {
+            summaryHTML += `
+              <div class="summary-item">
+                <span>Pet ${index + 1}:</span>
+                <span>${pet.name} (${pet.breed || 'Mixed'}, ${pet.age || 'Unknown'} old)</span>
+              </div>
+            `;
+          }
+        });
+      }
+      
+      summaryDetails.innerHTML = summaryHTML;
+      modal.style.display = 'flex';
+      
+      // Disable chat
+      isChatActive = false;
+      const input = document.getElementById('chat-input-text');
+      const sendButton = document.querySelector('.chat-input button');
+      input.disabled = true;
+      sendButton.disabled = true;
+    }
+    
+    // Edit booking details
+    function editBooking() {
+      const modal = document.getElementById('summaryModal');
+      modal.style.display = 'none';
+      
+      // Re-enable chat
+      isChatActive = true;
+      const input = document.getElementById('chat-input-text');
+      const sendButton = document.querySelector('.chat-input button');
+      input.disabled = false;
+      sendButton.disabled = false;
+      
+      // Go back to start of questions
+      currentQuestionIndex = -1;
+      proceedToNextQuestion();
+    }
+    
+    // Proceed to summary page
+    function proceedToSummary() {
+      try {
+        // Save data redundantly for reliability
+        const dataString = JSON.stringify(sessionData);
+        const dataString2 = JSON.stringify(sessionData);
+        localStorage.setItem('intakeData', dataString);
+        sessionStorage.setItem('intakeData', dataString2);
+        console.log('✅ Intake data saved:', sessionData);
+        window.location.href = '/summary.html';
+      } catch (error) {
+        console.error('Error saving intake data:', error);
+        logErrorToAirtable('intake.html', error, sessionData);
+        alert('Oops, something went wrong. Please try again.');
+      }
+    }
     document.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Intake page loaded - v4.1.6');
       
@@ -1492,20 +1713,47 @@
               type: 'text',
               usesPetName: true,
               petIndex: i
+            },
+            {
+              id: `pet-photos-${i}`,
+              text: `Let's see your adorable [PET_NAME]! 📸 Please upload a photo so I can better understand their personality.`,
+              type: 'photo-upload',
+              usesPetName: true,
+              petIndex: i
+            },
+            {
+              id: `pet-social-${i}`,
+              text: `Does [PET_NAME] have their own social media account? 📱`,
+              type: 'options',
+              usesPetName: true,
+              petIndex: i,
+              options: [
+                { value: 'Yes', display: 'Yes 📸' },
+                { value: 'No', display: 'No 🚫' }
+              ]
             }
           );
         }
         
-        // Add photo upload and session details
+        // Add people social media questions if people are attending
+        const peopleCount = parseInt(sessionData.peopleCount) || 0;
+        if (peopleCount > 0) {
+          chatQuestions.push({
+            id: 'people-social',
+            text: `Do you have social media accounts you'd like us to tag in posts? 📱`,
+            type: 'options',
+            options: [
+              { value: 'Yes', display: 'Yes 📸' },
+              { value: 'No', display: 'No 🚫' }
+            ]
+          });
+        }
+        
+        // Add date and time selection (only once)
         chatQuestions.push(
           {
-            id: 'pet-photos',
-            text: "Let's see your adorable pet(s)! 📸 Please upload some photos so I can better understand your furry friend's personality.",
-            type: 'photo-upload'
-          },
-          {
             id: 'date',
-            text: "Let's pick a date for your session! 📅 Please select a date from the calendar below.",
+            text: "Perfect! Now let's pick a date for your session! 📅 Please select a date from the calendar below.",
             type: 'calendar'
           },
           {
