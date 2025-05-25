@@ -71,11 +71,6 @@
       }
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
-    }
-
     /* === HEADER === */
     header {
       background-image: url("assets/images/ani_bkgd_cool.png");
@@ -185,19 +180,32 @@
       animation: moveBackground 30s ease-in-out infinite;
       padding: 4rem 1rem;
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* === PAYMENT SECTION === */
-    .payment-section {
-      max-width: 900px;
-      margin: 0 auto;
+    /* === PAYMENT CARD === */
+    .payment-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 100%;
+      max-width: 600px;
       text-align: center;
       animation: fadeInUp 0.8s ease-out;
     }
 
     .payment-title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
       color: white;
@@ -206,159 +214,36 @@
 
     .payment-subtitle {
       font-family: 'Inter', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 400;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       opacity: 0.9;
       line-height: 1.5;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
-    /* === PROGRESS INDICATOR === */
-    .progress-section {
-      text-align: center;
-      margin-bottom: 3rem;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .progress-steps {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .progress-step {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: rgba(255, 255, 255, 0.7);
-      transition: all 0.3s ease;
-    }
-
-    .progress-step.completed {
-      background: var(--available-green);
-      border-color: var(--available-green);
-      color: white;
-    }
-
-    .progress-step.active {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-      color: white;
-      animation: pulse 2s infinite;
-    }
-
-    .progress-line {
-      width: 60px;
-      height: 2px;
-      background: rgba(255, 255, 255, 0.3);
-      position: relative;
-    }
-
-    .progress-line.completed {
-      background: var(--available-green);
-    }
-
-    .progress-text {
-      color: white;
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-
-    /* === PAYMENT CONTAINER === */
-    .payment-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .booking-summary {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
+    /* === STRIPE CONTAINER === */
     .stripe-container {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 16px;
       padding: 2rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: white;
-      text-align: center;
-    }
-
-    .summary-item {
+      margin: 2rem 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      min-height: 400px;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      margin-bottom: 0.8rem;
-      font-size: 1rem;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .summary-item:last-child {
-      border-bottom: none;
-      font-weight: 600;
-      font-size: 1.2rem;
-      color: var(--gold);
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 2px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .summary-item .label {
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    .summary-item .value {
-      color: white;
-      font-weight: 600;
-    }
-
-    /* === STRIPE EMBED AREA === */
     .stripe-embed {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      width: 100%;
+      height: 100%;
       min-height: 300px;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      position: relative;
+      align-items: center;
     }
 
     .stripe-placeholder {
@@ -368,103 +253,59 @@
       opacity: 0.7;
     }
 
-    .stripe-redirect-info {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 1rem;
-      margin-top: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .redirect-label {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 0.5rem;
-    }
-
-    .redirect-link {
-      font-family: monospace;
-      font-size: 0.8rem;
-      color: var(--gold);
-      word-break: break-all;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 0.5rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .redirect-link:hover {
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    .copy-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .copy-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .payment-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 1.5rem;
-    }
-
-    .action-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .action-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    .action-btn.secondary {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .action-btn.secondary:hover {
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    .stripe-placeholder .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
     }
 
     /* === SECURITY NOTICE === */
     .security-notice {
       background: rgba(16, 185, 129, 0.1);
       border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 8px;
-      padding: 1rem;
-      margin: 2rem auto;
-      max-width: 600px;
-      text-align: center;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
       color: var(--available-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
     }
 
     .security-notice .icon {
       font-size: 1.5rem;
-      margin-bottom: 0.5rem;
+    }
+
+    .security-notice .text {
+      text-align: left;
+    }
+
+    .security-notice .text strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .security-notice .text p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* === LOADING ANIMATION === */
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(244, 124, 44, 0.3);
+      border-top: 4px solid var(--orange);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* === FOOTER STYLES === */
@@ -589,49 +430,32 @@
         padding: 2rem 1rem;
       }
 
+      .payment-card {
+        padding: 2rem;
+        max-width: 100%;
+      }
+
       .payment-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
 
       .payment-subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
 
-      .payment-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      .booking-summary, .stripe-container {
+      .stripe-container {
         padding: 1.5rem;
+        min-height: 350px;
       }
 
-      .section-title {
-        font-size: 1.5rem;
-      }
-
-      .progress-steps {
-        gap: 0.5rem;
-      }
-
-      .progress-step {
-        width: 35px;
-        height: 35px;
-        font-size: 0.9rem;
-      }
-
-      .progress-line {
-        width: 40px;
-      }
-
-      .stripe-embed {
-        padding: 1rem;
-        min-height: 250px;
-      }
-
-      .payment-actions {
+      .security-notice {
         flex-direction: column;
-        align-items: center;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .security-notice .text {
+        text-align: center;
       }
 
       .footer-container {
@@ -673,95 +497,31 @@
   </header>
 
   <main>
-    <!-- Progress Indicator -->
-    <div class="progress-section">
-      <div class="progress-steps">
-        <div class="progress-step completed">1</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">2</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">3</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">4</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step completed">5</div>
-        <div class="progress-line completed"></div>
-        <div class="progress-step active">6</div>
-      </div>
-      <p class="progress-text">Secure Payment Processing</p>
-    </div>
-
-    <div class="payment-section">
+    <div class="payment-card">
       <h1 class="payment-title">Secure Payment</h1>
-      <p class="payment-subtitle">Complete your booking with our secure Stripe payment processing.</p>
+      <p class="payment-subtitle">Complete your booking with our secure payment processing</p>
 
-      <div class="payment-container">
-        <!-- Booking Summary -->
-        <div class="booking-summary">
-          <h2 class="section-title">Booking Summary</h2>
-          <div id="bookingSummary">
-            <div class="summary-item">
-              <span class="label">Session Type:</span>
-              <span class="value" id="sessionType">—</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Location:</span>
-              <span class="value" id="sessionLocation">—</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Date & Time:</span>
-              <span class="value" id="sessionDateTime">—</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Pets:</span>
-              <span class="value" id="petCount">—</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">People:</span>
-              <span class="value" id="peopleCount">—</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Total:</span>
-              <span class="value" id="totalPrice">$0</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Stripe Payment Container -->
-        <div class="stripe-container">
-          <h2 class="section-title">Payment Details</h2>
-          
-          <!-- Stripe Embed Area -->
-          <div class="stripe-embed" id="stripe-embed">
-            <div class="stripe-placeholder">
-              <p>🔒 Stripe payment form will load here</p>
-              <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.7;">
-                Secure payment processing powered by Stripe
-              </p>
-            </div>
-          </div>
-
-          <!-- Stripe Redirect Information -->
-          <div class="stripe-redirect-info">
-            <div class="redirect-label">Stripe Checkout Link:</div>
-            <div class="redirect-link" id="stripe-redirect-link" onclick="copyToClipboard()">
-              Link will be generated based on your session details...
-            </div>
-            <button class="copy-btn" onclick="copyToClipboard()">Copy Link</button>
-          </div>
-
-          <div class="payment-actions">
-            <button class="action-btn" onclick="proceedToStripe()">Pay with Stripe</button>
-            <a href="/payment-summary.html" class="action-btn secondary">Back to Summary</a>
+      <!-- Stripe Checkout Container -->
+      <div class="stripe-container" id="stripe-container">
+        <div class="stripe-embed" id="stripe-embed">
+          <div class="stripe-placeholder">
+            <div class="icon">🔒</div>
+            <p><strong>Stripe Checkout will load here</strong></p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+              Secure payment processing powered by Stripe
+            </p>
+            <div class="loading-spinner"></div>
           </div>
         </div>
       </div>
 
       <!-- Security Notice -->
       <div class="security-notice">
-        <div class="icon">🔐</div>
-        <p><strong>Your payment is secured by Stripe</strong></p>
-        <p>All payment information is encrypted and processed securely. We never store your payment details.</p>
+        <div class="icon">🛡️</div>
+        <div class="text">
+          <strong>Bank-level security</strong>
+          <p>Your payment information is encrypted and secure. We never store your payment details.</p>
+        </div>
       </div>
     </div>
   </main>
@@ -805,10 +565,6 @@
   <script>
     // Global variables
     let stripe;
-    let elements;
-    let sessionData = {};
-    let calculatedTotal = 0;
-    let stripeCheckoutLink = '';
 
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
@@ -817,131 +573,88 @@
 
     // Initialize Stripe
     function initializeStripe() {
-      // Replace with your actual Stripe publishable key
-      stripe = Stripe('pk_test_your_stripe_publishable_key_here');
-      
-      // You can initialize Stripe Elements here if you want embedded payment forms
-      // For now, we'll focus on the redirect approach you're already using
-    }
-
-    // Copy Stripe link to clipboard
-    function copyToClipboard() {
-      const linkElement = document.getElementById('stripe-redirect-link');
-      const link = linkElement.textContent;
-      
-      if (link && link !== 'Link will be generated based on your session details...') {
-        navigator.clipboard.writeText(link).then(() => {
-          // Visual feedback
-          const copyBtn = document.querySelector('.copy-btn');
-          const originalText = copyBtn.textContent;
-          copyBtn.textContent = 'Copied!';
-          copyBtn.style.background = 'rgba(16, 185, 129, 0.3)';
-          
-          setTimeout(() => {
-            copyBtn.textContent = originalText;
-            copyBtn.style.background = '';
-          }, 2000);
-        }).catch(err => {
-          console.error('Failed to copy: ', err);
-          alert('Failed to copy link. Please select and copy manually.');
-        });
+      try {
+        // Replace 'pk_test_...' with your actual Stripe publishable key
+        stripe = Stripe('pk_test_your_stripe_publishable_key_here');
+        console.log('✅ Stripe initialized successfully');
+        
+        // You can initialize Stripe Elements here
+        // Example: embedStripeCheckout();
+        
+      } catch (error) {
+        console.error('❌ Failed to initialize Stripe:', error);
+        showStripeError('Failed to initialize Stripe payment system');
       }
     }
 
-    // Proceed to Stripe checkout
-    function proceedToStripe() {
-      if (stripeCheckoutLink && stripeCheckoutLink !== '#') {
-        // Save payment data before redirect
-        const paymentData = {
-          ...sessionData,
-          paymentMethod: 'stripe',
-          paymentTimestamp: new Date().toISOString(),
-          stripeCheckoutUrl: stripeCheckoutLink
-        };
-
-        // Save redundantly
-        try {
-          const dataString = JSON.stringify(paymentData);
-          localStorage.setItem('ptpPaymentData', dataString);
-          localStorage.setItem('ptpPaymentBackup', dataString);
-          sessionStorage.setItem('ptpPaymentData', dataString);
-          console.log('✅ Payment data saved before Stripe redirect');
-        } catch (error) {
-          console.warn('⚠️ Storage warning:', error);
-        }
-
-        // Redirect to Stripe
-        window.location.href = stripeCheckoutLink;
-      } else {
-        alert('Payment link not available. Please contact support.');
+    // Example function to embed Stripe Elements
+    function embedStripeElements() {
+      if (!stripe) {
+        console.error('Stripe not initialized');
+        return;
       }
-    }
 
-    // Calculate total price
-    function calculateTotal(sessionData) {
-      let total = 0;
-      if (sessionData.session === "Mini") total += 50;
-      if (sessionData.session === "Full") total += 100;
-      if (sessionData.petCount === "2") total += 40;
-      if (sessionData.peopleCount === "2") total += 20;
-      return total;
-    }
+      const elements = stripe.elements();
+      const cardElement = elements.create('card', {
+        style: {
+          base: {
+            fontSize: '16px',
+            color: '#424770',
+            '::placeholder': {
+              color: '#aab7c4',
+            },
+          },
+        },
+      });
 
-    // Generate Stripe checkout link
-    function generateStripeLink(sessionData) {
-      const sessionType = sessionData.session?.toLowerCase();
-      const location = sessionData.park?.toLowerCase();
-      const petCount = sessionData.petCount;
-      const peopleCount = sessionData.peopleCount;
-
-      // Map session details to Stripe Checkout links (same as your existing logic)
-      if (sessionType === "full") {
-        if (location === "cheesman") {
-          if (petCount === "1" && peopleCount === "1") {
-            return "https://buy.stripe.com/4gw6ry0Wz0bXe1G147?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "2" && peopleCount === "1") {
-            return "https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "1" && peopleCount === "2") {
-            return "https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "2" && peopleCount === "2") {
-            return "https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d?prefilled_success_url=https://your-site.pages.dev/success.html";
-          }
-        } else if (location === "city") {
-          if (petCount === "1" && peopleCount === "1") {
-            return "https://buy.stripe.com/00gg28eNp9Mx9Lq9AE?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "2" && peopleCount === "1") {
-            return "https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "1" && peopleCount === "2") {
-            return "https://buy.stripe.com/14A8wR8d12921VD80B9bO0e?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "2" && peopleCount === "2") {
-            return "https://buy.stripe.com/6oU28tdxl29243Lft39bO0f?prefilled_success_url=https://your-site.pages.dev/success.html";
-          }
-        }
-      } else if (sessionType === "mini") {
-        if (location === "cheesman") {
-          if (petCount === "1" && peopleCount === "1") {
-            return "https://buy.stripe.com/eVag28fRtgaVe1GcMN?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "2" && peopleCount === "1") {
-            return "https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "1" && peopleCount === "2") {
-            return "https://buy.stripe.com/8x24gB64T292eIpbcN9bO09?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "2" && peopleCount === "2") {
-            return "https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g?prefilled_success_url=https://your-site.pages.dev/success.html";
-          }
-        } else if (location === "city") {
-          if (petCount === "1" && peopleCount === "1") {
-            return "https://buy.stripe.com/9AQ6ry7kX8It3n28wy?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "2" && peopleCount === "1") {
-            return "https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "1" && peopleCount === "2") {
-            return "https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b?prefilled_success_url=https://your-site.pages.dev/success.html";
-          } else if (petCount === "2" && peopleCount === "2") {
-            return "https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a?prefilled_success_url=https://your-site.pages.dev/success.html";
-          }
-        }
-      }
+      // Clear the placeholder
+      document.getElementById('stripe-embed').innerHTML = '';
       
-      return '#'; // Fallback
+      // Mount the card element
+      cardElement.mount('#stripe-embed');
+    }
+
+    // Example function to embed Stripe Checkout
+    function embedStripeCheckout() {
+      // This is where you would embed a Stripe Checkout session
+      // For now, we'll show a placeholder
+      const container = document.getElementById('stripe-embed');
+      container.innerHTML = `
+        <div style="text-align: center; color: #666;">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">💳</div>
+          <p><strong>Stripe Checkout Ready</strong></p>
+          <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            This container is ready for your Stripe checkout integration
+          </p>
+          <button onclick="simulateStripeRedirect()" style="
+            background: linear-gradient(135deg, #635bff, #1e88e5);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-size: 14px;
+          ">Pay with Stripe</button>
+        </div>
+      `;
+    }
+
+    // Simulate Stripe redirect (for demo purposes)
+    function simulateStripeRedirect() {
+      alert('This would redirect to your Stripe checkout page!');
+    }
+
+    // Show Stripe error
+    function showStripeError(message) {
+      const container = document.getElementById('stripe-embed');
+      container.innerHTML = `
+        <div style="text-align: center; color: #dc3545;">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">⚠️</div>
+          <p><strong>Payment System Error</strong></p>
+          <p style="font-size: 0.9rem; margin-top: 0.5rem;">${message}</p>
+        </div>
+      `;
     }
 
     // Log errors to Airtable for live testing
@@ -981,42 +694,17 @@
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('🎯 Stripe Payment page loaded, initializing...');
+      console.log('🎯 Stripe Payment page loaded');
 
       // Initialize Stripe
       initializeStripe();
 
-      // Retrieve session data
-      sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
-      
-      // Validate session data
-      if (!sessionData.bookingId || !sessionData.selectedDateTime) {
-        alert('Booking data not found. Please start over.');
-        window.location.href = '/index.html#session-builder-section';
-        return;
-      }
+      // Simulate loading and then show the checkout
+      setTimeout(() => {
+        embedStripeCheckout();
+      }, 2000);
 
-      console.log('Loaded session data for Stripe payment:', sessionData);
-
-      // Populate booking summary
-      document.getElementById('sessionType').textContent = sessionData.session || '—';
-      document.getElementById('sessionLocation').textContent = sessionData.park || '—';
-      document.getElementById('sessionDateTime').textContent = sessionData.selectedDateTime ? new Date(sessionData.selectedDateTime).toLocaleString() : '—';
-      document.getElementById('petCount').textContent = sessionData.petCount || '—';
-      document.getElementById('peopleCount').textContent = sessionData.peopleCount || '—';
-
-      // Calculate total
-      calculatedTotal = calculateTotal(sessionData);
-      document.getElementById('totalPrice').textContent = `$${calculatedTotal}`;
-
-      // Generate Stripe checkout link
-      stripeCheckoutLink = generateStripeLink(sessionData);
-      document.getElementById('stripe-redirect-link').textContent = stripeCheckoutLink;
-
-      console.log('🎯 Stripe payment page initialized:', {
-        total: calculatedTotal,
-        stripeLink: stripeCheckoutLink
-      });
+      console.log('✅ Payment page ready for Stripe integration');
     });
   </script>
 </body>
