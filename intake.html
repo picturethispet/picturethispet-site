@@ -1331,13 +1331,13 @@
         addMessage('bot', questionText, nextQuestion.options, nextQuestion.type);
       } else {
         // Chat complete - show summary button
-        addMessage('bot', 'Perfect! All set! Let\'s review your session details and pick a date. ✅', [], 'none');
+        addMessage('bot', 'Perfect! All set! Let\'s review your session details. ✅', [], 'none');
         const inputContainer = document.getElementById('chat-input');
         inputContainer.innerHTML = '';
         
         const continueButton = document.createElement('button');
         continueButton.className = 'book-btn';
-        continueButton.textContent = 'Continue to Date Selection';
+        continueButton.textContent = 'Continue to Summary';
         continueButton.onclick = () => {
           try {
             // Save data redundantly for reliability
@@ -1472,6 +1472,26 @@
             }
           );
         }
+        
+        // Add photo upload and session details
+        chatQuestions.push(
+          {
+            id: 'pet-photos',
+            text: "Let's see your adorable pet(s)! 📸 Please upload some photos so I can better understand your furry friend's personality.",
+            type: 'photo-upload'
+          },
+          {
+            id: 'date',
+            text: "Let's pick a date for your session! 📅 Please select a date from the calendar below.",
+            type: 'calendar'
+          },
+          {
+            id: 'time',
+            text: "",
+            type: 'options',
+            options: []
+          }
+        );
         
         // Add photo upload and session details
         chatQuestions.push(
