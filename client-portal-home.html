@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Client Portal | Picture This Pet</title>
-  <meta name="description" content="Manage your pet photography sessions and view your gallery.">
+  <title>My Portal | Picture This Pet</title>
+  <meta name="description" content="View your bookings and schedule new pet photography sessions with PictureThisPet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -17,8 +17,6 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
-      --client-blue: #3b82f6;
-      --client-purple: #8b5cf6;
     }
 
     * {
@@ -28,45 +26,19 @@
     }
 
     html, body {
-      overflow-x: hidden;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-    }
-
-    html::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    html::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    html::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
-    }
-
-    body {
+      height: 100%;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
+      background-image: url('assets/images/main_background_allsystem.png');
+      background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      animation: moveBackground 30s ease-in-out infinite;
-      min-height: 100vh;
-    }
-
-    @keyframes moveBackground {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -74,124 +46,62 @@
       }
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+    .container {
+      min-height: 100vh;
+      padding: 2rem;
+      animation: fadeInUp 1s ease-out;
     }
 
-    /* === HEADER === */
-    .client-header {
+    .header {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 1rem;
     }
 
-    .logo-small {
-      height: 50px;
+    .logo {
+      height: 60px;
     }
 
     .header-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
       color: white;
+    }
+
+    .header-subtitle {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 0.2rem;
     }
 
     .header-right {
       display: flex;
-      align-items: center;
       gap: 1rem;
-    }
-
-    .client-welcome {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.8rem 1.5rem;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .logout-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.7rem 1.2rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .logout-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    /* === MAIN CONTENT === */
-    .client-main {
-      padding: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding-bottom: 4rem;
-    }
-
-    /* === CARDS === */
-    .client-card {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 2rem;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
     }
 
-    .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: white;
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    /* === BUTTONS === */
     .btn {
       padding: 0.8rem 1.5rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
@@ -200,7 +110,6 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      min-height: 48px;
     }
 
     .btn-primary {
@@ -223,189 +132,193 @@
       background: rgba(255, 255, 255, 0.2);
     }
 
-    .btn-small {
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
-      min-height: 40px;
-    }
-
-    /* === STATS === */
-    .stats-grid {
+    .main-content {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
-    .stat-card {
+    .section {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .bookings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .booking-card {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       padding: 1.5rem;
-      text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.2);
       transition: all 0.3s ease;
     }
 
-    .stat-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    .stat-card h4 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--gold);
-    }
-
-    .stat-card p {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: white;
-    }
-
-    /* === BOOKING SLOTS === */
-    .slots-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .slot-card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .slot-card:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .booking-card:hover {
+      background: rgba(255, 255, 255, 0.15);
       transform: translateY(-2px);
     }
 
-    .slot-card.available {
-      border-left: 4px solid var(--available-green);
-    }
-
-    .slot-card.booked {
-      border-left: 4px solid var(--booked-red);
-    }
-
-    .slot-date {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-    }
-
-    .slot-time {
-      font-size: 1rem;
-      color: white;
-      margin-bottom: 0.5rem;
-    }
-
-    .slot-location {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 1rem;
-    }
-
-    .slot-status {
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      display: inline-block;
-    }
-
-    .slot-status.available {
-      background: rgba(16, 185, 129, 0.2);
-      color: var(--available-green);
-      border: 1px solid var(--available-green);
-    }
-
-    .slot-status.booked {
-      background: rgba(239, 68, 68, 0.2);
-      color: var(--booked-red);
-      border: 1px solid var(--booked-red);
-    }
-
-    /* === BOOKINGS LIST === */
-    .bookings-list {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .booking-item {
-      padding: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    .booking-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.3s ease;
-    }
-
-    .booking-item:last-child {
-      border-bottom: none;
-    }
-
-    .booking-item:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-    }
-
-    .booking-info {
-      flex: 1;
+      margin-bottom: 1rem;
     }
 
     .booking-date {
       font-size: 1.1rem;
       font-weight: 600;
-      color: white;
-      margin-bottom: 0.3rem;
-    }
-
-    .booking-details {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--gold);
     }
 
     .booking-status {
-      font-size: 0.8rem;
-      font-weight: 600;
       padding: 0.3rem 0.8rem;
       border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
     }
 
-    .booking-status.upcoming {
-      background: rgba(59, 130, 246, 0.2);
-      color: var(--client-blue);
-      border: 1px solid var(--client-blue);
+    .status-booked {
+      background: var(--booked-red);
+      color: white;
     }
 
-    .booking-status.completed {
-      background: rgba(16, 185, 129, 0.2);
-      color: var(--available-green);
-      border: 1px solid var(--available-green);
+    .status-available {
+      background: var(--available-green);
+      color: white;
     }
 
-    .booking-status.past {
-      background: rgba(107, 114, 128, 0.2);
-      color: #9ca3af;
-      border: 1px solid #6b7280;
-    }
-
-    /* === FORMS === */
-    .form-grid {
+    .booking-details {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .booking-detail {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .slot-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .slot-card:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      border-color: var(--gold);
+    }
+
+    .slot-card.selected {
+      background: rgba(253, 183, 94, 0.2);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(253, 183, 94, 0.3);
+    }
+
+    .slot-date {
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .slot-time {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.5rem;
+    }
+
+    .slot-location {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .loading {
+      text-align: center;
+      color: var(--gold);
+      padding: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 2rem;
+      font-style: italic;
+    }
+
+    .error-message {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      color: #ef4444;
+      font-size: 0.9rem;
+    }
+
+    .success-message {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      color: #10b981;
+      font-size: 0.9rem;
+    }
+
+    .booking-form {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: none;
+    }
+
+    .booking-form.show {
+      display: block;
+      animation: fadeInUp 0.5s ease-out;
     }
 
     .form-group {
@@ -414,7 +327,7 @@
 
     .form-label {
       display: block;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
       color: rgba(255, 255, 255, 0.9);
@@ -423,7 +336,7 @@
     .form-input, .form-select {
       width: 100%;
       padding: 0.8rem;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-family: 'Inter', sans-serif;
       color: white;
       background: rgba(255, 255, 255, 0.1);
@@ -436,885 +349,648 @@
       outline: none;
       border-color: var(--gold);
       background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 2px rgba(253, 183, 94, 0.2);
     }
 
     .form-input::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }
 
-    /* === MODALS === */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
-      z-index: 3000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      border-radius: 20px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-      padding: 2rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      max-width: 600px;
-      width: 90%;
-      max-height: 80vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .modal-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: white;
-    }
-
-    .modal-close {
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      min-height: 40px;
-      min-width: 40px;
-    }
-
-    .modal-close:hover {
-      color: white;
-    }
-
-    .modal-actions {
-      display: flex;
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 1rem;
-      justify-content: flex-end;
-      margin-top: 2rem;
     }
 
-    /* === FILTERS === */
-    .filter-tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
+    .selected-slot-info {
+      background: rgba(253, 183, 94, 0.1);
+      border: 1px solid rgba(253, 183, 94, 0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      color: var(--gold);
     }
 
-    .filter-tab {
-      padding: 0.6rem 1.2rem;
+    /* Scrollbar styling */
+    .slots-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .slots-grid::-webkit-scrollbar-track {
       background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 20px;
-      color: rgba(255, 255, 255, 0.8);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-      font-weight: 600;
+      border-radius: 3px;
     }
 
-    .filter-tab:hover {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
+    .slots-grid::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 3px;
     }
 
-    .filter-tab.active {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border-color: var(--gold);
-    }
-
-    /* === RESPONSIVE === */
+    /* Responsive */
     @media (max-width: 768px) {
-      .client-header {
-        padding: 0.5rem 1rem;
-        flex-wrap: wrap;
-      }
-
-      .header-title {
-        font-size: 1.4rem;
-      }
-
-      .client-main {
+      .container {
         padding: 1rem;
       }
 
-      .form-grid {
+      .main-content {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
 
-      .stats-grid {
-        grid-template-columns: 1fr;
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header-title {
+        font-size: 1.5rem;
       }
 
       .slots-grid {
         grid-template-columns: 1fr;
       }
 
-      .booking-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+      .form-row {
+        grid-template-columns: 1fr;
       }
 
-      .modal {
-        padding: 1.5rem;
-        margin: 1rem;
+      .booking-details {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="client-header">
-    <div class="header-left">
-      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo-small" />
-      <h1 class="header-title">Client Portal 🐾</h1>
-    </div>
-    <div class="header-right">
-      <div class="client-welcome" id="clientWelcome">Welcome!</div>
-      <a href="/portal" class="logout-btn">Logout</a>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="client-main">
-    <!-- Welcome & Stats -->
-    <div class="client-card">
-      <div class="card-header">
-        <h2 class="card-title">Your Pet Photography Dashboard 📸</h2>
-        <div class="card-actions">
-          <button class="btn btn-secondary btn-small" onclick="refreshData()">🔄 Refresh</button>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo" />
+        <div>
+          <h1 class="header-title">Welcome Back! 🐾</h1>
+          <p class="header-subtitle" id="welcomeMessage">Loading your portal...</p>
         </div>
       </div>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <h4>Total Sessions 📅</h4>
-          <p id="totalSessions">Loading...</p>
-        </div>
-        <div class="stat-card">
-          <h4>Upcoming Sessions 🎉</h4>
-          <p id="upcomingSessions">Loading...</p>
-        </div>
-        <div class="stat-card">
-          <h4>Favorite Pet 🐕</h4>
-          <p id="favoritePet">Loading...</p>
-        </div>
+      <div class="header-right">
+        <button class="btn btn-secondary" onclick="refreshData()">🔄 Refresh</button>
+        <a href="/portal.html" class="btn btn-primary">🚪 Logout</a>
       </div>
     </div>
 
-    <!-- Available Booking Slots -->
-    <div class="client-card">
-      <div class="card-header">
-        <h2 class="card-title">Book a New Session 📅</h2>
-        <div class="card-actions">
-          <button class="btn btn-primary btn-small" onclick="showAllAvailability()">📋 View All Dates</button>
-        </div>
-      </div>
-
-      <div class="filter-tabs">
-        <div class="filter-tab active" onclick="filterSlots('next7days')">Next 7 Days</div>
-        <div class="filter-tab" onclick="filterSlots('next30days')">Next 30 Days</div>
-        <div class="filter-tab" onclick="filterSlots('all')">All Available</div>
-      </div>
-
-      <div class="slots-grid" id="availableSlotsGrid">
-        <!-- Available slots will be populated here -->
-      </div>
-    </div>
-
-    <!-- Your Bookings -->
-    <div class="client-card">
-      <div class="card-header">
-        <h2 class="card-title">Your Bookings 📖</h2>
-        <div class="card-actions">
-          <button class="btn btn-secondary btn-small" onclick="filterBookings('all')">All</button>
-          <button class="btn btn-secondary btn-small" onclick="filterBookings('upcoming')">Upcoming</button>
-          <button class="btn btn-secondary btn-small" onclick="filterBookings('completed')">Completed</button>
-        </div>
-      </div>
-
-      <div class="bookings-list" id="bookingsList">
-        <!-- Bookings will be populated here -->
-      </div>
-    </div>
-  </main>
-
-  <!-- Booking Modal -->
-  <div class="modal-overlay" id="bookingModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 class="modal-title">Book Session 📸</h3>
-        <button class="modal-close" onclick="closeBookingModal()">×</button>
-      </div>
-      
-      <form id="bookingForm">
-        <div class="form-group">
-          <label class="form-label">Selected Date & Time 📅</label>
-          <input type="text" class="form-input" id="selectedSlotInfo" readonly>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Session Type 📸</label>
-          <select class="form-select" id="sessionType" required>
-            <option value="">Choose session type...</option>
-            <option value="Mini Session">Mini Session (60 minutes)</option>
-            <option value="Full Session">Full Session (90 minutes)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Number of Pets 🐾</label>
-          <select class="form-select" id="petCount" onchange="updatePetFields()" required>
-            <option value="1">1 Pet</option>
-            <option value="2">2 Pets</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Number of People 👥</label>
-          <select class="form-select" id="peopleCount" onchange="updatePeopleFields()" required>
-            <option value="1">1 Person</option>
-            <option value="2">2 People</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Additional Pet Name 🐕</label>
-          <input type="text" class="form-input" id="additionalPetName" placeholder="If bringing a second pet">
-        </div>
-
-        <div class="form-group" id="secondPersonFields" style="display: none;">
-          <label class="form-label">Second Person Details 👤</label>
-          <input type="text" class="form-input" id="secondPersonName" placeholder="Second person's name">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Special Requests 📝</label>
-          <textarea class="form-input" id="specialRequests" rows="3" placeholder="Any special requests or notes for your session..."></textarea>
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- My Bookings Section -->
+      <div class="section">
+        <h2 class="section-title">📅 My Bookings</h2>
+        
+        <div id="bookingsError" class="error-message" style="display: none;"></div>
+        <div id="bookingsSuccess" class="success-message" style="display: none;"></div>
+        
+        <div id="bookingsLoading" class="loading">
+          🔄 Loading your bookings...
         </div>
         
-        <div class="modal-actions">
-          <button type="button" class="btn btn-secondary" onclick="closeBookingModal()">Cancel 🚫</button>
-          <button type="submit" class="btn btn-primary">Book Session 🎉</button>
+        <div id="bookingsList" class="bookings-list" style="display: none;">
+          <!-- Bookings will be populated here -->
         </div>
-      </form>
+        
+        <div id="bookingsEmpty" class="empty-state" style="display: none;">
+          📭 No bookings yet. Book your first session on the right!
+        </div>
+      </div>
+
+      <!-- Available Slots Section -->
+      <div class="section">
+        <h2 class="section-title">🗓️ Book a New Session</h2>
+        
+        <div id="slotsError" class="error-message" style="display: none;"></div>
+        <div id="slotsSuccess" class="success-message" style="display: none;"></div>
+        
+        <div id="slotsLoading" class="loading">
+          🔄 Loading available slots...
+        </div>
+        
+        <div id="slotsContainer" style="display: none;">
+          <div id="slotsGrid" class="slots-grid">
+            <!-- Available slots will be populated here -->
+          </div>
+          
+          <div id="slotsEmpty" class="empty-state" style="display: none;">
+            📅 No available slots at the moment. Check back later!
+          </div>
+        </div>
+
+        <!-- Booking Form -->
+        <div id="bookingForm" class="booking-form">
+          <h3 style="color: var(--gold); margin-bottom: 1rem;">✨ Complete Your Booking</h3>
+          
+          <div id="selectedSlotInfo" class="selected-slot-info">
+            <!-- Selected slot details will appear here -->
+          </div>
+          
+          <form id="newBookingForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="clientName">Your Name *</label>
+                <input type="text" class="form-input" id="clientName" required placeholder="Enter your full name">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="clientEmail">Email Address *</label>
+                <input type="email" class="form-input" id="clientEmail" required placeholder="Enter your email">
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="clientPhone">Phone Number *</label>
+                <input type="tel" class="form-input" id="clientPhone" required placeholder="(303) 555-1234">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="clientZip">Zip Code *</label>
+                <input type="text" class="form-input" id="clientZip" required placeholder="80206">
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="petName">Pet's Name *</label>
+                <input type="text" class="form-input" id="petName" required placeholder="Enter your pet's name">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="petCount">Number of Pets</label>
+                <select class="form-select" id="petCount">
+                  <option value="1">1 Pet</option>
+                  <option value="2">2 Pets</option>
+                  <option value="3">3 Pets</option>
+                  <option value="4">4+ Pets</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="peopleCount">Number of People</label>
+                <select class="form-select" id="peopleCount">
+                  <option value="1">1 Person</option>
+                  <option value="2">2 People</option>
+                  <option value="3">3 People</option>
+                  <option value="4">4+ People</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="clientInstagram">Instagram Handle</label>
+                <input type="text" class="form-input" id="clientInstagram" placeholder="@yourhandle">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <input type="checkbox" id="marketingConsent" style="margin-right: 0.5rem;">
+                I'd like to receive updates about special offers and new sessions
+              </label>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+              <button type="button" class="btn btn-secondary" onclick="cancelBooking()">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="submitBookingBtn">
+                📸 Book Session
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
     // Global variables
-    let clientData = null;
+    let currentClient = null;
     let availableSlots = [];
     let clientBookings = [];
-    let sessionTypes = [];
     let selectedSlot = null;
-    let currentFilter = 'next7days';
+    let isBooking = false;
 
-    // Authentication and initialization
-    function checkClientAuthentication() {
-      const username = localStorage.getItem('clientUsername');
-      const password = localStorage.getItem('clientPassword');
-      
-      if (!username || !password || !password.includes('bark')) {
-        console.log('Not authenticated as client, redirecting...');
-        window.location.href = '/portal';
-        return;
-      }
-      
-      console.log('Authenticated as client:', username);
-      loadClientData(username);
-    }
+    // Initialize the portal
+    document.addEventListener('DOMContentLoaded', function() {
+      initializePortal();
+    });
 
-    // Load client data from Airtable
-    async function loadClientData(username) {
+    async function initializePortal() {
       try {
-        console.log('Loading client data for username:', username);
-        
-        // Fetch client record
-        const clientResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Clients?filterByFormula={username}='${username}'`, {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-
-        if (!clientResponse.ok) {
-          throw new Error(`Client fetch error: ${clientResponse.status}`);
-        }
-
-        const clientData = await clientResponse.json();
-        
-        if (clientData.records.length === 0) {
-          console.error('No client found with username:', username);
-          alert('Client record not found. Please contact support.');
-          window.location.href = '/portal';
+        // Check authentication
+        const clientData = localStorage.getItem('clientData');
+        if (!clientData) {
+          window.location.href = '/portal.html';
           return;
         }
 
-        clientData = clientData.records[0];
+        currentClient = JSON.parse(clientData);
         
         // Update welcome message
-        const clientEmail = clientData.fields.clientEmail || 'Valued Client';
-        document.getElementById('clientWelcome').textContent = `Welcome, ${clientEmail}! 👋`;
-        
-        // Load all related data
+        const welcomeMsg = document.getElementById('welcomeMessage');
+        welcomeMsg.textContent = `Manage your bookings and schedule new sessions`;
+
+        // Load data
         await Promise.all([
           loadClientBookings(),
-          loadAvailableSlots(),
-          loadSessionTypes()
+          loadAvailableSlots()
         ]);
-        
-        updateDashboardStats();
-        displayAvailableSlots();
-        displayClientBookings();
-        
+
       } catch (error) {
-        console.error('Error loading client data:', error);
-        await logErrorToAirtable('client-portal-home.html', error);
-        alert('Error loading your data. Please try refreshing the page.');
+        console.error('Portal initialization error:', error);
+        showBookingsError('Failed to load portal. Please refresh and try again.');
       }
     }
 
     // Load client bookings
     async function loadClientBookings() {
       try {
-        if (!clientData) return;
-        
-        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings?filterByFormula={clientRecord}='${clientData.id}'`, {
+        console.log('Loading bookings for client:', currentClient.id);
+
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings', {
           headers: {
             'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
           }
         });
 
         if (!response.ok) {
-          throw new Error(`Bookings fetch error: ${response.status}`);
+          throw new Error(`Airtable error: ${response.status}`);
         }
 
         const data = await response.json();
-        clientBookings = data.records.map(record => ({
-          id: record.id,
-          bookingId: record.fields.bookingId,
-          sessionDate: record.fields.sessionDate,
-          sessionType: record.fields.sessionType || 'Session',
-          petCount: record.fields.petCount || 1,
-          peopleCount: record.fields.peopleCount || 1,
-          client1FirstPetName: record.fields.client1FirstPetName,
-          client2FirstPetName: record.fields.client2FirstPetName,
-          calendarSlot: record.fields.calendarSlot ? record.fields.calendarSlot[0] : null,
-          specialRequests: record.fields.specialRequests || ''
-        }));
-
-        console.log('Client bookings loaded:', clientBookings);
         
+        // Filter bookings for this client
+        clientBookings = data.records.filter(record => {
+          return record.fields.clientRecord && record.fields.clientRecord.includes(currentClient.id);
+        });
+
+        console.log('Found bookings:', clientBookings.length);
+        displayBookings();
+
       } catch (error) {
-        console.error('Error loading client bookings:', error);
-        await logErrorToAirtable('client-portal-home.html', error);
+        console.error('Error loading bookings:', error);
+        showBookingsError('Failed to load your bookings. Please try refreshing.');
+      } finally {
+        document.getElementById('bookingsLoading').style.display = 'none';
       }
+    }
+
+    // Display bookings
+    function displayBookings() {
+      const bookingsList = document.getElementById('bookingsList');
+      const bookingsEmpty = document.getElementById('bookingsEmpty');
+
+      if (clientBookings.length === 0) {
+        bookingsEmpty.style.display = 'block';
+        bookingsList.style.display = 'none';
+        return;
+      }
+
+      // Sort bookings by date (newest first)
+      const sortedBookings = clientBookings.sort((a, b) => 
+        new Date(b.fields.sessionDate || 0) - new Date(a.fields.sessionDate || 0)
+      );
+
+      bookingsList.innerHTML = sortedBookings.map(booking => {
+        const fields = booking.fields;
+        const sessionDate = fields.sessionDate ? new Date(fields.sessionDate) : null;
+        const dateStr = sessionDate ? sessionDate.toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric', 
+          month: 'long',
+          day: 'numeric'
+        }) : 'Date TBD';
+
+        return `
+          <div class="booking-card">
+            <div class="booking-header">
+              <div class="booking-date">${dateStr}</div>
+              <div class="booking-status status-booked">Booked</div>
+            </div>
+            <div class="booking-details">
+              <div class="booking-detail">
+                <span>Booking ID:</span>
+                <span>${fields.bookingId || 'N/A'}</span>
+              </div>
+              <div class="booking-detail">
+                <span>Pets:</span>
+                <span>${fields.petCount || 1}</span>
+              </div>
+              <div class="booking-detail">
+                <span>People:</span>
+                <span>${fields.peopleCount || 1}</span>
+              </div>
+              <div class="booking-detail">
+                <span>Pet Name:</span>
+                <span>${fields.client1FirstPetName || 'N/A'}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      bookingsList.style.display = 'block';
+      bookingsEmpty.style.display = 'none';
     }
 
     // Load available slots
     async function loadAvailableSlots() {
       try {
-        const response = await fetch("https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar?filterByFormula=AND({status}='available',{isBlocked}=0,{createdByAdmin}=1)", {
+        console.log('Loading available slots...');
+
+        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
           headers: {
             'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
           }
         });
 
         if (!response.ok) {
-          throw new Error(`Calendar fetch error: ${response.status}`);
+          throw new Error(`Airtable error: ${response.status}`);
         }
 
         const data = await response.json();
-        availableSlots = data.records.map(record => ({
-          id: record.id,
-          date: record.fields.date,
-          time: record.fields.time,
-          location: record.fields.Location || 'TBD',
-          sessionType: record.fields.sessionType || 'Open Availability',
-          bufferTime: record.fields.bufferTime || 60,
-          availabilityWindow: record.fields.availabilityWindow || ''
-        })).filter(slot => {
-          // Only show future slots
-          const slotDate = new Date(slot.date + 'T' + slot.time);
-          return slotDate > new Date();
-        }).sort((a, b) => {
-          const dateA = new Date(a.date + 'T' + a.time);
-          const dateB = new Date(b.date + 'T' + b.time);
-          return dateA - dateB;
+        
+        // Filter for available slots
+        availableSlots = data.records.filter(record => {
+          const fields = record.fields;
+          return fields.status === 'available' && 
+                 !fields.isBlocked && 
+                 fields.isAvailable !== false;
         });
 
-        console.log('Available slots loaded:', availableSlots);
-        
+        console.log('Found available slots:', availableSlots.length);
+        displayAvailableSlots();
+
       } catch (error) {
-        console.error('Error loading available slots:', error);
-        await logErrorToAirtable('client-portal-home.html', error);
+        console.error('Error loading slots:', error);
+        showSlotsError('Failed to load available slots. Please try refreshing.');
+      } finally {
+        document.getElementById('slotsLoading').style.display = 'none';
       }
-    }
-
-    // Load session types
-    async function loadSessionTypes() {
-      try {
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/SessionTypes', {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`SessionTypes fetch error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        sessionTypes = data.records.map(record => ({
-          id: record.id,
-          typeName: record.fields.typeName,
-          duration: record.fields.duration,
-          price: record.fields.price || 0
-        }));
-
-        console.log('Session types loaded:', sessionTypes);
-        
-      } catch (error) {
-        console.error('Error loading session types:', error);
-        await logErrorToAirtable('client-portal-home.html', error);
-      }
-    }
-
-    // Update dashboard stats
-    function updateDashboardStats() {
-      const totalSessions = clientBookings.length;
-      const upcomingSessions = clientBookings.filter(booking => {
-        const sessionDate = new Date(booking.sessionDate);
-        return sessionDate > new Date();
-      }).length;
-      
-      const allPetNames = [];
-      clientBookings.forEach(booking => {
-        if (booking.client1FirstPetName) allPetNames.push(booking.client1FirstPetName);
-        if (booking.client2FirstPetName) allPetNames.push(booking.client2FirstPetName);
-      });
-      
-      const favoritePet = allPetNames.length > 0 ? allPetNames[0] : 'None yet';
-      
-      document.getElementById('totalSessions').textContent = totalSessions;
-      document.getElementById('upcomingSessions').textContent = upcomingSessions;
-      document.getElementById('favoritePet').textContent = favoritePet;
     }
 
     // Display available slots
     function displayAvailableSlots() {
-      const slotsGrid = document.getElementById('availableSlotsGrid');
-      slotsGrid.innerHTML = '';
+      const slotsContainer = document.getElementById('slotsContainer');
+      const slotsGrid = document.getElementById('slotsGrid');
+      const slotsEmpty = document.getElementById('slotsEmpty');
 
-      let filteredSlots = [...availableSlots];
-      const today = new Date();
+      slotsContainer.style.display = 'block';
 
-      // Apply filter
-      switch(currentFilter) {
-        case 'next7days':
-          const next7Days = new Date(today);
-          next7Days.setDate(today.getDate() + 7);
-          filteredSlots = filteredSlots.filter(slot => {
-            const slotDate = new Date(slot.date);
-            return slotDate <= next7Days;
-          });
-          break;
-        case 'next30days':
-          const next30Days = new Date(today);
-          next30Days.setDate(today.getDate() + 30);
-          filteredSlots = filteredSlots.filter(slot => {
-            const slotDate = new Date(slot.date);
-            return slotDate <= next30Days;
-          });
-          break;
-        // 'all' shows all slots (already filtered for future dates)
-      }
-
-      if (filteredSlots.length === 0) {
-        slotsGrid.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: rgba(255,255,255,0.7);">
-            <h3>No available slots found 📅</h3>
-            <p>Check back later or contact us directly to schedule a session!</p>
-          </div>
-        `;
+      if (availableSlots.length === 0) {
+        slotsEmpty.style.display = 'block';
+        slotsGrid.innerHTML = '';
         return;
       }
 
-      filteredSlots.forEach(slot => {
-        const slotDate = new Date(slot.date);
-        const formattedDate = slotDate.toLocaleDateString('en-US', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
+      // Sort slots by date and time
+      const sortedSlots = availableSlots.sort((a, b) => {
+        const dateA = new Date(a.fields.date + 'T' + a.fields.time);
+        const dateB = new Date(b.fields.date + 'T' + b.fields.time);
+        return dateA - dateB;
+      });
+
+      slotsGrid.innerHTML = sortedSlots.map(slot => {
+        const fields = slot.fields;
+        const slotDate = new Date(fields.date);
+        const dateStr = slotDate.toLocaleDateString('en-US', {
+          weekday: 'short',
+          month: 'short',
           day: 'numeric'
         });
-        
-        const formattedTime = formatTime(slot.time);
 
-        const slotCard = document.createElement('div');
-        slotCard.className = 'slot-card available';
-        slotCard.onclick = () => openBookingModal(slot);
-        
-        slotCard.innerHTML = `
-          <div class="slot-date">${formattedDate}</div>
-          <div class="slot-time">⏰ ${formattedTime}</div>
-          <div class="slot-location">📍 ${slot.location}</div>
-          <div class="slot-status available">Available to Book</div>
-        `;
-        
-        slotsGrid.appendChild(slotCard);
-      });
-    }
+        const timeStr = formatTime(fields.time);
+        const endTimeStr = fields.endTime ? formatTime(fields.endTime) : '';
 
-    // Display client bookings
-    function displayClientBookings() {
-      const bookingsList = document.getElementById('bookingsList');
-      bookingsList.innerHTML = '';
-
-      if (clientBookings.length === 0) {
-        bookingsList.innerHTML = `
-          <div style="text-align: center; padding: 2rem; color: rgba(255,255,255,0.7);">
-            <h3>No bookings yet 📅</h3>
-            <p>Book your first pet photography session above!</p>
+        return `
+          <div class="slot-card" onclick="selectSlot('${slot.id}')">
+            <div class="slot-date">${dateStr}</div>
+            <div class="slot-time">${timeStr}${endTimeStr ? ' - ' + endTimeStr : ''}</div>
+            <div class="slot-location">📍 ${fields.Location || 'Studio'}</div>
           </div>
         `;
-        return;
-      }
+      }).join('');
 
-      // Sort bookings by date (newest first)
-      const sortedBookings = [...clientBookings].sort((a, b) => {
-        return new Date(b.sessionDate) - new Date(a.sessionDate);
-      });
-
-      sortedBookings.forEach(booking => {
-        const sessionDate = new Date(booking.sessionDate);
-        const isUpcoming = sessionDate > new Date();
-        
-        const formattedDate = sessionDate.toLocaleDateString('en-US', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
-        
-        const formattedTime = sessionDate.toLocaleTimeString('en-US', {
-          hour: 'numeric',
-          minute: '2-digit',
-          hour12: true
-        });
-
-        const petNames = [booking.client1FirstPetName, booking.client2FirstPetName]
-          .filter(name => name)
-          .join(', ');
-
-        const bookingItem = document.createElement('div');
-        bookingItem.className = 'booking-item';
-        
-        const statusClass = isUpcoming ? 'upcoming' : 'completed';
-        const statusText = isUpcoming ? 'Upcoming' : 'Completed';
-        
-        bookingItem.innerHTML = `
-          <div class="booking-info">
-            <div class="booking-date">${formattedDate} at ${formattedTime}</div>
-            <div class="booking-details">
-              ${booking.sessionType} • ${booking.petCount} pet(s), ${booking.peopleCount} person(s)
-              ${petNames ? ` • ${petNames}` : ''}
-            </div>
-          </div>
-          <div class="booking-status ${statusClass}">${statusText}</div>
-        `;
-        
-        bookingsList.appendChild(bookingItem);
-      });
+      slotsEmpty.style.display = 'none';
     }
 
-    // Filter functions
-    function filterSlots(filter) {
-      currentFilter = filter;
+    // Select a slot for booking
+    function selectSlot(slotId) {
+      selectedSlot = availableSlots.find(slot => slot.id === slotId);
       
-      // Update active tab
-      document.querySelectorAll('.filter-tab').forEach(tab => {
-        tab.classList.remove('active');
+      if (!selectedSlot) return;
+
+      // Update UI
+      document.querySelectorAll('.slot-card').forEach(card => {
+        card.classList.remove('selected');
       });
-      event.target.classList.add('active');
       
-      displayAvailableSlots();
-    }
+      event.target.closest('.slot-card').classList.add('selected');
 
-    function filterBookings(filter) {
-      // This could be enhanced to actually filter bookings
-      console.log('Filtering bookings by:', filter);
-    }
-
-    // Booking modal functions
-    function openBookingModal(slot) {
-      selectedSlot = slot;
+      // Show booking form
+      const bookingForm = document.getElementById('bookingForm');
+      const selectedSlotInfo = document.getElementById('selectedSlotInfo');
       
-      const slotDate = new Date(slot.date);
-      const formattedDate = slotDate.toLocaleDateString('en-US', {
+      const fields = selectedSlot.fields;
+      const slotDate = new Date(fields.date);
+      const dateStr = slotDate.toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
-        month: 'long',
+        month: 'long', 
         day: 'numeric'
       });
-      const formattedTime = formatTime(slot.time);
       
-      document.getElementById('selectedSlotInfo').value = `${formattedDate} at ${formattedTime} - ${slot.location}`;
-      document.getElementById('bookingModal').style.display = 'flex';
+      const timeStr = formatTime(fields.time);
+      const endTimeStr = fields.endTime ? formatTime(fields.endTime) : '';
+
+      selectedSlotInfo.innerHTML = `
+        <strong>📅 Selected Session:</strong> ${dateStr}<br>
+        <strong>🕐 Time:</strong> ${timeStr}${endTimeStr ? ' - ' + endTimeStr : ''}<br>
+        <strong>📍 Location:</strong> ${fields.Location || 'Studio'}
+      `;
+
+      bookingForm.classList.add('show');
+      bookingForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    function closeBookingModal() {
-      document.getElementById('bookingModal').style.display = 'none';
-      document.getElementById('bookingForm').reset();
+    // Cancel booking
+    function cancelBooking() {
       selectedSlot = null;
+      document.getElementById('bookingForm').classList.remove('show');
+      document.querySelectorAll('.slot-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      document.getElementById('newBookingForm').reset();
     }
 
-    function updatePetFields() {
-      const petCount = document.getElementById('petCount').value;
-      const additionalPetField = document.getElementById('additionalPetName');
-      
-      if (petCount === '2') {
-        additionalPetField.required = true;
-        additionalPetField.parentElement.style.display = 'block';
-      } else {
-        additionalPetField.required = false;
-        additionalPetField.parentElement.style.display = 'none';
-      }
-    }
-
-    function updatePeopleFields() {
-      const peopleCount = document.getElementById('peopleCount').value;
-      const secondPersonFields = document.getElementById('secondPersonFields');
-      
-      secondPersonFields.style.display = peopleCount === '2' ? 'block' : 'none';
-    }
-
-    // Book session
-    document.getElementById('bookingForm').onsubmit = async function(e) {
+    // Handle booking form submission
+    document.getElementById('newBookingForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
-      if (!selectedSlot || !clientData) {
-        alert('Missing booking information. Please try again.');
-        return;
-      }
+      if (isBooking || !selectedSlot) return;
       
-      const sessionType = document.getElementById('sessionType').value;
-      const petCount = parseInt(document.getElementById('petCount').value);
-      const peopleCount = parseInt(document.getElementById('peopleCount').value);
-      const additionalPetName = document.getElementById('additionalPetName').value;
-      const secondPersonName = document.getElementById('secondPersonName').value;
-      const specialRequests = document.getElementById('specialRequests').value;
+      await createBooking();
+    });
+
+    // Create new booking
+    async function createBooking() {
+      isBooking = true;
+      const submitBtn = document.getElementById('submitBookingBtn');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '🔄 Booking...';
       
       try {
-        // Create new booking ID
-        const bookingId = `SESS_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        
+        // Get form data
+        const formData = {
+          clientName: document.getElementById('clientName').value.trim(),
+          clientEmail: document.getElementById('clientEmail').value.trim(),
+          clientPhone: document.getElementById('clientPhone').value.trim(),
+          clientZip: document.getElementById('clientZip').value.trim(),
+          petName: document.getElementById('petName').value.trim(),
+          petCount: parseInt(document.getElementById('petCount').value),
+          peopleCount: parseInt(document.getElementById('peopleCount').value),
+          clientInstagram: document.getElementById('clientInstagram').value.trim(),
+          marketingConsent: document.getElementById('marketingConsent').checked
+        };
+
+        // Validate required fields
+        if (!formData.clientName || !formData.clientEmail || !formData.clientPhone || 
+            !formData.clientZip || !formData.petName) {
+          throw new Error('Please fill in all required fields.');
+        }
+
+        // Generate booking ID
+        const bookingId = `PTP_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+
         // Create booking record
-        const bookingData = {
+        const bookingRecord = {
           fields: {
             bookingId: bookingId,
-            client1Name: clientData.fields.clientEmail, // Using email as client name for now
-            client1Email: clientData.fields.clientEmail,
-            client1Phone: clientData.fields.username.slice(-5), // Extract from username
-            client1FirstPetName: clientData.fields.password.replace('bark', ''), // Extract pet name from password
-            client2FirstPetName: additionalPetName || null,
-            petCount: petCount,
-            peopleCount: peopleCount,
-            sessionDate: `${selectedSlot.date}T${selectedSlot.time}:00`,
-            sessionType: sessionType,
-            specialRequests: specialRequests,
-            marketingConsent: true,
-            clientRecord: [clientData.id]
+            client1Name: formData.clientName,
+            client1Email: formData.clientEmail,
+            client1Phone: formData.clientPhone,
+            client1Zip: formData.clientZip,
+            client1FirstPetName: formData.petName,
+            client1Instagram: formData.clientInstagram,
+            marketingConsent: formData.marketingConsent,
+            petCount: formData.petCount,
+            peopleCount: formData.peopleCount,
+            sessionDate: selectedSlot.fields.date,
+            calendarSlot: [selectedSlot.id],
+            clientRecord: [currentClient.id]
           }
         };
-        
-        // Create booking
+
+        console.log('Creating booking:', bookingRecord);
+
+        // Create booking in Airtable
         const bookingResponse = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings', {
           method: 'POST',
           headers: {
             'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(bookingData)
+          body: JSON.stringify(bookingRecord)
         });
-        
+
         if (!bookingResponse.ok) {
-          throw new Error(`Booking creation error: ${bookingResponse.status}`);
+          throw new Error(`Failed to create booking: ${bookingResponse.status}`);
         }
-        
-        const bookingResult = await bookingResponse.json();
-        
+
         // Update calendar slot to booked
-        const calendarUpdateData = {
-          fields: {
-            status: 'booked',
-            bookingId: bookingId,
-            sessionType: sessionType
-          }
-        };
-        
-        const calendarResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar/${selectedSlot.id}`, {
+        const updateSlotResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar/${selectedSlot.id}`, {
           method: 'PATCH',
           headers: {
             'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(calendarUpdateData)
+          body: JSON.stringify({
+            fields: {
+              status: 'booked',
+              bookingId: bookingId
+            }
+          })
         });
-        
-        if (!calendarResponse.ok) {
-          throw new Error(`Calendar update error: ${calendarResponse.status}`);
-        }
-        
-        // Create buffer time blocks if needed
-        if (selectedSlot.bufferTime > 0) {
-          await createBufferBlocks(selectedSlot, sessionType, bookingId);
-        }
-        
-        console.log('✅ Session booked successfully');
-        alert(`🎉 Session booked successfully!\n\nBooking ID: ${bookingId}\nDate: ${selectedSlot.date} at ${selectedSlot.time}\nSession Type: ${sessionType}\n\nYou'll receive a confirmation email soon!`);
-        
-        closeBookingModal();
-        await refreshData();
-        
-      } catch (error) {
-        console.error('Error booking session:', error);
-        await logErrorToAirtable('client-portal-home.html', error);
-        alert('❌ Error booking session. Please try again or contact support.');
-      }
-    };
 
-    // Create buffer time blocks
-    async function createBufferBlocks(slot, sessionType, bookingId) {
-      try {
-        // Get session duration
-        const sessionTypeData = sessionTypes.find(st => st.typeName === sessionType);
-        const sessionDuration = sessionTypeData ? sessionTypeData.duration : 60;
-        
-        // Calculate buffer start time
-        const sessionStart = new Date(`${slot.date}T${slot.time}:00`);
-        const bufferStart = new Date(sessionStart);
-        bufferStart.setMinutes(bufferStart.getMinutes() + sessionDuration);
-        
-        const bufferEnd = new Date(bufferStart);
-        bufferEnd.setMinutes(bufferEnd.getMinutes() + slot.bufferTime);
-        
-        const bufferData = {
-          fields: {
-            SlotType: 'Buffer',
-            Location: 'Buffer Time',
-            date: slot.date,
-            time: bufferStart.toTimeString().slice(0, 5),
-            endTime: bufferEnd.toTimeString().slice(0, 5),
-            status: 'blocked',
-            sessionType: 'Buffer Time',
-            isBlocked: true,
-            bufferFor: sessionType,
-            relatedBooking: bookingId
-          }
-        };
-        
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(bufferData)
-        });
-        
-        if (response.ok) {
-          console.log(`✅ Created ${slot.bufferTime} min buffer after ${sessionType}`);
+        if (!updateSlotResponse.ok) {
+          console.warn('Failed to update slot status');
         }
+
+        // Success!
+        showSlotsSuccess(`🎉 Booking confirmed! Your session is scheduled for ${selectedSlot.fields.date}. Booking ID: ${bookingId}`);
         
+        // Reset form and refresh data
+        cancelBooking();
+        await Promise.all([
+          loadClientBookings(),
+          loadAvailableSlots()
+        ]);
+
       } catch (error) {
-        console.error('Error creating buffer blocks:', error);
-        // Don't throw - buffer creation failing shouldn't break the booking
+        console.error('Booking error:', error);
+        showSlotsError(error.message || 'Failed to create booking. Please try again.');
+      } finally {
+        isBooking = false;
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
       }
     }
 
     // Utility functions
-    function formatTime(timeString) {
-      const [hours, minutes] = timeString.split(':');
-      const hour = parseInt(hours);
-      const ampm = hour >= 12 ? 'PM' : 'AM';
-      const displayHour = hour % 12 || 12;
-      return `${displayHour}:${minutes} ${ampm}`;
+    function formatTime(timeStr) {
+      if (!timeStr) return '';
+      
+      try {
+        const [hours, minutes] = timeStr.split(':');
+        const hour = parseInt(hours);
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const displayHour = hour % 12 || 12;
+        return `${displayHour}:${minutes} ${ampm}`;
+      } catch {
+        return timeStr;
+      }
+    }
+
+    function showBookingsError(message) {
+      const errorDiv = document.getElementById('bookingsError');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+      setTimeout(() => errorDiv.style.display = 'none', 5000);
+    }
+
+    function showSlotsError(message) {
+      const errorDiv = document.getElementById('slotsError');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+      setTimeout(() => errorDiv.style.display = 'none', 5000);
+    }
+
+    function showSlotsSuccess(message) {
+      const successDiv = document.getElementById('slotsSuccess');
+      successDiv.textContent = message;
+      successDiv.style.display = 'block';
+      setTimeout(() => successDiv.style.display = 'none', 8000);
     }
 
     async function refreshData() {
-      console.log('Refreshing all data...');
+      document.getElementById('bookingsLoading').style.display = 'block';
+      document.getElementById('slotsLoading').style.display = 'block';
+      
       await Promise.all([
         loadClientBookings(),
         loadAvailableSlots()
       ]);
-      
-      updateDashboardStats();
-      displayAvailableSlots();
-      displayClientBookings();
     }
 
-    function showAllAvailability() {
-      filterSlots('all');
+    // Handle logout
+    function logout() {
+      localStorage.removeItem('clientAuthenticated');
+      localStorage.removeItem('clientData');
+      localStorage.removeItem('clientLoginTime');
+      window.location.href = '/portal.html';
     }
-
-    // Error logging
-    async function logErrorToAirtable(page, error, data = {}) {
-      try {
-        const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        const errorRecord = {
-          fields: {
-            errorId: errorId,
-            timestamp: new Date().toISOString(),
-            page: page,
-            errorMessage: error.message || String(error),
-            errorStack: error.stack || 'No stack trace available',
-            userAgent: navigator.userAgent,
-            sessionData: JSON.stringify(data)
-          }
-        };
-
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Errors', {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(errorRecord)
-        });
-
-        if (response.ok) {
-          console.log('✅ Error logged to Airtable:', errorRecord);
-        }
-      } catch (innerError) {
-        console.warn('⚠️ Failed to log error to Airtable:', innerError);
-      }
-    }
-
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Client portal loaded...');
-      checkClientAuthentication();
-    });
   </script>
 </body>
 </html>
