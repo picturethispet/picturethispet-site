@@ -1368,8 +1368,8 @@
           sessionType: record.fields.sessionType,
           bufferTime: record.fields.bufferTime || 0,
           isBlocked: record.fields.isBlocked || false,
-          slotType: record.fields.SlotType || 'Regular',
-          location: record.fields.Location || ''
+          slotType: record.fields.slotType || 'Regular',  // Fixed: lowercase 's'
+          location: record.fields.location || ''          // Fixed: lowercase 'l'
         }));
         console.log('Calendar data fetched:', calendarData);
         updateCalendarStats();
@@ -1862,8 +1862,8 @@
                 
                 slotsToCreate.push({
                   fields: {
-                    SlotType: 'Available',
-                    Location: location,
+                    slotType: 'Available',           // matches your field
+                    location: location,              // matches your field  
                     date: dateString,
                     time: timeString,
                     endTime: timeString,
@@ -1871,10 +1871,11 @@
                     sessionType: 'Open Availability',
                     bufferTime: bufferMinutes,
                     isBlocked: false,
-                    isAvailable: true,
-                    availabilityWindow: `${startTime}-${endTime}`,
-                    createdByAdmin: true,
-                    availabilityType: 'hourly-slot'
+                    // Enhanced functionality fields (ADD THESE TO AIRTABLE):
+                    isAvailable: true,               // Quick filtering
+                    availabilityWindow: `${startTime}-${endTime}`, // Time range reference
+                    createdByAdmin: true,            // Track creation source
+                    availabilityType: 'hourly-slot' // Differentiate availability types
                   }
                 });
               }
@@ -1904,8 +1905,8 @@
               
               slotsToCreate.push({
                 fields: {
-                  SlotType: 'Available',
-                  Location: location,
+                  slotType: 'Available',           // matches your field
+                  location: location,              // matches your field
                   date: dateString,
                   time: timeString,
                   endTime: timeString,
@@ -1913,10 +1914,11 @@
                   sessionType: 'Open Availability',
                   bufferTime: bufferMinutes,
                   isBlocked: false,
-                  isAvailable: true,
-                  availabilityWindow: `${startTime}-${endTime}`,
-                  createdByAdmin: true,
-                  availabilityType: 'hourly-slot'
+                  // Enhanced functionality fields (ADD THESE TO AIRTABLE):
+                  isAvailable: true,               // Quick filtering
+                  availabilityWindow: `${startTime}-${endTime}`, // Time range reference
+                  createdByAdmin: true,            // Track creation source
+                  availabilityType: 'hourly-slot' // Differentiate availability types
                 }
               });
             }
@@ -2017,8 +2019,8 @@
         // Create calendar slot (blocked time)
         const calendarSlot = {
           fields: {
-            SlotType: 'Booked',
-            Location: formData.location,
+            slotType: 'Booked',              // matches your field
+            location: formData.location,     // matches your field
             date: formData.date,
             time: formData.time,
             endTime: endTimeString,
@@ -2027,7 +2029,10 @@
             sessionType: formData.sessionType,
             bufferTime: 60, // Standard buffer
             isBlocked: false,
-            quickBooked: true
+            // Enhanced functionality fields (ADD THESE TO AIRTABLE):
+            quickBooked: true,               // Flag for quick-booked sessions
+            createdByAdmin: true,            // Track creation source
+            availabilityType: 'quick-book'   // Differentiate booking types
           }
         };
         
@@ -2158,8 +2163,8 @@
           
           slotsToCreate.push({
             fields: {
-              SlotType: 'Pop-Up',
-              Location: location,
+              slotType: 'Pop-Up',           // matches your field
+              location: location,           // matches your field
               date: date,
               time: timeString,
               endTime: endTimeString,
@@ -2167,7 +2172,10 @@
               sessionType: 'Pop-Up',
               bufferTime: 10,
               isBlocked: false,
-              description: description
+              // Enhanced functionality fields (ADD THESE TO AIRTABLE):
+              description: description,     // Pop-up event description
+              createdByAdmin: true,         // Track creation source
+              availabilityType: 'popup-event' // Differentiate event types
             }
           });
         }
@@ -2217,8 +2225,8 @@
             // Block entire day
             slotsToCreate.push({
               fields: {
-                SlotType: 'Blocked',
-                Location: reason,
+                slotType: 'Blocked',        // matches your field
+                location: reason,           // matches your field (storing reason in location)
                 date: dateString,
                 time: '00:00',
                 endTime: '23:59',
@@ -2226,7 +2234,10 @@
                 sessionType: 'Blocked',
                 bufferTime: 0,
                 isBlocked: true,
-                blockReason: reason
+                // Enhanced functionality fields (ADD THESE TO AIRTABLE):
+                blockReason: reason,        // Specific reason for blocking
+                createdByAdmin: true,       // Track creation source
+                availabilityType: 'blocked-day' // Differentiate block types
               }
             });
           } else {
@@ -2236,8 +2247,8 @@
             
             slotsToCreate.push({
               fields: {
-                SlotType: 'Blocked',
-                Location: reason,
+                slotType: 'Blocked',        // matches your field
+                location: reason,           // matches your field (storing reason)
                 date: dateString,
                 time: startTime,
                 endTime: endTime,
@@ -2245,7 +2256,10 @@
                 sessionType: 'Blocked Time',
                 bufferTime: 0,
                 isBlocked: true,
-                blockReason: reason
+                // Enhanced functionality fields (ADD THESE TO AIRTABLE):
+                blockReason: reason,        // Specific reason for blocking
+                createdByAdmin: true,       // Track creation source
+                availabilityType: 'blocked-time' // Differentiate block types
               }
             });
           }
