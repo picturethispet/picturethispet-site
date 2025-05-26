@@ -182,21 +182,87 @@
       color: var(--gold);
       transform: scale(1.1);
     }
-    /* === MAIN CONTENT WRAPPER === */
-    main {
-      flex: 1;
-      min-height: auto;
+    /* === HERO SECTION === */
+    .hero-section {
+      position: relative;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding-top: 110px;
-      padding-bottom: 20px;
+      text-align: center;
+      padding: 0 2rem;
+      animation: fadeInUp 1s ease-out;
     }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+    
+    .hero-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+    
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .hero-btn {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.5rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      min-width: 150px;
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+    
     /* === SECTION STYLES === */
     section {
       width: 100%;
-      padding: 2rem;
+      padding: 4rem 2rem;
       text-align: center;
     }
     section h2 {
@@ -210,6 +276,56 @@
     section p {
       font-size: 1.2rem;
       margin-bottom: 1rem;
+    }
+    /* === FORM STYLES === */
+    .start-journey-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .start-journey-form input {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      min-height: 48px;
+    }
+    .start-journey-form input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .start-journey-form input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .start-journey-form button {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      min-width: 150px;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .start-journey-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
     .ig-feed {
       display: flex;
@@ -227,141 +343,6 @@
       align-items: center;
       justify-content: center;
       font-size: 0.9rem;
-    }
-    /* === CHAT SECTION === */
-    .chat-section {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      width: 100%;
-      padding: 1rem;
-    }
-    .chat-container {
-      max-width: 900px;
-      width: 100%;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      background-color: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      padding: 2rem;
-      height: auto;
-      max-height: none;
-      display: flex;
-      flex-direction: column;
-    }
-    .chat-header {
-      margin-bottom: 1rem;
-    }
-    .chat-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      text-align: center;
-    }
-    .chat-messages {
-      flex: none;
-      overflow-y: visible;
-      margin-bottom: 1rem;
-      padding-right: 0;
-    }
-    .chat-messages::-webkit-scrollbar {
-      display: none;
-    }
-    
-    /* === IMPROVED CHAT MESSAGE STYLING === */
-    .chat-message {
-      margin-bottom: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-    
-    .chat-message.bot {
-      align-items: flex-start; /* Bot messages align left */
-    }
-    
-    .chat-message.user {
-      align-items: flex-end; /* User messages align right */
-    }
-    
-    .message-bubble {
-      max-width: 70%;
-      padding: 1rem 1.2rem;
-      border-radius: 16px;
-      font-size: 1rem;
-      line-height: 1.5;
-      word-wrap: break-word;
-    }
-    
-    .chat-message.bot .message-bubble {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px 16px 16px 4px;
-    }
-    
-    .chat-message.user .message-bubble {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      border-radius: 16px 16px 4px 16px;
-    }
-    
-    /* === CHAT INPUT === */
-    .chat-input {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-      width: 100%;
-      margin-top: 1rem;
-    }
-    .chat-input input {
-      flex: 1;
-      padding: 1rem;
-      font-size: 1rem;
-      font-family: 'Inter', sans-serif;
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      min-height: 48px;
-      width: 100%;
-    }
-    .chat-input input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-    .chat-input input:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: rgba(255, 255, 255, 0.15);
-    }
-    .chat-input button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      min-width: 100px;
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: auto;
-    }
-    .chat-input button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
     /* === FOOTER STYLES === */
     footer {
@@ -443,7 +424,7 @@
       text-decoration: underline;
     }
     
-    /* === RESPONSIVE === */
+    /* === RESPONSIVE STYLES === */
     @media (max-width: 768px) {
       header {
         height: 80px;
@@ -514,8 +495,24 @@
       main {
         padding-top: 80px;
       }
+      .hero-section {
+        height: 80vh;
+        padding: 0 1rem;
+      }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .hero-content p {
+        font-size: 1rem;
+      }
+      .hero-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1.2rem;
+        min-width: 120px;
+        min-height: 44px;
+      }
       section {
-        padding: 1rem;
+        padding: 2rem 1rem;
       }
       section h2 {
         font-size: 2rem;
@@ -523,28 +520,20 @@
       section p {
         font-size: 1rem;
       }
-      .chat-section {
-        padding: 1rem;
+      .start-journey-form {
+        gap: 0.5rem;
+        max-width: 100%;
       }
-      .chat-container {
-        padding: 1.5rem;
-      }
-      .chat-header h2 {
-        font-size: 2rem;
-      }
-      .message-bubble {
-        max-width: 85%;
-        font-size: 0.9rem;
-        padding: 0.8rem 1rem;
-      }
-      .chat-input input {
+      .start-journey-form input {
         padding: 0.8rem;
         font-size: 0.9rem;
+        min-height: 40px;
       }
-      .chat-input button {
-        padding: 0.8rem 1rem;
-        font-size: 0.9rem;
-        min-width: 80px;
+      .start-journey-form button {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        min-width: 120px;
+        min-height: 44px;
       }
       .ig-feed {
         gap: 0.5rem;
@@ -580,26 +569,32 @@
       }
     }
     @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .hero-content p {
+        font-size: 0.9rem;
+      }
+      .hero-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        min-width: 100px;
+        min-height: 40px;
+      }
       section h2 {
         font-size: 1.8rem;
       }
       section p {
         font-size: 0.9rem;
       }
-      .chat-header h2 {
-        font-size: 1.8rem;
-      }
-      .message-bubble {
-        font-size: 0.85rem;
-      }
-      .chat-input input {
+      .start-journey-form input {
         padding: 0.7rem;
         font-size: 0.85rem;
       }
-      .chat-input button {
-        padding: 0.7rem 0.8rem;
-        font-size: 0.85rem;
-        min-width: 70px;
+      .start-journey-form button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+        min-width: 100px;
       }
       .ig-post {
         width: 120px;
@@ -623,7 +618,7 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#chat-section" class="book-btn" aria-label="Book a session" onclick="scrollToSection(event)">Book Now</a>
+      <a href="#start-journey" class="book-btn" aria-label="Book a session" onclick="scrollToSection(event)">Book Now</a>
     </nav>
     <div class="social-icons">
       <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
@@ -633,26 +628,36 @@
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
   <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <img src="assets/images/hero_image.jpg" alt="Happy pet with owner in a park" class="hero-image" />
+      <div class="hero-content">
+        <h1>Timeless Pet Photography</h1>
+        <p>Capture the magic of your furry friend with PictureThisPet.</p>
+        <a href="#start-journey" class="hero-btn" onclick="scrollToSection(event)">Book Now</a>
+      </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section id="welcome">
+      <h2>Welcome to PictureThisPet</h2>
+      <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we’ll capture their unique personality in beautiful settings across Denver.</p>
+    </section>
+
     <!-- Pop Up Event Section -->
     <section id="pop-up-event">
       <h2>Upcoming Pop Up Event</h2>
       <p>Join us at our next pop-up event at Cheesman Park! Bring your pets for a fun day of photography.</p>
     </section>
 
-    <!-- Start Your Journey Section (Chat Interface) -->
-    <section id="chat-section" class="chat-section">
-      <div class="chat-container">
-        <div class="chat-header">
-          <h2>Start Your Journey 📅</h2>
-        </div>
-        <div class="chat-messages" id="chat-messages">
-          <!-- Chat messages will be populated by JavaScript -->
-        </div>
-        <div class="chat-input" id="chat-input">
-          <input type="text" id="chat-input-text" placeholder="Type your email here... 📧" />
-          <button onclick="sendUserMessage()">Send</button>
-        </div>
-      </div>
+    <!-- Start Your Journey Section -->
+    <section id="start-journey">
+      <h2>Start Your Journey</h2>
+      <p>Ready to capture your pet's best moments? Begin by entering your email address below!</p>
+      <form class="start-journey-form" onsubmit="handleEmailSubmit(event)">
+        <input type="email" id="email-input" placeholder="Enter your email address 📧" required />
+        <button type="submit">Continue</button>
+      </form>
     </section>
 
     <!-- Testimonials Section -->
@@ -705,13 +710,10 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.2.0 | Last updated: 09:11 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.4.0 | Last updated: 09:26 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
     </div>
   </footer>
   <script>
-    let sessionData = {};
-    let isChatActive = true;
-    
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
@@ -719,7 +721,7 @@
     
     function scrollToSection(e) {
       e.preventDefault();
-      const section = document.querySelector('#chat-section');
+      const section = document.querySelector('#start-journey');
       const offset = 100;
       const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
@@ -728,62 +730,24 @@
       });
     }
     
-    function addMessage(sender, text) {
-      const messagesContainer = document.getElementById('chat-messages');
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `chat-message ${sender}`;
-      messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
+    function handleEmailSubmit(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById('email-input').value.trim();
+      if (!emailInput) return;
       
-      messagesContainer.appendChild(messageDiv);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      
-      const input = document.getElementById('chat-input-text');
-      const sendButton = document.querySelector('.chat-input button');
-      if (!isChatActive) {
-        input.disabled = true;
-        sendButton.disabled = true;
-      }
-      
-      setTimeout(() => {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: 'smooth'
-        });
-      }, 100);
-    }
-    
-    function sendUserMessage() {
-      if (!isChatActive) return;
-      const input = document.getElementById('chat-input-text');
-      const userResponse = input.value.trim();
-      if (!userResponse) return;
-      
-      sessionData.email = userResponse;
-      addMessage('user', userResponse);
-      
-      isChatActive = false;
-      const inputContainer = document.getElementById('chat-input');
-      inputContainer.innerHTML = '';
-      
+      const sessionData = { email: emailInput };
       try {
         const dataString = JSON.stringify(sessionData);
         sessionStorage.setItem('cartData', dataString);
         window.location.href = '/cart.html';
       } catch (error) {
         console.error('Error saving email data:', error);
-        addMessage('bot', 'Oops, something went wrong. Please try again. 😓', [], 'none');
+        alert('Oops, something went wrong. Please try again.');
       }
     }
     
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Index page loaded - v4.2.0');
-      addMessage('bot', 'Start your journey here by entering your email address! 📧');
-      
-      document.getElementById('chat-input-text').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          sendUserMessage();
-        }
-      });
+      console.log('✅ Index page loaded - v4.4.0');
     });
   </script>
 </body>
