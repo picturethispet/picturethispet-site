@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Picture This Pet - Pet Photography</title>
   <meta name="description" content="Book your pet photography session with Picture This Pet.">
-  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -18,24 +17,25 @@
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
+
     html {
       overflow-x: hidden;
       scrollbar-width: none;
       -ms-overflow-style: none;
       scroll-behavior: smooth;
     }
-    
+
     html::-webkit-scrollbar {
       width: 0;
       height: 0;
     }
-    
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
@@ -43,28 +43,23 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-color: #f5d7b2;
       overflow-x: hidden;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
+
     @keyframes moveBackground {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+
     /* === HEADER STYLES === */
     header {
       width: 100%;
@@ -73,9 +68,8 @@
       align-items: center;
       padding: 0.01rem 1.5rem;
       background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: cover;
+      background-size: 100% 100%;
       background-position: center;
-      background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -85,32 +79,30 @@
       left: 0;
       z-index: 1000;
       height: 110px;
-      overflow: hidden;
     }
-    
+
     .desktop-logo {
       height: 100px;
-      max-width: 100%;
-      width: auto;
-      object-fit: contain;
     }
+
     .logo-link {
       display: flex;
       align-items: center;
       transition: all 0.3s ease;
       text-decoration: none;
     }
+
     .logo-link:hover {
       opacity: 0.8;
       transform: scale(1.02);
     }
-    
+
     .site-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
     }
-    
+
     .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
@@ -120,13 +112,14 @@
       padding: 0.5rem 1rem;
       border-radius: 8px;
     }
+
     .site-nav a:not(.book-btn):hover {
       background: rgba(255, 255, 255, 0.1);
       transform: translateY(-1px);
     }
-    
+
     .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       padding: 0.8rem 2rem;
       border: none;
@@ -137,17 +130,14 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
       box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-      min-width: 120px;
-      min-height: 44px;
     }
+
     .book-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
-    
+
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -156,56 +146,65 @@
       font-size: 2rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      min-width: 44px;
-      min-height: 44px;
     }
+
     .mobile-menu-btn:hover {
       transform: scale(1.1);
     }
-    .social-icons {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-left: 1rem;
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      flex: 1;
+      padding: 4rem 1rem;
     }
-    .social-icon {
+
+    /* === SECTION STYLES === */
+    section {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeInUp 1s ease-out;
+    }
+
+    section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
       color: white;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-      min-width: 44px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.5rem;
+      text-align: center;
     }
-    .social-icon:hover {
-      color: var(--gold);
-      transform: scale(1.1);
+
+    section p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.5rem;
     }
+
     /* === HERO SECTION === */
     .hero-section {
       position: relative;
-      height: 100vh;
+      height: 80vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end; /* Align content to the bottom */
+      justify-content: flex-end;
       align-items: center;
       text-align: center;
-      padding: 2rem;
-      animation: fadeInUp 1s ease-out;
+      padding: 3rem;
+      overflow: hidden;
     }
-    
-    .hero-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6)); /* Gradient overlay to ensure text readability */
-      z-index: 1;
-    }
-    
+
     .hero-image {
       position: absolute;
       top: 0;
@@ -213,16 +212,15 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: 0;
+      z-index: -1;
     }
-    
+
     .hero-content {
       position: relative;
-      z-index: 2;
+      z-index: 1;
       max-width: 800px;
-      margin-bottom: 2rem; /* Add some margin to keep content above the bottom edge */
     }
-    
+
     .hero-content h1 {
       font-family: 'Playfair Display', serif;
       font-size: 4rem;
@@ -230,15 +228,15 @@
       margin-bottom: 1rem;
       text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
-    
+
     .hero-content p {
       font-size: 1.5rem;
       margin-bottom: 2rem;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-    
+
     .hero-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       padding: 1rem 2.5rem;
       border: none;
@@ -249,37 +247,13 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-      min-width: 150px;
-      min-height: 50px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
     }
+
     .hero-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
-    
-    /* === SECTION STYLES === */
-    section {
-      width: 100%;
-      padding: 4rem 2rem;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05); /* Subtle background for sections */
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Soft separator */
-    }
-    section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      margin-bottom: 1rem;
-    }
-    section p {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
+
     /* === FORM STYLES === */
     .start-journey-form {
       display: flex;
@@ -289,28 +263,35 @@
       max-width: 500px;
       margin: 0 auto;
     }
+
+    .form-group {
+      width: 100%;
+      position: relative;
+    }
+
     .start-journey-form input {
       width: 100%;
-      padding: 1rem;
+      padding: 1.2rem;
       font-size: 1rem;
-      font-family: 'Inter', sans-serif;
       color: white;
       background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 12px;
       transition: all 0.3s ease;
-      min-height: 48px;
     }
+
     .start-journey-form input::placeholder {
       color: rgba(255, 255, 255, 0.6);
     }
+
     .start-journey-form input:focus {
       outline: none;
       border-color: var(--gold);
       background: rgba(255, 255, 255, 0.15);
     }
+
     .start-journey-form button {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       padding: 1rem 2.5rem;
       border: none;
@@ -320,23 +301,34 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-      min-width: 150px;
-      min-height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
+
     .start-journey-form button:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
+
+    .form-error {
+      color: var(--booked-red);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+      text-align: center;
+    }
+
+    .form-group.error .form-error {
+      display: block;
+    }
+
+    /* === INSTAGRAM FEED === */
     .ig-feed {
       display: flex;
       justify-content: center;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-top: 1rem;
+      margin-top: 1.5rem;
     }
+
     .ig-post {
       width: 200px;
       height: 200px;
@@ -346,35 +338,41 @@
       align-items: center;
       justify-content: center;
       font-size: 0.9rem;
+      transition: all 0.3s ease;
     }
+
+    .ig-post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
     /* === FOOTER STYLES === */
     footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: cover;
+      background-size: 100% 100%;
       background-position: center;
-      background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 1.28rem 0.96rem;
+      padding: 2rem 1.5rem;
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
-      position: relative;
-      z-index: 1000;
-      width: 100%;
     }
+
     .footer-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.28rem;
+      gap: 2rem;
       max-width: 1200px;
       margin: 0 auto;
-      margin-bottom: 0.96rem;
+      margin-bottom: 1.5rem;
     }
+
     .footer-section {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
     }
+
     .footer-section h4 {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
@@ -382,70 +380,61 @@
       color: white;
       margin-bottom: 1rem;
     }
+
     .footer-section a {
       color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
       display: block;
       margin-bottom: 0.5rem;
       transition: color 0.3s ease;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
     }
+
     .footer-section a:hover {
       color: var(--gold);
     }
+
     .payment-methods {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
     }
+
     .payment-icon {
       width: 40px;
       height: 25px;
       object-fit: contain;
       opacity: 0.7;
       transition: opacity 0.3s ease;
-      min-width: 40px;
-      min-height: 25px;
     }
+
     .payment-icon:hover {
       opacity: 1;
       transform: scale(1.1);
     }
+
     .footer-bottom {
       text-align: center;
-      padding-top: 0.96rem;
+      padding-top: 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .footer-bottom p {
-      display: inline-block;
-    }
-    .footer-bottom a {
-      white-space: nowrap;
-      color: var(--gold);
-      text-decoration: underline;
-    }
-    
-    /* === RESPONSIVE STYLES === */
+
+    /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
         height: 80px;
         padding: 0.5rem 1rem;
-        background-attachment: scroll;
       }
-      
-      .desktop-logo { 
-        height: 48px; 
+
+      .desktop-logo {
+        height: 48px;
       }
-      
+
       .site-nav {
         display: none;
         flex-direction: column;
         background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: cover;
+        background-size: 100% 100%;
         background-position: center;
-        background-attachment: scroll;
         position: absolute;
         top: 80px;
         right: 0;
@@ -456,156 +445,100 @@
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(12px);
       }
-      
+
       .site-nav.active {
         display: flex;
       }
-      
+
       .site-nav.active a {
-        display: block;
         margin: 0.5rem 0;
         font-size: 1.2rem;
-        color: white;
         padding: 0.5rem 1rem;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
       }
+
       .site-nav.active a[href="/"] { order: 1; }
       .site-nav.active a[href="/availability.html"] { order: 2; }
       .site-nav.active a[href="/locations.html"] { order: 3; }
       .site-nav.active a[href="/pricing"] { order: 4; }
       .site-nav.active a[href="/contact"] { order: 5; }
       .site-nav.active .book-btn { order: 6; }
-      
+
       .book-btn {
         padding: 0.6rem 1.5rem;
         font-size: 1rem;
-        min-width: 100px;
+        margin-left: 0;
       }
-      
+
       .mobile-menu-btn {
         display: block;
       }
-      .social-icons {
-        gap: 0.5rem;
-        margin-left: 0.5rem;
-      }
-      .social-icon {
-        font-size: 1.2rem;
-      }
+
       main {
-        padding-top: 80px;
+        margin-top: 80px;
+        padding: 2rem 1rem;
       }
+
       .hero-section {
-        height: 80vh;
-        padding: 0 1rem;
+        height: 70vh;
+        padding: 2rem 1rem;
       }
+
       .hero-content h1 {
         font-size: 2.5rem;
       }
+
       .hero-content p {
-        font-size: 1rem;
+        font-size: 1.2rem;
       }
+
       .hero-btn {
         padding: 0.8rem 2rem;
         font-size: 1.2rem;
-        min-width: 120px;
-        min-height: 44px;
       }
+
       section {
-        padding: 2rem 1rem;
+        padding: 2rem;
       }
+
       section h2 {
         font-size: 2rem;
       }
+
       section p {
         font-size: 1rem;
       }
+
       .start-journey-form {
-        gap: 0.5rem;
         max-width: 100%;
       }
+
       .start-journey-form input {
-        padding: 0.8rem;
+        padding: 1rem;
         font-size: 0.9rem;
-        min-height: 40px;
       }
+
       .start-journey-form button {
         padding: 0.8rem 2rem;
         font-size: 1rem;
-        min-width: 120px;
-        min-height: 44px;
       }
+
       .ig-feed {
         gap: 0.5rem;
       }
+
       .ig-post {
         width: 150px;
         height: 150px;
       }
-      footer {
-        padding: 1rem 0.8rem;
-        background-attachment: scroll;
-      }
+
       .footer-container {
         grid-template-columns: 1fr;
-        gap: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        gap: 1.5rem;
       }
+
       .footer-section {
         align-items: center;
         text-align: center;
-      }
-      .payment-methods {
-        justify-content: center;
-      }
-      .footer-bottom {
-        padding-top: 0.8rem;
-      }
-      .footer-bottom p {
-        font-size: 0.8rem;
-      }
-    }
-    @media (max-width: 480px) {
-      .hero-content h1 {
-        font-size: 2rem;
-      }
-      .hero-content p {
-        font-size: 0.9rem;
-      }
-      .hero-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
-        min-width: 100px;
-        min-height: 40px;
-      }
-      section h2 {
-        font-size: 1.8rem;
-      }
-      section p {
-        font-size: 0.9rem;
-      }
-      .start-journey-form input {
-        padding: 0.7rem;
-        font-size: 0.85rem;
-      }
-      .start-journey-form button {
-        padding: 0.7rem 1.5rem;
-        font-size: 0.9rem;
-        min-width: 100px;
-      }
-      .ig-post {
-        width: 120px;
-        height: 120px;
-        font-size: 0.8rem;
-      }
-      .footer-bottom p {
-        font-size: 0.7rem;
       }
     }
   </style>
@@ -623,17 +556,13 @@
       <a href="/contact" aria-label="Contact page">Contact</a>
       <a href="#start-journey" class="book-btn" aria-label="Book a session" onclick="scrollToSection(event)">Book Now</a>
     </nav>
-    <div class="social-icons">
-      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
-        <i class="fab fa-instagram social-icon"></i>
-      </a>
-    </div>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
+
   <main>
     <!-- Hero Section -->
     <section class="hero-section">
-      <img src="assets/images/hero_image.jpg" alt="Happy pet with owner in a park" class="hero-image" />
+      <img src="assets/images/2I4A4374 copy.jpg" alt="Happy pet with owner in a park" class="hero-image" />
       <div class="hero-content">
         <h1>Timeless Pet Photography</h1>
         <p>Capture the magic of your furry friend with PictureThisPet.</p>
@@ -644,7 +573,7 @@
     <!-- Welcome Section -->
     <section id="welcome">
       <h2>Welcome to PictureThisPet</h2>
-      <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we’ll capture their unique personality in beautiful settings across Denver.</p>
+      <p>We specialize in creating stunning, timeless photographs of your pets. Whether it’s a playful pup or a curious kitten, we’ll capture their unique personality in beautiful settings across Denver.</p>
     </section>
 
     <!-- Pop Up Event Section -->
@@ -656,9 +585,12 @@
     <!-- Start Your Journey Section -->
     <section id="start-journey">
       <h2>Start Your Journey</h2>
-      <p>Ready to capture your pet's best moments? Begin by entering your email address below!</p>
+      <p>Ready to capture your pet’s best moments? Begin by entering your email address below!</p>
       <form class="start-journey-form" onsubmit="handleEmailSubmit(event)">
-        <input type="email" id="email-input" placeholder="Enter your email address 📧" required />
+        <div class="form-group">
+          <input type="email" id="email-input" placeholder="Enter your email address 📧" required />
+          <div class="form-error" id="email-error">Please enter a valid email address</div>
+        </div>
         <button type="submit">Continue</button>
       </form>
     </section>
@@ -666,7 +598,7 @@
     <!-- Testimonials Section -->
     <section id="testimonials">
       <h2>Testimonials</h2>
-      <p>"PictureThisPet captured the essence of my dog perfectly! The photos are stunning." - Happy Client</p>
+      <p>“PictureThisPet captured the essence of my dog perfectly! The photos are stunning.” - Happy Client</p>
     </section>
 
     <!-- Instagram Section -->
@@ -674,13 +606,14 @@
       <h2>Follow Us on Instagram</h2>
       <p>Check out our latest pet photography sessions on Instagram!</p>
       <div class="ig-feed">
-        <div class="ig-post">Instagram Post 1</div>
-        <div class="ig-post">Instagram Post 2</div>
-        <div class="ig-post">Instagram Post 3</div>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" class="ig-post">Instagram Post 1</a>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" class="ig-post">Instagram Post 2</a>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" class="ig-post">Instagram Post 3</a>
       </div>
       <p><a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" style="color: var(--gold); text-decoration: underline;">Follow @picturethispet</a></p>
     </section>
   </main>
+
   <footer>
     <div class="footer-container">
       <div class="footer-section">
@@ -713,15 +646,16 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.5.0 | Last updated: 09:31 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.0 | Last updated: 10:06 PM MDT, May 25, 2025</p>
     </div>
   </footer>
+
   <script>
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
-    
+
     function scrollToSection(e) {
       e.preventDefault();
       const section = document.querySelector('#start-journey');
@@ -732,25 +666,39 @@
         behavior: 'smooth'
       });
     }
-    
+
     function handleEmailSubmit(e) {
       e.preventDefault();
-      const emailInput = document.getElementById('email-input').value.trim();
-      if (!emailInput) return;
-      
-      const sessionData = { email: emailInput };
+      const emailInput = document.getElementById('email-input');
+      const emailError = document.getElementById('email-error');
+      const formGroup = emailInput.closest('.form-group');
+      const email = emailInput.value.trim();
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        formGroup.classList.add('error');
+        return;
+      }
+
+      formGroup.classList.remove('error');
+
+      // Store email in sessionStorage
+      const cartData = { email };
       try {
-        const dataString = JSON.stringify(sessionData);
-        sessionStorage.setItem('cartData', dataString);
+        sessionStorage.setItem('cartData', JSON.stringify(cartData));
+        console.log('✅ Email saved to sessionStorage:', cartData);
         window.location.href = '/cart.html';
       } catch (error) {
         console.error('Error saving email data:', error);
-        alert('Oops, something went wrong. Please try again.');
+        formGroup.classList.add('error');
+        emailError.textContent = 'Error saving email. Please try again.';
+        emailError.style.display = 'block';
       }
     }
-    
+
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Index page loaded - v4.5.0');
+      console.log('✅ Index page loaded - v1.0.0');
     });
   </script>
 </body>
