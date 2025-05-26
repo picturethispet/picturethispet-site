@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Build Your Session | Picture This Pet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session Builder | Picture This Pet</title>
   <meta name="description" content="Build your pet photography session with Picture This Pet.">
-  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -18,24 +17,25 @@
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
+
     html {
       overflow-x: hidden;
       scrollbar-width: none;
       -ms-overflow-style: none;
       scroll-behavior: smooth;
     }
-    
+
     html::-webkit-scrollbar {
       width: 0;
       height: 0;
     }
-    
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
@@ -43,28 +43,33 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-color: #f5d7b2;
       overflow-x: hidden;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
+
     @keyframes moveBackground {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
     /* === HEADER STYLES === */
     header {
       width: 100%;
@@ -73,9 +78,8 @@
       align-items: center;
       padding: 0.01rem 1.5rem;
       background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: cover;
+      background-size: 100% 100%;
       background-position: center;
-      background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -85,32 +89,30 @@
       left: 0;
       z-index: 1000;
       height: 110px;
-      overflow: hidden;
     }
-    
+
     .desktop-logo {
       height: 100px;
-      max-width: 100%;
-      width: auto;
-      object-fit: contain;
     }
+
     .logo-link {
       display: flex;
       align-items: center;
       transition: all 0.3s ease;
       text-decoration: none;
     }
+
     .logo-link:hover {
       opacity: 0.8;
       transform: scale(1.02);
     }
-    
+
     .site-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
     }
-    
+
     .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
@@ -120,13 +122,14 @@
       padding: 0.5rem 1rem;
       border-radius: 8px;
     }
+
     .site-nav a:not(.book-btn):hover {
       background: rgba(255, 255, 255, 0.1);
       transform: translateY(-1px);
     }
-    
+
     .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       padding: 0.8rem 2rem;
       border: none;
@@ -137,17 +140,14 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
       box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-      min-width: 120px;
-      min-height: 44px;
     }
+
     .book-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
-    
+
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -156,316 +156,316 @@
       font-size: 2rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      min-width: 44px;
-      min-height: 44px;
     }
+
     .mobile-menu-btn:hover {
       transform: scale(1.1);
     }
-    .social-icons {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-left: 1rem;
-    }
-    .social-icon {
-      color: white;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-      min-width: 44px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .social-icon:hover {
-      color: var(--gold);
-      transform: scale(1.1);
-    }
-    /* === MAIN CONTENT WRAPPER === */
+
+    /* === MAIN CONTENT === */
     main {
+      margin-top: 110px;
       flex: 1;
-      min-height: auto;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 110px;
-      padding-bottom: 20px;
+      padding: 4rem 1rem;
     }
-    /* === CHAT SECTION === */
-    .chat-section {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      width: 100%;
-      padding: 1rem;
-    }
-    .chat-container {
-      max-width: 900px;
-      width: 100%;
+
+    /* === SESSION BUILDER SECTION === */
+    #session-builder {
+      max-width: 800px;
+      margin: 0 auto;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      background-color: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      padding: 2rem;
-      height: auto;
-      max-height: none;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeInUp 1s ease-out;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      min-height: 500px;
     }
-    .chat-header {
-      margin-bottom: 1rem;
-    }
-    .chat-header h2 {
+
+    #session-builder h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
       font-weight: 700;
       color: white;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.5rem;
       text-align: center;
     }
-    .chat-messages {
-      flex: none;
-      overflow-y: auto;
-      margin-bottom: 1rem;
-      padding-right: 0;
-      max-height: 50vh;
+
+    #session-builder p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+      text-align: center;
     }
-    .chat-messages::-webkit-scrollbar {
-      display: none;
-    }
-    
-    /* === IMPROVED CHAT MESSAGE STYLING === */
-    .chat-message {
-      margin-bottom: 1.5rem;
+
+    /* === CHAT STYLES === */
+    .chat-container {
       display: flex;
       flex-direction: column;
-      width: 100%;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
-    
-    .chat-message.bot {
-      align-items: flex-start; /* Bot messages align left */
-    }
-    
-    .chat-message.user {
-      align-items: flex-end; /* User messages align right */
-    }
-    
-    .message-bubble {
+
+    .chat-message {
       max-width: 70%;
-      padding: 1rem 1.2rem;
-      border-radius: 16px;
+      padding: 1rem;
+      border-radius: 20px;
       font-size: 1rem;
       line-height: 1.5;
-      word-wrap: break-word;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
     }
-    
-    .chat-message.bot .message-bubble {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px 16px 16px 4px;
+
+    .chat-message.bot {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px 20px 20px 5px;
+      animation-name: slideInLeft;
     }
-    
-    .chat-message.user .message-bubble {
+
+    .chat-message.user {
+      align-self: flex-end;
       background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-radius: 20px 20px 5px 20px;
       color: white;
-      border: none;
-      border-radius: 16px 16px 4px 16px;
+      animation-name: slideInRight;
     }
-    
-    /* === CALENDAR CONTAINER === */
-    .calendar-container {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 1rem 0;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
+
+    .chat-message.error {
+      align-self: flex-start;
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--booked-red);
+      border: 1px solid var(--booked-red);
+      border-radius: 20px 20px 20px 5px;
+      animation-name: slideInLeft;
     }
-    
-    /* === OPTIONS CONTAINER === */
-    .options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin: 1rem 0;
-      justify-content: flex-start;
-      align-items: center;
-      width: 100%;
-    }
-    
-    .option-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.8rem 1.2rem;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      color: white;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-align: center;
-      min-width: 120px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex: 0 1 auto;
-    }
-    
-    .option-btn:hover {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(244, 124, 44, 0.3);
-    }
-    
-    /* === CHAT INPUT === */
+
     .chat-input {
       display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-      width: 100%;
+      flex-direction: column;
+      gap: 0.5rem;
       margin-top: 1rem;
     }
-    .chat-input input {
-      flex: 1;
+
+    .chat-input input[type="text"],
+    .chat-input input[type="number"],
+    .chat-input select {
+      width: 100%;
       padding: 1rem;
       font-size: 1rem;
-      font-family: 'Inter', sans-serif;
       color: white;
       background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 12px;
       transition: all 0.3s ease;
-      min-height: 48px;
-      width: 100%;
     }
+
     .chat-input input::placeholder {
       color: rgba(255, 255, 255, 0.6);
     }
-    .chat-input input:focus {
+
+    .chat-input input:focus,
+    .chat-input select:focus {
       outline: none;
       border-color: var(--gold);
       background: rgba(255, 255, 255, 0.15);
     }
+
+    .chat-input .radio-group,
+    .chat-input .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .chat-input label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .chat-input input[type="radio"],
+    .chat-input input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      accent-color: var(--gold);
+    }
+
     .chat-input button {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
+      padding: 0.8rem 2rem;
       border: none;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      font-size: 1rem;
+      border-radius: 999px;
       font-weight: 600;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      min-width: 100px;
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: auto;
+      align-self: flex-end;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
     }
+
     .chat-input button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
-    
+
+    .submit-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      margin-top: 2rem;
+      align-self: center;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+
     /* === CALENDAR STYLES === */
+    .calendar-container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+
     .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
     }
-    .calendar-header button {
-      background: none;
-      border: none;
-      color: white;
+
+    .calendar-title {
       font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-      transition: color 0.3s ease;
-      border-radius: 8px;
-    }
-    .calendar-header button:hover {
-      color: var(--gold);
-      background: rgba(255, 255, 255, 0.1);
-    }
-    .calendar-header span {
-      font-size: 1.2rem;
       font-weight: 600;
+      color: white;
     }
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
+
+    .calendar-nav {
+      display: flex;
       gap: 0.5rem;
     }
-    .calendar-day {
-      padding: 0.8rem 0.5rem;
-      text-align: center;
-      font-size: 0.9rem;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      min-height: 40px;
+
+    .nav-button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .calendar-day.header {
-      font-weight: 600;
-      color: var(--gold);
-      background: rgba(253, 183, 94, 0.1);
-    }
-    .calendar-day.disabled {
-      color: rgba(255, 255, 255, 0.3);
-      cursor: not-allowed;
-    }
-    .calendar-day.selectable {
       cursor: pointer;
-      background: rgba(255, 255, 243, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
     }
-    .calendar-day.selectable:hover {
-      background: var(--gold);
-      color: var(--dark-brown);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(253, 183, 94, 0.3);
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
     }
-    
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .calendar-day-header {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 0.8rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .calendar-day {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.8rem;
+      text-align: center;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .calendar-day.other-month {
+      color: rgba(255, 255, 255, 0.3);
+      pointer-events: none;
+    }
+
+    .calendar-day.available {
+      background: rgba(16, 185, 129, 0.2);
+      border: 2px solid rgba(16, 185, 129, 0.5);
+      color: white;
+    }
+
+    .calendar-day.booked {
+      background: rgba(239, 68, 68, 0.2);
+      border: 2px solid rgba(239, 68, 68, 0.5);
+      color: rgba(255, 255, 255, 0.7);
+      pointer-events: none;
+    }
+
+    .calendar-day:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
     /* === FOOTER STYLES === */
     footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: cover;
+      background-size: 100% 100%;
       background-position: center;
-      background-attachment: fixed;
       animation: moveBackground 30s ease-in-out infinite;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 1.28rem 0.96rem;
+      padding: 2rem 1.5rem;
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
-      position: relative;
-      z-index: 1000;
-      width: 100%;
     }
+
     .footer-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.28rem;
+      gap: 2rem;
       max-width: 1200px;
       margin: 0 auto;
-      margin-bottom: 0.96rem;
+      margin-bottom: 1.5rem;
     }
+
     .footer-section {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
     }
+
     .footer-section h4 {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
@@ -473,70 +473,61 @@
       color: white;
       margin-bottom: 1rem;
     }
+
     .footer-section a {
       color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
       display: block;
       margin-bottom: 0.5rem;
       transition: color 0.3s ease;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
     }
+
     .footer-section a:hover {
       color: var(--gold);
     }
+
     .payment-methods {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
     }
+
     .payment-icon {
       width: 40px;
       height: 25px;
       object-fit: contain;
       opacity: 0.7;
       transition: opacity 0.3s ease;
-      min-width: 40px;
-      min-height: 25px;
     }
+
     .payment-icon:hover {
       opacity: 1;
       transform: scale(1.1);
     }
+
     .footer-bottom {
       text-align: center;
-      padding-top: 0.96rem;
+      padding-top: 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .footer-bottom p {
-      display: inline-block;
-    }
-    .footer-bottom a {
-      white-space: nowrap;
-      color: var(--gold);
-      text-decoration: underline;
-    }
-    
-    /* === RESPONSIVE STYLES === */
+
+    /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
         height: 80px;
         padding: 0.5rem 1rem;
-        background-attachment: scroll;
       }
-      
-      .desktop-logo { 
-        height: 48px; 
+
+      .desktop-logo {
+        height: 48px;
       }
-      
+
       .site-nav {
         display: none;
         flex-direction: column;
         background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: cover;
+        background-size: 100% 100%;
         background-position: center;
-        background-attachment: scroll;
         position: absolute;
         top: 80px;
         right: 0;
@@ -547,151 +538,93 @@
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(12px);
       }
-      
+
       .site-nav.active {
         display: flex;
       }
-      
+
       .site-nav.active a {
-        display: block;
         margin: 0.5rem 0;
         font-size: 1.2rem;
-        color: white;
         padding: 0.5rem 1rem;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
       }
+
       .site-nav.active a[href="/"] { order: 1; }
       .site-nav.active a[href="/availability.html"] { order: 2; }
       .site-nav.active a[href="/locations.html"] { order: 3; }
       .site-nav.active a[href="/pricing"] { order: 4; }
       .site-nav.active a[href="/contact"] { order: 5; }
       .site-nav.active .book-btn { order: 6; }
-      
+
       .book-btn {
         padding: 0.6rem 1.5rem;
         font-size: 1rem;
-        min-width: 100px;
+        margin-left: 0;
       }
-      
+
       .mobile-menu-btn {
         display: block;
       }
-      .social-icons {
-        gap: 0.5rem;
-        margin-left: 0.5rem;
-      }
-      .social-icon {
-        font-size: 1.2rem;
-      }
+
       main {
-        padding-top: 80px;
+        margin-top: 80px;
+        padding: 2rem 1rem;
       }
-      .chat-section {
-        padding: 1rem;
+
+      #session-builder {
+        padding: 2rem;
+        min-height: 400px;
       }
-      .chat-container {
-        padding: 1.5rem;
-      }
-      .chat-header h2 {
+
+      #session-builder h2 {
         font-size: 2rem;
       }
-      .message-bubble {
+
+      #session-builder p {
+        font-size: 1rem;
+      }
+
+      .chat-message {
         max-width: 85%;
         font-size: 0.9rem;
-        padding: 0.8rem 1rem;
+        padding: 0.8rem;
       }
-      .chat-input input {
+
+      .chat-input input,
+      .chat-input select {
         padding: 0.8rem;
         font-size: 0.9rem;
       }
+
       .chat-input button {
-        padding: 0.8rem 1rem;
+        padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
-        min-width: 80px;
       }
-      .options {
-        gap: 0.6rem;
-        justify-content: center;
-      }
-      .option-btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-        min-width: 100px;
+
+      .calendar-day {
+        font-size: 0.8rem;
+        padding: 0.6rem;
         min-height: 40px;
       }
-      .calendar-container {
-        padding: 1rem;
-        max-width: 100%;
+
+      .calendar-day-header {
+        font-size: 0.8rem;
+        padding: 0.6rem;
       }
-      .calendar-header span {
+
+      .submit-btn {
+        padding: 0.8rem 2rem;
         font-size: 1rem;
       }
-      .calendar-day {
-        padding: 0.5rem 0.3rem;
-        font-size: 0.8rem;
-        min-height: 36px;
-      }
-      footer {
-        padding: 1rem 0.8rem;
-        background-attachment: scroll;
-      }
+
       .footer-container {
         grid-template-columns: 1fr;
-        gap: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        gap: 1.5rem;
       }
+
       .footer-section {
         align-items: center;
         text-align: center;
-      }
-      .payment-methods {
-        justify-content: center;
-      }
-      .footer-bottom {
-        padding-top: 0.8rem;
-      }
-      .footer-bottom p {
-        font-size: 0.8rem;
-      }
-    }
-    @media (max-width: 480px) {
-      .chat-header h2 {
-        font-size: 1.8rem;
-      }
-      .message-bubble {
-        font-size: 0.85rem;
-      }
-      .chat-input input {
-        padding: 0.7rem;
-        font-size: 0.85rem;
-      }
-      .chat-input button {
-        padding: 0.7rem 0.8rem;
-        font-size: 0.85rem;
-        min-width: 70px;
-      }
-      .option-btn {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
-        min-width: 90px;
-        min-height: 36px;
-      }
-      .calendar-header span {
-        font-size: 0.9rem;
-      }
-      .calendar-day {
-        padding: 0.4rem 0.2rem;
-        font-size: 0.7rem;
-        min-height: 32px;
-      }
-      .footer-bottom p {
-        font-size: 0.7rem;
       }
     }
   </style>
@@ -707,32 +640,20 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/index.html#chat-section" class="book-btn" aria-label="Book a session">Book Now</a>
+      <a href="#session-builder" class="book-btn" aria-label="Book a session" onclick="scrollToSection(event)">Book Now</a>
     </nav>
-    <div class="social-icons">
-      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
-        <i class="fab fa-instagram social-icon"></i>
-      </a>
-    </div>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
+
   <main>
-    <!-- Chat Section -->
-    <section class="chat-section">
-      <div class="chat-container">
-        <div class="chat-header">
-          <h2>Build Your Session 📸</h2>
-        </div>
-        <div class="chat-messages" id="chat-messages">
-          <!-- Chat messages will be populated by JavaScript -->
-        </div>
-        <div class="chat-input" id="chat-input">
-          <input type="text" id="chat-input-text" placeholder="Type your response here... 😊" />
-          <button onclick="sendUserMessage()">Send</button>
-        </div>
-      </div>
+    <section id="session-builder">
+      <h2>Build Your Session</h2>
+      <p>Let’s customize your pet photography session! 🐾</p>
+      <div class="chat-container" id="chatContainer"></div>
+      <button class="submit-btn" id="submitBtn" style="display: none;">Continue to Intake</button>
     </section>
   </main>
+
   <footer>
     <div class="footer-container">
       <div class="footer-section">
@@ -765,398 +686,302 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.2.0 | Last updated: 09:15 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.0 | Last updated: 10:29 PM MDT, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
+
   <script>
-    // === Global Variables ===
-    let sessionData = {};
-    let currentQuestionIndex = 0;
-    let isChatActive = true;
-    let chatQuestions = [];
-    let calendarYear = 2025;
-    let calendarMonth = 4; // May (0-based index)
-    
-    const bookedSessions = {
-      'Cheesman Park': [],
-      'City Park': []
-    };
-    
-    const timeSlots = [
-      '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-      '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM',
-      '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM'
+    const chatContainer = document.getElementById('chatContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    let cartData = JSON.parse(sessionStorage.getItem('cartData')) || {};
+    let currentStep = 0;
+    let selectedDate = null;
+
+    // Placeholder calendar data (30 days, 9 AM-5 PM, 10% booked)
+    const today = new Date();
+    const calendarData = [];
+    for (let i = 0; i < 30; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      const dateStr = date.toISOString().split('T')[0];
+      for (let hour = 9; hour <= 17; hour++) {
+        const isBooked = Math.random() < 0.1; // 10% chance booked
+        calendarData.push({
+          date: dateStr,
+          time: `${hour.toString().padStart(2, '0')}:00`,
+          status: isBooked ? 'booked' : 'available'
+        });
+      }
+    }
+
+    const steps = [
+      {
+        bot: "Let’s build your session! What’s your first name? 😊",
+        input: '<input type="text" id="client1FirstName" placeholder="Your first name" required>',
+        validate: (value) => value.trim() ? null : "Please enter your first name! 😅"
+      },
+      {
+        bot: (data) => `Great, ${data.client1FirstName}! What’s your pet’s name? 🐾`,
+        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name" required>',
+        validate: (value) => value.trim() ? null : "Please enter your pet’s name! 🐶"
+      },
+      {
+        bot: (data) => `Awesome, ${data.pet1Name} sounds adorable! Are you looking for a Full or Mini session? 📸 Full Session: 90 min, 10 images, $100. Mini Session: 60 min, 5 images, $50.`,
+        input: `
+          <div class="radio-group">
+            <label><input type="radio" name="sessionType" value="Full" required> Full Session</label>
+            <label><input type="radio" name="sessionType" value="Mini"> Mini Session</label>
+          </div>
+        `,
+        validate: (value) => value ? null : "Please select a session type! 😊"
+      },
+      {
+        bot: "Nice choice! Where would you like the session? 🌳",
+        input: `
+          <select id="location" required>
+            <option value="" disabled selected>Select a location...</option>
+            <option value="Cheesman Park">Cheesman Park</option>
+            <option value="City Park">City Park</option>
+          </select>
+        `,
+        validate: (value) => value ? null : "Please select a location! 🌲"
+      },
+      {
+        bot: "How many pets will be in the session? 🐶🐱 (1-5)",
+        input: '<input type="number" id="numberOfPets" min="1" max="5" required>',
+        validate: (value) => {
+          const num = parseInt(value);
+          if (!num || num < 1 || num > 5) return "Please enter a number between 1 and 5! 😅";
+          return null;
+        }
+      },
+      {
+        bot: "Got it! How many people will be in the session? 👥 (1-5)",
+        input: '<input type="number" id="numberOfPeople" min="1" max="5" required>',
+        validate: (value) => {
+          const num = parseInt(value);
+          if (!num || num < 1 || num > 5) return "Please enter a number between 1 and 5! 😊";
+          return null;
+        }
+      },
+      {
+        bot: "What’s the name of your second pet? 🐕",
+        input: '<input type="text" id="pet2Name" placeholder="Second pet’s name" required>',
+        validate: (value) => value.trim() ? null : "Please enter your second pet’s name! 🐱",
+        condition: (data) => parseInt(data.numberOfPets) >= 2
+      },
+      {
+        bot: (data) => `Great, let’s pick a date for you and ${data.pet1Name}! 📅`,
+        input: generateCalendar(),
+        validate: () => selectedDate ? null : "Please select a date! 😅"
+      },
+      {
+        bot: (data) => `Perfect! Which time works for you on ${new Date(selectedDate).toLocaleDateString()}? ⏰`,
+        input: generateTimeOptions(),
+        validate: (value) => value ? null : "Please select a time! ⏰"
+      },
+      {
+        bot: "Almost done! Please agree to our Terms of Service and Photo Release. ✅",
+        input: `
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="terms" required> I agree to the Terms of Service</label>
+            <label><input type="checkbox" id="photoRelease" required> I agree to the Photo Release</label>
+          </div>
+        `,
+        validate: () => document.getElementById('terms').checked && document.getElementById('photoRelease').checked ? null : "Please agree to both terms! 😊"
+      }
     ];
-    
-    // === Header Navigation Functions ===
+
+    function generateCalendar() {
+      const currentMonth = new Date(today);
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+      const startingDayOfWeek = firstDay.getDay();
+
+      let html = `
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <h3 class="calendar-title">${new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(currentMonth)}</h3>
+            <div class="calendar-nav">
+              <button class="nav-button" onclick="previousMonth()">‹</button>
+              <button class="nav-button" onclick="nextMonth()">›</button>
+            </div>
+          </div>
+          <div class="calendar-grid" id="calendarGrid">
+      `;
+
+      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayHeaders.forEach(day => {
+        html += `<div class="calendar-day-header">${day}</div>`;
+      });
+
+      for (let i = 0; i < startingDayOfWeek; i++) {
+        html += '<div class="calendar-day other-month"></div>';
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        const hasAvailable = calendarData.some(slot => slot.date === dateStr && slot.status === 'available');
+        html += `<div class="calendar-day ${hasAvailable ? 'available' : 'booked'}" data-date="${dateStr}" onclick="selectDate('${dateStr}')">${day}</div>`;
+      }
+
+      html += '</div></div>';
+      return html;
+    }
+
+    function generateTimeOptions() {
+      if (!selectedDate) return '<select id="time" required><option value="" disabled selected>No date selected</option></select>';
+      const availableTimes = calendarData.filter(slot => slot.date === selectedDate && slot.status === 'available').map(slot => slot.time);
+      let html = '<select id="time" required><option value="" disabled selected>Select a time...</option>';
+      availableTimes.forEach(time => {
+        html += `<option value="${time}">${time}</option>`;
+      });
+      html += '</select>';
+      return html;
+    }
+
+    function appendMessage(content, type) {
+      const message = document.createElement('div');
+      message.className = `chat-message ${type}`;
+      message.innerHTML = content;
+      chatContainer.appendChild(message);
+      message.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    function appendInput(step) {
+      const inputDiv = document.createElement('div');
+      inputDiv.className = 'chat-input';
+      inputDiv.innerHTML = step.input + '<button onclick="submitInput()">Send</button>';
+      chatContainer.appendChild(inputDiv);
+      inputDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    function submitInput() {
+      const step = steps[currentStep];
+      let value;
+      let inputElement;
+
+      if (step.input.includes('radio')) {
+        inputElement = document.querySelector('input[name="sessionType"]:checked');
+        value = inputElement ? inputElement.value : null;
+      } else if (step.input.includes('select')) {
+        inputElement = document.querySelector('select');
+        value = inputElement.value;
+      } else if (step.input.includes('checkbox')) {
+        value = document.getElementById('terms').checked && document.getElementById('photoRelease').checked;
+      } else {
+        inputElement = document.querySelector('input');
+        value = inputElement.value.trim();
+      }
+
+      const error = step.validate(value);
+      if (error) {
+        appendMessage(error, 'error');
+        return;
+      }
+
+      if (step.input.includes('radio') || step.input.includes('checkbox')) {
+        appendMessage(value, 'user');
+      } else if (step.input.includes('select')) {
+        appendMessage(value, 'user');
+      } else if (step.input.includes('calendar')) {
+        appendMessage(selectedDate, 'user');
+      } else {
+        appendMessage(value, 'user');
+      }
+
+      if (currentStep === 0) cartData.client1FirstName = value;
+      if (currentStep === 1) cartData.pet1Name = value;
+      if (currentStep === 2) cartData.sessionType = value;
+      if (currentStep === 3) cartData.location = value;
+      if (currentStep === 4) cartData.numberOfPets = value;
+      if (currentStep === 5) cartData.numberOfPeople = value;
+      if (currentStep === 6) cartData.pet2Name = value;
+      if (currentStep === 7) cartData.selectedDate = selectedDate;
+      if (currentStep === 8) cartData.selectedTime = value;
+      if (currentStep === 9) cartData.agreements = { terms: true, photoRelease: true };
+
+      chatContainer.removeChild(chatContainer.lastChild);
+
+      currentStep++;
+      if (currentStep < steps.length) {
+        if (steps[currentStep].condition && !steps[currentStep].condition(cartData)) {
+          currentStep++;
+        }
+        if (currentStep < steps.length) {
+          const botMessage = typeof steps[currentStep].bot === 'function' ? steps[currentStep].bot(cartData) : steps[currentStep].bot;
+          appendMessage(botMessage, 'bot');
+          appendInput(steps[currentStep]);
+        } else {
+          showSubmitButton();
+        }
+      } else {
+        showSubmitButton();
+      }
+    }
+
+    function selectDate(date) {
+      selectedDate = date;
+      const days = document.querySelectorAll('.calendar-day');
+      days.forEach(day => day.classList.remove('available'));
+      const selectedDay = document.querySelector(`.calendar-day[data-date="${date}"]`);
+      if (selectedDay) selectedDay.classList.add('available');
+      submitInput();
+    }
+
+    function previousMonth() {
+      // Placeholder: Static calendar, no navigation
+    }
+
+    function nextMonth() {
+      // Placeholder: Static calendar, no navigation
+    }
+
+    function showSubmitButton() {
+      submitBtn.style.display = 'block';
+      submitBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    function handleSubmit() {
+      cartData.selectedDateTime = `${cartData.selectedDate}T${cartData.selectedTime}:00`;
+      try {
+        sessionStorage.setItem('cartData', JSON.stringify(cartData));
+        console.log('✅ Session data saved:', cartData);
+        window.location.href = '/intake1.html';
+      } catch (error) {
+        console.error('Error saving session data:', error);
+        appendMessage('Oops, something went wrong! Please try again. 😅', 'error');
+      }
+    }
+
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
-    
-    // === Chat Functionality ===
-    function addMessage(sender, text, options = [], type = 'options') {
-      const messagesContainer = document.getElementById('chat-messages');
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `chat-message ${sender}`;
-      messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
-      
-      if (type === 'calendar' && isChatActive) {
-        const calendarDiv = document.createElement('div');
-        calendarDiv.className = 'calendar-container';
-        calendarDiv.innerHTML = generateCalendar();
-        messageDiv.appendChild(calendarDiv);
-      }
-      
-      if (options.length > 0 && isChatActive) {
-        const optionsContainer = document.createElement('div');
-        optionsContainer.className = 'options';
-        options.forEach(option => {
-          const button = document.createElement('button');
-          button.className = 'option-btn';
-          button.innerHTML = option.display;
-          button.onclick = () => selectOption(option.value);
-          optionsContainer.appendChild(button);
-        });
-        messageDiv.appendChild(optionsContainer);
-      }
-      
-      messagesContainer.appendChild(messageDiv);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      
-      const input = document.getElementById('chat-input-text');
-      const sendButton = document.querySelector('.chat-input button');
-      if (!isChatActive) {
-        input.disabled = true;
-        sendButton.disabled = true;
-      }
-      
-      setTimeout(() => {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: 'smooth'
-        });
-      }, 100);
+
+    function scrollToSection(e) {
+      e.preventDefault();
+      const section = document.querySelector('#session-builder');
+      const offset = 100;
+      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: sectionPosition - offset,
+        behavior: 'smooth'
+      });
     }
-    
-    // === Calendar Functions ===
-    function generateCalendar() {
-      const date = new Date(calendarYear, calendarMonth);
-      const monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-      ];
-      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
-      const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
-      
-      let html = `
-        <div class="calendar-header">
-          <button onclick="prevMonth()">‹</button>
-          <span>${monthNames[calendarMonth]} ${calendarYear}</span>
-          <button onclick="nextMonth()">›</button>
-        </div>
-        <div class="calendar-grid">
-          <div class="calendar-day header">Sun</div>
-          <div class="calendar-day header">Mon</div>
-          <div class="calendar-day header">Tue</div>
-          <div class="calendar-day header">Wed</div>
-          <div class="calendar-day header">Thu</div>
-          <div class="calendar-day header">Fri</div>
-          <div class="calendar-day header">Sat</div>
-      `;
-      
-      for (let i = 0; i < firstDay; i++) {
-        html += `<div class="calendar-day"></div>`;
-      }
-      
-      const today = new Date('2025-05-25');
-      const minDate = new Date('2025-05-26');
-      for (let day = 1; day <= daysInMonth; day++) {
-        const currentDate = new Date(calendarYear, calendarMonth, day);
-        const isDisabled = currentDate < minDate;
-        const className = isDisabled ? 'disabled' : 'selectable';
-        html += `<div class="calendar-day ${className}" ${!isDisabled ? `onclick="selectDate('${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}')"` : ''}>${day}</div>`;
-      }
-      html += '</div>';
-      return html;
-    }
-    
-    function prevMonth() {
-      calendarMonth--;
-      if (calendarMonth < 0) {
-        calendarMonth = 11;
-        calendarYear--;
-      }
-      const calendarContainer = document.querySelector('.calendar-container');
-      calendarContainer.innerHTML = generateCalendar();
-    }
-    
-    function nextMonth() {
-      calendarMonth++;
-      if (calendarMonth > 11) {
-        calendarMonth = 0;
-        calendarYear++;
-      }
-      const calendarContainer = document.querySelector('.calendar-container');
-      calendarContainer.innerHTML = generateCalendar();
-    }
-    
-    function selectDate(date) {
-      sessionData.date = date;
-      const timeQuestion = chatQuestions.find(q => q.id === 'time');
-      timeQuestion.text = `Great! Here are the available appointments for ${date} at ${sessionData.location} 🕒`;
-      timeQuestion.options = getAvailableTimeSlots(date);
-      
-      if (timeQuestion.options.length === 0) {
-        addMessage('bot', `Sorry, no time slots are available on ${date} at your chosen location. Please pick another date. 📅`, [], 'calendar');
-        currentQuestionIndex--;
-        return;
-      }
-      
-      addMessage('user', date);
-      proceedToNextQuestion();
-    }
-    
-    function getAvailableTimeSlots(date) {
-      const location = sessionData.location;
-      const duration = sessionData.sessionDuration;
-      const slotsNeeded = duration === 60 ? 2 : 3;
-      const booked = bookedSessions[location];
-      const availableSlots = [];
-      
-      for (let i = 0; i < timeSlots.length - slotsNeeded + 1; i++) {
-        let isAvailable = true;
-        for (let j = 0; j < slotsNeeded; j++) {
-          const slotTime = timeSlots[i + j];
-          if (booked.some(booking => booking.date === date && booking.time === slotTime)) {
-            isAvailable = false;
-            break;
-          }
-        }
-        if (isAvailable) {
-          availableSlots.push({ value: timeSlots[i], display: timeSlots[i] });
-        }
-      }
-      return availableSlots;
-    }
-    
-    // === Chat Interaction Functions ===
-    function sendUserMessage() {
-      if (!isChatActive) return;
-      const input = document.getElementById('chat-input-text');
-      const userResponse = input.value.trim();
-      if (!userResponse) return;
-      
-      const currentQuestion = chatQuestions[currentQuestionIndex];
-      if (currentQuestion.type === 'text') {
-        try {
-          if (currentQuestion.id === 'client1-first-name') {
-            sessionData.client1FirstName = userResponse;
-          } else if (currentQuestion.id === 'pet1-name') {
-            sessionData.pet1Name = userResponse;
-          } else if (currentQuestion.id === 'pet2-name') {
-            sessionData.pet2Name = userResponse;
-          }
-          
-          addMessage('user', userResponse);
-          input.value = '';
-          proceedToNextQuestion();
-        } catch (error) {
-          console.error('❌ Error in sendUserMessage:', error);
-          addMessage('bot', 'Sorry, an error occurred. Please try again. 😓', [], 'none');
-        }
-      }
-    }
-    
-    function selectOption(value) {
-      if (!isChatActive) return;
-      const currentQuestion = chatQuestions[currentQuestionIndex];
-      let displayValue = value;
-      
-      if (currentQuestion.id === 'session-type') {
-        sessionData.sessionType = value;
-        sessionData.sessionDuration = value === 'Mini Session' ? 60 : 90;
-      } else if (currentQuestion.id === 'location') {
-        sessionData.location = value;
-      } else if (currentQuestion.id === 'number-of-pets') {
-        sessionData.numberOfPets = parseInt(value);
-        if (value === '2') {
-          chatQuestions.splice(currentQuestionIndex + 1, 0, {
-            id: 'pet2-name',
-            text: `What is your second pet's name? 🐾`,
-            type: 'text'
-          });
-        }
-      } else if (currentQuestion.id === 'number-of-people') {
-        sessionData.numberOfPeople = parseInt(value);
-      } else if (currentQuestion.id === 'terms-agreement' || currentQuestion.id === 'photo-release') {
-        sessionData[currentQuestion.id] = value === 'Agree';
-        if (value !== 'Agree') {
-          addMessage('bot', 'You must agree to proceed. Please review and accept the agreements. 😓', [], 'none');
-          return;
-        }
-      } else if (currentQuestion.id === 'time') {
-        sessionData.time = value;
-        const location = sessionData.location;
-        const duration = sessionData.sessionDuration;
-        const slotsNeeded = duration === 60 ? 2 : 3;
-        const startIndex = timeSlots.indexOf(value);
-        for (let i = 0; i < slotsNeeded; i++) {
-          bookedSessions[location].push({
-            date: sessionData.date,
-            time: timeSlots[startIndex + i]
-          });
-        }
-        proceedToNextQuestion();
-        return;
-      }
-      
-      addMessage('user', displayValue);
-      proceedToNextQuestion();
-    }
-    
-    function proceedToNextQuestion() {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < chatQuestions.length) {
-        const nextQuestion = chatQuestions[currentQuestionIndex];
-        addMessage('bot', nextQuestion.text, nextQuestion.options, nextQuestion.type);
-      } else {
-        try {
-          const dataString = JSON.stringify(sessionData);
-          sessionStorage.setItem('cartData', dataString);
-          window.location.href = '/intake1.html';
-        } catch (error) {
-          console.error('Error saving cart data:', error);
-          addMessage('bot', 'Oops, something went wrong. Please try again. 😓', [], 'none');
-        }
-      }
-    }
-    
-    // === Page Initialization ===
+
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v4.2.0');
-      
-      try {
-        // Load session data from previous step
-        const cartDataRaw = sessionStorage.getItem('cartData');
-        console.log('Raw cartData from sessionStorage:', cartDataRaw);
-        const cartData = cartDataRaw ? JSON.parse(cartDataRaw) : {};
-        console.log('Parsed cartData:', cartData);
-        sessionData = { ...cartData };
-        
-        // Validate required session data
-        const requiredFields = ['email'];
-        const missingFields = requiredFields.filter(field => !sessionData[field]);
-        if (missingFields.length > 0) {
-          console.log('Missing required fields:', missingFields);
-          addMessage('bot', `It looks like some session details are missing: ${missingFields.join(', ')}. Please go back to the home page and start again. 😓`, [], 'none');
-          const inputContainer = document.getElementById('chat-input');
-          inputContainer.innerHTML = '';
-          isChatActive = false;
-          return;
-        }
-        
-        // Build dynamic chat questions
-        chatQuestions = [
-          {
-            id: 'welcome',
-            text: `Hi there! Let's build your perfect pet photography session. 😊`,
-            type: 'none'
-          },
-          {
-            id: 'client1-first-name',
-            text: `What is your first name? 👤`,
-            type: 'text'
-          },
-          {
-            id: 'pet1-name',
-            text: `What is your first pet's name? 🐾`,
-            type: 'text'
-          },
-          {
-            id: 'session-type',
-            text: `What type of session would you like? 📸`,
-            type: 'options',
-            options: [
-              { value: 'Mini Session', display: 'Mini Session (60 min, 5 images)' },
-              { value: 'Full Session', display: 'Full Session (90 min, 10 images)' }
-            ]
-          },
-          {
-            id: 'location',
-            text: `Where would you like your session to take place? 📍`,
-            type: 'options',
-            options: [
-              { value: 'Cheesman Park', display: 'Cheesman Park' },
-              { value: 'City Park', display: 'City Park' }
-            ]
-          },
-          {
-            id: 'number-of-pets',
-            text: `How many pets will be in the session? 🐶🐱`,
-            type: 'options',
-            options: [
-              { value: '1', display: '1 Pet' },
-              { value: '2', display: '2 Pets' }
-            ]
-          },
-          {
-            id: 'number-of-people',
-            text: `How many people will be in the session? 👥`,
-            type: 'options',
-            options: [
-              { value: '1', display: '1 Person' },
-              { value: '2', display: '2 People' }
-            ]
-          },
-          {
-            id: 'terms-agreement',
-            text: `Please agree to our Terms of Service to proceed. 📜`,
-            type: 'options',
-            options: [
-              { value: 'Agree', display: 'I Agree' },
-              { value: 'Disagree', display: 'I Disagree' }
-            ]
-          },
-          {
-            id: 'photo-release',
-            text: `Please agree to our Photo Release to allow us to use your pet's photos for promotional purposes. 📸`,
-            type: 'options',
-            options: [
-              { value: 'Agree', display: 'I Agree' },
-              { value: 'Disagree', display: 'I Disagree' }
-            ]
-          },
-          {
-            id: 'date',
-            text: "Perfect! Now let's pick a date for your session! 📅 Please select a date from the calendar below.",
-            type: 'calendar'
-          },
-          {
-            id: 'time',
-            text: "",
-            type: 'options',
-            options: []
-          }
-        ];
-        
-        // Start the chat flow
-        addMessage('bot', chatQuestions[0].text, [], chatQuestions[0].type);
-        
-        // Add Enter key listener for text input
-        document.getElementById('chat-input-text').addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') {
-            sendUserMessage();
-          }
-        });
-        
-      } catch (error) {
-        console.error('Error initializing cart page:', error);
-        addMessage('bot', 'Sorry, there was an error loading the page. Please refresh and try again. 😓', [], 'none');
-        isChatActive = false;
-        const inputContainer = document.getElementById('chat-input');
-        inputContainer.innerHTML = '';
+      console.log('✅ Cart page loaded - v1.0.0');
+      if (!cartData.email) {
+        appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
+        return;
       }
+      appendMessage(steps[0].bot, 'bot');
+      appendInput(steps[0]);
+      submitBtn.addEventListener('click', handleSubmit);
     });
   </script>
 </body>
