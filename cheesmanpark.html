@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cheesman Park Photography Sessions | Picture This Pet</title>
+  <meta name="description" content="Everything you need to know about Cheesman Park photo sessions and dog-friendly activities in the area.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      overflow-x: hidden;
+    }
+    
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background: none;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === HEADER STYLES === */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .book-btn {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      min-height: calc(100vh - 110px);
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      padding: 4rem 1rem;
+      position: relative;
+    }
+
+    /* === HERO SECTION === */
+    .hero-section {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+      text-align: center;
+      animation: slideInUp 0.8s ease-out;
+    }
+
+    .hero-box {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .hero-content p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-item {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 0.3rem;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .park-map {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .map-header {
+      padding: 1.2rem 1.6rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .map-iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      filter: contrast(1.1) brightness(0.9);
+    }
+
+    .map-footer {
+      padding: 1rem 1.6rem;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* === CONTENT SECTIONS === */
+    .content-section {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      margin-bottom: 3rem;
+      line-height: 1.6;
+    }
+
+    /* === PHOTO SPOTS === */
+    .photo-spots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .photo-spot {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .photo-spot:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .photo-spot h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .photo-spot p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-spot-features {
+      list-style: none;
+      padding: 0;
+    }
+
+    .photo-spot-features li {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .photo-spot-features li::before {
+      content: "📸";
+      font-size: 1rem;
+    }
+
+    /* === BUSINESS LISTINGS === */
+    .business-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .business-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .business-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .business-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .business-icon {
+      font-size: 2rem;
+      width: 50px;
+      height: 50px;
+      background: rgba(244, 124, 44, 0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(244, 124, 44, 0.3);
+    }
+
+    .business-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.3rem;
+    }
+
+    .business-type {
+      font-size: 0.9rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .business-description {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .business-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .business-detail {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .business-link {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .business-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(244, 124, 44, 0.4);
+    }
+
+    /* === ACTION SECTION === */
+    .action-section {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .action-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .action-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 1.2rem 3rem;
+      border-radius: 16px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(244, 124, 44, 0.4);
+    }
+
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 1.2rem 3rem;
+      border-radius: 16px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url("assets/images/ani_bkgd_cool.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      padding: 3rem 2rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .footer-section p, .footer-section a {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .footer-section.socials a {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .payment-icon:nth-child(1) { animation-delay: 0.5s; }
+    .payment-icon:nth-child(2) { animation-delay: 0.7s; }
+    .payment-icon:nth-child(3) { animation-delay: 0.9s; }
+    .payment-icon:nth-child(4) { animation-delay: 1.1s; }
+    .payment-icon:nth-child(5) { animation-delay: 1.3s; }
+    .payment-icon:nth-child(6) { animation-delay: 1.5s; }
+    .payment-icon:nth-child(7) { animation-delay: 1.7s; }
+    .payment-icon:nth-child(8) { animation-delay: 1.9s; }
+    .payment-icon:nth-child(9) { animation-delay: 2.1s; }
+    .payment-icon:nth-child(10) { animation-delay: 2.3s; }
+    .payment-icon:nth-child(11) { animation-delay: 2.5s; }
+    .payment-icon:nth-child(12) { animation-delay: 2.7s; }
+    .payment-icon:nth-child(13) { animation-delay: 2.9s; }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+      }
+      
+      .desktop-logo {
+        height: 48px;
+      }
+      
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        background: linear-gradient(135deg, #F47C2C, #FDB75E);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1rem;
+        margin-left: 0;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      main {
+        margin-top: 80px;
+        padding: 2rem 1rem;
+      }
+
+      .hero-box {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+        text-align: center;
+      }
+
+      .hero-content p {
+        text-align: center;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .content-section {
+        padding: 2rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .photo-spots-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .business-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .primary-btn,
+      .secondary-btn {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-section.socials a {
+        display: inline-block;
+        margin: 0 0.5rem;
+      }
+
+      .payment-methods {
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-menu-btn { 
+        display: none !important; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="/" class="book-btn" aria-label="Book a session">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-box">
+        <div class="hero-content">
+          <h1>Cheesman Park Photography Sessions</h1>
+          <p>Historic charm meets urban elegance in the heart of Denver. This beautifully landscaped park offers classic architecture, open meadows, and tree-lined paths perfect for timeless pet portraits.</p>
+          
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">80</span>
+              <span class="stat-label">Acres of Beauty</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">1907</span>
+              <span class="stat-label">Historic Pavilion</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">4+</span>
+              <span class="stat-label">Photo Zones</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">1890</span>
+              <span class="stat-label">Est. Year</span>
+            </div>
+          </div>
+          
+          <div class="action-buttons">
+            <a href="/" class="primary-btn">Book Cheesman Session</a>
+          </div>
+        </div>
+        
+        <div class="hero-visual">
+          <div class="park-map">
+            <div class="map-header">
+              <span>📍</span>
+              <span>Cheesman Park Location</span>
+            </div>
+            <iframe
+              class="map-iframe"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6134.306478944552!2d-104.9669827235144!3d39.73302870192812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c78d7367d2a0f%3A0x79885f4ae5c9f805!2sCheesman%20Park!5e0!3m2!1sen!2sus!4v1716637911983!5m2!1sen!2sus">
+            </iframe>
+            <div class="map-footer">E 8th Ave & Franklin St, Denver, CO 80206</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo Spots Section -->
+    <section class="content-section">
+      <h2 class="section-title">Perfect Photo Spots</h2>
+      <p class="section-subtitle">Cheesman Park's historic elegance and natural beauty create the perfect backdrop for classic pet photography.</p>
+      
+      <div class="photo-spots-grid">
+        <div class="photo-spot">
+          <h3>Historic Pavilion</h3>
+          <p>The crown jewel of Cheesman Park, this 1907 neoclassical pavilion provides stunning architectural backdrops and elegant columns for timeless portraits.</p>
+          <ul class="photo-spot-features">
+            <li>Neoclassical architecture</li>
+            <li>Elegant columns</li>
+            <li>Historic grandeur</li>
+            <li>Weather protection</li>
+          </ul>
+        </div>
+        
+        <div class="photo-spot">
+          <h3>Formal Gardens</h3>
+          <p>Beautifully maintained flower beds and manicured lawns create a refined setting perfect for sophisticated pet portraits.</p>
+          <ul class="photo-spot-features">
+            <li>Seasonal flowers</li>
+            <li>Manicured landscapes</li>
+            <li>Colorful backdrops</li>
+            <li>Garden pathways</li>
+          </ul>
+        </div>
+        
+        <div class="photo-spot">
+          <h3>Tree-Lined Promenade</h3>
+          <p>Grand old trees create natural tunnels and frames, with dappled sunlight perfect for artistic and romantic pet photography.</p>
+          <ul class="photo-spot-features">
+            <li>Natural tree canopy</li>
+            <li>Dappled lighting</li>
+            <li>Walking portraits</li>
+            <li>Romantic atmosphere</li>
+          </ul>
+        </div>
+        
+        <div class="photo-spot">
+          <h3>Open Meadows</h3>
+          <p>Wide grass areas provide space for active pets to run and play, perfect for capturing natural, joyful moments and action shots.</p>
+          <ul class="photo-spot-features">
+            <li>Running space</li>
+            <li>Action photography</li>
+            <li>Natural play</li>
+            <li>Group sessions</li>
+          </ul>
+        </div>
+        
+        <div class="photo-spot">
+          <h3>Historic Monuments</h3>
+          <p>Beautiful statues and monuments throughout the park add character and historic context to your pet's portrait session.</p>
+          <ul class="photo-spot-features">
+            <li>Historic statues</li>
+            <li>Artistic elements</li>
+            <li>Cultural context</li>
+            <li>Unique backdrops</li>
+          </ul>
+        </div>
+        
+        <div class="photo-spot">
+          <h3>Neighborhood Views</h3>
+          <p>Elevated areas of the park offer glimpses of the beautiful Cap Hill neighborhood and downtown Denver in the distance.</p>
+          <ul class="photo-spot-features">
+            <li>Neighborhood charm</li>
+            <li>Urban backdrops</li>
+            <li>City views</li>
+            <li>Elevated perspectives</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dog-Friendly Restaurants Section -->
+    <section class="content-section">
+      <h2 class="section-title">Dog-Friendly Dining</h2>
+      <p class="section-subtitle">Capitol Hill's vibrant food scene offers plenty of dog-welcoming spots near Cheesman Park.</p>
+      
+      <div class="business-grid">
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">☕</div>
+            <div>
+              <div class="business-name">Corvus Coffee Roasters</div>
+              <div class="business-type">Coffee Roastery</div>
+            </div>
+          </div>
+          <p class="business-description">Award-winning specialty coffee roaster with a welcoming patio. Perfect for a pre-session caffeine boost or post-session celebration with your pup.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 1834 E 12th Ave (3 min walk)</div>
+            <div class="business-detail">🐕 Dog-friendly patio</div>
+            <div class="business-detail">⭐ Award-winning coffee</div>
+            <div class="business-detail">💰 $3-6 per person</div>
+          </div>
+          <a href="https://corvuscoffee.com" target="_blank" class="business-link">Visit Website</a>
+        </div>
+        
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🍕</div>
+            <div>
+              <div class="business-name">Cart-Driver</div>
+              <div class="business-type">Wood-Fired Pizza</div>
+            </div>
+          </div>
+          <p class="business-description">Authentic Neapolitan pizza with a large dog-friendly patio. Known for their wood-fired pizzas and welcoming atmosphere for pets and families.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 2500 E 6th Ave (8 min walk)</div>
+            <div class="business-detail">🐕 Large outdoor patio</div>
+            <div class="business-detail">⭐ Wood-fired pizzas</div>
+            <div class="business-detail">💰 $15-25 per person</div>
+          </div>
+          <a href="https://cart-driver.com" target="_blank" class="business-link">Visit Website</a>
+        </div>
+        
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🍺</div>
+            <div>
+              <div class="business-name">Adrift Tiki Bar</div>
+              <div class="business-type">Tiki Bar</div>
+            </div>
+          </div>
+          <p class="business-description">Tropical-themed bar with a fun dog-friendly patio. Great for unwinding after your photo session with creative cocktails and a laid-back vibe.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 218 E 13th Ave (5 min walk)</div>
+            <div class="business-detail">🐕 Tropical patio</div>
+            <div class="business-detail">⭐ Creative cocktails</div>
+            <div class="business-detail">💰 $10-18 per person</div>
+          </div>
+          <a href="https://adrifttikibar.com" target="_blank" class="business-link">Visit Website</a>
+        </div>
+        
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🥗</div>
+            <div>
+              <div class="business-name">City, O' City</div>
+              <div class="business-type">Vegetarian Restaurant</div>
+            </div>
+          </div>
+          <p class="business-description">Popular vegetarian spot with excellent brunch and a dog-friendly patio. Perfect for health-conscious pet parents looking for fresh, local ingredients.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 206 E 13th Ave (4 min walk)</div>
+            <div class="business-detail">🐕 Welcoming patio</div>
+            <div class="business-detail">⭐ Vegetarian specialties</div>
+            <div class="business-detail">💰 $12-18 per person</div>
+          </div>
+          <a href="https://cityocitydenver.com" target="_blank" class="business-link">Visit Website</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pet Shops Section -->
+    <section class="content-section">
+      <h2 class="section-title">Pet Shops & Services</h2>
+      <p class="section-subtitle">Capitol Hill's pet-friendly businesses have everything your furry friend needs.</p>
+      
+      <div class="business-grid">
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🛍️</div>
+            <div>
+              <div class="business-name">Biscuit & Bath</div>
+              <div class="business-type">Pet Boutique</div>
+            </div>
+          </div>
+          <p class="business-description">Upscale pet boutique with luxury accessories, organic treats, and stylish collars. Perfect for adding special touches to your photo session.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 1535 S Pearl St (1.2 mi south)</div>
+            <div class="business-detail">🛒 Luxury accessories</div>
+            <div class="business-detail">⭐ Photo-ready gear</div>
+            <div class="business-detail">💰 $20-80 accessories</div>
+          </div>
+          <a href="#" class="business-link">Visit Store</a>
+        </div>
+        
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">✂️</div>
+            <div>
+              <div class="business-name">Posh Pups Grooming</div>
+              <div class="business-type">Pet Grooming</div>
+            </div>
+          </div>
+          <p class="business-description">Full-service grooming salon specializing in photo-ready styling. Book ahead to ensure your pet looks picture-perfect for their session.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 1290 S Pearl St (1 mi south)</div>
+            <div class="business-detail">✂️ Photo-ready grooming</div>
+            <div class="business-detail">⭐ Styling expertise</div>
+            <div class="business-detail">💰 $45-85 per session</div>
+          </div>
+          <a href="#" class="business-link">Call to Book</a>
+        </div>
+        
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🐾</div>
+            <div>
+              <div class="business-name">Healthy Pet</div>
+              <div class="business-type">Pet Supply Store</div>
+            </div>
+          </div>
+          <p class="business-description">Natural pet food and supplies with knowledgeable staff. Great for healthy treats to keep your pet motivated during the photo session.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 2144 S University Blvd (1.5 mi east)</div>
+            <div class="business-detail">🛒 Natural & organic</div>
+            <div class="business-detail">⭐ Expert nutrition advice</div>
+            <div class="business-detail">💰 $5-30 treats/toys</div>
+          </div>
+          <a href="#" class="business-link">Visit Store</a>
+        </div>
+        
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🏥</div>
+            <div>
+              <div class="business-name">Capitol Hill Veterinary Clinic</div>
+              <div class="business-type">Veterinary Care</div>
+            </div>
+          </div>
+          <p class="business-description">Neighborhood veterinary clinic providing comprehensive pet healthcare. Convenient for any health needs and emergency services.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 1216 E Colfax Ave (0.7 mi north)</div>
+            <div class="business-detail">🏥 Full veterinary services</div>
+            <div class="business-detail">⭐ Local neighborhood clinic</div>
+            <div class="business-detail">💰 Standard vet pricing</div>
+          </div>
+          <a href="#" class="business-link">Call Clinic</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Other Activities Section -->
+    <section class="content-section">
+      <h2 class="section-title">Capitol Hill Adventures</h2>
+      <p class="section-subtitle">Explore the vibrant Capitol Hill neighborhood with these dog-friendly activities and attractions.</p>
+      
+      <div class="business-grid">
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🎨</div>
+            <div>
+              <div class="business-name">Capitol Hill Art District</div>
+              <div class="business-type">Arts & Culture</div>
+            </div>
+          </div>
+          <p class="business-description">Walk through the vibrant street art and murals of Capitol Hill. Many outdoor galleries and installations are perfect for unique photo backdrops with your pet.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 Throughout Capitol Hill</div>
+            <div class="business-detail">🎨 Street art tours</div>
+            <div class="business-detail">⭐ Unique photo ops</div>
+            <div class="business-detail">💰 Free to explore</div>
+          </div>
+          <a href="#" class="business-link">Explore Art</a>
+        </div>
+        
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🛍️</div>
+            <div>
+              <div class="business-name">South Pearl Street</div>
+              <div class="business-type">Shopping District</div>
+            </div>
+          </div>
+          <p class="business-description">Charming shopping street with many dog-friendly shops and outdoor seating. Perfect for a leisurely stroll before or after your photo session.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 S Pearl St (0.5 mi south)</div>
+            <div class="business-detail">🐕 Dog-friendly shopping</div>
+            <div class="business-detail">⭐ Local boutiques</div>
+            <div class="business-detail">💰 Varies by shop</div>
+          </div>
+          <a href="#" class="business-link">Shop Local</a>
+        </div>
+        
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🏛️</div>
+            <div>
+              <div class="business-name">Molly Brown House Museum</div>
+              <div class="business-type">Historic Site</div>
+            </div>
+          </div>
+          <p class="business-description">Historic home of the "Unsinkable" Molly Brown. While pets can't go inside, the beautiful Victorian architecture makes for great exterior photos.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 1340 Pennsylvania St (0.8 mi north)</div>
+            <div class="business-detail">🚫 Pets not allowed inside</div>
+            <div class="business-detail">⭐ Victorian architecture</div>
+            <div class="business-detail">💰 Free exterior viewing</div>
+          </div>
+          <a href="https://mollybrown.org" target="_blank" class="business-link">Museum Info</a>
+        </div>
+        
+        <div class="business-card">
+          <div class="business-header">
+            <div class="business-icon">🌳</div>
+            <div>
+              <div class="business-name">Congress Park</div>
+              <div class="business-type">Neighborhood Park</div>
+            </div>
+          </div>
+          <p class="business-description">Small neighborhood park perfect for a quick play session. Less crowded than Cheesman and great for dogs who need to burn off energy before photos.</p>
+          <div class="business-details">
+            <div class="business-detail">📍 E 8th Ave & Josephine St (0.4 mi east)</div>
+            <div class="business-detail">🐕 Off-leash friendly</div>
+            <div class="business-detail">⭐ Less crowded</div>
+            <div class="business-detail">💰 Free park access</div>
+          </div>
+          <a href="#" class="business-link">Park Info</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Practical Info Section -->
+    <section class="content-section">
+      <h2 class="section-title">Planning Your Visit</h2>
+      <p class="section-subtitle">Everything you need to know for a successful photo session at Cheesman Park.</p>
+      
+      <div class="photo-spots-grid">
+        <div class="photo-spot">
+          <h3>🅿️ Parking</h3>
+          <p>Free street parking available on Franklin Street, 8th Avenue, and surrounding Capitol Hill streets. Some metered areas during weekdays.</p>
+          <ul class="photo-spot-features">
+            <li>Free street parking</li>
+            <li>Multiple nearby streets</li>
+            <li>Some metered zones</li>
+            <li>Residential area respect</li>
+          </ul>
+        </div>
+        
+        <div class="photo-spot">
+          <h3>⏰ Best Times</h3>
+          <p>Early morning (6-8am) and late afternoon (4-6pm) offer the best lighting and fewer crowds, especially on weekends.</p>
+          <ul class="photo-spot-features">
+            <li>Golden hour lighting</li>
+            <li>Quieter mornings</li>
+            <li>Cooler temperatures</li>
+            <li>Better pet focus</li>
+          </ul>
+        </div>
+        
+        <div class="photo-spot">
+          <h3>🌸 Seasonal Highlights</h3>
+          <p>Spring brings beautiful flowering trees, summer offers lush greenery, fall showcases golden leaves, and winter creates elegant snow scenes.</p>
+          <ul class="photo-spot-features">
+            <li>Spring: Blooming trees</li>
+            <li>Summer: Full foliage</li>
+            <li>Fall: Autumn colors</li>
+            <li>Winter: Snow scenes</li>
+          </ul>
+        </div>
+        
+        <div class="photo-spot">
+          <h3>📋 Preparation Tips</h3>
+          <p>Bring your pet's favorite treats, a water bowl, and any special toys or accessories you'd like to include in photos.</p>
+          <ul class="photo-spot-features">
+            <li>High-value treats</li>
+            <li>Portable water bowl</li>
+            <li>Favorite toys</li>
+            <li>Cleanup supplies</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="action-section">
+        <h3 class="action-title">Ready for Your Cheesman Park Session?</h3>
+        <p class="action-subtitle">
+          Book your Cheesman Park photography session today and capture your pet's elegance against historic Denver charm.
+        </p>
+        <div class="action-buttons">
+          <a href="/" class="primary-btn">Book Cheesman Session</a>
+          <a href="/locations" class="secondary-btn">View All Locations</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:03 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Cheesman Park page loaded successfully');
+    });
+  </script>
+</body>
+</html>
