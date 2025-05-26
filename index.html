@@ -190,6 +190,7 @@
       line-height: 1.6;
       color: rgba(255, 255, 255, 0.9);
       margin-bottom: 1.5rem;
+      text-align: center;
     }
 
     /* === HERO SECTION === */
@@ -254,7 +255,14 @@
       box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
 
-    /* === FORM STYLES === */
+    /* === START YOUR JOURNEY === */
+    #start-journey {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 300px;
+    }
+
     .start-journey-form {
       display: flex;
       flex-direction: column;
@@ -318,6 +326,44 @@
 
     .form-group.error .form-error {
       display: block;
+    }
+
+    /* === TESTIMONIALS === */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .testimonial-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card cite {
+      font-size: 0.9rem;
+      color: var(--gold);
+      font-style: italic;
     }
 
     /* === INSTAGRAM FEED === */
@@ -508,6 +554,10 @@
         font-size: 1rem;
       }
 
+      #start-journey {
+        min-height: 250px;
+      }
+
       .start-journey-form {
         max-width: 100%;
       }
@@ -520,6 +570,10 @@
       .start-journey-form button {
         padding: 0.8rem 2rem;
         font-size: 1rem;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
       }
 
       .ig-feed {
@@ -598,7 +652,20 @@
     <!-- Testimonials Section -->
     <section id="testimonials">
       <h2>Testimonials</h2>
-      <p>“PictureThisPet captured the essence of my dog perfectly! The photos are stunning.” - Happy Client</p>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p>“Amazing experience! The photos of my dog are absolutely perfect.”</p>
+          <cite>- Jane D.</cite>
+        </div>
+        <div class="testimonial-card">
+          <p>“PictureThisPet captured my cat’s personality so well. Highly recommend!”</p>
+          <cite>- Mark S.</cite>
+        </div>
+        <div class="testimonial-card">
+          <p>“The session was so fun, and the photos are stunning!”</p>
+          <cite>- Emily R.</cite>
+        </div>
+      </div>
     </section>
 
     <!-- Instagram Section -->
@@ -646,7 +713,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.0 | Last updated: 10:06 PM MDT, May 25, 2025</p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.1 | Last updated: 10:12 PM MDT, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -698,7 +765,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Index page loaded - v1.0.0');
+      console.log('✅ Index page loaded - v1.0.1');
     });
   </script>
 </body>
