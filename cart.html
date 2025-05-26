@@ -217,9 +217,9 @@
 
     .chat-message {
       max-width: 70%;
-      padding: 1rem;
+      padding: 1rem 1.5rem;
       border-radius: 20px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       line-height: 1.5;
       animation-duration: 0.5s;
       animation-fill-mode: forwards;
@@ -227,7 +227,7 @@
 
     .chat-message.bot {
       align-self: flex-start;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 20px 20px 20px 5px;
       animation-name: slideInLeft;
     }
@@ -280,7 +280,6 @@
       background: rgba(255, 255, 255, 0.15);
     }
 
-    .chat-input .radio-group,
     .chat-input .checkbox-group {
       display: flex;
       flex-direction: column;
@@ -295,50 +294,53 @@
       color: rgba(255, 255, 255, 0.9);
     }
 
-    .chat-input input[type="radio"],
     .chat-input input[type="checkbox"] {
       width: 1.2rem;
       height: 1.2rem;
       accent-color: var(--gold);
     }
 
-    .chat-input button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 999px;
+    .session-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .session-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      text-align: center;
+      flex: 1;
+      min-width: 250px;
+      cursor: pointer;
+    }
+
+    .session-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .session-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
       font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      align-self: flex-end;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-    }
-
-    .chat-input button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
-    }
-
-    .submit-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
+      margin-bottom: 1rem;
       color: white;
-      padding: 1rem 2.5rem;
-      border: none;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
-      margin-top: 2rem;
-      align-self: center;
     }
 
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    .session-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: left;
     }
 
     /* === CALENDAR STYLES === */
@@ -511,6 +513,10 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    .footer-bottom .site-creation-link {
+      white-space: nowrap;
+    }
+
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
@@ -587,7 +593,7 @@
       .chat-message {
         max-width: 85%;
         font-size: 0.9rem;
-        padding: 0.8rem;
+        padding: 0.8rem 1.2rem;
       }
 
       .chat-input input,
@@ -596,9 +602,8 @@
         font-size: 0.9rem;
       }
 
-      .chat-input button {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.9rem;
+      .session-card {
+        min-width: 200px;
       }
 
       .calendar-day {
@@ -686,7 +691,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.0 | Last updated: 10:29 PM MDT, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.1 | Last updated: 10:40 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -705,7 +710,7 @@
       date.setDate(today.getDate() + i);
       const dateStr = date.toISOString().split('T')[0];
       for (let hour = 9; hour <= 17; hour++) {
-        const isBooked = Math.random() < 0.1; // 10% chance booked
+        const isBooked = Math.random() < 0.1;
         calendarData.push({
           date: dateStr,
           time: `${hour.toString().padStart(2, '0')}:00`,
@@ -716,27 +721,33 @@
 
     const steps = [
       {
-        bot: "Let’s build your session! What’s your first name? 😊",
-        input: '<input type="text" id="client1FirstName" placeholder="Your first name" required>',
-        validate: (value) => value.trim() ? null : "Please enter your first name! 😅"
-      },
-      {
-        bot: (data) => `Great, ${data.client1FirstName}! What’s your pet’s name? 🐾`,
-        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name" required>',
-        validate: (value) => value.trim() ? null : "Please enter your pet’s name! 🐶"
-      },
-      {
-        bot: (data) => `Awesome, ${data.pet1Name} sounds adorable! Are you looking for a Full or Mini session? 📸 Full Session: 90 min, 10 images, $100. Mini Session: 60 min, 5 images, $50.`,
+        bot: "What kind of session are you interested in? 📸",
         input: `
-          <div class="radio-group">
-            <label><input type="radio" name="sessionType" value="Full" required> Full Session</label>
-            <label><input type="radio" name="sessionType" value="Mini"> Mini Session</label>
+          <div class="session-cards">
+            <div class="session-card" onclick="selectSession('Mini')">
+              <h3>Mini Session 🐾</h3>
+              <p>60 min, 5 images, $50<br>Perfect for a quick shoot! 🌟</p>
+            </div>
+            <div class="session-card" onclick="selectSession('Full')">
+              <h3>Full Session 📷</h3>
+              <p>90 min, 10 images, $100<br>Capture every moment! 🎉</p>
+            </div>
           </div>
         `,
         validate: (value) => value ? null : "Please select a session type! 😊"
       },
       {
-        bot: "Nice choice! Where would you like the session? 🌳",
+        bot: (data) => `Great choice! What’s your first name? 😊`,
+        input: '<input type="text" id="client1FirstName" placeholder="Your first name" required>',
+        validate: (value) => value.trim() ? null : "Please enter your first name! 😅"
+      },
+      {
+        bot: (data) => `Nice to meet you, ${data.client1FirstName}! What’s your pet’s name? 🐾`,
+        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name" required>',
+        validate: (value) => value.trim() ? null : "Please enter your pet’s name! 🐶"
+      },
+      {
+        bot: (data) => `Yay, ${data.pet1Name} is gonna shine! 🌟 Where would you like the session? 🌳`,
         input: `
           <select id="location" required>
             <option value="" disabled selected>Select a location...</option>
@@ -747,7 +758,7 @@
         validate: (value) => value ? null : "Please select a location! 🌲"
       },
       {
-        bot: "How many pets will be in the session? 🐶🐱 (1-5)",
+        bot: "Perfect! How many pets will be in the session? 🐶🐱 (1-5)",
         input: '<input type="number" id="numberOfPets" min="1" max="5" required>',
         validate: (value) => {
           const num = parseInt(value);
@@ -771,17 +782,17 @@
         condition: (data) => parseInt(data.numberOfPets) >= 2
       },
       {
-        bot: (data) => `Great, let’s pick a date for you and ${data.pet1Name}! 📅`,
+        bot: (data) => `Awesome, let’s pick a date for you and ${data.pet1Name}! 📅`,
         input: generateCalendar(),
         validate: () => selectedDate ? null : "Please select a date! 😅"
       },
       {
-        bot: (data) => `Perfect! Which time works for you on ${new Date(selectedDate).toLocaleDateString()}? ⏰`,
+        bot: (data) => `Sweet! Which time works for you on ${new Date(selectedDate).toLocaleDateString()}? ⏰`,
         input: generateTimeOptions(),
         validate: (value) => value ? null : "Please select a time! ⏰"
       },
       {
-        bot: "Almost done! Please agree to our Terms of Service and Photo Release. ✅",
+        bot: "Almost there! Please agree to our Terms of Service and Photo Release. ✅",
         input: `
           <div class="checkbox-group">
             <label><input type="checkbox" id="terms" required> I agree to the Terms of Service</label>
@@ -854,9 +865,21 @@
     function appendInput(step) {
       const inputDiv = document.createElement('div');
       inputDiv.className = 'chat-input';
-      inputDiv.innerHTML = step.input + '<button onclick="submitInput()">Send</button>';
+      inputDiv.innerHTML = step.input;
       chatContainer.appendChild(inputDiv);
+      const input = inputDiv.querySelector('input, select');
+      if (input) input.focus();
       inputDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+      // Enter key submission
+      if (input && !step.input.includes('checkbox')) {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            submitInput();
+          }
+        });
+      }
     }
 
     function submitInput() {
@@ -864,14 +887,21 @@
       let value;
       let inputElement;
 
-      if (step.input.includes('radio')) {
-        inputElement = document.querySelector('input[name="sessionType"]:checked');
-        value = inputElement ? inputElement.value : null;
+      if (step.input.includes('session-card')) {
+        value = cartData.sessionType;
       } else if (step.input.includes('select')) {
         inputElement = document.querySelector('select');
         value = inputElement.value;
       } else if (step.input.includes('checkbox')) {
         value = document.getElementById('terms').checked && document.getElementById('photoRelease').checked;
+        if (value) {
+          const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+          checkboxes.forEach(cb => cb.addEventListener('change', () => {
+            if (document.getElementById('terms').checked && document.getElementById('photoRelease').checked) {
+              submitInput();
+            }
+          }));
+        }
       } else {
         inputElement = document.querySelector('input');
         value = inputElement.value.trim();
@@ -883,7 +913,7 @@
         return;
       }
 
-      if (step.input.includes('radio') || step.input.includes('checkbox')) {
+      if (step.input.includes('session-card') || step.input.includes('checkbox')) {
         appendMessage(value, 'user');
       } else if (step.input.includes('select')) {
         appendMessage(value, 'user');
@@ -893,9 +923,9 @@
         appendMessage(value, 'user');
       }
 
-      if (currentStep === 0) cartData.client1FirstName = value;
-      if (currentStep === 1) cartData.pet1Name = value;
-      if (currentStep === 2) cartData.sessionType = value;
+      if (currentStep === 0) cartData.sessionType = value;
+      if (currentStep === 1) cartData.client1FirstName = value;
+      if (currentStep === 2) cartData.pet1Name = value;
       if (currentStep === 3) cartData.location = value;
       if (currentStep === 4) cartData.numberOfPets = value;
       if (currentStep === 5) cartData.numberOfPeople = value;
@@ -923,6 +953,11 @@
       }
     }
 
+    function selectSession(type) {
+      cartData.sessionType = type;
+      submitInput();
+    }
+
     function selectDate(date) {
       selectedDate = date;
       const days = document.querySelectorAll('.calendar-day');
@@ -933,11 +968,11 @@
     }
 
     function previousMonth() {
-      // Placeholder: Static calendar, no navigation
+      // Placeholder: Static calendar
     }
 
     function nextMonth() {
-      // Placeholder: Static calendar, no navigation
+      // Placeholder: Static calendar
     }
 
     function showSubmitButton() {
@@ -974,7 +1009,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.0');
+      console.log('✅ Cart page loaded - v1.0.1');
       if (!cartData.email) {
         appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
         return;
