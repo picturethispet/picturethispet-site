@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Session Builder | Picture This Pet</title>
   <meta name="description" content="Build your pet photography session with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -77,6 +77,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
+      padding-top: calc(0.01rem + env(safe-area-inset-top));
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
@@ -88,7 +89,7 @@
       top: 0;
       left: 0;
       z-index: 1000;
-      height: 110px;
+      height: calc(110px + env(safe-area-inset-top));
     }
 
     .desktop-logo {
@@ -522,6 +523,8 @@
       header {
         height: 80px;
         padding: 0.5rem 1rem;
+        padding-top: calc(0.5rem + env(safe-area-inset-top));
+        height: calc(80px + env(safe-area-inset-top));
       }
 
       .desktop-logo {
@@ -535,7 +538,7 @@
         background-size: 100% 100%;
         background-position: center;
         position: absolute;
-        top: 80px;
+        top: calc(80px + env(safe-area-inset-top));
         right: 0;
         width: 100%;
         text-align: right;
@@ -573,7 +576,7 @@
       }
 
       main {
-        margin-top: 80px;
+        margin-top: calc(80px + env(safe-area-inset-top));
         padding: 2rem 1rem;
       }
 
@@ -691,7 +694,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.1 | Last updated: 10:40 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.2 | Last updated: 11:01 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -721,7 +724,17 @@
 
     const steps = [
       {
-        bot: "What kind of session are you interested in? 📸",
+        bot: "What’s your pet’s name? 🐾",
+        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name" required>',
+        validate: (value) => value.trim() ? null : "Please enter your pet’s name! 🐶"
+      },
+      {
+        bot: (data) => `Awesome, ${data.pet1Name} sounds adorable! What’s your first name? 😊`,
+        input: '<input type="text" id="client1FirstName" placeholder="Your first name" required>',
+        validate: (value) => value.trim() ? null : "Please enter your first name! 😅"
+      },
+      {
+        bot: (data) => `Nice to meet you, ${data.client1FirstName}! What kind of session are you interested in? 📸`,
         input: `
           <div class="session-cards">
             <div class="session-card" onclick="selectSession('Mini')">
@@ -737,23 +750,18 @@
         validate: (value) => value ? null : "Please select a session type! 😊"
       },
       {
-        bot: (data) => `Great choice! What’s your first name? 😊`,
-        input: '<input type="text" id="client1FirstName" placeholder="Your first name" required>',
-        validate: (value) => value.trim() ? null : "Please enter your first name! 😅"
-      },
-      {
-        bot: (data) => `Nice to meet you, ${data.client1FirstName}! What’s your pet’s name? 🐾`,
-        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name" required>',
-        validate: (value) => value.trim() ? null : "Please enter your pet’s name! 🐶"
-      },
-      {
-        bot: (data) => `Yay, ${data.pet1Name} is gonna shine! 🌟 Where would you like the session? 🌳`,
+        bot: "Great choice! Where would you like the session? 🌳",
         input: `
-          <select id="location" required>
-            <option value="" disabled selected>Select a location...</option>
-            <option value="Cheesman Park">Cheesman Park</option>
-            <option value="City Park">City Park</option>
-          </select>
+          <div class="session-cards">
+            <div class="session-card" onclick="selectLocation('Cheesman Park')">
+              <h3>Cheesman Park 🌳</h3>
+              <p>Scenic park with beautiful views! 🌸</p>
+            </div>
+            <div class="session-card" onclick="selectLocation('City Park')">
+              <h3>City Park 🏞️</h3>
+              <p>Urban vibes with stunning backdrops! 🌇</p>
+            </div>
+          </div>
         `,
         validate: (value) => value ? null : "Please select a location! 🌲"
       },
@@ -782,12 +790,12 @@
         condition: (data) => parseInt(data.numberOfPets) >= 2
       },
       {
-        bot: (data) => `Awesome, let’s pick a date for you and ${data.pet1Name}! 📅`,
+        bot: (data) => `Sweet, let’s pick a date for you and ${data.pet1Name}! 📅`,
         input: generateCalendar(),
         validate: () => selectedDate ? null : "Please select a date! 😅"
       },
       {
-        bot: (data) => `Sweet! Which time works for you on ${new Date(selectedDate).toLocaleDateString()}? ⏰`,
+        bot: (data) => `Yay! Which time works for you on ${new Date(selectedDate).toLocaleDateString()}? ⏰`,
         input: generateTimeOptions(),
         validate: (value) => value ? null : "Please select a time! ⏰"
       },
@@ -880,6 +888,20 @@
           }
         });
       }
+      if (step.input.includes('checkbox')) {
+        const checkboxes = inputDiv.querySelectorAll('input[type="checkbox"]');
+        inputDiv.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && document.getElementById('terms').checked && document.getElementById('photoRelease').checked) {
+            e.preventDefault();
+            submitInput();
+          }
+        });
+        checkboxes.forEach(cb => cb.addEventListener('change', () => {
+          if (document.getElementById('terms').checked && document.getElementById('photoRelease').checked) {
+            submitInput();
+          }
+        }));
+      }
     }
 
     function submitInput() {
@@ -888,20 +910,12 @@
       let inputElement;
 
       if (step.input.includes('session-card')) {
-        value = cartData.sessionType;
+        value = cartData.sessionType || cartData.location;
       } else if (step.input.includes('select')) {
         inputElement = document.querySelector('select');
         value = inputElement.value;
       } else if (step.input.includes('checkbox')) {
         value = document.getElementById('terms').checked && document.getElementById('photoRelease').checked;
-        if (value) {
-          const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-          checkboxes.forEach(cb => cb.addEventListener('change', () => {
-            if (document.getElementById('terms').checked && document.getElementById('photoRelease').checked) {
-              submitInput();
-            }
-          }));
-        }
       } else {
         inputElement = document.querySelector('input');
         value = inputElement.value.trim();
@@ -923,9 +937,9 @@
         appendMessage(value, 'user');
       }
 
-      if (currentStep === 0) cartData.sessionType = value;
+      if (currentStep === 0) cartData.pet1Name = value;
       if (currentStep === 1) cartData.client1FirstName = value;
-      if (currentStep === 2) cartData.pet1Name = value;
+      if (currentStep === 2) cartData.sessionType = value;
       if (currentStep === 3) cartData.location = value;
       if (currentStep === 4) cartData.numberOfPets = value;
       if (currentStep === 5) cartData.numberOfPeople = value;
@@ -955,6 +969,11 @@
 
     function selectSession(type) {
       cartData.sessionType = type;
+      submitInput();
+    }
+
+    function selectLocation(location) {
+      cartData.location = location;
       submitInput();
     }
 
@@ -1009,7 +1028,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.1');
+      console.log('✅ Cart page loaded - v1.0.2');
       if (!cartData.email) {
         appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
         return;
