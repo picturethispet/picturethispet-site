@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Schedule Your Session | Picture This Pet</title>
-  <meta name="description" content="Schedule your pet photography session with Picture This Pet.">
+  <title>Schedule Your Session - Step 1 | Picture This Pet</title>
+  <meta name="description" content="Complete your pet photography session details - Step 1.">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -483,68 +483,6 @@
       box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
     }
     
-    /* === CALENDAR STYLES === */
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    .calendar-header button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-      transition: color 0.3s ease;
-      border-radius: 8px;
-    }
-    .calendar-header button:hover {
-      color: var(--gold);
-      background: rgba(255, 255, 255, 0.1);
-    }
-    .calendar-header span {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.5rem;
-    }
-    .calendar-day {
-      padding: 0.8rem 0.5rem;
-      text-align: center;
-      font-size: 0.9rem;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      min-height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .calendar-day.header {
-      font-weight: 600;
-      color: var(--gold);
-      background: rgba(253, 183, 94, 0.1);
-    }
-    .calendar-day.disabled {
-      color: rgba(255, 255, 255, 0.3);
-      cursor: not-allowed;
-    }
-    .calendar-day.selectable {
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .calendar-day.selectable:hover {
-      background: var(--gold);
-      color: var(--dark-brown);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(253, 183, 94, 0.3);
-    }
-    
     /* === FOOTER STYLES === */
     footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
@@ -632,7 +570,6 @@
       align-items: center;
       justify-content: center;
     }
-
     .summary-modal-content {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -647,7 +584,6 @@
       backdrop-filter: blur(15px);
       color: white;
     }
-
     .summary-modal h3 {
       font-family: 'Playfair Display', serif;
       font-size: 2rem;
@@ -655,7 +591,6 @@
       margin-bottom: 1.5rem;
       color: white;
     }
-
     .summary-details {
       text-align: left;
       margin-bottom: 2rem;
@@ -663,27 +598,23 @@
       padding: 1.5rem;
       border-radius: 12px;
     }
-
     .summary-item {
       display: flex;
       justify-content: space-between;
       margin-bottom: 0.8rem;
       font-size: 1rem;
     }
-
     .summary-item:last-child {
       margin-bottom: 0;
       border-top: 1px solid rgba(255, 255, 255, 0.2);
       padding-top: 0.8rem;
       font-weight: 600;
     }
-
     .summary-actions {
       display: flex;
       gap: 1rem;
       justify-content: center;
     }
-
     .modal-btn {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
@@ -695,25 +626,20 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-
     .modal-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(244, 124, 44, 0.3);
     }
-
     .modal-btn.secondary {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
-
     .modal-btn.secondary:hover {
       background: rgba(255, 255, 255, 0.2);
     }
-
     .footer-bottom p {
       display: inline-block;
     }
-
     .footer-bottom a {
       white-space: nowrap;
       color: var(--gold);
@@ -828,14 +754,6 @@
         padding: 1rem;
         max-width: 100%;
       }
-      .calendar-header span {
-        font-size: 1rem;
-      }
-      .calendar-day {
-        padding: 0.5rem 0.3rem;
-        font-size: 0.8rem;
-        min-height: 36px;
-      }
       .photo-upload-container {
         padding: 1.5rem;
         max-width: 100%;
@@ -868,25 +786,6 @@
       .footer-bottom p {
         font-size: 0.8rem;
       }
-
-      .summary-modal-content {
-        padding: 1.5rem;
-        max-width: 95%;
-      }
-
-      .summary-modal h3 {
-        font-size: 1.5rem;
-      }
-
-      .summary-actions {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .modal-btn {
-        width: 100%;
-        padding: 0.6rem 1rem;
-      }
     }
     @media (max-width: 480px) {
       .chat-header h2 {
@@ -910,34 +809,8 @@
         min-width: 90px;
         min-height: 36px;
       }
-      .calendar-header span {
-        font-size: 0.9rem;
-      }
-      .calendar-day {
-        padding: 0.4rem 0.2rem;
-        font-size: 0.7rem;
-        min-height: 32px;
-      }
       .footer-bottom p {
         font-size: 0.7rem;
-      }
-
-      .summary-modal-content {
-        padding: 1rem;
-      }
-
-      .summary-modal h3 {
-        font-size: 1.3rem;
-      }
-
-      .summary-details {
-        padding: 1rem;
-      }
-
-      .summary-item {
-        font-size: 0.9rem;
-        flex-direction: column;
-        gap: 0.2rem;
       }
     }
   </style>
@@ -967,7 +840,7 @@
     <section class="chat-section">
       <div class="chat-container">
         <div class="chat-header">
-          <h2>Let's Schedule Your Session! 📅</h2>
+          <h2>Let's Get Your Details! 📝</h2>
         </div>
         <div class="chat-messages" id="chat-messages">
           <!-- Chat messages will be populated by JavaScript -->
@@ -978,7 +851,6 @@
         </div>
       </div>
     </section>
-
     <!-- Summary Modal -->
     <div class="summary-modal" id="summaryModal">
       <div class="summary-modal-content">
@@ -989,805 +861,3 @@
         <div class="summary-actions">
           <button class="modal-btn secondary" onclick="editBooking()">Edit Details</button>
           <button class="modal-btn" onclick="proceedToSummary()">Continue to Summary</button>
-        </div>
-      </div>
-    </div>
-  </main>
-  <footer>
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Contact Us</h4>
-        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
-      </div>
-      <div class="footer-section socials">
-        <h4>Connect</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-      </div>
-      <div class="footer-section">
-        <h4>We Accept</h4>
-        <div class="payment-methods">
-          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.9 | Last updated: 08:05 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
-    </div>
-  </footer>
-  <script>
-    // === Global Variables ===
-    let sessionData = {}; // Stores all session-related data
-    let currentQuestionIndex = 0; // Tracks the current question in the chat flow
-    let isChatActive = true; // Controls whether the chat input is active
-    let calendarYear = 2025; // Default year for the calendar UI
-    let calendarMonth = 4; // May (0-based index)
-    let uploadedPhotos = []; // Temporarily stores uploaded pet photos before assignment
-    let chatQuestions = []; // Array to hold the dynamic chat questions
-    
-    // === Mock Availability Data ===
-    const bookedSessions = {
-      'Cheesman Park': [],
-      'City Park': []
-    };
-    
-    const timeSlots = [
-      '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-      '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM',
-      '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM'
-    ];
-    
-    // === Header Navigation Functions ===
-    // Toggles the mobile menu visibility
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('active');
-    }
-    
-    // Smooth scrolls to the chat section
-    function scrollToForm(e) {
-      e.preventDefault();
-      const section = document.querySelector('#chat-section');
-      const offset = 100;
-      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: sectionPosition - offset,
-        behavior: 'smooth'
-      });
-    }
-    
-    // === Chat Functionality ===
-    // Adds a message to the chat UI
-    function addMessage(sender, text, options = [], type = 'options') {
-      const messagesContainer = document.getElementById('chat-messages');
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `chat-message ${sender}`;
-      messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
-      
-      if (type === 'calendar' && isChatActive) {
-        const calendarDiv = document.createElement('div');
-        calendarDiv.className = 'calendar-container';
-        calendarDiv.innerHTML = generateCalendar();
-        messageDiv.appendChild(calendarDiv);
-      }
-      
-      if (type === 'photo-upload' && isChatActive) {
-        const uploadDiv = document.createElement('div');
-        uploadDiv.className = 'photo-upload-container';
-        const currentQuestion = chatQuestions[currentQuestionIndex];
-        uploadDiv.innerHTML = generatePhotoUpload(currentQuestion.petIndex);
-        messageDiv.appendChild(uploadDiv);
-        
-        setTimeout(() => initializePhotoUpload(currentQuestion.petIndex), 100);
-      }
-      
-      if (options.length > 0 && isChatActive) {
-        const optionsContainer = document.createElement('div');
-        optionsContainer.className = 'options';
-        options.forEach(option => {
-          const button = document.createElement('button');
-          button.className = 'option-btn';
-          button.innerHTML = option.display;
-          button.onclick = () => selectOption(option.value);
-          optionsContainer.appendChild(button);
-        });
-        messageDiv.appendChild(optionsContainer);
-      }
-      
-      messagesContainer.appendChild(messageDiv);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      
-      const input = document.getElementById('chat-input-text');
-      const sendButton = document.querySelector('.chat-input button');
-      if (!isChatActive) {
-        input.disabled = true;
-        sendButton.disabled = true;
-      }
-      
-      setTimeout(() => {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: 'smooth'
-        });
-      }, 100);
-    }
-    
-    // === Photo Upload Functions ===
-    // Generates the photo upload UI for a specific pet
-    function generatePhotoUpload(petIndex) {
-      return `
-        <div class="upload-area" onclick="document.getElementById('photo-input-${petIndex}').click()">
-          <div class="upload-icon">📸</div>
-          <div class="upload-text">Click or drag photo here</div>
-          <div class="upload-subtext">Upload 1 photo of ${sessionData.pets[petIndex]?.name || 'your pet'}</div>
-          <input type="file" id="photo-input-${petIndex}" class="file-input" accept="image/*" onchange="handleFileSelect(event, ${petIndex})">
-          <button class="upload-btn" type="button">Choose Photo</button>
-        </div>
-        <div class="uploaded-photos" id="uploaded-photos-${petIndex}"></div>
-        <div style="margin-top: 1rem;">
-          <button class="option-btn" onclick="skipPhotoUpload(${petIndex})" style="background: rgba(255,255,255,0.2);">Skip for now</button>
-          <button class="option-btn" onclick="continueAfterPhotos(${petIndex})" style="margin-left: 1rem;">Continue</button>
-        </div>
-      `;
-    }
-    
-    // Initializes drag-and-drop functionality for photo uploads
-    function initializePhotoUpload(petIndex) {
-      const uploadArea = document.querySelector(`.photo-upload-container .upload-area`);
-      if (!uploadArea) return;
-      
-      uploadArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadArea.parentElement.classList.add('dragover');
-      });
-      
-      uploadArea.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        uploadArea.parentElement.classList.remove('dragover');
-      });
-      
-      uploadArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadArea.parentElement.classList.remove('dragover');
-        const files = e.dataTransfer.files;
-        handleFiles(files, petIndex);
-      });
-    }
-    
-    // Handles file selection for photo uploads
-    function handleFileSelect(event, petIndex) {
-      const files = event.target.files;
-      handleFiles(files, petIndex);
-    }
-    
-    // Processes uploaded files for a specific pet
-    function handleFiles(files, petIndex) {
-      if (files.length > 0) {
-        const file = files[0]; // Only take the first file
-        
-        if (file.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const photo = {
-              id: Date.now(),
-              file: file,
-              dataUrl: e.target.result,
-              name: file.name,
-              petIndex: petIndex
-            };
-            uploadedPhotos = [photo]; // Only one photo allowed
-            displayUploadedPhotos(petIndex);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          alert('Please upload an image file.');
-        }
-      }
-    }
-    
-    // Displays uploaded photo thumbnails for a specific pet
-    function displayUploadedPhotos(petIndex) {
-      const container = document.getElementById(`uploaded-photos-${petIndex}`);
-      if (!container) return;
-      
-      container.innerHTML = '';
-      const photosForPet = uploadedPhotos.filter(photo => photo.petIndex === petIndex);
-      photosForPet.forEach(photo => {
-        const photoDiv = document.createElement('div');
-        photoDiv.className = 'uploaded-photo';
-        photoDiv.innerHTML = `
-          <img src="${photo.dataUrl}" alt="${photo.name}">
-          <button class="remove-photo" onclick="removePhoto(${photo.id}, ${petIndex})">×</button>
-        `;
-        container.appendChild(photoDiv);
-      });
-    }
-    
-    // Removes a photo from the uploaded list
-    function removePhoto(photoId, petIndex) {
-      uploadedPhotos = uploadedPhotos.filter(photo => photo.id !== photoId);
-      displayUploadedPhotos(petIndex);
-    }
-    
-    // Skips the photo upload step for a specific pet
-    function skipPhotoUpload(petIndex) {
-      if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
-      sessionData.pets[petIndex].photo = null;
-      addMessage('user', 'Skipped photo upload');
-      proceedToNextQuestion();
-    }
-    
-    // Continues after uploading a photo for a specific pet
-    function continueAfterPhotos(petIndex) {
-      const photosForPet = uploadedPhotos.filter(photo => photo.petIndex === petIndex);
-      if (photosForPet.length === 0) {
-        alert('Please upload a photo or click "Skip for now"');
-        return;
-      }
-      
-      if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
-      sessionData.pets[petIndex].photo = photosForPet[0];
-      uploadedPhotos = uploadedPhotos.filter(photo => photo.petIndex !== petIndex);
-      
-      addMessage('user', `Uploaded 1 photo 📸`);
-      proceedToNextQuestion();
-    }
-    
-    // === Calendar Functions ===
-    // Generates the calendar UI for date selection
-    function generateCalendar() {
-      const date = new Date(calendarYear, calendarMonth);
-      const monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-      ];
-      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
-      const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
-      
-      let html = `
-        <div class="calendar-header">
-          <button onclick="prevMonth()">‹</button>
-          <span>${monthNames[calendarMonth]} ${calendarYear}</span>
-          <button onclick="nextMonth()">›</button>
-        </div>
-        <div class="calendar-grid">
-          <div class="calendar-day header">Sun</div>
-          <div class="calendar-day header">Mon</div>
-          <div class="calendar-day header">Tue</div>
-          <div class="calendar-day header">Wed</div>
-          <div class="calendar-day header">Thu</div>
-          <div class="calendar-day header">Fri</div>
-          <div class="calendar-day header">Sat</div>
-      `;
-      
-      for (let i = 0; i < firstDay; i++) {
-        html += `<div class="calendar-day"></div>`;
-      }
-      
-      const today = new Date('2025-05-25');
-      const minDate = new Date('2025-05-26');
-      for (let day = 1; day <= daysInMonth; day++) {
-        const currentDate = new Date(calendarYear, calendarMonth, day);
-        const isDisabled = currentDate < minDate;
-        const className = isDisabled ? 'disabled' : 'selectable';
-        html += `<div class="calendar-day ${className}" ${!isDisabled ? `onclick="selectDate('${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}')"` : ''}>${day}</div>`;
-      }
-      html += '</div>';
-      return html;
-    }
-    
-    // Navigates to the previous month in the calendar
-    function prevMonth() {
-      calendarMonth--;
-      if (calendarMonth < 0) {
-        calendarMonth = 11;
-        calendarYear--;
-      }
-      const calendarContainer = document.querySelector('.calendar-container');
-      calendarContainer.innerHTML = generateCalendar();
-    }
-    
-    // Navigates to the next month in the calendar
-    function nextMonth() {
-      calendarMonth++;
-      if (calendarMonth > 11) {
-        calendarMonth = 0;
-        calendarYear++;
-      }
-      const calendarContainer = document.querySelector('.calendar-container');
-      calendarContainer.innerHTML = generateCalendar();
-    }
-    
-    // Handles date selection from the calendar
-    function selectDate(date) {
-      sessionData.date = date;
-      const timeQuestion = chatQuestions.find(q => q.id === 'time');
-      timeQuestion.text = `Great! Here are the available appointments for ${date} 🕒`;
-      timeQuestion.options = getAvailableTimeSlots(date);
-      
-      if (timeQuestion.options.length === 0) {
-        addMessage('bot', `Sorry, no time slots are available on ${date} at your chosen location. Please pick another date. 📅`, [], 'calendar');
-        currentQuestionIndex--;
-        return;
-      }
-      
-      addMessage('user', date);
-      proceedToNextQuestion();
-    }
-    
-    // Retrieves available time slots for the selected date
-    function getAvailableTimeSlots(date) {
-      const location = sessionData.location;
-      const duration = sessionData.sessionDuration;
-      const slotsNeeded = duration === 60 ? 2 : 3;
-      const booked = bookedSessions[location];
-      const availableSlots = [];
-      
-      for (let i = 0; i < timeSlots.length - slotsNeeded + 1; i++) {
-        let isAvailable = true;
-        for (let j = 0; j < slotsNeeded; j++) {
-          const slotTime = timeSlots[i + j];
-          if (booked.some(booking => booking.date === date && booking.time === slotTime)) {
-            isAvailable = false;
-            break;
-          }
-        }
-        if (isAvailable) {
-          availableSlots.push({ value: timeSlots[i], display: timeSlots[i] });
-        }
-      }
-      return availableSlots;
-    }
-    
-    // === Chat Interaction Functions ===
-    // Handles user text input
-    function sendUserMessage() {
-      if (!isChatActive) return;
-      const input = document.getElementById('chat-input-text');
-      const userResponse = input.value.trim();
-      if (!userResponse) return;
-      
-      const currentQuestion = chatQuestions[currentQuestionIndex];
-      if (currentQuestion.type === 'text') {
-        try {
-          if (currentQuestion.id === 'first-name') {
-            sessionData.firstName = userResponse;
-          } else if (currentQuestion.id === 'last-name') {
-            sessionData.lastName = userResponse;
-          } else if (currentQuestion.id === 'email') {
-            sessionData.email = userResponse;
-          } else if (currentQuestion.id === 'phone-number') {
-            sessionData.phoneNumber = userResponse;
-          } else if (currentQuestion.id.startsWith('pet-name-')) {
-            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
-            sessionData.pets[petIndex].name = userResponse;
-            const petQuestions = chatQuestions.filter(q => q.id.startsWith('pet-') && q.id.includes(`-${petIndex}`));
-            petQuestions.forEach(q => {
-              if (q.id !== currentQuestion.id) {
-                q.text = q.text.replace('[PET_NAME]', userResponse);
-              }
-            });
-          } else if (currentQuestion.id.startsWith('pet-age-')) {
-            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
-            sessionData.pets[petIndex].age = userResponse;
-          } else if (currentQuestion.id.startsWith('pet-breed-')) {
-            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
-            sessionData.pets[petIndex].breed = userResponse;
-          } else if (currentQuestion.id.startsWith('pet-temperament-')) {
-            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
-            sessionData.pets[petIndex].temperament = userResponse;
-          } else if (currentQuestion.id.startsWith('pet-health-concerns-')) {
-            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
-            sessionData.pets[petIndex].healthConcerns = userResponse;
-          } else if (currentQuestion.id.startsWith('pet-social-handle-')) {
-            const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-            if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
-            sessionData.pets[petIndex].socialMediaHandle = userResponse;
-          } else if (currentQuestion.id === 'people-social-handle') {
-            sessionData.peopleSocialMediaHandle = userResponse;
-          }
-          
-          addMessage('user', userResponse);
-          input.value = '';
-          proceedToNextQuestion();
-        } catch (error) {
-          console.error('❌ Error in sendUserMessage:', error);
-          addMessage('bot', 'Sorry, an error occurred. Please try again. 😓', [], 'none');
-        }
-      }
-    }
-    
-    // Handles user selection from option buttons
-    function selectOption(value) {
-      if (!isChatActive) return;
-      const currentQuestion = chatQuestions[currentQuestionIndex];
-      let displayValue = value;
-      
-      if (currentQuestion.id === 'time') {
-        sessionData.time = value;
-        const location = sessionData.location;
-        const duration = sessionData.sessionDuration;
-        const slotsNeeded = duration === 60 ? 2 : 3;
-        const startIndex = timeSlots.indexOf(value);
-        for (let i = 0; i < slotsNeeded; i++) {
-          bookedSessions[location].push({
-            date: sessionData.date,
-            time: timeSlots[startIndex + i]
-          });
-        }
-        showSummaryModal();
-        return;
-      } else if (currentQuestion.id === 'preferred-contact') {
-        sessionData.preferredContact = value;
-      } else if (currentQuestion.id === 'referral-source') {
-        sessionData.referralSource = value;
-      } else if (currentQuestion.id.startsWith('pet-social-')) {
-        const petIndex = parseInt(currentQuestion.id.split('-')[2]);
-        if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
-        sessionData.pets[petIndex].socialMedia = value;
-        if (value === 'Yes') {
-          const petName = sessionData.pets[petIndex].name || `Pet ${petIndex + 1}`;
-          chatQuestions.splice(currentQuestionIndex + 1, 0, {
-            id: `pet-social-handle-${petIndex}`,
-            text: `What is ${petName}'s social media handle? (e.g., @buddythepup) 📸`,
-            type: 'text',
-            usesPetName: true,
-            petIndex: petIndex
-          });
-        }
-      } else if (currentQuestion.id === 'people-social') {
-        sessionData.peopleSocialMedia = value;
-        if (value === 'Yes') {
-          chatQuestions.splice(currentQuestionIndex + 1, 0, {
-            id: 'people-social-handle',
-            text: 'What is your social media handle? (e.g., @petlover) 📸',
-            type: 'text'
-          });
-        }
-      }
-      
-      addMessage('user', displayValue);
-      proceedToNextQuestion();
-    }
-    
-    // Proceeds to the next question in the chat flow
-    function proceedToNextQuestion() {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < chatQuestions.length) {
-        const nextQuestion = chatQuestions[currentQuestionIndex];
-        let questionText = nextQuestion.text;
-        
-        if (nextQuestion.usesPetName && nextQuestion.petIndex !== undefined) {
-          const petName = sessionData.pets[nextQuestion.petIndex]?.name || 'your pet';
-          questionText = questionText.replace('[PET_NAME]', petName);
-        }
-        
-        addMessage('bot', questionText, nextQuestion.options, nextQuestion.type);
-      } else {
-        addMessage('bot', 'It looks like the chat flow ended unexpectedly. Please refresh the page and try again. 😓', [], 'none');
-        isChatActive = false;
-        const input = document.getElementById('chat-input-text');
-        const sendButton = document.querySelector('.chat-input button');
-        input.disabled = true;
-        sendButton.disabled = true;
-      }
-    }
-    
-    // Shows the summary modal after time selection
-    function showSummaryModal() {
-      const modal = document.getElementById('summaryModal');
-      const summaryDetails = document.getElementById('modalSummaryDetails');
-      
-      let summaryHTML = `
-        <div class="summary-item">
-          <span>Client:</span>
-          <span>${sessionData.firstName}${sessionData.lastName ? ' ' + sessionData.lastName : ''}</span>
-        </div>
-        <div class="summary-item">
-          <span>Email:</span>
-          <span>${sessionData.email || 'Not provided'}</span>
-        </div>
-        <div class="summary-item">
-          <span>Phone:</span>
-          <span>${sessionData.phoneNumber || 'Not provided'}</span>
-        </div>
-        <div class="summary-item">
-          <span>Preferred Contact:</span>
-          <span>${sessionData.preferredContact || 'Not specified'}</span>
-        </div>
-        <div class="summary-item">
-          <span>Referral Source:</span>
-          <span>${sessionData.referralSource || 'Not specified'}</span>
-        </div>
-        <div class="summary-item">
-          <span>Session:</span>
-          <span>${sessionData.sessionType} (${sessionData.sessionDuration} min)</span>
-        </div>
-        <div class="summary-item">
-          <span>Location:</span>
-          <span>${sessionData.location}</span>
-        </div>
-        <div class="summary-item">
-          <span>Date & Time:</span>
-          <span>${sessionData.date} at ${sessionData.time}</span>
-        </div>
-      `;
-      
-      if (sessionData.pets && sessionData.pets.length > 0) {
-        sessionData.pets.forEach((pet, index) => {
-          if (pet.name) {
-            summaryHTML += `
-              <div class="summary-item">
-                <span>Pet ${index + 1}:</span>
-                <span>${pet.name} (${pet.breed || 'Mixed'}, ${pet.age || 'Unknown'} old)</span>
-              </div>
-            `;
-            if (pet.socialMedia === 'Yes' && pet.socialMediaHandle) {
-              summaryHTML += `
-                <div class="summary-item">
-                  <span>Pet ${index + 1} Social Media:</span>
-                  <span>${pet.socialMediaHandle}</span>
-                </div>
-              `;
-            }
-          }
-        });
-      }
-      
-      if (sessionData.peopleSocialMedia === 'Yes' && sessionData.peopleSocialMediaHandle) {
-        summaryHTML += `
-          <div class="summary-item">
-            <span>Your Social Media:</span>
-            <span>${sessionData.peopleSocialMediaHandle}</span>
-          </div>
-        `;
-      }
-      
-      summaryDetails.innerHTML = summaryHTML;
-      modal.style.display = 'flex';
-      
-      isChatActive = false;
-      const input = document.getElementById('chat-input-text');
-      const sendButton = document.querySelector('.chat-input button');
-      input.disabled = true;
-      sendButton.disabled = true;
-    }
-    
-    // Edits booking details by restarting the chat
-    function editBooking() {
-      const modal = document.getElementById('summaryModal');
-      modal.style.display = 'none';
-      
-      isChatActive = true;
-      const input = document.getElementById('chat-input-text');
-      const sendButton = document.querySelector('.chat-input button');
-      input.disabled = false;
-      sendButton.disabled = false;
-      
-      currentQuestionIndex = -1;
-      proceedToNextQuestion();
-    }
-    
-    // Proceeds to the summary page
-    function proceedToSummary() {
-      try {
-        const dataString = JSON.stringify(sessionData);
-        sessionStorage.setItem('intakeData', dataString);
-        window.location.href = '/summary.html';
-      } catch (error) {
-        console.error('Error saving intake data:', error);
-        addMessage('bot', 'Oops, something went wrong. Please try again. 😓', [], 'none');
-      }
-    }
-    
-    // === Page Initialization ===
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Intake page loaded - v4.1.9');
-      
-      try {
-        // Load session data from previous step
-        const cartData = JSON.parse(sessionStorage.getItem('cartData') || '{}');
-        sessionData = { ...cartData };
-        
-        // Validate required session data
-        const requiredFields = ['sessionType', 'sessionDuration', 'location', 'numberOfPets'];
-        const missingFields = requiredFields.filter(field => !sessionData[field]);
-        if (missingFields.length > 0) {
-          console.log('Missing required fields:', missingFields);
-          addMessage('bot', `It looks like some session details are missing: ${missingFields.join(', ')}. Please go back and complete the previous steps. 😓`, [], 'none');
-          const inputContainer = document.getElementById('chat-input');
-          inputContainer.innerHTML = '';
-          isChatActive = false;
-          return;
-        }
-        
-        // Initialize pets array based on numberOfPets
-        const numberOfPets = parseInt(sessionData.numberOfPets) || 1;
-        sessionData.pets = Array.from({ length: numberOfPets }, () => ({}));
-        sessionData.peopleCount = parseInt(sessionData.peopleCount) || 0;
-        
-        // Build dynamic chat questions
-        chatQuestions = [
-          {
-            id: 'welcome',
-            text: `Welcome to PictureThisPet! I'm here to help you schedule a paw-some session for your furry friend(s). Let's get started! 😊`,
-            type: 'none'
-          }
-        ];
-        
-        // Add first name question if missing
-        if (!sessionData.firstName) {
-          chatQuestions.push({
-            id: 'first-name',
-            text: `Let's start with your information. What is your first name? 👤`,
-            type: 'text'
-          });
-        }
-        
-        // Add remaining client information questions
-        chatQuestions.push(
-          {
-            id: 'last-name',
-            text: `Great! Let's continue with your information. What is your last name? 👤`,
-            type: 'text'
-          },
-          {
-            id: 'email',
-            text: `What is your email address? 📧`,
-            type: 'text'
-          },
-          {
-            id: 'phone-number',
-            text: `What is your phone number? 📱`,
-            type: 'text'
-          },
-          {
-            id: 'preferred-contact',
-            text: "How would you prefer to be contacted for confirmations and updates? 📞",
-            type: 'options',
-            options: [
-              { value: 'Email', display: 'Email 📧' },
-              { value: 'Phone', display: 'Phone 📱' },
-              { value: 'Text', display: 'Text 💬' }
-            ]
-          },
-          {
-            id: 'referral-source',
-            text: "How did you hear about us? 🌟",
-            type: 'options',
-            options: [
-              { value: 'Social Media', display: 'Social Media 📸' },
-              { value: 'Friend/Family', display: 'Friend/Family 👥' },
-              { value: 'Website/Search', display: 'Website/Search 🌐' },
-              { value: 'Other', display: 'Other ❓' }
-            ]
-          }
-        );
-        
-        // Add pet-specific questions dynamically
-        for (let i = 0; i < numberOfPets; i++) {
-          const petNum = i + 1;
-          const ordinal = petNum === 1 ? 'first' : petNum === 2 ? 'second' : `${petNum}th`;
-          
-          chatQuestions.push(
-            {
-              id: `pet-name-${i}`,
-              text: `Let's go over your ${ordinal} pet's information. What is your ${ordinal} pet's name? 🐾`,
-              type: 'text'
-            },
-            {
-              id: `pet-age-${i}`,
-              text: `How old is [PET_NAME]? 🎂`,
-              type: 'text',
-              usesPetName: true,
-              petIndex: i
-            },
-            {
-              id: `pet-breed-${i}`,
-              text: `What breed is [PET_NAME]? 🐶🐱`,
-              type: 'text',
-              usesPetName: true,
-              petIndex: i
-            },
-            {
-              id: `pet-temperament-${i}`,
-              text: `How would you describe [PET_NAME]'s temperament? (e.g., shy, energetic, calm) 🐾`,
-              type: 'text',
-              usesPetName: true,
-              petIndex: i
-            },
-            {
-              id: `pet-health-concerns-${i}`,
-              text: `Does [PET_NAME] have any health concerns, mobility issues, or allergies that we should be aware of? 🩺`,
-              type: 'text',
-              usesPetName: true,
-              petIndex: i
-            },
-            {
-              id: `pet-photos-${i}`,
-              text: `Let's see your adorable [PET_NAME]! 📸 Please upload a photo so I can better understand their personality.`,
-              type: 'photo-upload',
-              usesPetName: true,
-              petIndex: i
-            },
-            {
-              id: `pet-social-${i}`,
-              text: `Does [PET_NAME] have their own social media account? 📱`,
-              type: 'options',
-              usesPetName: true,
-              petIndex: i,
-              options: [
-                { value: 'Yes', display: 'Yes 📸' },
-                { value: 'No', display: 'No 🚫' }
-              ]
-            }
-          );
-        }
-        
-        // Add people social media questions if people are attending
-        if (sessionData.peopleCount > 0) {
-          chatQuestions.push({
-            id: 'people-social',
-            text: `Do you have social media accounts you'd like us to tag in posts? 📱`,
-            type: 'options',
-            options: [
-              { value: 'Yes', display: 'Yes 📸' },
-              { value: 'No', display: 'No 🚫' }
-            ]
-          });
-        }
-        
-        // Add date and time selection
-        chatQuestions.push(
-          {
-            id: 'date',
-            text: "Perfect! Now let's pick a date for your session! 📅 Please select a date from the calendar below.",
-            type: 'calendar'
-          },
-          {
-            id: 'time',
-            text: "",
-            type: 'options',
-            options: []
-          }
-        );
-        
-        // Start the chat flow
-        addMessage('bot', chatQuestions[0].text, [], chatQuestions[0].type);
-        
-        // Add Enter key listener for text input
-        document.getElementById('chat-input-text').addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') {
-            sendUserMessage();
-          }
-        });
-        
-      } catch (error) {
-        console.error('Error initializing intake page:', error);
-        addMessage('bot', 'Sorry, there was an error loading the page. Please refresh and try again. 😓', [], 'none');
-        isChatActive = false;
-        const inputContainer = document.getElementById('chat-input');
-        inputContainer.innerHTML = '';
-      }
-    });
-  </script>
-</body>
-</html>
