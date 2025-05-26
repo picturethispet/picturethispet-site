@@ -1,1 +1,1363 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Schedule Your Session - Step 2 | Picture This Pet</title>
+  <meta name="description" content="Schedule your pet photography session with Picture This Pet.">
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background-image: url('assets/images/main_background_allsystem.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-color: #f5d7b2;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* === HEADER STYLES === */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
+      overflow: hidden;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+      max-width: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+    
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .book-btn {
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      min-width: 120px;
+      min-height: 44px;
+    }
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+    .social-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+    .social-icon {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .social-icon:hover {
+      color: var(--gold);
+      transform: scale(1.1);
+    }
+    /* === MAIN CONTENT WRAPPER === */
+    main {
+      flex: 1;
+      min-height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 110px;
+      padding-bottom: 20px;
+    }
+    /* === CHAT SECTION === */
+    .chat-section {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100%;
+      padding: 1rem;
+    }
+    .chat-container {
+      max-width: 900px;
+      width: 100%;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      height: auto;
+      max-height: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      margin-bottom: 1rem;
+    }
+    .chat-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+    .chat-messages {
+      flex: none;
+      overflow-y: visible;
+      margin-bottom: 1rem;
+      padding-right: 0;
+    }
+    .chat-messages::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* === IMPROVED CHAT MESSAGE STYLING === */
+    .chat-message {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .chat-message.bot {
+      align-items: flex-start; /* Bot messages align left */
+    }
+    
+    .chat-message.user {
+      align-items: flex-end; /* User messages align right */
+    }
+    
+    .message-bubble {
+      max-width: 70%;
+      padding: 1rem 1.2rem;
+      border-radius: 16px;
+      font-size: 1rem;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+    
+    .chat-message.bot .message-bubble {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px 16px 16px 4px;
+    }
+    
+    .chat-message.user .message-bubble {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      border-radius: 16px 16px 4px 16px;
+    }
+    
+    /* === CALENDAR CONTAINER === */
+    .calendar-container {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1rem auto;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      align-self: center;
+    }
+    
+    /* === OPTIONS CONTAINER === */
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1rem auto;
+      justify-content: center;
+      align-items: center;
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    .option-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      min-width: 120px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 1 auto;
+    }
+    
+    .option-btn:hover {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(244, 124, 44, 0.3);
+    }
+    
+    /* === PHOTO UPLOAD SECTION === */
+    .photo-upload-container {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 1rem auto;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      transition: all 0.3s ease;
+      align-self: center;
+    }
+    
+    .photo-upload-container:hover {
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .photo-upload-container.dragover {
+      border-color: var(--orange);
+      background: rgba(244, 124, 44, 0.1);
+    }
+    
+    .upload-area {
+      cursor: pointer;
+    }
+    
+    .upload-icon {
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    
+    .upload-text {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .upload-subtext {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+    
+    .file-input {
+      display: none;
+    }
+    
+    .upload-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .upload-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(244, 124, 44, 0.3);
+    }
+    
+    .uploaded-photos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+    
+    .uploaded-photo {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid var(--gold);
+    }
+    
+    .uploaded-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .remove-photo {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--booked-red);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* === CHAT INPUT === */
+    .chat-input {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 1rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      min-height: 48px;
+      width: 100%;
+    }
+    .chat-input input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .chat-input input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .chat-input button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 100px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+    }
+    .chat-input button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+    }
+    
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.28rem 0.96rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1000;
+      width: 100%;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.28rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 0.96rem;
+    }
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      min-width: 40px;
+      min-height: 25px;
+    }
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 0.96rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .footer-bottom p {
+      display: inline-block;
+    }
+    .footer-bottom a {
+      white-space: nowrap;
+      color: var(--gold);
+      text-decoration: underline;
+    }
+    
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+        background-attachment: scroll;
+      }
+      
+      .desktop-logo { 
+        height: 48px; 
+      }
+      
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      
+      .site-nav.active {
+        display: flex;
+      }
+      
+      .site-nav.active a {
+        display: block;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        color: white;
+        padding: 0.5rem 1rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+      
+      .book-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        min-width: 100px;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      .social-icons {
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+      }
+      .social-icon {
+        font-size: 1.2rem;
+      }
+      main {
+        padding-top: 80px;
+      }
+      .chat-section {
+        padding: 1rem;
+      }
+      .chat-container {
+        padding: 1.5rem;
+      }
+      .chat-header h2 {
+        font-size: 2rem;
+      }
+      .message-bubble {
+        max-width: 85%;
+        font-size: 0.9rem;
+        padding: 0.8rem 1rem;
+      }
+      .chat-input input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+      .chat-input button {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+        min-width: 80px;
+      }
+      .options {
+        gap: 0.6rem;
+        max-width: 100%;
+      }
+      .option-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        min-width: 100px;
+        min-height: 40px;
+      }
+      .photo-upload-container {
+        padding: 1.5rem;
+        max-width: 100%;
+      }
+      .upload-icon {
+        font-size: 2rem;
+      }
+      footer {
+        padding: 1rem 0.8rem;
+        background-attachment: scroll;
+      }
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .footer-section {
+        align-items: center;
+        text-align: center;
+      }
+      .payment-methods {
+        justify-content: center;
+      }
+      .footer-bottom {
+        padding-top: 0.8rem;
+      }
+      .footer-bottom p {
+        font-size: 0.8rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .chat-header h2 {
+        font-size: 1.8rem;
+      }
+      .message-bubble {
+        font-size: 0.85rem;
+      }
+      .chat-input input {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+      }
+      .chat-input button {
+        padding: 0.7rem 0.8rem;
+        font-size: 0.85rem;
+        min-width: 70px;
+      }
+      .option-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        min-width: 90px;
+        min-height: 36px;
+      }
+      .footer-bottom p {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="/index.html#chat-section" class="book-btn" aria-label="Book a session" onclick="scrollToForm(event)">Book Now</a>
+    </nav>
+    <div class="social-icons">
+      <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+        <i class="fab fa-instagram social-icon"></i>
+      </a>
+    </div>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+  <main>
+    <!-- Chat Section -->
+    <section class="chat-section">
+      <div class="chat-container">
+        <div class="chat-header">
+          <h2>Let's Schedule Your Session - Step 2 📅</h2>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <!-- Chat messages will be populated by JavaScript -->
+        </div>
+        <div class="chat-input" id="chat-input">
+          <input type="text" id="chat-input-text" placeholder="Type your response here... 😊" />
+          <button onclick="sendUserMessage()">Send</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.13 | Last updated: 08:45 PM MDT, May 25, 2025 | <a href="/site-creation">AI built my site. Find out How!</a></p>
+    </div>
+  </footer>
+  <script>
+    // === Global Variables ===
+    let sessionData = {}; // Stores all session-related data
+    let currentQuestionIndex = 0; // Tracks the current question in the chat flow
+    let isChatActive = true; // Controls whether the chat input is active
+    let uploadedPhotos = []; // Temporarily stores uploaded pet photos before assignment
+    let chatQuestions = []; // Array to hold the dynamic chat questions
+    
+    // === Mock Availability Data ===
+    const bookedSessions = {
+      'Cheesman Park': [],
+      'City Park': []
+    };
+    
+    const timeSlots = [
+      '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+      '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM',
+      '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM'
+    ];
+    
+    // === Header Navigation Functions ===
+    // Toggles the mobile menu visibility
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+    
+    // Smooth scrolls to the chat section
+    function scrollToForm(e) {
+      e.preventDefault();
+      const section = document.querySelector('#chat-section');
+      const offset = 100;
+      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: sectionPosition - offset,
+        behavior: 'smooth'
+      });
+    }
+    
+    // === Chat Functionality ===
+    // Adds a message to the chat UI
+    function addMessage(sender, text, options = [], type = 'options') {
+      const messagesContainer = document.getElementById('chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message ${sender}`;
+      messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
+      
+      if (type === 'photo-upload' && isChatActive) {
+        const uploadDiv = document.createElement('div');
+        uploadDiv.className = 'photo-upload-container';
+        const currentQuestion = chatQuestions[currentQuestionIndex];
+        uploadDiv.innerHTML = generatePhotoUpload(currentQuestion.petIndex);
+        messageDiv.appendChild(uploadDiv);
+        
+        setTimeout(() => initializePhotoUpload(currentQuestion.petIndex), 100);
+      }
+      
+      if (options.length > 0 && isChatActive) {
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className = 'options';
+        options.forEach(option => {
+          const button = document.createElement('button');
+          button.className = 'option-btn';
+          button.innerHTML = option.display;
+          button.onclick = () => selectOption(option.value);
+          optionsContainer.appendChild(button);
+        });
+        messageDiv.appendChild(optionsContainer);
+      }
+      
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      
+      const input = document.getElementById('chat-input-text');
+      const sendButton = document.querySelector('.chat-input button');
+      if (!isChatActive) {
+        input.disabled = true;
+        sendButton.disabled = true;
+      }
+      
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+    
+    // === Photo Upload Functions ===
+    // Generates the photo upload UI for a specific pet
+    function generatePhotoUpload(petIndex) {
+      const petName = sessionData.pets[petIndex]?.name || 'your pet';
+      return `
+        <div class="upload-area" onclick="document.getElementById('photo-input-${petIndex}').click()">
+          <div class="upload-icon">📸</div>
+          <div class="upload-text">Click or drag photo here</div>
+          <div class="upload-subtext">Upload 1 photo of ${petName}</div>
+          <input type="file" id="photo-input-${petIndex}" class="file-input" accept="image/*" onchange="handleFileSelect(event, ${petIndex})">
+          <button class="upload-btn" type="button">Choose Photo</button>
+        </div>
+        <div class="uploaded-photos" id="uploaded-photos-${petIndex}"></div>
+        <div style="margin-top: 1rem;">
+          <button class="option-btn" onclick="continueAfterPhotos(${petIndex})" style="margin-left: 1rem;">Continue</button>
+        </div>
+      `;
+    }
+    
+    // Initializes drag-and-drop functionality for photo uploads
+    function initializePhotoUpload(petIndex) {
+      const uploadArea = document.querySelector(`.photo-upload-container .upload-area`);
+      if (!uploadArea) return;
+      
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.parentElement.classList.add('dragover');
+      });
+      
+      uploadArea.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        uploadArea.parentElement.classList.remove('dragover');
+      });
+      
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.parentElement.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        handleFiles(files, petIndex);
+      });
+    }
+    
+    // Handles file selection for photo uploads
+    function handleFileSelect(event, petIndex) {
+      const files = event.target.files;
+      handleFiles(files, petIndex);
+    }
+    
+    // Processes uploaded files for a specific pet
+    function handleFiles(files, petIndex) {
+      if (files.length > 0) {
+        const file = files[0]; // Only take the first file
+        
+        if (file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const photo = {
+              id: Date.now(),
+              file: file,
+              dataUrl: e.target.result,
+              name: file.name,
+              petIndex: petIndex
+            };
+            uploadedPhotos = [photo]; // Only one photo allowed
+            displayUploadedPhotos(petIndex);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          alert('Please upload an image file.');
+        }
+      }
+    }
+    
+    // Displays uploaded photo thumbnails for a specific pet
+    function displayUploadedPhotos(petIndex) {
+      const container = document.getElementById(`uploaded-photos-${petIndex}`);
+      if (!container) return;
+      
+      container.innerHTML = '';
+      const photosForPet = uploadedPhotos.filter(photo => photo.petIndex === petIndex);
+      photosForPet.forEach(photo => {
+        const photoDiv = document.createElement('div');
+        photoDiv.className = 'uploaded-photo';
+        photoDiv.innerHTML = `
+          <img src="${photo.dataUrl}" alt="${photo.name}">
+          <button class="remove-photo" onclick="removePhoto(${photo.id}, ${petIndex})">×</button>
+        `;
+        container.appendChild(photoDiv);
+      });
+    }
+    
+    // Removes a photo from the uploaded list
+    function removePhoto(photoId, petIndex) {
+      uploadedPhotos = uploadedPhotos.filter(photo => photo.id !== photoId);
+      displayUploadedPhotos(petIndex);
+    }
+    
+    // Continues after uploading a photo for a specific pet
+    function continueAfterPhotos(petIndex) {
+      const photosForPet = uploadedPhotos.filter(photo => photo.petIndex === petIndex);
+      if (photosForPet.length === 0) {
+        alert('Please upload a photo before continuing.');
+        return;
+      }
+      
+      if (!sessionData.pets[petIndex]) sessionData.pets[petIndex] = {};
+      sessionData.pets[petIndex].photo = photosForPet[0];
+      uploadedPhotos = uploadedPhotos.filter(photo => photo.petIndex !== petIndex);
+      
+      addMessage('user', `Uploaded 1 photo 📸`);
+      proceedToNextQuestion();
+    }
+    
+    // Proceeds to the next question in the chat flow
+    function proceedToNextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < chatQuestions.length) {
+        const nextQuestion = chatQuestions[currentQuestionIndex];
+        let questionText = nextQuestion.text;
+        
+        if (nextQuestion.usesPetName && nextQuestion.petIndex !== undefined) {
+          const petName = sessionData.pets[nextQuestion.petIndex]?.name || 'your pet';
+          questionText = questionText.replace('[PET_NAME]', petName);
+        }
+        
+        addMessage('bot', questionText, nextQuestion.options, nextQuestion.type);
+      } else {
+        // Save data and redirect to summary
+        try {
+          const dataString = JSON.stringify(sessionData);
+          sessionStorage.setItem('intakeData', dataString);
+          window.location.href = '/summary.html';
+        } catch (error) {
+          console.error('Error saving intake data:', error);
+          addMessage('bot', 'Oops, something went wrong. Please try again. 😓', [], 'none');
+        }
+      }
+    }
+    
+    // Handles user text input
+    function sendUserMessage() {
+      if (!isChatActive) return;
+      const input = document.getElementById('chat-input-text');
+      const userResponse = input.value.trim();
+      if (!userResponse) return;
+      
+      const currentQuestion = chatQuestions[currentQuestionIndex];
+      if (currentQuestion.type === 'text') {
+        try {
+          // Client 2 Info
+          if (currentQuestion.id === 'client2-name') {
+            if (!sessionData.clients[1]) sessionData.clients[1] = {};
+            sessionData.clients[1].name = userResponse;
+          } else if (currentQuestion.id === 'client2-email') {
+            if (!sessionData.clients[1]) sessionData.clients[1] = {};
+            sessionData.clients[1].email = userResponse;
+          } else if (currentQuestion.id === 'client2-zip') {
+            if (!sessionData.clients[1]) sessionData.clients[1] = {};
+            sessionData.clients[1].zip = userResponse;
+          } else if (currentQuestion.id === 'client2-phone') {
+            if (!sessionData.clients[1]) sessionData.clients[1] = {};
+            sessionData.clients[1].phone = userResponse;
+          }
+          // Pet 2 Info
+          else if (currentQuestion.id === 'pet2-age') {
+            if (!sessionData.pets[1]) sessionData.pets[1] = {};
+            sessionData.pets[1].age = parseInt(userResponse) || 0;
+          } else if (currentQuestion.id === 'pet2-breed') {
+            if (!sessionData.pets[1]) sessionData.pets[1] = {};
+            sessionData.pets[1].breed = userResponse;
+          } else if (currentQuestion.id === 'pet2-allergies') {
+            if (!sessionData.pets[1]) sessionData.pets[1] = {};
+            sessionData.pets[1].allergies = userResponse;
+          } else if (currentQuestion.id === 'pet2-favorite-toy') {
+            if (!sessionData.pets[1]) sessionData.pets[1] = {};
+            sessionData.pets[1].favoriteToy = userResponse;
+          } else if (currentQuestion.id === 'pet2-energy-type') {
+            if (!sessionData.pets[1]) sessionData.pets[1] = {};
+            sessionData.pets[1].energyType = userResponse;
+          } else if (currentQuestion.id === 'pet2-favorite-treats') {
+            if (!sessionData.pets[1]) sessionData.pets[1] = {};
+            sessionData.pets[1].favoriteTreats = userResponse;
+          } else if (currentQuestion.id === 'pet2-bio') {
+            if (!sessionData.pets[1]) sessionData.pets[1] = {};
+            sessionData.pets[1].bio = userResponse;
+          }
+          // Social Media Handles
+          else if (currentQuestion.id === 'person1-social-handle') {
+            if (!sessionData.clients[0]) sessionData.clients[0] = {};
+            sessionData.clients[0].socialMediaHandle = userResponse;
+          } else if (currentQuestion.id === 'person2-social-handle') {
+            if (!sessionData.clients[1]) sessionData.clients[1] = {};
+            sessionData.clients[1].socialMediaHandle = userResponse;
+          } else if (currentQuestion.id === 'pet1-social-handle') {
+            if (!sessionData.pets[0]) sessionData.pets[0] = {};
+            sessionData.pets[0].socialMediaHandle = userResponse;
+          } else if (currentQuestion.id === 'pet2-social-handle') {
+            if (!sessionData.pets[1]) sessionData.pets[1] = {};
+            sessionData.pets[1].socialMediaHandle = userResponse;
+          }
+          
+          addMessage('user', userResponse);
+          input.value = '';
+          proceedToNextQuestion();
+        } catch (error) {
+          console.error('❌ Error in sendUserMessage:', error);
+          addMessage('bot', 'Sorry, an error occurred. Please try again. 😓', [], 'none');
+        }
+      }
+    }
+    
+    // Handles user selection from option buttons
+    function selectOption(value) {
+      if (!isChatActive) return;
+      const currentQuestion = chatQuestions[currentQuestionIndex];
+      let displayValue = value;
+      
+      // Social Media Tagging
+      if (currentQuestion.id === 'person1-social') {
+        if (!sessionData.clients[0]) sessionData.clients[0] = {};
+        sessionData.clients[0].socialMedia = value;
+        if (value === 'Yes') {
+          chatQuestions.splice(currentQuestionIndex + 1, 0, {
+            id: 'person1-social-handle',
+            text: `What is your Instagram handle? (e.g., @petlover) 📸`,
+            type: 'text'
+          });
+        }
+      } else if (currentQuestion.id === 'person2-social') {
+        if (!sessionData.clients[1]) sessionData.clients[1] = {};
+        sessionData.clients[1].socialMedia = value;
+        if (value === 'Yes') {
+          chatQuestions.splice(currentQuestionIndex + 1, 0, {
+            id: 'person2-social-handle',
+            text: `What is ${sessionData.clients[1]?.name || 'the second person'}'s Instagram handle? (e.g., @petlover2) 📸`,
+            type: 'text'
+          });
+        }
+      } else if (currentQuestion.id === 'pet1-social') {
+        if (!sessionData.pets[0]) sessionData.pets[0] = {};
+        sessionData.pets[0].socialMedia = value;
+        if (value === 'Yes') {
+          const petName = sessionData.pets[0].name || 'your pet';
+          chatQuestions.splice(currentQuestionIndex + 1, 0, {
+            id: 'pet1-social-handle',
+            text: `What is ${petName}'s Instagram handle? (e.g., @buddythepup) 📸`,
+            type: 'text'
+          });
+        }
+      } else if (currentQuestion.id === 'pet2-social') {
+        if (!sessionData.pets[1]) sessionData.pets[1] = {};
+        sessionData.pets[1].socialMedia = value;
+        if (value === 'Yes') {
+          const petName = sessionData.pets[1].name || 'your second pet';
+          chatQuestions.splice(currentQuestionIndex + 1, 0, {
+            id: 'pet2-social-handle',
+            text: `What is ${petName}'s Instagram handle? (e.g., @buddythepup2) 📸`,
+            type: 'text'
+          });
+        }
+      }
+      
+      addMessage('user', displayValue);
+      proceedToNextQuestion();
+    }
+    
+    // === Page Initialization ===
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Intake2 page loaded - v4.1.13');
+      
+      try {
+        // Load session data from previous step
+        const intakeDataRaw = sessionStorage.getItem('intakeData');
+        console.log('Raw intakeData from sessionStorage:', intakeDataRaw);
+        const intakeData = intakeDataRaw ? JSON.parse(intakeDataRaw) : {};
+        console.log('Parsed intakeData:', intakeData);
+        sessionData = { ...intakeData };
+        
+        // Validate required session data
+        const requiredFields = ['sessionType', 'sessionDuration', 'location', 'numberOfPets', 'numberOfPeople', 'clients', 'pets'];
+        const missingFields = requiredFields.filter(field => !sessionData[field]);
+        if (missingFields.length > 0) {
+          console.log('Missing required fields:', missingFields);
+          addMessage('bot', `It looks like some session details are missing: ${missingFields.join(', ')}. Please go back and complete the previous steps. 😓`, [], 'none');
+          const inputContainer = document.getElementById('chat-input');
+          inputContainer.innerHTML = '';
+          isChatActive = false;
+          return;
+        }
+        
+        // Build dynamic chat questions
+        chatQuestions = [
+          {
+            id: 'welcome',
+            text: `Welcome back, ${sessionData.clients[0]?.firstName || 'friend'}! Let's continue with the details for your session with ${sessionData.pets[0]?.name || 'your pet'}${sessionData.numberOfPets > 1 ? ' and friends' : ''}. 😊`,
+            type: 'none'
+          }
+        ];
+        
+        // Client 2 Info (if numberOfPeople >= 2)
+        if (sessionData.numberOfPeople >= 2) {
+          chatQuestions.push(
+            {
+              id: 'client2-name',
+              text: `Since there are two people in your session, let's get the second person's information. What is their name? 👤`,
+              type: 'text'
+            },
+            {
+              id: 'client2-email',
+              text: `What is their email address? (Optional) 📧`,
+              type: 'text'
+            },
+            {
+              id: 'client2-zip',
+              text: `What is their zip code? (Optional) 📍`,
+              type: 'text'
+            },
+            {
+              id: 'client2-phone',
+              text: `What is their phone number? (Optional) 📱`,
+              type: 'text'
+            }
+          );
+        }
+        
+        // Pet 2 Info (if numberOfPets >= 2)
+        if (sessionData.numberOfPets >= 2) {
+          const petName = sessionData.pets[1]?.name || 'your second pet';
+          chatQuestions.push(
+            {
+              id: 'pet2-age',
+              text: `Let's talk about ${petName}. How old is ${petName}? (Please enter a number) 🎂`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: 1
+            },
+            {
+              id: 'pet2-breed',
+              text: `What breed is ${petName}? 🐶🐱`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: 1
+            },
+            {
+              id: 'pet2-allergies',
+              text: `Does ${petName} have any allergies or disabilities? (Optional) 🩺`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: 1
+            },
+            {
+              id: 'pet2-favorite-toy',
+              text: `What is ${petName}'s favorite toy? 🎾`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: 1
+            },
+            {
+              id: 'pet2-energy-type',
+              text: `How would you describe ${petName}'s energy type? (e.g., high, low, playful) 🐾`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: 1
+            },
+            {
+              id: 'pet2-favorite-treats',
+              text: `What are ${petName}'s favorite treats? 🍖`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: 1
+            },
+            {
+              id: 'pet2-bio',
+              text: `Tell us a bit about ${petName}. What's their story? 📜`,
+              type: 'text',
+              usesPetName: true,
+              petIndex: 1
+            },
+            {
+              id: 'pet2-photo',
+              text: `Let's see your adorable ${petName}! 📸 Please upload a photo so I can better understand their personality.`,
+              type: 'photo-upload',
+              usesPetName: true,
+              petIndex: 1
+            }
+          );
+        }
+        
+        // Social Media Tagging
+        chatQuestions.push(
+          {
+            id: 'person1-social',
+            text: `Do you want to be tagged on Instagram? 📸`,
+            type: 'options',
+            options: [
+              { value: 'Yes', display: 'Yes 📸' },
+              { value: 'No', display: 'No 🚫' }
+            ]
+          }
+        );
+        
+        if (sessionData.numberOfPeople >= 2) {
+          chatQuestions.push({
+            id: 'person2-social',
+            text: `Does ${sessionData.clients[1]?.name || 'the second person'} want to be tagged on Instagram? 📸`,
+            type: 'options',
+            options: [
+              { value: 'Yes', display: 'Yes 📸' },
+              { value: 'No', display: 'No 🚫' }
+            ]
+          });
+        }
+        
+        chatQuestions.push(
+          {
+            id: 'pet1-social',
+            text: `Does ${sessionData.pets[0]?.name || 'your pet'} want to be tagged on Instagram? 📸`,
+            type: 'options',
+            options: [
+              { value: 'Yes', display: 'Yes 📸' },
+              { value: 'No', display: 'No 🚫' }
+            ]
+          }
+        );
+        
+        if (sessionData.numberOfPets >= 2) {
+          chatQuestions.push({
+            id: 'pet2-social',
+            text: `Does ${sessionData.pets[1]?.name || 'your second pet'} want to be tagged on Instagram? 📸`,
+            type: 'options',
+            options: [
+              { value: 'Yes', display: 'Yes 📸' },
+              { value: 'No', display: 'No 🚫' }
+            ]
+          });
+        }
+        
+        // Add date and time selection
+        chatQuestions.push(
+          {
+            id: 'date',
+            text: "Perfect! Now let's pick a date for your session! 📅 Please select a date from the calendar below.",
+            type: 'calendar'
+          },
+          {
+            id: 'time',
+            text: "",
+            type: 'options',
+            options: []
+          }
+        );
+        
+        // Start the chat flow
+        addMessage('bot', chatQuestions[0].text, [], chatQuestions[0].type);
+        
+        // Add Enter key listener for text input
+        document.getElementById('chat-input-text').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            sendUserMessage();
+          }
+        });
+        
+      } catch (error) {
+        console.error('Error initializing intake2 page:', error);
+        addMessage('bot', 'Sorry, there was an error loading the page. Please refresh and try again. 😓', [], 'none');
+        isChatActive = false;
+        const inputContainer = document.getElementById('chat-input');
+        inputContainer.innerHTML = '';
+      }
+    });
+  </script>
+</body>
+</html>
