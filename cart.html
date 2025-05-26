@@ -258,7 +258,6 @@
     }
 
     .chat-input input[type="text"],
-    .chat-input input[type="number"],
     .chat-input select {
       width: 100%;
       padding: 1rem;
@@ -694,7 +693,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.2 | Last updated: 11:01 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.3 | Last updated: 11:15 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -766,28 +765,42 @@
         validate: (value) => value ? null : "Please select a location! 🌲"
       },
       {
-        bot: "Perfect! How many pets will be in the session? 🐶🐱 (1-5)",
-        input: '<input type="number" id="numberOfPets" min="1" max="5" required>',
-        validate: (value) => {
-          const num = parseInt(value);
-          if (!num || num < 1 || num > 5) return "Please enter a number between 1 and 5! 😅";
-          return null;
-        }
+        bot: "Perfect! How many pets will be in the session? 🐶🐱",
+        input: `
+          <div class="session-cards">
+            <div class="session-card" onclick="selectPetCount(1)">
+              <h3>1 Pet Included 🐶</h3>
+              <p>No extra cost! 🌟</p>
+            </div>
+            <div class="session-card" onclick="selectPetCount(2)">
+              <h3>2 Pets 🐶🐱</h3>
+              <p>+$40 for second pet 🎉</p>
+            </div>
+          </div>
+        `,
+        validate: (value) => value ? null : "Please select the number of pets! 😅"
       },
       {
-        bot: "Got it! How many people will be in the session? 👥 (1-5)",
-        input: '<input type="number" id="numberOfPeople" min="1" max="5" required>',
-        validate: (value) => {
-          const num = parseInt(value);
-          if (!num || num < 1 || num > 5) return "Please enter a number between 1 and 5! 😊";
-          return null;
-        }
+        bot: "Got it! How many people will be in the session? 👥",
+        input: `
+          <div class="session-cards">
+            <div class="session-card" onclick="selectPeopleCount(1)">
+              <h3>1 Person Included 👤</h3>
+              <p>No extra cost! 🌟</p>
+            </div>
+            <div class="session-card" onclick="selectPeopleCount(2)">
+              <h3>2 People 👥</h3>
+              <p>+$20 for second person 🎉</p>
+            </div>
+          </div>
+        `,
+        validate: (value) => value ? null : "Please select the number of people! 😊"
       },
       {
         bot: "What’s the name of your second pet? 🐕",
         input: '<input type="text" id="pet2Name" placeholder="Second pet’s name" required>',
         validate: (value) => value.trim() ? null : "Please enter your second pet’s name! 🐱",
-        condition: (data) => parseInt(data.numberOfPets) >= 2
+        condition: (data) => parseInt(data.numberOfPets) === 2
       },
       {
         bot: (data) => `Sweet, let’s pick a date for you and ${data.pet1Name}! 📅`,
@@ -910,7 +923,7 @@
       let inputElement;
 
       if (step.input.includes('session-card')) {
-        value = cartData.sessionType || cartData.location;
+        value = cartData.sessionType || cartData.location || cartData.numberOfPets || cartData.numberOfPeople;
       } else if (step.input.includes('select')) {
         inputElement = document.querySelector('select');
         value = inputElement.value;
@@ -941,8 +954,14 @@
       if (currentStep === 1) cartData.client1FirstName = value;
       if (currentStep === 2) cartData.sessionType = value;
       if (currentStep === 3) cartData.location = value;
-      if (currentStep === 4) cartData.numberOfPets = value;
-      if (currentStep === 5) cartData.numberOfPeople = value;
+      if (currentStep === 4) {
+        cartData.numberOfPets = value;
+        cartData.additionalPetFee = value === '2' ? 40 : 0;
+      }
+      if (currentStep === 5) {
+        cartData.numberOfPeople = value;
+        cartData.additionalPersonFee = value === '2' ? 20 : 0;
+      }
       if (currentStep === 6) cartData.pet2Name = value;
       if (currentStep === 7) cartData.selectedDate = selectedDate;
       if (currentStep === 8) cartData.selectedTime = value;
@@ -974,6 +993,16 @@
 
     function selectLocation(location) {
       cartData.location = location;
+      submitInput();
+    }
+
+    function selectPetCount(count) {
+      cartData.numberOfPets = count.toString();
+      submitInput();
+    }
+
+    function selectPeopleCount(count) {
+      cartData.numberOfPeople = count.toString();
       submitInput();
     }
 
@@ -1028,7 +1057,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.2');
+      console.log('✅ Cart page loaded - v1.0.3');
       if (!cartData.email) {
         appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
         return;
