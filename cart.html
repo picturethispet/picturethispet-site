@@ -70,7 +70,6 @@
       to { opacity: 1; transform: translateX(0); }
     }
 
-    /* === HEADER STYLES === */
     header {
       width: 100%;
       display: flex;
@@ -83,7 +82,7 @@
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0, 0.3);
       border-bottom: 1px solid rgba(255,255,255, 0.1);
       position: fixed;
       top: 0;
@@ -163,14 +162,12 @@
       transform: scale(1.1);
     }
 
-    /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
       flex: 1;
       padding: 4rem 1rem;
     }
 
-    /* === SESSION BUILDER SECTION === */
     #session-builder {
       max-width: 800px;
       margin: 0 auto;
@@ -208,7 +205,6 @@
       text-align: center;
     }
 
-    /* === CHAT STYLES === */
     .chat-container {
       display: flex;
       flex-direction: column;
@@ -280,26 +276,6 @@
       background: rgba(255,255,255, 0.15);
     }
 
-    .chat-input .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .chat-input label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 1rem;
-      color: rgba(255,255,255, 0.9);
-    }
-
-    .chat-input input[type="checkbox"] {
-      width: 1.2rem;
-      height: 1.2rem;
-      accent-color: var(--gold);
-    }
-
     .session-cards {
       display: flex;
       flex-wrap: wrap;
@@ -343,7 +319,6 @@
       text-align: left;
     }
 
-    /* === CALENDAR STYLES === */
     .calendar-container {
       background: rgba(255,255,255, 0.05);
       border-radius: 16px;
@@ -461,7 +436,6 @@
       box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
     }
 
-    /* === FOOTER STYLES === */
     footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -537,7 +511,6 @@
       white-space: nowrap;
     }
 
-    /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
         height: 80px;
@@ -722,7 +695,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.6 | Last updated: 11:38 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.7 | Last updated: 11:45 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -845,7 +818,7 @@
       {
         bot: "Great, wrapping up soon! Let’s go over agreements ✅",
         input: '<p>Click below to review agreements.</p>',
-        validate: () => true // No validation needed, button handles redirect
+        validate: () => true
       }
     ];
 
@@ -891,13 +864,11 @@
 
     function generateTimeCards() {
       if (!selectedDate) {
-        appendMessage('Please select a date first! 😅', 'error');
-        return generateCalendar();
+        return '<p>No date selected. Please go back and select a date. 😅</p>';
       }
       const availableTimes = calendarData.filter(slot => slot.date === selectedDate && slot.status === 'available').map(slot => slot.time);
       if (availableTimes.length === 0) {
-        appendMessage('No available times for this date. Please select another date. 😅', 'error');
-        return generateCalendar();
+        return '<p>No available times for this date. Please go back and select another date. 😅</p>';
       }
       let html = '<div class="session-cards">';
       availableTimes.forEach(time => {
@@ -929,7 +900,6 @@
       if (input) input.focus();
       inputDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
-      // Enter key submission
       if (input && !step.input.includes('checkbox')) {
         input.addEventListener('keydown', (e) => {
           if (e.key === 'Enter') {
@@ -949,7 +919,7 @@
       } else if (step.input.includes('calendar')) {
         value = selectedDate;
       } else if (step.input.includes('<p>')) {
-        value = true; // For agreements redirect step
+        value = true;
       } else {
         const inputElement = document.querySelector('input');
         value = inputElement.value.trim();
@@ -962,7 +932,7 @@
       }
 
       if (step.input.includes('session-card') || step.input.includes('calendar') || step.input.includes('<p>')) {
-        appendMessage(value, 'user');
+        appendMessage(value.toString(), 'user');
       } else {
         appendMessage(value, 'user');
       }
@@ -1077,11 +1047,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.6');
+      console.log('✅ Cart page loaded - v1.0.7');
       if (!cartData.email) {
         appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
         return;
       }
+      currentStep = 0; // Ensure starting at step 0
       appendMessage(steps[0].bot, 'bot');
       appendInput(steps[0]);
     });
