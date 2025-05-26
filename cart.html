@@ -313,13 +313,13 @@
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 20px;
-      padding: 2.5rem;
+      padding: 2rem;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.3s ease;
       text-align: center;
       flex: 1;
-      min-width: 250px;
+      min-width: 150px;
       cursor: pointer;
     }
 
@@ -330,15 +330,15 @@
 
     .session-card h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 600;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       color: white;
     }
 
     .session-card p {
-      font-size: 1rem;
-      line-height: 1.6;
+      font-size: 0.9rem;
+      line-height: 1.5;
       color: rgba(255, 255, 255, 0.9);
       text-align: left;
     }
@@ -605,7 +605,16 @@
       }
 
       .session-card {
-        min-width: 200px;
+        min-width: 150px;
+        padding: 1.5rem;
+      }
+
+      .session-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .session-card p {
+        font-size: 0.8rem;
       }
 
       .calendar-day {
@@ -693,7 +702,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.3 | Last updated: 11:15 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.4 | Last updated: 11:24 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -808,12 +817,12 @@
         validate: () => selectedDate ? null : "Please select a date! 😅"
       },
       {
-        bot: (data) => `Yay! Which time works for you on ${new Date(selectedDate).toLocaleDateString()}? ⏰`,
-        input: generateTimeOptions(),
+        bot: "What time works for you? ⏰",
+        input: generateTimeCards(),
         validate: (value) => value ? null : "Please select a time! ⏰"
       },
       {
-        bot: "Almost there! Please agree to our Terms of Service and Photo Release. ✅",
+        bot: "Great, wrapping up soon! Let’s go over agreements ✅",
         input: `
           <div class="checkbox-group">
             <label><input type="checkbox" id="terms" required> I agree to the Terms of Service</label>
@@ -864,14 +873,20 @@
       return html;
     }
 
-    function generateTimeOptions() {
-      if (!selectedDate) return '<select id="time" required><option value="" disabled selected>No date selected</option></select>';
+    function generateTimeCards() {
+      if (!selectedDate) return '<p>No available times for this date.</p>';
       const availableTimes = calendarData.filter(slot => slot.date === selectedDate && slot.status === 'available').map(slot => slot.time);
-      let html = '<select id="time" required><option value="" disabled selected>Select a time...</option>';
+      if (availableTimes.length === 0) return '<p>No available times for this date.</p>';
+      let html = '<div class="session-cards">';
       availableTimes.forEach(time => {
-        html += `<option value="${time}">${time}</option>`;
+        html += `
+          <div class="session-card" onclick="selectTime('${time}')">
+            <h3>${time} ⏰</h3>
+            <p>Available slot!</p>
+          </div>
+        `;
       });
-      html += '</select>';
+      html += '</div>';
       return html;
     }
 
@@ -923,7 +938,7 @@
       let inputElement;
 
       if (step.input.includes('session-card')) {
-        value = cartData.sessionType || cartData.location || cartData.numberOfPets || cartData.numberOfPeople;
+        value = cartData.sessionType || cartData.location || cartData.numberOfPets || cartData.numberOfPeople || cartData.selectedTime;
       } else if (step.input.includes('select')) {
         inputElement = document.querySelector('select');
         value = inputElement.value;
@@ -1006,6 +1021,11 @@
       submitInput();
     }
 
+    function selectTime(time) {
+      cartData.selectedTime = time;
+      submitInput();
+    }
+
     function selectDate(date) {
       selectedDate = date;
       const days = document.querySelectorAll('.calendar-day');
@@ -1057,7 +1077,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.3');
+      console.log('✅ Cart page loaded - v1.0.4');
       if (!cartData.email) {
         appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
         return;
