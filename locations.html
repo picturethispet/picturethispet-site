@@ -245,7 +245,7 @@
 
     .locations-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 2rem;
       margin-bottom: 3rem;
     }
@@ -256,6 +256,23 @@
       border-radius: 16px;
       padding: 2rem;
       text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .location-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .popup-card {
+      border-color: rgba(244, 124, 44, 0.3);
+      background: rgba(244, 124, 44, 0.08);
+    }
+
+    .popup-card:hover {
+      border-color: rgba(244, 124, 44, 0.5);
+      background: rgba(244, 124, 44, 0.12);
     }
 
     .location-card h3 {
@@ -292,6 +309,92 @@
       content: "✔";
       color: var(--available-green);
       font-weight: bold;
+    }
+
+    .popup-link {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .popup-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+
+    /* === MAP SECTION === */
+    .map-section-title {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      margin-bottom: 2rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .map-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .map-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      width: 100%;
+      max-width: 420px;
+      transition: all 0.3s ease;
+    }
+
+    .map-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .map-header {
+      padding: 1.2rem 1.6rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .map-iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      filter: contrast(1.1) brightness(0.9);
+      transition: filter 0.3s ease;
+    }
+
+    .map-card:hover .map-iframe {
+      filter: contrast(1.2) brightness(1);
+    }
+
+    .map-footer {
+      padding: 1rem 1.6rem;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.03);
     }
 
     /* === ACTION SECTION === */
@@ -560,6 +663,24 @@
         font-size: 1rem;
       }
 
+      .popup-link {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .map-section-title {
+        font-size: 1.8rem;
+      }
+
+      .map-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .map-card {
+        max-width: 100%;
+      }
+
       .action-section {
         padding: 2rem;
       }
@@ -600,6 +721,10 @@
 
     .page-header {
       animation: fadeInDown 0.8s ease-out;
+    }
+
+    .map-section {
+      animation: slideInUp 1s ease-out;
     }
 
     @keyframes slideInUp {
@@ -679,7 +804,7 @@
     <div class="page-header">
       <h1 class="page-title">Our Locations</h1>
       <p class="page-subtitle">
-        We offer pet photography sessions at two beautiful parks in Denver, Colorado. Choose the location that best suits your session needs.
+        We offer pet photography sessions at beautiful Denver parks and custom PopUp locations. Choose from our scenic park settings or bring the session to your pet's favorite hangout spots.
       </p>
     </div>
 
@@ -706,6 +831,55 @@
               <li>Lush greenery and trees</li>
               <li>Easy access and parking</li>
             </ul>
+          </div>
+          <div class="location-card popup-card">
+            <h3>PopUp Sessions</h3>
+            <p>Looking to snag a shot at your favorite dog bar, local dog park, or other special places where dogs love to hang out? We'll bring the magic to your pet's favorite spots!</p>
+            <ul class="features">
+              <li>Your favorite dog-friendly venues</li>
+              <li>Local neighborhood dog parks</li>
+              <li>Pet-friendly breweries & cafes</li>
+              <li>Custom location coordination</li>
+            </ul>
+            <div class="popup-image-placeholder">
+              <img src="assets/images/popup-placeholder.jpg" alt="PopUp Sessions at dog-friendly locations" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-top: 1rem; opacity: 0.8;">
+            </div>
+            <a href="/popups" class="popup-link">Learn More About PopUps →</a>
+          </div>
+        </div>
+
+        <!-- Map Section -->
+        <h2 class="map-section-title">Find Our Locations</h2>
+        <div class="map-section">
+          <!-- Cheesman Park -->
+          <div class="map-card">
+            <div class="map-header">
+              <span>📍</span>
+              <span>Cheesman Park</span>
+            </div>
+            <iframe
+              class="map-iframe"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6134.306478944552!2d-104.9669827235144!3d39.73302870192812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c78d7367d2a0f%3A0x79885f4ae5c9f805!2sCheesman%20Park!5e0!3m2!1sen!2sus!4v1716637911983!5m2!1sen!2sus">
+            </iframe>
+            <div class="map-footer">E 8th Ave & Franklin St, Denver, CO 80206</div>
+          </div>
+          <!-- City Park -->
+          <div class="map-card">
+            <div class="map-header">
+              <span>📍</span>
+              <span>City Park</span>
+            </div>
+            <iframe
+              class="map-iframe"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6133.803357172409!2d-104.95465562351398!3d39.74747399157158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c79527dc2f88f%3A0x409292cfbe1667d0!2sCity%20Park!5e0!3m2!1sen!2sus!4v1716638100000!5m2!1sen!2sus">
+            </iframe>
+            <div class="map-footer">E 17th Ave to E 23rd Ave, York St to Colorado Blvd, Denver, CO</div>
           </div>
         </div>
 
