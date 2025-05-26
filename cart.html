@@ -702,7 +702,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.4 | Last updated: 11:24 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.5 | Last updated: 11:31 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -814,7 +814,7 @@
       {
         bot: (data) => `Sweet, let’s pick a date for you and ${data.pet1Name}! 📅`,
         input: generateCalendar(),
-        validate: () => selectedDate ? null : "Please select a date! 😅"
+        validate: (value) => value ? null : "Please select a date! 😅"
       },
       {
         bot: "What time works for you? ⏰",
@@ -874,9 +874,15 @@
     }
 
     function generateTimeCards() {
-      if (!selectedDate) return '<p>No available times for this date.</p>';
+      if (!selectedDate) {
+        appendMessage('No available times for this date. Please select another date. 😅', 'error');
+        return generateCalendar(); // Allow re-selection of date
+      }
       const availableTimes = calendarData.filter(slot => slot.date === selectedDate && slot.status === 'available').map(slot => slot.time);
-      if (availableTimes.length === 0) return '<p>No available times for this date.</p>';
+      if (availableTimes.length === 0) {
+        appendMessage('No available times for this date. Please select another date. 😅', 'error');
+        return generateCalendar(); // Allow re-selection of date
+      }
       let html = '<div class="session-cards">';
       availableTimes.forEach(time => {
         html += `
@@ -935,17 +941,15 @@
     function submitInput() {
       const step = steps[currentStep];
       let value;
-      let inputElement;
 
       if (step.input.includes('session-card')) {
         value = cartData.sessionType || cartData.location || cartData.numberOfPets || cartData.numberOfPeople || cartData.selectedTime;
-      } else if (step.input.includes('select')) {
-        inputElement = document.querySelector('select');
-        value = inputElement.value;
+      } else if (step.input.includes('calendar')) {
+        value = selectedDate;
       } else if (step.input.includes('checkbox')) {
         value = document.getElementById('terms').checked && document.getElementById('photoRelease').checked;
       } else {
-        inputElement = document.querySelector('input');
+        const inputElement = document.querySelector('input');
         value = inputElement.value.trim();
       }
 
@@ -955,12 +959,8 @@
         return;
       }
 
-      if (step.input.includes('session-card') || step.input.includes('checkbox')) {
+      if (step.input.includes('session-card') || step.input.includes('checkbox') || step.input.includes('calendar')) {
         appendMessage(value, 'user');
-      } else if (step.input.includes('select')) {
-        appendMessage(value, 'user');
-      } else if (step.input.includes('calendar')) {
-        appendMessage(selectedDate, 'user');
       } else {
         appendMessage(value, 'user');
       }
@@ -978,7 +978,7 @@
         cartData.additionalPersonFee = value === '2' ? 20 : 0;
       }
       if (currentStep === 6) cartData.pet2Name = value;
-      if (currentStep === 7) cartData.selectedDate = selectedDate;
+      if (currentStep === 7) cartData.selectedDate = value;
       if (currentStep === 8) cartData.selectedTime = value;
       if (currentStep === 9) cartData.agreements = { terms: true, photoRelease: true };
 
@@ -1077,7 +1077,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.4');
+      console.log('✅ Cart page loaded - v1.0.5');
       if (!cartData.email) {
         appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
         return;
