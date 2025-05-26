@@ -695,7 +695,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.8 | Last updated: 11:50 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.9 | Last updated: 11:57 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -706,22 +706,30 @@
     let currentStep = 0;
     let selectedDate = null;
 
-    // Placeholder calendar data (30 days, 9 AM-5 PM, 80% available)
+    // Fixed placeholder calendar data (30 days, 9 AM-5 PM, 6+ available slots per day)
     // TODO: Replace with Airtable integration for client records and calendar slots
     const today = new Date();
     const calendarData = [];
+    const availableTimes = ['09:00', '10:00', '11:00', '13:00', '14:00', '15:00'];
+    const bookedTimes = ['12:00', '16:00'];
     for (let i = 0; i < 30; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       const dateStr = date.toISOString().split('T')[0];
-      for (let hour = 9; hour <= 17; hour++) {
-        const isBooked = Math.random() < 0.2; // 20% chance booked, 80% available
+      availableTimes.forEach(time => {
         calendarData.push({
           date: dateStr,
-          time: `${hour.toString().padStart(2, '0')}:00`,
-          status: isBooked ? 'booked' : 'available'
+          time: time,
+          status: 'available'
         });
-      }
+      });
+      bookedTimes.forEach(time => {
+        calendarData.push({
+          date: dateStr,
+          time: time,
+          status: 'booked'
+        });
+      });
     }
 
     const steps = [
@@ -863,11 +871,15 @@
     }
 
     function generateTimeCards() {
+      console.log('Generating time cards for date:', selectedDate);
       if (!selectedDate) {
+        console.log('No date selected');
         return '<p>No date selected. Please go back and select a date. 😅</p>';
       }
       const availableTimes = calendarData.filter(slot => slot.date === selectedDate && slot.status === 'available').map(slot => slot.time);
+      console.log('Available times:', availableTimes);
       if (availableTimes.length === 0) {
+        console.log('No available times for date:', selectedDate);
         return '<p>No available times for this date. Please go back and select another date. 😅</p>';
       }
       let html = '<div class="session-cards">';
@@ -998,6 +1010,7 @@
     }
 
     function selectDate(date) {
+      console.log('Selected date:', date);
       selectedDate = date;
       const days = document.querySelectorAll('.calendar-day');
       days.forEach(day => day.classList.remove('available'));
@@ -1047,7 +1060,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.8');
+      console.log('✅ Cart page loaded - v1.0.9');
       if (!cartData.email) {
         appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
         return;
