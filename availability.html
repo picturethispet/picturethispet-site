@@ -307,6 +307,22 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
+    .loading-message {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+      font-style: italic;
+      padding: 2rem;
+    }
+
+    .error-message {
+      text-align: center;
+      color: var(--booked-red);
+      padding: 2rem;
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: 12px;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
     /* === BOOK NOW BUTTON === */
     .book-now-section {
       margin-top: 2rem;
@@ -567,7 +583,9 @@
             <button class="nav-button" onclick="nextMonth()">›</button>
           </div>
         </div>
-        <div id="calendar-grid" class="calendar-grid"></div>
+        <div id="calendar-grid" class="calendar-grid">
+          <div class="loading-message">Loading calendar data...</div>
+        </div>
       </div>
 
       <!-- Book Now Button -->
@@ -613,8 +631,21 @@
   </footer>
 
   <script>
+    // Google Calendar Configuration
+    const GOOGLE_CALENDAR_CONFIG = {
+      calendarId: 'cd42508bf949d68a615df8c843a09f2a33691da922b0b2ed66af6dc2c32b0216@group.calendar.google.com',
+      apiKey: 'YOUR_GOOGLE_API_KEY', // You'll need to replace this with your actual API key
+      timezone: 'America/Denver'
+    };
+
     let currentMonth = new Date();
     let calendarData = [];
+    let googleEvents = [];
+
+    // Default time slots for photography sessions
+    const DEFAULT_TIME_SLOTS = [
+      '9:00 AM', '10:30 AM', '12:00 PM', '1:30 PM', '3:00 PM', '4:30 PM'
+    ];
 
     // Mobile menu toggle
     function toggleMenu() {
@@ -663,10 +694,64 @@
       }
     }
 
-    // Fetch calendar data from Airtable
-    async function fetchCalendarData() {
+    // Fetch Google Calendar events
+    async function fetchGoogleCalendarEvents() {
       try {
-        console.log('Fetching calendar data from Airtable...');
+        // Check if API key is configured
+        if (GOOGLE_CALENDAR_CONFIG.apiKey === 'YOUR_GOOGLE_API_KEY') {
+          console.warn('⚠️ Google Calendar API key not configured. Using fallback data.');
+          return await fetchCalendarDataFromAirtable();
+        }
+
+        console.log('📅 Fetching Google Calendar events...');
+        
+        const today = new Date();
+        const threeMonthsLater = new Date();
+        threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
+        
+        const timeMin = today.toISOString();
+        const timeMax = threeMonthsLater.toISOString();
+        
+        const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(GOOGLE_CALENDAR_CONFIG.calendarId)}/events` +
+                   `?key=${GOOGLE_CALENDAR_CONFIG.apiKey}` +
+                   `&timeMin=${timeMin}` +
+                   `&timeMax=${timeMax}` +
+                   `&singleEvents=true` +
+                   `&orderBy=startTime`;
+
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          throw new Error(`Google Calendar API error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        
+        // Process Google Calendar events
+        googleEvents = data.items.map(event => ({
+          id: event.id,
+          summary: event.summary || 'Busy',
+          start: new Date(event.start.dateTime || event.start.date),
+          end: new Date(event.end.dateTime || event.end.date),
+          isAllDay: !event.start.dateTime
+        }));
+
+        console.log('✅ Google Calendar events fetched:', googleEvents.length);
+        return true;
+        
+      } catch (error) {
+        console.error('❌ Error fetching Google Calendar events:', error);
+        await logErrorToAirtable('availability.html', error, { source: 'googleCalendar' });
+        
+        // Fallback to Airtable data
+        return await fetchCalendarDataFromAirtable();
+      }
+    }
+
+    // Fallback: Fetch calendar data from Airtable
+    async function fetchCalendarDataFromAirtable() {
+      try {
+        console.log('📋 Fetching calendar data from Airtable (fallback)...');
         const today = new Date().toISOString().split('T')[0];
         const threeMonthsLater = new Date();
         threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
@@ -696,13 +781,75 @@
           description: record.fields.SessionDescription
         }));
 
-        console.log('Calendar data fetched:', calendarData);
-        generateCalendar();
+        console.log('✅ Airtable calendar data fetched:', calendarData.length);
+        return true;
       } catch (error) {
-        console.error('Error fetching calendar data:', error);
-        await logErrorToAirtable('availability.html', error);
-        document.getElementById('calendar-title').textContent = 'Error loading calendar';
+        console.error('❌ Error fetching Airtable calendar data:', error);
+        await logErrorToAirtable('availability.html', error, { source: 'airtable' });
+        return false;
       }
+    }
+
+    // Check if a date/time is busy based on Google Calendar
+    function isDateTimeBusy(date, timeSlot) {
+      if (googleEvents.length === 0) return false;
+      
+      // Parse the time slot
+      const [time, period] = timeSlot.split(' ');
+      const [hours, minutes] = time.split(':').map(Number);
+      let hour24 = hours;
+      
+      if (period === 'PM' && hours !== 12) hour24 += 12;
+      if (period === 'AM' && hours === 12) hour24 = 0;
+      
+      const slotStart = new Date(date);
+      slotStart.setHours(hour24, minutes || 0, 0, 0);
+      
+      const slotEnd = new Date(slotStart);
+      slotEnd.setHours(slotStart.getHours() + 2); // Assume 2-hour sessions
+      
+      // Check if this time slot conflicts with any Google Calendar events
+      return googleEvents.some(event => {
+        return (slotStart < event.end && slotEnd > event.start);
+      });
+    }
+
+    // Generate availability for a specific date
+    function generateDayAvailability(date) {
+      const dateString = date.toISOString().split('T')[0];
+      
+      // Check Airtable data first
+      const airtableSlot = calendarData.find(slot => slot.date === dateString);
+      if (airtableSlot) {
+        return {
+          status: airtableSlot.status,
+          time: airtableSlot.time,
+          sessionType: airtableSlot.sessionType,
+          duration: airtableSlot.duration
+        };
+      }
+      
+      // Check Google Calendar for busy times
+      const availableSlots = DEFAULT_TIME_SLOTS.filter(timeSlot => 
+        !isDateTimeBusy(date, timeSlot)
+      );
+      
+      if (availableSlots.length === 0) {
+        return {
+          status: 'booked',
+          time: 'All Day',
+          sessionType: 'Unavailable',
+          duration: 'Busy'
+        };
+      }
+      
+      // If we have available slots, show as available
+      return {
+        status: 'available',
+        time: `${availableSlots[0]} - ${availableSlots[availableSlots.length - 1]}`,
+        sessionType: 'Open',
+        duration: `${availableSlots.length} slots`
+      };
     }
 
     // Generate calendar display
@@ -744,19 +891,16 @@
         dayElement.textContent = day;
 
         const currentDate = new Date(year, month, day);
-        const dateString = currentDate.toISOString().split('T')[0];
+        const availability = generateDayAvailability(currentDate);
 
-        // Find slots for this date
-        const slotsOnDay = calendarData.filter(slot => slot.date === dateString);
-
-        if (slotsOnDay.length > 0) {
-          const slot = slotsOnDay[0]; // Display the first slot
-          dayElement.classList.add(slot.status);
-          const infoElement = document.createElement('div');
-          infoElement.className = 'slot-info';
-          infoElement.textContent = `${slot.time} - ${slot.sessionType} (${slot.duration} mins)`;
-          dayElement.appendChild(infoElement);
-        }
+        // Apply status styling
+        dayElement.classList.add(availability.status);
+        
+        // Add slot information
+        const infoElement = document.createElement('div');
+        infoElement.className = 'slot-info';
+        infoElement.textContent = `${availability.time} - ${availability.sessionType}`;
+        dayElement.appendChild(infoElement);
 
         calendarGrid.appendChild(dayElement);
       }
@@ -775,7 +919,24 @@
 
     // Initialize the page
     document.addEventListener('DOMContentLoaded', async function() {
-      await fetchCalendarData();
+      console.log('🚀 Availability page loading...');
+      
+      try {
+        // Fetch calendar data from both sources
+        await fetchGoogleCalendarEvents();
+        
+        // Generate the calendar
+        generateCalendar();
+        
+        console.log('✅ Availability page loaded successfully');
+      } catch (error) {
+        console.error('❌ Failed to initialize availability page:', error);
+        await logErrorToAirtable('availability.html', error, { source: 'initialization' });
+        
+        // Show error message
+        const calendarGrid = document.getElementById('calendar-grid');
+        calendarGrid.innerHTML = '<div class="error-message">❌ Error loading calendar data. Please try again later.</div>';
+      }
     });
   </script>
 </body>
