@@ -157,7 +157,7 @@
       flex: 1;
       padding: 2rem 1rem;
       display: flex;
-      align-items: center;
+      align-items: flex-start; /* Align content to the top */
       justify-content: center;
       min-height: calc(100vh - 110px);
     }
@@ -172,14 +172,14 @@
       border: 1px solid rgba(255,255,255, 0.1);
       padding: 3rem;
       animation: fadeInUp 0.8s ease-out;
-      min-height: 900px;
+      min-height: 600px; /* Reduced min-height to bring content closer to header */
       position: relative;
       overflow: hidden;
     }
 
     .page-header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem; /* Reduced margin to bring content closer to header */
     }
 
     .page-title {
@@ -201,9 +201,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start; /* Align content to the top */
       position: relative;
       width: 100%;
+      min-height: auto; /* Remove fixed min-height to allow natural sizing */
     }
 
     .loading-area {
@@ -223,7 +224,7 @@
       border: 1px solid var(--available-green);
       border-radius: 16px;
       padding: 2rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem; /* Reduced margin to bring content closer */
       text-align: center;
     }
 
@@ -247,7 +248,7 @@
     }
 
     .loading-animation {
-      margin: 2rem 0;
+      margin: 1rem 0; /* Reduced margin to bring content closer */
     }
 
     .loading-spinner {
@@ -257,14 +258,14 @@
       border-top: 5px solid var(--gold);
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin: 0 auto 2rem;
+      margin: 0 auto 1rem;
     }
 
     .paw-prints {
       display: flex;
       justify-content: center;
       gap: 1.2rem;
-      margin: 2rem 0;
+      margin: 1rem 0;
     }
 
     .paw {
@@ -280,7 +281,7 @@
     .loading-text {
       font-size: 1.3rem;
       color: rgba(255,255,255, 0.8);
-      margin: 1.5rem 0;
+      margin: 1rem 0;
       background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(253,183,94,1) 50%, rgba(255,255,255,0.6) 100%);
       background-size: 200% 100%;
       background-clip: text;
@@ -295,7 +296,7 @@
       background: rgba(255,255,255, 0.2);
       border-radius: 3px;
       overflow: hidden;
-      margin: 2rem 0;
+      margin: 1rem 0;
     }
 
     .progress-fill {
@@ -313,7 +314,7 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      margin-top: 2rem;
+      margin-top: 0; /* Removed margin-top to bring iframe closer to header */
     }
 
     .acuity-container.show {
@@ -435,11 +436,16 @@
 
       main {
         margin-top: calc(80px + env(safe-area-inset-top));
-        padding: 1.5rem 1rem;
+        padding: 1rem; /* Reduced padding to bring content closer to top */
       }
 
       .booking-container {
-        padding: 2rem;
+        padding: 1.5rem; /* Reduced padding */
+        min-height: auto; /* Allow natural height */
+      }
+
+      .page-header {
+        margin-bottom: 1rem; /* Further reduced to bring iframe up */
       }
 
       .page-title {
@@ -447,7 +453,28 @@
       }
 
       .confirmation-message {
-        padding: 1.5rem;
+        padding: 1rem; /* Reduced padding */
+        margin-bottom: 1rem;
+      }
+
+      .loading-animation {
+        margin: 0.5rem 0; /* Reduced margin */
+      }
+
+      .loading-spinner {
+        margin-bottom: 0.5rem;
+      }
+
+      .paw-prints {
+        margin: 0.5rem 0;
+      }
+
+      .loading-text {
+        margin: 0.5rem 0;
+      }
+
+      .progress-bar {
+        margin: 0.5rem 0;
       }
 
       .acuity-iframe {
@@ -468,7 +495,7 @@
 
     @media (max-width: 480px) {
       .booking-container {
-        padding: 1.5rem;
+        padding: 1rem;
         margin: 0.5rem;
       }
 
@@ -477,7 +504,7 @@
       }
 
       .confirmation-message {
-        padding: 1.2rem;
+        padding: 0.8rem;
       }
 
       .acuity-iframe {
@@ -539,7 +566,7 @@
 
         <!-- Acuity Container -->
         <div class="acuity-container" id="acuityContainer">
-          <iframe class="acuity-iframe" id="acuityIframe" src="https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621" title="Acuity Scheduling"></iframe>
+          <iframe class="acuity-iframe" id="acuityIframe" src="" title="Acuity Scheduling"></iframe>
         </div>
       </div>
     </div>
@@ -577,11 +604,12 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:10 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:22 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
   <script>
+    let sessionData = null;
     let loadingMessages = [
       "📅 Loading scheduling portal...",
       "🐾 Preparing your session booking...",
@@ -591,20 +619,67 @@
     ];
     let messageIndex = 0;
 
+    // Acuity URL mapping based on session type
+    const acuityLinks = {
+      "Full": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621",
+      "Mini": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=MINI_ID" // Placeholder, replace with actual URL
+    };
+
     function updateLoadingText() {
       const loadingTextElement = document.getElementById('loadingText');
       loadingTextElement.textContent = loadingMessages[messageIndex];
       messageIndex = (messageIndex + 1) % loadingMessages.length;
     }
 
+    function loadSessionData() {
+      try {
+        const storedData = localStorage.getItem('sessionData');
+        if (storedData) {
+          sessionData = JSON.parse(storedData);
+          console.log('Loaded session data:', sessionData);
+          return true;
+        }
+      } catch (e) {
+        console.error('Error loading session data:', e);
+      }
+      return false;
+    }
+
+    function getAcuityUrl() {
+      if (!sessionData || !sessionData.sessionType) {
+        return null;
+      }
+
+      const acuityUrl = acuityLinks[sessionData.sessionType];
+      
+      if (!acuityUrl) {
+        console.error('No Acuity URL found for session type:', sessionData.sessionType);
+      }
+      
+      return acuityUrl;
+    }
+
     function showAcuityIframe() {
+      const acuityUrl = getAcuityUrl();
+      if (!acuityUrl) {
+        console.error('No Acuity URL available');
+        alert('⚠️ Scheduling URL not found. Please try booking again.');
+        window.location.href = '/cart.html';
+        return;
+      }
+
+      console.log('Loading Acuity URL:', acuityUrl);
+
       const loadingArea = document.getElementById('loadingArea');
       const acuityContainer = document.getElementById('acuityContainer');
+      const acuityIframe = document.getElementById('acuityIframe');
 
       // Hide loading area
       loadingArea.classList.add('hidden');
 
-      // Show Acuity iframe
+      // Set iframe source and show
+      acuityIframe.src = acuityUrl;
+      
       setTimeout(() => {
         acuityContainer.classList.add('show');
       }, 500);
@@ -619,14 +694,21 @@
     document.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Booking page loaded');
       
-      // Start loading text rotation
-      const textInterval = setInterval(updateLoadingText, 1000);
-      
-      // Show Acuity iframe after 3 seconds
-      setTimeout(() => {
-        clearInterval(textInterval);
-        showAcuityIframe();
-      }, 3000);
+      // Load session data
+      if (loadSessionData()) {
+        // Start loading text rotation
+        const textInterval = setInterval(updateLoadingText, 1000);
+        
+        // Show Acuity iframe after 3 seconds
+        setTimeout(() => {
+          clearInterval(textInterval);
+          showAcuityIframe();
+        }, 3000);
+      } else {
+        // No session data, redirect back to cart
+        alert('⚠️ No session data found. Redirecting to session builder...');
+        window.location.href = '/cart.html';
+      }
     });
   </script>
 </body>
