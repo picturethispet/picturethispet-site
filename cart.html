@@ -395,27 +395,6 @@
       transform: translateY(-2px);
     }
 
-    .submit-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      padding: 1rem 2.5rem;
-      border: none;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
-      margin-top: 2rem;
-      align-self: center;
-      touch-action: manipulation; /* Improves touch responsiveness */
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
-    }
-
     footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -614,11 +593,6 @@
         font-size: 0.8rem;
       }
 
-      .submit-btn {
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
-      }
-
       .restart-btn {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
@@ -681,11 +655,6 @@
 
       .summary-card p {
         font-size: 0.75rem;
-      }
-
-      .submit-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.9rem;
       }
 
       .restart-btn {
@@ -753,7 +722,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.16 | Last updated: 09:18 PM MST, May 26, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 12:15 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -862,7 +831,7 @@
         condition: (data) => parseInt(data.numberOfPets) === 2
       },
       {
-        bot: "Oh great, here are your session details! 📋",
+        bot: "Here’s your session summary! 📋",
         input: '', // No input, just a message
         validate: () => null
       },
@@ -870,15 +839,18 @@
         bot: (data) => {
           const sessionIdentifier = `${data.sessionType} at ${data.location} (${data.numberOfPeople} people, ${data.numberOfPets} pets)`;
           const basePrice = data.sessionType === "Full" ? 100 : 50;
-          const inclusions = data.sessionType === "Full" ? "Up to 90 minutes, 10 edited photos 🖼️" : "Up to 60 minutes, 5 edited photos 🖼️";
           const additionalPetFee = parseInt(data.numberOfPets) === 2 ? 40 : 0;
           const additionalPersonFee = parseInt(data.numberOfPeople) === 2 ? 20 : 0;
           const totalPrice = basePrice + additionalPetFee + additionalPersonFee;
+          const additions = [];
+          if (parseInt(data.numberOfPets) === 2) additions.push("another pet (+$40)");
+          if (parseInt(data.numberOfPeople) === 2) additions.push("another person (+$20)");
+          const additionsText = additions.length > 0 ? `You added ${additions.join(" and ")}. Great! ` : "";
           return `
             <div class="summary-card">
               <h3>${data.sessionType} Session at ${data.location} 🌳</h3>
-              <p>${inclusions}</p>
-              <p>Total: $${totalPrice}</p>
+              <p>${data.sessionType === "Full" ? "Up to 90 minutes, 10 edited photos 🖼️" : "Up to 60 minutes, 5 edited photos 🖼️"}</p>
+              <p>${additionsText}Your total is $${totalPrice}.</p>
             </div>
           `;
         },
@@ -886,15 +858,15 @@
         validate: () => null
       },
       {
-        bot: "Do you want to continue to book?",
+        bot: "Ready to book?",
         input: `
           <div class="session-cards">
             <div class="session-card" onclick="selectContinue('Yes')">
-              <h3>Yes ✅</h3>
-              <p>Let’s proceed!</p>
+              <h3>Sure, Let’s Book! ✅</h3>
+              <p>Proceed to payment.</p>
             </div>
             <div class="session-card" onclick="selectContinue('No')">
-              <h3>No 🚫</h3>
+              <h3>No Thanks 🚫</h3>
               <p>I’ll review my options.</p>
             </div>
           </div>
@@ -972,7 +944,7 @@
         sessionData.continueBooking = value;
         if (value === 'Yes') {
           const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
-          window.location.href = `/payment.html?session_identifier=${encodeURIComponent(sessionIdentifier)}`;
+          window.location.href = `/loading.html?session_identifier=${encodeURIComponent(sessionIdentifier)}`;
           return;
         } else {
           appendMessage("No problem! You can restart the chat if you’d like to make changes. 😊", 'bot');
@@ -1064,7 +1036,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.16');
+      console.log('✅ Cart page loaded - v1.0.17');
       currentStep = 0;
       appendMessage(steps[0].bot, 'bot');
       appendInput(steps[0]);
