@@ -40,6 +40,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     @keyframes moveBackground {
@@ -56,11 +57,6 @@
     @keyframes slideIn {
       from { opacity: 0; transform: translateX(-10px); }
       to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
     }
 
     header {
@@ -138,7 +134,7 @@
     main {
       margin-top: 110px;
       flex: 1;
-      padding: 3rem 1rem;
+      padding: 3rem 1rem 6rem 1rem;
       max-width: 1400px;
       margin-left: auto;
       margin-right: auto;
@@ -149,7 +145,7 @@
       display: grid;
       grid-template-columns: 1fr 400px;
       gap: 3rem;
-      min-height: calc(100vh - 200px);
+      align-items: start;
     }
 
     .configuration-panel {
@@ -167,10 +163,8 @@
       border-radius: 24px;
       border: 1px solid rgba(255,255,255, 0.15);
       padding: 2rem;
-      height: fit-content;
-      position: sticky;
-      top: 140px;
       animation: fadeInUp 0.8s ease-out 0.2s both;
+      /* Removed sticky positioning - now flows naturally */
     }
 
     .panel-header {
@@ -261,7 +255,7 @@
 
     .option-header {
       display: flex;
-      justify-content: between;
+      justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 0.8rem;
     }
@@ -306,40 +300,6 @@
       left: 0;
       color: var(--available-green);
       font-weight: 600;
-    }
-
-    .input-group {
-      margin-bottom: 2rem;
-    }
-
-    .input-label {
-      font-size: 1rem;
-      font-weight: 500;
-      color: white;
-      margin-bottom: 0.8rem;
-      display: block;
-    }
-
-    .text-input {
-      width: 100%;
-      padding: 1rem;
-      font-size: 1rem;
-      color: white;
-      background: rgba(255,255,255, 0.08);
-      border: 2px solid rgba(255,255,255, 0.15);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      font-family: inherit;
-    }
-
-    .text-input:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: rgba(255,255,255, 0.12);
-    }
-
-    .text-input::placeholder {
-      color: rgba(255,255,255, 0.4);
     }
 
     .summary-header {
@@ -469,8 +429,11 @@
       }
 
       .summary-panel {
-        position: static;
-        order: -1;
+        order: 2;
+      }
+
+      .configuration-panel {
+        order: 1;
       }
     }
 
@@ -554,61 +517,47 @@
       <!-- Configuration Panel -->
       <div class="configuration-panel">
         <div class="panel-header">
-          <h1>Build Your Session</h1>
-          <p>Configure your perfect pet photography experience</p>
-        </div>
-
-        <!-- Pet Information -->
-        <div class="config-section">
-          <h3 class="section-title">🐾 Pet Information</h3>
-          <div class="input-group">
-            <label class="input-label">What's your pet's name?</label>
-            <input type="text" class="text-input" id="petName" placeholder="Enter your pet's name" onchange="updateSummary()">
-          </div>
-          
-          <div class="input-group">
-            <label class="input-label">Your first name</label>
-            <input type="text" class="text-input" id="clientName" placeholder="Enter your first name" onchange="updateSummary()">
-          </div>
+          <h1>🐾 Build Your Session</h1>
+          <p>Configure your perfect pet photography experience ✨</p>
         </div>
 
         <!-- Session Type -->
         <div class="config-section">
           <h3 class="section-title">📸 Choose Your Session</h3>
-          <p class="section-subtitle">Select the perfect session length and photo package for your needs</p>
+          <p class="section-subtitle">Select the perfect session length and photo package for your needs ✨</p>
           
           <div class="option-grid">
-            <div class="option-card" onclick="selectOption('sessionType', 'Mini', 50)" data-option="Mini">
+            <div class="option-card" onclick="selectOption('sessionType', 'Mini')" data-option="Mini">
               <div class="option-header">
                 <div>
-                  <div class="option-title">Mini Session</div>
-                  <div class="option-price">$50</div>
+                  <div class="option-title">🐾 Mini Session</div>
+                  <div class="option-price">Starting $50</div>
                 </div>
               </div>
-              <div class="option-description">Perfect for a quick photo session with your pet</div>
+              <div class="option-description">Perfect for a quick photo session with your pet 💕</div>
               <ul class="option-features">
-                <li>60 minutes of photography</li>
-                <li>5 professionally edited photos</li>
-                <li>Digital gallery delivery</li>
-                <li>Multiple poses and angles</li>
+                <li>⏰ 60 minutes of photography</li>
+                <li>📷 5 professionally edited photos</li>
+                <li>📱 Digital gallery delivery</li>
+                <li>🌟 Multiple poses and angles</li>
               </ul>
             </div>
 
-            <div class="option-card" onclick="selectOption('sessionType', 'Full', 100)" data-option="Full">
+            <div class="option-card" onclick="selectOption('sessionType', 'Full')" data-option="Full">
               <div class="option-header">
                 <div>
-                  <div class="option-title">Full Session</div>
-                  <div class="option-price">$100</div>
+                  <div class="option-title">📸 Full Session</div>
+                  <div class="option-price">Starting $100</div>
                 </div>
               </div>
-              <div class="option-description">Our signature comprehensive photo experience</div>
+              <div class="option-description">Our signature comprehensive photo experience 🎉</div>
               <ul class="option-features">
-                <li>90 minutes of photography</li>
-                <li>10 professionally edited photos</li>
-                <li>Digital gallery delivery</li>
-                <li>Advanced retouching included</li>
-                <li>Pre-session consultation</li>
-                <li>Bonus candid shots</li>
+                <li>⏰ 90 minutes of photography</li>
+                <li>📷 10 professionally edited photos</li>
+                <li>📱 Digital gallery delivery</li>
+                <li>✨ Advanced retouching included</li>
+                <li>📞 Pre-session consultation</li>
+                <li>🎁 Bonus candid shots</li>
               </ul>
             </div>
           </div>
@@ -617,27 +566,27 @@
         <!-- Location -->
         <div class="config-section">
           <h3 class="section-title">📍 Select Location</h3>
-          <p class="section-subtitle">Choose your preferred photography location</p>
+          <p class="section-subtitle">Choose your preferred photography location 🌳</p>
           
           <div class="option-grid">
-            <div class="option-card" onclick="selectOption('location', 'Cheesman Park', 0)" data-option="Cheesman Park">
+            <div class="option-card" onclick="selectOption('location', 'Cheesman')" data-option="Cheesman">
               <div class="option-header">
                 <div>
-                  <div class="option-title">Cheesman Park</div>
-                  <div class="option-price">Included</div>
+                  <div class="option-title">🌳 Cheesman Park</div>
+                  <div class="option-price">Included ✨</div>
                 </div>
               </div>
-              <div class="option-description">Beautiful trees, open spaces, and natural lighting</div>
+              <div class="option-description">Beautiful trees, open spaces, and natural lighting 🌿</div>
             </div>
 
-            <div class="option-card" onclick="selectOption('location', 'City Park', 0)" data-option="City Park">
+            <div class="option-card" onclick="selectOption('location', 'City')" data-option="City">
               <div class="option-header">
                 <div>
-                  <div class="option-title">City Park</div>
-                  <div class="option-price">Included</div>
+                  <div class="option-title">🏞️ City Park</div>
+                  <div class="option-price">Included ✨</div>
                 </div>
               </div>
-              <div class="option-description">Urban vibes with stunning city backdrops</div>
+              <div class="option-description">Urban vibes with stunning city backdrops 🌆</div>
             </div>
           </div>
         </div>
@@ -645,27 +594,27 @@
         <!-- Number of Pets -->
         <div class="config-section">
           <h3 class="section-title">🐕 How many pets?</h3>
-          <p class="section-subtitle">Additional pets require extra time and attention</p>
+          <p class="section-subtitle">Additional pets require extra time and attention 💕</p>
           
           <div class="option-grid">
-            <div class="option-card" onclick="selectOption('pets', 1, 0)" data-option="1">
+            <div class="option-card" onclick="selectOption('pets', 1)" data-option="1">
               <div class="option-header">
                 <div>
-                  <div class="option-title">1 Pet</div>
-                  <div class="option-price">Included</div>
+                  <div class="option-title">🐶 1 Pet</div>
+                  <div class="option-price">Base Price</div>
                 </div>
               </div>
-              <div class="option-description">Perfect for focusing on one adorable companion</div>
+              <div class="option-description">Perfect for focusing on one adorable companion 💖</div>
             </div>
 
-            <div class="option-card" onclick="selectOption('pets', 2, 40)" data-option="2">
+            <div class="option-card" onclick="selectOption('pets', 2)" data-option="2">
               <div class="option-header">
                 <div>
-                  <div class="option-title">2 Pets</div>
-                  <div class="option-price">+$40</div>
+                  <div class="option-title">🐶🐱 2 Pets</div>
+                  <div class="option-price">Extended Session</div>
                 </div>
               </div>
-              <div class="option-description">Double the cuteness! Extra time needed for multiple pets</div>
+              <div class="option-description">Double the cuteness! Extra time needed for multiple pets 🎊</div>
             </div>
           </div>
         </div>
@@ -673,37 +622,28 @@
         <!-- Number of People -->
         <div class="config-section">
           <h3 class="section-title">👥 How many people?</h3>
-          <p class="section-subtitle">Include family members in your precious memories</p>
+          <p class="section-subtitle">Include family members in your precious memories 📸</p>
           
           <div class="option-grid">
-            <div class="option-card" onclick="selectOption('people', 1, 0)" data-option="1">
+            <div class="option-card" onclick="selectOption('people', 1)" data-option="1">
               <div class="option-header">
                 <div>
-                  <div class="option-title">1 Person</div>
-                  <div class="option-price">Included</div>
+                  <div class="option-title">👤 1 Person</div>
+                  <div class="option-price">Base Price</div>
                 </div>
               </div>
-              <div class="option-description">Just you and your beloved pet</div>
+              <div class="option-description">Just you and your beloved pet 💕</div>
             </div>
 
-            <div class="option-card" onclick="selectOption('people', 2, 20)" data-option="2">
+            <div class="option-card" onclick="selectOption('people', 2)" data-option="2">
               <div class="option-header">
                 <div>
-                  <div class="option-title">2 People</div>
-                  <div class="option-price">+$20</div>
+                  <div class="option-title">👥 2 People</div>
+                  <div class="option-price">Family Package</div>
                 </div>
               </div>
-              <div class="option-description">Perfect for couples or you and a family member</div>
+              <div class="option-description">Perfect for couples or you and a family member 💑</div>
             </div>
-          </div>
-        </div>
-
-        <!-- Second Pet Name (conditional) -->
-        <div class="config-section" id="secondPetSection" style="display: none;">
-          <h3 class="section-title">🐾 Second Pet Information</h3>
-          <div class="input-group">
-            <label class="input-label">What's your second pet's name?</label>
-            <input type="text" class="text-input" id="secondPetName" placeholder="Enter your second pet's name" onchange="updateSummary()">
           </div>
         </div>
       </div>
@@ -711,74 +651,72 @@
       <!-- Summary Panel -->
       <div class="summary-panel">
         <div class="summary-header">
-          <h2 class="summary-title">Session Summary</h2>
-          <p class="summary-subtitle">Review your configuration</p>
+          <h2 class="summary-title">📋 Session Summary</h2>
+          <p class="summary-subtitle">Review your configuration ✨</p>
         </div>
 
         <div class="session-preview">
           <div class="preview-item">
-            <span class="preview-label">Session Type</span>
+            <span class="preview-label">📸 Session Type</span>
             <span class="preview-value" id="summarySessionType">Select session type</span>
           </div>
           <div class="preview-item">
-            <span class="preview-label">Location</span>
+            <span class="preview-label">📍 Location</span>
             <span class="preview-value" id="summaryLocation">Select location</span>
           </div>
           <div class="preview-item">
-            <span class="preview-label">Pet(s)</span>
-            <span class="preview-value" id="summaryPets">Enter pet name</span>
+            <span class="preview-label">🐾 Pets</span>
+            <span class="preview-value" id="summaryPets">Select number</span>
           </div>
           <div class="preview-item">
-            <span class="preview-label">People</span>
+            <span class="preview-label">👥 People</span>
             <span class="preview-value" id="summaryPeople">Select number</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">Client</span>
-            <span class="preview-value" id="summaryClient">Enter your name</span>
           </div>
         </div>
 
         <div class="pricing-breakdown">
-          <div class="price-line">
-            <span class="price-label" id="baseSessionLabel">Session</span>
-            <span class="price-value" id="baseSessionPrice">$0</span>
-          </div>
-          <div class="price-line" id="extraPetLine" style="display: none;">
-            <span class="price-label">Additional Pet</span>
-            <span class="price-value">+$40</span>
-          </div>
-          <div class="price-line" id="extraPersonLine" style="display: none;">
-            <span class="price-label">Additional Person</span>
-            <span class="price-value">+$20</span>
-          </div>
           <div class="price-line price-total">
-            <span class="price-label">Total</span>
-            <span class="price-value" id="totalPrice">$0</span>
+            <span class="price-label">💰 Session Total</span>
+            <span class="price-value" id="totalPrice">Select all options</span>
           </div>
         </div>
 
         <button class="continue-btn" id="continueBtn" onclick="proceedToPayment()" disabled>
-          Complete Your Booking
+          🚀 Complete Your Booking
         </button>
       </div>
     </div>
   </main>
 
   <script>
-    let sessionConfig = {
-      sessionType: null,
-      sessionPrice: 0,
-      location: null,
-      pets: null,
-      extraPetCost: 0,
-      people: null,
-      extraPersonCost: 0,
-      petName: '',
-      clientName: '',
-      secondPetName: ''
+    // Stripe URL mapping based on Excel data
+    const STRIPE_MAPPING = {
+      'Full-Cheesman-1-1': { price: 100, url: 'https://buy.stripe.com/4gw6ry0Wz0bXe1G147' },
+      'Full-Cheesman-2-1': { price: 140, url: 'https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08' },
+      'Full-Cheesman-1-2': { price: 160, url: 'https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c' },
+      'Full-Cheesman-2-2': { price: 160, url: 'https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d' },
+      'Full-City-1-1': { price: 100, url: 'https://buy.stripe.com/00gg28eNp9Mx9Lq9AE' },
+      'Full-City-2-1': { price: 140, url: 'https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07' },
+      'Full-City-1-2': { price: 120, url: 'https://buy.stripe.com/14A8wR8d12921VD80B9bO0e' },
+      'Full-City-2-2': { price: 160, url: 'https://buy.stripe.com/6oU28tdxl29243Lft39bO0f' },
+      'Mini-Cheesman-1-1': { price: 50, url: 'https://buy.stripe.com/eVag28fRtgaVe1GcMN' },
+      'Mini-Cheesman-2-1': { price: 90, url: 'https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05' },
+      'Mini-Cheesman-1-2': { price: 70, url: 'https://buy.stripe.com/8x24gB64T292eIpbcN9bO09' },
+      'Mini-Cheesman-2-2': { price: 110, url: 'https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g' },
+      'Mini-City-1-1': { price: 50, url: 'https://buy.stripe.com/9AQ6ry7kX8It3n28wy' },
+      'Mini-City-2-1': { price: 90, url: 'https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06' },
+      'Mini-City-1-2': { price: 70, url: 'https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b' },
+      'Mini-City-2-2': { price: 110, url: 'https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a' }
     };
 
-    function selectOption(category, value, price) {
+    let sessionConfig = {
+      sessionType: null,
+      location: null,
+      pets: null,
+      people: null
+    };
+
+    function selectOption(category, value) {
       // Remove selected class from all cards in this category
       const categoryCards = document.querySelectorAll(`[onclick*="${category}"]`);
       categoryCards.forEach(card => card.classList.remove('selected'));
@@ -787,106 +725,61 @@
       event.currentTarget.classList.add('selected');
       
       // Update configuration
-      if (category === 'sessionType') {
-        sessionConfig.sessionType = value;
-        sessionConfig.sessionPrice = price;
-      } else if (category === 'location') {
-        sessionConfig.location = value;
-      } else if (category === 'pets') {
-        sessionConfig.pets = value;
-        sessionConfig.extraPetCost = price;
-        
-        // Show/hide second pet name field
-        const secondPetSection = document.getElementById('secondPetSection');
-        if (value === 2) {
-          secondPetSection.style.display = 'block';
-        } else {
-          secondPetSection.style.display = 'none';
-          sessionConfig.secondPetName = '';
-          document.getElementById('secondPetName').value = '';
-        }
-      } else if (category === 'people') {
-        sessionConfig.people = value;
-        sessionConfig.extraPersonCost = price;
-      }
+      sessionConfig[category] = value;
       
       updateSummary();
     }
 
+    function getConfigKey() {
+      if (!sessionConfig.sessionType || !sessionConfig.location || 
+          !sessionConfig.pets || !sessionConfig.people) {
+        return null;
+      }
+      return `${sessionConfig.sessionType}-${sessionConfig.location}-${sessionConfig.pets}-${sessionConfig.people}`;
+    }
+
     function updateSummary() {
-      // Get input values
-      sessionConfig.petName = document.getElementById('petName').value;
-      sessionConfig.clientName = document.getElementById('clientName').value;
-      sessionConfig.secondPetName = document.getElementById('secondPetName').value;
-      
       // Update session type
       const sessionTypeText = sessionConfig.sessionType || 'Select session type';
       document.getElementById('summarySessionType').textContent = sessionTypeText;
       
       // Update location
-      const locationText = sessionConfig.location || 'Select location';
+      const locationText = sessionConfig.location ? `${sessionConfig.location} Park` : 'Select location';
       document.getElementById('summaryLocation').textContent = locationText;
       
       // Update pets
-      let petsText = 'Enter pet name';
-      if (sessionConfig.petName) {
-        petsText = sessionConfig.petName;
-        if (sessionConfig.pets === 2 && sessionConfig.secondPetName) {
-          petsText += ` & ${sessionConfig.secondPetName}`;
-        } else if (sessionConfig.pets === 2) {
-          petsText += ' & [second pet]';
-        }
-      }
+      const petsText = sessionConfig.pets ? `${sessionConfig.pets} ${sessionConfig.pets === 1 ? 'pet' : 'pets'}` : 'Select number';
       document.getElementById('summaryPets').textContent = petsText;
       
       // Update people
       const peopleText = sessionConfig.people ? `${sessionConfig.people} ${sessionConfig.people === 1 ? 'person' : 'people'}` : 'Select number';
       document.getElementById('summaryPeople').textContent = peopleText;
       
-      // Update client
-      const clientText = sessionConfig.clientName || 'Enter your name';
-      document.getElementById('summaryClient').textContent = clientText;
+      // Update total price
+      const configKey = getConfigKey();
+      const totalPriceElement = document.getElementById('totalPrice');
       
-      // Update pricing
-      document.getElementById('baseSessionLabel').textContent = sessionConfig.sessionType ? `${sessionConfig.sessionType} Session` : 'Session';
-      document.getElementById('baseSessionPrice').textContent = `$${sessionConfig.sessionPrice}`;
-      
-      // Show/hide extra costs
-      const extraPetLine = document.getElementById('extraPetLine');
-      const extraPersonLine = document.getElementById('extraPersonLine');
-      
-      if (sessionConfig.extraPetCost > 0) {
-        extraPetLine.style.display = 'flex';
+      if (configKey && STRIPE_MAPPING[configKey]) {
+        totalPriceElement.textContent = `$${STRIPE_MAPPING[configKey].price}`;
       } else {
-        extraPetLine.style.display = 'none';
+        totalPriceElement.textContent = 'Select all options';
       }
-      
-      if (sessionConfig.extraPersonCost > 0) {
-        extraPersonLine.style.display = 'flex';
-      } else {
-        extraPersonLine.style.display = 'none';
-      }
-      
-      // Update total
-      const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
-      document.getElementById('totalPrice').textContent = `$${total}`;
       
       // Enable/disable continue button
       const continueBtn = document.getElementById('continueBtn');
-      const isComplete = sessionConfig.sessionType && 
-                        sessionConfig.location && 
-                        sessionConfig.pets !== null && 
-                        sessionConfig.people !== null && 
-                        sessionConfig.petName && 
-                        sessionConfig.clientName &&
-                        (sessionConfig.pets === 1 || sessionConfig.secondPetName);
-      
+      const isComplete = configKey && STRIPE_MAPPING[configKey];
       continueBtn.disabled = !isComplete;
     }
 
     function proceedToPayment() {
-      // Calculate total
-      const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
+      const configKey = getConfigKey();
+      
+      if (!configKey || !STRIPE_MAPPING[configKey]) {
+        alert('⚠️ Please complete all selections before proceeding.');
+        return;
+      }
+      
+      const config = STRIPE_MAPPING[configKey];
       
       // Prepare session data for payment page
       const sessionData = {
@@ -894,22 +787,22 @@
         location: sessionConfig.location,
         numberOfPets: sessionConfig.pets,
         numberOfPeople: sessionConfig.people,
-        pet1Name: sessionConfig.petName,
-        pet2Name: sessionConfig.secondPetName,
-        client1FirstName: sessionConfig.clientName,
-        totalPrice: total,
+        totalPrice: config.price,
+        stripeUrl: config.url,
+        configKey: configKey,
         timestamp: Date.now()
       };
       
       // Store in localStorage for payment page
       localStorage.setItem('sessionData', JSON.stringify(sessionData));
       
+      console.log('✅ Session data prepared:', sessionData);
+      
       // Redirect to payment page
       window.location.href = '/payment.html';
     }
 
     function toggleMenu() {
-      // Mobile menu toggle functionality
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
@@ -917,6 +810,7 @@
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Session Builder loaded');
+      console.log('📊 Available configurations:', Object.keys(STRIPE_MAPPING).length);
       updateSummary();
     });
   </script>
