@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | Picture This Pet</title>
-  <meta name="description" content="Admin dashboard for managing bookings, scheduling, and client intake.">
+  <meta name="description" content="Central admin dashboard for managing all business operations.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -61,8 +61,8 @@
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
     }
 
     /* === HEADER STYLES === */
@@ -189,12 +189,12 @@
 
     .admin-header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 3rem;
     }
 
     .admin-header h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
+      font-size: 3.2rem;
       font-weight: 700;
       color: white;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -202,30 +202,38 @@
     }
 
     .admin-header p {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       line-height: 1.6;
       color: rgba(255,255,255, 0.9);
     }
 
-    /* === ADMIN CARDS GRID === */
-    .admin-cards-grid {
+    /* === ADMIN GRID === */
+    .admin-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
-      margin-bottom: 3rem;
+      flex: 1;
+      align-items: start;
     }
 
     .admin-card {
       background: rgba(255,255,255, 0.08);
-      backdrop-filter: blur(15px);
       border-radius: 20px;
-      padding: 2.5rem;
       border: 1px solid rgba(255,255,255, 0.15);
+      padding: 2rem;
       transition: all 0.3s ease;
+      cursor: pointer;
       text-decoration: none;
       color: white;
       position: relative;
       overflow: hidden;
+    }
+
+    .admin-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255,255,255, 0.12);
+      border-color: rgba(255,255,255, 0.25);
+      box-shadow: 0 12px 32px rgba(0,0,0, 0.3);
     }
 
     .admin-card::before {
@@ -234,119 +242,97 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
+      bottom: 0;
+      background: linear-gradient(135deg, transparent, rgba(255,255,255, 0.05));
       opacity: 0;
-      transition: all 0.3s ease;
-    }
-
-    .admin-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0, 0.3);
+      transition: opacity 0.3s ease;
     }
 
     .admin-card:hover::before {
       opacity: 1;
     }
 
-    .admin-card-icon {
-      font-size: 3.5rem;
-      margin-bottom: 1.5rem;
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
       display: block;
-      text-align: center;
+      animation: pulse 2s infinite;
     }
 
-    .admin-card h3 {
+    .card-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.8rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      text-align: center;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: white;
     }
 
-    .admin-card p {
+    .card-description {
       font-size: 1rem;
-      line-height: 1.6;
+      line-height: 1.5;
       color: rgba(255,255,255, 0.8);
-      text-align: center;
       margin-bottom: 1.5rem;
     }
 
-    .admin-card-footer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
+    .card-features {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card-features li {
       font-size: 0.9rem;
-      font-weight: 600;
+      color: rgba(255,255,255, 0.7);
+      margin-bottom: 0.4rem;
+      padding-left: 1.2rem;
+      position: relative;
     }
 
-    /* === CARD SPECIFIC COLORS === */
-    .scheduling-card {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
-      border-color: rgba(16, 185, 129, 0.2);
+    .card-features li::before {
+      content: "✨";
+      position: absolute;
+      left: 0;
+      top: 0;
     }
 
-    .scheduling-card:hover {
-      border-color: rgba(16, 185, 129, 0.4);
+    /* === CARD SPECIFIC STYLING === */
+    .admin-card.acuity {
+      background: linear-gradient(135deg, rgba(75, 46, 30, 0.2), rgba(107, 62, 38, 0.1));
+      border-color: rgba(75, 46, 30, 0.3);
     }
 
-    .scheduling-card::before {
-      background: linear-gradient(90deg, var(--available-green), #059669);
+    .admin-card.acuity:hover {
+      background: linear-gradient(135deg, rgba(75, 46, 30, 0.3), rgba(107, 62, 38, 0.2));
+      border-color: rgba(75, 46, 30, 0.5);
     }
 
-    .scheduling-card .admin-card-footer {
-      color: var(--available-green);
+    .admin-card.stripe {
+      background: linear-gradient(135deg, rgba(99, 91, 255, 0.2), rgba(79, 70, 229, 0.1));
+      border-color: rgba(99, 91, 255, 0.3);
     }
 
-    .intake-card {
-      background: linear-gradient(135deg, rgba(253, 183, 94, 0.1), rgba(244, 124, 44, 0.05));
-      border-color: rgba(253, 183, 94, 0.2);
+    .admin-card.stripe:hover {
+      background: linear-gradient(135deg, rgba(99, 91, 255, 0.3), rgba(79, 70, 229, 0.2));
+      border-color: rgba(99, 91, 255, 0.5);
     }
 
-    .intake-card:hover {
-      border-color: rgba(253, 183, 94, 0.4);
+    .admin-card.intake {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.1));
+      border-color: rgba(16, 185, 129, 0.3);
     }
 
-    .intake-card::before {
-      background: linear-gradient(90deg, var(--gold), var(--orange));
+    .admin-card.intake:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.2));
+      border-color: rgba(16, 185, 129, 0.5);
     }
 
-    .intake-card .admin-card-footer {
-      color: var(--gold);
+    .admin-card.pixieset {
+      background: linear-gradient(135deg, rgba(244, 124, 44, 0.2), rgba(253, 183, 94, 0.1));
+      border-color: rgba(244, 124, 44, 0.3);
     }
 
-    .squareup-card {
-      background: linear-gradient(135deg, rgba(62, 67, 72, 0.1), rgba(28, 30, 32, 0.05));
-      border-color: rgba(62, 67, 72, 0.2);
-    }
-
-    .squareup-card:hover {
-      border-color: rgba(62, 67, 72, 0.4);
-    }
-
-    .squareup-card::before {
-      background: linear-gradient(90deg, #3E4348, #1C1E20);
-    }
-
-    .squareup-card .admin-card-footer {
-      color: #3E4348;
-    }
-
-    .stripe-card {
-      background: linear-gradient(135deg, rgba(99, 91, 255, 0.1), rgba(79, 70, 229, 0.05));
-      border-color: rgba(99, 91, 255, 0.2);
-    }
-
-    .stripe-card:hover {
-      border-color: rgba(99, 91, 255, 0.4);
-    }
-
-    .stripe-card::before {
-      background: linear-gradient(90deg, #635BFF, #4F46E5);
-    }
-
-    .stripe-card .admin-card-footer {
-      color: #635BFF;
+    .admin-card.pixieset:hover {
+      background: linear-gradient(135deg, rgba(244, 124, 44, 0.3), rgba(253, 183, 94, 0.2));
+      border-color: rgba(244, 124, 44, 0.5);
     }
 
     /* === FOOTER STYLES === */
@@ -483,7 +469,7 @@
         padding: 0.5rem 1rem;
       }
 
-      .site-nav.active a[href="/adminhome"] { order: 1; }
+      .site-nav.active a[href="/"] { order: 1; }
       .site-nav.active a[href="/availability.html"] { order: 2; }
       .site-nav.active a[href="/locations.html"] { order: 3; }
       .site-nav.active a[href="/pricing"] { order: 4; }
@@ -510,20 +496,28 @@
       }
 
       .admin-header h1 {
-        font-size: 2.2rem;
+        font-size: 2.4rem;
       }
 
       .admin-header p {
-        font-size: 1rem;
+        font-size: 1.1rem;
       }
 
-      .admin-cards-grid {
+      .admin-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
       }
 
       .admin-card {
-        padding: 2rem;
+        padding: 1.5rem;
+      }
+
+      .card-icon {
+        font-size: 2.5rem;
+      }
+
+      .card-title {
+        font-size: 1.5rem;
       }
 
       .footer-container {
@@ -547,23 +541,42 @@
       }
 
       .admin-header h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
+      }
+
+      .admin-card {
+        padding: 1.2rem;
+      }
+    }
+
+    /* === LARGE SCREENS === */
+    @media (min-width: 1200px) {
+      .admin-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1600px) {
+      .admin-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <a href="/adminhome" class="logo-link" aria-label="PictureThisPet Admin Home">
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="site-nav">
-      <a href="/adminhome" aria-label="Admin Home">Home</a>
+      <a href="/" aria-label="Home page">Home</a>
       <a href="/availability.html" aria-label="Availability page">Availability</a>
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/adminhome" class="book-btn" aria-label="Admin Dashboard">Admin Dashboard</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
@@ -571,54 +584,57 @@
   <main>
     <div class="admin-section">
       <div class="admin-header">
-        <h1>🔧 Admin Dashboard</h1>
-        <p>Access all your Picture This Pet admin tools and services from this central hub.</p>
+        <h1>🚀 Admin Dashboard</h1>
+        <p>Central command center for managing your Picture This Pet business operations</p>
       </div>
-
-      <!-- Admin Cards Grid -->
-      <div class="admin-cards-grid">
-        <!-- Scheduling Card -->
-        <a href="/admin" class="admin-card scheduling-card">
-          <span class="admin-card-icon">📅</span>
-          <h3>Scheduling</h3>
-          <p>Manage your appointment calendar, view bookings, and handle client scheduling through your Acuity integration.</p>
-          <div class="admin-card-footer">
-            <span>Open Scheduler</span>
-            <span>→</span>
-          </div>
+      
+      <div class="admin-grid">
+        <a href="/acuity" class="admin-card acuity" aria-label="Acuity Scheduling Admin">
+          <span class="card-icon">📅</span>
+          <h3 class="card-title">Acuity Scheduling</h3>
+          <p class="card-description">Manage appointments, bookings, and client scheduling with your integrated Acuity system.</p>
+          <ul class="card-features">
+            <li>View upcoming appointments</li>
+            <li>Manage client bookings</li>
+            <li>Configure scheduling settings</li>
+            <li>Handle cancellations & reschedules</li>
+          </ul>
         </a>
 
-        <!-- Client Intake Card -->
-        <a href="/adminintake" class="admin-card intake-card">
-          <span class="admin-card-icon">📝</span>
-          <h3>Client Intake & Agreements</h3>
-          <p>Review client intake forms, manage agreements, and handle all client onboarding documentation.</p>
-          <div class="admin-card-footer">
-            <span>View Intakes</span>
-            <span>→</span>
-          </div>
+        <a href="/stripe" class="admin-card stripe" aria-label="Stripe Payment Admin">
+          <span class="card-icon">💰</span>
+          <h3 class="card-title">Stripe Payments</h3>
+          <p class="card-description">Monitor payments, subscriptions, and financial transactions through your Stripe dashboard.</p>
+          <ul class="card-features">
+            <li>View payment history</li>
+            <li>Manage subscriptions</li>
+            <li>Handle refunds & disputes</li>
+            <li>Financial reporting & analytics</li>
+          </ul>
         </a>
 
-        <!-- SquareUp Card -->
-        <a href="/squareup" class="admin-card squareup-card">
-          <span class="admin-card-icon">💳</span>
-          <h3>SquareUp</h3>
-          <p>Manage payments, invoices, and transactions through your SquareUp dashboard.</p>
-          <div class="admin-card-footer">
-            <span>Manage Payments</span>
-            <span>→</span>
-          </div>
+        <a href="/adminintake" class="admin-card intake" aria-label="Client Intake Admin">
+          <span class="card-icon">📋</span>
+          <h3 class="card-title">Client Intake</h3>
+          <p class="card-description">Review client intake forms, pet information, and session preparation details.</p>
+          <ul class="card-features">
+            <li>Review client submissions</li>
+            <li>Pet information & preferences</li>
+            <li>Special requirements</li>
+            <li>Session preparation notes</li>
+          </ul>
         </a>
 
-        <!-- Stripe Card -->
-        <a href="/stripe" class="admin-card stripe-card">
-          <span class="admin-card-icon">💰</span>
-          <h3>Stripe</h3>
-          <p>Handle online payments, refunds, and payment analytics through your Stripe dashboard.</p>
-          <div class="admin-card-footer">
-            <span>View Stripe</span>
-            <span>→</span>
-          </div>
+        <a href="/pixieset" class="admin-card pixieset" aria-label="Gallery Management">
+          <span class="card-icon">📸</span>
+          <h3 class="card-title">Gallery Management</h3>
+          <p class="card-description">Manage your photo galleries, client proofs, and image delivery system via Pixieset.</p>
+          <ul class="card-features">
+            <li>Upload new galleries</li>
+            <li>Manage client proofs</li>
+            <li>Handle image delivery</li>
+            <li>Gallery organization</li>
+          </ul>
         </a>
       </div>
     </div>
@@ -657,7 +673,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 11:49 AM MDT, May 27, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 12:25 AM MDT, May 27, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -667,24 +683,46 @@
       nav.classList.toggle('active');
     }
 
-    // Initialize page
+    // Page initialization
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Admin Home Dashboard loaded');
-
-      // Add click tracking for admin cards
-      document.querySelectorAll('.admin-card').forEach(card => {
-        card.addEventListener('click', function(e) {
-          const cardType = this.classList.contains('scheduling-card') ? 'Scheduling' :
-                           this.classList.contains('intake-card') ? 'Intake' :
-                           this.classList.contains('squareup-card') ? 'SquareUp' : 'Stripe';
-          console.log(`🚀 Admin navigating to: ${cardType}`);
+      console.log('✅ Admin dashboard loaded');
+      
+      // Add hover effects for admin cards
+      const adminCards = document.querySelectorAll('.admin-card');
+      adminCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0) scale(1)';
         });
       });
     });
 
-    // Log errors for debugging
-    window.addEventListener('error', function(e) {
-      console.error('Admin Home Dashboard error:', e.error);
+    // Keyboard shortcuts for quick navigation
+    document.addEventListener('keydown', function(e) {
+      // Alt + 1-4 for quick access to different admin sections
+      if (e.altKey) {
+        switch(e.key) {
+          case '1':
+            e.preventDefault();
+            window.location.href = '/acuity';
+            break;
+          case '2':
+            e.preventDefault();
+            window.location.href = '/stripe';
+            break;
+          case '3':
+            e.preventDefault();
+            window.location.href = '/adminintake';
+            break;
+          case '4':
+            e.preventDefault();
+            window.location.href = '/pixieset';
+            break;
+        }
+      }
     });
   </script>
 </body>
