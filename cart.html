@@ -210,6 +210,7 @@
       flex-direction: column;
       gap: 1rem;
       margin-bottom: 2rem;
+      position: relative;
     }
 
     .chat-message {
@@ -263,6 +264,7 @@
       border: 2px solid rgba(255,255,255, 0.3);
       border-radius: 12px;
       transition: all 0.3s ease;
+      touch-action: manipulation; /* Improves touch responsiveness */
     }
 
     .chat-input input::placeholder {
@@ -281,6 +283,7 @@
       flex-wrap: wrap;
       gap: 1rem;
       margin: 1rem 0;
+      justify-content: center;
     }
 
     .session-card {
@@ -296,7 +299,9 @@
       text-align: center;
       flex: 1;
       min-width: 150px;
+      max-width: 200px;
       cursor: pointer;
+      touch-action: manipulation; /* Improves touch responsiveness */
     }
 
     .session-card:hover {
@@ -319,101 +324,23 @@
       text-align: left;
     }
 
-    .calendar-container {
-      background: rgba(255,255,255, 0.05);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin: 1rem 0;
-    }
-
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .calendar-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: white;
-    }
-
-    .calendar-nav {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .nav-button {
+    .restart-btn {
       background: rgba(255,255,255, 0.1);
+      color: white;
+      padding: 0.5rem 1rem;
       border: 1px solid rgba(255,255,255, 0.3);
-      color: white;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border-radius: 999px;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      margin-top: 1rem;
+      align-self: center;
+      touch-action: manipulation; /* Improves touch responsiveness */
     }
 
-    .nav-button:hover {
+    .restart-btn:hover {
       background: rgba(255,255,255, 0.2);
-      transform: scale(1.05);
-    }
-
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 2px;
-      background: rgba(255,255,255, 0.1);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .calendar-day-header {
-      background: rgba(255,255,255, 0.15);
-      padding: 0.8rem;
-      text-align: center;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: rgba(255,255,255, 0.9);
-    }
-
-    .calendar-day {
-      background: rgba(255,255,255, 0.05);
-      padding: 0.8rem;
-      text-align: center;
-      min-height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .calendar-day.other-month {
-      color: rgba(255,255,255, 0.3);
-      pointer-events: none;
-    }
-
-    .calendar-day.available {
-      background: rgba(16,185,129, 0.2);
-      border: 2px solid rgba(16,185,129, 0.5);
-      color: white;
-    }
-
-    .calendar-day.booked {
-      background: rgba(239,68,68, 0.2);
-      border: 2px solid rgba(239,68,68, 0.5);
-      color: rgba(255,255,255, 0.7);
-      pointer-events: none;
-    }
-
-    .calendar-day:hover {
-      background: rgba(255,255,255, 0.1);
+      transform: translateY(-2px);
     }
 
     .submit-btn {
@@ -429,6 +356,7 @@
       box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
       margin-top: 2rem;
       align-self: center;
+      touch-action: manipulation; /* Improves touch responsiveness */
     }
 
     .submit-btn:hover {
@@ -600,6 +528,7 @@
       .session-card {
         min-width: 150px;
         padding: 1.5rem;
+        max-width: 180px;
       }
 
       .session-card h3 {
@@ -610,20 +539,14 @@
         font-size: 0.8rem;
       }
 
-      .calendar-day {
-        font-size: 0.8rem;
-        padding: 0.6rem;
-        min-height: 40px;
-      }
-
-      .calendar-day-header {
-        font-size: 0.8rem;
-        padding: 0.6rem;
-      }
-
       .submit-btn {
         padding: 0.8rem 2rem;
         font-size: 1rem;
+      }
+
+      .restart-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
       }
 
       .footer-container {
@@ -634,6 +557,52 @@
       .footer-section {
         align-items: center;
         text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #session-builder {
+        padding: 1.5rem;
+      }
+
+      #session-builder h2 {
+        font-size: 1.8rem;
+      }
+
+      .chat-message {
+        max-width: 90%;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .chat-input input,
+      .chat-input select {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+      }
+
+      .session-card {
+        padding: 1rem;
+        min-width: 140px;
+        max-width: 160px;
+      }
+
+      .session-card h3 {
+        font-size: 1.1rem;
+      }
+
+      .session-card p {
+        font-size: 0.75rem;
+      }
+
+      .submit-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .restart-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
       }
     }
   </style>
@@ -658,7 +627,9 @@
     <section id="session-builder">
       <h2>Build Your Session</h2>
       <p>Let’s customize your pet photography session! 🐾</p>
-      <div class="chat-container" id="chatContainer"></div>
+      <div class="chat-container" id="chatContainer">
+        <button class="restart-btn" onclick="restartChat()">Restart Chat 🔄</button>
+      </div>
       <button class="submit-btn" id="submitBtn" style="display: none;" onclick="goToCheckout()">Continue to Booking</button>
     </section>
   </main>
@@ -702,68 +673,67 @@
   <script>
     const chatContainer = document.getElementById('chatContainer');
     const submitBtn = document.getElementById('submitBtn');
-    let cartData = JSON.parse(sessionStorage.getItem('cartData')) || {};
     let currentStep = 0;
-    let selectedDate = null;
-
-    // Fixed placeholder calendar data (30 days, 9 AM-5 PM, 6+ available slots per day)
-    const today = new Date();
-    const calendarData = [];
-    const availableTimes = ['09:00', '10:00', '11:00', '13:00', '14:00', '15:00'];
-    const bookedTimes = ['12:00', '16:00'];
-    for (let i = 0; i < 30; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      const dateStr = date.toISOString().split('T')[0];
-      availableTimes.forEach(time => {
-        calendarData.push({
-          date: dateStr,
-          time: time,
-          status: 'available'
-        });
-      });
-      bookedTimes.forEach(time => {
-        calendarData.push({
-          date: dateStr,
-          time: time,
-          status: 'booked'
-        });
-      });
-    }
+    let chatActive = true;
+    // Temporary object to store session builder selections
+    const sessionData = {};
 
     const steps = [
       {
         bot: "What’s your pet’s name? 🐾",
-        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name" required>',
+        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name">',
         validate: (value) => value.trim() ? null : "Please enter your pet’s name! 🐶"
       },
       {
         bot: (data) => `Awesome, ${data.pet1Name} sounds adorable! What’s your first name? 😊`,
-        input: '<input type="text" id="client1FirstName" placeholder="Your first name" required>',
+        input: '<input type="text" id="client1FirstName" placeholder="Your first name">',
         validate: (value) => value.trim() ? null : "Please enter your first name! 😅"
+      },
+      {
+        bot: "Is your pet vaccinated? 🩺",
+        input: `
+          <div class="session-cards">
+            <div class="session-card" onclick="selectVaccination('Yes')">
+              <h3>Yes ✅</h3>
+              <p>Great, let’s proceed!</p>
+            </div>
+            <div class="session-card" onclick="selectVaccination('No')">
+              <h3>No 🚫</h3>
+              <p>We’ll need to reschedule.</p>
+            </div>
+          </div>
+        `,
+        validate: (value) => value ? null : "Please select if your pet is vaccinated! 😊"
       },
       {
         bot: (data) => `Nice to meet you, ${data.client1FirstName}! What kind of session are you interested in? 📸`,
         input: `
           <div class="session-cards">
-            <div class="session-card" onclick="selectSession('Full Session at City Park (2 people, 2 pets)')">
-              <h3>Full Session at City Park (2 people, 2 pets) 📷</h3>
-              <p>90 min, 10 images, $160<br>Perfect for a comprehensive shoot! 🎉</p>
+            <div class="session-card" onclick="selectSession('Mini')">
+              <h3>Mini Session 🐾</h3>
+              <p>60 min, 5 images, $50<br>Perfect for a quick shoot! 🌟</p>
             </div>
-            <!-- Add more session types here in the future -->
+            <div class="session-card" onclick="selectSession('Full')">
+              <h3>Full Session 📷</h3>
+              <p>90 min, 10 images, $100<br>Capture every moment! 🎉</p>
+            </div>
           </div>
         `,
-        validate: (value) => value ? null : "Please select a session type! 😊"
+        validate: (value) => value ? null : "Please select a session type! 😊",
+        condition: (data) => data.isVaccinated === 'Yes'
       },
       {
         bot: "Great choice! Where would you like the session? 🌳",
         input: `
           <div class="session-cards">
+            <div class="session-card" onclick="selectLocation('Cheesman Park')">
+              <h3>Cheesman Park 🌳</h3>
+              <p>Scenic park with beautiful views! 🌸</p>
+            </div>
             <div class="session-card" onclick="selectLocation('City Park')">
               <h3>City Park 🏞️</h3>
               <p>Urban vibes with stunning backdrops! 🌇</p>
             </div>
-            <!-- Add more locations here in the future -->
           </div>
         `,
         validate: (value) => value ? null : "Please select a location! 🌲"
@@ -772,6 +742,10 @@
         bot: "Perfect! How many pets will be in the session? 🐶🐱",
         input: `
           <div class="session-cards">
+            <div class="session-card" onclick="selectPetCount(1)">
+              <h3>1 Pet Included 🐶</h3>
+              <p>No extra cost! 🌟</p>
+            </div>
             <div class="session-card" onclick="selectPetCount(2)">
               <h3>2 Pets 🐶🐱</h3>
               <p>+$40 for second pet 🎉</p>
@@ -784,6 +758,10 @@
         bot: "Got it! How many people will be in the session? 👥",
         input: `
           <div class="session-cards">
+            <div class="session-card" onclick="selectPeopleCount(1)">
+              <h3>1 Person Included 👤</h3>
+              <p>No extra cost! 🌟</p>
+            </div>
             <div class="session-card" onclick="selectPeopleCount(2)">
               <h3>2 People 👥</h3>
               <p>+$20 for second person 🎉</p>
@@ -794,92 +772,17 @@
       },
       {
         bot: "Awesome, what’s your second pet’s name? 🐕",
-        input: '<input type="text" id="pet2Name" placeholder="Second pet’s name" required>',
+        input: '<input type="text" id="pet2Name" placeholder="Second pet’s name">',
         validate: (value) => value.trim() ? null : "Please enter your second pet’s name! 🐱",
         condition: (data) => parseInt(data.numberOfPets) === 2
-      },
-      {
-        bot: (data) => `Sweet, let’s pick a date for you, ${data.client1FirstName}, ${data.pet1Name}, and ${data.pet2Name}! 📅`,
-        input: generateCalendar(),
-        validate: (value) => value ? null : "Please select a date! 😅"
-      },
-      {
-        bot: "What time works for you? ⏰",
-        input: generateTimeCards(),
-        validate: (value) => value ? null : "Please select a time! ⏰"
       }
     ];
-
-    function generateCalendar() {
-      const currentMonth = new Date(today);
-      const year = currentMonth.getFullYear();
-      const month = currentMonth.getMonth();
-      const firstDay = new Date(year, month, 1);
-      const lastDay = new Date(year, month + 1, 0);
-      const daysInMonth = lastDay.getDate();
-      const startingDayOfWeek = firstDay.getDay();
-
-      let html = `
-        <div class="calendar-container">
-          <div class="calendar-header">
-            <h3 class="calendar-title">${new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(currentMonth)}</h3>
-            <div class="calendar-nav">
-              <button class="nav-button" onclick="previousMonth()">‹</button>
-              <button class="nav-button" onclick="nextMonth()">›</button>
-            </div>
-          </div>
-          <div class="calendar-grid" id="calendarGrid">
-      `;
-
-      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      dayHeaders.forEach(day => {
-        html += `<div class="calendar-day-header">${day}</div>`;
-      });
-
-      for (let i = 0; i < startingDayOfWeek; i++) {
-        html += '<div class="calendar-day other-month"></div>';
-      }
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-        const hasAvailable = calendarData.some(slot => slot.date === dateStr && slot.status === 'available');
-        html += `<div class="calendar-day ${hasAvailable ? 'available' : 'booked'}" data-date="${dateStr}" onclick="selectDate('${dateStr}')">${day}</div>`;
-      }
-
-      html += '</div></div>';
-      return html;
-    }
-
-    function generateTimeCards() {
-      console.log('Generating time cards for date:', selectedDate);
-      if (!selectedDate) {
-        console.log('No date selected');
-        return '<p>No date selected. Please go back and select a date. 😅</p>';
-      }
-      const availableTimes = calendarData.filter(slot => slot.date === selectedDate && slot.status === 'available').map(slot => slot.time);
-      console.log('Available times:', availableTimes);
-      if (availableTimes.length === 0) {
-        console.log('No available times for date:', selectedDate);
-        return '<p>No available times for this date. Please go back and select another date. 😅</p>';
-      }
-      let html = '<div class="session-cards">';
-      availableTimes.forEach(time => {
-        html += `
-          <div class="session-card" onclick="selectTime('${time}')">
-            <h3>${time} ⏰</h3>
-            <p>Available slot!</p>
-          </div>
-        `;
-      });
-      html += '</div>';
-      return html;
-    }
 
     function appendMessage(content, type) {
       const message = document.createElement('div');
       message.className = `chat-message ${type}`;
       message.innerHTML = content;
-      chatContainer.appendChild(message);
+      chatContainer.insertBefore(message, chatContainer.querySelector('.restart-btn'));
       message.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 
@@ -887,7 +790,7 @@
       const inputDiv = document.createElement('div');
       inputDiv.className = 'chat-input';
       inputDiv.innerHTML = step.input;
-      chatContainer.appendChild(inputDiv);
+      chatContainer.insertBefore(inputDiv, chatContainer.querySelector('.restart-btn'));
       const input = inputDiv.querySelector('input, select');
       if (input) input.focus();
       inputDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -903,13 +806,13 @@
     }
 
     function submitInput() {
+      if (!chatActive) return;
+
       const step = steps[currentStep];
       let value;
 
       if (step.input.includes('session-card')) {
-        value = cartData.sessionType || cartData.location || cartData.numberOfPets || cartData.numberOfPeople || cartData.selectedTime;
-      } else if (step.input.includes('calendar')) {
-        value = selectedDate;
+        value = sessionData.sessionType || sessionData.location || sessionData.numberOfPets || sessionData.numberOfPeople || sessionData.isVaccinated;
       } else {
         const inputElement = document.querySelector('input');
         value = inputElement.value.trim();
@@ -921,37 +824,38 @@
         return;
       }
 
-      if (step.input.includes('session-card') || step.input.includes('calendar')) {
+      if (step.input.includes('session-card')) {
         appendMessage(value.toString(), 'user');
       } else {
         appendMessage(value, 'user');
       }
 
-      if (currentStep === 0) cartData.pet1Name = value;
-      if (currentStep === 1) cartData.client1FirstName = value;
-      if (currentStep === 2) cartData.sessionType = value;
-      if (currentStep === 3) cartData.location = value;
-      if (currentStep === 4) {
-        cartData.numberOfPets = value;
-        cartData.additionalPetFee = value === '2' ? 40 : 0;
+      // Store data temporarily (not saved)
+      if (currentStep === 0) sessionData.pet1Name = value;
+      if (currentStep === 1) sessionData.client1FirstName = value;
+      if (currentStep === 2) {
+        sessionData.isVaccinated = value;
+        if (value === 'No') {
+          appendMessage("I’m so sorry, but please come back when your pet is fully vaccinated. 😔", 'bot');
+          chatActive = false;
+          return;
+        }
       }
-      if (currentStep === 5) {
-        cartData.numberOfPeople = value;
-        cartData.additionalPersonFee = value === '2' ? 20 : 0;
-      }
-      if (currentStep === 6) cartData.pet2Name = value;
-      if (currentStep === 7) cartData.selectedDate = value;
-      if (currentStep === 8) cartData.selectedTime = value;
+      if (currentStep === 3) sessionData.sessionType = value;
+      if (currentStep === 4) sessionData.location = value;
+      if (currentStep === 5) sessionData.numberOfPets = value.toString();
+      if (currentStep === 6) sessionData.numberOfPeople = value.toString();
+      if (currentStep === 7) sessionData.pet2Name = value;
 
-      chatContainer.removeChild(chatContainer.lastChild);
+      chatContainer.removeChild(chatContainer.querySelector('.chat-input'));
 
       currentStep++;
       if (currentStep < steps.length) {
-        if (steps[currentStep].condition && !steps[currentStep].condition(cartData)) {
+        if (steps[currentStep].condition && !steps[currentStep].condition(sessionData)) {
           currentStep++;
         }
         if (currentStep < steps.length) {
-          const botMessage = typeof steps[currentStep].bot === 'function' ? steps[currentStep].bot(cartData) : steps[currentStep].bot;
+          const botMessage = typeof steps[currentStep].bot === 'function' ? steps[currentStep].bot(sessionData) : steps[currentStep].bot;
           appendMessage(botMessage, 'bot');
           appendInput(steps[currentStep]);
         } else {
@@ -963,46 +867,28 @@
     }
 
     function selectSession(type) {
-      cartData.sessionType = type;
+      sessionData.sessionType = type;
       submitInput();
     }
 
     function selectLocation(location) {
-      cartData.location = location;
+      sessionData.location = location;
       submitInput();
     }
 
     function selectPetCount(count) {
-      cartData.numberOfPets = count.toString();
+      sessionData.numberOfPets = count;
       submitInput();
     }
 
     function selectPeopleCount(count) {
-      cartData.numberOfPeople = count.toString();
+      sessionData.numberOfPeople = count;
       submitInput();
     }
 
-    function selectDate(date) {
-      console.log('Selected date:', date);
-      selectedDate = date;
-      const days = document.querySelectorAll('.calendar-day');
-      days.forEach(day => day.classList.remove('available'));
-      const selectedDay = document.querySelector(`.calendar-day[data-date="${date}"]`);
-      if (selectedDay) selectedDay.classList.add('available');
+    function selectVaccination(status) {
+      sessionData.isVaccinated = status;
       submitInput();
-    }
-
-    function selectTime(time) {
-      cartData.selectedTime = time;
-      submitInput();
-    }
-
-    function previousMonth() {
-      // Placeholder: Static calendar
-    }
-
-    function nextMonth() {
-      // Placeholder: Static calendar
     }
 
     function showSubmitButton() {
@@ -1011,14 +897,28 @@
     }
 
     function goToCheckout() {
-      try {
-        sessionStorage.setItem('cartData', JSON.stringify(cartData));
-        console.log('✅ Session data saved:', cartData);
-        window.location.href = `/checkout.html?session_type=${encodeURIComponent(cartData.sessionType)}&price=${cartData.price || 160}&location=${encodeURIComponent(cartData.location)}&client_name=${encodeURIComponent(cartData.client1FirstName)}&client_email=${encodeURIComponent(localStorage.getItem('clientEmail'))}&pet1_name=${encodeURIComponent(cartData.pet1Name)}&pet2_name=${encodeURIComponent(cartData.pet2Name || '')}&number_of_pets=${cartData.numberOfPets}&number_of_people=${cartData.numberOfPeople}&selected_date=${encodeURIComponent(cartData.selectedDate)}&selected_time=${encodeURIComponent(cartData.selectedTime)}`;
-      } catch (error) {
-        console.error('Error saving session data:', error);
-        appendMessage('Oops, something went wrong! Please try again. 😅', 'error');
-      }
+      if (!chatActive) return;
+      // Construct the session identifier based on the four questions
+      const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
+      const price = sessionIdentifier === "Full Session at City Park (2 people, 2 pets)" ? 160 : 0; // Set price based on session type
+      window.location.href = `/checkout.html?session_identifier=${encodeURIComponent(sessionIdentifier)}&price=${price}`;
+    }
+
+    function restartChat() {
+      sessionData.pet1Name = '';
+      sessionData.client1FirstName = '';
+      sessionData.isVaccinated = '';
+      sessionData.sessionType = '';
+      sessionData.location = '';
+      sessionData.numberOfPets = '';
+      sessionData.numberOfPeople = '';
+      sessionData.pet2Name = '';
+      currentStep = 0;
+      chatActive = true;
+      chatContainer.innerHTML = '<button class="restart-btn" onclick="restartChat()">Restart Chat 🔄</button>';
+      submitBtn.style.display = 'none';
+      appendMessage(steps[0].bot, 'bot');
+      appendInput(steps[0]);
     }
 
     function toggleMenu() {
@@ -1039,11 +939,6 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Cart page loaded - v1.0.9');
-      cartData.email = localStorage.getItem('clientEmail');
-      if (!cartData.email) {
-        appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
-        return;
-      }
       currentStep = 0;
       appendMessage(steps[0].bot, 'bot');
       appendInput(steps[0]);
