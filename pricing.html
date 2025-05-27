@@ -107,7 +107,6 @@
     .promo-text {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
       font-weight: 600;
-      white-space: nowrap;
     }
 
     .promo-banner a {
@@ -120,7 +119,6 @@
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(4px);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      white-space: nowrap;
     }
 
     .promo-banner a:hover {
@@ -650,23 +648,28 @@
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
       .promo-banner {
-        font-size: 0.9rem;
-        padding: 0.7rem 0.8rem;
+        font-size: 0.85rem;
+        padding: 0.8rem 1rem;
         top: 80px;
       }
 
       .promo-banner-content {
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: 0.8rem;
+        justify-content: center;
       }
 
       .promo-text {
         font-size: 0.85rem;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.3;
       }
 
       .promo-banner a {
-        padding: 0.25rem 0.8rem;
+        padding: 0.4rem 1rem;
         font-size: 0.8rem;
+        white-space: nowrap;
       }
 
       header {
@@ -777,17 +780,26 @@
 
     @media (max-width: 480px) {
       .promo-banner {
-        font-size: 0.8rem;
-        padding: 0.6rem 0.5rem;
+        font-size: 0.75rem;
+        padding: 0.7rem 0.8rem;
+      }
+
+      .promo-banner-content {
+        flex-direction: column;
+        gap: 0.6rem;
+        text-align: center;
       }
 
       .promo-text {
         font-size: 0.75rem;
+        line-height: 1.4;
+        white-space: normal;
       }
 
       .promo-banner a {
-        padding: 0.2rem 0.6rem;
+        padding: 0.3rem 0.8rem;
         font-size: 0.7rem;
+        align-self: center;
       }
     }
   </style>
