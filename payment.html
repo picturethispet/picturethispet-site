@@ -652,31 +652,6 @@
     ];
     let messageIndex = 0;
 
-    function getStripeUrl(sessionType, location, pets, people) {
-      const sessionKey = `${sessionType.toLowerCase()}_${location.toLowerCase().replace(' ', '')}_${pets}pets_${people}people`;
-      
-      const stripeUrls = {
-        'full_cheesmanpark_1pets_1people': 'https://buy.stripe.com/4gw6ry0Wz0bXe1G147',
-        'full_cheesmanpark_2pets_1people': 'https://buy.stripe.com/8x200lgJx3d69o5dkV',
-        'full_cheesmanpark_1pets_2people': 'https://buy.stripe.com/14A14peBpfZSgQx3Kl',
-        'full_cheesmanpark_2pets_2people': 'https://buy.stripe.com/5kQbJ33WL14Y9o5gx7',
-        'full_citypark_1pets_1people': 'https://buy.stripe.com/00gg28eNp9Mx9Lq9AE',
-        'full_citypark_2pets_1people': 'https://buy.stripe.com/14A9AV8d15le6bTbcN',
-        'full_citypark_1pets_2people': 'https://buy.stripe.com/14A8wR8d12921VD80B',
-        'full_citypark_2pets_2people': 'https://buy.stripe.com/6oU28tdxl29243Lft3',
-        'mini_cheesmanpark_1pets_1people': 'https://buy.stripe.com/eVag28fRtgaVe1GcMN',
-        'mini_cheesmanpark_2pets_1people': 'https://buy.stripe.com/5kQcN70KzbJCfMt94F',
-        'mini_cheesmanpark_1pets_2people': 'https://buy.stripe.com/8x24gB64T292eIpbcN',
-        'mini_cheesmanpark_2pets_2people': 'https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd',
-        'mini_citypark_1pets_1people': 'https://buy.stripe.com/9AQ6ry7kX8It3n28wy',
-        'mini_citypark_2pets_1people': 'https://buy.stripe.com/5kQ6oJ50PaFy43L4Op',
-        'mini_citypark_1pets_2people': 'https://buy.stripe.com/cNieVfeBp8xqeIp6Wx',
-        'mini_citypark_2pets_2people': 'https://buy.stripe.com/3cI3cxgJx8xqgQxdkV'
-      };
-      
-      return stripeUrls[sessionKey] || stripeUrls['full_citypark_1pets_1people'];
-    }
-
     function updateLoadingText() {
       const loadingTextElement = document.getElementById('loadingText');
       loadingTextElement.textContent = loadingMessages[messageIndex];
@@ -688,6 +663,7 @@
         const storedData = localStorage.getItem('sessionData');
         if (storedData) {
           sessionData = JSON.parse(storedData);
+          console.log('Loaded session data:', sessionData);
           populateSessionDetails();
           return true;
         }
@@ -706,40 +682,29 @@
       document.getElementById('sessionPets').textContent = `${sessionData.numberOfPets} ${sessionData.numberOfPets === 1 ? 'pet' : 'pets'}`;
       document.getElementById('sessionPeople').textContent = `${sessionData.numberOfPeople} ${sessionData.numberOfPeople === 1 ? 'person' : 'people'}`;
 
-      // Update pricing
-      const basePrice = sessionData.sessionType === 'Full' ? 100 : 50;
-      const extraPetFee = sessionData.numberOfPets === 2 ? 40 : 0;
-      const extraPersonFee = sessionData.numberOfPeople === 2 ? 20 : 0;
-
+      // Update pricing - simplified since it's bundled pricing
       document.getElementById('baseSessionLabel').textContent = `📸 ${sessionData.sessionType} Session`;
-      document.getElementById('baseSessionPrice').textContent = `$${basePrice}`;
+      document.getElementById('baseSessionPrice').textContent = `${sessionData.totalPrice}`;
 
-      // Show/hide extra fees
-      const extraPetLine = document.getElementById('extraPetLine');
-      const extraPersonLine = document.getElementById('extraPersonLine');
-
-      if (extraPetFee > 0) {
-        extraPetLine.style.display = 'flex';
-      }
-
-      if (extraPersonFee > 0) {
-        extraPersonLine.style.display = 'flex';
-      }
+      // Hide extra fee lines since pricing is bundled
+      document.getElementById('extraPetLine').style.display = 'none';
+      document.getElementById('extraPersonLine').style.display = 'none';
 
       // Update total
-      const total = basePrice + extraPetFee + extraPersonFee;
-      document.getElementById('totalPrice').textContent = `$${total}`;
+      document.getElementById('totalPrice').textContent = `${sessionData.totalPrice}`;
+      
+      console.log('Session details populated. Stripe URL:', sessionData.stripeUrl);
     }
 
     function showStripeIframe() {
-      const stripeUrl = getStripeUrl(
-        sessionData.sessionType,
-        sessionData.location,
-        sessionData.numberOfPets,
-        sessionData.numberOfPeople
-      );
+      if (!sessionData || !sessionData.stripeUrl) {
+        console.error('No Stripe URL available');
+        alert('⚠️ Payment URL not found. Please try booking again.');
+        window.location.href = '/cart.html';
+        return;
+      }
 
-      console.log('Loading Stripe URL:', stripeUrl);
+      console.log('Loading Stripe URL:', sessionData.stripeUrl);
 
       const loadingArea = document.getElementById('loadingArea');
       const stripeContainer = document.getElementById('stripeContainer');
@@ -749,7 +714,7 @@
       loadingArea.classList.add('hidden');
 
       // Set iframe source and show
-      stripeIframe.src = stripeUrl;
+      stripeIframe.src = sessionData.stripeUrl;
       
       setTimeout(() => {
         stripeContainer.classList.add('show');
