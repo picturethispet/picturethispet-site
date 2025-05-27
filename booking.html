@@ -172,9 +172,9 @@
       border: 1px solid rgba(255,255,255, 0.1);
       padding: 3rem;
       animation: fadeInUp 0.8s ease-out;
-      min-height: 600px;
+      min-height: auto; /* Allow container to grow with content */
       position: relative;
-      overflow: hidden;
+      overflow: visible; /* Ensure content isn’t clipped */
     }
 
     .page-header {
@@ -331,8 +331,7 @@
       box-shadow: 0 5px 15px rgba(0,0,0, 0.2);
       width: 100%;
       max-width: 900px;
-      min-height: 600px;
-      max-height: 80vh;
+      height: auto; /* Will be set dynamically via JavaScript */
     }
 
     footer {
@@ -412,8 +411,7 @@
 
     @media (max-width: 1024px) {
       .acuity-iframe {
-        min-height: 500px;
-        max-height: 80vh;
+        height: auto; /* Will be set dynamically */
       }
     }
 
@@ -488,15 +486,15 @@
       }
 
       .acuity-container {
-        margin-top: -1rem; /* Negative margin to pull iframe up */
+        margin-top: -1rem;
         padding: 0;
+        margin-bottom: 0; /* Ensure no extra space below */
       }
 
       .acuity-iframe {
-        min-height: 450px;
-        max-height: 80vh;
+        height: auto; /* Will be set dynamically */
         border-radius: 0;
-        box-shadow: none; /* Remove shadow to eliminate visual gap */
+        box-shadow: none;
       }
 
       .footer-container {
@@ -525,8 +523,7 @@
       }
 
       .acuity-iframe {
-        min-height: 400px;
-        max-height: 80vh;
+        height: auto; /* Will be set dynamically */
       }
     }
   </style>
@@ -583,7 +580,7 @@
 
         <!-- Acuity Container -->
         <div class="acuity-container" id="acuityContainer">
-          <iframe class="acuity-iframe" id="acuityIframe" src="" title="Acuity Scheduling"></iframe>
+          <iframe class="acuity-iframe" id="acuityIframe" src="" title="Acuity Scheduling" scrolling="no"></iframe>
         </div>
       </div>
     </div>
@@ -621,7 +618,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:49 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:54 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -676,6 +673,22 @@
       return acuityUrl;
     }
 
+    function adjustIframeHeight() {
+      const iframe = document.getElementById('acuityIframe');
+      if (!iframe) return;
+
+      // Attempt to get the content height from the iframe
+      try {
+        const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+        iframe.style.height = `${contentHeight}px`;
+        console.log('Iframe height set to:', contentHeight);
+      } catch (e) {
+        console.error('Error accessing iframe content height:', e);
+        // Fallback height if cross-origin restrictions prevent access
+        iframe.style.height = '1000px'; // Adjust based on typical Acuity content height
+      }
+    }
+
     function showAcuityIframe() {
       const acuityUrl = getAcuityUrl();
       if (!acuityUrl) {
@@ -699,6 +712,8 @@
       
       setTimeout(() => {
         acuityContainer.classList.add('show');
+        // Adjust iframe height after it loads
+        acuityIframe.onload = adjustIframeHeight;
       }, 500);
     }
 
