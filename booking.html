@@ -203,12 +203,13 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      min-height: 800px; /* Ensure enough space for the iframe */
+      width: 100%;
     }
 
     .loading-area {
       text-align: center;
       transition: all 0.8s ease;
+      width: 100%;
     }
 
     .loading-area.hidden {
@@ -305,18 +306,14 @@
     }
 
     .acuity-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
       opacity: 0;
       transform: scale(0.95);
       transition: all 0.8s ease;
       display: flex;
       flex-direction: column;
-      padding: 2rem;
+      align-items: center;
       width: 100%;
+      margin-top: 2rem;
     }
 
     .acuity-container.show {
@@ -325,33 +322,14 @@
     }
 
     .acuity-iframe {
-      flex: 1;
       border: none;
       border-radius: 16px;
       background: white;
       box-shadow: 0 15px 35px rgba(0,0,0, 0.2);
-      min-height: 800px;
       width: 100%;
-    }
-
-    .back-button {
-      background: rgba(255,255,255, 0.1);
-      color: white;
-      padding: 1rem 2rem;
-      border: 1px solid rgba(255,255,255, 0.3);
-      border-radius: 999px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 2rem;
-      align-self: center;
-    }
-
-    .back-button:hover {
-      background: rgba(255,255,255, 0.2);
-      transform: translateY(-2px);
+      max-width: 900px;
+      min-height: 600px;
+      max-height: 80vh;
     }
 
     footer {
@@ -431,7 +409,8 @@
 
     @media (max-width: 1024px) {
       .acuity-iframe {
-        min-height: 700px;
+        min-height: 500px;
+        max-height: 70vh;
       }
     }
 
@@ -472,7 +451,8 @@
       }
 
       .acuity-iframe {
-        min-height: 600px;
+        min-height: 400px;
+        max-height: 60vh;
       }
 
       .footer-container {
@@ -501,7 +481,8 @@
       }
 
       .acuity-iframe {
-        min-height: 500px;
+        min-height: 350px;
+        max-height: 50vh;
       }
     }
   </style>
@@ -561,8 +542,6 @@
           <iframe class="acuity-iframe" id="acuityIframe" src="https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621" title="Acuity Scheduling"></iframe>
         </div>
       </div>
-
-      <a href="/" class="back-button">← Back to Home</a>
     </div>
   </main>
 
@@ -598,7 +577,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 01:54 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:10 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
