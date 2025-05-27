@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Built My Site | Picture This Pet</title>
-  <meta name="description" content="Discover how Picture This Pet was built from scratch using AI collaboration - from Squarespace limitations to custom features.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Secure Payment | Picture This Pet</title>
+  <meta name="description" content="Complete your pet photography session booking with secure payment.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #F47C2C;
@@ -17,8 +16,6 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
-      --ai-purple: #8b5cf6;
-      --ai-blue: #3b82f6;
     }
 
     * {
@@ -26,24 +23,23 @@
       margin: 0;
       padding: 0;
     }
-    
+
     html {
       overflow-x: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
       scroll-behavior: smooth;
     }
-    
-    html::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-    }
-    
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background: none;
+      background-image: url('assets/images/main_background_allsystem.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes moveBackground {
@@ -53,42 +49,58 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes aiPulse {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.05); }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    /* === HEADER STYLES === */
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes progressFill {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
     header {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
+      padding-top: calc(0.01rem + env(safe-area-inset-top));
       background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
+      background-size: cover;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0,0,0, 0.3);
+      border-bottom: 1px solid rgba(255,255,255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
       z-index: 1000;
-      height: 110px;
+      height: calc(110px + env(safe-area-inset-top));
     }
-    
+
     .desktop-logo {
       height: 100px;
     }
@@ -100,17 +112,12 @@
       text-decoration: none;
     }
 
-    .logo-link:hover {
-      opacity: 0.8;
-      transform: scale(1.02);
-    }
-    
     .site-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
     }
-    
+
     .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
@@ -121,13 +128,8 @@
       border-radius: 8px;
     }
 
-    .site-nav a:not(.book-btn):hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-1px);
-    }
-    
     .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       padding: 0.8rem 2rem;
       border: none;
@@ -138,16 +140,9 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
     }
 
-    .book-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
-    }
-    
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -155,421 +150,385 @@
       color: white;
       font-size: 2rem;
       cursor: pointer;
-      transition: all 0.3s ease;
     }
 
-    .mobile-menu-btn:hover {
-      transform: scale(1.1);
-    }
-
-    /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
+      flex: 1;
+      padding: 2rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       min-height: calc(100vh - 110px);
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
     }
 
-    /* === HERO SECTION === */
-    .hero-section {
-      padding: 5rem 1rem;
+    .payment-container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      background: rgba(255,255,255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255, 0.1);
+      padding: 3rem;
+      animation: fadeInUp 0.8s ease-out;
+      min-height: 600px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header {
       text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255,255,255, 0.7);
+      font-weight: 500;
+    }
+
+    .content-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      min-height: 500px;
+    }
+
+    .session-summary {
+      background: rgba(255,255,255, 0.08);
+      border-radius: 20px;
+      padding: 2.5rem;
+      border: 1px solid rgba(255,255,255, 0.15);
+      height: fit-content;
+    }
+
+    .summary-header {
+      margin-bottom: 2rem;
+    }
+
+    .summary-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .session-details {
+      background: rgba(255,255,255, 0.06);
+      border-radius: 12px;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255,255,255, 0.08);
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-size: 1rem;
+      color: rgba(255,255,255, 0.7);
+    }
+
+    .detail-value {
+      font-size: 1rem;
+      font-weight: 500;
+      color: white;
+    }
+
+    .pricing-breakdown {
+      background: rgba(253,183,94, 0.1);
+      border: 1px solid rgba(253,183,94, 0.3);
+      border-radius: 12px;
+      padding: 1.8rem;
+    }
+
+    .price-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      font-size: 1rem;
+    }
+
+    .price-label {
+      color: rgba(255,255,255, 0.8);
+    }
+
+    .price-value {
+      color: white;
+      font-weight: 500;
+    }
+
+    .price-total {
+      border-top: 1px solid rgba(255,255,255, 0.2);
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+
+    .price-total .price-label {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .price-total .price-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .payment-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       position: relative;
     }
 
-    .hero-content {
-      max-width: 1000px;
-      margin: 0 auto;
-      animation: fadeInUp 1s ease-out;
+    .loading-area {
+      text-align: center;
+      transition: all 0.8s ease;
     }
 
-    .ai-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue));
-      color: white;
-      padding: 0.8rem 2rem;
-      border-radius: 25px;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      animation: aiPulse 3s ease-in-out infinite;
+    .loading-area.hidden {
+      opacity: 0;
+      transform: translateY(-30px);
+      pointer-events: none;
     }
 
-    .hero-content h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 4rem;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-      color: white;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero-content p {
-      font-size: 1.3rem;
-      line-height: 1.6;
+    .security-message {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
+      border: 1px solid var(--available-green);
+      border-radius: 16px;
+      padding: 2rem;
       margin-bottom: 3rem;
-      color: rgba(255, 255, 255, 0.9);
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
     }
 
-    /* === STORY SECTION === */
-    .story-section {
-      padding: 4rem 1rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .story-card {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 3rem;
-      transition: all 0.3s ease;
-    }
-
-    .story-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-    }
-
-    .story-card h2 {
-      font-family: 'Playfair Display', serif;
+    .security-icon {
       font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 2rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      text-align: center;
-    }
-
-    .story-content {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      color: rgba(255, 255, 255, 0.95);
-      text-align: left;
-    }
-
-    .story-content p {
-      margin-bottom: 1.5rem;
-    }
-
-    .story-content strong {
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-
-
-    /* === FEATURES SECTION === */
-    .features-section {
-      padding: 4rem 1rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .features-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 3rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-    }
-
-    .feature-card {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 20px;
-      padding: 2.5rem;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    }
-
-    .feature-icon {
-      font-size: 3rem;
       margin-bottom: 1rem;
-      display: block;
+      animation: pulse 2s infinite;
     }
 
-    .feature-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .feature-card p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    /* === CTA SECTION === */
-    .cta-section {
-      padding: 5rem 1rem;
-      text-align: center;
-    }
-
-    .cta-content {
-      max-width: 800px;
-      margin: 0 auto;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      padding: 3rem;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .cta-content h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .cta-content p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .cta-button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      padding: 1rem 3rem;
-      border-radius: 999px;
+    .security-title {
       font-size: 1.3rem;
-      font-weight: 900;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      font-weight: 600;
+      color: var(--available-green);
+      margin-bottom: 0.8rem;
     }
 
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
+    .security-description {
+      font-size: 1rem;
+      color: rgba(255,255,255, 0.8);
+      line-height: 1.6;
     }
 
-    /* === FOOTER STYLES === */
-    footer {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2rem 1.5rem;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.9rem;
+    .loading-animation {
+      margin: 2rem 0;
     }
 
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
+    .loading-spinner {
+      width: 70px;
+      height: 70px;
+      border: 5px solid rgba(255,255,255, 0.3);
+      border-top: 5px solid var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 2rem;
     }
 
-    .footer-section h4 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: white;
-      margin-bottom: 1rem;
-    }
-
-    .footer-section a {
-      color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s ease;
-    }
-
-    .footer-section a:hover {
-      color: var(--gold);
-    }
-
-    .payment-methods {
+    .paw-prints {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      justify-content: center;
+      gap: 1.2rem;
+      margin: 2rem 0;
     }
 
-    .payment-icon {
-      width: 40px;
-      height: 25px;
-      object-fit: contain;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
+    .paw {
+      font-size: 1.8rem;
+      animation: bounce 1.5s infinite;
     }
 
-    .payment-icon:hover {
+    .paw:nth-child(1) { animation-delay: 0s; }
+    .paw:nth-child(2) { animation-delay: 0.3s; }
+    .paw:nth-child(3) { animation-delay: 0.6s; }
+    .paw:nth-child(4) { animation-delay: 0.9s; }
+
+    .loading-text {
+      font-size: 1.3rem;
+      color: rgba(255,255,255, 0.8);
+      margin: 1.5rem 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(253,183,94,1) 50%, rgba(255,255,255,0.6) 100%);
+      background-size: 200% 100%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 2s ease-in-out infinite;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange), var(--gold));
+      border-radius: 3px;
+      animation: progressFill 5s ease-out forwards;
+    }
+
+    .stripe-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.8s ease;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+    }
+
+    .stripe-container.show {
       opacity: 1;
-      transform: scale(1.1);
+      transform: scale(1);
     }
 
-    .footer-bottom {
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    .stripe-iframe {
+      flex: 1;
+      border: none;
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 15px 35px rgba(0,0,0, 0.2);
+      min-height: 600px;
+      width: 100%;
     }
 
-    /* === RESPONSIVE === */
+    .back-button {
+      background: rgba(255,255,255, 0.1);
+      color: white;
+      padding: 1rem 2rem;
+      border: 1px solid rgba(255,255,255, 0.3);
+      border-radius: 999px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 2rem;
+      align-self: center;
+    }
+
+    .back-button:hover {
+      background: rgba(255,255,255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1024px) {
+      .content-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .session-summary {
+        order: 2;
+      }
+
+      .payment-section {
+        order: 1;
+        min-height: 400px;
+      }
+    }
+
     @media (max-width: 768px) {
       header {
         height: 80px;
         padding: 0.5rem 1rem;
-      }
-      
-      .desktop-logo { 
-        height: 48px; 
-      }
-      
-      .site-nav {
-        display: none;
-        flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: 100% 100%;
-        background-position: center;
-        position: absolute;
-        top: 80px;
-        right: 0;
-        width: 100%;
-        text-align: right;
-        padding: 1rem;
-        z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
-      }
-      
-      .site-nav.active {
-        display: flex;
-      }
-      
-      .site-nav.active a {
-        display: block;
-        margin: 0.5rem 0;
-        font-size: 1.2rem;
-        color: white;
-        padding: 0.5rem 1rem;
+        height: calc(80px + env(safe-area-inset-top));
       }
 
-      .site-nav.active a[href="/"] { order: 1; }
-      .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/locations.html"] { order: 3; }
-      .site-nav.active a[href="/pricing"] { order: 4; }
-      .site-nav.active a[href="/contact"] { order: 5; }
-      .site-nav.active .book-btn { order: 6; }
-      
-      .book-btn {
-        background: linear-gradient(135deg, #F47C2C, #FDB75E);
-        color: white;
-        padding: 0.6rem 1.5rem;
-        border: none;
-        border-radius: 999px;
-        font-weight: 900;
-        font-size: 1rem;
-        margin-left: 0;
-        display: inline-block;
-        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      .desktop-logo {
+        height: 48px;
       }
-      
+
       .mobile-menu-btn {
         display: block;
       }
-      
+
+      .site-nav {
+        display: none;
+      }
+
       main {
-        margin-top: 80px;
+        margin-top: calc(80px + env(safe-area-inset-top));
+        padding: 1.5rem 1rem;
       }
 
-      .hero-content h1 {
-        font-size: 2.5rem;
-      }
-
-      .hero-content p {
-        font-size: 1.1rem;
-      }
-
-      .story-card,
-      .timeline-item,
-      .feature-card,
-      .cta-content {
+      .payment-container {
         padding: 2rem;
       }
 
-      .story-card h2,
-      .timeline-title,
-      .features-title {
-        font-size: 2rem;
+      .page-title {
+        font-size: 2.2rem;
       }
 
-      .timeline-item:hover {
-        transform: translateY(-5px);
-      }
-
-      .timeline-number {
-        position: relative;
-        left: 0;
-        top: 0;
-        transform: none;
-        margin-bottom: 1rem;
-        align-self: flex-start;
-      }
-
-      .timeline-item h3,
-      .timeline-item p {
-        margin-left: 0;
-      }
-
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-container {
-        grid-template-columns: 1fr;
+      .content-wrapper {
         gap: 1.5rem;
       }
 
-      .payment-methods {
-        justify-content: center;
+      .session-summary,
+      .security-message {
+        padding: 1.5rem;
+      }
+
+      .stripe-iframe {
+        min-height: 500px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .payment-container {
+        padding: 1.5rem;
+        margin: 0.5rem;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .session-summary {
+        padding: 1.2rem;
+      }
+
+      .stripe-iframe {
+        min-height: 400px;
       }
     }
   </style>
@@ -585,204 +544,262 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToBooking(event)">Book Now</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <div class="ai-badge">🤖 AI-Powered Development</div>
-        <h1>Built by AI, Owned by Me</h1>
-        <p>From Squarespace limitations to custom features, discover how AI collaboration transformed a simple idea into a fully-featured photography business platform.</p>
+    <div class="payment-container">
+      <div class="page-header">
+        <h1 class="page-title">🔒 Secure Payment</h1>
+        <p class="page-subtitle">Complete your pet photography session booking securely</p>
       </div>
-    </section>
 
-    <!-- Story Section -->
-    <section class="story-section">
-      <div class="story-card">
-        <h2>The Journey from Template to Custom</h2>
-        <div class="story-content">
-          <p>This site began with a simple idea and a **Squarespace template**. While that platform got things off the ground, it didn't take long to hit its limits — both in design flexibility and the custom workflows I needed to support a growing creative business. I wanted more control, better automation, and a seamless experience that could scale with my vision.</p>
-          
-          <p>So I made the jump. With **no formal background in web development**, I turned to AI for help — specifically **ChatGPT, Claude.ai, and Grok**. Over time, we built every part of this site together: the custom photo session builder, the dynamic intake forms, the Stripe-powered checkout, and even the client galleries. Every page you see here was shaped through conversation, iteration, and problem-solving — not with a drag-and-drop tool, but with **code and logic written collaboratively, line by line**.</p>
-          
-          <p>I purchased my domain, routed it through **Cloudflare**, and set up the site infrastructure on **GitHub**. What started as a workaround turned into a full-on digital rebuild, powered by AI and a drive to do it better. This isn't just a site — **it's proof of what's possible when creativity and technology work side by side**.</p>
-          
-          <p>This platform now reflects not just the brand I envisioned, but **the process it took to get here**. Built from scratch, owned fully, and designed intentionally — by me and the AIs that helped along the way.</p>
-        </div>
-      </div>
-    </section>
-
-
-
-    <!-- Features Section -->
-    <section class="features-section">
-      <h2 class="features-title">What We Built Together</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <span class="feature-icon">🎯</span>
-          <h3>Smart Session Builder</h3>
-          <p>Multi-step booking flow with intelligent pricing, location selection, and custom validation that prevents booking conflicts.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">💳</span>
-          <h3>Secure Payments</h3>
-          <p>Full Stripe integration with support for cards, digital wallets, and BNPL options. PCI compliant and mobile-optimized checkout.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">📅</span>
-          <h3>Live Calendar Sync</h3>
-          <p>Real-time availability powered by Google Calendar API. Bookings sync instantly, preventing conflicts and automating schedule management.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">📱</span>
-          <h3>Mobile-First Design</h3>
-          <p>Responsive design that works perfectly on every device. Over 70% of bookings come from mobile, so we optimized every interaction.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">🖼️</span>
-          <h3>Client Galleries</h3>
-          <p>Password-protected photo galleries for each client. Download tracking, watermark removal, and personalized sharing experiences.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">⚡</span>
-          <h3>Performance Optimized</h3>
-          <p>Cloudflare CDN, image optimization, and lazy loading ensure lightning-fast page loads and perfect mobile experience.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Consulting Section -->
-    <section class="consulting-section" style="padding: 4rem 1rem; max-width: 1200px; margin: 0 auto;">
-      <div class="consulting-card" style="background-image: url('assets/images/ani_bkgd_cool.png'); background-size: 100% 100%; background-position: center; animation: moveBackground 30s ease-in-out infinite; border-radius: 24px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); padding: 3rem; color: white; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
-        <div style="display: inline-block; background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue)); color: white; padding: 0.6rem 1.5rem; border-radius: 25px; font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.5px;">
-          💡 Consulting Available
-        </div>
-        
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; color: white; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">
-          Want Your Own AI-Built Site?
-        </h2>
-        
-        <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 2rem; color: rgba(255, 255, 255, 0.9); max-width: 800px; margin-left: auto; margin-right: auto; margin-bottom: 2rem;">
-          I've learned what works (and what doesn't) when collaborating with AI to build custom websites. From session builders to payment processing, I can guide you through creating your own professional platform without the traditional development costs.
-        </p>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0; text-align: left;">
-          <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-            <h4 style="color: var(--gold); font-weight: 600; margin-bottom: 0.5rem;">🎯 Strategy Sessions</h4>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; line-height: 1.5;">AI collaboration planning, feature prioritization, and development roadmaps tailored to your business needs.</p>
+      <div class="content-wrapper">
+        <!-- Session Summary -->
+        <div class="session-summary">
+          <div class="summary-header">
+            <h2 class="summary-title">📸 Your Session</h2>
           </div>
-          
-          <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-            <h4 style="color: var(--gold); font-weight: 600; margin-bottom: 0.5rem;">🤖 AI Prompt Engineering</h4>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; line-height: 1.5;">Learn the exact prompting techniques I use to get production-ready code from ChatGPT, Claude, and other AI tools.</p>
+
+          <div class="session-details">
+            <div class="detail-item">
+              <span class="detail-label">📸 Session Type</span>
+              <span class="detail-value" id="sessionType">Loading...</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">📍 Location</span>
+              <span class="detail-value" id="sessionLocation">Loading...</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">🐾 Pets</span>
+              <span class="detail-value" id="sessionPets">Loading...</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">👥 People</span>
+              <span class="detail-value" id="sessionPeople">Loading...</span>
+            </div>
           </div>
-          
-          <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-            <h4 style="color: var(--gold); font-weight: 600; margin-bottom: 0.5rem;">⚡ Implementation Support</h4>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; line-height: 1.5;">Hands-on guidance for complex integrations like payments, APIs, and automated workflows that scale with your business.</p>
+
+          <div class="pricing-breakdown">
+            <div class="price-line">
+              <span class="price-label" id="baseSessionLabel">📸 Session</span>
+              <span class="price-value" id="baseSessionPrice">$0</span>
+            </div>
+            <div class="price-line" id="extraPetLine">
+              <span class="price-label">🐾 Additional Pet</span>
+              <span class="price-value" id="extraPetPrice">$0</span>
+            </div>
+            <div class="price-line" id="extraPersonLine">
+              <span class="price-label">👥 Additional Person</span>
+              <span class="price-value" id="extraPersonPrice">$0</span>
+            </div>
+            <div class="price-line price-total">
+              <span class="price-label">💰 Total</span>
+              <span class="price-value" id="totalPrice">$0</span>
+            </div>
           </div>
         </div>
-        
-        <div style="margin: 2rem 0;">
-          <a href="/contact" style="background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue)); color: white; padding: 1rem 2.5rem; border-radius: 999px; font-size: 1.2rem; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4); margin-right: 1rem;">
-            Schedule a Consultation
-          </a>
-          <a href="mailto:info@picturethispet.co?subject=AI Site Development Consultation" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 255, 255, 0.3); padding: 1rem 2.5rem; border-radius: 999px; font-size: 1.2rem; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.3s ease;">
-            Email Directly
-          </a>
-        </div>
-        
-        <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); font-style: italic; margin-top: 1rem;">
-          From creative professionals to small businesses — let's build something amazing together.
-        </p>
-      </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="cta-content">
-        <h2>Ready to Experience the Difference?</h2>
-        <p>This isn't just a website — it's a testament to what's possible when human creativity meets AI capability. Every feature was thoughtfully designed to make booking your pet photography session as smooth as possible.</p>
-        <a href="/" class="cta-button">Book Your Session</a>
+        <!-- Payment Section -->
+        <div class="payment-section">
+          <!-- Loading Area -->
+          <div class="loading-area" id="loadingArea">
+            <div class="security-message">
+              <div class="security-icon">🔒✨</div>
+              <h3 class="security-title">Secure Payment Processing</h3>
+              <p class="security-description">Your payment is protected with bank-level security. We process payment before scheduling to guarantee your session is reserved! 🎉</p>
+            </div>
+
+            <div class="loading-animation">
+              <div class="loading-spinner"></div>
+              
+              <div class="paw-prints">
+                <span class="paw">🐾</span>
+                <span class="paw">🐾</span>
+                <span class="paw">🐾</span>
+                <span class="paw">🐾</span>
+              </div>
+
+              <div class="loading-text" id="loadingText">🔐 Preparing secure payment portal...</div>
+
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stripe Container -->
+          <div class="stripe-container" id="stripeContainer">
+            <iframe class="stripe-iframe" id="stripeIframe" src="" title="Secure Payment Portal"></iframe>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <a href="/cart.html" class="back-button">← Back to Session Builder</a>
+    </div>
   </main>
 
-  <footer>
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Contact Us</h4>
-        <a href="/contact" aria-label="Contact us page">Contact Us</a>
-      </div>
-      <div class="footer-section socials">
-        <h4>Connect</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-      </div>
-      <div class="footer-section">
-        <h4>We Accept</h4>
-        <div class="payment-methods">
-          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 05:35 PM MST, May 23, 2025 | Built with AI collaboration ❤️</p>
-    </div>
-  </footer>
-
   <script>
-    // Mobile menu toggle
+    let sessionData = null;
+    let loadingMessages = [
+      "🔐 Preparing secure payment portal...",
+      "📸 Loading your session details...",
+      "💳 Connecting to Stripe checkout...",
+      "🐾 Almost ready for payment...",
+      "✨ Finalizing secure connection..."
+    ];
+    let messageIndex = 0;
+
+    // Stripe product links mapping
+    const stripeLinks = {
+      "Full at Cheesman Park (1 people, 1 pets)": "https://buy.stripe.com/4gw6ry0Wz0bXe1G147",
+      "Full at Cheesman Park (1 people, 2 pets)": "https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08",
+      "Full at Cheesman Park (2 people, 1 pets)": "https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c",
+      "Full at Cheesman Park (2 people, 2 pets)": "https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d",
+      "Full at City Park (1 people, 1 pets)": "https://buy.stripe.com/00gg28eNp9Mx9Lq9AE",
+      "Full at City Park (1 people, 2 pets)": "https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07",
+      "Full at City Park (2 people, 1 pets)": "https://buy.stripe.com/14A8wR8d12921VD80B9bO0e",
+      "Full at City Park (2 people, 2 pets)": "https://buy.stripe.com/6oU28tdxl29243Lft39bO0f",
+      "Mini at Cheesman Park (1 people, 1 pets)": "https://buy.stripe.com/eVag28fRtgaVe1GcMN",
+      "Mini at Cheesman Park (1 people, 2 pets)": "https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05",
+      "Mini at Cheesman Park (2 people, 1 pets)": "https://buy.stripe.com/8x24gB64T292eIpbcN9bO09",
+      "Mini at Cheesman Park (2 people, 2 pets)": "https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g",
+      "Mini at City Park (1 people, 1 pets)": "https://buy.stripe.com/9AQ6ry7kX8It3n28wy",
+      "Mini at City Park (1 people, 2 pets)": "https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06",
+      "Mini at City Park (2 people, 1 pets)": "https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b",
+      "Mini at City Park (2 people, 2 pets)": "https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a"
+    };
+
+    function updateLoadingText() {
+      const loadingTextElement = document.getElementById('loadingText');
+      loadingTextElement.textContent = loadingMessages[messageIndex];
+      messageIndex = (messageIndex + 1) % loadingMessages.length;
+    }
+
+    function loadSessionData() {
+      try {
+        const storedData = localStorage.getItem('sessionData');
+        if (storedData) {
+          sessionData = JSON.parse(storedData);
+          console.log('Loaded session data:', sessionData);
+          return true;
+        }
+      } catch (e) {
+        console.error('Error loading session data:', e);
+      }
+      return false;
+    }
+
+    function getStripeUrl() {
+      if (!sessionData || !sessionData.sessionType || !sessionData.location || 
+          sessionData.numberOfPets === null || sessionData.numberOfPeople === null) {
+        return null;
+      }
+
+      const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
+      const stripeUrl = stripeLinks[sessionIdentifier];
+      
+      if (!stripeUrl) {
+        console.error('No Stripe URL found for session identifier:', sessionIdentifier);
+      }
+      
+      return stripeUrl;
+    }
+
+    function populateSessionDetails() {
+      if (!sessionData) return;
+
+      // Update session details
+      document.getElementById('sessionType').textContent = sessionData.sessionType || 'Not specified';
+      document.getElementById('sessionLocation').textContent = sessionData.location || 'Not specified';
+      document.getElementById('sessionPets').textContent = sessionData.numberOfPets !== null ? `${sessionData.numberOfPets} ${sessionData.numberOfPets === 1 ? 'pet' : 'pets'}` : 'Not specified';
+      document.getElementById('sessionPeople').textContent = sessionData.numberOfPeople !== null ? `${sessionData.numberOfPeople} ${sessionData.numberOfPeople === 1 ? 'person' : 'people'}` : 'Not specified';
+
+      // Calculate pricing breakdown
+      const basePrice = sessionData.sessionType === "Full" ? 100 : 50;
+      const extraPetFee = sessionData.numberOfPets === 2 ? 40 : 0;
+      const extraPersonFee = sessionData.numberOfPeople === 2 ? 20 : 0;
+
+      // Update pricing
+      document.getElementById('baseSessionLabel').textContent = `📸 ${sessionData.sessionType} Session`;
+      document.getElementById('baseSessionPrice').textContent = `$${basePrice}`;
+
+      // Update extra fees
+      if (extraPetFee > 0) {
+        document.getElementById('extraPetLine').style.display = 'flex';
+        document.getElementById('extraPetPrice').textContent = `+$${extraPetFee}`;
+      } else {
+        document.getElementById('extraPetLine').style.display = 'none';
+      }
+
+      if (extraPersonFee > 0) {
+        document.getElementById('extraPersonLine').style.display = 'flex';
+        document.getElementById('extraPersonPrice').textContent = `+$${extraPersonFee}`;
+      } else {
+        document.getElementById('extraPersonLine').style.display = 'none';
+      }
+
+      // Update total
+      document.getElementById('totalPrice').textContent = `$${sessionData.totalPrice}`;
+      
+      console.log('Session details populated.');
+    }
+
+    function showStripeIframe() {
+      const stripeUrl = getStripeUrl();
+      if (!stripeUrl) {
+        console.error('No Stripe URL available');
+        alert('⚠️ Payment URL not found. Please try booking again.');
+        window.location.href = '/cart.html';
+        return;
+      }
+
+      console.log('Loading Stripe URL:', stripeUrl);
+
+      const loadingArea = document.getElementById('loadingArea');
+      const stripeContainer = document.getElementById('stripeContainer');
+      const stripeIframe = document.getElementById('stripeIframe');
+
+      // Hide loading area
+      loadingArea.classList.add('hidden');
+
+      // Set iframe source and show
+      stripeIframe.src = stripeUrl;
+      
+      setTimeout(() => {
+        stripeContainer.classList.add('show');
+      }, 500);
+    }
+
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
 
-    // Smooth scroll to booking
-    function scrollToBooking(e) {
-      e.preventDefault();
-      window.location.href = '/#session-builder-section';
-    }
-
-    // Add some interactive elements
+    // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
-      // Animate timeline items on scroll
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
-          }
-        });
-      }, { threshold: 0.1 });
+      console.log('✅ Payment page loaded');
+      
+      // Load session data
+      if (loadSessionData()) {
+        // Populate session details
+        populateSessionDetails();
 
-      document.querySelectorAll('.timeline-item').forEach(item => {
-        observer.observe(item);
-      });
-
-      document.querySelectorAll('.feature-card').forEach(item => {
-        observer.observe(item);
-      });
+        // Start loading text rotation
+        const textInterval = setInterval(updateLoadingText, 1000);
+        
+        // Show Stripe iframe after 5 seconds
+        setTimeout(() => {
+          clearInterval(textInterval);
+          showStripeIframe();
+        }, 5000);
+      } else {
+        // No session data, redirect back to cart
+        alert('⚠️ No session data found. Redirecting to session builder...');
+        window.location.href = '/cart.html';
+      }
     });
   </script>
 </body>
