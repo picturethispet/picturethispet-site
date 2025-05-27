@@ -157,7 +157,7 @@
       flex: 1;
       padding: 2rem 1rem;
       display: flex;
-      align-items: flex-start; /* Align content to the top */
+      align-items: flex-start;
       justify-content: center;
       min-height: calc(100vh - 110px);
     }
@@ -172,14 +172,14 @@
       border: 1px solid rgba(255,255,255, 0.1);
       padding: 3rem;
       animation: fadeInUp 0.8s ease-out;
-      min-height: 600px; /* Reduced min-height to bring content closer to header */
+      min-height: 600px;
       position: relative;
       overflow: hidden;
     }
 
     .page-header {
       text-align: center;
-      margin-bottom: 2rem; /* Reduced margin to bring content closer to header */
+      margin-bottom: 2rem;
     }
 
     .page-title {
@@ -201,10 +201,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start; /* Align content to the top */
+      justify-content: flex-start;
       position: relative;
       width: 100%;
-      min-height: auto; /* Remove fixed min-height to allow natural sizing */
+      min-height: auto;
     }
 
     .loading-area {
@@ -224,7 +224,7 @@
       border: 1px solid var(--available-green);
       border-radius: 16px;
       padding: 2rem;
-      margin-bottom: 2rem; /* Reduced margin to bring content closer */
+      margin-bottom: 2rem;
       text-align: center;
     }
 
@@ -248,7 +248,7 @@
     }
 
     .loading-animation {
-      margin: 1rem 0; /* Reduced margin to bring content closer */
+      margin: 1rem 0;
     }
 
     .loading-spinner {
@@ -314,7 +314,7 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      margin-top: 0; /* Removed margin-top to bring iframe closer to header */
+      margin-top: 0;
     }
 
     .acuity-container.show {
@@ -436,29 +436,33 @@
 
       main {
         margin-top: calc(80px + env(safe-area-inset-top));
-        padding: 1rem; /* Reduced padding to bring content closer to top */
+        padding: 1rem;
       }
 
       .booking-container {
-        padding: 1.5rem; /* Reduced padding */
-        min-height: auto; /* Allow natural height */
+        padding: 1rem;
+        min-height: auto;
       }
 
       .page-header {
-        margin-bottom: 1rem; /* Further reduced to bring iframe up */
+        margin-bottom: 0; /* Remove margin to bring iframe closer */
       }
 
       .page-title {
         font-size: 2.2rem;
       }
 
+      .page-subtitle {
+        margin-bottom: 0.5rem; /* Minimal spacing below subheader */
+      }
+
       .confirmation-message {
-        padding: 1rem; /* Reduced padding */
-        margin-bottom: 1rem;
+        padding: 0.5rem;
+        margin-bottom: 0; /* Remove margin to bring iframe closer */
       }
 
       .loading-animation {
-        margin: 0.5rem 0; /* Reduced margin */
+        margin: 0; /* Remove margin to minimize space */
       }
 
       .loading-spinner {
@@ -475,6 +479,10 @@
 
       .progress-bar {
         margin: 0.5rem 0;
+      }
+
+      .acuity-container {
+        margin-top: 0.5rem; /* Minimal spacing to bring iframe right below subheader */
       }
 
       .acuity-iframe {
@@ -495,7 +503,7 @@
 
     @media (max-width: 480px) {
       .booking-container {
-        padding: 1rem;
+        padding: 0.5rem;
         margin: 0.5rem;
       }
 
@@ -504,7 +512,7 @@
       }
 
       .confirmation-message {
-        padding: 0.8rem;
+        padding: 0.3rem;
       }
 
       .acuity-iframe {
@@ -604,7 +612,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:22 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:30 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
