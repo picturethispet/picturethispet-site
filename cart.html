@@ -152,7 +152,6 @@
       gap: 3rem;
       min-height: calc(100vh - 200px);
       align-items: start;
-      position: relative; /* Ensure the summary panel positions relative to this */
     }
 
     .configuration-panel {
@@ -554,7 +553,7 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session">Book Now</a>
+      <a href="#session-builder" class="book-btn" aria-label="Book a session" onclick="scrollToSection(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
@@ -851,8 +850,8 @@
       // Store in localStorage for payment page
       localStorage.setItem('sessionData', JSON.stringify(sessionData));
       
-      // Redirect to payment page
-      window.location.href = '/payment.html';
+      // Redirect to payments page (updated from /payment.html)
+      window.location.href = '/payments.html';
     }
 
     function toggleMenu() {
@@ -861,65 +860,21 @@
       nav.classList.toggle('active');
     }
 
-    // Function to handle dynamic positioning of the summary panel on desktop
-    function adjustSummaryPanelPosition() {
-      const summaryPanel = document.querySelector('.summary-panel');
-      const sessionBuilder = document.querySelector('.session-builder');
-      const configurationPanel = document.querySelector('.configuration-panel');
-      const viewportHeight = window.innerHeight;
-      const headerHeight = 110; // Header height in pixels
-      const mainPaddingTop = 48; // 3rem (48px) from main padding
-      const padding = 20; // Top padding to keep the panel below the header
-      const gridGap = 48; // 3rem (48px) gap between grid columns
-      const mainPaddingHorizontal = 16; // 1rem (16px) from main padding-left and padding-right
-
-      // Only apply on desktop (above 1024px)
-      if (window.innerWidth > 1024) {
-        const sessionBuilderRect = sessionBuilder.getBoundingClientRect();
-        const configRect = configurationPanel.getBoundingClientRect();
-        const summaryRect = summaryPanel.getBoundingClientRect();
-        const configHeight = configRect.height;
-        const summaryHeight = summaryRect.height;
-        const scrollTop = window.scrollY || window.pageYOffset;
-        const configTop = configRect.top + scrollTop - headerHeight - mainPaddingTop;
-
-        // Calculate the top position for the summary panel
-        let newTop = scrollTop - configTop + headerHeight + mainPaddingTop + padding;
-
-        // Ensure the summary panel stays within the bounds of the configuration panel
-        const maxTop = configHeight - summaryHeight - padding;
-        newTop = Math.max(padding, Math.min(newTop, maxTop));
-
-        // Calculate the right offset to align with the grid column
-        const sessionBuilderWidth = sessionBuilderRect.width;
-        const summaryWidth = 400; // Matches grid-template-columns: 1fr 400px
-        const rightOffset = mainPaddingHorizontal; // Align with the main padding-right
-
-        // Apply the new position
-        summaryPanel.style.position = 'absolute';
-        summaryPanel.style.top = `${newTop}px`;
-        summaryPanel.style.right = `${rightOffset}px`;
-        summaryPanel.style.left = 'auto';
-        summaryPanel.style.width = `${summaryWidth}px`;
-      } else {
-        // Reset for mobile
-        summaryPanel.style.position = 'static';
-        summaryPanel.style.top = 'auto';
-        summaryPanel.style.right = 'auto';
-        summaryPanel.style.left = 'auto';
-        summaryPanel.style.width = 'auto';
-      }
+    function scrollToSection(e) {
+      e.preventDefault();
+      const section = document.querySelector('#session-builder');
+      const offset = 100;
+      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: sectionPosition - offset,
+        behavior: 'smooth'
+      });
     }
 
-    // Initialize page and add event listeners
+    // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Session Builder loaded');
       updateSummary();
-      adjustSummaryPanelPosition();
-
-      // Add scroll and resize event listeners for dynamic positioning
-      window.addEventListener('scroll', adjustSummaryPanelPosition);
-      window.addEventListener('resize', adjustSummaryPanelPosition);
     });
   </script>
 </body>
