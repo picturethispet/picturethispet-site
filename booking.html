@@ -195,7 +195,7 @@
       font-size: 1.2rem;
       color: rgba(255,255,255, 0.7);
       font-weight: 500;
-      line-height: 1; /* Reduced to minimize space */
+      line-height: 1;
     }
 
     .booking-section {
@@ -448,7 +448,7 @@
 
       .page-header {
         margin-bottom: 0;
-        padding: 0; /* Remove padding to minimize space */
+        padding: 0;
       }
 
       .page-title {
@@ -458,7 +458,7 @@
       .page-subtitle {
         margin-bottom: 0;
         padding-bottom: 0;
-        line-height: 1; /* Further reduced */
+        line-height: 1;
       }
 
       .confirmation-message {
@@ -487,7 +487,7 @@
       }
 
       .acuity-container {
-        margin-top: -2rem; /* Doubled negative margin to pull iframe up further */
+        margin-top: -2rem;
         padding: 0;
         margin-bottom: 0;
       }
@@ -619,7 +619,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 03:23 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 03:32 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -677,14 +677,27 @@
     function getAcuityUrl() {
       if (!sessionData || !sessionData.sessionType || !sessionData.location || 
           sessionData.numberOfPets === null || sessionData.numberOfPeople === null) {
+        console.error('Missing session data fields:', {
+          sessionType: sessionData?.sessionType,
+          location: sessionData?.location,
+          numberOfPets: sessionData?.numberOfPets,
+          numberOfPeople: sessionData?.numberOfPeople
+        });
         return null;
       }
 
-      const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
+      // Construct session identifier with correct pluralization
+      const peopleLabel = sessionData.numberOfPeople === 1 ? "person" : "people";
+      const petsLabel = sessionData.numberOfPets === 1 ? "pet" : "pets";
+      const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} ${peopleLabel}, ${sessionData.numberOfPets} ${petsLabel})`;
+      
+      console.log('Constructed session identifier:', sessionIdentifier);
+
       const acuityUrl = acuityLinks[sessionIdentifier];
       
       if (!acuityUrl) {
         console.error('No Acuity URL found for session identifier:', sessionIdentifier);
+        console.log('Available keys in acuityLinks:', Object.keys(acuityLinks));
       }
       
       return acuityUrl;
@@ -694,15 +707,13 @@
       const iframe = document.getElementById('acuityIframe');
       if (!iframe) return;
 
-      // Attempt to get the content height from the iframe
       try {
         const contentHeight = iframe.contentWindow.document.body.scrollHeight;
         iframe.style.height = `${contentHeight}px`;
         console.log('Iframe height set to:', contentHeight);
       } catch (e) {
         console.error('Error accessing iframe content height:', e);
-        // Fallback height if cross-origin restrictions prevent access
-        iframe.style.height = '1000px'; // Adjust based on typical Acuity content height
+        iframe.style.height = '1000px'; // Fallback height
       }
     }
 
