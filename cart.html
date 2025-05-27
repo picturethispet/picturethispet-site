@@ -753,7 +753,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.11 | Last updated: 07:03 PM MDT, May 26, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.16 | Last updated: 09:18 PM MST, May 26, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -761,7 +761,6 @@
     const chatContainer = document.getElementById('chatContainer');
     let currentStep = 0;
     let chatActive = true;
-    // Temporary object to store session builder selections
     const sessionData = {};
 
     const steps = [
@@ -892,7 +891,7 @@
           <div class="session-cards">
             <div class="session-card" onclick="selectContinue('Yes')">
               <h3>Yes ✅</h3>
-              <p>Let’s book it!</p>
+              <p>Let’s proceed!</p>
             </div>
             <div class="session-card" onclick="selectContinue('No')">
               <h3>No 🚫</h3>
@@ -950,12 +949,10 @@
         return;
       }
 
-      // Only append user response for text inputs (pet names, client name)
       if (!step.input.includes('session-card')) {
         appendMessage(value, 'user');
       }
 
-      // Store data temporarily (not saved)
       if (currentStep === 0) sessionData.pet1Name = value;
       if (currentStep === 1) sessionData.client1FirstName = value;
       if (currentStep === 2) {
@@ -974,7 +971,8 @@
       if (currentStep === 10) {
         sessionData.continueBooking = value;
         if (value === 'Yes') {
-          goToCheckout();
+          const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
+          window.location.href = `/payment.html?session_identifier=${encodeURIComponent(sessionIdentifier)}`;
           return;
         } else {
           appendMessage("No problem! You can restart the chat if you’d like to make changes. 😊", 'bot');
@@ -1032,17 +1030,6 @@
       submitInput();
     }
 
-    function goToCheckout() {
-      if (!chatActive) return;
-      // Construct the session identifier based on the four questions
-      const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
-      const basePrice = sessionData.sessionType === "Full" ? 100 : 50;
-      const additionalPetFee = parseInt(sessionData.numberOfPets) === 2 ? 40 : 0;
-      const additionalPersonFee = parseInt(sessionData.numberOfPeople) === 2 ? 20 : 0;
-      const totalPrice = basePrice + additionalPetFee + additionalPersonFee;
-      window.location.href = `/checkout.html?session_identifier=${encodeURIComponent(sessionIdentifier)}&price=${totalPrice}`;
-    }
-
     function restartChat() {
       sessionData.pet1Name = '';
       sessionData.client1FirstName = '';
@@ -1077,7 +1064,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.11');
+      console.log('✅ Cart page loaded - v1.0.16');
       currentStep = 0;
       appendMessage(steps[0].bot, 'bot');
       appendInput(steps[0]);
