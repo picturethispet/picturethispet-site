@@ -213,63 +213,60 @@
       position: relative;
     }
 
-    .acuity-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      min-height: 600px;
-    }
-
-    .loading-message {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: rgba(255,255,255, 0.7);
-      font-size: 1.1rem;
+    .admin-notice {
       text-align: center;
-      z-index: 1;
+      padding: 3rem 2rem;
+      color: white;
     }
 
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(255,255,255, 0.3);
-      border-top: 3px solid var(--gold);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
+    .notice-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .admin-notice h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--gold);
+    }
+
+    .admin-notice p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: rgba(255,255,255, 0.9);
     }
 
     /* === ADMIN CONTROLS === */
     .admin-controls {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
+      margin-bottom: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .admin-btn {
       background: linear-gradient(135deg, var(--dark-brown), #6B3E26);
       color: white;
-      padding: 0.6rem 1.5rem;
+      padding: 1rem 1.5rem;
       border: none;
       border-radius: 12px;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 1rem;
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 3px 12px rgba(75, 46, 30, 0.3);
-      display: inline-flex;
+      display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
+      text-align: center;
     }
 
     .admin-btn:hover {
@@ -278,14 +275,55 @@
       background: linear-gradient(135deg, #5A341C, var(--dark-brown));
     }
 
-    .admin-btn.refresh {
-      background: linear-gradient(135deg, var(--available-green), #059669);
-      box-shadow: 0 3px 12px rgba(16, 185, 129, 0.3);
+    .admin-btn.primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      box-shadow: 0 3px 12px rgba(244, 124, 44, 0.3);
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 1.2rem 2rem;
     }
 
-    .admin-btn.refresh:hover {
-      background: linear-gradient(135deg, #059669, var(--available-green));
-      box-shadow: 0 5px 16px rgba(16, 185, 129, 0.4);
+    .admin-btn.primary:hover {
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      box-shadow: 0 5px 16px rgba(244, 124, 44, 0.4);
+    }
+
+    .quick-tips {
+      max-width: 600px;
+      margin: 2rem auto 0;
+      padding: 2rem;
+      background: rgba(255,255,255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255, 0.1);
+      text-align: left;
+    }
+
+    .quick-tips h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--gold);
+    }
+
+    .quick-tips ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .quick-tips li {
+      margin-bottom: 0.8rem;
+      padding-left: 1.5rem;
+      position: relative;
+      line-height: 1.5;
+      color: rgba(255,255,255, 0.9);
+    }
+
+    .quick-tips li:before {
+      content: "✨";
+      position: absolute;
+      left: 0;
+      top: 0;
     }
 
     /* === FOOTER STYLES === */
@@ -457,22 +495,35 @@
       }
 
       .admin-controls {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: 1fr;
+        gap: 1rem;
       }
 
       .admin-btn {
-        width: 100%;
-        max-width: 250px;
-        justify-content: center;
+        padding: 1rem;
+        font-size: 0.95rem;
       }
 
-      .iframe-container {
-        min-height: 500px;
+      .admin-btn.primary {
+        padding: 1.1rem;
+        font-size: 1rem;
       }
 
-      .acuity-iframe {
-        min-height: 500px;
+      .quick-tips {
+        padding: 1.5rem;
+        margin: 1.5rem auto 0;
+      }
+
+      .admin-notice {
+        padding: 2rem 1rem;
+      }
+
+      .notice-icon {
+        font-size: 3rem;
+      }
+
+      .admin-notice h3 {
+        font-size: 1.6rem;
       }
 
       .footer-container {
@@ -495,37 +546,31 @@
         padding: 1rem;
       }
 
-      .admin-header h1 {
-        font-size: 1.8rem;
+      .admin-notice h3 {
+        font-size: 1.4rem;
       }
 
-      .iframe-container {
-        min-height: 400px;
+      .admin-notice {
+        padding: 1.5rem 0.5rem;
       }
 
-      .acuity-iframe {
-        min-height: 400px;
+      .quick-tips {
+        padding: 1rem;
       }
     }
 
     /* === LARGE SCREENS === */
     @media (min-width: 1200px) {
-      .iframe-container {
-        min-height: 700px;
-      }
-
-      .acuity-iframe {
-        min-height: 700px;
+      .admin-controls {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 900px;
       }
     }
 
     @media (min-width: 1600px) {
-      .iframe-container {
-        min-height: 800px;
-      }
-
-      .acuity-iframe {
-        min-height: 800px;
+      .admin-controls {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1000px;
       }
     }
   </style>
@@ -550,34 +595,45 @@
     <div class="admin-section">
       <div class="admin-header">
         <h1>🔧 Admin Dashboard</h1>
-        <p>Manage your bookings, appointments, and scheduling with Acuity ⚡</p>
-      </div>
-      
-      <div class="admin-controls">
-        <button class="admin-btn refresh" onclick="refreshIframe()" aria-label="Refresh Acuity dashboard">
-          🔄 Refresh Dashboard
-        </button>
-        <a href="https://secure.acuityscheduling.com/home.php" target="_blank" class="admin-btn" aria-label="Open Acuity in new tab">
-          🚀 Open in New Tab
-        </a>
-        <button class="admin-btn" onclick="toggleFullscreen()" aria-label="Toggle fullscreen mode">
-          📱 Fullscreen
-        </button>
+        <p>Quick access to your Acuity Scheduling admin tools ⚡</p>
       </div>
       
       <div class="iframe-container">
-        <div class="loading-message" id="loadingMessage">
-          <div class="loading-spinner"></div>
-          <div>Loading Acuity Dashboard...</div>
+        <div class="admin-notice">
+          <div class="notice-icon">🔒</div>
+          <h3>Secure Access Required</h3>
+          <p>For security reasons, Acuity Scheduling cannot be embedded directly. Use the buttons below to access your admin dashboard:</p>
+          
+          <div class="admin-controls">
+            <a href="https://secure.acuityscheduling.com/home.php" target="_blank" class="admin-btn primary" aria-label="Open Acuity Dashboard">
+              🚀 Open Acuity Dashboard
+            </a>
+            <a href="https://secure.acuityscheduling.com/calendar.php" target="_blank" class="admin-btn" aria-label="View Calendar">
+              📅 Calendar View
+            </a>
+            <a href="https://secure.acuityscheduling.com/appointments.php" target="_blank" class="admin-btn" aria-label="Manage Appointments">
+              📋 Appointments
+            </a>
+            <a href="https://secure.acuityscheduling.com/clients.php" target="_blank" class="admin-btn" aria-label="Manage Clients">
+              👥 Clients
+            </a>
+            <a href="https://secure.acuityscheduling.com/settings.php" target="_blank" class="admin-btn" aria-label="Settings">
+              ⚙️ Settings
+            </a>
+            <a href="https://secure.acuityscheduling.com/reports.php" target="_blank" class="admin-btn" aria-label="View Reports">
+              📊 Reports
+            </a>
+          </div>
+          
+          <div class="quick-tips">
+            <h4>💡 Quick Tips:</h4>
+            <ul>
+              <li>Bookmark this page for quick access to all admin tools</li>
+              <li>Each button opens in a new tab so you won't lose your place</li>
+              <li>Use Ctrl+Click (or Cmd+Click on Mac) to open multiple tabs</li>
+            </ul>
+          </div>
         </div>
-        <iframe 
-          src="https://secure.acuityscheduling.com/home.php" 
-          class="acuity-iframe" 
-          id="acuityIframe"
-          title="Acuity Scheduling Dashboard"
-          loading="lazy"
-          allowfullscreen>
-        </iframe>
       </div>
     </div>
   </main>
@@ -625,61 +681,30 @@
       nav.classList.toggle('active');
     }
 
-    function refreshIframe() {
-      const iframe = document.getElementById('acuityIframe');
-      const loadingMessage = document.getElementById('loadingMessage');
-      
-      // Show loading message
-      loadingMessage.style.display = 'block';
-      
-      // Refresh iframe
-      iframe.src = iframe.src;
-      
-      console.log('🔄 Refreshing Acuity dashboard');
-    }
-
-    function toggleFullscreen() {
-      const container = document.querySelector('.iframe-container');
-      
-      if (!document.fullscreenElement) {
-        container.requestFullscreen().catch(err => {
-          console.log('Fullscreen error:', err);
-        });
-      } else {
-        document.exitFullscreen();
-      }
-    }
-
-    // Hide loading message when iframe loads
+    // Page initialization
     document.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Admin dashboard loaded');
       
-      const iframe = document.getElementById('acuityIframe');
-      const loadingMessage = document.getElementById('loadingMessage');
-      
-      iframe.addEventListener('load', function() {
-        console.log('✅ Acuity iframe loaded');
-        loadingMessage.style.display = 'none';
+      // Add click tracking for analytics (optional)
+      const adminButtons = document.querySelectorAll('.admin-btn');
+      adminButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const destination = this.href || this.textContent;
+          console.log('🔗 Admin link clicked:', destination);
+        });
       });
-      
-      // Hide loading message after 8 seconds regardless (Acuity can be slow)
-      setTimeout(() => {
-        loadingMessage.style.display = 'none';
-      }, 8000);
     });
 
-    // Keyboard shortcuts for admin
+    // Keyboard shortcuts for quick access
     document.addEventListener('keydown', function(e) {
-      // Ctrl/Cmd + R for refresh
-      if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+      // Alt + 1-6 for quick access to different admin sections
+      if (e.altKey && e.key >= '1' && e.key <= '6') {
         e.preventDefault();
-        refreshIframe();
-      }
-      
-      // F11 for fullscreen
-      if (e.key === 'F11') {
-        e.preventDefault();
-        toggleFullscreen();
+        const buttons = document.querySelectorAll('.admin-btn');
+        const index = parseInt(e.key) - 1;
+        if (buttons[index]) {
+          buttons[index].click();
+        }
       }
     });
   </script>
