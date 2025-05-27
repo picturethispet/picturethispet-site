@@ -263,42 +263,15 @@
       min-height: 300px;
     }
 
-    .start-journey-form {
+    .start-journey-button {
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 1rem;
       max-width: 500px;
       margin: 0 auto;
     }
 
-    .form-group {
-      width: 100%;
-      position: relative;
-    }
-
-    .start-journey-form input {
-      width: 100%;
-      padding: 1.2rem;
-      font-size: 1rem;
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .start-journey-form input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .start-journey-form input:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .start-journey-form button {
+    .start-journey-button a {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       padding: 1rem 2.5rem;
@@ -306,26 +279,15 @@
       border-radius: 999px;
       font-weight: 900;
       font-size: 1.2rem;
+      text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
     }
 
-    .start-journey-form button:hover {
+    .start-journey-button a:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
-    }
-
-    .form-error {
-      color: var(--booked-red);
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-      display: none;
-      text-align: center;
-    }
-
-    .form-group.error .form-error {
-      display: block;
     }
 
     /* === TESTIMONIALS === */
@@ -558,16 +520,11 @@
         min-height: 250px;
       }
 
-      .start-journey-form {
+      .start-journey-button {
         max-width: 100%;
       }
 
-      .start-journey-form input {
-        padding: 1rem;
-        font-size: 0.9rem;
-      }
-
-      .start-journey-form button {
+      .start-journey-button a {
         padding: 0.8rem 2rem;
         font-size: 1rem;
       }
@@ -639,14 +596,10 @@
     <!-- Start Your Journey Section -->
     <section id="start-journey">
       <h2>Start Your Journey</h2>
-      <p>Ready to capture your pet’s best moments? Begin by entering your email address below!</p>
-      <form class="start-journey-form" onsubmit="handleEmailSubmit(event)">
-        <div class="form-group">
-          <input type="email" id="email-input" placeholder="Enter your email address 📧" />
-          <div class="form-error" id="email-error">Please enter a valid email address</div>
-        </div>
-        <button type="submit">Continue</button>
-      </form>
+      <p>Ready to capture your pet’s best moments? Begin your journey now!</p>
+      <div class="start-journey-button">
+        <a href="/cart.html">Begin Journey</a>
+      </div>
     </section>
 
     <!-- Testimonials Section -->
@@ -713,7 +666,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.1 | Last updated: 10:12 PM MDT, May 25, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 12:25 AM MDT, May 27, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -734,14 +687,8 @@
       });
     }
 
-    function handleEmailSubmit(e) {
-      e.preventDefault();
-      // No validation or data saving; just redirect to cart.html
-      window.location.href = '/cart.html';
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Index page loaded - v1.0.1');
+      console.log('✅ Index page loaded - v1.0.17');
     });
   </script>
 </body>
