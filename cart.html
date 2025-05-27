@@ -753,7 +753,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.10 | Last updated: 06:59 PM MDT, May 26, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.11 | Last updated: 07:03 PM MDT, May 26, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -950,9 +950,8 @@
         return;
       }
 
-      if (step.input.includes('session-card')) {
-        appendMessage(value.toString(), 'user');
-      } else {
+      // Only append user response for text inputs (pet names, client name)
+      if (!step.input.includes('session-card')) {
         appendMessage(value, 'user');
       }
 
@@ -1078,7 +1077,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.10');
+      console.log('✅ Cart page loaded - v1.0.11');
       currentStep = 0;
       appendMessage(steps[0].bot, 'bot');
       appendInput(steps[0]);
