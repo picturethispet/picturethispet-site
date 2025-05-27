@@ -172,9 +172,9 @@
       border: 1px solid rgba(255,255,255, 0.1);
       padding: 3rem;
       animation: fadeInUp 0.8s ease-out;
-      min-height: auto; /* Allow container to grow with content */
+      min-height: auto;
       position: relative;
-      overflow: visible; /* Ensure content isn’t clipped */
+      overflow: visible;
     }
 
     .page-header {
@@ -195,7 +195,7 @@
       font-size: 1.2rem;
       color: rgba(255,255,255, 0.7);
       font-weight: 500;
-      line-height: 1.2;
+      line-height: 1; /* Reduced to minimize space */
     }
 
     .booking-section {
@@ -411,7 +411,7 @@
 
     @media (max-width: 1024px) {
       .acuity-iframe {
-        height: auto; /* Will be set dynamically */
+        height: auto;
       }
     }
 
@@ -448,7 +448,7 @@
 
       .page-header {
         margin-bottom: 0;
-        padding: 0.5rem;
+        padding: 0; /* Remove padding to minimize space */
       }
 
       .page-title {
@@ -458,6 +458,7 @@
       .page-subtitle {
         margin-bottom: 0;
         padding-bottom: 0;
+        line-height: 1; /* Further reduced */
       }
 
       .confirmation-message {
@@ -486,13 +487,13 @@
       }
 
       .acuity-container {
-        margin-top: -1rem;
+        margin-top: -2rem; /* Doubled negative margin to pull iframe up further */
         padding: 0;
-        margin-bottom: 0; /* Ensure no extra space below */
+        margin-bottom: 0;
       }
 
       .acuity-iframe {
-        height: auto; /* Will be set dynamically */
+        height: auto;
         border-radius: 0;
         box-shadow: none;
       }
@@ -523,7 +524,7 @@
       }
 
       .acuity-iframe {
-        height: auto; /* Will be set dynamically */
+        height: auto;
       }
     }
   </style>
@@ -618,7 +619,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:54 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 03:23 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -633,10 +634,24 @@
     ];
     let messageIndex = 0;
 
-    // Acuity URL mapping based on session type
+    // Acuity URL mapping based on session configuration
     const acuityLinks = {
-      "Full": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621",
-      "Mini": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=MINI_ID" // Placeholder, replace with actual URL
+      "Full at Cheesman (1 people, 1 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498",
+      "Full at Cheesman (1 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444",
+      "Full at Cheesman (2 people, 1 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428",
+      "Full at Cheesman (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419",
+      "Full at City (1 people, 1 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425",
+      "Full at City (1 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441",
+      "Full at City (2 people, 1 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431",
+      "Full at City (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621",
+      "Mini at Cheesman (1 people, 1 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731",
+      "Mini at Cheesman (1 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816464",
+      "Mini at Cheesman (2 people, 1 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816457",
+      "Mini at Cheesman (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816469",
+      "Mini at City (1 people, 1 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816452",
+      "Mini at City (1 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816463",
+      "Mini at City (2 people, 1 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816458",
+      "Mini at City (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816472"
     };
 
     function updateLoadingText() {
@@ -660,14 +675,16 @@
     }
 
     function getAcuityUrl() {
-      if (!sessionData || !sessionData.sessionType) {
+      if (!sessionData || !sessionData.sessionType || !sessionData.location || 
+          sessionData.numberOfPets === null || sessionData.numberOfPeople === null) {
         return null;
       }
 
-      const acuityUrl = acuityLinks[sessionData.sessionType];
+      const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
+      const acuityUrl = acuityLinks[sessionIdentifier];
       
       if (!acuityUrl) {
-        console.error('No Acuity URL found for session type:', sessionData.sessionType);
+        console.error('No Acuity URL found for session identifier:', sessionIdentifier);
       }
       
       return acuityUrl;
