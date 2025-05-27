@@ -1,0 +1,870 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Build Your Session | Picture This Pet</title>
+  <meta name="description" content="Configure your perfect pet photography session with Picture This Pet.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
+      background-image: url('assets/images/main_background_allsystem.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.01rem 1.5rem;
+      padding-top: calc(0.01rem + env(safe-area-inset-top));
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: cover;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0,0,0, 0.3);
+      border-bottom: 1px solid rgba(255,255,255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: calc(110px + env(safe-area-inset-top));
+    }
+
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    .site-nav a:not(.book-btn) {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .book-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    main {
+      margin-top: 110px;
+      flex: 1;
+      padding: 3rem 1rem;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+
+    .session-builder {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 3rem;
+      min-height: calc(100vh - 200px);
+    }
+
+    .configuration-panel {
+      background: rgba(255,255,255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255, 0.1);
+      padding: 2.5rem;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .summary-panel {
+      background: rgba(255,255,255, 0.08);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255, 0.15);
+      padding: 2rem;
+      height: fit-content;
+      position: sticky;
+      top: 140px;
+      max-height: calc(100vh - 160px);
+      overflow-y: auto;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .panel-header {
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    .panel-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
+    }
+
+    .panel-header p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255, 0.7);
+      font-weight: 500;
+    }
+
+    .config-section {
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: slideIn 0.6s ease-out forwards;
+    }
+
+    .config-section:nth-child(2) { animation-delay: 0.1s; }
+    .config-section:nth-child(3) { animation-delay: 0.2s; }
+    .config-section:nth-child(4) { animation-delay: 0.3s; }
+    .config-section:nth-child(5) { animation-delay: 0.4s; }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: rgba(255,255,255, 0.6);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .option-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .option-card {
+      background: rgba(255,255,255, 0.06);
+      border: 2px solid rgba(255,255,255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-card:hover {
+      border-color: rgba(253,183,94, 0.4);
+      background: rgba(255,255,255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .option-card.selected {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(253,183,94, 0.15), rgba(244,124,44, 0.1));
+      box-shadow: 0 8px 25px rgba(253,183,94, 0.2);
+    }
+
+    .option-card.selected::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--orange), var(--gold));
+    }
+
+    .option-header {
+      display: flex;
+      justify-content: between;
+      align-items: flex-start;
+      margin-bottom: 0.8rem;
+    }
+
+    .option-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.3rem;
+    }
+
+    .option-price {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-left: auto;
+    }
+
+    .option-description {
+      font-size: 0.9rem;
+      color: rgba(255,255,255, 0.7);
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+    }
+
+    .option-features {
+      list-style: none;
+      padding: 0;
+    }
+
+    .option-features li {
+      font-size: 0.85rem;
+      color: rgba(255,255,255, 0.6);
+      margin-bottom: 0.3rem;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .option-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--available-green);
+      font-weight: 600;
+    }
+
+    .input-group {
+      margin-bottom: 2rem;
+    }
+
+    .input-label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: white;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      color: white;
+      background: rgba(255,255,255, 0.08);
+      border: 2px solid rgba(255,255,255, 0.15);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .text-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255,255,255, 0.12);
+    }
+
+    .text-input::placeholder {
+      color: rgba(255,255,255, 0.4);
+    }
+
+    .summary-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .summary-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-subtitle {
+      font-size: 0.9rem;
+      color: rgba(255,255,255, 0.6);
+    }
+
+    .session-preview {
+      background: rgba(255,255,255, 0.06);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255,255,255, 0.1);
+    }
+
+    .preview-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255,255,255, 0.08);
+    }
+
+    .preview-item:last-child {
+      border-bottom: none;
+    }
+
+    .preview-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255, 0.7);
+    }
+
+    .preview-value {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: white;
+      text-align: right;
+    }
+
+    .pricing-breakdown {
+      background: rgba(255,255,255, 0.04);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .price-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .price-label {
+      color: rgba(255,255,255, 0.7);
+    }
+
+    .price-value {
+      color: white;
+      font-weight: 500;
+    }
+
+    .price-total {
+      border-top: 1px solid rgba(255,255,255, 0.1);
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+
+    .price-total .price-label {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .price-total .price-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .continue-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: none;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+    }
+
+    .continue-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(244,124,44, 0.4);
+    }
+
+    .continue-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    @media (max-width: 1024px) {
+      .session-builder {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .summary-panel {
+        position: static;
+        order: 2;
+        max-height: none;
+        overflow-y: visible;
+      }
+
+      .configuration-panel {
+        order: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
+        height: calc(80px + env(safe-area-inset-top));
+      }
+
+      .desktop-logo {
+        height: 48px;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .site-nav {
+        display: none;
+      }
+
+      main {
+        margin-top: calc(80px + env(safe-area-inset-top));
+        padding: 2rem 1rem;
+      }
+
+      .configuration-panel,
+      .summary-panel {
+        padding: 1.5rem;
+      }
+
+      .panel-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .session-builder {
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 1.5rem 0.5rem;
+      }
+
+      .configuration-panel,
+      .summary-panel {
+        padding: 1.2rem;
+        border-radius: 20px;
+      }
+
+      .panel-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .option-card {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="#" class="book-btn" aria-label="Book a session">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <div class="session-builder">
+      <!-- Configuration Panel -->
+      <div class="configuration-panel">
+        <div class="panel-header">
+          <h1>🐾 Build Your Session</h1>
+          <p>Configure your perfect pet photography experience ✨</p>
+        </div>
+
+        <!-- Pet Information -->
+        <div class="config-section">
+          <h3 class="section-title">📸 Choose Your Session</h3>
+          <p class="section-subtitle">Select the perfect session length and photo package for your needs ✨</p>
+          
+          <div class="option-grid">
+            <div class="option-card" onclick="selectOption('sessionType', 'Mini', 50)" data-option="Mini">
+              <div class="option-header">
+                <div>
+                  <div class="option-title">🐾 Mini Session</div>
+                  <div class="option-price">$50</div>
+                </div>
+              </div>
+              <div class="option-description">Perfect for a quick photo session with your pet 💕</div>
+              <ul class="option-features">
+                <li>⏰ 60 minutes of photography</li>
+                <li>📷 5 professionally edited photos</li>
+                <li>📱 Digital gallery delivery</li>
+                <li>🌟 Multiple poses and angles</li>
+              </ul>
+            </div>
+
+            <div class="option-card" onclick="selectOption('sessionType', 'Full', 100)" data-option="Full">
+              <div class="option-header">
+                <div>
+                  <div class="option-title">📸 Full Session</div>
+                  <div class="option-price">$100</div>
+                </div>
+              </div>
+              <div class="option-description">Our signature comprehensive photo experience 🎉</div>
+              <ul class="option-features">
+                <li>⏰ 90 minutes of photography</li>
+                <li>📷 10 professionally edited photos</li>
+                <li>📱 Digital gallery delivery</li>
+                <li>✨ Advanced retouching included</li>
+                <li>📞 Pre-session consultation</li>
+                <li>🎁 Bonus candid shots</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Session Type -->
+        <div class="config-section">
+          <h3 class="section-title">📍 Select Location</h3>
+          <p class="section-subtitle">Choose your preferred photography location 🌳</p>
+          
+          <div class="option-grid">
+            <div class="option-card" onclick="selectOption('location', 'Cheesman Park', 0)" data-option="Cheesman Park">
+              <div class="option-header">
+                <div>
+                  <div class="option-title">🌳 Cheesman Park</div>
+                  <div class="option-price">Included ✨</div>
+                </div>
+              </div>
+              <div class="option-description">Beautiful trees, open spaces, and natural lighting 🌿</div>
+            </div>
+
+            <div class="option-card" onclick="selectOption('location', 'City Park', 0)" data-option="City Park">
+              <div class="option-header">
+                <div>
+                  <div class="option-title">🏞️ City Park</div>
+                  <div class="option-price">Included ✨</div>
+                </div>
+              </div>
+              <div class="option-description">Urban vibes with stunning city backdrops 🌆</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="config-section">
+          <h3 class="section-title">🐕 How many pets?</h3>
+          <p class="section-subtitle">Additional pets require extra time and attention 💕</p>
+          
+          <div class="option-grid">
+            <div class="option-card" onclick="selectOption('pets', 1, 0)" data-option="1">
+              <div class="option-header">
+                <div>
+                  <div class="option-title">🐶 1 Pet</div>
+                  <div class="option-price">Included ✨</div>
+                </div>
+              </div>
+              <div class="option-description">Perfect for focusing on one adorable companion 💖</div>
+            </div>
+
+            <div class="option-card" onclick="selectOption('pets', 2, 40)" data-option="2">
+              <div class="option-header">
+                <div>
+                  <div class="option-title">🐶🐱 2 Pets</div>
+                  <div class="option-price">+$40</div>
+                </div>
+              </div>
+              <div class="option-description">Double the cuteness! Extra time needed for multiple pets 🎊</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Number of Pets -->
+        <div class="config-section">
+          <h3 class="section-title">👥 How many people?</h3>
+          <p class="section-subtitle">Include family members in your precious memories 📸</p>
+          
+          <div class="option-grid">
+            <div class="option-card" onclick="selectOption('people', 1, 0)" data-option="1">
+              <div class="option-header">
+                <div>
+                  <div class="option-title">👤 1 Person</div>
+                  <div class="option-price">Included ✨</div>
+                </div>
+              </div>
+              <div class="option-description">Just you and your beloved pet 💕</div>
+            </div>
+
+            <div class="option-card" onclick="selectOption('people', 2, 20)" data-option="2">
+              <div class="option-header">
+                <div>
+                  <div class="option-title">👥 2 People</div>
+                  <div class="option-price">+$20</div>
+                </div>
+              </div>
+              <div class="option-description">Perfect for couples or you and a family member 💑</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Panel -->
+      <div class="summary-panel">
+        <div class="summary-header">
+          <h2 class="summary-title">📋 Session Summary</h2>
+          <p class="summary-subtitle">Review your configuration ✨</p>
+        </div>
+
+        <div class="session-preview">
+          <div class="preview-item">
+            <span class="preview-label">📸 Session Type</span>
+            <span class="preview-value" id="summarySessionType">Select session type</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-label">📍 Location</span>
+            <span class="preview-value" id="summaryLocation">Select location</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-label">🐾 Pets</span>
+            <span class="preview-value" id="summaryPets">Select number</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-label">👥 People</span>
+            <span class="preview-value" id="summaryPeople">Select number</span>
+          </div>
+        </div>
+
+        <div class="pricing-breakdown">
+          <div class="price-line">
+            <span class="price-label" id="baseSessionLabel">📸 Session</span>
+            <span class="price-value" id="baseSessionPrice">$0</span>
+          </div>
+          <div class="price-line" id="extraPetLine" style="display: none;">
+            <span class="price-label">🐾 Additional Pet</span>
+            <span class="price-value">+$40</span>
+          </div>
+          <div class="price-line" id="extraPersonLine" style="display: none;">
+            <span class="price-label">👥 Additional Person</span>
+            <span class="price-value">+$20</span>
+          </div>
+          <div class="price-line price-total">
+            <span class="price-label">💰 Total</span>
+            <span class="price-value" id="totalPrice">$0</span>
+          </div>
+        </div>
+
+        <button class="continue-btn" id="continueBtn" onclick="proceedToPayment()" disabled>
+          🚀 Complete Your Booking
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let sessionConfig = {
+      sessionType: null,
+      sessionPrice: 0,
+      location: null,
+      pets: null,
+      extraPetCost: 0,
+      people: null,
+      extraPersonCost: 0
+    };
+
+    function selectOption(category, value, price) {
+      // Remove selected class from all cards in this category
+      const categoryCards = document.querySelectorAll(`[onclick*="${category}"]`);
+      categoryCards.forEach(card => card.classList.remove('selected'));
+      
+      // Add selected class to clicked card
+      event.currentTarget.classList.add('selected');
+      
+      // Update configuration
+      if (category === 'sessionType') {
+        sessionConfig.sessionType = value;
+        sessionConfig.sessionPrice = price;
+      } else if (category === 'location') {
+        sessionConfig.location = value;
+      } else if (category === 'pets') {
+        sessionConfig.pets = value;
+        sessionConfig.extraPetCost = price;
+      } else if (category === 'people') {
+        sessionConfig.people = value;
+        sessionConfig.extraPersonCost = price;
+      }
+      
+      updateSummary();
+    }
+
+    function updateSummary() {
+      // Update session type
+      const sessionTypeText = sessionConfig.sessionType || 'Select session type';
+      document.getElementById('summarySessionType').textContent = sessionTypeText;
+      
+      // Update location
+      const locationText = sessionConfig.location || 'Select location';
+      document.getElementById('summaryLocation').textContent = locationText;
+      
+      // Update pets
+      const petsText = sessionConfig.pets ? `${sessionConfig.pets} ${sessionConfig.pets === 1 ? 'pet' : 'pets'}` : 'Select number';
+      document.getElementById('summaryPets').textContent = petsText;
+      
+      // Update people
+      const peopleText = sessionConfig.people ? `${sessionConfig.people} ${sessionConfig.people === 1 ? 'person' : 'people'}` : 'Select number';
+      document.getElementById('summaryPeople').textContent = peopleText;
+      
+      // Update pricing
+      document.getElementById('baseSessionLabel').textContent = sessionConfig.sessionType ? `${sessionConfig.sessionType} Session` : 'Session';
+      document.getElementById('baseSessionPrice').textContent = `${sessionConfig.sessionPrice}`;
+      
+      // Show/hide extra costs
+      const extraPetLine = document.getElementById('extraPetLine');
+      const extraPersonLine = document.getElementById('extraPersonLine');
+      
+      if (sessionConfig.extraPetCost > 0) {
+        extraPetLine.style.display = 'flex';
+      } else {
+        extraPetLine.style.display = 'none';
+      }
+      
+      if (sessionConfig.extraPersonCost > 0) {
+        extraPersonLine.style.display = 'flex';
+      } else {
+        extraPersonLine.style.display = 'none';
+      }
+      
+      // Update total
+      const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
+      document.getElementById('totalPrice').textContent = `${total}`;
+      
+      // Enable/disable continue button
+      const continueBtn = document.getElementById('continueBtn');
+      const isComplete = sessionConfig.sessionType && 
+                        sessionConfig.location && 
+                        sessionConfig.pets !== null && 
+                        sessionConfig.people !== null;
+      
+      continueBtn.disabled = !isComplete;
+    }
+
+    function proceedToPayment() {
+      // Calculate total
+      const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
+      
+      // Prepare session data for payment page
+      const sessionData = {
+        sessionType: sessionConfig.sessionType,
+        location: sessionConfig.location,
+        numberOfPets: sessionConfig.pets,
+        numberOfPeople: sessionConfig.people,
+        totalPrice: total,
+        timestamp: Date.now()
+      };
+      
+      // Store in localStorage for payment page
+      localStorage.setItem('sessionData', JSON.stringify(sessionData));
+      
+      // Redirect to payment page
+      window.location.href = '/payment.html';
+    }
+
+    function toggleMenu() {
+      // Mobile menu toggle functionality
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Session Builder loaded');
+      updateSummary();
+    });
+  </script>
+</body>
+</html>
