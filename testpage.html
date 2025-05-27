@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pop-up Event Agreement | Picture This Pet</title>
-  <meta name="description" content="Review and agree to our pop-up event terms and policies before completing your booking with Picture This Pet.">
+  <title>Admin Dashboard | Picture This Pet</title>
+  <meta name="description" content="Picture This Pet Admin Dashboard - Manage bookings, gallery, and client intake.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -16,6 +16,8 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
+      --admin-purple: #8b5cf6;
+      --admin-blue: #3b82f6;
       --popup-event-purple: #a78bfa;
     }
 
@@ -80,6 +82,11 @@
       50% { opacity: 0.8; }
     }
 
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); }
+      50% { box-shadow: 0 8px 30px rgba(139, 92, 246, 0.6); }
+    }
+
     /* === HEADER STYLES === */
     header {
       width: 100%;
@@ -117,13 +124,26 @@
       transform: scale(1.02);
     }
 
+    .admin-badge {
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: glow 3s ease-in-out infinite;
+    }
+
     .site-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
     }
 
-    .site-nav a:not(.book-btn) {
+    .admin-nav-link {
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
@@ -131,31 +151,33 @@
       transition: all 0.3s ease;
       padding: 0.5rem 1rem;
       border-radius: 8px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.3);
     }
 
-    .site-nav a:not(.book-btn):hover {
-      background: rgba(255,255,255, 0.1);
+    .admin-nav-link:hover {
+      background: rgba(139, 92, 246, 0.2);
       transform: translateY(-1px);
     }
 
-    .book-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
+    .logout-btn {
+      background: linear-gradient(135deg, var(--booked-red), #dc2626);
       color: white;
-      padding: 0.8rem 2rem;
+      padding: 0.8rem 1.5rem;
       border: none;
       border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
+      font-weight: 600;
+      font-size: 1rem;
       text-decoration: none;
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     }
 
-    .book-btn:hover {
+    .logout-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
     }
 
     .mobile-menu-btn {
@@ -177,14 +199,14 @@
       margin-top: 110px;
       flex: 1;
       padding: 3rem 1rem;
-      max-width: 1000px;
+      max-width: 1200px;
       margin-left: auto;
       margin-right: auto;
       width: 100%;
     }
 
-    /* === AGREEMENT SECTION === */
-    .agreement-container {
+    /* === DASHBOARD CONTAINER === */
+    .dashboard-container {
       background: rgba(255,255,255, 0.05);
       backdrop-filter: blur(20px);
       border-radius: 24px;
@@ -194,12 +216,12 @@
       margin-bottom: 2rem;
     }
 
-    .agreement-header {
+    .dashboard-header {
       text-align: center;
       margin-bottom: 3rem;
     }
 
-    .agreement-header h1 {
+    .dashboard-header h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
       font-weight: 700;
@@ -208,9 +230,9 @@
       text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
     }
 
-    .agreement-header .event-badge {
+    .dashboard-header .admin-welcome {
       display: inline-block;
-      background: linear-gradient(135deg, var(--popup-event-purple), #8b5cf6);
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
       color: white;
       padding: 0.5rem 1.5rem;
       border-radius: 25px;
@@ -222,14 +244,130 @@
       animation: pulse 3s ease-in-out infinite;
     }
 
-    .agreement-header p {
+    .dashboard-header p {
       font-size: 1.1rem;
       color: rgba(255,255,255, 0.8);
       line-height: 1.6;
     }
 
-    /* === AGREEMENT SECTIONS === */
-    .agreement-section {
+    /* === ADMIN CARDS GRID === */
+    .admin-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .admin-card {
+      background: rgba(255,255,255, 0.08);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 2.5rem;
+      border: 1px solid rgba(255,255,255, 0.15);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .admin-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--admin-purple), var(--admin-blue));
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .admin-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0, 0.3);
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+
+    .admin-card:hover::before {
+      opacity: 1;
+    }
+
+    .admin-card-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      text-align: center;
+    }
+
+    .admin-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .admin-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255, 0.8);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-card-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--admin-purple);
+      font-weight: 600;
+    }
+
+    /* === CARD SPECIFIC COLORS === */
+    .acuity-card {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+      border-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .acuity-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .acuity-card::before {
+      background: linear-gradient(90deg, var(--admin-blue), #1d4ed8);
+    }
+
+    .gallery-card {
+      background: linear-gradient(135deg, rgba(253, 183, 94, 0.1), rgba(244, 124, 44, 0.05));
+      border-color: rgba(253, 183, 94, 0.2);
+    }
+
+    .gallery-card:hover {
+      border-color: rgba(253, 183, 94, 0.4);
+    }
+
+    .gallery-card::before {
+      background: linear-gradient(90deg, var(--gold), var(--orange));
+    }
+
+    .intake-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .intake-card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .intake-card::before {
+      background: linear-gradient(90deg, var(--available-green), #059669);
+    }
+
+    /* === QUICK STATS === */
+    .quick-stats {
       background: rgba(255,255,255, 0.03);
       border-radius: 16px;
       padding: 2rem;
@@ -237,138 +375,39 @@
       border: 1px solid rgba(255,255,255, 0.08);
     }
 
-    .agreement-section h2 {
+    .quick-stats h2 {
       font-family: 'Playfair Display', serif;
       font-size: 1.6rem;
       font-weight: 600;
       color: var(--gold);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
     }
 
-    .agreement-section h3 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 0.8rem;
-      margin-top: 1.5rem;
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
     }
 
-    .agreement-section p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255,255,255, 0.9);
-      margin-bottom: 1rem;
+    .stat-item {
+      background: rgba(255,255,255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(255,255,255, 0.1);
     }
 
-    .agreement-section ul {
-      margin-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .agreement-section li {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255,255,255, 0.9);
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
       margin-bottom: 0.5rem;
     }
 
-    /* === CHECKBOX SECTION === */
-    .checkbox-container {
-      background: rgba(255,255,255, 0.08);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border: 2px solid rgba(253,183,94, 0.3);
-    }
-
-    .checkbox-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      background: rgba(255,255,255, 0.03);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .checkbox-item:hover {
-      background: rgba(255,255,255, 0.06);
-    }
-
-    .checkbox-item input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      margin-top: 2px;
-      accent-color: var(--gold);
-      cursor: pointer;
-    }
-
-    .checkbox-item label {
-      font-size: 1rem;
-      line-height: 1.5;
-      color: rgba(255,255,255, 0.9);
-      cursor: pointer;
-      flex: 1;
-    }
-
-    .checkbox-item.required label::after {
-      content: " *";
-      color: var(--booked-red);
-      font-weight: bold;
-    }
-
-    /* === ACTION BUTTONS === */
-    .action-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      align-items: center;
-      margin-top: 2rem;
-    }
-
-    .back-button {
-      background: rgba(255,255,255, 0.1);
-      color: white;
-      padding: 1rem 2rem;
-      border: 1px solid rgba(255,255,255, 0.3);
-      border-radius: 999px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .back-button:hover {
-      background: rgba(255,255,255, 0.2);
-      transform: translateY(-2px);
-    }
-
-    .continue-button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      padding: 1rem 3rem;
-      border: none;
-      border-radius: 999px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .continue-button.enabled {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .continue-button.enabled:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(244,124,44, 0.4);
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255, 0.7);
     }
 
     /* === FOOTER STYLES === */
@@ -477,6 +516,10 @@
         height: 48px;
       }
 
+      .admin-badge {
+        display: none;
+      }
+
       .site-nav {
         display: none;
         flex-direction: column;
@@ -500,21 +543,8 @@
 
       .site-nav.active a {
         margin: 0.5rem 0;
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
-      }
-
-      .site-nav.active a[href="/"] { order: 1; }
-      .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/locations.html"] { order: 3; }
-      .site-nav.active a[href="/pricing"] { order: 4; }
-      .site-nav.active a[href="/contact"] { order: 5; }
-      .site-nav.active .book-btn { order: 6; }
-
-      .book-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
-        margin-left: 0;
+        font-size: 1.1rem;
+        padding: 0.8rem 1rem;
       }
 
       .mobile-menu-btn {
@@ -526,31 +556,25 @@
         padding: 2rem 1rem;
       }
 
-      .agreement-container {
+      .dashboard-container {
         padding: 2rem;
       }
 
-      .agreement-header h1 {
+      .dashboard-header h1 {
         font-size: 2.2rem;
       }
 
-      .agreement-section {
-        padding: 1.5rem;
+      .admin-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
 
-      .checkbox-container {
-        padding: 1.5rem;
+      .admin-card {
+        padding: 2rem;
       }
 
-      .action-buttons {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .action-buttons a,
-      .action-buttons button {
-        width: 100%;
-        text-align: center;
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .footer-container {
@@ -569,138 +593,106 @@
     }
 
     @media (max-width: 480px) {
-      .agreement-container {
+      .dashboard-container {
         padding: 1.5rem;
         margin: 0.5rem;
       }
 
-      .agreement-header h1 {
+      .dashboard-header h1 {
         font-size: 1.8rem;
       }
 
-      .checkbox-item {
-        padding: 0.8rem;
+      .admin-card {
+        padding: 1.5rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
-    </a>
+    <div style="display: flex; align-items: center;">
+      <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+        <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      </a>
+      <span class="admin-badge">🔐 Admin Panel</span>
+    </div>
     <nav class="site-nav">
-      <a href="/" aria-label="Home page">Home</a>
-      <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations.html" aria-label="Locations page">Locations</a>
-      <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
+      <a href="/admin" class="admin-nav-link" aria-label="Dashboard">Dashboard</a>
+      <a href="/" class="admin-nav-link" aria-label="View Site">View Site</a>
+      <a href="/admin/login" class="logout-btn" aria-label="Logout">Logout</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <div class="agreement-container">
-      <div class="agreement-header">
-        <div class="event-badge">🎉 Pop-up Event</div>
-        <h1>Event Agreement & Policies</h1>
-        <p>Please review and agree to the following terms before completing your pop-up event booking.</p>
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <div class="admin-welcome">👋 Welcome Back, Admin</div>
+        <h1>Admin Dashboard</h1>
+        <p>Manage your Picture This Pet business operations from this central hub.</p>
       </div>
 
-      <!-- Event Terms & Conditions -->
-      <div class="agreement-section">
-        <h2>📝 Event Terms & Conditions</h2>
-        <h3>Event Details</h3>
-        <p>This pop-up photography event will take place at Cheesman Park on the scheduled date. Sessions are weather-dependent and may be rescheduled due to severe weather conditions.</p>
-        
-        <h3>Session Guidelines</h3>
-        <ul>
-          <li>Each session is approximately 15-20 minutes</li>
-          <li>Arrive 10 minutes before your scheduled time slot</li>
-          <li>Keep pets on leash unless otherwise directed</li>
-          <li>Bring high-value treats to keep your pet engaged</li>
-          <li>Sessions may run slightly behind schedule due to the nature of pet photography</li>
-        </ul>
-
-        <h3>Photo Delivery</h3>
-        <p>You will receive 3-5 professionally edited digital photos within 2-3 weeks of the event date. Photos will be delivered via a private online gallery with download access.</p>
-      </div>
-
-      <!-- Cancellation Policy -->
-      <div class="agreement-section">
-        <h2>🔄 Cancellation & Refund Policy</h2>
-        <p><strong>Event Cancellations:</strong> If we must cancel the entire event due to severe weather or unforeseen circumstances, all participants will receive a full refund or credit toward a future session.</p>
-        
-        <p><strong>Individual Cancellations:</strong> Individual session cancellations made more than 48 hours in advance will receive a full refund. Cancellations made within 48 hours of the event are non-refundable but may be transferred to another participant.</p>
-        
-        <p><strong>No-Shows:</strong> No-shows are non-refundable and non-transferable.</p>
-      </div>
-
-      <!-- Liability Waiver -->
-      <div class="agreement-section">
-        <h2>⚖️ Liability Waiver</h2>
-        <p>By participating in this pop-up event, you acknowledge and agree that:</p>
-        <ul>
-          <li>You participate at your own risk</li>
-          <li>Picture This Pet is not liable for any injuries to you, your pet, or others during the session</li>
-          <li>You are responsible for your pet's behavior and any damage they may cause</li>
-          <li>You will supervise your pet at all times during the session</li>
-          <li>You have disclosed any behavioral issues or concerns about your pet prior to the session</li>
-        </ul>
-      </div>
-
-      <!-- Photo Usage Rights -->
-      <div class="agreement-section">
-        <h2>📸 Photo Usage & Privacy</h2>
-        <p><strong>Your Photos:</strong> You will receive full resolution digital files with a personal use license. You may print, share, and post your photos on social media.</p>
-        
-        <p><strong>Marketing Usage:</strong> By default, Picture This Pet may use photos from your session for marketing purposes including social media, website, and promotional materials. You may opt out of this by checking the box below.</p>
-        
-        <p><strong>Privacy:</strong> Your personal information will not be shared with third parties and will only be used for session coordination and photo delivery.</p>
-      </div>
-
-      <!-- Agreement Checkboxes -->
-      <div class="checkbox-container">
-        <h2 style="margin-bottom: 1.5rem; color: var(--gold);">✅ Required Agreements</h2>
-        
-        <div class="checkbox-item required">
-          <input type="checkbox" id="terms" name="terms" required>
-          <label for="terms">I have read and agree to the Event Terms & Conditions</label>
-        </div>
-
-        <div class="checkbox-item required">
-          <input type="checkbox" id="cancellation" name="cancellation" required>
-          <label for="cancellation">I understand and agree to the Cancellation & Refund Policy</label>
-        </div>
-
-        <div class="checkbox-item required">
-          <input type="checkbox" id="liability" name="liability" required>
-          <label for="liability">I acknowledge and agree to the Liability Waiver terms</label>
-        </div>
-
-        <div class="checkbox-item required">
-          <input type="checkbox" id="photo-usage" name="photo-usage" required>
-          <label for="photo-usage">I understand the Photo Usage & Privacy terms</label>
-        </div>
-
-        <div class="checkbox-item">
-          <input type="checkbox" id="marketing-opt-out" name="marketing-opt-out">
-          <label for="marketing-opt-out">Opt out of marketing usage (check this box if you do NOT want your photos used for marketing)</label>
-        </div>
-
-        <div class="checkbox-item required">
-          <input type="checkbox" id="pet-behavior" name="pet-behavior" required>
-          <label for="pet-behavior">I confirm that my pet is well-socialized and I have disclosed any behavioral concerns</label>
+      <!-- Quick Stats -->
+      <div class="quick-stats">
+        <h2>📊 Quick Stats</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number" id="todaysBookings">-</div>
+            <div class="stat-label">Today's Bookings</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="weeklyRevenue">-</div>
+            <div class="stat-label">Weekly Revenue</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="pendingIntakes">-</div>
+            <div class="stat-label">Pending Intakes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="totalClients">-</div>
+            <div class="stat-label">Total Clients</div>
+          </div>
         </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="action-buttons">
-        <a href="/cart.html" class="back-button">← Back to Session Builder</a>
-        <button class="continue-button" id="continueButton" onclick="proceedToPayment()">
-          Continue to Secure Payment 🔒
-        </button>
+      <!-- Admin Cards Grid -->
+      <div class="admin-cards-grid">
+        <!-- Acuity Scheduling Card -->
+        <a href="/acuity" class="admin-card acuity-card">
+          <span class="admin-card-icon">📅</span>
+          <h3>Acuity Scheduling</h3>
+          <p>Manage your appointment calendar, view bookings, and handle client scheduling directly through your Acuity integration.</p>
+          <div class="admin-card-footer">
+            <span>Open Scheduler</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Gallery Management Card -->
+        <a href="/gallery" class="admin-card gallery-card">
+          <span class="admin-card-icon">🖼️</span>
+          <h3>Gallery Management</h3>
+          <p>Access your Pixieset gallery system to manage client photos, create galleries, and handle photo delivery.</p>
+          <div class="admin-card-footer">
+            <span>Manage Gallery</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Client Intake Card -->
+        <a href="/admin/intake" class="admin-card intake-card">
+          <span class="admin-card-icon">📝</span>
+          <h3>Client Intake & Agreements</h3>
+          <p>Review client intake forms, manage agreements, and handle all client onboarding documentation.</p>
+          <div class="admin-card-footer">
+            <span>View Intakes</span>
+            <span>→</span>
+          </div>
+        </a>
       </div>
     </div>
   </main>
@@ -708,17 +700,17 @@
   <footer>
     <div class="footer-container">
       <div class="footer-section">
-        <h4>Contact Us</h4>
-        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+        <h4>Admin Contact</h4>
+        <a href="mailto:admin@picturethispet.co" aria-label="Email admin">Admin Email</a>
+        <a href="/admin/settings" aria-label="Admin settings">System Settings</a>
       </div>
       <div class="footer-section socials">
-        <h4>Connect</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+        <h4>Business Links</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Business Instagram">Instagram</a>
+        <a href="/admin/reports" aria-label="Business reports">Reports</a>
       </div>
       <div class="footer-section">
-        <h4>We Accept</h4>
+        <h4>Payment Processing</h4>
         <div class="payment-methods">
           <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
           <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
@@ -738,7 +730,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 12:25 AM MDT, May 27, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet Admin Portal. All rights reserved. | Admin v2.0.1 | Last login: <span id="lastLogin">Loading...</span></p>
     </div>
   </footer>
 
@@ -748,96 +740,48 @@
       nav.classList.toggle('active');
     }
 
-    // Track checkbox states and enable/disable continue button
-    function updateContinueButton() {
-      const requiredCheckboxes = document.querySelectorAll('input[type="checkbox"][required]');
-      const continueButton = document.getElementById('continueButton');
-      
-      let allChecked = true;
-      requiredCheckboxes.forEach(checkbox => {
-        if (!checkbox.checked) {
-          allChecked = false;
-        }
-      });
-      
-      if (allChecked) {
-        continueButton.classList.add('enabled');
-      } else {
-        continueButton.classList.remove('enabled');
-      }
+    // Simulate loading stats (replace with real API calls)
+    function loadDashboardStats() {
+      // Simulate API delay
+      setTimeout(() => {
+        document.getElementById('todaysBookings').textContent = '7';
+        document.getElementById('weeklyRevenue').textContent = '$1,240';
+        document.getElementById('pendingIntakes').textContent = '3';
+        document.getElementById('totalClients').textContent = '142';
+      }, 1000);
     }
 
-    // Add event listeners to all checkboxes
+    // Update last login time
+    function updateLastLogin() {
+      const now = new Date();
+      const timeString = now.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      document.getElementById('lastLogin').textContent = timeString;
+    }
+
+    // Initialize dashboard
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Pop-up Agreement page loaded');
-      
-      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateContinueButton);
-      });
-      
-      // Initial button state check
-      updateContinueButton();
-    });
+      console.log('✅ Admin Dashboard loaded');
+      loadDashboardStats();
+      updateLastLogin();
 
-    // Proceed to payment with agreement data
-    function proceedToPayment() {
-      const continueButton = document.getElementById('continueButton');
-      
-      // Check if button is enabled
-      if (!continueButton.classList.contains('enabled')) {
-        alert('⚠️ Please agree to all required terms before continuing.');
-        return;
-      }
-      
-      // Collect agreement data
-      const agreementData = {
-        termsAccepted: document.getElementById('terms').checked,
-        cancellationAccepted: document.getElementById('cancellation').checked,
-        liabilityAccepted: document.getElementById('liability').checked,
-        photoUsageAccepted: document.getElementById('photo-usage').checked,
-        marketingOptOut: document.getElementById('marketing-opt-out').checked,
-        petBehaviorConfirmed: document.getElementById('pet-behavior').checked,
-        timestamp: new Date().toISOString(),
-        ipAddress: 'client-side', // Would need server-side for real IP
-        userAgent: navigator.userAgent
-      };
-      
-      // Get existing session data
-      let sessionData = {};
-      try {
-        const storedData = localStorage.getItem('sessionData');
-        if (storedData) {
-          sessionData = JSON.parse(storedData);
-        }
-      } catch (e) {
-        console.error('Error loading session data:', e);
-      }
-      
-      // Add agreement data to session
-      sessionData.agreements = agreementData;
-      sessionData.agreementCompleted = true;
-      
-      // Save updated session data
-      localStorage.setItem('sessionData', JSON.stringify(sessionData));
-      
-      console.log('✅ Agreements accepted:', agreementData);
-      console.log('📝 Updated session data:', sessionData);
-      
-      // Here you would redirect to the specific Stripe URL
-      // For now, redirect to payment page which will handle the Stripe URL
-      if (sessionData.stripeUrl) {
-        console.log('🚀 Redirecting to Stripe:', sessionData.stripeUrl);
-        window.location.href = sessionData.stripeUrl;
-      } else {
-        console.log('🚀 Redirecting to payment page');
-        window.location.href = '/payment.html';
-      }
-    }
+      // Add click tracking for admin cards
+      document.querySelectorAll('.admin-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+          const cardType = this.classList.contains('acuity-card') ? 'Acuity' :
+                           this.classList.contains('gallery-card') ? 'Gallery' : 'Intake';
+          console.log(`🚀 Admin navigating to: ${cardType}`);
+        });
+      });
+    });
 
     // Log errors for debugging
     window.addEventListener('error', function(e) {
-      console.error('Page error:', e.error);
+      console.error('Admin Dashboard error:', e.error);
     });
   </script>
 </body>
