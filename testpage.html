@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Build Your Session | Picture This Pet</title>
-  <meta name="description" content="Configure your perfect pet photography session with Picture This Pet.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Picture This Pet - Pet Photography</title>
+  <meta name="description" content="Book your pet photography session with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #F47C2C;
@@ -26,7 +26,14 @@
 
     html {
       overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       scroll-behavior: smooth;
+    }
+
+    html::-webkit-scrollbar {
+      width: 0;
+      height: 0;
     }
 
     body {
@@ -40,7 +47,6 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      position: relative;
     }
 
     @keyframes moveBackground {
@@ -50,34 +56,29 @@
     }
 
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-10px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
+    /* === HEADER STYLES === */
     header {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      padding-top: calc(0.01rem + env(safe-area-inset-top));
       background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: cover;
+      background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0,0,0, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255,255,255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
       z-index: 1000;
-      height: calc(110px + env(safe-area-inset-top));
+      height: 110px;
     }
 
     .desktop-logo {
@@ -89,6 +90,11 @@
       align-items: center;
       transition: all 0.3s ease;
       text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
     }
 
     .site-nav {
@@ -107,6 +113,11 @@
       border-radius: 8px;
     }
 
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255,255,255, 0.1);
+      transform: translateY(-1px);
+    }
+
     .book-btn {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
@@ -122,6 +133,11 @@
       box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
     }
 
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
+    }
+
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -129,369 +145,438 @@
       color: white;
       font-size: 2rem;
       cursor: pointer;
+      transition: all 0.3s ease;
     }
 
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
       flex: 1;
-      padding: 3rem 1rem 6rem 1rem;
-      max-width: 1400px;
-      margin-left: auto;
-      margin-right: auto;
-      width: 100%;
+      padding: 4rem 1rem;
     }
 
-    .session-builder {
-      display: grid;
-      grid-template-columns: 1fr 400px;
-      gap: 3rem;
-      align-items: start;
-    }
-
-    .configuration-panel {
-      background: rgba(255,255,255, 0.05);
-      backdrop-filter: blur(20px);
+    /* === SECTION STYLES === */
+    section {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0, 0.2);
+      padding: 3rem;
+      backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255, 0.1);
-      padding: 2.5rem;
-      animation: fadeInUp 0.8s ease-out;
+      animation: fadeInUp 1s ease-out;
     }
 
-    .summary-panel {
-      background: rgba(255,255,255, 0.08);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255, 0.15);
-      padding: 2rem;
-      animation: fadeInUp 0.8s ease-out 0.2s both;
-      /* Removed sticky positioning - now flows naturally */
-    }
-
-    .panel-header {
-      margin-bottom: 2.5rem;
+    section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.5rem;
       text-align: center;
     }
 
-    .panel-header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
-    }
-
-    .panel-header p {
-      font-size: 1.1rem;
-      color: rgba(255,255,255, 0.7);
-      font-weight: 500;
-    }
-
-    .config-section {
-      margin-bottom: 3rem;
-      opacity: 0;
-      animation: slideIn 0.6s ease-out forwards;
-    }
-
-    .config-section:nth-child(2) { animation-delay: 0.1s; }
-    .config-section:nth-child(3) { animation-delay: 0.2s; }
-    .config-section:nth-child(4) { animation-delay: 0.3s; }
-    .config-section:nth-child(5) { animation-delay: 0.4s; }
-
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .section-subtitle {
-      font-size: 0.95rem;
-      color: rgba(255,255,255, 0.6);
+    section p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255,255,255, 0.9);
       margin-bottom: 1.5rem;
-      line-height: 1.5;
+      text-align: center;
     }
 
-    .option-grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .option-card {
-      background: rgba(255,255,255, 0.06);
-      border: 2px solid rgba(255,255,255, 0.1);
-      border-radius: 16px;
-      padding: 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    /* === HERO SECTION === */
+    .hero-section {
       position: relative;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: center;
+      padding: 3rem;
       overflow: hidden;
     }
 
-    .option-card:hover {
-      border-color: rgba(253,183,94, 0.4);
-      background: rgba(255,255,255, 0.08);
-      transform: translateY(-2px);
-    }
-
-    .option-card.selected {
-      border-color: var(--gold);
-      background: linear-gradient(135deg, rgba(253,183,94, 0.15), rgba(244,124,44, 0.1));
-      box-shadow: 0 8px 25px rgba(253,183,94, 0.2);
-    }
-
-    .option-card.selected::before {
-      content: '';
+    .hero-image {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--orange), var(--gold));
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
     }
 
-    .option-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.8rem;
-    }
-
-    .option-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 0.3rem;
-    }
-
-    .option-price {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--gold);
-      margin-left: auto;
-    }
-
-    .option-description {
-      font-size: 0.9rem;
-      color: rgba(255,255,255, 0.7);
-      line-height: 1.4;
-      margin-bottom: 0.8rem;
-    }
-
-    .option-features {
-      list-style: none;
-      padding: 0;
-    }
-
-    .option-features li {
-      font-size: 0.85rem;
-      color: rgba(255,255,255, 0.6);
-      margin-bottom: 0.3rem;
-      padding-left: 1rem;
+    .hero-content {
       position: relative;
+      z-index: 1;
+      max-width: 800px;
     }
 
-    .option-features li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--available-green);
-      font-weight: 600;
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
 
-    .summary-header {
+    .hero-content p {
+      font-size: 1.5rem;
       margin-bottom: 2rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.5rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+
+    /* === START YOUR JOURNEY === */
+    #start-journey {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 300px;
+    }
+
+    .start-journey-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .start-journey-button a {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .start-journey-button a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+    }
+
+    /* === TESTIMONIALS === */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
       text-align: center;
     }
 
-    .summary-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 0.5rem;
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     }
 
-    .summary-subtitle {
+    .testimonial-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card cite {
       font-size: 0.9rem;
-      color: rgba(255,255,255, 0.6);
+      color: var(--gold);
+      font-style: italic;
     }
 
-    .session-preview {
-      background: rgba(255,255,255, 0.06);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255,255,255, 0.1);
-    }
-
-    .preview-item {
+    /* === INSTAGRAM FEED === */
+    .ig-feed {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem 0;
-      border-bottom: 1px solid rgba(255,255,255, 0.08);
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
     }
 
-    .preview-item:last-child {
-      border-bottom: none;
-    }
-
-    .preview-label {
-      font-size: 0.9rem;
-      color: rgba(255,255,255, 0.7);
-    }
-
-    .preview-value {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: white;
-      text-align: right;
-    }
-
-    .pricing-breakdown {
-      background: rgba(255,255,255, 0.04);
+    .ig-post {
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
     }
 
-    .price-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 0;
+    .ig-post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* === FOOTER STYLES === */
+    footer {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
     }
 
-    .price-label {
-      color: rgba(255,255,255, 0.7);
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
     }
 
-    .price-value {
-      color: white;
-      font-weight: 500;
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
-    .price-total {
-      border-top: 1px solid rgba(255,255,255, 0.1);
-      padding-top: 1rem;
-      margin-top: 1rem;
-    }
-
-    .price-total .price-label {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: white;
-    }
-
-    .price-total .price-value {
-      font-size: 1.8rem;
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
       font-weight: 700;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
       color: var(--gold);
     }
 
-    .continue-btn {
-      width: 100%;
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 1.2rem;
-      font-size: 1.1rem;
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .payment-placeholder {
+      width: 40px;
+      height: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: none;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+      color: rgba(255, 255, 255, 0.7);
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      text-align: center;
+      line-height: 1.1;
     }
 
-    .continue-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(244,124,44, 0.4);
+    .payment-placeholder:hover {
+      opacity: 1;
+      transform: scale(1.1);
     }
 
-    .continue-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    @media (max-width: 1024px) {
-      .session-builder {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .summary-panel {
-        order: 2;
-      }
-
-      .configuration-panel {
-        order: 1;
-      }
-    }
-
+    /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
         height: 80px;
         padding: 0.5rem 1rem;
-        height: calc(80px + env(safe-area-inset-top));
       }
 
       .desktop-logo {
         height: 48px;
       }
 
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255,255,255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+
+      .site-nav.active {
+        display: flex;
+      }
+
+      .site-nav.active a {
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+
+      .book-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        margin-left: 0;
+      }
+
       .mobile-menu-btn {
         display: block;
       }
 
-      .site-nav {
-        display: none;
-      }
-
       main {
-        margin-top: calc(80px + env(safe-area-inset-top));
+        margin-top: 80px;
         padding: 2rem 1rem;
       }
 
-      .configuration-panel,
-      .summary-panel {
-        padding: 1.5rem;
+      .hero-section {
+        height: 70vh;
+        padding: 2rem 1rem;
       }
 
-      .panel-header h1 {
-        font-size: 2.2rem;
+      .hero-content h1 {
+        font-size: 2.5rem;
       }
 
-      .session-builder {
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+
+      .hero-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1.2rem;
+      }
+
+      section {
+        padding: 2rem;
+      }
+
+      section h2 {
+        font-size: 2rem;
+      }
+
+      section p {
+        font-size: 1rem;
+      }
+
+      #start-journey {
+        min-height: 250px;
+      }
+
+      .start-journey-button {
+        max-width: 100%;
+      }
+
+      .start-journey-button a {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ig-feed {
+        gap: 0.5rem;
+      }
+
+      .ig-post {
+        width: 150px;
+        height: 150px;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
         gap: 1.5rem;
       }
-    }
 
-    @media (max-width: 480px) {
-      main {
-        padding: 1.5rem 0.5rem;
+      .footer-section {
+        align-items: center;
+        text-align: center;
       }
 
-      .configuration-panel,
-      .summary-panel {
-        padding: 1.2rem;
-        border-radius: 20px;
-      }
-
-      .panel-header h1 {
-        font-size: 1.8rem;
-      }
-
-      .option-card {
-        padding: 1.2rem;
+      .payment-methods {
+        justify-content: center;
       }
     }
   </style>
@@ -507,311 +592,131 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session">Book Now</a>
+      <a href="#start-journey" class="book-btn" aria-label="Book a session" onclick="scrollToSection(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <div class="session-builder">
-      <!-- Configuration Panel -->
-      <div class="configuration-panel">
-        <div class="panel-header">
-          <h1>🐾 Build Your Session</h1>
-          <p>Configure your perfect pet photography experience ✨</p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <img src="assets/images/2I4A4374 copy.jpg" alt="Happy pet with owner in a park" class="hero-image" />
+      <div class="hero-content">
+        <h1>Timeless Pet Photography</h1>
+        <p>Capture the magic of your furry friend with PictureThisPet.</p>
+        <a href="#start-journey" class="hero-btn" onclick="scrollToSection(event)">Book Now</a>
+      </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section id="welcome">
+      <h2>Welcome to PictureThisPet</h2>
+      <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we'll capture their unique personality in beautiful settings across Denver.</p>
+    </section>
+
+    <!-- Pop Up Event Section -->
+    <section id="pop-up-event">
+      <h2>Upcoming Pop Up Event</h2>
+      <p>Join us at our next pop-up event at Cheesman Park! Bring your pets for a fun day of photography.</p>
+    </section>
+
+    <!-- Start Your Journey Section -->
+    <section id="start-journey">
+      <h2>Start Your Journey</h2>
+      <p>Ready to capture your pet's best moments? Begin your journey now!</p>
+      <div class="start-journey-button">
+        <a href="/cart.html">Begin Journey</a>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+      <h2>Testimonials</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p>"Amazing experience! The photos of my dog are absolutely perfect."</p>
+          <cite>- Jane D.</cite>
         </div>
-
-        <!-- Session Type -->
-        <div class="config-section">
-          <h3 class="section-title">📸 Choose Your Session</h3>
-          <p class="section-subtitle">Select the perfect session length and photo package for your needs ✨</p>
-          
-          <div class="option-grid">
-            <div class="option-card" onclick="selectOption('sessionType', 'Mini')" data-option="Mini">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">🐾 Mini Session</div>
-                  <div class="option-price">Starting $50</div>
-                </div>
-              </div>
-              <div class="option-description">Perfect for a quick photo session with your pet 💕</div>
-              <ul class="option-features">
-                <li>⏰ 60 minutes of photography</li>
-                <li>📷 5 professionally edited photos</li>
-                <li>📱 Digital gallery delivery</li>
-                <li>🌟 Multiple poses and angles</li>
-              </ul>
-            </div>
-
-            <div class="option-card" onclick="selectOption('sessionType', 'Full')" data-option="Full">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">📸 Full Session</div>
-                  <div class="option-price">Starting $100</div>
-                </div>
-              </div>
-              <div class="option-description">Our signature comprehensive photo experience 🎉</div>
-              <ul class="option-features">
-                <li>⏰ 90 minutes of photography</li>
-                <li>📷 10 professionally edited photos</li>
-                <li>📱 Digital gallery delivery</li>
-                <li>✨ Advanced retouching included</li>
-                <li>📞 Pre-session consultation</li>
-                <li>🎁 Bonus candid shots</li>
-              </ul>
-            </div>
-          </div>
+        <div class="testimonial-card">
+          <p>"PictureThisPet captured my cat's personality so well. Highly recommend!"</p>
+          <cite>- Mark S.</cite>
         </div>
-
-        <!-- Location -->
-        <div class="config-section">
-          <h3 class="section-title">📍 Select Location</h3>
-          <p class="section-subtitle">Choose your preferred photography location 🌳</p>
-          
-          <div class="option-grid">
-            <div class="option-card" onclick="selectOption('location', 'Cheesman')" data-option="Cheesman">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">🌳 Cheesman Park</div>
-                  <div class="option-price">Included ✨</div>
-                </div>
-              </div>
-              <div class="option-description">Beautiful trees, open spaces, and natural lighting 🌿</div>
-            </div>
-
-            <div class="option-card" onclick="selectOption('location', 'City')" data-option="City">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">🏞️ City Park</div>
-                  <div class="option-price">Included ✨</div>
-                </div>
-              </div>
-              <div class="option-description">Urban vibes with stunning city backdrops 🌆</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Number of Pets -->
-        <div class="config-section">
-          <h3 class="section-title">🐕 How many pets?</h3>
-          <p class="section-subtitle">Additional pets require extra time and attention 💕</p>
-          
-          <div class="option-grid">
-            <div class="option-card" onclick="selectOption('pets', 1)" data-option="1">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">🐶 1 Pet</div>
-                  <div class="option-price">Base Price</div>
-                </div>
-              </div>
-              <div class="option-description">Perfect for focusing on one adorable companion 💖</div>
-            </div>
-
-            <div class="option-card" onclick="selectOption('pets', 2)" data-option="2">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">🐶🐱 2 Pets</div>
-                  <div class="option-price">Extended Session</div>
-                </div>
-              </div>
-              <div class="option-description">Double the cuteness! Extra time needed for multiple pets 🎊</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Number of People -->
-        <div class="config-section">
-          <h3 class="section-title">👥 How many people?</h3>
-          <p class="section-subtitle">Include family members in your precious memories 📸</p>
-          
-          <div class="option-grid">
-            <div class="option-card" onclick="selectOption('people', 1)" data-option="1">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">👤 1 Person</div>
-                  <div class="option-price">Base Price</div>
-                </div>
-              </div>
-              <div class="option-description">Just you and your beloved pet 💕</div>
-            </div>
-
-            <div class="option-card" onclick="selectOption('people', 2)" data-option="2">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">👥 2 People</div>
-                  <div class="option-price">Family Package</div>
-                </div>
-              </div>
-              <div class="option-description">Perfect for couples or you and a family member 💑</div>
-            </div>
-          </div>
+        <div class="testimonial-card">
+          <p>"The session was so fun, and the photos are stunning!"</p>
+          <cite>- Emily R.</cite>
         </div>
       </div>
+    </section>
 
-      <!-- Summary Panel -->
-      <div class="summary-panel">
-        <div class="summary-header">
-          <h2 class="summary-title">📋 Session Summary</h2>
-          <p class="summary-subtitle">Review your configuration ✨</p>
-        </div>
-
-        <div class="session-preview">
-          <div class="preview-item">
-            <span class="preview-label">📸 Session Type</span>
-            <span class="preview-value" id="summarySessionType">Select session type</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">📍 Location</span>
-            <span class="preview-value" id="summaryLocation">Select location</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">🐾 Pets</span>
-            <span class="preview-value" id="summaryPets">Select number</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">👥 People</span>
-            <span class="preview-value" id="summaryPeople">Select number</span>
-          </div>
-        </div>
-
-        <div class="pricing-breakdown">
-          <div class="price-line price-total">
-            <span class="price-label">💰 Session Total</span>
-            <span class="price-value" id="totalPrice">Select all options</span>
-          </div>
-        </div>
-
-        <button class="continue-btn" id="continueBtn" onclick="proceedToPayment()" disabled>
-          🚀 Complete Your Booking
-        </button>
+    <!-- Instagram Section -->
+    <section id="instagram-feed">
+      <h2>Follow Us on Instagram</h2>
+      <p>Check out our latest pet photography sessions on Instagram!</p>
+      <div class="ig-feed">
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" class="ig-post">Instagram Post 1</a>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" class="ig-post">Instagram Post 2</a>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" class="ig-post">Instagram Post 3</a>
       </div>
-    </div>
+      <p><a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" style="color: var(--gold); text-decoration: underline;">Follow @picturethispet</a></p>
+    </section>
   </main>
 
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+          <div class="assets/images/taptopay.jpg" alt="Tap to Pay" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 12:25 AM MDT, May 27, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+    </div>
+  </footer>
+
   <script>
-    // Stripe URL mapping based on Excel data
-    const STRIPE_MAPPING = {
-      'Full-Cheesman-1-1': { price: 100, url: 'https://buy.stripe.com/4gw6ry0Wz0bXe1G147' },
-      'Full-Cheesman-2-1': { price: 140, url: 'https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08' },
-      'Full-Cheesman-1-2': { price: 160, url: 'https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c' },
-      'Full-Cheesman-2-2': { price: 160, url: 'https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d' },
-      'Full-City-1-1': { price: 100, url: 'https://buy.stripe.com/00gg28eNp9Mx9Lq9AE' },
-      'Full-City-2-1': { price: 140, url: 'https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07' },
-      'Full-City-1-2': { price: 120, url: 'https://buy.stripe.com/14A8wR8d12921VD80B9bO0e' },
-      'Full-City-2-2': { price: 160, url: 'https://buy.stripe.com/6oU28tdxl29243Lft39bO0f' },
-      'Mini-Cheesman-1-1': { price: 50, url: 'https://buy.stripe.com/eVag28fRtgaVe1GcMN' },
-      'Mini-Cheesman-2-1': { price: 90, url: 'https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05' },
-      'Mini-Cheesman-1-2': { price: 70, url: 'https://buy.stripe.com/8x24gB64T292eIpbcN9bO09' },
-      'Mini-Cheesman-2-2': { price: 110, url: 'https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g' },
-      'Mini-City-1-1': { price: 50, url: 'https://buy.stripe.com/9AQ6ry7kX8It3n28wy' },
-      'Mini-City-2-1': { price: 90, url: 'https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06' },
-      'Mini-City-1-2': { price: 70, url: 'https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b' },
-      'Mini-City-2-2': { price: 110, url: 'https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a' }
-    };
-
-    let sessionConfig = {
-      sessionType: null,
-      location: null,
-      pets: null,
-      people: null
-    };
-
-    function selectOption(category, value) {
-      // Remove selected class from all cards in this category
-      const categoryCards = document.querySelectorAll(`[onclick*="${category}"]`);
-      categoryCards.forEach(card => card.classList.remove('selected'));
-      
-      // Add selected class to clicked card
-      event.currentTarget.classList.add('selected');
-      
-      // Update configuration
-      sessionConfig[category] = value;
-      
-      updateSummary();
-    }
-
-    function getConfigKey() {
-      if (!sessionConfig.sessionType || !sessionConfig.location || 
-          !sessionConfig.pets || !sessionConfig.people) {
-        return null;
-      }
-      return `${sessionConfig.sessionType}-${sessionConfig.location}-${sessionConfig.pets}-${sessionConfig.people}`;
-    }
-
-    function updateSummary() {
-      // Update session type
-      const sessionTypeText = sessionConfig.sessionType || 'Select session type';
-      document.getElementById('summarySessionType').textContent = sessionTypeText;
-      
-      // Update location
-      const locationText = sessionConfig.location ? `${sessionConfig.location} Park` : 'Select location';
-      document.getElementById('summaryLocation').textContent = locationText;
-      
-      // Update pets
-      const petsText = sessionConfig.pets ? `${sessionConfig.pets} ${sessionConfig.pets === 1 ? 'pet' : 'pets'}` : 'Select number';
-      document.getElementById('summaryPets').textContent = petsText;
-      
-      // Update people
-      const peopleText = sessionConfig.people ? `${sessionConfig.people} ${sessionConfig.people === 1 ? 'person' : 'people'}` : 'Select number';
-      document.getElementById('summaryPeople').textContent = peopleText;
-      
-      // Update total price
-      const configKey = getConfigKey();
-      const totalPriceElement = document.getElementById('totalPrice');
-      
-      if (configKey && STRIPE_MAPPING[configKey]) {
-        totalPriceElement.textContent = `$${STRIPE_MAPPING[configKey].price}`;
-      } else {
-        totalPriceElement.textContent = 'Select all options';
-      }
-      
-      // Enable/disable continue button
-      const continueBtn = document.getElementById('continueBtn');
-      const isComplete = configKey && STRIPE_MAPPING[configKey];
-      continueBtn.disabled = !isComplete;
-    }
-
-    function proceedToPayment() {
-      const configKey = getConfigKey();
-      
-      if (!configKey || !STRIPE_MAPPING[configKey]) {
-        alert('⚠️ Please complete all selections before proceeding.');
-        return;
-      }
-      
-      const config = STRIPE_MAPPING[configKey];
-      
-      // Prepare session data for payment page
-      const sessionData = {
-        sessionType: sessionConfig.sessionType,
-        location: sessionConfig.location,
-        numberOfPets: sessionConfig.pets,
-        numberOfPeople: sessionConfig.people,
-        totalPrice: config.price,
-        stripeUrl: config.url,
-        configKey: configKey,
-        timestamp: Date.now()
-      };
-      
-      // Store in localStorage for payment page
-      localStorage.setItem('sessionData', JSON.stringify(sessionData));
-      
-      console.log('✅ Session data prepared:', sessionData);
-      
-      // Redirect to payment page
-      window.location.href = '/payment.html';
-    }
-
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
 
-    // Initialize page
+    function scrollToSection(e) {
+      e.preventDefault();
+      const section = document.querySelector('#start-journey');
+      const offset = 100;
+      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: sectionPosition - offset,
+        behavior: 'smooth'
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Session Builder loaded');
-      console.log('📊 Available configurations:', Object.keys(STRIPE_MAPPING).length);
-      updateSummary();
+      console.log('✅ Index page loaded - v1.0.17');
     });
   </script>
 </body>
