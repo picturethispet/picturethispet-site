@@ -60,6 +60,59 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* === PROMOTIONAL BANNER === */
+    .promo-banner {
+      position: fixed;
+      top: 110px;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #f94d6a 0%, #f9a54d 100%);
+      color: white;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .promo-banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: nowrap;
+    }
+
+    .promo-text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .promo-banner a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      padding: 0.2rem 0.8rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      white-space: nowrap;
+    }
+
+    .promo-banner a:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
     /* === HEADER STYLES === */
     header {
       width: 100%;
@@ -156,7 +209,7 @@
 
     /* === MAIN CONTENT === */
     main {
-      margin-top: 110px;
+      margin-top: 155px;
       flex: 1;
       padding: 4rem 1rem;
     }
@@ -427,9 +480,30 @@
 
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
+      .promo-banner {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+        top: 80px;
+      }
+
+      .promo-banner-content {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .promo-text {
+        font-size: 0.8rem;
+      }
+
+      .promo-banner a {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
       header {
         height: 80px;
         padding: 0.5rem 1rem;
+        top: 0;
       }
 
       .desktop-logo {
@@ -481,7 +555,7 @@
       }
 
       main {
-        margin-top: 80px;
+        margin-top: 115px;
         padding: 2rem 1rem;
       }
 
@@ -542,9 +616,33 @@
         text-align: center;
       }
     }
+
+    @media (max-width: 480px) {
+      .promo-banner {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.5rem;
+      }
+
+      .promo-text {
+        font-size: 0.7rem;
+      }
+
+      .promo-banner a {
+        padding: 0.15rem 0.4rem;
+        font-size: 0.65rem;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Promotional Banner -->
+  <div class="promo-banner">
+    <div class="promo-banner-content">
+      <span class="promo-text">🎉 Special Launch Pricing Available 💸 Flexible Payment Plans 📸</span>
+      <a href="/pricing">Learn More ✨</a>
+    </div>
+  </div>
+
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
@@ -574,16 +672,16 @@
     <!-- Welcome Section -->
     <section id="welcome">
       <h2>Welcome to PictureThisPet</h2>
-      <p>We specialize in creating stunning, timeless photographs of your pets. Whether it’s a playful pup or a curious kitten, we’ll capture their unique personality in beautiful settings across Denver.</p>
+      <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we'll capture their unique personality in beautiful settings across Denver.</p>
     </section>
 
     <!-- Instagram Section -->
     <section id="instagram-feed">
       <h2>Follow Us on Instagram</h2>
       <p>Check out our latest pet photography sessions on Instagram!</p>
-      <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
-      <script src="https://static.elfsight.com/platform/platform.js" async></script>
-      <div class="elfsight-app-b3e09cb0-e001-49ce-885d-a02c8dec8281" data-elfsight-app-lazy></div>
+      <!-- LightWidget WIDGET -->
+      <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
+      <iframe src="//lightwidget.com/widgets/cd509cbecbd855848f446ce9c1596639.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width:100%;border:0;overflow:hidden;"></iframe>
       <p><a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" style="color: var(--gold); text-decoration: underline;">Follow @picturethispet</a></p>
     </section>
 
@@ -596,7 +694,7 @@
     <!-- Start Your Journey Section -->
     <section id="start-journey">
       <h2>Start Your Journey</h2>
-      <p>Ready to capture your pet’s best moments? Begin your journey now!</p>
+      <p>Ready to capture your pet's best moments? Begin your journey now!</p>
       <div class="start-journey-button">
         <a href="/cart.html">Begin Journey</a>
       </div>
@@ -607,15 +705,15 @@
       <h2>Testimonials</h2>
       <div class="testimonials-grid">
         <div class="testimonial-card">
-          <p>“Amazing experience! The photos of my dog are absolutely perfect.”</p>
+          <p>"Amazing experience! The photos of my dog are absolutely perfect."</p>
           <cite>- Jane D.</cite>
         </div>
         <div class="testimonial-card">
-          <p>“PictureThisPet captured my cat’s personality so well. Highly recommend!”</p>
+          <p>"PictureThisPet captured my cat's personality so well. Highly recommend!"</p>
           <cite>- Mark S.</cite>
         </div>
         <div class="testimonial-card">
-          <p>“The session was so fun, and the photos are stunning!”</p>
+          <p>"The session was so fun, and the photos are stunning!"</p>
           <cite>- Emily R.</cite>
         </div>
       </div>
@@ -655,7 +753,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:12 PM MDT, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 10:41 AM MDT, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
