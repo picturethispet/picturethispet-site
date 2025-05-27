@@ -659,7 +659,7 @@
       <h2>Build Your Session</h2>
       <p>Let’s customize your pet photography session! 🐾</p>
       <div class="chat-container" id="chatContainer"></div>
-      <button class="submit-btn" id="submitBtn" style="display: none;" onclick="goToAgreements()">Continue to Agreements</button>
+      <button class="submit-btn" id="submitBtn" style="display: none;" onclick="goToCheckout()">Continue to Booking</button>
     </section>
   </main>
 
@@ -707,7 +707,6 @@
     let selectedDate = null;
 
     // Fixed placeholder calendar data (30 days, 9 AM-5 PM, 6+ available slots per day)
-    // TODO: Replace with Airtable integration for client records and calendar slots
     const today = new Date();
     const calendarData = [];
     const availableTimes = ['09:00', '10:00', '11:00', '13:00', '14:00', '15:00'];
@@ -747,14 +746,11 @@
         bot: (data) => `Nice to meet you, ${data.client1FirstName}! What kind of session are you interested in? 📸`,
         input: `
           <div class="session-cards">
-            <div class="session-card" onclick="selectSession('Mini')">
-              <h3>Mini Session 🐾</h3>
-              <p>60 min, 5 images, $50<br>Perfect for a quick shoot! 🌟</p>
+            <div class="session-card" onclick="selectSession('Full Session at City Park (2 people, 2 pets)')">
+              <h3>Full Session at City Park (2 people, 2 pets) 📷</h3>
+              <p>90 min, 10 images, $160<br>Perfect for a comprehensive shoot! 🎉</p>
             </div>
-            <div class="session-card" onclick="selectSession('Full')">
-              <h3>Full Session 📷</h3>
-              <p>90 min, 10 images, $100<br>Capture every moment! 🎉</p>
-            </div>
+            <!-- Add more session types here in the future -->
           </div>
         `,
         validate: (value) => value ? null : "Please select a session type! 😊"
@@ -763,14 +759,11 @@
         bot: "Great choice! Where would you like the session? 🌳",
         input: `
           <div class="session-cards">
-            <div class="session-card" onclick="selectLocation('Cheesman Park')">
-              <h3>Cheesman Park 🌳</h3>
-              <p>Scenic park with beautiful views! 🌸</p>
-            </div>
             <div class="session-card" onclick="selectLocation('City Park')">
               <h3>City Park 🏞️</h3>
               <p>Urban vibes with stunning backdrops! 🌇</p>
             </div>
+            <!-- Add more locations here in the future -->
           </div>
         `,
         validate: (value) => value ? null : "Please select a location! 🌲"
@@ -779,10 +772,6 @@
         bot: "Perfect! How many pets will be in the session? 🐶🐱",
         input: `
           <div class="session-cards">
-            <div class="session-card" onclick="selectPetCount(1)">
-              <h3>1 Pet Included 🐶</h3>
-              <p>No extra cost! 🌟</p>
-            </div>
             <div class="session-card" onclick="selectPetCount(2)">
               <h3>2 Pets 🐶🐱</h3>
               <p>+$40 for second pet 🎉</p>
@@ -795,10 +784,6 @@
         bot: "Got it! How many people will be in the session? 👥",
         input: `
           <div class="session-cards">
-            <div class="session-card" onclick="selectPeopleCount(1)">
-              <h3>1 Person Included 👤</h3>
-              <p>No extra cost! 🌟</p>
-            </div>
             <div class="session-card" onclick="selectPeopleCount(2)">
               <h3>2 People 👥</h3>
               <p>+$20 for second person 🎉</p>
@@ -814,7 +799,7 @@
         condition: (data) => parseInt(data.numberOfPets) === 2
       },
       {
-        bot: (data) => `Sweet, let’s pick a date for you and ${data.pet1Name}! 📅`,
+        bot: (data) => `Sweet, let’s pick a date for you, ${data.client1FirstName}, ${data.pet1Name}, and ${data.pet2Name}! 📅`,
         input: generateCalendar(),
         validate: (value) => value ? null : "Please select a date! 😅"
       },
@@ -822,11 +807,6 @@
         bot: "What time works for you? ⏰",
         input: generateTimeCards(),
         validate: (value) => value ? null : "Please select a time! ⏰"
-      },
-      {
-        bot: "Great, wrapping up soon! Let’s go over agreements ✅",
-        input: '<p>Click below to review agreements.</p>',
-        validate: () => true
       }
     ];
 
@@ -930,8 +910,6 @@
         value = cartData.sessionType || cartData.location || cartData.numberOfPets || cartData.numberOfPeople || cartData.selectedTime;
       } else if (step.input.includes('calendar')) {
         value = selectedDate;
-      } else if (step.input.includes('<p>')) {
-        value = true;
       } else {
         const inputElement = document.querySelector('input');
         value = inputElement.value.trim();
@@ -943,7 +921,7 @@
         return;
       }
 
-      if (step.input.includes('session-card') || step.input.includes('calendar') || step.input.includes('<p>')) {
+      if (step.input.includes('session-card') || step.input.includes('calendar')) {
         appendMessage(value.toString(), 'user');
       } else {
         appendMessage(value, 'user');
@@ -1004,11 +982,6 @@
       submitInput();
     }
 
-    function selectTime(time) {
-      cartData.selectedTime = time;
-      submitInput();
-    }
-
     function selectDate(date) {
       console.log('Selected date:', date);
       selectedDate = date;
@@ -1016,6 +989,11 @@
       days.forEach(day => day.classList.remove('available'));
       const selectedDay = document.querySelector(`.calendar-day[data-date="${date}"]`);
       if (selectedDay) selectedDay.classList.add('available');
+      submitInput();
+    }
+
+    function selectTime(time) {
+      cartData.selectedTime = time;
       submitInput();
     }
 
@@ -1032,11 +1010,11 @@
       submitBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 
-    function goToAgreements() {
+    function goToCheckout() {
       try {
         sessionStorage.setItem('cartData', JSON.stringify(cartData));
         console.log('✅ Session data saved:', cartData);
-        window.location.href = '/agreements.html';
+        window.location.href = `/checkout.html?session_type=${encodeURIComponent(cartData.sessionType)}&price=${cartData.price || 160}&location=${encodeURIComponent(cartData.location)}&client_name=${encodeURIComponent(cartData.client1FirstName)}&client_email=${encodeURIComponent(localStorage.getItem('clientEmail'))}&pet1_name=${encodeURIComponent(cartData.pet1Name)}&pet2_name=${encodeURIComponent(cartData.pet2Name || '')}&number_of_pets=${cartData.numberOfPets}&number_of_people=${cartData.numberOfPeople}&selected_date=${encodeURIComponent(cartData.selectedDate)}&selected_time=${encodeURIComponent(cartData.selectedTime)}`;
       } catch (error) {
         console.error('Error saving session data:', error);
         appendMessage('Oops, something went wrong! Please try again. 😅', 'error');
@@ -1061,6 +1039,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Cart page loaded - v1.0.9');
+      cartData.email = localStorage.getItem('clientEmail');
       if (!cartData.email) {
         appendMessage('Oops, we need your email to start! Please go back to the homepage. 😅', 'error');
         return;
