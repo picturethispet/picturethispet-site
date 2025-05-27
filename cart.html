@@ -249,9 +249,10 @@
 
     .chat-input {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       gap: 0.5rem;
       margin-top: 1rem;
+      align-items: center;
     }
 
     .chat-input input[type="text"],
@@ -276,6 +277,23 @@
       outline: none;
       border-color: var(--gold);
       background: rgba(255,255,255, 0.15);
+    }
+
+    .chat-input .send-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: none; /* Hidden by default for mobile */
+    }
+
+    .chat-input .send-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(244,124,44, 0.3);
     }
 
     .session-cards {
@@ -322,6 +340,40 @@
       line-height: 1.5;
       color: rgba(255,255,255, 0.9);
       text-align: left;
+    }
+
+    .summary-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255, 0.1);
+      transition: all 0.3s ease;
+      text-align: center;
+      max-width: 70%;
+      align-self: flex-start;
+      animation-name: slideInLeft;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
+    }
+
+    .summary-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: white;
+    }
+
+    .summary-card p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(255,255,255, 0.9);
+      text-align: left;
+      margin: 0.5rem 0;
     }
 
     .restart-btn {
@@ -439,6 +491,16 @@
       white-space: nowrap;
     }
 
+    @media (min-width: 769px) {
+      .chat-input .send-btn {
+        display: block;
+      }
+
+      .chat-input input[type="text"] {
+        width: calc(100% - 80px); /* Adjust width to accommodate Send button */
+      }
+    }
+
     @media (max-width: 768px) {
       header {
         height: 80px;
@@ -539,6 +601,19 @@
         font-size: 0.8rem;
       }
 
+      .summary-card {
+        max-width: 85%;
+        padding: 1.5rem;
+      }
+
+      .summary-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .summary-card p {
+        font-size: 0.8rem;
+      }
+
       .submit-btn {
         padding: 0.8rem 2rem;
         font-size: 1rem;
@@ -595,6 +670,19 @@
         font-size: 0.75rem;
       }
 
+      .summary-card {
+        max-width: 90%;
+        padding: 1rem;
+      }
+
+      .summary-card h3 {
+        font-size: 1.1rem;
+      }
+
+      .summary-card p {
+        font-size: 0.75rem;
+      }
+
       .submit-btn {
         padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
@@ -630,7 +718,6 @@
       <div class="chat-container" id="chatContainer">
         <button class="restart-btn" onclick="restartChat()">Restart Chat 🔄</button>
       </div>
-      <button class="submit-btn" id="submitBtn" style="display: none;" onclick="goToCheckout()">Continue to Booking</button>
     </section>
   </main>
 
@@ -666,13 +753,12 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.9 | Last updated: 11:57 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.10 | Last updated: 06:59 PM MDT, May 26, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
   <script>
     const chatContainer = document.getElementById('chatContainer');
-    const submitBtn = document.getElementById('submitBtn');
     let currentStep = 0;
     let chatActive = true;
     // Temporary object to store session builder selections
@@ -681,12 +767,12 @@
     const steps = [
       {
         bot: "What’s your pet’s name? 🐾",
-        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name">',
+        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name"><button class="send-btn" onclick="submitInput()">Send</button>',
         validate: (value) => value.trim() ? null : "Please enter your pet’s name! 🐶"
       },
       {
         bot: (data) => `Awesome, ${data.pet1Name} sounds adorable! What’s your first name? 😊`,
-        input: '<input type="text" id="client1FirstName" placeholder="Your first name">',
+        input: '<input type="text" id="client1FirstName" placeholder="Your first name"><button class="send-btn" onclick="submitInput()">Send</button>',
         validate: (value) => value.trim() ? null : "Please enter your first name! 😅"
       },
       {
@@ -772,20 +858,36 @@
       },
       {
         bot: "Awesome, what’s your second pet’s name? 🐕",
-        input: '<input type="text" id="pet2Name" placeholder="Second pet’s name">',
+        input: '<input type="text" id="pet2Name" placeholder="Second pet’s name"><button class="send-btn" onclick="submitInput()">Send</button>',
         validate: (value) => value.trim() ? null : "Please enter your second pet’s name! 🐱",
         condition: (data) => parseInt(data.numberOfPets) === 2
       },
       {
+        bot: "Oh great, here are your session details! 📋",
+        input: '', // No input, just a message
+        validate: () => null
+      },
+      {
         bot: (data) => {
           const sessionIdentifier = `${data.sessionType} at ${data.location} (${data.numberOfPeople} people, ${data.numberOfPets} pets)`;
-          const price = sessionIdentifier === "Full Session at City Park (2 people, 2 pets)" ? 160 : (data.sessionType === "Full" ? 100 : 50);
-          const inclusions = data.sessionType === "Full" ? "a 90-minute session with 10 edited photos" : "a 60-minute session with 5 edited photos";
+          const basePrice = data.sessionType === "Full" ? 100 : 50;
+          const inclusions = data.sessionType === "Full" ? "Up to 90 minutes, 10 edited photos 🖼️" : "Up to 60 minutes, 5 edited photos 🖼️";
           const additionalPetFee = parseInt(data.numberOfPets) === 2 ? 40 : 0;
           const additionalPersonFee = parseInt(data.numberOfPeople) === 2 ? 20 : 0;
-          const totalPrice = price + additionalPetFee + additionalPersonFee;
-          return `Oh great, you and ${data.pet1Name} are booking for you ${parseInt(data.numberOfPets) === 2 ? "and another pet and person" : parseInt(data.numberOfPeople) === 2 ? "and another person" : ""}. These are your session details: You’re choosing a ${data.sessionType} Session, ${data.numberOfPeople} people, ${data.numberOfPets} pets at ${data.location}. This includes ${inclusions} for $${totalPrice}. Do you want to continue to book?`;
+          const totalPrice = basePrice + additionalPetFee + additionalPersonFee;
+          return `
+            <div class="summary-card">
+              <h3>${data.sessionType} Session at ${data.location} 🌳</h3>
+              <p>${inclusions}</p>
+              <p>Total: $${totalPrice}</p>
+            </div>
+          `;
         },
+        input: '', // No input, just a card
+        validate: () => null
+      },
+      {
+        bot: "Do you want to continue to book?",
         input: `
           <div class="session-cards">
             <div class="session-card" onclick="selectContinue('Yes')">
@@ -870,7 +972,7 @@
       if (currentStep === 5) sessionData.numberOfPets = value.toString();
       if (currentStep === 6) sessionData.numberOfPeople = value.toString();
       if (currentStep === 7) sessionData.pet2Name = value;
-      if (currentStep === 8) {
+      if (currentStep === 10) {
         sessionData.continueBooking = value;
         if (value === 'Yes') {
           goToCheckout();
@@ -882,7 +984,9 @@
         }
       }
 
-      chatContainer.removeChild(chatContainer.querySelector('.chat-input'));
+      if (chatContainer.querySelector('.chat-input')) {
+        chatContainer.removeChild(chatContainer.querySelector('.chat-input'));
+      }
 
       currentStep++;
       if (currentStep < steps.length) {
@@ -892,7 +996,9 @@
         if (currentStep < steps.length) {
           const botMessage = typeof steps[currentStep].bot === 'function' ? steps[currentStep].bot(sessionData) : steps[currentStep].bot;
           appendMessage(botMessage, 'bot');
-          appendInput(steps[currentStep]);
+          if (step.input !== '') {
+            appendInput(steps[currentStep]);
+          }
         }
       }
     }
@@ -931,10 +1037,10 @@
       if (!chatActive) return;
       // Construct the session identifier based on the four questions
       const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
-      const price = sessionIdentifier === "Full Session at City Park (2 people, 2 pets)" ? 160 : (sessionData.sessionType === "Full" ? 100 : 50);
+      const basePrice = sessionData.sessionType === "Full" ? 100 : 50;
       const additionalPetFee = parseInt(sessionData.numberOfPets) === 2 ? 40 : 0;
       const additionalPersonFee = parseInt(sessionData.numberOfPeople) === 2 ? 20 : 0;
-      const totalPrice = price + additionalPetFee + additionalPersonFee;
+      const totalPrice = basePrice + additionalPetFee + additionalPersonFee;
       window.location.href = `/checkout.html?session_identifier=${encodeURIComponent(sessionIdentifier)}&price=${totalPrice}`;
     }
 
@@ -951,7 +1057,6 @@
       currentStep = 0;
       chatActive = true;
       chatContainer.innerHTML = '<button class="restart-btn" onclick="restartChat()">Restart Chat 🔄</button>';
-      submitBtn.style.display = 'none';
       appendMessage(steps[0].bot, 'bot');
       appendInput(steps[0]);
     }
@@ -973,7 +1078,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.9');
+      console.log('✅ Cart page loaded - v1.0.10');
       currentStep = 0;
       appendMessage(steps[0].bot, 'bot');
       appendInput(steps[0]);
