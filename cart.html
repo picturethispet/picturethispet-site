@@ -161,7 +161,7 @@
       border: 1px solid rgba(255,255,255, 0.1);
       padding: 2.5rem;
       animation: fadeInUp 0.8s ease-out;
-      min-height: 100vh;
+      min-height: calc(100vh - 200px);
     }
 
     .summary-panel {
@@ -171,10 +171,9 @@
       border: 1px solid rgba(255,255,255, 0.15);
       padding: 2rem;
       height: fit-content;
-      position: sticky;
-      top: 130px;
       animation: fadeInUp 0.8s ease-out 0.2s both;
       z-index: 10;
+      /* Removed position: sticky and top: 130px; will handle with JS */
     }
 
     .panel-header {
@@ -265,7 +264,7 @@
 
     .option-header {
       display: flex;
-      justify-content: between;
+      justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 0.8rem;
     }
@@ -801,8 +800,8 @@
       document.getElementById('summaryPeople').textContent = peopleText;
       
       // Update pricing
-      document.getElementById('baseSessionLabel').textContent = sessionConfig.sessionType ? `${sessionConfig.sessionType} Session` : 'Session';
-      document.getElementById('baseSessionPrice').textContent = `${sessionConfig.sessionPrice}`;
+      document.getElementById('baseSessionLabel').textContent = sessionConfig.sessionType ? `📸 ${sessionConfig.sessionType} Session` : '📸 Session';
+      document.getElementById('baseSessionPrice').textContent = `$${sessionConfig.sessionPrice}`;
       
       // Show/hide extra costs
       const extraPetLine = document.getElementById('extraPetLine');
@@ -822,7 +821,7 @@
       
       // Update total
       const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
-      document.getElementById('totalPrice').textContent = `${total}`;
+      document.getElementById('totalPrice').textContent = `$${total}`;
       
       // Enable/disable continue button
       const continueBtn = document.getElementById('continueBtn');
@@ -861,10 +860,55 @@
       nav.classList.toggle('active');
     }
 
-    // Initialize page
+    // Function to handle dynamic positioning of the summary panel on desktop
+    function adjustSummaryPanelPosition() {
+      const summaryPanel = document.querySelector('.summary-panel');
+      const configurationPanel = document.querySelector('.configuration-panel');
+      const viewportHeight = window.innerHeight;
+      const headerHeight = 110; // Header height in pixels
+      const padding = 20; // Top padding to keep the panel below the header
+
+      // Only apply on desktop (above 1024px)
+      if (window.innerWidth > 1024) {
+        const configRect = configurationPanel.getBoundingClientRect();
+        const summaryRect = summaryPanel.getBoundingClientRect();
+        const configHeight = configRect.height;
+        const summaryHeight = summaryRect.height;
+        const scrollTop = window.scrollY || window.pageYOffset;
+        const configTop = configRect.top + scrollTop - headerHeight;
+
+        // Calculate the top position for the summary panel
+        let newTop = Math.max(padding, scrollTop - configTop + headerHeight + padding);
+
+        // Ensure the summary panel doesn't go below the bottom of the configuration panel
+        const maxTop = configHeight - summaryHeight - padding;
+        newTop = Math.min(newTop, maxTop);
+
+        // Apply the new top position
+        summaryPanel.style.position = 'absolute';
+        summaryPanel.style.top = `${newTop}px`;
+        summaryPanel.style.left = 'auto';
+        summaryPanel.style.right = '0';
+        summaryPanel.style.width = '400px'; // Ensure width matches grid column
+      } else {
+        // Reset for mobile
+        summaryPanel.style.position = 'static';
+        summaryPanel.style.top = 'auto';
+        summaryPanel.style.left = 'auto';
+        summaryPanel.style.right = 'auto';
+        summaryPanel.style.width = 'auto';
+      }
+    }
+
+    // Initialize page and add event listeners
     document.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Session Builder loaded');
       updateSummary();
+      adjustSummaryPanelPosition();
+
+      // Add scroll and resize event listeners for dynamic positioning
+      window.addEventListener('scroll', adjustSummaryPanelPosition);
+      window.addEventListener('resize', adjustSummaryPanelPosition);
     });
   </script>
 </body>
