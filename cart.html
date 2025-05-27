@@ -803,7 +803,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.18 | Last updated: 12:29 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 12:36 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -812,25 +812,6 @@
     let currentStep = 0;
     let chatActive = true;
     const sessionData = {};
-
-    const stripeLinks = {
-      "Full at Cheesman Park (1 people, 1 pets)": "https://buy.stripe.com/4gw6ry0Wz0bXe1G147",
-      "Full at Cheesman Park (1 people, 2 pets)": "https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08",
-      "Full at Cheesman Park (2 people, 1 pets)": "https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c",
-      "Full at Cheesman Park (2 people, 2 pets)": "https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d",
-      "Full at City Park (1 people, 1 pets)": "https://buy.stripe.com/00gg28eNp9Mx9Lq9AE",
-      "Full at City Park (1 people, 2 pets)": "https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07",
-      "Full at City Park (2 people, 1 pets)": "https://buy.stripe.com/14A8wR8d12921VD80B9bO0e",
-      "Full at City Park (2 people, 2 pets)": "https://buy.stripe.com/6oU28tdxl29243Lft39bO0f",
-      "Mini at Cheesman Park (1 people, 1 pets)": "https://buy.stripe.com/eVag28fRtgaVe1GcMN",
-      "Mini at Cheesman Park (1 people, 2 pets)": "https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05",
-      "Mini at Cheesman Park (2 people, 1 pets)": "https://buy.stripe.com/8x24gB64T292eIpbcN9bO09",
-      "Mini at Cheesman Park (2 people, 2 pets)": "https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g",
-      "Mini at City Park (1 people, 1 pets)": "https://buy.stripe.com/9AQ6ry7kX8It3n28wy",
-      "Mini at City Park (1 people, 2 pets)": "https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06",
-      "Mini at City Park (2 people, 1 pets)": "https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b",
-      "Mini at City Park (2 people, 2 pets)": "https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a"
-    };
 
     const steps = [
       {
@@ -931,7 +912,7 @@
         condition: (data) => parseInt(data.numberOfPets) === 2
       },
       {
-        bot: "Oh great, here are your session details! 📋",
+        bot: "Here are your session details! 📋",
         input: '', // No input, just a message
         validate: () => null
       },
@@ -943,15 +924,19 @@
           const additionalPetFee = parseInt(data.numberOfPets) === 2 ? 40 : 0;
           const additionalPersonFee = parseInt(data.numberOfPeople) === 2 ? 20 : 0;
           const totalPrice = basePrice + additionalPetFee + additionalPersonFee;
+          
+          sessionData.sessionIdentifier = sessionIdentifier;
+          sessionData.totalPrice = totalPrice;
+
           return `
             <div class="summary-card">
               <h3>${data.sessionType} Session at ${data.location} 🌳</h3>
-              <p>${inclusions}</p>
-              ${additionalPetFee > 0 ? '<p>Additional Pet Fee: $40</p>' : ''}
-              ${additionalPersonFee > 0 ? '<p>Additional Person Fee: $20</p>' : ''}
-              <p>Total: $${totalPrice}</p>
+              <p>Includes: ${inclusions}</p>
+              ${additionalPetFee > 0 ? '<p>Additional Pet Fee: $40 🐾</p>' : ''}
+              ${additionalPersonFee > 0 ? '<p>Additional Person Fee: $20 👥</p>' : ''}
+              <p><strong>Total: $${totalPrice}</strong></p>
             </div>
-            <button class="confirm-btn" onclick="proceedToPayment('${sessionIdentifier}')">Let’s Book! 📅</button>
+            <button class="confirm-btn" onclick="proceedToPayment()">Let’s Book! 📅</button>
           `;
         },
         input: '', // No input, just a card with confirmation button
@@ -986,11 +971,11 @@
       }
     }
 
-    function proceedToPayment(sessionIdentifier) {
+    function proceedToPayment() {
       const loadingOverlay = document.getElementById('loadingOverlay');
       loadingOverlay.classList.add('active');
       setTimeout(() => {
-        window.location.href = `/payment.html?session_identifier=${encodeURIComponent(sessionIdentifier)}`;
+        window.location.href = `/payment.html?session_identifier=${encodeURIComponent(sessionData.sessionIdentifier)}&total_price=${sessionData.totalPrice}`;
       }, 2000); // 2-second delay for the loading animation
     }
 
@@ -1086,6 +1071,8 @@
       sessionData.numberOfPets = '';
       sessionData.numberOfPeople = '';
       sessionData.pet2Name = '';
+      sessionData.sessionIdentifier = '';
+      sessionData.totalPrice = 0;
       currentStep = 0;
       chatActive = true;
       chatContainer.innerHTML = '<button class="restart-btn" onclick="restartChat()">Restart Chat 🔄</button>';
@@ -1110,7 +1097,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Cart page loaded - v1.0.18');
+      console.log('✅ Cart page loaded - v1.0.19');
       currentStep = 0;
       appendMessage(steps[0].bot, 'bot');
       appendInput(steps[0]);
