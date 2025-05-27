@@ -296,13 +296,11 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      margin-left: auto;
-      flex-direction: column;
-      align-items: flex-end;
+      margin-bottom: 0.8rem;
     }
 
     .option-price-original {
-      font-size: 0.9rem;
+      font-size: 1.8rem;
       font-weight: 600;
       color: rgba(255, 255, 255, 0.4);
       text-decoration: line-through;
@@ -310,7 +308,7 @@
     }
 
     .option-price-special {
-      font-size: 1.2rem;
+      font-size: 2.2rem;
       font-weight: 700;
       background: linear-gradient(135deg, #f94d6a 0%, #f9a54d 100%);
       -webkit-background-clip: text;
@@ -726,6 +724,14 @@
         align-items: flex-end;
         gap: 0.3rem;
       }
+
+      .option-price-original {
+        font-size: 1.4rem;
+      }
+
+      .option-price-special {
+        font-size: 1.8rem;
+      }
     }
   </style>
 </head>
@@ -740,7 +746,7 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#session-builder" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
@@ -762,13 +768,11 @@
           <div class="option-grid">
             <div class="option-card" onclick="selectOption('sessionType', 'Mini', 50)" data-option="Mini">
               <div class="option-header">
-                <div>
-                  <div class="option-title">🐾 Mini Session</div>
-                  <div class="option-price-container">
-                    <span class="option-price-original">$200</span>
-                    <span class="option-price-special">$50</span>
-                  </div>
-                </div>
+                <div class="option-title">🐾 Mini Session</div>
+              </div>
+              <div class="option-price-container">
+                <span class="option-price-original">$200</span>
+                <span class="option-price-special">$50</span>
               </div>
               <div class="option-description">Perfect for a quick photo session with your pet 💕</div>
               <ul class="option-features">
@@ -780,13 +784,11 @@
 
             <div class="option-card" onclick="selectOption('sessionType', 'Full', 100)" data-option="Full">
               <div class="option-header">
-                <div>
-                  <div class="option-title">📸 Full Session</div>
-                  <div class="option-price-container">
-                    <span class="option-price-original">$400</span>
-                    <span class="option-price-special">$100</span>
-                  </div>
-                </div>
+                <div class="option-title">📸 Full Session</div>
+              </div>
+              <div class="option-price-container">
+                <span class="option-price-original">$400</span>
+                <span class="option-price-special">$100</span>
               </div>
               <div class="option-description">Our signature comprehensive photo experience 🎉</div>
               <ul class="option-features">
@@ -968,7 +970,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 10:54 AM MDT, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:53 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -1084,17 +1086,6 @@
       // Mobile menu toggle functionality
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
-    }
-
-    function scrollToSection(e) {
-      e.preventDefault();
-      const section = document.querySelector('#session-builder');
-      const offset = 100;
-      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: sectionPosition - offset,
-        behavior: 'smooth'
-      });
     }
 
     // Initialize page
