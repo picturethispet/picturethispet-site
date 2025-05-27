@@ -619,7 +619,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 03:51 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 03:56 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -686,11 +686,26 @@
         return null;
       }
 
+      // Normalize location to match acuityLinks keys
+      let normalizedLocation = sessionData.location;
+      if (sessionData.location === "City Park") {
+        normalizedLocation = "City";
+      } else if (sessionData.location === "Cheesman Park") {
+        normalizedLocation = "Cheesman";
+      }
+
       // Construct session identifier with correct pluralization
       const peopleLabel = sessionData.numberOfPeople === 1 ? "person" : "people";
       const petsLabel = sessionData.numberOfPets === 1 ? "pet" : "pets";
-      const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} ${peopleLabel}, ${sessionData.numberOfPets} ${petsLabel})`;
+      const sessionIdentifier = `${sessionData.sessionType} at ${normalizedLocation} (${sessionData.numberOfPeople} ${peopleLabel}, ${sessionData.numberOfPets} ${petsLabel})`;
       
+      console.log('Raw session data:', {
+        sessionType: sessionData.sessionType,
+        location: sessionData.location,
+        normalizedLocation: normalizedLocation,
+        numberOfPeople: sessionData.numberOfPeople,
+        numberOfPets: sessionData.numberOfPets
+      });
       console.log('Constructed session identifier:', sessionIdentifier);
 
       const acuityUrl = acuityLinks[sessionIdentifier];
@@ -698,6 +713,8 @@
       if (!acuityUrl) {
         console.error('No Acuity URL found for session identifier:', sessionIdentifier);
         console.log('Available keys in acuityLinks:', Object.keys(acuityLinks));
+        // Fallback URL to prevent redirect
+        return "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621"; // Default to a known Acuity link
       }
       
       return acuityUrl;
