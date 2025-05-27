@@ -193,7 +193,7 @@
     main {
       margin-top: 110px;
       flex: 1;
-      padding: 4rem 1rem;
+      padding: 2rem 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -201,7 +201,8 @@
     }
 
     .payment-container {
-      max-width: 800px;
+      max-width: 900px;
+      width: 100%;
       margin: 0 auto;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -209,50 +210,96 @@
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0,0,0, 0.2);
-      padding: 4rem 3rem;
+      padding: 2.5rem 2rem;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255, 0.1);
       animation: fadeInUp 1s ease-out;
       text-align: center;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
     }
 
     .payment-container h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 700;
       color: white;
       text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .session-summary {
-      background: rgba(255,255,255, 0.1);
-      border-radius: 16px;
+      background: rgba(255,255,255, 0.15);
+      border-radius: 20px;
       padding: 2rem;
-      margin: 2rem 0;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255,255,255, 0.2);
+      margin: 1.5rem 0;
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(255,255,255, 0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0, 0.1);
     }
 
     .session-summary h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       color: var(--gold);
       margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0, 0.2);
     }
 
     .session-summary p {
       font-size: 1.1rem;
       line-height: 1.6;
-      color: rgba(255,255,255, 0.9);
+      color: rgba(255,255,255, 0.95);
+      margin: 0.8rem 0;
+      font-weight: 500;
+    }
+
+    .session-detail {
+      background: rgba(255,255,255, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
       margin: 0.5rem 0;
+      border-left: 4px solid var(--gold);
+    }
+
+    .session-includes {
+      background: linear-gradient(135deg, rgba(253,183,94, 0.2), rgba(244,124,44, 0.1));
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      border: 1px solid var(--gold);
+    }
+
+    .session-includes h4 {
+      color: var(--gold);
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+
+    .session-includes ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+
+    .session-includes li {
+      color: rgba(255,255,255, 0.9);
+      padding: 0.3rem 0;
+      font-size: 1rem;
+      line-height: 1.4;
     }
 
     .total-price {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
       color: var(--gold);
-      margin-top: 1rem;
+      margin-top: 1.5rem;
+      text-shadow: 0 2px 4px rgba(0,0,0, 0.3);
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .security-message {
@@ -346,6 +393,66 @@
       font-size: 0.95rem;
       line-height: 1.5;
       color: rgba(255,255,255, 0.8);
+    }
+
+    .pay-now-button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1.2rem 3rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(244,124,44, 0.4);
+      margin: 2rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: payButtonAppear 0.8s ease-out 8s forwards;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .pay-now-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(244,124,44, 0.6);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes payButtonAppear {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .stripe-iframe-container {
+      width: 100%;
+      height: 600px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0, 0.3);
+      margin: 2rem 0;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.5s ease;
+      display: none;
+    }
+
+    .stripe-iframe-container.show {
+      opacity: 1;
+      transform: scale(1);
+      display: block;
+    }
+
+    .stripe-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 20px;
+    }
+
+    .loading-complete {
+      display: none;
     }
 
     .progress-bar {
@@ -521,23 +628,74 @@
 
       main {
         margin-top: calc(80px + env(safe-area-inset-top));
-        padding: 2rem 1rem;
+        padding: 1rem 0.5rem;
+        min-height: calc(100vh - 80px - env(safe-area-inset-top));
       }
 
       .payment-container {
-        padding: 2rem 1.5rem;
+        padding: 1.5rem 1rem;
+        max-height: calc(100vh - 100px - env(safe-area-inset-top));
+        overflow-y: auto;
       }
 
       .payment-container h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
+        margin-bottom: 1rem;
       }
 
       .session-summary {
         padding: 1.5rem;
+        margin: 1rem 0;
+      }
+
+      .session-summary h3 {
+        font-size: 1.4rem;
+      }
+
+      .session-detail {
+        padding: 0.8rem;
+        margin: 0.4rem 0;
+      }
+
+      .session-includes {
+        padding: 1rem;
+        margin: 0.8rem 0;
+      }
+
+      .session-includes h4 {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .session-includes li {
+        font-size: 0.9rem;
+        padding: 0.2rem 0;
       }
 
       .total-price {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
+        margin-top: 1rem;
+      }
+
+      .security-message, .payment-info {
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+
+      .loading-animation {
+        margin: 1.5rem 0;
+      }
+
+      .pay-now-button {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        margin: 1.5rem 0;
+      }
+
+      .stripe-iframe-container {
+        height: 500px;
+        margin: 1rem 0;
+        border-radius: 15px;
       }
 
       .paw-prints {
@@ -615,18 +773,37 @@
       <h1>Preparing Your Session 🐾</h1>
       
       <div class="session-summary" id="sessionSummary">
-        <h3>Session Details</h3>
-        <p id="sessionType">Full Session at City Park</p>
-        <p id="sessionPets">2 adorable pets</p>
-        <p id="sessionPeople">2 people</p>
-        <p id="sessionIncludes">Up to 90 minutes, 10 edited photos 🖼️</p>
-        <div class="total-price" id="totalPrice">Total: $160</div>
+        <h3>📸 Your Pawsome Session Details</h3>
+        <div class="session-detail">
+          <p id="sessionType">🎯 Full Session at City Park</p>
+        </div>
+        <div class="session-detail">
+          <p id="sessionPets">🐾 2 adorable pets</p>
+        </div>
+        <div class="session-detail">
+          <p id="sessionPeople">👥 2 people</p>
+        </div>
+        
+        <div class="session-includes">
+          <h4>✨ What's Included in Your Session:</h4>
+          <ul id="sessionIncludesList">
+            <li>⏰ Up to 90 minutes of professional photography</li>
+            <li>📷 10 beautifully edited high-resolution photos</li>
+            <li>🎨 Professional editing and color correction</li>
+            <li>📱 Digital delivery via online gallery</li>
+            <li>🌟 Multiple poses and creative shots</li>
+            <li>📞 Pre-session consultation call</li>
+            <li>🎁 Surprise bonus candid shots</li>
+          </ul>
+        </div>
+        
+        <div class="total-price" id="totalPrice">💰 Total: $160</div>
       </div>
 
       <div class="security-message">
-        <div class="icon">🔒</div>
-        <h4>Secure Payment Process</h4>
-        <p>For the best experience, we process payment before scheduling your session date. This ensures your spot is reserved and allows us to coordinate the perfect time for your photo session!</p>
+        <div class="icon">🔒✨</div>
+        <h4>🛡️ Secure Payment Process</h4>
+        <p>🎯 For the best experience, we process payment before scheduling your session date. This ensures your spot is reserved and allows us to coordinate the perfect time for your magical photo session! 📅✨</p>
       </div>
 
       <div class="loading-animation">
@@ -644,8 +821,16 @@
       </div>
 
       <div class="payment-info">
-        <h4>🛡️ What happens next?</h4>
-        <p>You'll be redirected to our secure Stripe payment portal. After payment, we'll contact you within 24 hours to schedule your perfect session date and time!</p>
+        <h4>🚀 What happens next?</h4>
+        <p>🔐 Your secure payment portal is ready! After payment, we'll contact you within 24 hours to schedule your perfect session date and time! 📞💕 Get ready for some amazing memories! 🎉📸</p>
+      </div>
+
+      <button class="pay-now-button" id="payNowButton" onclick="showStripeIframe()">
+        💳 Complete Payment Securely
+      </button>
+
+      <div class="stripe-iframe-container" id="stripeContainer">
+        <iframe class="stripe-iframe" id="stripeIframe" src="" title="Secure Payment"></iframe>
       </div>
 
       <a href="/session-builder.html" class="back-button">← Back to Session Builder</a>
@@ -721,14 +906,38 @@
 
     // Loading messages that cycle through
     const loadingMessages = [
-      "Connecting to secure payment...",
-      "Preparing your session details...",
-      "Almost ready! 🐾",
-      "Securing your payment portal..."
+      "🔐 Connecting to secure payment...",
+      "📸 Preparing your session details...",
+      "🐾 Almost ready for your pawsome session!",
+      "✨ Securing your payment portal...",
+      "🎉 Getting everything ready...",
+      "💳 Payment portal is ready!",
+      "🚀 Click the button when ready!"
     ];
 
     let messageIndex = 0;
     let redirectTimer;
+    let currentStripeUrl = '';
+
+    // Function to show the Stripe iframe
+    function showStripeIframe() {
+      const payButton = document.getElementById('payNowButton');
+      const stripeContainer = document.getElementById('stripeContainer');
+      const stripeIframe = document.getElementById('stripeIframe');
+      const loadingAnimation = document.querySelector('.loading-animation');
+
+      // Hide the pay button and loading animation
+      payButton.style.display = 'none';
+      loadingAnimation.classList.add('loading-complete');
+
+      // Set the iframe source to the correct Stripe URL
+      stripeIframe.src = currentStripeUrl;
+
+      // Show the iframe with animation
+      setTimeout(() => {
+        stripeContainer.classList.add('show');
+      }, 100);
+    }
 
     // Function to update loading text
     function updateLoadingText() {
@@ -765,27 +974,43 @@
         const sessionTypeElement = document.getElementById('sessionType');
         const sessionPetsElement = document.getElementById('sessionPets');
         const sessionPeopleElement = document.getElementById('sessionPeople');
-        const sessionIncludesElement = document.getElementById('sessionIncludes');
+        const sessionIncludesElement = document.getElementById('sessionIncludesList');
         const totalPriceElement = document.getElementById('totalPrice');
 
         // Update session details
-        sessionTypeElement.textContent = `${sessionData.sessionType} Session at ${sessionData.location}`;
+        sessionTypeElement.textContent = `🎯 ${sessionData.sessionType} Session at ${sessionData.location}`;
         
         let petText = sessionData.pet1Name;
         if (sessionData.pet2Name) {
           petText += ` & ${sessionData.pet2Name}`;
         }
         petText += ` (${sessionData.numberOfPets} pet${sessionData.numberOfPets === '2' ? 's' : ''})`;
-        sessionPetsElement.textContent = petText;
+        sessionPetsElement.textContent = `🐾 ${petText}`;
         
-        sessionPeopleElement.textContent = `${sessionData.numberOfPeople} person${sessionData.numberOfPeople === '2' ? 's' : ''}`;
+        sessionPeopleElement.textContent = `👥 ${sessionData.numberOfPeople} person${sessionData.numberOfPeople === '2' ? 's' : ''}`;
         
-        const inclusions = sessionData.sessionType === "Full" ? 
-          "Up to 90 minutes, 10 edited photos 🖼️" : 
-          "Up to 60 minutes, 5 edited photos 🖼️";
-        sessionIncludesElement.textContent = inclusions;
+        // Update session includes based on type
+        const isFull = sessionData.sessionType === "Full";
+        const includesHTML = isFull ? `
+          <li>⏰ Up to 90 minutes of professional photography</li>
+          <li>📷 10 beautifully edited high-resolution photos</li>
+          <li>🎨 Professional editing and color correction</li>
+          <li>📱 Digital delivery via online gallery</li>
+          <li>🌟 Multiple poses and creative shots</li>
+          <li>📞 Pre-session consultation call</li>
+          <li>🎁 Surprise bonus candid shots</li>
+          <li>✨ Advanced retouching included</li>
+        ` : `
+          <li>⏰ Up to 60 minutes of professional photography</li>
+          <li>📷 5 beautifully edited high-resolution photos</li>
+          <li>🎨 Professional editing and color correction</li>
+          <li>📱 Digital delivery via online gallery</li>
+          <li>🌟 Multiple poses and creative shots</li>
+          <li>🎁 Surprise bonus candid shots</li>
+        `;
+        sessionIncludesElement.innerHTML = includesHTML;
         
-        totalPriceElement.textContent = `Total: $${sessionData.totalPrice}`;
+        totalPriceElement.textContent = `💰 Total: ${sessionData.totalPrice}`;
 
         // Set up redirect to correct Stripe URL
         const stripeUrl = getStripeUrl(
@@ -797,16 +1022,16 @@
 
         console.log('Redirecting to Stripe URL:', stripeUrl);
         
-        // Redirect after 4 seconds
+        // Redirect after 5 seconds (increased for better UX)
         redirectTimer = setTimeout(() => {
           if (stripeUrl && stripeUrl !== 'YOUR_STRIPE_URL_HERE' && stripeUrl !== 'YOUR_DEFAULT_STRIPE_URL_HERE') {
             window.location.href = stripeUrl;
           } else {
             // Fallback - show message that Stripe URLs need to be configured
-            alert('Payment system is being configured. Please contact us directly to complete your booking!');
+            alert('🚀 Payment system is being configured. Please contact us directly to complete your booking! 📞');
             window.location.href = '/contact';
           }
-        }, 4000);
+        }, 5000);
       }
     }
 
@@ -815,6 +1040,9 @@
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
+
+    // Make showStripeIframe globally available
+    window.showStripeIframe = showStripeIframe;
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
