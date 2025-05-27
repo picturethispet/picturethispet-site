@@ -587,13 +587,13 @@
               <span class="price-label" id="baseSessionLabel">📸 Session</span>
               <span class="price-value" id="baseSessionPrice">$0</span>
             </div>
-            <div class="price-line" id="extraPetLine" style="display: none;">
+            <div class="price-line" id="extraPetLine">
               <span class="price-label">🐾 Additional Pet</span>
-              <span class="price-value">+$40</span>
+              <span class="price-value" id="extraPetPrice">$0</span>
             </div>
-            <div class="price-line" id="extraPersonLine" style="display: none;">
+            <div class="price-line" id="extraPersonLine">
               <span class="price-label">👥 Additional Person</span>
-              <span class="price-value">+$20</span>
+              <span class="price-value" id="extraPersonPrice">$0</span>
             </div>
             <div class="price-line price-total">
               <span class="price-label">💰 Total</span>
@@ -652,6 +652,26 @@
     ];
     let messageIndex = 0;
 
+    // Stripe product links mapping
+    const stripeLinks = {
+      "Full at Cheesman Park (1 people, 1 pets)": "https://buy.stripe.com/4gw6ry0Wz0bXe1G147",
+      "Full at Cheesman Park (1 people, 2 pets)": "https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08",
+      "Full at Cheesman Park (2 people, 1 pets)": "https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c",
+      "Full at Cheesman Park (2 people, 2 pets)": "https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d",
+      "Full at City Park (1 people, 1 pets)": "https://buy.stripe.com/00gg28eNp9Mx9Lq9AE",
+      "Full at City Park (1 people, 2 pets)": "https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07",
+      "Full at City Park (2 people, 1 pets)": "https://buy.stripe.com/14A8wR8d12921VD80B9bO0e",
+      "Full at City Park (2 people, 2 pets)": "https://buy.stripe.com/6oU28tdxl29243Lft39bO0f",
+      "Mini at Cheesman Park (1 people, 1 pets)": "https://buy.stripe.com/eVag28fRtgaVe1GcMN",
+      "Mini at Cheesman Park (1 people, 2 pets)": "https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05",
+      "Mini at Cheesman Park (2 people, 1 pets)": "https://buy.stripe.com/8x24gB64T292eIpbcN9bO09",
+      "Mini at Cheesman Park (2 people, 2 pets)": "https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g",
+      "Mini at City Park (1 people, 1 pets)": "https://buy.stripe.com/9AQ6ry7kX8It3n28wy",
+      "Mini at City Park (1 people, 2 pets)": "https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06",
+      "Mini at City Park (2 people, 1 pets)": "https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b",
+      "Mini at City Park (2 people, 2 pets)": "https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a"
+    };
+
     function updateLoadingText() {
       const loadingTextElement = document.getElementById('loadingText');
       loadingTextElement.textContent = loadingMessages[messageIndex];
@@ -664,7 +684,6 @@
         if (storedData) {
           sessionData = JSON.parse(storedData);
           console.log('Loaded session data:', sessionData);
-          populateSessionDetails();
           return true;
         }
       } catch (e) {
@@ -673,38 +692,71 @@
       return false;
     }
 
+    function getStripeUrl() {
+      if (!sessionData || !sessionData.sessionType || !sessionData.location || 
+          sessionData.numberOfPets === null || sessionData.numberOfPeople === null) {
+        return null;
+      }
+
+      const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
+      const stripeUrl = stripeLinks[sessionIdentifier];
+      
+      if (!stripeUrl) {
+        console.error('No Stripe URL found for session identifier:', sessionIdentifier);
+      }
+      
+      return stripeUrl;
+    }
+
     function populateSessionDetails() {
       if (!sessionData) return;
 
       // Update session details
       document.getElementById('sessionType').textContent = sessionData.sessionType || 'Not specified';
       document.getElementById('sessionLocation').textContent = sessionData.location || 'Not specified';
-      document.getElementById('sessionPets').textContent = `${sessionData.numberOfPets} ${sessionData.numberOfPets === 1 ? 'pet' : 'pets'}`;
-      document.getElementById('sessionPeople').textContent = `${sessionData.numberOfPeople} ${sessionData.numberOfPeople === 1 ? 'person' : 'people'}`;
+      document.getElementById('sessionPets').textContent = sessionData.numberOfPets !== null ? `${sessionData.numberOfPets} ${sessionData.numberOfPets === 1 ? 'pet' : 'pets'}` : 'Not specified';
+      document.getElementById('sessionPeople').textContent = sessionData.numberOfPeople !== null ? `${sessionData.numberOfPeople} ${sessionData.numberOfPeople === 1 ? 'person' : 'people'}` : 'Not specified';
 
-      // Update pricing - simplified since it's bundled pricing
+      // Calculate pricing breakdown
+      const basePrice = sessionData.sessionType === "Full" ? 100 : 50;
+      const extraPetFee = sessionData.numberOfPets === 2 ? 40 : 0;
+      const extraPersonFee = sessionData.numberOfPeople === 2 ? 20 : 0;
+
+      // Update pricing
       document.getElementById('baseSessionLabel').textContent = `📸 ${sessionData.sessionType} Session`;
-      document.getElementById('baseSessionPrice').textContent = `${sessionData.totalPrice}`;
+      document.getElementById('baseSessionPrice').textContent = `$${basePrice}`;
 
-      // Hide extra fee lines since pricing is bundled
-      document.getElementById('extraPetLine').style.display = 'none';
-      document.getElementById('extraPersonLine').style.display = 'none';
+      // Update extra fees
+      if (extraPetFee > 0) {
+        document.getElementById('extraPetLine').style.display = 'flex';
+        document.getElementById('extraPetPrice').textContent = `+$${extraPetFee}`;
+      } else {
+        document.getElementById('extraPetLine').style.display = 'none';
+      }
+
+      if (extraPersonFee > 0) {
+        document.getElementById('extraPersonLine').style.display = 'flex';
+        document.getElementById('extraPersonPrice').textContent = `+$${extraPersonFee}`;
+      } else {
+        document.getElementById('extraPersonLine').style.display = 'none';
+      }
 
       // Update total
-      document.getElementById('totalPrice').textContent = `${sessionData.totalPrice}`;
+      document.getElementById('totalPrice').textContent = `$${sessionData.totalPrice}`;
       
-      console.log('Session details populated. Stripe URL:', sessionData.stripeUrl);
+      console.log('Session details populated.');
     }
 
     function showStripeIframe() {
-      if (!sessionData || !sessionData.stripeUrl) {
+      const stripeUrl = getStripeUrl();
+      if (!stripeUrl) {
         console.error('No Stripe URL available');
         alert('⚠️ Payment URL not found. Please try booking again.');
         window.location.href = '/cart.html';
         return;
       }
 
-      console.log('Loading Stripe URL:', sessionData.stripeUrl);
+      console.log('Loading Stripe URL:', stripeUrl);
 
       const loadingArea = document.getElementById('loadingArea');
       const stripeContainer = document.getElementById('stripeContainer');
@@ -714,7 +766,7 @@
       loadingArea.classList.add('hidden');
 
       // Set iframe source and show
-      stripeIframe.src = sessionData.stripeUrl;
+      stripeIframe.src = stripeUrl;
       
       setTimeout(() => {
         stripeContainer.classList.add('show');
@@ -732,6 +784,9 @@
       
       // Load session data
       if (loadSessionData()) {
+        // Populate session details
+        populateSessionDetails();
+
         // Start loading text rotation
         const textInterval = setInterval(updateLoadingText, 1000);
         
