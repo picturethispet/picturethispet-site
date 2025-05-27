@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Schedule Your Session | Picture This Pet</title>
-  <meta name="description" content="Schedule your pet photography session with Picture This Pet.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pop-up Event Agreement | Picture This Pet</title>
+  <meta name="description" content="Review and agree to our pop-up event terms and policies before completing your booking with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #F47C2C;
@@ -16,6 +16,7 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
+      --popup-event-purple: #a78bfa;
     }
 
     * {
@@ -26,15 +27,32 @@
 
     html {
       overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
       scroll-behavior: smooth;
     }
 
+    html::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    html::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    html::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
       background-image: url('assets/images/main_background_allsystem.png');
-      background-size: 100% 100%;
+      background-size: cover;
       background-position: center;
+      background-attachment: fixed;
+      overflow-x: hidden;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -47,56 +65,35 @@
     }
 
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
     }
 
-    @keyframes progressFill {
-      0% { width: 0%; }
-      100% { width: 100%; }
-    }
-
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* HEADER */
+    /* === HEADER STYLES === */
     header {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-image: url("assets/images/ani_bkgd_cool.png");
+      background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255,255,255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
@@ -137,12 +134,12 @@
     }
 
     .site-nav a:not(.book-btn):hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255, 0.1);
       transform: translateY(-1px);
     }
 
     .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       padding: 0.8rem 2rem;
       border: none;
@@ -153,14 +150,12 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
     }
 
     .mobile-menu-btn {
@@ -177,37 +172,34 @@
       transform: scale(1.1);
     }
 
+    /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
       flex: 1;
-      padding: 2rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: calc(100vh - 110px);
+      padding: 3rem 1rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
     }
 
-    .booking-container {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
+    /* === AGREEMENT SECTION === */
+    .agreement-container {
       background: rgba(255,255,255, 0.05);
       backdrop-filter: blur(20px);
       border-radius: 24px;
       border: 1px solid rgba(255,255,255, 0.1);
       padding: 3rem;
       animation: fadeInUp 0.8s ease-out;
-      min-height: auto;
-      position: relative;
-      overflow: visible;
-    }
-
-    .page-header {
-      text-align: center;
       margin-bottom: 2rem;
     }
 
-    .page-title {
+    .agreement-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .agreement-header h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
       font-weight: 700;
@@ -216,155 +208,170 @@
       text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
     }
 
-    .page-subtitle {
-      font-size: 1.2rem;
-      color: rgba(255,255,255, 0.7);
-      font-weight: 500;
-      line-height: 1;
-    }
-
-    .booking-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      position: relative;
-      width: 100%;
-      min-height: auto;
-      padding: 0;
-      gap: 0;
-    }
-
-    .loading-area {
-      text-align: center;
-      transition: all 0.8s ease;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    .loading-area.hidden {
-      opacity: 0;
-      transform: translateY(-30px);
-      pointer-events: none;
-      height: 0;
-      margin: 0;
-    }
-
-    .confirmation-message {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
-      border: 1px solid var(--available-green);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .confirmation-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      animation: pulse 2s infinite;
-    }
-
-    .confirmation-title {
-      font-size: 1.3rem;
+    .agreement-header .event-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--popup-event-purple), #8b5cf6);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
       font-weight: 600;
-      color: var(--available-green);
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 3s ease-in-out infinite;
     }
 
-    .confirmation-description {
-      font-size: 1rem;
+    .agreement-header p {
+      font-size: 1.1rem;
       color: rgba(255,255,255, 0.8);
       line-height: 1.6;
     }
 
-    .loading-animation {
-      margin: 1rem 0;
-    }
-
-    .loading-spinner {
-      width: 70px;
-      height: 70px;
-      border: 5px solid rgba(255,255,255, 0.3);
-      border-top: 5px solid var(--gold);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
-    }
-
-    .paw-prints {
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      margin: 1rem 0;
-    }
-
-    .paw {
-      font-size: 1.8rem;
-      animation: bounce 1.5s infinite;
-    }
-
-    .paw:nth-child(1) { animation-delay: 0s; }
-    .paw:nth-child(2) { animation-delay: 0.3s; }
-    .paw:nth-child(3) { animation-delay: 0.6s; }
-    .paw:nth-child(4) { animation-delay: 0.9s; }
-
-    .loading-text {
-      font-size: 1.3rem;
-      color: rgba(255,255,255, 0.8);
-      margin: 1rem 0;
-      background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(253,183,94,1) 50%, rgba(255,255,255,0.6) 100%);
-      background-size: 200% 100%;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 2s ease-in-out infinite;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 6px;
-      background: rgba(255,255,255, 0.2);
-      border-radius: 3px;
-      overflow: hidden;
-      margin: 1rem 0;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--orange), var(--gold));
-      border-radius: 3px;
-      animation: progressFill 3s ease-out forwards;
-    }
-
-    .acuity-container {
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all 0.8s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      margin-top: 0;
-    }
-
-    .acuity-container.show {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .acuity-iframe {
-      border: none;
+    /* === AGREEMENT SECTIONS === */
+    .agreement-section {
+      background: rgba(255,255,255, 0.03);
       border-radius: 16px;
-      background: white;
-      box-shadow: 0 5px 15px rgba(0,0,0, 0.2);
-      width: 100%;
-      max-width: 900px;
-      height: auto;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255,255,255, 0.08);
     }
 
-    /* FOOTER */
+    .agreement-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .agreement-section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.8rem;
+      margin-top: 1.5rem;
+    }
+
+    .agreement-section p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255, 0.9);
+      margin-bottom: 1rem;
+    }
+
+    .agreement-section ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .agreement-section li {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255, 0.9);
+      margin-bottom: 0.5rem;
+    }
+
+    /* === CHECKBOX SECTION === */
+    .checkbox-container {
+      background: rgba(255,255,255, 0.08);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 2px solid rgba(253,183,94, 0.3);
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(255,255,255, 0.03);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-item:hover {
+      background: rgba(255,255,255, 0.06);
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    .checkbox-item label {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: rgba(255,255,255, 0.9);
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .checkbox-item.required label::after {
+      content: " *";
+      color: var(--booked-red);
+      font-weight: bold;
+    }
+
+    /* === ACTION BUTTONS === */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .back-button {
+      background: rgba(255,255,255, 0.1);
+      color: white;
+      padding: 1rem 2rem;
+      border: 1px solid rgba(255,255,255, 0.3);
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-button:hover {
+      background: rgba(255,255,255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .continue-button {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 1rem 3rem;
+      border: none;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .continue-button.enabled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .continue-button.enabled:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(244,124,44, 0.4);
+    }
+
+    /* === FOOTER STYLES === */
     footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -459,21 +466,23 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
         height: 80px;
         padding: 0.5rem 1rem;
-        height: calc(80px + env(safe-area-inset-top));
       }
-      
+
       .desktop-logo {
         height: 48px;
       }
-      
+
       .site-nav {
         display: none;
         flex-direction: column;
         background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
         position: absolute;
         top: 80px;
         right: 0;
@@ -481,14 +490,14 @@
         text-align: right;
         padding: 1rem;
         z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255,255,255, 0.1);
         backdrop-filter: blur(12px);
       }
-      
+
       .site-nav.active {
         display: flex;
       }
-      
+
       .site-nav.active a {
         margin: 0.5rem 0;
         font-size: 1.2rem;
@@ -513,77 +522,40 @@
       }
 
       main {
-        margin-top: calc(80px + env(safe-area-inset-top));
-        padding: 0;
-        min-height: auto;
+        margin-top: 80px;
+        padding: 2rem 1rem;
       }
 
-      .booking-container {
-        padding: 0;
-        min-height: auto;
-        border-radius: 0;
-        border: none;
+      .agreement-container {
+        padding: 2rem;
       }
 
-      .page-header {
-        margin-bottom: 0;
-        padding: 0;
-      }
-
-      .page-title {
+      .agreement-header h1 {
         font-size: 2.2rem;
       }
 
-      .page-subtitle {
-        margin-bottom: 0;
-        padding-bottom: 0;
-        line-height: 0.8;
+      .agreement-section {
+        padding: 1.5rem;
       }
 
-      .confirmation-message {
-        padding: 0.5rem;
-        margin-bottom: 0;
+      .checkbox-container {
+        padding: 1.5rem;
       }
 
-      .loading-animation {
-        margin: 0;
+      .action-buttons {
+        flex-direction: column;
+        gap: 1rem;
       }
 
-      .loading-spinner {
-        margin-bottom: 0.5rem;
-      }
-
-      .paw-prints {
-        margin: 0.5rem 0;
-      }
-
-      .loading-text {
-        margin: 0.5rem 0;
-      }
-
-      .progress-bar {
-        margin: 0.5rem 0;
-      }
-
-      .acuity-container {
-        margin-top: 1rem;
-        padding: 0;
-        margin-bottom: 0;
-      }
-
-      .acuity-iframe {
-        height: auto;
-        border-radius: 0;
-        box-shadow: none;
+      .action-buttons a,
+      .action-buttons button {
+        width: 100%;
+        text-align: center;
       }
 
       .footer-container {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
       }
 
       .footer-section {
@@ -597,21 +569,17 @@
     }
 
     @media (max-width: 480px) {
-      .booking-container {
-        padding: 0;
-        margin: 0;
+      .agreement-container {
+        padding: 1.5rem;
+        margin: 0.5rem;
       }
 
-      .page-title {
-        font-size: 2rem;
+      .agreement-header h1 {
+        font-size: 1.8rem;
       }
 
-      .confirmation-message {
-        padding: 0.3rem;
-      }
-
-      .acuity-iframe {
-        height: auto;
+      .checkbox-item {
+        padding: 0.8rem;
       }
     }
   </style>
@@ -627,49 +595,112 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/cart.html" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <div class="booking-container">
-      <div class="page-header">
-        <h1 class="page-title">📅 Schedule Your Session</h1>
-        <p class="page-subtitle">Book a time slot for your pet photography session</p>
+    <div class="agreement-container">
+      <div class="agreement-header">
+        <div class="event-badge">🎉 Pop-up Event</div>
+        <h1>Event Agreement & Policies</h1>
+        <p>Please review and agree to the following terms before completing your pop-up event booking.</p>
       </div>
 
-      <div class="booking-section">
-        <!-- Loading Area -->
-        <div class="loading-area" id="loadingArea">
-          <div class="confirmation-message">
-            <div class="confirmation-icon">✅✨</div>
-            <h3 class="confirmation-title">Payment Confirmed!</h3>
-            <p class="confirmation-description">Your payment has been successfully processed. Let’s schedule your session with Picture This Pet! 🐾</p>
-          </div>
+      <!-- Event Terms & Conditions -->
+      <div class="agreement-section">
+        <h2>📝 Event Terms & Conditions</h2>
+        <h3>Event Details</h3>
+        <p>This pop-up photography event will take place at Cheesman Park on the scheduled date. Sessions are weather-dependent and may be rescheduled due to severe weather conditions.</p>
+        
+        <h3>Session Guidelines</h3>
+        <ul>
+          <li>Each session is approximately 15-20 minutes</li>
+          <li>Arrive 10 minutes before your scheduled time slot</li>
+          <li>Keep pets on leash unless otherwise directed</li>
+          <li>Bring high-value treats to keep your pet engaged</li>
+          <li>Sessions may run slightly behind schedule due to the nature of pet photography</li>
+        </ul>
 
-          <div class="loading-animation">
-            <div class="loading-spinner"></div>
-            
-            <div class="paw-prints">
-              <span class="paw">🐾</span>
-              <span class="paw">🐾</span>
-              <span class="paw">🐾</span>
-              <span class="paw">🐾</span>
-            </div>
+        <h3>Photo Delivery</h3>
+        <p>You will receive 3-5 professionally edited digital photos within 2-3 weeks of the event date. Photos will be delivered via a private online gallery with download access.</p>
+      </div>
 
-            <div class="loading-text" id="loadingText">📅 Loading scheduling portal...</div>
+      <!-- Cancellation Policy -->
+      <div class="agreement-section">
+        <h2>🔄 Cancellation & Refund Policy</h2>
+        <p><strong>Event Cancellations:</strong> If we must cancel the entire event due to severe weather or unforeseen circumstances, all participants will receive a full refund or credit toward a future session.</p>
+        
+        <p><strong>Individual Cancellations:</strong> Individual session cancellations made more than 48 hours in advance will receive a full refund. Cancellations made within 48 hours of the event are non-refundable but may be transferred to another participant.</p>
+        
+        <p><strong>No-Shows:</strong> No-shows are non-refundable and non-transferable.</p>
+      </div>
 
-            <div class="progress-bar">
-              <div class="progress-fill"></div>
-            </div>
-          </div>
+      <!-- Liability Waiver -->
+      <div class="agreement-section">
+        <h2>⚖️ Liability Waiver</h2>
+        <p>By participating in this pop-up event, you acknowledge and agree that:</p>
+        <ul>
+          <li>You participate at your own risk</li>
+          <li>Picture This Pet is not liable for any injuries to you, your pet, or others during the session</li>
+          <li>You are responsible for your pet's behavior and any damage they may cause</li>
+          <li>You will supervise your pet at all times during the session</li>
+          <li>You have disclosed any behavioral issues or concerns about your pet prior to the session</li>
+        </ul>
+      </div>
+
+      <!-- Photo Usage Rights -->
+      <div class="agreement-section">
+        <h2>📸 Photo Usage & Privacy</h2>
+        <p><strong>Your Photos:</strong> You will receive full resolution digital files with a personal use license. You may print, share, and post your photos on social media.</p>
+        
+        <p><strong>Marketing Usage:</strong> By default, Picture This Pet may use photos from your session for marketing purposes including social media, website, and promotional materials. You may opt out of this by checking the box below.</p>
+        
+        <p><strong>Privacy:</strong> Your personal information will not be shared with third parties and will only be used for session coordination and photo delivery.</p>
+      </div>
+
+      <!-- Agreement Checkboxes -->
+      <div class="checkbox-container">
+        <h2 style="margin-bottom: 1.5rem; color: var(--gold);">✅ Required Agreements</h2>
+        
+        <div class="checkbox-item required">
+          <input type="checkbox" id="terms" name="terms" required>
+          <label for="terms">I have read and agree to the Event Terms & Conditions</label>
         </div>
 
-        <!-- Acuity Container -->
-        <div class="acuity-container" id="acuityContainer">
-          <iframe class="acuity-iframe" id="acuityIframe" src="" title="Acuity Scheduling" scrolling="no"></iframe>
+        <div class="checkbox-item required">
+          <input type="checkbox" id="cancellation" name="cancellation" required>
+          <label for="cancellation">I understand and agree to the Cancellation & Refund Policy</label>
         </div>
+
+        <div class="checkbox-item required">
+          <input type="checkbox" id="liability" name="liability" required>
+          <label for="liability">I acknowledge and agree to the Liability Waiver terms</label>
+        </div>
+
+        <div class="checkbox-item required">
+          <input type="checkbox" id="photo-usage" name="photo-usage" required>
+          <label for="photo-usage">I understand the Photo Usage & Privacy terms</label>
+        </div>
+
+        <div class="checkbox-item">
+          <input type="checkbox" id="marketing-opt-out" name="marketing-opt-out">
+          <label for="marketing-opt-out">Opt out of marketing usage (check this box if you do NOT want your photos used for marketing)</label>
+        </div>
+
+        <div class="checkbox-item required">
+          <input type="checkbox" id="pet-behavior" name="pet-behavior" required>
+          <label for="pet-behavior">I confirm that my pet is well-socialized and I have disclosed any behavioral concerns</label>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <a href="/cart.html" class="back-button">← Back to Session Builder</a>
+        <button class="continue-button" id="continueButton" onclick="proceedToPayment()">
+          Continue to Secure Payment 🔒
+        </button>
       </div>
     </div>
   </main>
@@ -702,167 +733,111 @@
           <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
           <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
           <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <img src="assets/images/taptopay.jpg" alt="PayPal payment accepted" class="payment-icon" />
+          <div class="payment-placeholder" title="Tap to Pay accepted">TAP TO PAY</div>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 10:51 AM MDT, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 12:25 AM MDT, May 27, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
   <script>
-    let sessionData = null;
-    let loadingMessages = [
-      "📅 Loading scheduling portal...",
-      "🐾 Preparing your session booking...",
-      "✨ Connecting to Acuity Scheduling...",
-      "🎉 Almost ready to book your slot...",
-      "📆 Finalizing booking portal..."
-    ];
-    let messageIndex = 0;
-
-    // Acuity URL mapping with corrected pluralization
-    const acuityLinks = {
-      "Full at Cheesman (1 person, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498",
-      "Full at Cheesman (1 person, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444",
-      "Full at Cheesman (2 people, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428",
-      "Full at Cheesman (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419",
-      "Full at City (1 person, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425",
-      "Full at City (1 person, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441",
-      "Full at City (2 people, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431",
-      "Full at City (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621",
-      "Mini at Cheesman (1 person, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731",
-      "Mini at Cheesman (1 person, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816464",
-      "Mini at Cheesman (2 people, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816457",
-      "Mini at Cheesman (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816469",
-      "Mini at City (1 person, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816452",
-      "Mini at City (1 person, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816463",
-      "Mini at City (2 people, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816458",
-      "Mini at City (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816472"
-    };
-
-    function updateLoadingText() {
-      const loadingTextElement = document.getElementById('loadingText');
-      loadingTextElement.textContent = loadingMessages[messageIndex];
-      messageIndex = (messageIndex + 1) % loadingMessages.length;
-    }
-
-    function loadSessionData() {
-      try {
-        const storedData = localStorage.getItem('sessionData');
-        if (storedData) {
-          sessionData = JSON.parse(storedData);
-          console.log('Loaded session data:', sessionData);
-          return true;
-        }
-      } catch (e) {
-        console.error('Error loading session data:', e);
-      }
-      return false;
-    }
-
-    function getAcuityUrl() {
-      if (!sessionData || !sessionData.sessionType || !sessionData.location || 
-          sessionData.numberOfPets === null || sessionData.numberOfPeople === null) {
-        console.error('Missing session data fields:', {
-          sessionType: sessionData?.sessionType,
-          location: sessionData?.location,
-          numberOfPets: sessionData?.numberOfPets,
-          numberOfPeople: sessionData?.numberOfPeople
-        });
-        return null;
-      }
-
-      let normalizedLocation = sessionData.location;
-      if (sessionData.location === "City Park") {
-        normalizedLocation = "City";
-      } else if (sessionData.location === "Cheesman Park") {
-        normalizedLocation = "Cheesman";
-      }
-
-      const peopleLabel = sessionData.numberOfPeople === 1 ? "person" : "people";
-      const petsLabel = sessionData.numberOfPets === 1 ? "pet" : "pets";
-      const sessionIdentifier = `${sessionData.sessionType} at ${normalizedLocation} (${sessionData.numberOfPeople} ${peopleLabel}, ${sessionData.numberOfPets} ${petsLabel})`;
-      
-      console.log('Raw session data:', {
-        sessionType: sessionData.sessionType,
-        location: sessionData.location,
-        normalizedLocation: normalizedLocation,
-        numberOfPeople: sessionData.numberOfPeople,
-        numberOfPets: sessionData.numberOfPets
-      });
-      console.log('Constructed session identifier:', sessionIdentifier);
-
-      const acuityUrl = acuityLinks[sessionIdentifier];
-      
-      if (!acuityUrl) {
-        console.error('No Acuity URL found for session identifier:', sessionIdentifier);
-        console.log('Available keys in acuityLinks:', Object.keys(acuityLinks));
-        return "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621";
-      }
-      
-      return acuityUrl;
-    }
-
-    function adjustIframeHeight() {
-      const iframe = document.getElementById('acuityIframe');
-      if (!iframe) return;
-
-      try {
-        const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-        iframe.style.height = `${contentHeight}px`;
-        console.log('Iframe height set to:', contentHeight);
-      } catch (e) {
-        console.error('Error accessing iframe content height:', e);
-        iframe.style.height = '6000px';
-      }
-    }
-
-    function showAcuityIframe() {
-      const acuityUrl = getAcuityUrl();
-      if (!acuityUrl) {
-        console.error('No Acuity URL available');
-        alert('⚠️ Scheduling URL not found. Please try booking again.');
-        window.location.href = '/cart.html';
-        return;
-      }
-
-      console.log('Loading Acuity URL:', acuityUrl);
-
-      const loadingArea = document.getElementById('loadingArea');
-      const acuityContainer = document.getElementById('acuityContainer');
-      const acuityIframe = document.getElementById('acuityIframe');
-
-      loadingArea.classList.add('hidden');
-
-      acuityIframe.src = acuityUrl;
-      
-      setTimeout(() => {
-        acuityContainer.classList.add('show');
-        acuityIframe.onload = adjustIframeHeight;
-      }, 500);
-    }
-
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Booking page loaded');
+    // Track checkbox states and enable/disable continue button
+    function updateContinueButton() {
+      const requiredCheckboxes = document.querySelectorAll('input[type="checkbox"][required]');
+      const continueButton = document.getElementById('continueButton');
       
-      if (loadSessionData()) {
-        const textInterval = setInterval(updateLoadingText, 1000);
-        
-        setTimeout(() => {
-          clearInterval(textInterval);
-          showAcuityIframe();
-        }, 3000);
+      let allChecked = true;
+      requiredCheckboxes.forEach(checkbox => {
+        if (!checkbox.checked) {
+          allChecked = false;
+        }
+      });
+      
+      if (allChecked) {
+        continueButton.classList.add('enabled');
       } else {
-        alert('⚠️ No session data found. Redirecting to session builder...');
-        window.location.href = '/cart.html';
+        continueButton.classList.remove('enabled');
       }
+    }
+
+    // Add event listeners to all checkboxes
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Pop-up Agreement page loaded');
+      
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateContinueButton);
+      });
+      
+      // Initial button state check
+      updateContinueButton();
+    });
+
+    // Proceed to payment with agreement data
+    function proceedToPayment() {
+      const continueButton = document.getElementById('continueButton');
+      
+      // Check if button is enabled
+      if (!continueButton.classList.contains('enabled')) {
+        alert('⚠️ Please agree to all required terms before continuing.');
+        return;
+      }
+      
+      // Collect agreement data
+      const agreementData = {
+        termsAccepted: document.getElementById('terms').checked,
+        cancellationAccepted: document.getElementById('cancellation').checked,
+        liabilityAccepted: document.getElementById('liability').checked,
+        photoUsageAccepted: document.getElementById('photo-usage').checked,
+        marketingOptOut: document.getElementById('marketing-opt-out').checked,
+        petBehaviorConfirmed: document.getElementById('pet-behavior').checked,
+        timestamp: new Date().toISOString(),
+        ipAddress: 'client-side', // Would need server-side for real IP
+        userAgent: navigator.userAgent
+      };
+      
+      // Get existing session data
+      let sessionData = {};
+      try {
+        const storedData = localStorage.getItem('sessionData');
+        if (storedData) {
+          sessionData = JSON.parse(storedData);
+        }
+      } catch (e) {
+        console.error('Error loading session data:', e);
+      }
+      
+      // Add agreement data to session
+      sessionData.agreements = agreementData;
+      sessionData.agreementCompleted = true;
+      
+      // Save updated session data
+      localStorage.setItem('sessionData', JSON.stringify(sessionData));
+      
+      console.log('✅ Agreements accepted:', agreementData);
+      console.log('📝 Updated session data:', sessionData);
+      
+      // Here you would redirect to the specific Stripe URL
+      // For now, redirect to payment page which will handle the Stripe URL
+      if (sessionData.stripeUrl) {
+        console.log('🚀 Redirecting to Stripe:', sessionData.stripeUrl);
+        window.location.href = sessionData.stripeUrl;
+      } else {
+        console.log('🚀 Redirecting to payment page');
+        window.location.href = '/payment.html';
+      }
+    }
+
+    // Log errors for debugging
+    window.addEventListener('error', function(e) {
+      console.error('Page error:', e.error);
     });
   </script>
 </body>
