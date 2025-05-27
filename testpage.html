@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us | Picture This Pet</title>
-  <meta name="description" content="Get in touch for pet photography sessions or business partnerships.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Session Builder | Picture This Pet</title>
+  <meta name="description" content="Build your pet photography session with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
   <style>
     :root {
       --orange: #F47C2C;
       --gold: #FDB75E;
       --dark-brown: #4B2E1E;
       --available-green: #10b981;
-      --error-red: #ef4444;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
     }
 
     * {
@@ -23,24 +23,30 @@
       margin: 0;
       padding: 0;
     }
-    
+
     html {
       overflow-x: hidden;
       scrollbar-width: none;
       -ms-overflow-style: none;
       scroll-behavior: smooth;
     }
-    
+
     html::-webkit-scrollbar {
       width: 0;
       height: 0;
     }
-    
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background: none;
+      background-image: url('assets/images/main_background_allsystem.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes moveBackground {
@@ -50,70 +56,41 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes slideInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
     @keyframes slideInRight {
-      from {
-        opacity: 0;
-        transform: translateX(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* === HEADER STYLES === */
     header {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
+      padding-top: calc(0.01rem + env(safe-area-inset-top));
       background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
+      background-size: cover;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0,0,0, 0.3);
+      border-bottom: 1px solid rgba(255,255,255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
       z-index: 1000;
-      height: 110px;
+      height: calc(110px + env(safe-area-inset-top));
     }
-    
+
     .desktop-logo {
       height: 100px;
     }
@@ -129,13 +106,13 @@
       opacity: 0.8;
       transform: scale(1.02);
     }
-    
+
     .site-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
     }
-    
+
     .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
@@ -147,12 +124,12 @@
     }
 
     .site-nav a:not(.book-btn):hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255, 0.1);
       transform: translateY(-1px);
     }
-    
+
     .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
       padding: 0.8rem 2rem;
       border: none;
@@ -163,16 +140,14 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
     }
-    
+
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -187,442 +162,222 @@
       transform: scale(1.1);
     }
 
-    /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
-      min-height: calc(100vh - 110px);
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      padding: 4rem 1rem 2rem;
-      position: relative;
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
+      flex: 1;
+      padding: 4rem 1rem;
     }
 
-    /* === CONTACT SECTION === */
-    .contact-section {
-      max-width: 900px;
+    #session-builder {
+      max-width: 800px;
       margin: 0 auto;
-      position: relative;
-      z-index: 2;
-      animation: fadeInUp 0.8s ease-out;
-    }
-
-    .contact-card {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      height: auto;
-      min-height: 600px;
-      width: 100%;
-      max-width: 900px;
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0, 0.2);
       padding: 3rem;
-      color: white;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 0;
-      transform: scale(0.9);
-      display: none;
-      position: relative;
-      overflow: hidden;
-      margin: 0 auto 2rem;
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .contact-card.active {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .contact-card.exiting {
-      opacity: 0;
-      transform: scale(0.8);
-    }
-
-    .contact-card-logo {
-      display: block;
-      max-width: 300px;
-      margin: 0 auto 2rem;
-      height: auto;
-      flex-shrink: 0;
-    }
-
-    .contact-card-body {
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%;
-      min-height: 0;
-      padding-bottom: 3rem;
-    }
-
-    .contact-card-body.form-content {
-      justify-content: flex-start;
-      text-align: left;
-      padding-top: 1rem;
-      padding-bottom: 2rem;
-    }
-
-    .contact-card-body.centered-content {
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .contact-card-body h1 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 900;
-      font-size: 3.5rem;
-      line-height: 1.1;
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1.5rem;
-      animation: slideInLeft 0.8s ease-out;
-      /* Fallback for browsers that don't support background-clip */
-      color: var(--gold);
-    }
-
-    .contact-card-body h2 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 2.5rem;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .contact-card-body p {
-      font-size: 1.3rem;
-      line-height: 1.6;
-      opacity: 0.9;
-      margin-bottom: 2rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* === FORM STYLES === */
-    .form-group {
-      margin-bottom: 2rem;
-      text-align: left;
-      width: 100%;
-    }
-
-    .form-row {
-      display: flex;
-      gap: 2rem;
-      align-items: flex-start;
-      margin-bottom: 2rem;
-    }
-
-    .form-row .form-group {
-      flex: 1;
-      margin-bottom: 0;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: white;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 1.2rem;
-      border-radius: 12px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1rem;
       backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255, 0.1);
+      animation: fadeInUp 1s ease-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 500px;
+    }
+
+    #session-builder h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    #session-builder p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: rgba(255,255,255, 0.9);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .chat-message {
+      max-width: 70%;
+      padding: 1rem 1.5rem;
+      border-radius: 20px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
+    }
+
+    .chat-message.bot {
+      align-self: flex-start;
+      background: rgba(255,255,255, 0.2);
+      border-radius: 20px 20px 20px 5px;
+      animation-name: slideInLeft;
+    }
+
+    .chat-message.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      border-radius: 20px 20px 5px 20px;
+      color: white;
+      animation-name: slideInRight;
+    }
+
+    .chat-message.error {
+      align-self: flex-start;
+      background: rgba(239,68,68, 0.2);
+      color: var(--booked-red);
+      border: 1px solid var(--booked-red);
+      border-radius: 20px 20px 20px 5px;
+      animation-name: slideInLeft;
+    }
+
+    .chat-input {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .chat-input input[type="text"],
+    .chat-input select {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      color: white;
+      background: rgba(255,255,255, 0.1);
+      border: 2px solid rgba(255,255,255, 0.3);
+      border-radius: 12px;
       transition: all 0.3s ease;
-      min-height: 50px;
     }
 
-    .form-group input[type="text"],
-    .form-group input[type="email"] {
-      text-transform: none;
+    .chat-input input::placeholder {
+      color: rgba(255,255,255, 0.6);
     }
 
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
+    .chat-input input:focus,
+    .chat-input select:focus {
       outline: none;
       border-color: var(--gold);
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-1px);
+      background: rgba(255,255,255, 0.15);
     }
 
-    .form-group textarea {
-      resize: vertical;
-      min-height: 140px;
-    }
-
-    .form-group.required label::after {
-      content: " *";
-      color: var(--error-red);
-    }
-
-    .form-error {
-      color: var(--error-red);
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-      display: none;
-    }
-
-    .form-group.error input,
-    .form-group.error select,
-    .form-group.error textarea {
-      border-color: var(--error-red);
-    }
-
-    .form-group.error .form-error {
-      display: block;
-    }
-
-    /* === CHOICE BUTTONS === */
-    .choice-buttons {
+    .session-cards {
       display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      margin: 2rem 0;
       flex-wrap: wrap;
-    }
-
-    .choice-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 16px;
-      padding: 1.5rem 2.5rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      min-width: 200px;
-      text-align: center;
-    }
-
-    .choice-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    .choice-btn.selected {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      border-color: var(--gold);
-      color: white;
-      box-shadow: 0 8px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    .choice-btn.business {
-      border-color: rgba(16, 185, 129, 0.5);
-      color: rgba(16, 185, 129, 0.9);
-    }
-
-    .choice-btn.business:hover {
-      background: rgba(16, 185, 129, 0.1);
-      border-color: rgba(16, 185, 129, 0.7);
-    }
-
-    .choice-btn.business.selected {
-      background: var(--available-green);
-      border-color: var(--available-green);
-      color: white;
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-    }
-
-    /* === CONTACT INFO DISPLAY === */
-    .contact-info {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 2rem;
-      margin: 2rem 0;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      text-align: center;
-    }
-
-    .contact-info h3 {
-      color: var(--gold);
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .contact-info p {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      opacity: 0.9;
-    }
-
-    .contact-info a {
-      color: var(--gold);
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .contact-info a:hover {
-      color: white;
-      transform: translateY(-1px);
-    }
-
-    /* === BUTTON STYLES === */
-    .contact-card-footer {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       gap: 1rem;
-      width: 100%;
-      flex-shrink: 0;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 1rem 0;
     }
 
-    .button-group-left {
-      display: flex;
-      gap: 0.75rem;
+    .session-card {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255, 0.1);
+      transition: all 0.3s ease;
+      text-align: center;
+      flex: 1;
+      min-width: 150px;
+      cursor: pointer;
+    }
+
+    .session-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0, 0.2);
+    }
+
+    .session-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: white;
+    }
+
+    .session-card p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(255,255,255, 0.9);
+      text-align: left;
     }
 
     .submit-btn {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
+      padding: 1rem 2.5rem;
       border: none;
-      border-radius: 16px;
-      padding: 1.2rem 2.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
-      box-shadow: 0 8px 25px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+      margin-top: 2rem;
+      align-self: center;
     }
 
     .submit-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(244, 124, 44, 0.4);
-    }
-
-    .submit-btn.business {
-      background: linear-gradient(135deg, var(--available-green), #059669);
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-    }
-
-    .submit-btn.business:hover {
-      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
-    }
-
-    .submit-btn.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    .back-btn {
-      background: rgba(255, 255, 255, 0.08);
-      color: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .back-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      border-color: rgba(255, 255, 255, 0.4);
       transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
     }
 
-    /* === SUCCESS MESSAGE === */
-    .success-message {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      margin: 2rem 0;
-      backdrop-filter: blur(10px);
-    }
-
-    .success-message h3 {
-      color: var(--available-green);
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .success-message p {
-      color: white;
-      opacity: 0.9;
-      margin-bottom: 0;
-    }
-
-    /* === FOOTER STYLES === */
     footer {
-      background-image: url("assets/images/ani_bkgd_cool.png");
+      background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      padding: 3rem 2rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: white;
+      border-top: 1px solid rgba(255,255,255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255,255,255, 0.5);
+      font-size: 0.9rem;
     }
 
     .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
       max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .footer-section h4 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.2rem;
       color: white;
+      margin-bottom: 1rem;
     }
 
-    .footer-section p, .footer-section a {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 0.5rem;
+    .footer-section a {
+      color: rgba(255,255,255, 0.7);
       text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
       transition: color 0.3s ease;
     }
 
@@ -630,62 +385,47 @@
       color: var(--gold);
     }
 
-    .footer-section.socials a {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
     .payment-methods {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 1rem;
+      gap: 0.5rem;
     }
 
     .payment-icon {
       width: 40px;
       height: 25px;
       object-fit: contain;
-      opacity: 0;
-      animation: fadeIn 0.5s ease forwards;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
     }
 
-    .payment-icon:nth-child(1) { animation-delay: 0.5s; }
-    .payment-icon:nth-child(2) { animation-delay: 0.7s; }
-    .payment-icon:nth-child(3) { animation-delay: 0.9s; }
-    .payment-icon:nth-child(4) { animation-delay: 1.1s; }
-    .payment-icon:nth-child(5) { animation-delay: 1.3s; }
-    .payment-icon:nth-child(6) { animation-delay: 1.5s; }
-    .payment-icon:nth-child(7) { animation-delay: 1.7s; }
-    .payment-icon:nth-child(8) { animation-delay: 1.9s; }
-    .payment-icon:nth-child(9) { animation-delay: 2.1s; }
-    .payment-icon:nth-child(10) { animation-delay: 2.3s; }
-    .payment-icon:nth-child(11) { animation-delay: 2.5s; }
-    .payment-icon:nth-child(12) { animation-delay: 2.7s; }
-    .payment-icon:nth-child(13) { animation-delay: 2.9s; }
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
 
     .footer-bottom {
       text-align: center;
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255, 0.1);
     }
 
-    .footer-bottom p {
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.5);
+    .footer-bottom .site-creation-link {
+      white-space: nowrap;
     }
 
     @media (max-width: 768px) {
       header {
         height: 80px;
         padding: 0.5rem 1rem;
+        padding-top: calc(0.5rem + env(safe-area-inset-top));
+        height: calc(80px + env(safe-area-inset-top));
       }
-      
-      .desktop-logo { 
-        height: 48px; 
+
+      .desktop-logo {
+        height: 48px;
       }
-      
+
       .site-nav {
         display: none;
         flex-direction: column;
@@ -693,182 +433,99 @@
         background-size: 100% 100%;
         background-position: center;
         position: absolute;
-        top: 80px;
+        top: calc(80px + env(safe-area-inset-top));
         right: 0;
         width: 100%;
         text-align: right;
         padding: 1rem;
         z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255,255,255, 0.1);
         backdrop-filter: blur(12px);
       }
-      
+
       .site-nav.active {
         display: flex;
       }
-      
+
       .site-nav.active a {
-        display: block;
         margin: 0.5rem 0;
         font-size: 1.2rem;
-        color: white;
         padding: 0.5rem 1rem;
       }
-      
+
       .site-nav.active a[href="/"] { order: 1; }
       .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/locations"] { order: 3; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
       .site-nav.active a[href="/pricing"] { order: 4; }
       .site-nav.active a[href="/contact"] { order: 5; }
       .site-nav.active .book-btn { order: 6; }
-      
+
       .book-btn {
-        background: linear-gradient(135deg, #F47C2C, #FDB75E);
-        color: white;
         padding: 0.6rem 1.5rem;
-        border: none;
-        border-radius: 999px;
-        font-weight: 900;
         font-size: 1rem;
         margin-left: 0;
-        display: inline-block;
-        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
       }
-      
+
       .mobile-menu-btn {
         display: block;
       }
 
       main {
-        margin-top: 80px;
-        padding: 2rem 1rem 6rem;
+        margin-top: calc(80px + env(safe-area-inset-top));
+        padding: 2rem 1rem;
       }
 
-      .contact-section {
-        max-width: 100%;
-      }
-      
-      .contact-card {
-        max-width: 100%;
+      #session-builder {
         padding: 2rem;
-        margin-bottom: 2rem;
-        min-height: auto;
+        min-height: 400px;
       }
 
-      .contact-card-logo {
-        max-width: 200px;
-        margin-bottom: 1.5rem;
-      }
-
-      .contact-card-body h1 {
-        font-size: 2.5rem;
-      }
-
-      .contact-card-body h2 {
+      #session-builder h2 {
         font-size: 2rem;
-        margin-bottom: 1rem;
       }
 
-      .contact-card-body p {
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
+      #session-builder p {
+        font-size: 1rem;
       }
 
-      .form-row {
-        flex-direction: column;
-        gap: 0;
+      .chat-message {
+        max-width: 85%;
+        font-size: 0.9rem;
+        padding: 0.8rem 1.2rem;
       }
 
-      .form-row .form-group {
-        margin-bottom: 2rem;
+      .chat-input input,
+      .chat-input select {
+        padding: 0.8rem;
+        font-size: 0.9rem;
       }
 
-      .form-group input,
-      .form-group select,
-      .form-group textarea {
-        padding: 1.2rem;
-        font-size: 1.1rem;
-        min-height: 60px;
+      .session-card {
+        min-width: 150px;
+        padding: 1.5rem;
       }
 
-      .form-group textarea {
-        min-height: 140px;
+      .session-card h3 {
+        font-size: 1.2rem;
       }
 
-      .choice-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        margin: 2rem 0;
-      }
-
-      .choice-btn {
-        width: 100%;
-        max-width: 280px;
-        padding: 1.2rem;
-      }
-
-      .contact-card-footer {
-        flex-direction: column;
-        gap: 1.5rem;
-        padding-top: 2rem;
-        margin-top: 2rem;
-      }
-
-      .button-group-left {
-        order: 2;
-        width: 100%;
-        justify-content: center;
+      .session-card p {
+        font-size: 0.8rem;
       }
 
       .submit-btn {
-        order: 1;
-        width: 100%;
-        max-width: 280px;
-        padding: 1.2rem 2rem;
-      }
-
-      .back-btn {
-        width: 100%;
-        max-width: 150px;
-        padding: 1rem;
-        text-align: center;
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
       }
 
       .footer-container {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .footer-section {
+        align-items: center;
         text-align: center;
-      }
-
-      .footer-section.socials a {
-        display: inline-block;
-        margin: 0 0.5rem;
-      }
-
-      .payment-methods {
-        justify-content: center;
-      }
-    }
-
-    @media (min-width: 769px) {
-      .mobile-menu-btn { 
-        display: none !important; 
-      }
-    }
-
-    /* === ANIMATIONS === */
-    .contact-section {
-      animation: slideInUp 0.8s ease-out;
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
       }
     }
   </style>
@@ -876,25 +533,25 @@
 <body>
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/header_logo_cool_final.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
     </a>
     <nav class="site-nav">
       <a href="/" aria-label="Home page">Home</a>
       <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations" aria-label="Locations page">Locations</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" class="active" aria-label="Contact page">Contact</a>
-      <a href="/" class="book-btn" aria-label="Book a session">Book Now</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="#session-builder" class="book-btn" aria-label="Book a session" onclick="scrollToSection(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
-  
+
   <main>
-    <!-- Contact Section -->
-    <section class="contact-section">
-      <div class="contact-card-stack" id="contactCardStack">
-        <!-- Cards will be dynamically generated -->
-      </div>
+    <section id="session-builder">
+      <h2>Build Your Session</h2>
+      <p>Let’s customize your pet photography session! 🐾</p>
+      <div class="chat-container" id="chatContainer"></div>
+      <button class="submit-btn" id="submitBtn" style="display: none;" onclick="goToCheckout()">Continue to Booking</button>
     </section>
   </main>
 
@@ -902,7 +559,8 @@
     <div class="footer-container">
       <div class="footer-section">
         <h4>Contact Us</h4>
-        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -929,414 +587,232 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:03 PM MDT, May 23, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.9 | Last updated: 11:57 PM MDT, May 25, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
   <script>
-    // Contact form state
-    let contactData = {};
-    let currentCard = 0;
-    let totalCards = 0;
-    let contactType = '';
+    const chatContainer = document.getElementById('chatContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    let currentStep = 0;
+    // Temporary object to store session builder selections
+    const sessionData = {};
 
-    // Email Configuration
-    const RECIPIENT_EMAIL = 'info@picturethispet.com';
-    // TODO: Integrate with backend email service and custom email template design
+    const steps = [
+      {
+        bot: "What’s your pet’s name? 🐾",
+        input: '<input type="text" id="pet1Name" placeholder="Your pet’s name">',
+        validate: (value) => value.trim() ? null : "Please enter your pet’s name! 🐶"
+      },
+      {
+        bot: (data) => `Awesome, ${data.pet1Name} sounds adorable! What’s your first name? 😊`,
+        input: '<input type="text" id="client1FirstName" placeholder="Your first name">',
+        validate: (value) => value.trim() ? null : "Please enter your first name! 😅"
+      },
+      {
+        bot: (data) => `Nice to meet you, ${data.client1FirstName}! What kind of session are you interested in? 📸`,
+        input: `
+          <div class="session-cards">
+            <div class="session-card" onclick="selectSession('Mini')">
+              <h3>Mini Session 🐾</h3>
+              <p>60 min, 5 images, $50<br>Perfect for a quick shoot! 🌟</p>
+            </div>
+            <div class="session-card" onclick="selectSession('Full')">
+              <h3>Full Session 📷</h3>
+              <p>90 min, 10 images, $100<br>Capture every moment! 🎉</p>
+            </div>
+          </div>
+        `,
+        validate: (value) => value ? null : "Please select a session type! 😊"
+      },
+      {
+        bot: "Great choice! Where would you like the session? 🌳",
+        input: `
+          <div class="session-cards">
+            <div class="session-card" onclick="selectLocation('Cheesman Park')">
+              <h3>Cheesman Park 🌳</h3>
+              <p>Scenic park with beautiful views! 🌸</p>
+            </div>
+            <div class="session-card" onclick="selectLocation('City Park')">
+              <h3>City Park 🏞️</h3>
+              <p>Urban vibes with stunning backdrops! 🌇</p>
+            </div>
+          </div>
+        `,
+        validate: (value) => value ? null : "Please select a location! 🌲"
+      },
+      {
+        bot: "Perfect! How many pets will be in the session? 🐶🐱",
+        input: `
+          <div class="session-cards">
+            <div class="session-card" onclick="selectPetCount(1)">
+              <h3>1 Pet Included 🐶</h3>
+              <p>No extra cost! 🌟</p>
+            </div>
+            <div class="session-card" onclick="selectPetCount(2)">
+              <h3>2 Pets 🐶🐱</h3>
+              <p>+$40 for second pet 🎉</p>
+            </div>
+          </div>
+        `,
+        validate: (value) => value ? null : "Please select the number of pets! 😅"
+      },
+      {
+        bot: "Got it! How many people will be in the session? 👥",
+        input: `
+          <div class="session-cards">
+            <div class="session-card" onclick="selectPeopleCount(1)">
+              <h3>1 Person Included 👤</h3>
+              <p>No extra cost! 🌟</p>
+            </div>
+            <div class="session-card" onclick="selectPeopleCount(2)">
+              <h3>2 People 👥</h3>
+              <p>+$20 for second person 🎉</p>
+            </div>
+          </div>
+        `,
+        validate: (value) => value ? null : "Please select the number of people! 😊"
+      },
+      {
+        bot: "Awesome, what’s your second pet’s name? 🐕",
+        input: '<input type="text" id="pet2Name" placeholder="Second pet’s name">',
+        validate: (value) => value.trim() ? null : "Please enter your second pet’s name! 🐱",
+        condition: (data) => parseInt(data.numberOfPets) === 2
+      }
+    ];
 
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', function() {
-      generateContactCards();
-      setupFormValidation();
-      setupKeyboardNavigation();
-    });
+    function appendMessage(content, type) {
+      const message = document.createElement('div');
+      message.className = `chat-message ${type}`;
+      message.innerHTML = content;
+      chatContainer.appendChild(message);
+      message.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
 
-    // Mobile menu toggle
+    function appendInput(step) {
+      const inputDiv = document.createElement('div');
+      inputDiv.className = 'chat-input';
+      inputDiv.innerHTML = step.input;
+      chatContainer.appendChild(inputDiv);
+      const input = inputDiv.querySelector('input, select');
+      if (input) input.focus();
+      inputDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+      if (input && !step.input.includes('checkbox')) {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            submitInput();
+          }
+        });
+      }
+    }
+
+    function submitInput() {
+      const step = steps[currentStep];
+      let value;
+
+      if (step.input.includes('session-card')) {
+        value = sessionData.sessionType || sessionData.location || sessionData.numberOfPets || sessionData.numberOfPeople;
+      } else {
+        const inputElement = document.querySelector('input');
+        value = inputElement.value.trim();
+      }
+
+      const error = step.validate(value);
+      if (error) {
+        appendMessage(error, 'error');
+        return;
+      }
+
+      if (step.input.includes('session-card')) {
+        appendMessage(value.toString(), 'user');
+      } else {
+        appendMessage(value, 'user');
+      }
+
+      // Store data temporarily (not saved)
+      if (currentStep === 0) sessionData.pet1Name = value;
+      if (currentStep === 1) sessionData.client1FirstName = value;
+      if (currentStep === 2) sessionData.sessionType = value;
+      if (currentStep === 3) sessionData.location = value;
+      if (currentStep === 4) sessionData.numberOfPets = value.toString();
+      if (currentStep === 5) sessionData.numberOfPeople = value.toString();
+      if (currentStep === 6) sessionData.pet2Name = value;
+
+      chatContainer.removeChild(chatContainer.lastChild);
+
+      currentStep++;
+      if (currentStep < steps.length) {
+        if (steps[currentStep].condition && !steps[currentStep].condition(sessionData)) {
+          currentStep++;
+        }
+        if (currentStep < steps.length) {
+          const botMessage = typeof steps[currentStep].bot === 'function' ? steps[currentStep].bot(sessionData) : steps[currentStep].bot;
+          appendMessage(botMessage, 'bot');
+          appendInput(steps[currentStep]);
+        } else {
+          showSubmitButton();
+        }
+      } else {
+        showSubmitButton();
+      }
+    }
+
+    function selectSession(type) {
+      sessionData.sessionType = type;
+      submitInput();
+    }
+
+    function selectLocation(location) {
+      sessionData.location = location;
+      submitInput();
+    }
+
+    function selectPetCount(count) {
+      sessionData.numberOfPets = count;
+      submitInput();
+    }
+
+    function selectPeopleCount(count) {
+      sessionData.numberOfPeople = count;
+      submitInput();
+    }
+
+    function showSubmitButton() {
+      submitBtn.style.display = 'block';
+      submitBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    function goToCheckout() {
+      // Construct the session identifier based on the four questions
+      const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
+      const price = sessionIdentifier === "Full Session at City Park (2 people, 2 pets)" ? 160 : 0; // Set price based on session type
+      window.location.href = `/checkout.html?session_identifier=${encodeURIComponent(sessionIdentifier)}&price=${price}`;
+    }
+
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
 
-    // Setup keyboard navigation
-    function setupKeyboardNavigation() {
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && e.target.matches('input, textarea, select')) {
-          e.preventDefault();
-          const activeCard = document.querySelector('.contact-card.active');
-          const submitBtn = activeCard.querySelector('.submit-btn');
-          if (submitBtn && !submitBtn.classList.contains('disabled')) {
-            submitBtn.click();
-          }
-        }
+    function scrollToSection(e) {
+      e.preventDefault();
+      const section = document.querySelector('#session-builder');
+      const offset = 100;
+      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: sectionPosition - offset,
+        behavior: 'smooth'
       });
     }
 
-    // Setup form validation
-    function setupFormValidation() {
-      document.addEventListener('input', function(e) {
-        if (e.target.matches('input, select, textarea')) {
-          setTimeout(validateCurrentCard, 100);
-        }
-      });
-    }
-
-    // Phone number formatting
-    function formatPhoneNumber(input) {
-      const value = input.value.replace(/\D/g, '');
-      let formattedValue = '';
-      
-      if (value.length > 0) {
-        if (value.length <= 3) {
-          formattedValue = value;
-        } else if (value.length <= 6) {
-          formattedValue = `${value.slice(0, 3)}-${value.slice(3)}`;
-        } else {
-          formattedValue = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
-        }
-      }
-      
-      input.value = formattedValue;
-    }
-
-    // Create card element
-    function createCard(content, isActive = false) {
-      const card = document.createElement("div");
-      card.className = `contact-card${isActive ? ' active' : ''}`;
-      card.innerHTML = content;
-      return card;
-    }
-
-    // Show specific card
-    function showCard(index) {
-      const cards = document.querySelectorAll('.contact-card');
-      cards.forEach((card, i) => {
-        if (i === index) {
-          card.classList.add('active');
-        } else {
-          card.classList.remove('active');
-        }
-      });
-      currentCard = index;
-    }
-
-    // Advance to next card
-    function advanceCard() {
-      if (currentCard < totalCards - 1) {
-        const currentCardEl = document.querySelector('.contact-card.active');
-        if (currentCardEl) {
-          currentCardEl.classList.add('exiting');
-          setTimeout(() => {
-            currentCardEl.classList.remove('active', 'exiting');
-            showCard(currentCard + 1);
-          }, 400);
-        } else {
-          showCard(currentCard + 1);
-        }
-      }
-    }
-
-    // Go back to previous card
-    function goBack() {
-      if (currentCard > 0) {
-        showCard(currentCard - 1);
-      }
-    }
-
-    // Handle contact type selection
-    function selectContactType(button, type) {
-      const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
-      choiceButtons.forEach(btn => btn.classList.remove('selected'));
-      button.classList.add('selected');
-      
-      contactType = type;
-      contactData.contactType = type;
-      
-      // Auto-advance after selection
-      setTimeout(() => {
-        generateContactCards(); // Regenerate with appropriate form
-        showCard(1); // Show the form card
-      }, 800);
-    }
-
-    // Validate current card
-    function validateCurrentCard() {
-      const activeCard = document.querySelector('.contact-card.active');
-      const requiredInputs = activeCard.querySelectorAll('input[required], select[required], textarea[required]');
-      let isValid = true;
-
-      requiredInputs.forEach(input => {
-        const formGroup = input.closest('.form-group');
-        if (!input.value.trim()) {
-          formGroup.classList.add('error');
-          isValid = false;
-        } else {
-          formGroup.classList.remove('error');
-          
-          // Email validation
-          if (input.type === 'email' && input.value.trim()) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(input.value.trim())) {
-              formGroup.classList.add('error');
-              isValid = false;
-            }
-          }
-        }
-      });
-
-      // Update submit button state
-      const submitBtn = activeCard.querySelector('.submit-btn');
-      if (submitBtn) {
-        if (isValid) {
-          submitBtn.classList.remove('disabled');
-        } else {
-          submitBtn.classList.add('disabled');
-        }
-      }
-
-      return isValid;
-    }
-
-    // Submit form
-    function submitContactForm() {
-      if (validateCurrentCard()) {
-        // Save form data
-        const activeCard = document.querySelector('.contact-card.active');
-        const inputs = activeCard.querySelectorAll('input, select, textarea');
-        
-        inputs.forEach(input => {
-          if (input.name && input.value) {
-            contactData[input.name] = input.value;
-          }
-        });
-
-        // Add metadata
-        contactData.submissionTime = new Date().toISOString();
-        contactData.userAgent = navigator.userAgent;
-        contactData.recipientEmail = '@picturethispet.com';
-
-        // TODO: Send to backend endpoint that will format and email to info@picturethispet.co
-        // Backend should use the custom email template design
-        console.log('Contact form submitted to info@picturethispet.co:', contactData);
-
-        // Show success message
-        showSuccessCard();
-      }
-    }
-
-    // Show success card
-    function showSuccessCard() {
-      const container = document.getElementById('contactCardStack');
-      const successCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="contact-card-logo" />
-        <div class="contact-card-body centered-content">
-          <div>
-            <h2>Message Sent!</h2>
-            <div class="success-message">
-              <h3>✨ Thank You!</h3>
-              <p>We've received your ${contactType === 'client' ? 'inquiry' : 'partnership request'} and will get back to you from info@picturethispet.co within 24 hours.</p>
-            </div>
-            <div class="contact-info">
-              <h3>Get In Touch Directly</h3>
-              <p>📧 <a href="mailto:info@picturethispet.co">info@picturethispet.co</a></p>
-              <p>📱 <a href="tel:+1234567890">(123) 456-7890</a></p>
-              <p>📍 Denver, Colorado</p>
-            </div>
-          </div>
-        </div>
-        <div class="contact-card-footer">
-          <div class="button-group-left">
-            <button class="back-btn" onclick="window.location.href='/'">← Back to Home</button>
-          </div>
-          <button class="submit-btn" onclick="window.location.href='/'">Book a Session →</button>
-        </div>
-      `, true);
-      
-      container.appendChild(successCard);
-      showCard(container.children.length - 1);
-    }
-
-    // Generate contact cards
-    function generateContactCards() {
-      const container = document.getElementById('contactCardStack');
-      container.innerHTML = '';
-      let cardIndex = 0;
-
-      // Card 0 - Contact Type Selection
-      const typeCard = createCard(`
-        <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="contact-card-logo" />
-        <div class="contact-card-body centered-content">
-          <div>
-            <h1>Get In Touch</h1>
-            <p>Whether you're looking to book a session or explore partnership opportunities, we'd love to hear from you!</p>
-            <div class="choice-buttons">
-              <button class="choice-btn ${contactType === 'client' ? 'selected' : ''}" onclick="selectContactType(this, 'client')">
-                🐾 Pet Photography<br><small style="opacity: 0.8;">Sessions & General Inquiries</small>
-              </button>
-              <button class="choice-btn business ${contactType === 'business' ? 'selected' : ''}" onclick="selectContactType(this, 'business')">
-                🤝 Business Partnership<br><small style="opacity: 0.8;">Organizations & Collaborations</small>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="contact-card-footer">
-          <div class="button-group-left"></div>
-          <div></div>
-        </div>
-      `, true);
-      container.appendChild(typeCard);
-      cardIndex++;
-
-      // Card 1 - Form based on contact type
-      if (contactType === 'client') {
-        const clientFormCard = createCard(`
-          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="contact-card-logo" />
-          <div class="contact-card-body form-content">
-            <h2>Tell Us About Your Inquiry</h2>
-            
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="clientName">Your Name</label>
-                <input type="text" id="clientName" name="clientName" required placeholder="Enter your full name" value="${contactData.clientName || ''}">
-                <div class="form-error">Please enter your name</div>
-              </div>
-              <div class="form-group required">
-                <label for="clientEmail">Email Address</label>
-                <input type="email" id="clientEmail" name="clientEmail" required placeholder="your@email.com" value="${contactData.clientEmail || ''}">
-                <div class="form-error">Please enter a valid email address</div>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="clientPhone">Phone Number</label>
-                <input type="tel" id="clientPhone" name="clientPhone" required placeholder="(555) 555-5555" value="${contactData.clientPhone || ''}" oninput="formatPhoneNumber(this)" maxlength="12">
-                <div class="form-error">Please enter your phone number</div>
-              </div>
-              <div class="form-group required">
-                <label for="inquiryType">Type of Inquiry</label>
-                <select id="inquiryType" name="inquiryType" required>
-                  <option value="">Select inquiry type...</option>
-                  <option value="session-booking" ${contactData.inquiryType === 'session-booking' ? 'selected' : ''}>Session Booking</option>
-                  <option value="pricing-info" ${contactData.inquiryType === 'pricing-info' ? 'selected' : ''}>Pricing Information</option>
-                  <option value="availability" ${contactData.inquiryType === 'availability' ? 'selected' : ''}>Availability</option>
-                  <option value="gift-certificate" ${contactData.inquiryType === 'gift-certificate' ? 'selected' : ''}>Gift Certificate</option>
-                  <option value="general-question" ${contactData.inquiryType === 'general-question' ? 'selected' : ''}>General Question</option>
-                  <option value="other" ${contactData.inquiryType === 'other' ? 'selected' : ''}>Other</option>
-                </select>
-                <div class="form-error">Please select inquiry type</div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="petInfo">Tell us about your pet(s)</label>
-              <input type="text" id="petInfo" name="petInfo" placeholder="e.g., Golden Retriever named Max, 3 years old" value="${contactData.petInfo || ''}">
-            </div>
-
-            <div class="form-group required">
-              <label for="clientMessage">Your Message</label>
-              <textarea id="clientMessage" name="clientMessage" required placeholder="Tell us about what you're looking for, preferred dates, any special requests, etc.">${contactData.clientMessage || ''}</textarea>
-              <div class="form-error">Please enter your message</div>
-            </div>
-          </div>
-          <div class="contact-card-footer">
-            <div class="button-group-left">
-              <button class="back-btn" onclick="goBack()">← Back</button>
-            </div>
-            <button class="submit-btn" onclick="submitContactForm()">Send Message →</button>
-          </div>
-        `);
-        container.appendChild(clientFormCard);
-        cardIndex++;
-
-      } else if (contactType === 'business') {
-        const businessFormCard = createCard(`
-          <img src="assets/images/final_sessionbuilder_qcard_logo_warm.png" alt="PictureThisPet Logo" class="contact-card-logo" />
-          <div class="contact-card-body form-content">
-            <h2>Partnership Inquiry</h2>
-            
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="contactName">Contact Person</label>
-                <input type="text" id="contactName" name="contactName" required placeholder="Your full name" value="${contactData.contactName || ''}">
-                <div class="form-error">Please enter contact person name</div>
-              </div>
-              <div class="form-group required">
-                <label for="businessEmail">Business Email</label>
-                <input type="email" id="businessEmail" name="businessEmail" required placeholder="contact@company.com" value="${contactData.businessEmail || ''}">
-                <div class="form-error">Please enter a valid business email</div>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="companyName">Company/Organization</label>
-                <input type="text" id="companyName" name="companyName" required placeholder="Company name" value="${contactData.companyName || ''}">
-                <div class="form-error">Please enter company name</div>
-              </div>
-              <div class="form-group required">
-                <label for="businessPhone">Phone Number</label>
-                <input type="tel" id="businessPhone" name="businessPhone" required placeholder="(555) 555-5555" value="${contactData.businessPhone || ''}" oninput="formatPhoneNumber(this)" maxlength="12">
-                <div class="form-error">Please enter phone number</div>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="partnershipType">Partnership Type</label>
-                <select id="partnershipType" name="partnershipType" required>
-                  <option value="">Select partnership type...</option>
-                  <option value="pet-business" ${contactData.partnershipType === 'pet-business' ? 'selected' : ''}>Pet Business Collaboration</option>
-                  <option value="veterinary" ${contactData.partnershipType === 'veterinary' ? 'selected' : ''}>Veterinary Clinic</option>
-                  <option value="rescue-shelter" ${contactData.partnershipType === 'rescue-shelter' ? 'selected' : ''}>Animal Rescue/Shelter</option>
-                  <option value="event-venue" ${contactData.partnershipType === 'event-venue' ? 'selected' : ''}>Event Venue</option>
-                  <option value="corporate" ${contactData.partnershipType === 'corporate' ? 'selected' : ''}>Corporate Photography</option>
-                  <option value="media-content" ${contactData.partnershipType === 'media-content' ? 'selected' : ''}>Media/Content Creation</option>
-                  <option value="other" ${contactData.partnershipType === 'other' ? 'selected' : ''}>Other Partnership</option>
-                </select>
-                <div class="form-error">Please select partnership type</div>
-              </div>
-              <div class="form-group">
-                <label for="companySize">Company Size</label>
-                <select id="companySize" name="companySize">
-                  <option value="">Select size...</option>
-                  <option value="1-10" ${contactData.companySize === '1-10' ? 'selected' : ''}>1-10 employees</option>
-                  <option value="11-50" ${contactData.companySize === '11-50' ? 'selected' : ''}>11-50 employees</option>
-                  <option value="51-200" ${contactData.companySize === '51-200' ? 'selected' : ''}>51-200 employees</option>
-                  <option value="200+" ${contactData.companySize === '200+' ? 'selected' : ''}>200+ employees</option>
-                  <option value="nonprofit" ${contactData.companySize === 'nonprofit' ? 'selected' : ''}>Non-profit</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="website">Website/Social Media</label>
-              <input type="text" id="website" name="website" placeholder="www.yourcompany.com or @instagram" value="${contactData.website || ''}">
-            </div>
-
-            <div class="form-group required">
-              <label for="businessMessage">Partnership Details</label>
-              <textarea id="businessMessage" name="businessMessage" required placeholder="Describe your partnership idea, goals, timeline, budget considerations, and how you envision working together...">${contactData.businessMessage || ''}</textarea>
-              <div class="form-error">Please describe your partnership proposal</div>
-            </div>
-          </div>
-          <div class="contact-card-footer">
-            <div class="button-group-left">
-              <button class="back-btn" onclick="goBack()">← Back</button>
-            </div>
-            <button class="submit-btn business" onclick="submitContactForm()">Submit Partnership Inquiry →</button>
-          </div>
-        `);
-        container.appendChild(businessFormCard);
-        cardIndex++;
-      }
-
-      totalCards = cardIndex;
-      
-      // Setup validation after cards are created
-      setTimeout(validateCurrentCard, 100);
-    }
-
-    console.log('✨ Contact page initialized successfully');
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Cart page loaded - v1.0.9');
+      currentStep = 0;
+      appendMessage(steps[0].bot, 'bot');
+      appendInput(steps[0]);
+    });
   </script>
 </body>
 </html>
