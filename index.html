@@ -67,13 +67,13 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-image: url("assets/images/ani_bkgd_cool.png");
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255,255,255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
@@ -114,12 +114,12 @@
     }
 
     .site-nav a:not(.book-btn):hover {
-      background: rgba(255,255,255, 0.1);
+      background: rgba(255, 255, 255, 0.1);
       transform: translateY(-1px);
     }
 
     .book-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
       color: white;
       padding: 0.8rem 2rem;
       border: none;
@@ -130,12 +130,14 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
 
     .mobile-menu-btn {
@@ -420,6 +422,29 @@
       transform: scale(1.1);
     }
 
+    .payment-placeholder {
+      width: 40px;
+      height: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .payment-placeholder:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
     .footer-bottom {
       text-align: center;
       padding-top: 1.5rem;
@@ -450,7 +475,7 @@
         text-align: right;
         padding: 1rem;
         z-index: 999;
-        border-top: 1px solid rgba(255,255,255, 0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(12px);
       }
 
@@ -565,7 +590,7 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#start-journey" class="book-btn" aria-label="Book a session" onclick="scrollToSection(event)">Book Now</a>
+      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
@@ -662,11 +687,12 @@
           <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
           <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
           <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+          <img src="assets/images/taptopay.jpg" alt="PayPal payment accepted" class="payment-icon" />
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 12:25 AM MDT, May 27, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 10:41 AM MDT, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
