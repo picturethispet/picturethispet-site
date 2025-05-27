@@ -302,6 +302,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
+      min-height: 500px; /* Ensure enough space for the loading area */
     }
 
     .loading-area {
@@ -402,35 +403,6 @@
       animation: progressFill 5s ease-out forwards;
     }
 
-    .stripe-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all 0.8s ease;
-      display: flex;
-      flex-direction: column;
-      padding: 2rem;
-    }
-
-    .stripe-container.show {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .stripe-iframe {
-      flex: 1;
-      border: none;
-      border-radius: 16px;
-      background: white;
-      box-shadow: 0 15px 35px rgba(0,0,0, 0.2);
-      min-height: 600px;
-      width: 100%;
-    }
-
     .back-button {
       background: rgba(255,255,255, 0.1);
       color: white;
@@ -507,10 +479,6 @@
       .security-message {
         padding: 1.5rem;
       }
-
-      .stripe-iframe {
-        min-height: 500px;
-      }
     }
 
     @media (max-width: 480px) {
@@ -525,10 +493,6 @@
 
       .session-summary {
         padding: 1.2rem;
-      }
-
-      .stripe-iframe {
-        min-height: 400px;
       }
     }
   </style>
@@ -629,11 +593,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Stripe Container -->
-          <div class="stripe-container" id="stripeContainer">
-            <iframe class="stripe-iframe" id="stripeIframe" src="" title="Secure Payment Portal"></iframe>
-          </div>
         </div>
       </div>
 
@@ -648,7 +607,7 @@
       "📸 Loading your session details...",
       "💳 Connecting to Stripe checkout...",
       "🐾 Almost ready for payment...",
-      "✨ Finalizing secure connection..."
+      "✨ Redirecting to Stripe..."
     ];
     let messageIndex = 0;
 
@@ -747,7 +706,7 @@
       console.log('Session details populated.');
     }
 
-    function showStripeIframe() {
+    function redirectToStripe() {
       const stripeUrl = getStripeUrl();
       if (!stripeUrl) {
         console.error('No Stripe URL available');
@@ -756,20 +715,16 @@
         return;
       }
 
-      console.log('Loading Stripe URL:', stripeUrl);
+      console.log('Redirecting to Stripe URL:', stripeUrl);
 
       const loadingArea = document.getElementById('loadingArea');
-      const stripeContainer = document.getElementById('stripeContainer');
-      const stripeIframe = document.getElementById('stripeIframe');
 
       // Hide loading area
       loadingArea.classList.add('hidden');
 
-      // Set iframe source and show
-      stripeIframe.src = stripeUrl;
-      
+      // Redirect to Stripe
       setTimeout(() => {
-        stripeContainer.classList.add('show');
+        window.location.href = stripeUrl;
       }, 500);
     }
 
@@ -790,10 +745,10 @@
         // Start loading text rotation
         const textInterval = setInterval(updateLoadingText, 1000);
         
-        // Show Stripe iframe after 5 seconds
+        // Redirect to Stripe after 5 seconds
         setTimeout(() => {
           clearInterval(textInterval);
-          showStripeIframe();
+          redirectToStripe();
         }, 5000);
       } else {
         // No session data, redirect back to cart
