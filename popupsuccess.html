@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Booking Confirmed | Picture This Pet</title>
-  <meta name="description" content="Your pet photography session has been successfully booked with Picture This Pet.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Payment Success | Picture This Pet</title>
+  <meta name="description" content="Your PopUp event payment has been successfully processed. Show this to a Picture This Pet team member to start your shoot!">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #F47C2C;
@@ -24,24 +23,23 @@
       margin: 0;
       padding: 0;
     }
-    
+
     html {
       overflow-x: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
       scroll-behavior: smooth;
     }
-    
-    html::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-    }
-    
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background: none;
+      background-image: url('assets/images/main_background_allsystem.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes moveBackground {
@@ -51,17 +49,21 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* === HEADER STYLES === */
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
     header {
       width: 100%;
       display: flex;
@@ -81,7 +83,7 @@
       z-index: 1000;
       height: 110px;
     }
-    
+
     .desktop-logo {
       height: 100px;
     }
@@ -97,13 +99,13 @@
       opacity: 0.8;
       transform: scale(1.02);
     }
-    
+
     .site-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
     }
-    
+
     .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
@@ -118,7 +120,7 @@
       background: rgba(255, 255, 255, 0.1);
       transform: translateY(-1px);
     }
-    
+
     .book-btn {
       background: linear-gradient(135deg, #F47C2C, #FDB75E);
       color: white;
@@ -140,7 +142,7 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
-    
+
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -155,190 +157,99 @@
       transform: scale(1.1);
     }
 
-    /* === MAIN CONTENT === */
     main {
       margin-top: 110px;
-      min-height: calc(100vh - 110px);
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      padding: 4rem 1rem;
-      position: relative;
-    }
-
-    /* === SUCCESS SECTION === */
-    .success-section {
-      max-width: 800px;
-      margin: 0 auto;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .success-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .success-section p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .confirmation-details {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .confirmation-details h3 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .confirmation-item {
+      flex: 1;
+      padding: 2rem 1rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
+      justify-content: center;
+      min-height: calc(100vh - 110px);
     }
 
-    .confirmation-item .label {
-      color: rgba(255, 255, 255, 0.8);
+    .success-container {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      background: rgba(255,255,255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255, 0.1);
+      padding: 3rem;
+      animation: fadeInUp 0.8s ease-out;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
     }
 
-    .confirmation-item .value {
-      color: white;
-      font-weight: 600;
-    }
-
-    .gallery-access {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 16px;
-      padding: 1.5rem;
+    .page-header {
       margin-bottom: 2rem;
     }
 
-    .gallery-access h3 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--available-green);
-    }
-
-    .gallery-access p {
-      font-size: 1rem;
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: white;
       margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
     }
 
-    .gallery-access .credential {
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255,255,255, 0.7);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .confirmation-message {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
+      border: 1px solid var(--available-green);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .confirmation-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite;
+    }
+
+    .confirmation-title {
+      font-size: 1.8rem;
       font-weight: 600;
-      color: var(--gold);
+      color: var(--available-green);
+      margin-bottom: 0.8rem;
     }
 
-    .success-actions {
-      margin-top: 2rem;
+    .confirmation-description {
+      font-size: 1.1rem;
+      color: rgba(255,255,255, 0.8);
+      line-height: 1.6;
     }
 
-    .home-btn {
+    .home-button {
       background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
+      padding: 1rem 2rem;
       border: none;
-      padding: 1rem 3rem;
-      border-radius: 12px;
-      font-size: 1.2rem;
+      border-radius: 999px;
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
+      margin-top: 1rem;
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
     }
 
-    .home-btn:hover {
+    .home-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
     }
 
-    /* === POP-UP STYLES === */
-    .popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 2000;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .popup-content {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 2rem;
-      max-width: 500px;
-      width: 90%;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .popup-content h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .popup-content p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .popup-content button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      padding: 0.8rem 2rem;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .popup-content button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    /* === FOOTER STYLES === */
     footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
@@ -404,29 +315,49 @@
       transform: scale(1.1);
     }
 
+    .payment-placeholder {
+      width: 40px;
+      height: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .payment-placeholder:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
     .footer-bottom {
       text-align: center;
       padding-top: 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* === RESPONSIVE === */
     @media (max-width: 768px) {
       header {
         height: 80px;
         padding: 0.5rem 1rem;
       }
-      
-      .desktop-logo { 
-        height: 48px; 
+
+      .desktop-logo {
+        height: 48px;
       }
-      
+
       .site-nav {
         display: none;
         flex-direction: column;
         background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: 100% 100%;
-        background-position: center;
         position: absolute;
         top: 80px;
         right: 0;
@@ -437,16 +368,14 @@
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(12px);
       }
-      
+
       .site-nav.active {
         display: flex;
       }
-      
+
       .site-nav.active a {
-        display: block;
         margin: 0.5rem 0;
         font-size: 1.2rem;
-        color: white;
         padding: 0.5rem 1rem;
       }
 
@@ -456,89 +385,32 @@
       .site-nav.active a[href="/pricing"] { order: 4; }
       .site-nav.active a[href="/contact"] { order: 5; }
       .site-nav.active .book-btn { order: 6; }
-      
+
       .book-btn {
-        background: linear-gradient(135deg, #F47C2C, #FDB75E);
-        color: white;
         padding: 0.6rem 1.5rem;
-        border: none;
-        border-radius: 999px;
-        font-weight: 900;
         font-size: 1rem;
         margin-left: 0;
-        display: inline-block;
-        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
       }
-      
+
       .mobile-menu-btn {
         display: block;
       }
-      
+
       main {
         margin-top: 80px;
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
       }
 
-      .success-section {
+      .success-container {
         padding: 2rem;
       }
 
-      .success-section h2 {
-        font-size: 2rem;
+      .page-title {
+        font-size: 2.2rem;
       }
 
-      .success-section p {
-        font-size: 1rem;
-      }
-
-      .confirmation-details {
-        padding: 1rem;
-      }
-
-      .confirmation-details h3 {
-        font-size: 1.3rem;
-      }
-
-      .confirmation-item {
-        font-size: 0.9rem;
-      }
-
-      .gallery-access {
-        padding: 1rem;
-      }
-
-      .gallery-access h3 {
-        font-size: 1.3rem;
-      }
-
-      .gallery-access p {
-        font-size: 0.9rem;
-      }
-
-      .home-btn {
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
-      }
-
-      .popup-content {
+      .confirmation-message {
         padding: 1.5rem;
-      }
-
-      .popup-content h3 {
-        font-size: 1.5rem;
-      }
-
-      .popup-content p {
-        font-size: 1rem;
-      }
-
-      .popup-content button {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
-      }
-
-      footer {
-        padding: 1.5rem 1rem;
       }
 
       .footer-container {
@@ -559,6 +431,21 @@
         justify-content: center;
       }
     }
+
+    @media (max-width: 480px) {
+      .success-container {
+        padding: 1.5rem;
+        margin: 0.5rem;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .confirmation-title {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -572,69 +459,27 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <!-- Success Section -->
-    <div class="success-section">
-      <h2>Booking Confirmed!</h2>
-      <p>Thank you for booking your pet photography session with Picture This Pet. We’re excited to capture your special moments!</p>
-      
-      <div class="confirmation-details">
-        <h3>Booking Details</h3>
-        <div id="confirmationDetails">
-          <div class="confirmation-item">
-            <span class="label">Session Type:</span>
-            <span class="value" id="sessionType">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Location:</span>
-            <span class="value" id="sessionLocation">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Date & Time:</span>
-            <span class="value" id="sessionDateTime">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Pets:</span>
-            <span class="value" id="petCount">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">People:</span>
-            <span class="value" id="peopleCount">—</span>
-          </div>
-          <div class="confirmation-item">
-            <span class="label">Total Paid:</span>
-            <span class="value" id="totalPaid">$0</span>
-          </div>
-        </div>
+    <div class="success-container">
+      <div class="page-header">
+        <h1 class="page-title">🎉 PopUp Payment Success</h1>
+        <p class="page-subtitle">Your PopUp event booking is confirmed!</p>
       </div>
 
-      <div class="gallery-access">
-        <h3>Gallery Access</h3>
-        <p>Your photos will be available in a private gallery after the session. Use the credentials below to access your gallery:</p>
-        <p><strong>Username:</strong> <span class="credential" id="galleryUsername">—</span></p>
-        <p><strong>Password:</strong> <span class="credential" id="galleryPassword">—</span></p>
-        <p>Please save these credentials, as you’ll need them to view and download your photos.</p>
+      <div class="confirmation-message">
+        <div class="confirmation-icon">✅✨</div>
+        <h3 class="confirmation-title">Payment Confirmed!</h3>
+        <p class="confirmation-description">
+          Thank you for booking your PopUp event with Picture This Pet! Please show this confirmation to a Picture This Pet team member to get your shoot started. 🐾
+        </p>
       </div>
 
-      <p>We’ll follow up with a confirmation email and additional details about your session soon. If you have any questions, feel free to <a href="/contact" style="color: var(--gold); text-decoration: underline;">contact us</a>.</p>
-
-      <div class="success-actions">
-        <a href="/" class="home-btn">Return to Home</a>
-      </div>
-    </div>
-
-    <!-- Pop-up for Invalid Booking -->
-    <div class="popup" id="invalidBookingPopup">
-      <div class="popup-content">
-        <h3>Booking Error</h3>
-        <p>We couldn’t find your booking or confirm your payment. Please try again or contact support.</p>
-        <button onclick="redirectHome()">Return to Home</button>
-      </div>
+      <a href="/" class="home-button">Return to Homepage</a>
     </div>
   </main>
 
@@ -642,7 +487,8 @@
     <div class="footer-container">
       <div class="footer-section">
         <h4>Contact Us</h4>
-        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -652,279 +498,36 @@
       <div class="footer-section">
         <h4>We Accept</h4>
         <div class="payment-methods">
-          <img src="assets/images/payments/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/mastercard.png" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amex.png" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/applepay.png" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/googlepay.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/samsungpay.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/amazonpay.png" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/klarna.png" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/affirm.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/cashapp.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/payments/paypal.png" alt="PayPal payment accepted" class="payment-icon" />
+          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+          <img src="assets/images/taptopay.jpg" alt="PayPal payment accepted" class="payment-icon" />
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.1.0 | Last updated: 04:34 AM MDT, May 24, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 11:28 AM MDT, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
-    // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
 
-    // Smooth scroll to session builder (for Book Now)
-    function scrollToSessionBuilder(e) {
-      e.preventDefault();
-      window.location.href = '/index.html#session-builder-section';
-    }
-
-    // Redirect to home page
-    function redirectHome() {
-      window.location.href = '/';
-    }
-
-    // Log errors to Airtable for live testing
-    async function logErrorToAirtable(page, error, sessionData = {}) {
-      try {
-        const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        const errorRecord = {
-          fields: {
-            errorId: errorId,
-            timestamp: new Date().toISOString(),
-            page: page,
-            errorMessage: error.message || String(error),
-            errorStack: error.stack || 'No stack trace available',
-            userAgent: navigator.userAgent,
-            sessionData: JSON.stringify(sessionData)
-          }
-        };
-
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Errors', {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(errorRecord)
-        });
-
-        if (response.ok) {
-          console.log('✅ Error logged to Airtable:', errorRecord);
-        } else {
-          console.warn('⚠️ Failed to log error to Airtable:', response.status);
-        }
-      } catch (innerError) {
-        console.warn('⚠️ Failed to log error to Airtable:', innerError);
-      }
-    }
-
-    // Fetch booking record from Airtable
-    async function fetchBookingRecord(bookingId) {
-      try {
-        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings?filterByFormula={bookingId}="${bookingId}"`, {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Airtable error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (data.records.length === 0) {
-          throw new Error('Booking not found');
-        }
-
-        return data.records[0].fields;
-      } catch (error) {
-        console.error('Error fetching booking record:', error);
-        await logErrorToAirtable('success.html', error, { bookingId });
-        return null;
-      }
-    }
-
-    // Update the Calendar table to mark the slot as booked
-    async function updateCalendarSlot(dateTime, bookingId) {
-      try {
-        const date = dateTime.split('T')[0];
-        const time = dateTime.split('T')[1].substring(0, 5);
-        console.log('Updating calendar slot to booked:', date, time);
-
-        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar?filterByFormula=AND({date}="${date}", {time}="${time}", {bookingId}="${bookingId}")`, {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Airtable error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (data.records.length === 0) {
-          throw new Error('Calendar slot not found');
-        }
-
-        const recordId = data.records[0].id;
-        const updateRecord = {
-          fields: {
-            status: 'booked',
-            softHoldUntil: null // Clear soft hold
-          }
-        };
-
-        const updateResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar/${recordId}`, {
-          method: 'PATCH',
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(updateRecord)
-        });
-
-        if (updateResponse.ok) {
-          console.log('✅ Calendar slot updated to booked');
-        } else {
-          throw new Error(`Airtable error: ${updateResponse.status}`);
-        }
-      } catch (error) {
-        console.error('Error updating calendar slot:', error);
-        await logErrorToAirtable('success.html', error, { dateTime, bookingId });
-      }
-    }
-
-    // Generate unique gallery credentials
-    function generateGalleryCredentials(bookingId) {
-      const username = `ptp_${bookingId}_${Math.random().toString(36).substr(2, 8)}`;
-      const password = Math.random().toString(36).slice(2, 10);
-      return { username, password };
-    }
-
-    // Update the Bookings record with gallery credentials and final status
-    async function updateBookingWithGalleryCredentials(bookingId, galleryCredentials) {
-      try {
-        console.log('Updating booking with gallery credentials:', bookingId);
-
-        const response = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings?filterByFormula={bookingId}="${bookingId}"`, {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Airtable error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (data.records.length === 0) {
-          throw new Error('Booking not found');
-        }
-
-        const recordId = data.records[0].id;
-        const updateRecord = {
-          fields: {
-            status: 'confirmed', // Ensure status is confirmed
-            galleryUsername: galleryCredentials.username,
-            galleryPassword: galleryCredentials.password
-          }
-        };
-
-        const updateResponse = await fetch(`https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings/${recordId}`, {
-          method: 'PATCH',
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(updateRecord)
-        });
-
-        if (updateResponse.ok) {
-          console.log('✅ Booking updated with gallery credentials');
-        } else {
-          throw new Error(`Airtable error: ${updateResponse.status}`);
-        }
-      } catch (error) {
-        console.error('Error updating booking with gallery credentials:', error);
-        await logErrorToAirtable('success.html', error, { bookingId, galleryCredentials });
-      }
-    }
-
-    // Display confirmation details
-    function displayConfirmationDetails(sessionData) {
-      document.getElementById('sessionType').textContent = sessionData.session || '—';
-      document.getElementById('sessionLocation').textContent = sessionData.park || '—';
-      document.getElementById('sessionDateTime').textContent = sessionData.selectedDateTime ? new Date(sessionData.selectedDateTime).toLocaleString() : '—';
-      document.getElementById('petCount').textContent = sessionData.petCount || '—';
-      document.getElementById('peopleCount').textContent = sessionData.peopleCount || '—';
-      document.getElementById('totalPaid').textContent = sessionData.payment ? `$${sessionData.payment.amount}` : '$0';
-    }
-
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', async function() {
-      console.log('🎯 Success page loaded, finalizing booking...');
-
-      // Retrieve session data from localStorage
-      let sessionData = JSON.parse(localStorage.getItem('ptpSessionData')) || {};
-      
-      // Validate session data
-      if (!sessionData.bookingId || !sessionData.payment || sessionData.payment.status !== 'confirmed') {
-        // Fallback to Airtable if localStorage is unavailable
-        const bookingId = sessionData.bookingId;
-        if (bookingId) {
-          const bookingRecord = await fetchBookingRecord(bookingId);
-          if (bookingRecord && bookingRecord.sessionDataBackup) {
-            sessionData = JSON.parse(bookingRecord.sessionDataBackup);
-            if (bookingRecord.paymentStatus !== 'completed') {
-              document.getElementById('invalidBookingPopup').style.display = 'flex';
-              return;
-            }
-          } else {
-            document.getElementById('invalidBookingPopup').style.display = 'flex';
-            return;
-          }
-        } else {
-          document.getElementById('invalidBookingPopup').style.display = 'flex';
-          return;
-        }
-      }
-
-      // Verify payment status in Airtable (in case webhook updated it)
-      const bookingRecord = await fetchBookingRecord(sessionData.bookingId);
-      if (!bookingRecord || bookingRecord.paymentStatus !== 'completed') {
-        document.getElementById('invalidBookingPopup').style.display = 'flex';
-        return;
-      }
-
-      // Update the calendar slot to booked
-      await updateCalendarSlot(sessionData.selectedDateTime, sessionData.bookingId);
-
-      // Generate and save gallery credentials
-      const galleryCredentials = generateGalleryCredentials(sessionData.bookingId);
-      await updateBookingWithGalleryCredentials(sessionData.bookingId, galleryCredentials);
-
-      // Display gallery credentials
-      document.getElementById('galleryUsername').textContent = galleryCredentials.username;
-      document.getElementById('galleryPassword').textContent = galleryCredentials.password;
-
-      // Display confirmation details
-      displayConfirmationDetails(sessionData);
-
-      // Clear session data to prevent reuse
-      localStorage.removeItem('ptpSessionData');
-      localStorage.removeItem('ptpSessionBackup');
-      localStorage.removeItem(`ptpBooking_${sessionData.payment.paymentIntentId}`);
-      sessionStorage.removeItem('ptpSessionData');
-      sessionStorage.removeItem('ptpSessionBackup');
-      console.log('✅ Session data cleared after successful booking');
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ PopUp Success page loaded');
     });
   </script>
 </body>
