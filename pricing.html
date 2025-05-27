@@ -20,6 +20,7 @@
       --admin-purple: #8b5cf6;
       --admin-blue: #3b82f6;
       --popup-event-purple: #a78bfa;
+      --promo-gradient: linear-gradient(135deg, #f94d6a 0%, #f9a54d 100%);
     }
 
     * {
@@ -73,6 +74,59 @@
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
+    }
+
+    /* === PROMOTIONAL BANNER === */
+    .promo-banner {
+      position: fixed;
+      top: 110px;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #f94d6a 0%, #f9a54d 100%);
+      color: white;
+      text-align: center;
+      padding: 0.8rem 1rem;
+      font-weight: 600;
+      font-size: 1rem;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .promo-banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: nowrap;
+    }
+
+    .promo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .promo-banner a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      white-space: nowrap;
+    }
+
+    .promo-banner a:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
 
     /* === HEADER === */
@@ -176,8 +230,8 @@
 
     /* === MAIN CONTENT === */
     main {
-      margin-top: 110px;
-      min-height: calc(100vh - 110px - 220px);
+      margin-top: 160px;
+      min-height: calc(100vh - 160px - 220px);
       background-image: url("assets/images/main_background_allsystem.png");
       background-size: 100% 100%;
       background-position: center;
@@ -252,11 +306,44 @@
       margin-bottom: 0.5rem;
     }
 
-    .card-price {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--gold);
+    .card-price-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
       margin-bottom: 1rem;
+    }
+
+    .card-price-original {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: line-through;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    }
+
+    .card-price-special {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f94d6a 0%, #f9a54d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      position: relative;
+    }
+
+    .card-price-special::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -8px;
+      right: -8px;
+      bottom: -2px;
+      background: linear-gradient(135deg, #f94d6a 0%, #f9a54d 100%);
+      border-radius: 12px;
+      opacity: 0.1;
+      z-index: -1;
     }
 
     .card-details {
@@ -562,9 +649,30 @@
 
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
+      .promo-banner {
+        font-size: 0.9rem;
+        padding: 0.7rem 0.8rem;
+        top: 80px;
+      }
+
+      .promo-banner-content {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .promo-text {
+        font-size: 0.85rem;
+      }
+
+      .promo-banner a {
+        padding: 0.25rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
       header {
         height: 80px;
         padding: 0.5rem 1rem;
+        top: 0;
       }
 
       .desktop-logo {
@@ -605,7 +713,7 @@
       }
 
       main {
-        margin-top: 80px;
+        margin-top: 130px;
         padding: 2rem 1rem;
       }
 
@@ -619,6 +727,15 @@
 
       .pricing-cards {
         grid-template-columns: 1fr;
+      }
+
+      .card-price-container {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .card-price-special {
+        font-size: 2rem;
       }
 
       .bnpl-options {
@@ -657,9 +774,33 @@
         justify-content: center;
       }
     }
+
+    @media (max-width: 480px) {
+      .promo-banner {
+        font-size: 0.8rem;
+        padding: 0.6rem 0.5rem;
+      }
+
+      .promo-text {
+        font-size: 0.75rem;
+      }
+
+      .promo-banner a {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.7rem;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Promotional Banner -->
+  <div class="promo-banner">
+    <div class="promo-banner-content">
+      <span class="promo-text">🎉 Early Career Special Pricing - Limited Time Only! 💸 Save up to 75% 🔥</span>
+      <a href="#pricing">View Pricing ⬇️</a>
+    </div>
+  </div>
+
   <header>
     <div class="header-left">
       <a href="/" class="logo-link" aria-label="PictureThisPet Home">
@@ -679,14 +820,17 @@
 
   <main>
     <!-- Pricing Section -->
-    <div class="section">
+    <div class="section" id="pricing">
       <h1 class="section-title">Our Pricing Plans</h1>
       <p class="section-subtitle">Choose the perfect package to capture your pet's best moments with Picture This Pet.</p>
 
       <div class="pricing-cards">
         <div class="pricing-card">
           <h2 class="card-title">Mini Session</h2>
-          <p class="card-price">$50</p>
+          <div class="card-price-container">
+            <span class="card-price-original">$200</span>
+            <span class="card-price-special">$50</span>
+          </div>
           <p class="card-details">30 minutes, 1 pet, 1 person</p>
           <ul class="card-features">
             <li>5 high-resolution digital photos</li>
@@ -700,7 +844,10 @@
 
         <div class="pricing-card">
           <h2 class="card-title">Full Session</h2>
-          <p class="card-price">$100</p>
+          <div class="card-price-container">
+            <span class="card-price-original">$400</span>
+            <span class="card-price-special">$100</span>
+          </div>
           <p class="card-details">60 minutes, 1 pet, 1 person</p>
           <ul class="card-features">
             <li>15 high-resolution digital photos</li>
