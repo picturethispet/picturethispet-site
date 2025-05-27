@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | Picture This Pet</title>
-  <meta name="description" content="Picture This Pet Admin Dashboard - Manage bookings, gallery, and client intake.">
+  <meta name="description" content="Admin dashboard for managing bookings and scheduling.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -16,9 +16,6 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
-      --admin-purple: #8b5cf6;
-      --admin-blue: #3b82f6;
-      --popup-event-purple: #a78bfa;
     }
 
     * {
@@ -29,22 +26,14 @@
 
     html {
       overflow-x: hidden;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       scroll-behavior: smooth;
     }
 
     html::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    html::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    html::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
+      width: 0;
+      height: 0;
     }
 
     body {
@@ -67,24 +56,8 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
-    }
-
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); }
-      50% { box-shadow: 0 8px 30px rgba(139, 92, 246, 0.6); }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* === HEADER STYLES === */
@@ -124,26 +97,13 @@
       transform: scale(1.02);
     }
 
-    .admin-badge {
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      color: white;
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-left: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      animation: glow 3s ease-in-out infinite;
-    }
-
     .site-nav {
       display: flex;
       align-items: center;
       margin-left: auto;
     }
 
-    .admin-nav-link {
+    .site-nav a:not(.book-btn) {
       margin-left: 1rem;
       text-decoration: none;
       font-weight: 600;
@@ -151,33 +111,31 @@
       transition: all 0.3s ease;
       padding: 0.5rem 1rem;
       border-radius: 8px;
-      background: rgba(139, 92, 246, 0.1);
-      border: 1px solid rgba(139, 92, 246, 0.3);
     }
 
-    .admin-nav-link:hover {
-      background: rgba(139, 92, 246, 0.2);
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255,255,255, 0.1);
       transform: translateY(-1px);
     }
 
-    .logout-btn {
-      background: linear-gradient(135deg, var(--booked-red), #dc2626);
+    .book-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
       color: white;
-      padding: 0.8rem 1.5rem;
+      padding: 0.8rem 2rem;
       border: none;
       border-radius: 999px;
-      font-weight: 600;
-      font-size: 1rem;
+      font-weight: 900;
+      font-size: 1.2rem;
       text-decoration: none;
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
     }
 
-    .logout-btn:hover {
+    .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
     }
 
     .mobile-menu-btn {
@@ -198,216 +156,187 @@
     main {
       margin-top: 110px;
       flex: 1;
-      padding: 3rem 1rem;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-      width: 100%;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100vh - 110px);
     }
 
-    /* === DASHBOARD CONTAINER === */
-    .dashboard-container {
-      background: rgba(255,255,255, 0.05);
-      backdrop-filter: blur(20px);
+    /* === ADMIN SECTION === */
+    .admin-section {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0, 0.2);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255, 0.1);
-      padding: 3rem;
-      animation: fadeInUp 0.8s ease-out;
+      animation: fadeInUp 1s ease-out;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-header {
+      text-align: center;
       margin-bottom: 2rem;
     }
 
-    .dashboard-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .dashboard-header h1 {
+    .admin-header h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
       font-weight: 700;
       color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       margin-bottom: 0.5rem;
-      text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
     }
 
-    .dashboard-header .admin-welcome {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
-      color: white;
-      padding: 0.5rem 1.5rem;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      animation: pulse 3s ease-in-out infinite;
-    }
-
-    .dashboard-header p {
-      font-size: 1.1rem;
-      color: rgba(255,255,255, 0.8);
+    .admin-header p {
+      font-size: 1.2rem;
       line-height: 1.6;
+      color: rgba(255,255,255, 0.9);
     }
 
-    /* === ADMIN CARDS GRID === */
-    .admin-cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .admin-card {
+    /* === IFRAME CONTAINER === */
+    .iframe-container {
+      flex: 1;
       background: rgba(255,255,255, 0.08);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      padding: 2.5rem;
+      border-radius: 16px;
       border: 1px solid rgba(255,255,255, 0.15);
-      transition: all 0.3s ease;
-      text-decoration: none;
-      color: white;
-      position: relative;
       overflow: hidden;
+      min-height: 600px;
+      position: relative;
     }
 
-    .admin-card::before {
-      content: '';
+    .acuity-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      min-height: 600px;
+    }
+
+    .loading-message {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--admin-purple), var(--admin-blue));
-      opacity: 0;
-      transition: all 0.3s ease;
-    }
-
-    .admin-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0, 0.3);
-      border-color: rgba(139, 92, 246, 0.4);
-    }
-
-    .admin-card:hover::before {
-      opacity: 1;
-    }
-
-    .admin-card-icon {
-      font-size: 3.5rem;
-      margin-bottom: 1.5rem;
-      display: block;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255,255,255, 0.7);
+      font-size: 1.1rem;
       text-align: center;
+      z-index: 1;
     }
 
-    .admin-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      text-align: center;
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255, 0.3);
+      border-top: 3px solid var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
     }
 
-    .admin-card p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255,255,255, 0.8);
-      text-align: center;
-      margin-bottom: 1.5rem;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    .admin-card-footer {
+    /* === ADMIN CONTROLS === */
+    .admin-controls {
       display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
       justify-content: center;
+    }
+
+    .admin-btn {
+      background: linear-gradient(135deg, var(--dark-brown), #6B3E26);
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 12px rgba(75, 46, 30, 0.3);
+      display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.9rem;
-      color: var(--admin-purple);
-      font-weight: 600;
     }
 
-    /* === CARD SPECIFIC COLORS === */
-    .acuity-card {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
-      border-color: rgba(59, 130, 246, 0.2);
+    .admin-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 16px rgba(75, 46, 30, 0.4);
+      background: linear-gradient(135deg, #5A341C, var(--dark-brown));
     }
 
-    .acuity-card:hover {
-      border-color: rgba(59, 130, 246, 0.4);
+    .admin-btn.refresh {
+      background: linear-gradient(135deg, var(--available-green), #059669);
+      box-shadow: 0 3px 12px rgba(16, 185, 129, 0.3);
     }
 
-    .acuity-card::before {
-      background: linear-gradient(90deg, var(--admin-blue), #1d4ed8);
+    .admin-btn.refresh:hover {
+      background: linear-gradient(135deg, #059669, var(--available-green));
+      box-shadow: 0 5px 16px rgba(16, 185, 129, 0.4);
     }
 
-    .gallery-card {
-      background: linear-gradient(135deg, rgba(253, 183, 94, 0.1), rgba(244, 124, 44, 0.05));
-      border-color: rgba(253, 183, 94, 0.2);
-    }
-
-    .gallery-card:hover {
-      border-color: rgba(253, 183, 94, 0.4);
-    }
-
-    .gallery-card::before {
-      background: linear-gradient(90deg, var(--gold), var(--orange));
-    }
-
-    .intake-card {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
-      border-color: rgba(16, 185, 129, 0.2);
-    }
-
-    .intake-card:hover {
-      border-color: rgba(16, 185, 129, 0.4);
-    }
-
-    .intake-card::before {
-      background: linear-gradient(90deg, var(--available-green), #059669);
-    }
-
-    /* === QUICK STATS === */
-    .quick-stats {
-      background: rgba(255,255,255, 0.03);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255,255,255, 0.08);
-    }
-
-    .quick-stats h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: var(--gold);
+    /* === ADMIN NAVIGATION === */
+    .admin-nav {
+      display: flex;
+      gap: 1rem;
       margin-bottom: 1.5rem;
-      text-align: center;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .stat-item {
-      background: rgba(255,255,255, 0.05);
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
-      border: 1px solid rgba(255,255,255, 0.1);
-    }
-
-    .stat-number {
-      font-size: 2rem;
+    .nav-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 999px;
       font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .stat-label {
-      font-size: 0.9rem;
-      color: rgba(255,255,255, 0.7);
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
+    }
+
+    .nav-btn.squareup {
+      background: linear-gradient(135deg, #3E4348, #1C1E20);
+      box-shadow: 0 4px 15px rgba(62, 67, 72, 0.3);
+    }
+
+    .nav-btn.squareup:hover {
+      box-shadow: 0 6px 20px rgba(62, 67, 72, 0.4);
+      background: linear-gradient(135deg, #1C1E20, #3E4348);
+    }
+
+    .nav-btn.stripe {
+      background: linear-gradient(135deg, #635BFF, #4F46E5);
+      box-shadow: 0 4px 15px rgba(99, 91, 255, 0.3);
+    }
+
+    .nav-btn.stripe:hover {
+      box-shadow: 0 6px 20px rgba(99, 91, 255, 0.4);
+      background: linear-gradient(135deg, #4F46E5, #635BFF);
     }
 
     /* === FOOTER STYLES === */
@@ -420,6 +349,7 @@
       padding: 2rem 1.5rem;
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.9rem;
+      margin-top: 2rem;
     }
 
     .footer-container {
@@ -516,10 +446,6 @@
         height: 48px;
       }
 
-      .admin-badge {
-        display: none;
-      }
-
       .site-nav {
         display: none;
         flex-direction: column;
@@ -543,8 +469,21 @@
 
       .site-nav.active a {
         margin: 0.5rem 0;
-        font-size: 1.1rem;
-        padding: 0.8rem 1rem;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+
+      .book-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        margin-left: 0;
       }
 
       .mobile-menu-btn {
@@ -553,28 +492,49 @@
 
       main {
         margin-top: 80px;
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
       }
 
-      .dashboard-container {
-        padding: 2rem;
+      .admin-section {
+        padding: 1.5rem;
       }
 
-      .dashboard-header h1 {
+      .admin-header h1 {
         font-size: 2.2rem;
       }
 
-      .admin-cards-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+      .admin-header p {
+        font-size: 1rem;
       }
 
-      .admin-card {
-        padding: 2rem;
+      .admin-controls {
+        flex-direction: column;
+        align-items: center;
       }
 
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .admin-btn {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+      }
+
+      .admin-nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .nav-btn {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+      }
+
+      .iframe-container {
+        min-height: 500px;
+      }
+
+      .acuity-iframe {
+        min-height: 500px;
       }
 
       .footer-container {
@@ -593,106 +553,102 @@
     }
 
     @media (max-width: 480px) {
-      .dashboard-container {
-        padding: 1.5rem;
-        margin: 0.5rem;
+      .admin-section {
+        padding: 1rem;
       }
 
-      .dashboard-header h1 {
+      .admin-header h1 {
         font-size: 1.8rem;
       }
 
-      .admin-card {
-        padding: 1.5rem;
+      .iframe-container {
+        min-height: 400px;
       }
 
-      .stats-grid {
-        grid-template-columns: 1fr;
+      .acuity-iframe {
+        min-height: 400px;
+      }
+    }
+
+    /* === LARGE SCREENS === */
+    @media (min-width: 1200px) {
+      .iframe-container {
+        min-height: 700px;
+      }
+
+      .acuity-iframe {
+        min-height: 700px;
+      }
+    }
+
+    @media (min-width: 1600px) {
+      .iframe-container {
+        min-height: 800px;
+      }
+
+      .acuity-iframe {
+        min-height: 800px;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <div style="display: flex; align-items: center;">
-      <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-        <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
-      </a>
-      <span class="admin-badge">🔐 Admin Panel</span>
-    </div>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+    </a>
     <nav class="site-nav">
-      <a href="/admin" class="admin-nav-link" aria-label="Dashboard">Dashboard</a>
-      <a href="/" class="admin-nav-link" aria-label="View Site">View Site</a>
-      <a href="/admin/login" class="logout-btn" aria-label="Logout">Logout</a>
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <div class="dashboard-container">
-      <div class="dashboard-header">
-        <div class="admin-welcome">👋 Welcome Back, Admin</div>
-        <h1>Admin Dashboard</h1>
-        <p>Manage your Picture This Pet business operations from this central hub.</p>
+    <div class="admin-section">
+      <div class="admin-header">
+        <h1>🔧 Admin Dashboard</h1>
+        <p>Manage your bookings, appointments, and scheduling with Acuity ⚡</p>
       </div>
-
-      <!-- Quick Stats -->
-      <div class="quick-stats">
-        <h2>📊 Quick Stats</h2>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-number" id="todaysBookings">-</div>
-            <div class="stat-label">Today's Bookings</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" id="weeklyRevenue">-</div>
-            <div class="stat-label">Weekly Revenue</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" id="pendingIntakes">-</div>
-            <div class="stat-label">Pending Intakes</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" id="totalClients">-</div>
-            <div class="stat-label">Total Clients</div>
-          </div>
+      
+      <div class="admin-controls">
+        <button class="admin-btn refresh" onclick="refreshIframe()" aria-label="Refresh Acuity dashboard">
+          🔄 Refresh Dashboard
+        </button>
+        <a href="https://acuityscheduling.com" target="_blank" class="admin-btn" aria-label="Open Acuity in new tab">
+          🚀 Open in New Tab
+        </a>
+        <button class="admin-btn" onclick="toggleFullscreen()" aria-label="Toggle fullscreen mode">
+          📱 Fullscreen
+        </button>
+      </div>
+      
+      <div class="admin-nav">
+        <a href="/squareup" class="nav-btn squareup" aria-label="SquareUp Admin">
+          💳 SquareUp
+        </a>
+        <a href="/stripe" class="nav-btn stripe" aria-label="Stripe Admin">
+          💰 Stripe
+        </a>
+      </div>
+      
+      <div class="iframe-container">
+        <div class="loading-message" id="loadingMessage">
+          <div class="loading-spinner"></div>
+          <div>Loading Acuity Dashboard...</div>
         </div>
-      </div>
-
-      <!-- Admin Cards Grid -->
-      <div class="admin-cards-grid">
-        <!-- Acuity Scheduling Card -->
-        <a href="/acuity" class="admin-card acuity-card">
-          <span class="admin-card-icon">📅</span>
-          <h3>Acuity Scheduling</h3>
-          <p>Manage your appointment calendar, view bookings, and handle client scheduling directly through your Acuity integration.</p>
-          <div class="admin-card-footer">
-            <span>Open Scheduler</span>
-            <span>→</span>
-          </div>
-        </a>
-
-        <!-- Gallery Management Card -->
-        <a href="/gallery" class="admin-card gallery-card">
-          <span class="admin-card-icon">🖼️</span>
-          <h3>Gallery Management</h3>
-          <p>Access your Pixieset gallery system to manage client photos, create galleries, and handle photo delivery.</p>
-          <div class="admin-card-footer">
-            <span>Manage Gallery</span>
-            <span>→</span>
-          </div>
-        </a>
-
-        <!-- Client Intake Card -->
-        <a href="/admin/intake" class="admin-card intake-card">
-          <span class="admin-card-icon">📝</span>
-          <h3>Client Intake & Agreements</h3>
-          <p>Review client intake forms, manage agreements, and handle all client onboarding documentation.</p>
-          <div class="admin-card-footer">
-            <span>View Intakes</span>
-            <span>→</span>
-          </div>
-        </a>
+        <iframe 
+          src="https://acuityscheduling.com" 
+          class="acuity-iframe" 
+          id="acuityIframe"
+          title="Acuity Scheduling Dashboard"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
       </div>
     </div>
   </main>
@@ -700,17 +656,17 @@
   <footer>
     <div class="footer-container">
       <div class="footer-section">
-        <h4>Admin Contact</h4>
-        <a href="mailto:admin@picturethispet.co" aria-label="Email admin">Admin Email</a>
-        <a href="/admin/settings" aria-label="Admin settings">System Settings</a>
+        <h4>Contact Us</h4>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
       </div>
       <div class="footer-section socials">
-        <h4>Business Links</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Business Instagram">Instagram</a>
-        <a href="/admin/reports" aria-label="Business reports">Reports</a>
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
       </div>
       <div class="footer-section">
-        <h4>Payment Processing</h4>
+        <h4>We Accept</h4>
         <div class="payment-methods">
           <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
           <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
@@ -730,7 +686,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet Admin Portal. All rights reserved. | Admin v2.0.1 | Last login: <span id="lastLogin">Loading...</span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 12:25 AM MDT, May 27, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -740,48 +696,62 @@
       nav.classList.toggle('active');
     }
 
-    // Simulate loading stats (replace with real API calls)
-    function loadDashboardStats() {
-      // Simulate API delay
-      setTimeout(() => {
-        document.getElementById('todaysBookings').textContent = '7';
-        document.getElementById('weeklyRevenue').textContent = '$1,240';
-        document.getElementById('pendingIntakes').textContent = '3';
-        document.getElementById('totalClients').textContent = '142';
-      }, 1000);
+    function refreshIframe() {
+      const iframe = document.getElementById('acuityIframe');
+      const loadingMessage = document.getElementById('loadingMessage');
+      
+      // Show loading message
+      loadingMessage.style.display = 'block';
+      
+      // Refresh iframe
+      iframe.src = iframe.src;
+      
+      console.log('🔄 Refreshing Acuity dashboard');
     }
 
-    // Update last login time
-    function updateLastLogin() {
-      const now = new Date();
-      const timeString = now.toLocaleString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      document.getElementById('lastLogin').textContent = timeString;
-    }
-
-    // Initialize dashboard
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Admin Dashboard loaded');
-      loadDashboardStats();
-      updateLastLogin();
-
-      // Add click tracking for admin cards
-      document.querySelectorAll('.admin-card').forEach(card => {
-        card.addEventListener('click', function(e) {
-          const cardType = this.classList.contains('acuity-card') ? 'Acuity' :
-                           this.classList.contains('gallery-card') ? 'Gallery' : 'Intake';
-          console.log(`🚀 Admin navigating to: ${cardType}`);
+    function toggleFullscreen() {
+      const container = document.querySelector('.iframe-container');
+      
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => {
+          console.log('Fullscreen error:', err);
         });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Hide loading message when iframe loads
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Admin dashboard loaded');
+      
+      const iframe = document.getElementById('acuityIframe');
+      const loadingMessage = document.getElementById('loadingMessage');
+      
+      iframe.addEventListener('load', function() {
+        console.log('✅ Acuity iframe loaded');
+        loadingMessage.style.display = 'none';
       });
+      
+      // Hide loading message after 8 seconds regardless (Acuity can be slow)
+      setTimeout(() => {
+        loadingMessage.style.display = 'none';
+      }, 8000);
     });
 
-    // Log errors for debugging
-    window.addEventListener('error', function(e) {
-      console.error('Admin Dashboard error:', e.error);
+    // Keyboard shortcuts for admin
+    document.addEventListener('keydown', function(e) {
+      // Ctrl/Cmd + R for refresh
+      if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+        e.preventDefault();
+        refreshIframe();
+      }
+      
+      // F11 for fullscreen
+      if (e.key === 'F11') {
+        e.preventDefault();
+        toggleFullscreen();
+      }
     });
   </script>
 </body>
