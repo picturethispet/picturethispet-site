@@ -775,6 +775,30 @@
         input: '<input type="text" id="pet2Name" placeholder="Second pet’s name">',
         validate: (value) => value.trim() ? null : "Please enter your second pet’s name! 🐱",
         condition: (data) => parseInt(data.numberOfPets) === 2
+      },
+      {
+        bot: (data) => {
+          const sessionIdentifier = `${data.sessionType} at ${data.location} (${data.numberOfPeople} people, ${data.numberOfPets} pets)`;
+          const price = sessionIdentifier === "Full Session at City Park (2 people, 2 pets)" ? 160 : (data.sessionType === "Full" ? 100 : 50);
+          const inclusions = data.sessionType === "Full" ? "a 90-minute session with 10 edited photos" : "a 60-minute session with 5 edited photos";
+          const additionalPetFee = parseInt(data.numberOfPets) === 2 ? 40 : 0;
+          const additionalPersonFee = parseInt(data.numberOfPeople) === 2 ? 20 : 0;
+          const totalPrice = price + additionalPetFee + additionalPersonFee;
+          return `Oh great, you and ${data.pet1Name} are booking for you ${parseInt(data.numberOfPets) === 2 ? "and another pet and person" : parseInt(data.numberOfPeople) === 2 ? "and another person" : ""}. These are your session details: You’re choosing a ${data.sessionType} Session, ${data.numberOfPeople} people, ${data.numberOfPets} pets at ${data.location}. This includes ${inclusions} for $${totalPrice}. Do you want to continue to book?`;
+        },
+        input: `
+          <div class="session-cards">
+            <div class="session-card" onclick="selectContinue('Yes')">
+              <h3>Yes ✅</h3>
+              <p>Let’s book it!</p>
+            </div>
+            <div class="session-card" onclick="selectContinue('No')">
+              <h3>No 🚫</h3>
+              <p>I’ll review my options.</p>
+            </div>
+          </div>
+        `,
+        validate: (value) => value ? null : "Please select an option! 😊"
       }
     ];
 
@@ -812,7 +836,7 @@
       let value;
 
       if (step.input.includes('session-card')) {
-        value = sessionData.sessionType || sessionData.location || sessionData.numberOfPets || sessionData.numberOfPeople || sessionData.isVaccinated;
+        value = sessionData.sessionType || sessionData.location || sessionData.numberOfPets || sessionData.numberOfPeople || sessionData.isVaccinated || sessionData.continueBooking;
       } else {
         const inputElement = document.querySelector('input');
         value = inputElement.value.trim();
@@ -846,6 +870,17 @@
       if (currentStep === 5) sessionData.numberOfPets = value.toString();
       if (currentStep === 6) sessionData.numberOfPeople = value.toString();
       if (currentStep === 7) sessionData.pet2Name = value;
+      if (currentStep === 8) {
+        sessionData.continueBooking = value;
+        if (value === 'Yes') {
+          goToCheckout();
+          return;
+        } else {
+          appendMessage("No problem! You can restart the chat if you’d like to make changes. 😊", 'bot');
+          chatActive = false;
+          return;
+        }
+      }
 
       chatContainer.removeChild(chatContainer.querySelector('.chat-input'));
 
@@ -858,11 +893,7 @@
           const botMessage = typeof steps[currentStep].bot === 'function' ? steps[currentStep].bot(sessionData) : steps[currentStep].bot;
           appendMessage(botMessage, 'bot');
           appendInput(steps[currentStep]);
-        } else {
-          showSubmitButton();
         }
-      } else {
-        showSubmitButton();
       }
     }
 
@@ -891,17 +922,20 @@
       submitInput();
     }
 
-    function showSubmitButton() {
-      submitBtn.style.display = 'block';
-      submitBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    function selectContinue(choice) {
+      sessionData.continueBooking = choice;
+      submitInput();
     }
 
     function goToCheckout() {
       if (!chatActive) return;
       // Construct the session identifier based on the four questions
       const sessionIdentifier = `${sessionData.sessionType} at ${sessionData.location} (${sessionData.numberOfPeople} people, ${sessionData.numberOfPets} pets)`;
-      const price = sessionIdentifier === "Full Session at City Park (2 people, 2 pets)" ? 160 : 0; // Set price based on session type
-      window.location.href = `/checkout.html?session_identifier=${encodeURIComponent(sessionIdentifier)}&price=${price}`;
+      const price = sessionIdentifier === "Full Session at City Park (2 people, 2 pets)" ? 160 : (sessionData.sessionType === "Full" ? 100 : 50);
+      const additionalPetFee = parseInt(sessionData.numberOfPets) === 2 ? 40 : 0;
+      const additionalPersonFee = parseInt(sessionData.numberOfPeople) === 2 ? 20 : 0;
+      const totalPrice = price + additionalPetFee + additionalPersonFee;
+      window.location.href = `/checkout.html?session_identifier=${encodeURIComponent(sessionIdentifier)}&price=${totalPrice}`;
     }
 
     function restartChat() {
@@ -913,6 +947,7 @@
       sessionData.numberOfPets = '';
       sessionData.numberOfPeople = '';
       sessionData.pet2Name = '';
+      sessionData.continueBooking = '';
       currentStep = 0;
       chatActive = true;
       chatContainer.innerHTML = '<button class="restart-btn" onclick="restartChat()">Restart Chat 🔄</button>';
