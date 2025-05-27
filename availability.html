@@ -634,7 +634,7 @@
     // Google Calendar Configuration
     const GOOGLE_CALENDAR_CONFIG = {
       calendarId: 'cd42508bf949d68a615df8c843a09f2a33691da922b0b2ed66af6dc2c32b0216@group.calendar.google.com',
-      apiKey: 'YOUR_GOOGLE_API_KEY', // You'll need to replace this with your actual API key
+      apiKey: 'AIzaSyB6HLpHGddlzsxIdFd-zb385uWASiRRQs8',
       timezone: 'America/Denver'
     };
 
@@ -698,7 +698,7 @@
     async function fetchGoogleCalendarEvents() {
       try {
         // Check if API key is configured
-        if (GOOGLE_CALENDAR_CONFIG.apiKey === 'YOUR_GOOGLE_API_KEY') {
+        if (!GOOGLE_CALENDAR_CONFIG.apiKey || GOOGLE_CALENDAR_CONFIG.apiKey === 'YOUR_GOOGLE_API_KEY') {
           console.warn('⚠️ Google Calendar API key not configured. Using fallback data.');
           return await fetchCalendarDataFromAirtable();
         }
