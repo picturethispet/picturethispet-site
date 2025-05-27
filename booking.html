@@ -207,18 +207,22 @@
       width: 100%;
       min-height: auto;
       padding: 0;
+      gap: 0;
     }
 
     .loading-area {
       text-align: center;
       transition: all 0.8s ease;
       width: 100%;
+      overflow: hidden; /* Ensure collapsing works */
     }
 
     .loading-area.hidden {
       opacity: 0;
       transform: translateY(-30px);
       pointer-events: none;
+      height: 0; /* Collapse space when hidden */
+      margin: 0; /* Remove margins when hidden */
     }
 
     .confirmation-message {
@@ -458,7 +462,7 @@
       .page-subtitle {
         margin-bottom: 0;
         padding-bottom: 0;
-        line-height: 1;
+        line-height: 0.8; /* Further reduced to minimize space */
       }
 
       .confirmation-message {
@@ -487,7 +491,7 @@
       }
 
       .acuity-container {
-        margin-top: -2rem;
+        margin-top: -4rem; /* Increased negative margin to pull iframe up further */
         padding: 0;
         margin-bottom: 0;
       }
@@ -619,7 +623,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 03:56 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 04:09 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -730,7 +734,7 @@
         console.log('Iframe height set to:', contentHeight);
       } catch (e) {
         console.error('Error accessing iframe content height:', e);
-        iframe.style.height = '1000px'; // Fallback height
+        iframe.style.height = '2000px'; // Increased fallback height for lengthy intake form
       }
     }
 
