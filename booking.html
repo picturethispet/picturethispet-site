@@ -195,6 +195,7 @@
       font-size: 1.2rem;
       color: rgba(255,255,255, 0.7);
       font-weight: 500;
+      line-height: 1.2; /* Reduced line-height to minimize space */
     }
 
     .booking-section {
@@ -205,6 +206,7 @@
       position: relative;
       width: 100%;
       min-height: auto;
+      padding: 0; /* Ensure no padding adds space */
     }
 
     .loading-area {
@@ -326,7 +328,7 @@
       border: none;
       border-radius: 16px;
       background: white;
-      box-shadow: 0 15px 35px rgba(0,0,0, 0.2);
+      box-shadow: 0 5px 15px rgba(0,0,0, 0.2); /* Reduced shadow to minimize visual gap */
       width: 100%;
       max-width: 900px;
       min-height: 600px;
@@ -411,7 +413,7 @@
     @media (max-width: 1024px) {
       .acuity-iframe {
         min-height: 500px;
-        max-height: 80vh; /* Adjusted to allow more content visibility */
+        max-height: 80vh;
       }
     }
 
@@ -436,16 +438,19 @@
 
       main {
         margin-top: calc(80px + env(safe-area-inset-top));
-        padding: 0.5rem; /* Reduced padding to minimize space */
+        padding: 0; /* Remove padding to minimize space */
       }
 
       .booking-container {
-        padding: 0.5rem;
+        padding: 0; /* Remove all padding */
         min-height: auto;
+        border-radius: 0; /* Remove border radius on mobile for full-width */
+        border: none; /* Remove border to avoid extra space */
       }
 
       .page-header {
         margin-bottom: 0;
+        padding: 0.5rem; /* Minimal padding for header content */
       }
 
       .page-title {
@@ -453,7 +458,8 @@
       }
 
       .page-subtitle {
-        margin-bottom: 0; /* Remove margin to bring iframe closer */
+        margin-bottom: 0;
+        padding-bottom: 0;
       }
 
       .confirmation-message {
@@ -482,12 +488,14 @@
       }
 
       .acuity-container {
-        margin-top: 0; /* Ensure no extra space above iframe */
+        margin-top: 0;
+        padding: 0;
       }
 
       .acuity-iframe {
-        min-height: 450px; /* Increased to fit Acuity content */
-        max-height: 80vh; /* Adjusted to allow more content visibility */
+        min-height: 450px;
+        max-height: 80vh;
+        border-radius: 0; /* Remove border radius on mobile for full-width */
       }
 
       .footer-container {
@@ -503,8 +511,8 @@
 
     @media (max-width: 480px) {
       .booking-container {
-        padding: 0.5rem;
-        margin: 0.5rem;
+        padding: 0;
+        margin: 0;
       }
 
       .page-title {
@@ -516,7 +524,7 @@
       }
 
       .acuity-iframe {
-        min-height: 400px; /* Adjusted for smaller screens */
+        min-height: 400px;
         max-height: 80vh;
       }
     }
@@ -612,7 +620,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:41 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 02:45 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -629,7 +637,7 @@
 
     // Acuity URL mapping based on session type
     const acuityLinks = {
-      "Full": "https://app产能scheduling.com/schedule.php?owner=35886698&appointmentType=78802621",
+      "Full": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621",
       "Mini": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=MINI_ID" // Placeholder, replace with actual URL
     };
 
