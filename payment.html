@@ -86,19 +86,18 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.01rem 1.5rem;
-      padding-top: calc(0.01rem + env(safe-area-inset-top));
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: cover;
+      background-image: url("assets/images/ani_bkgd_cool.png");
+      background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0,0,0, 0.3);
-      border-bottom: 1px solid rgba(255,255,255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
       z-index: 1000;
-      height: calc(110px + env(safe-area-inset-top));
+      height: 110px;
     }
 
     .desktop-logo {
@@ -110,6 +109,11 @@
       align-items: center;
       transition: all 0.3s ease;
       text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
     }
 
     .site-nav {
@@ -128,8 +132,13 @@
       border-radius: 8px;
     }
 
+    .site-nav a:not(.book-btn):hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+
     .book-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
+      background: linear-gradient(135deg, #F47C2C, #FDB75E);
       color: white;
       padding: 0.8rem 2rem;
       border: none;
@@ -140,7 +149,14 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
     }
 
     .mobile-menu-btn {
@@ -150,6 +166,11 @@
       color: white;
       font-size: 2rem;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
     }
 
     main {
@@ -344,12 +365,46 @@
         height: 48px;
       }
 
-      .mobile-menu-btn {
-        display: block;
-      }
-
       .site-nav {
         display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+
+      .site-nav.active {
+        display: flex;
+      }
+
+      .site-nav.active a {
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+
+      .book-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        margin-left: 0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
       }
 
       main {
@@ -393,7 +448,7 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
