@@ -4,11 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | Picture This Pet</title>
-  <meta name="description" content="Admin dashboard for Picture This Pet photography business.">
+  <meta name="description" content="Picture This Pet Admin Dashboard - Manage bookings, gallery, and client intake.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
   <style>
     :root {
       --orange: #F47C2C;
@@ -20,7 +19,6 @@
       --admin-purple: #8b5cf6;
       --admin-blue: #3b82f6;
       --popup-event-purple: #a78bfa;
-      --blocked-gray: #6b7280;
     }
 
     * {
@@ -29,10 +27,11 @@
       padding: 0;
     }
 
-    html, body {
+    html {
       overflow-x: hidden;
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+      scroll-behavior: smooth;
     }
 
     html::-webkit-scrollbar {
@@ -51,7 +50,14 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: white;
-      background: none;
+      background-image: url('assets/images/main_background_allsystem.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes moveBackground {
@@ -63,7 +69,7 @@
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -73,893 +79,709 @@
 
     @keyframes pulse {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      50% { opacity: 0.8; }
     }
 
-    /* === LAYOUT === */
-    .admin-layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      grid-template-rows: auto 1fr;
-      min-height: 100vh;
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); }
+      50% { box-shadow: 0 8px 30px rgba(139, 92, 246, 0.6); }
     }
 
     /* === HEADER STYLES === */
     header {
-      grid-column: 1 / -1;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 1000;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .logo-small {
-      height: 50px;
-    }
-
-    .header-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: white;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .sync-status {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .sync-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--available-green);
-      animation: pulse 2s infinite;
-    }
-
-    .sync-indicator.disconnected {
-      background: var(--booked-red);
-    }
-
-    .admin-user {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.8rem 1.5rem;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .logout-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.7rem 1.2rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      min-width: 80px;
-    }
-
-    .logout-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    /* === SIDEBAR === */
-    .admin-sidebar {
+      padding: 0.01rem 1.5rem;
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 2rem 0;
-      overflow-y: auto;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255,255,255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 110px;
     }
 
-    .nav-section {
-      margin-bottom: 2rem;
+    .desktop-logo {
+      height: 100px;
     }
 
-    .nav-section-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.6);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 0 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .nav-item {
+    .logo-link {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.5rem;
-      color: rgba(255, 255, 255, 0.8);
-      cursor: pointer;
       transition: all 0.3s ease;
-      border-left: 3px solid transparent;
-      min-height: 48px;
       text-decoration: none;
     }
 
-    .nav-item:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
     }
 
-    .nav-item.active {
-      background: rgba(255, 255, 255, 0.15);
+    .admin-badge {
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
       color: white;
-      border-left-color: var(--gold);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: glow 3s ease-in-out infinite;
     }
 
-    .nav-icon {
-      font-size: 1.2rem;
-      width: 20px;
-      text-align: center;
-    }
-
-    .nav-badge {
-      background: var(--booked-red);
-      color: white;
-      font-size: 0.7rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 10px;
+    .site-nav {
+      display: flex;
+      align-items: center;
       margin-left: auto;
     }
 
-    /* === MAIN CONTENT === */
-    .admin-main {
-      padding: 2rem;
-      padding-bottom: 4rem;
+    .admin-nav-link {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.3);
     }
 
-    /* === CARDS === */
+    .admin-nav-link:hover {
+      background: rgba(139, 92, 246, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, var(--booked-red), #dc2626);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 110px;
+      flex: 1;
+      padding: 3rem 1rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+
+    /* === DASHBOARD CONTAINER === */
+    .dashboard-container {
+      background: rgba(255,255,255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255, 0.1);
+      padding: 3rem;
+      animation: fadeInUp 0.8s ease-out;
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .dashboard-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
+    }
+
+    .dashboard-header .admin-welcome {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--admin-purple), var(--admin-blue));
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .dashboard-header p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255, 0.8);
+      line-height: 1.6;
+    }
+
+    /* === ADMIN CARDS GRID === */
+    .admin-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
     .admin-card {
+      background: rgba(255,255,255, 0.08);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 2.5rem;
+      border: 1px solid rgba(255,255,255, 0.15);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .admin-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--admin-purple), var(--admin-blue));
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .admin-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0, 0.3);
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+
+    .admin-card:hover::before {
+      opacity: 1;
+    }
+
+    .admin-card-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      text-align: center;
+    }
+
+    .admin-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .admin-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255, 0.8);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-card-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--admin-purple);
+      font-weight: 600;
+    }
+
+    /* === CARD SPECIFIC COLORS === */
+    .acuity-card {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+      border-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .acuity-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .acuity-card::before {
+      background: linear-gradient(90deg, var(--admin-blue), #1d4ed8);
+    }
+
+    .gallery-card {
+      background: linear-gradient(135deg, rgba(253, 183, 94, 0.1), rgba(244, 124, 44, 0.05));
+      border-color: rgba(253, 183, 94, 0.2);
+    }
+
+    .gallery-card:hover {
+      border-color: rgba(253, 183, 94, 0.4);
+    }
+
+    .gallery-card::before {
+      background: linear-gradient(90deg, var(--gold), var(--orange));
+    }
+
+    .intake-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .intake-card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .intake-card::before {
+      background: linear-gradient(90deg, var(--available-green), #059669);
+    }
+
+    /* === QUICK STATS === */
+    .quick-stats {
+      background: rgba(255,255,255, 0.03);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255,255,255, 0.08);
+    }
+
+    .quick-stats h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .stat-item {
+      background: rgba(255,255,255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(255,255,255, 0.1);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255, 0.7);
+    }
+
+    /* === FOOTER STYLES === */
+    footer {
       background-image: url('assets/images/ani_bkgd_cool.png');
       background-size: 100% 100%;
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
     }
 
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: white;
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    /* === BUTTONS === */
-    .btn {
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      min-height: 48px;
-      min-width: 80px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-small {
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
-      min-height: 40px;
-      min-width: 60px;
-    }
-
-    /* === STATS === */
-    .stats-grid {
+    .footer-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
     }
 
-    .stat-card {
-      background: rgba(255, 255, 245, 0.1);
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.3s ease;
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
-    .stat-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244, 124, 44, 0.3);
-    }
-
-    .stat-card h4 {
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
       font-size: 1.2rem;
-      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
       margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
       color: var(--gold);
     }
 
-    .stat-card p {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: white;
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
-    /* === WEEKLY CALENDAR === */
-    .weekly-calendar {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1rem;
-      max-height: 300px;
-      overflow-y: auto;
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
     }
 
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 1px;
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .payment-placeholder {
+      width: 40px;
+      height: 25px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .calendar-day {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.5rem;
-      min-height: 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .calendar-day:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .calendar-day.today {
-      background: rgba(244, 124, 44, 0.2);
-      border: 2px solid var(--orange);
-    }
-
-    .calendar-day.has-bookings {
-      background: rgba(239, 68, 68, 0.1);
-      border-left: 4px solid var(--booked-red);
-    }
-
-    .day-number {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: white;
-      margin-bottom: 0.3rem;
-    }
-
-    .day-events {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      width: 100%;
-    }
-
-    .event-dot {
-      width: 100%;
-      height: 3px;
-      border-radius: 2px;
-      background: var(--booked-red);
-    }
-
-    /* === RECENT BOOKINGS === */
-    .recent-bookings {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1rem;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .booking-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem;
-      margin-bottom: 0.5rem;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      border-left: 3px solid var(--available-green);
-      cursor: pointer;
-    }
-
-    .booking-item.booked {
-      border-left-color: var(--booked-red);
-    }
-
-    .booking-item.on-the-spot {
-      border-left-color: var(--admin-purple);
-    }
-
-    .booking-details {
-      font-size: 0.9rem;
-    }
-
-    .booking-details .client-name {
-      font-weight: 600;
-      color: white;
-    }
-
-    .booking-details .session-info {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .booking-status {
-      font-size: 0.8rem;
-      padding: 0.2rem 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      text-align: center;
+      line-height: 1.1;
     }
 
-    .booking-status.pending {
-      background: rgba(245, 158, 11, 0.2);
-      color: var(--soft-hold-yellow);
-      border: 1px solid var(--soft-hold-yellow);
+    .payment-placeholder:hover {
+      opacity: 1;
+      transform: scale(1.1);
     }
 
-    .booking-status.completed {
-      background: rgba(16, 185, 129, 0.2);
-      color: var(--available-green);
-      border: 1px solid var(--available-green);
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* === RESPONSIVE === */
-    @media (max-width: 1024px) {
-      .admin-layout {
-        grid-template-columns: 60px 1fr;
-      }
-
-      .admin-sidebar {
-        padding: 1rem 0;
-      }
-
-      .nav-item {
-        padding: 1rem 0.8rem;
-        justify-content: center;
-      }
-
-      .nav-item span:not(.nav-icon) {
-        display: none;
-      }
-
-      .nav-section-title {
-        display: none;
-      }
-
-      .calendar-day {
-        min-height: 50px;
-        padding: 0.3rem 0.2rem;
-      }
-
-      .day-number {
-        font-size: 0.8rem;
-      }
-    }
-
     @media (max-width: 768px) {
-      .admin-layout {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+      header {
+        height: 80px;
+        padding: 0.5rem 1rem;
       }
 
-      .admin-sidebar {
-        background: rgba(0, 0, 0, 0.9);
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 280px;
-        height: 100vh;
-        z-index: 4000;
-        transition: left 0.3s ease;
+      .desktop-logo {
+        height: 48px;
       }
 
-      .admin-sidebar.open {
-        left: 0;
+      .admin-badge {
+        display: none;
+      }
+
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background-image: url('assets/images/ani_bkgd_cool.png');
+        background-size: 100% 100%;
+        background-position: center;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(255,255,255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+
+      .site-nav.active {
+        display: flex;
+      }
+
+      .site-nav.active a {
+        margin: 0.5rem 0;
+        font-size: 1.1rem;
+        padding: 0.8rem 1rem;
       }
 
       .mobile-menu-btn {
         display: block;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        display: flex;
+      }
+
+      main {
+        margin-top: 80px;
+        padding: 2rem 1rem;
+      }
+
+      .dashboard-container {
+        padding: 2rem;
+      }
+
+      .dashboard-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .admin-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .admin-card {
+        padding: 2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .footer-section {
         align-items: center;
+        text-align: center;
+      }
+
+      .payment-methods {
         justify-content: center;
       }
+    }
 
-      .mobile-menu-btn:hover {
-        background: rgba(255, 255, 255, 0.2);
+    @media (max-width: 480px) {
+      .dashboard-container {
+        padding: 1.5rem;
+        margin: 0.5rem;
       }
 
-      .header-title {
-        font-size: 1.4rem;
+      .dashboard-header h1 {
+        font-size: 1.8rem;
       }
 
-      .admin-main {
-        padding: 1rem;
-        padding-bottom: 2rem;
+      .admin-card {
+        padding: 1.5rem;
       }
 
       .stats-grid {
         grid-template-columns: 1fr;
       }
-
-      .calendar-grid {
-        font-size: 0.8rem;
-      }
-
-      .calendar-day {
-        min-height: 40px;
-        padding: 0.2rem 0.1rem;
-      }
-
-      .day-number {
-        font-size: 0.7rem;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="admin-layout">
-    <!-- Header -->
-    <header class="admin-header">
-      <div class="header-left">
-        <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">☰</button>
-        <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="logo-small" />
-        <h1 class="header-title">Admin Dashboard 📊</h1>
-      </div>
-      <div class="header-right">
-        <div class="sync-status">
-          <div class="sync-indicator" id="syncIndicator"></div>
-          <span id="syncStatus">Connected</span>
-        </div>
-        <div class="admin-user" id="adminUser">Welcome, Admin</div>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-      </div>
-    </header>
-
-    <!-- Sidebar -->
-    <nav class="admin-sidebar" id="adminSidebar">
-      <div class="nav-section">
-        <div class="nav-section-title">Overview</div>
-        <a href="admin.html" class="nav-item active">
-          <span class="nav-icon">📊</span>
-          <span>Dashboard</span>
-        </a>
-        <a href="calendar-management.html" class="nav-item">
-          <span class="nav-icon">📅</span>
-          <span>Calendar Management</span>
-          <span class="nav-badge" id="calendarBadge">0</span>
-        </a>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Management</div>
-        <a href="sessions-management.html" class="nav-item">
-          <span class="nav-icon">📸</span>
-          <span>Sessions Management</span>
-        </a>
-        <a href="client-session-management.html" class="nav-item">
-          <span class="nav-icon">👥</span>
-          <span>Client & Session Management</span>
-        </a>
-        <a href="gallery-management.html" class="nav-item">
-          <span class="nav-icon">🖼️</span>
-          <span>Gallery Management</span>
-          <span class="nav-badge" id="galleriesBadge">0</span>
-        </a>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Business</div>
-        <a href="business-management.html" class="nav-item">
-          <span class="nav-icon">📈</span>
-          <span>Business Management</span>
-        </a>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">System</div>
-        <a href="#" class="nav-item">
-          <span class="nav-icon">⚙️</span>
-          <span>Settings</span>
-        </a>
-      </div>
+  <header>
+    <div style="display: flex; align-items: center;">
+      <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+        <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      </a>
+      <span class="admin-badge">🔐 Admin Panel</span>
+    </div>
+    <nav class="site-nav">
+      <a href="/admin" class="admin-nav-link" aria-label="Dashboard">Dashboard</a>
+      <a href="/" class="admin-nav-link" aria-label="View Site">View Site</a>
+      <a href="/admin/login" class="logout-btn" aria-label="Logout">Logout</a>
     </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
 
-    <!-- Main Content -->
-    <main class="admin-main">
-      <!-- Overview Stats -->
-      <div class="admin-card">
-        <div class="card-header">
-          <h2 class="card-title">Business Overview 📊</h2>
-          <div class="card-actions">
-            <button class="btn btn-secondary btn-small" onclick="syncData()">🔄 Sync Data</button>
-          </div>
-        </div>
+  <main>
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <div class="admin-welcome">👋 Welcome Back, Admin</div>
+        <h1>Admin Dashboard</h1>
+        <p>Manage your Picture This Pet business operations from this central hub.</p>
+      </div>
 
+      <!-- Quick Stats -->
+      <div class="quick-stats">
+        <h2>📊 Quick Stats</h2>
         <div class="stats-grid">
-          <div class="stat-card">
-            <h4>Upcoming Sessions 📅</h4>
-            <p id="upcomingSessions">Loading...</p>
+          <div class="stat-item">
+            <div class="stat-number" id="todaysBookings">-</div>
+            <div class="stat-label">Today's Bookings</div>
           </div>
-          <div class="stat-card">
-            <h4>Total Revenue 💰</h4>
-            <p id="totalRevenue">Loading...</p>
+          <div class="stat-item">
+            <div class="stat-number" id="weeklyRevenue">-</div>
+            <div class="stat-label">Weekly Revenue</div>
           </div>
-          <div class="stat-card">
-            <h4>Pending Payments 💳</h4>
-            <p id="pendingPayments">Loading...</p>
+          <div class="stat-item">
+            <div class="stat-number" id="pendingIntakes">-</div>
+            <div class="stat-label">Pending Intakes</div>
           </div>
-          <div class="stat-card">
-            <h4>Active Locations 📍</h4>
-            <p id="activeLocations">Loading...</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Weekly Calendar View -->
-      <div class="admin-card">
-        <div class="card-header">
-          <h2 class="card-title">Upcoming Bookings (This Week) 🗓️</h2>
-          <div class="card-actions">
-            <a href="calendar-management.html" class="btn btn-primary btn-small">View Calendar 📅</a>
-          </div>
-        </div>
-
-        <div class="weekly-calendar">
-          <div class="calendar-grid" id="weeklyCalendar">
-            <!-- Weekly calendar will be populated here -->
+          <div class="stat-item">
+            <div class="stat-number" id="totalClients">-</div>
+            <div class="stat-label">Total Clients</div>
           </div>
         </div>
       </div>
 
-      <!-- Recent Bookings -->
-      <div class="admin-card">
-        <div class="card-header">
-          <h2 class="card-title">Recent Bookings 📸</h2>
-          <div class="card-actions">
-            <a href="client-session-management.html" class="btn btn-primary btn-small">View All 👥</a>
+      <!-- Admin Cards Grid -->
+      <div class="admin-cards-grid">
+        <!-- Acuity Scheduling Card -->
+        <a href="/acuity" class="admin-card acuity-card">
+          <span class="admin-card-icon">📅</span>
+          <h3>Acuity Scheduling</h3>
+          <p>Manage your appointment calendar, view bookings, and handle client scheduling directly through your Acuity integration.</p>
+          <div class="admin-card-footer">
+            <span>Open Scheduler</span>
+            <span>→</span>
           </div>
-        </div>
+        </a>
 
-        <div class="recent-bookings" id="recentBookings">
-          <!-- Bookings will be populated here -->
+        <!-- Gallery Management Card -->
+        <a href="/gallery" class="admin-card gallery-card">
+          <span class="admin-card-icon">🖼️</span>
+          <h3>Gallery Management</h3>
+          <p>Access your Pixieset gallery system to manage client photos, create galleries, and handle photo delivery.</p>
+          <div class="admin-card-footer">
+            <span>Manage Gallery</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Client Intake Card -->
+        <a href="/admin/intake" class="admin-card intake-card">
+          <span class="admin-card-icon">📝</span>
+          <h3>Client Intake & Agreements</h3>
+          <p>Review client intake forms, manage agreements, and handle all client onboarding documentation.</p>
+          <div class="admin-card-footer">
+            <span>View Intakes</span>
+            <span>→</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Admin Contact</h4>
+        <a href="mailto:admin@picturethispet.co" aria-label="Email admin">Admin Email</a>
+        <a href="/admin/settings" aria-label="Admin settings">System Settings</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Business Links</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Business Instagram">Instagram</a>
+        <a href="/admin/reports" aria-label="Business reports">Reports</a>
+      </div>
+      <div class="footer-section">
+        <h4>Payment Processing</h4>
+        <div class="payment-methods">
+          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+          <div class="payment-placeholder" title="Tap to Pay accepted">TAP TO PAY</div>
         </div>
       </div>
-    </main>
-  </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet Admin Portal. All rights reserved. | Admin v2.0.1 | Last login: <span id="lastLogin">Loading...</span></p>
+    </div>
+  </footer>
 
   <script>
-    // Global variables
-    let bookingsData = [];
-    let calendarData = [];
-    let sessionTypes = [];
-    let locations = [];
-
-    // Authentication
-    function checkAuthentication() {
-      const isAuthenticated = localStorage.getItem('adminAuthenticated');
-      if (!isAuthenticated) {
-        window.location.href = '/portal';
-        return;
-      }
-      const adminUser = localStorage.getItem('adminUser') || 'Admin';
-      document.getElementById('adminUser').textContent = `Welcome, ${adminUser} 👋`;
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
     }
 
-    function logout() {
-      localStorage.removeItem('adminAuthenticated');
-      localStorage.removeItem('adminUser');
-      localStorage.removeItem('adminLoginTime');
-      localStorage.removeItem('clientAuthenticated');
-      localStorage.removeItem('clientLoginTime');
-      window.location.href = '/portal';
+    // Simulate loading stats (replace with real API calls)
+    function loadDashboardStats() {
+      // Simulate API delay
+      setTimeout(() => {
+        document.getElementById('todaysBookings').textContent = '7';
+        document.getElementById('weeklyRevenue').textContent = '$1,240';
+        document.getElementById('pendingIntakes').textContent = '3';
+        document.getElementById('totalClients').textContent = '142';
+      }, 1000);
     }
 
-    function toggleSidebar() {
-      const sidebar = document.getElementById('adminSidebar');
-      sidebar.classList.toggle('open');
-    }
-
-    // Data fetching
-    async function fetchBookingsData() {
-      try {
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Bookings', {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-        if (!response.ok) throw new Error(`Airtable error: ${response.status}`);
-        const data = await response.json();
-        bookingsData = data.records.map(record => ({
-          id: record.id,
-          bookingId: record.fields.bookingId,
-          client1Name: record.fields.client1Name,
-          sessionDate: record.fields.sessionDate,
-          calendarSlot: record.fields.calendarSlot ? record.fields.calendarSlot[0] : null,
-          paymentStatus: record.fields.paymentStatus || 'Pending',
-          bookingSource: record.fields.bookingSource || 'Website',
-          location: record.fields.location ? record.fields.location[0] : null
-        }));
-        updateDashboard();
-        renderWeeklyCalendar();
-      } catch (error) {
-        console.error('Error fetching bookings:', error);
-      }
-    }
-
-    async function fetchCalendarData() {
-      try {
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Calendar', {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-        if (!response.ok) throw new Error(`Airtable error: ${response.status}`);
-        const data = await response.json();
-        calendarData = data.records.map(record => ({
-          id: record.id,
-          date: record.fields.date,
-          time: record.fields.time,
-          status: record.fields.status,
-          location: record.fields.location ? record.fields.location[0] : null
-        }));
-        updateDashboard();
-        renderWeeklyCalendar();
-      } catch (error) {
-        console.error('Error fetching calendar:', error);
-      }
-    }
-
-    async function fetchSessionTypes() {
-      try {
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/SessionTypes', {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-        const data = await response.json();
-        sessionTypes = data.records.map(record => ({
-          id: record.id,
-          typeName: record.fields.typeName,
-          price: record.fields.price || 0
-        }));
-        updateDashboard();
-      } catch (error) {
-        console.error('Error fetching session types:', error);
-      }
-    }
-
-    async function fetchLocations() {
-      try {
-        const response = await fetch('https://api.airtable.com/v0/applU3NCdDveC4G8a/Locations', {
-          headers: {
-            'Authorization': 'Bearer patRiY2oii5YaxnGT.d79f2cadf0e49d677735ac56b003897974055bb6736efb893d3dce98d93a97b3'
-          }
-        });
-        const data = await response.json();
-        locations = data.records.map(record => ({
-          id: record.id,
-          locationName: record.fields.locationName
-        }));
-        updateDashboard();
-      } catch (error) {
-        console.error('Error fetching locations:', error);
-      }
-    }
-
-    // Update dashboard
-    function updateDashboard() {
-      const today = new Date();
-      const upcomingSessions = calendarData.filter(slot => {
-        const slotDate = new Date(slot.date);
-        return slotDate >= today && slot.status === 'booked';
-      }).length;
-      document.getElementById('upcomingSessions').textContent = upcomingSessions;
-
-      const totalRevenue = bookingsData.reduce((sum, booking) => {
-        const sessionType = sessionTypes.find(st => st.id === booking.sessionType);
-        return sum + (sessionType ? sessionType.price : 0);
-      }, 0);
-      document.getElementById('totalRevenue').textContent = `$${totalRevenue.toFixed(2)}`;
-
-      const pendingPayments = bookingsData.filter(booking => booking.paymentStatus === 'Pending').length;
-      document.getElementById('pendingPayments').textContent = pendingPayments;
-
-      document.getElementById('activeLocations').textContent = locations.length;
-
-      // Recent Bookings
-      const recentBookings = bookingsData.sort((a, b) => new Date(b.sessionDate) - new Date(a.sessionDate)).slice(0, 5);
-      const recentBookingsDiv = document.getElementById('recentBookings');
-      recentBookingsDiv.innerHTML = recentBookings.map(booking => {
-        const slot = calendarData.find(s => s.id === booking.calendarSlot);
-        const location = locations.find(loc => loc.id === booking.location);
-        return `
-          <div class="booking-item ${booking.status === 'booked' ? 'booked' : ''} ${booking.bookingSource === 'On-the-Spot' ? 'on-the-spot' : ''}" onclick="viewClientRecord('${booking.id}')">
-            <div class="booking-details">
-              <div class="client-name">${booking.client1Name}</div>
-              <div class="session-info">${slot ? `${slot.date} at ${slot.time}` : 'Unknown Date'} • ${location ? location.locationName : 'Unknown Location'}</div>
-            </div>
-            <div class="booking-status ${booking.paymentStatus.toLowerCase()}">${booking.paymentStatus}</div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // Render weekly calendar
-    function renderWeeklyCalendar() {
-      const calendarGrid = document.getElementById('weeklyCalendar');
-      calendarGrid.innerHTML = '';
-
-      const today = new Date();
-      const weekStart = new Date(today);
-      weekStart.setDate(today.getDate() - today.getDay());
-      const weekEnd = new Date(weekStart);
-      weekEnd.setDate(weekStart.getDate() + 6);
-
-      // Add day headers
-      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      dayHeaders.forEach(day => {
-        const header = document.createElement('div');
-        header.className = 'calendar-day';
-        header.style.fontWeight = 'bold';
-        header.style.background = 'rgba(255, 255, 255, 0.1)';
-        header.textContent = day;
-        calendarGrid.appendChild(header);
+    // Update last login time
+    function updateLastLogin() {
+      const now = new Date();
+      const timeString = now.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
       });
-
-      // Add days of the week
-      for (let i = 0; i < 7; i++) {
-        const day = new Date(weekStart);
-        day.setDate(weekStart.getDate() + i);
-        const dateString = day.toISOString().split('T')[0];
-        const dayElement = document.createElement('div');
-        dayElement.className = 'calendar-day';
-
-        if (day.toDateString() === today.toDateString()) {
-          dayElement.classList.add('today');
-        }
-
-        const dayEvents = calendarData.filter(slot => slot.date === dateString && slot.status === 'booked');
-        if (dayEvents.length > 0) {
-          dayElement.classList.add('has-bookings');
-        }
-
-        const dayNumber = document.createElement('div');
-        dayNumber.className = 'day-number';
-        dayNumber.textContent = day.getDate();
-        dayElement.appendChild(dayNumber);
-
-        const eventsContainer = document.createElement('div');
-        eventsContainer.className = 'day-events';
-        dayEvents.slice(0, 3).forEach(event => {
-          const eventDot = document.createElement('div');
-          eventDot.className = 'event-dot';
-          eventsContainer.appendChild(eventDot);
-        });
-        dayElement.appendChild(eventsContainer);
-
-        calendarGrid.appendChild(dayElement);
-      }
+      document.getElementById('lastLogin').textContent = timeString;
     }
 
-    // Navigate to client record
-    function viewClientRecord(bookingId) {
-      localStorage.setItem('selectedBookingId', bookingId);
-      window.location.href = 'client-session-management.html';
-    }
-
-    // Sync data
-    async function syncData() {
-      await Promise.all([
-        fetchBookingsData(),
-        fetchCalendarData(),
-        fetchSessionTypes(),
-        fetchLocations()
-      ]);
-    }
-
-    // Live view - Refresh every 30 seconds
-    function startLiveView() {
-      syncData();
-      setInterval(syncData, 30000);
-    }
-
-    // Initialize the page
+    // Initialize dashboard
     document.addEventListener('DOMContentLoaded', function() {
-      checkAuthentication();
-      startLiveView();
+      console.log('✅ Admin Dashboard loaded');
+      loadDashboardStats();
+      updateLastLogin();
+
+      // Add click tracking for admin cards
+      document.querySelectorAll('.admin-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+          const cardType = this.classList.contains('acuity-card') ? 'Acuity' :
+                           this.classList.contains('gallery-card') ? 'Gallery' : 'Intake';
+          console.log(`🚀 Admin navigating to: ${cardType}`);
+        });
+      });
+    });
+
+    // Log errors for debugging
+    window.addEventListener('error', function(e) {
+      console.error('Admin Dashboard error:', e.error);
     });
   </script>
 </body>
