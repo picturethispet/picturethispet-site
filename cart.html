@@ -152,6 +152,7 @@
       gap: 3rem;
       min-height: calc(100vh - 200px);
       align-items: start;
+      position: relative; /* Ensure the summary panel positions relative to this */
     }
 
     .configuration-panel {
@@ -173,7 +174,7 @@
       height: fit-content;
       animation: fadeInUp 0.8s ease-out 0.2s both;
       z-index: 10;
-      /* Removed position: sticky and top: 130px; will handle with JS */
+      box-sizing: border-box; /* Ensure padding doesn’t affect width */
     }
 
     .panel-header {
@@ -747,169 +748,4 @@
   </main>
 
   <script>
-    let sessionConfig = {
-      sessionType: null,
-      sessionPrice: 0,
-      location: null,
-      pets: null,
-      extraPetCost: 0,
-      people: null,
-      extraPersonCost: 0
-    };
-
-    function selectOption(category, value, price) {
-      // Remove selected class from all cards in this category
-      const categoryCards = document.querySelectorAll(`[onclick*="${category}"]`);
-      categoryCards.forEach(card => card.classList.remove('selected'));
-      
-      // Add selected class to clicked card
-      event.currentTarget.classList.add('selected');
-      
-      // Update configuration
-      if (category === 'sessionType') {
-        sessionConfig.sessionType = value;
-        sessionConfig.sessionPrice = price;
-      } else if (category === 'location') {
-        sessionConfig.location = value;
-      } else if (category === 'pets') {
-        sessionConfig.pets = value;
-        sessionConfig.extraPetCost = price;
-      } else if (category === 'people') {
-        sessionConfig.people = value;
-        sessionConfig.extraPersonCost = price;
-      }
-      
-      updateSummary();
-    }
-
-    function updateSummary() {
-      // Update session type
-      const sessionTypeText = sessionConfig.sessionType || 'Select session type';
-      document.getElementById('summarySessionType').textContent = sessionTypeText;
-      
-      // Update location
-      const locationText = sessionConfig.location || 'Select location';
-      document.getElementById('summaryLocation').textContent = locationText;
-      
-      // Update pets
-      const petsText = sessionConfig.pets ? `${sessionConfig.pets} ${sessionConfig.pets === 1 ? 'pet' : 'pets'}` : 'Select number';
-      document.getElementById('summaryPets').textContent = petsText;
-      
-      // Update people
-      const peopleText = sessionConfig.people ? `${sessionConfig.people} ${sessionConfig.people === 1 ? 'person' : 'people'}` : 'Select number';
-      document.getElementById('summaryPeople').textContent = peopleText;
-      
-      // Update pricing
-      document.getElementById('baseSessionLabel').textContent = sessionConfig.sessionType ? `📸 ${sessionConfig.sessionType} Session` : '📸 Session';
-      document.getElementById('baseSessionPrice').textContent = `$${sessionConfig.sessionPrice}`;
-      
-      // Show/hide extra costs
-      const extraPetLine = document.getElementById('extraPetLine');
-      const extraPersonLine = document.getElementById('extraPersonLine');
-      
-      if (sessionConfig.extraPetCost > 0) {
-        extraPetLine.style.display = 'flex';
-      } else {
-        extraPetLine.style.display = 'none';
-      }
-      
-      if (sessionConfig.extraPersonCost > 0) {
-        extraPersonLine.style.display = 'flex';
-      } else {
-        extraPersonLine.style.display = 'none';
-      }
-      
-      // Update total
-      const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
-      document.getElementById('totalPrice').textContent = `$${total}`;
-      
-      // Enable/disable continue button
-      const continueBtn = document.getElementById('continueBtn');
-      const isComplete = sessionConfig.sessionType && 
-                        sessionConfig.location && 
-                        sessionConfig.pets !== null && 
-                        sessionConfig.people !== null;
-      
-      continueBtn.disabled = !isComplete;
-    }
-
-    function proceedToPayment() {
-      // Calculate total
-      const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
-      
-      // Prepare session data for payment page
-      const sessionData = {
-        sessionType: sessionConfig.sessionType,
-        location: sessionConfig.location,
-        numberOfPets: sessionConfig.pets,
-        numberOfPeople: sessionConfig.people,
-        totalPrice: total,
-        timestamp: Date.now()
-      };
-      
-      // Store in localStorage for payment page
-      localStorage.setItem('sessionData', JSON.stringify(sessionData));
-      
-      // Redirect to payment page
-      window.location.href = '/payment.html';
-    }
-
-    function toggleMenu() {
-      // Mobile menu toggle functionality
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('active');
-    }
-
-    // Function to handle dynamic positioning of the summary panel on desktop
-    function adjustSummaryPanelPosition() {
-      const summaryPanel = document.querySelector('.summary-panel');
-      const configurationPanel = document.querySelector('.configuration-panel');
-      const viewportHeight = window.innerHeight;
-      const headerHeight = 110; // Header height in pixels
-      const padding = 20; // Top padding to keep the panel below the header
-
-      // Only apply on desktop (above 1024px)
-      if (window.innerWidth > 1024) {
-        const configRect = configurationPanel.getBoundingClientRect();
-        const summaryRect = summaryPanel.getBoundingClientRect();
-        const configHeight = configRect.height;
-        const summaryHeight = summaryRect.height;
-        const scrollTop = window.scrollY || window.pageYOffset;
-        const configTop = configRect.top + scrollTop - headerHeight;
-
-        // Calculate the top position for the summary panel
-        let newTop = Math.max(padding, scrollTop - configTop + headerHeight + padding);
-
-        // Ensure the summary panel doesn't go below the bottom of the configuration panel
-        const maxTop = configHeight - summaryHeight - padding;
-        newTop = Math.min(newTop, maxTop);
-
-        // Apply the new top position
-        summaryPanel.style.position = 'absolute';
-        summaryPanel.style.top = `${newTop}px`;
-        summaryPanel.style.left = 'auto';
-        summaryPanel.style.right = '0';
-        summaryPanel.style.width = '400px'; // Ensure width matches grid column
-      } else {
-        // Reset for mobile
-        summaryPanel.style.position = 'static';
-        summaryPanel.style.top = 'auto';
-        summaryPanel.style.left = 'auto';
-        summaryPanel.style.right = 'auto';
-        summaryPanel.style.width = 'auto';
-      }
-    }
-
-    // Initialize page and add event listeners
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Session Builder loaded');
-      updateSummary();
-      adjustSummaryPanelPosition();
-
-      // Add scroll and resize event listeners for dynamic positioning
-      window.addEventListener('scroll', adjustSummaryPanelPosition);
-      window.addEventListener('resize', adjustSummaryPanelPosition);
-    });
-  </script>
-</body>
-</html>
+    let sessionConfig =
