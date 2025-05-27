@@ -187,7 +187,7 @@
       font-size: 2.8rem;
       font-weight: 700;
       color: white;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem; /* Reduced to minimize space */
       text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
     }
 
@@ -214,15 +214,15 @@
       text-align: center;
       transition: all 0.8s ease;
       width: 100%;
-      overflow: hidden; /* Ensure collapsing works */
+      overflow: hidden;
     }
 
     .loading-area.hidden {
       opacity: 0;
       transform: translateY(-30px);
       pointer-events: none;
-      height: 0; /* Collapse space when hidden */
-      margin: 0; /* Remove margins when hidden */
+      height: 0;
+      margin: 0;
     }
 
     .confirmation-message {
@@ -441,6 +441,7 @@
       main {
         margin-top: calc(80px + env(safe-area-inset-top));
         padding: 0;
+        min-height: auto; /* Allow main to grow with content */
       }
 
       .booking-container {
@@ -462,7 +463,7 @@
       .page-subtitle {
         margin-bottom: 0;
         padding-bottom: 0;
-        line-height: 0.8; /* Further reduced to minimize space */
+        line-height: 0.8;
       }
 
       .confirmation-message {
@@ -491,7 +492,7 @@
       }
 
       .acuity-container {
-        margin-top: -4rem; /* Increased negative margin to pull iframe up further */
+        margin-top: -1rem; /* Reduced negative margin to position iframe below subheader */
         padding: 0;
         margin-bottom: 0;
       }
@@ -623,7 +624,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 04:09 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.19 | Last updated: 04:14 AM MDT, May 27, 2025 | <a href="/site-creation" class="site-creation-link" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
     </div>
   </footer>
 
@@ -734,7 +735,7 @@
         console.log('Iframe height set to:', contentHeight);
       } catch (e) {
         console.error('Error accessing iframe content height:', e);
-        iframe.style.height = '2000px'; // Increased fallback height for lengthy intake form
+        iframe.style.height = '3000px'; // Increased fallback height for lengthy intake form
       }
     }
 
