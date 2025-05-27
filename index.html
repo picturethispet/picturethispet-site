@@ -73,7 +73,7 @@
       animation: moveBackground 30s ease-in-out infinite;
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255,255,255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
@@ -114,7 +114,7 @@
     }
 
     .site-nav a:not(.book-btn):hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255, 0.1);
       transform: translateY(-1px);
     }
 
@@ -130,12 +130,12 @@
       margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
     }
 
     .mobile-menu-btn {
@@ -168,10 +168,10 @@
       background-position: center;
       animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 20px 40px rgba(0,0,0, 0.2);
       padding: 3rem;
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255,255,255, 0.1);
       animation: fadeInUp 1s ease-out;
     }
 
@@ -188,7 +188,7 @@
     section p {
       font-size: 1.2rem;
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255,255,255, 0.9);
       margin-bottom: 1.5rem;
       text-align: center;
     }
@@ -488,7 +488,7 @@
         text-align: right;
         padding: 1rem;
         z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255,255,255, 0.1);
         backdrop-filter: blur(12px);
       }
 
@@ -642,7 +642,7 @@
       <p>Ready to capture your pet’s best moments? Begin by entering your email address below!</p>
       <form class="start-journey-form" onsubmit="handleEmailSubmit(event)">
         <div class="form-group">
-          <input type="email" id="email-input" placeholder="Enter your email address 📧" required />
+          <input type="email" id="email-input" placeholder="Enter your email address 📧" />
           <div class="form-error" id="email-error">Please enter a valid email address</div>
         </div>
         <button type="submit">Continue</button>
@@ -736,32 +736,8 @@
 
     function handleEmailSubmit(e) {
       e.preventDefault();
-      const emailInput = document.getElementById('email-input');
-      const emailError = document.getElementById('email-error');
-      const formGroup = emailInput.closest('.form-group');
-      const email = emailInput.value.trim();
-
-      // Validate email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        formGroup.classList.add('error');
-        return;
-      }
-
-      formGroup.classList.remove('error');
-
-      // Store email in sessionStorage
-      const cartData = { email };
-      try {
-        sessionStorage.setItem('cartData', JSON.stringify(cartData));
-        console.log('✅ Email saved to sessionStorage:', cartData);
-        window.location.href = '/cart.html';
-      } catch (error) {
-        console.error('Error saving email data:', error);
-        formGroup.classList.add('error');
-        emailError.textContent = 'Error saving email. Please try again.';
-        emailError.style.display = 'block';
-      }
+      // No validation or data saving; just redirect to cart.html
+      window.location.href = '/cart.html';
     }
 
     document.addEventListener('DOMContentLoaded', function() {
