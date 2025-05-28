@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Availability | PictureThisPet</title>
-  <meta name="description" content="Check availability and book your pet photography session with PictureThisPet in Denver.">
+  <meta name="description" content="Check availability for your pet photography session with PictureThisPet in Denver.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -331,61 +331,6 @@
       margin-bottom: 2rem;
     }
 
-    /* Availability Section */
-    .availability-section {
-      max-width: 1200px;
-      margin: 0 auto 4rem;
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
-      padding: 3rem;
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease-out;
-      text-align: center;
-    }
-
-    .availability-section:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    .section-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: 1rem;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      letter-spacing: -0.02em;
-    }
-
-    .section-subtitle {
-      font-size: 1.2rem;
-      color: var(--text-secondary);
-      text-align: center;
-      margin-bottom: 3rem;
-      line-height: 1.6;
-    }
-
-    .availability-embed {
-      width: 100%;
-      max-width: 100%;
-      overflow: hidden;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.05);
-      padding: 1rem;
-    }
-
-    .availability-embed iframe {
-      width: 100%;
-      height: 800px;
-      border: none;
-    }
-
     /* Google Calendar Section */
     .calendar-section {
       max-width: 1200px;
@@ -399,6 +344,7 @@
       transition: all 0.3s ease;
       animation: fadeInUp 0.6s ease-out;
       text-align: center;
+      position: relative;
     }
 
     .calendar-section:hover {
@@ -406,9 +352,62 @@
       border-color: rgba(255,255,255,0.2);
     }
 
-    .calendar-embed {
+    .calendar-header {
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 3rem;
+      right: 3rem;
+      z-index: 1;
+    }
+
+    .calendar-header h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .calendar-header .nav-arrows {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .calendar-header .nav-arrow {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .calendar-header .nav-arrow:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.1);
+    }
+
+    .calendar-header .nav-arrow span {
+      font-size: 1.2rem;
+      color: var(--text-primary);
+    }
+
+    .calendar-embed-wrapper {
+      position: relative;
       width: 100%;
       max-width: 100%;
+      height: 600px;
       overflow: hidden;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.2);
@@ -416,9 +415,18 @@
       padding: 1rem;
     }
 
+    .calendar-embed {
+      position: absolute;
+      top: -50px; /* Adjust to hide the Google Calendar header */
+      left: 0;
+      width: 100%;
+      height: 700px; /* Extra height to ensure the date grid fits */
+      overflow: hidden;
+    }
+
     .calendar-embed iframe {
       width: 100%;
-      height: 600px;
+      height: 100%;
       border: none;
     }
 
@@ -679,36 +687,31 @@
         font-size: 1.1rem;
       }
 
-      .availability-section {
-        padding: 2rem;
-      }
-
       .calendar-section {
         padding: 2rem;
       }
 
-      .section-title {
-        font-size: 2rem;
+      .calendar-header {
+        left: 2rem;
+        right: 2rem;
       }
 
-      .section-subtitle {
-        font-size: 1rem;
+      .calendar-header h3 {
+        font-size: 1.3rem;
       }
 
-      .availability-embed {
-        padding: 0.5rem;
+      .calendar-header .nav-arrow {
+        width: 35px;
+        height: 35px;
       }
 
-      .availability-embed iframe {
-        height: 600px;
+      .calendar-embed-wrapper {
+        height: 500px;
       }
 
       .calendar-embed {
-        padding: 0.5rem;
-      }
-
-      .calendar-embed iframe {
-        height: 500px;
+        top: -40px;
+        height: 600px;
       }
 
       .footer-container {
@@ -777,12 +780,22 @@
         font-size: 0.65rem;
       }
 
-      .availability-embed iframe {
+      .calendar-embed-wrapper {
+        height: 400px;
+      }
+
+      .calendar-embed {
+        top: -30px;
         height: 500px;
       }
 
-      .calendar-embed iframe {
-        height: 400px;
+      .calendar-header h3 {
+        font-size: 1.1rem;
+      }
+
+      .calendar-header .nav-arrow {
+        width: 30px;
+        height: 30px;
       }
 
       .footer-container {
@@ -849,28 +862,27 @@
     <section class="hero-section">
       <div class="hero-box">
         <div class="hero-content">
-          <h1>Book Your Session</h1>
-          <p>Find the perfect time for your pet photography session with PictureThisPet in Denver. Use the calendar below to check my availability and schedule your appointment!</p>
+          <h1>Check My Availability</h1>
+          <p>View my schedule for pet photography sessions with PictureThisPet in Denver. Contact me to book your appointment once you find a suitable time!</p>
         </div>
-      </div>
-    </section>
-
-    <!-- Availability Section -->
-    <section class="availability-section">
-      <h2 class="section-title">Schedule Your Appointment</h2>
-      <p class="section-subtitle">Select a date and time that works best for you and your pet, and book directly below.</p>
-      <div class="availability-embed">
-        <iframe src="https://app.acuityscheduling.com/schedule.php?owner=35886698&calendarID=12186415&ref=embedded_csp" title="Schedule Appointment" width="100%" height="800" frameBorder="0"></iframe>
-        <script src="https://embed.acuityscheduling.com/js/embed.js" type="text/javascript"></script>
       </div>
     </section>
 
     <!-- Google Calendar Section -->
     <section class="calendar-section">
-      <h2 class="section-title">View My Availability</h2>
-      <p class="section-subtitle">Check my Google Calendar to see available dates and times for your pet photography session.</p>
-      <div class="calendar-embed">
-        <iframe src="https://calendar.google.com/calendar/embed?src=cd42508bf949d68a615df8c843a09f2a33691da922b0b2ed66af6dc2c32b0216%40group.calendar.google.com&ctz=America%2FDenver" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+      <div class="calendar-header">
+        <div class="nav-arrows">
+          <div class="nav-arrow" aria-label="Previous month"><span>←</span></div>
+        </div>
+        <h3>May 2025</h3>
+        <div class="nav-arrows">
+          <div class="nav-arrow" aria-label="Next month"><span>→</span></div>
+        </div>
+      </div>
+      <div class="calendar-embed-wrapper">
+        <div class="calendar-embed">
+          <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23E4C441" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        </div>
       </div>
     </section>
   </main>
@@ -908,7 +920,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:33 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:43 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
