@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Locations | Picture This Pet</title>
-  <meta name="description" content="Explore our pet photography session locations in Denver parks.">
+  <title>Availability | PictureThisPet</title>
+  <meta name="description" content="Check availability and book your pet photography session with PictureThisPet in Denver.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
       --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
       --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
       --pink: #ff1493;
@@ -19,9 +20,7 @@
       --text-primary: #ffffff;
       --text-secondary: rgba(255,255,255,0.8);
       --text-muted: rgba(255,255,255,0.6);
-      --available-green: #10b981;
-      --booked-red: #ef4444;
-      --soft-hold-yellow: #f59e0b;
+      --gold: #FDB75E;
     }
 
     * {
@@ -285,389 +284,281 @@
       transform: scale(1.1);
     }
 
-    /* ORIGINAL LOCATIONS PAGE STYLES */
-    :root {
-      --orange: #F47C2C;
-      --gold: #FDB75E;
-      --dark-brown: #4B2E1E;
-    }
-    
-    body {
-      background-image: url("assets/images/main_background_allsystem.png");
-      background-size: 100% 100%;
-      background-position: center;
-    }
-
-    @keyframes moveBackground {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* HEADER */
-    header {
-      background-image: url("assets/images/ani_bkgd_cool.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      height: 110px;
-    }
-    
-    .desktop-logo {
-      height: 100px;
-    }
-
-    /* MAIN CONTENT */
+    /* Main Content */
     main {
       margin-top: 146px;
+      flex: 1;
       padding: 4rem 1rem;
-      animation: moveBackground 30s ease-in-out infinite;
     }
 
+    /* Hero Section */
     .hero-section {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto 4rem;
       text-align: center;
     }
 
     .hero-box {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
+      padding: 3rem;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease-out;
     }
 
-    .hero-box img {
-      width: 100%;
-      height: auto;
-      max-height: 400px;
-      object-fit: cover;
-      border-radius: 16px;
-      margin-bottom: 1.5rem;
+    .hero-box:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.2);
     }
 
-    .hero-text h1 {
-      font-family: 'Playfair Display', serif;
+    .hero-content h1 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-content p {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    /* Availability Section */
+    .availability-section {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
+      padding: 3rem;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease-out;
+      text-align: center;
+    }
+
+    .availability-section:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .section-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 2.5rem;
       font-weight: 700;
-      color: white;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      margin-bottom: 0.5rem;
-    }
-
-    .hero-text p {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.9);
-      line-height: 1.6;
-    }
-
-    .page-header {
+      color: var(--text-primary);
       text-align: center;
-      margin-bottom: 4rem;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .page-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: white;
       margin-bottom: 1rem;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      letter-spacing: -0.02em;
     }
 
-    .page-subtitle {
-      font-size: 1.3rem;
-      color: rgba(255, 255, 255, 0.9);
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 3rem;
       line-height: 1.6;
     }
 
-    /* LOCATION BOXES */
-    .locations-section {
+    .availability-embed {
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+      padding: 1rem;
+    }
+
+    .availability-embed iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+    }
+
+    /* Google Calendar Section */
+    .calendar-section {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
+      padding: 3rem;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease-out;
+      text-align: center;
+    }
+
+    .calendar-section:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .calendar-embed {
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+      padding: 1rem;
+    }
+
+    .calendar-embed iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+
+    /* Footer */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding: 2rem 1.5rem;
+      color: #666666;
+      font-size: 0.9rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
       max-width: 1200px;
       margin: 0 auto;
+      margin-bottom: 1.5rem;
+      justify-items: center;
+    }
+
+    .footer-section {
       display: flex;
       flex-direction: column;
-      gap: 3rem;
-    }
-
-    .location-box {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-
-    .popup-box {
-      border-color: rgba(244, 124, 44, 0.2);
-      background-color: rgba(244, 124, 44, 0.05);
-    }
-
-    .location-map {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-    }
-
-    .popup-image {
-      width: 100%;
-      background: rgba(244, 124, 44, 0.08);
-      border: 1px solid rgba(244, 124, 44, 0.2);
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-    }
-
-    .map-header, .popup-image-header {
-      padding: 1.2rem 1.6rem;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(5px);
-      font-weight: 600;
-      font-size: 1.2rem;
-      color: white;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
       align-items: center;
-      gap: 0.5rem;
     }
 
-    .popup-image-header {
-      background: rgba(244, 124, 44, 0.1);
-      border-bottom: 1px solid rgba(244, 124, 44, 0.2);
-    }
-
-    .map-iframe {
-      width: 100%;
-      height: 280px;
-      border: none;
-      filter: contrast(1.1) brightness(0.9);
-    }
-
-    .popup-image-placeholder {
-      width: 100%;
-      height: 280px;
-      overflow: hidden;
-    }
-
-    .popup-image-placeholder img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.9;
-    }
-
-    .map-footer, .popup-image-footer {
-      padding: 1rem 1.6rem;
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .popup-image-footer {
-      background: rgba(244, 124, 44, 0.05);
-    }
-
-    .location-info h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
+    .footer-section h4 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-weight: 700;
-      color: white;
-      margin-bottom: 0.5rem;
-    }
-
-    .location-type {
-      font-size: 1rem;
-      color: var(--gold);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 1rem;
-    }
-
-    .location-description {
       font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.9);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
     }
 
-    .location-features {
-      list-style: none;
-      padding: 0;
-      margin-bottom: 2rem;
+    .footer-section a {
+      color: #555555;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
     }
 
-    .location-features li {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 0.8rem;
+    .footer-section a:hover {
+      color: #333333;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 0.5rem;
+      justify-items: center;
+    }
+
+    .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
+    .payment-methods img:nth-child(2) { grid-area: 1 / 2; }
+    .payment-methods img:nth-child(3) { grid-area: 1 / 3; }
+    .payment-methods img:nth-child(4) { grid-area: 1 / 4; }
+    .payment-methods img:nth-child(5) { grid-area: 1 / 5; }
+    .payment-methods img:nth-child(6) { grid-area: 1 / 6; }
+    .payment-methods img:nth-child(7) { grid-area: 1 / 7; }
+    .payment-methods img:nth-child(8) { grid-area: 2 / 7; }
+    .payment-methods img:nth-child(9) { grid-area: 2 / 6; }
+    .payment-methods img:nth-child(10) { grid-area: 2 / 5; }
+    .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
+    .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
+    .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
+    .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .payment-placeholder {
+      width: 40px;
+      height: 25px;
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-    }
-
-    .location-features li::before {
-      content: "✔";
-      color: var(--available-green);
-      font-weight: bold;
-      font-size: 1.1rem;
-    }
-
-    .popup-box .location-features li::before {
-      content: "🐾";
-      font-size: 1.2rem;
-    }
-
-    .location-highlights {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 1.5rem;
-    }
-
-    .popup-box .location-highlights {
-      background: rgba(244, 124, 44, 0.08);
-      border-color: rgba(244, 124, 44, 0.2);
-    }
-
-    .location-highlights h4 {
-      font-size: 1.3rem;
-      color: var(--gold);
-      margin-bottom: 0.8rem;
+      justify-content: center;
+      font-size: 8px;
       font-weight: 600;
-    }
-
-    .location-highlights p {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.9);
-      line-height: 1.6;
-    }
-
-    .location-guide-link {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      text-decoration: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 600;
+      color: #555555;
+      opacity: 0.7;
       transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .location-guide-link:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.4);
-      transform: translateY(-2px);
-    }
-
-    /* ACTION SECTION */
-    .action-container {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-top: 4rem;
-    }
-
-    .action-section {
       text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 2.5rem;
+      line-height: 1.1;
     }
 
-    .action-title {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 1rem;
+    .payment-placeholder:hover {
+      opacity: 1;
+      transform: scale(1.1);
     }
 
-    .action-subtitle {
-      font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 2rem;
-      line-height: 1.6;
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    .book-now-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
-      border: none;
-      padding: 1.2rem 3rem;
-      border-radius: 16px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      margin-right: 1rem;
+    .footer-bottom a {
+      color: #e07b00;
+      text-decoration: underline;
     }
 
-    .book-now-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(244, 124, 44, 0.4);
+    .footer-bottom a:hover {
+      color: #333333;
     }
 
-    .contact-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 1.2rem 3rem;
-      border-radius: 16px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .contact-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-3px);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* MOBILE */
+    /* Responsive */
     @media (max-width: 768px) {
       .promo-banner {
         font-size: 0.85rem;
@@ -697,7 +588,7 @@
         height: 84px;
         padding: 0.5rem 1rem;
       }
-      
+
       .desktop-logo {
         height: 80px;
       }
@@ -709,7 +600,7 @@
       .logo-text sup {
         font-size: 0.6rem;
       }
-      
+
       .site-nav {
         display: none;
         flex-direction: column;
@@ -725,11 +616,11 @@
         border-radius: 0 0 16px 16px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.1);
       }
-      
+
       .site-nav.active {
         display: flex;
       }
-      
+
       .site-nav.active a {
         margin: 0.5rem 0;
         font-size: 1.2rem;
@@ -776,14 +667,97 @@
         padding: 2rem 1rem;
       }
 
-      .page-title {
+      .hero-box {
+        padding: 2rem;
+      }
+
+      .hero-content h1 {
         font-size: 2.5rem;
       }
 
-      .location-box {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+      .hero-content p {
+        font-size: 1.1rem;
+      }
+
+      .availability-section {
         padding: 2rem;
+      }
+
+      .calendar-section {
+        padding: 2rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .section-subtitle {
+        font-size: 1rem;
+      }
+
+      .availability-embed {
+        padding: 0.5rem;
+      }
+
+      .availability-embed iframe {
+        height: 600px;
+      }
+
+      .calendar-embed {
+        padding: 0.5rem;
+      }
+
+      .calendar-embed iframe {
+        height: 500px;
+      }
+
+      .footer-container {
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+        gap: 0.5rem;
+        justify-items: center;
+      }
+
+      .footer-section:nth-child(1) {
+        grid-area: contact-us;
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        grid-area: connect;
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        grid-area: we-accept;
+        justify-self: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        margin-bottom: 0.2rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-bottom {
+        padding-top: 1rem;
+      }
+
+      .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
       }
     }
 
@@ -802,17 +776,37 @@
         padding: 0.15rem 0.4rem;
         font-size: 0.65rem;
       }
-    }
 
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+      .availability-embed iframe {
+        height: 500px;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+
+      .calendar-embed iframe {
+        height: 400px;
+      }
+
+      .footer-container {
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+      }
+
+      .footer-section:nth-child(1) {
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        justify-self: center;
+        align-items: center;
+        text-align: center;
       }
     }
   </style>
@@ -851,139 +845,34 @@
   </header>
 
   <main>
+    <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-box">
-        <img src="assets/images/parkphoto.jpg" alt="Denver Park Landscape" />
-        <div class="hero-text">
-          <h1>Explore Our Locations</h1>
-          <p>Capture your pet's joy in the perfect setting at one of our scenic locations or custom venues.</p>
+        <div class="hero-content">
+          <h1>Book Your Session</h1>
+          <p>Find the perfect time for your pet photography session with PictureThisPet in Denver. Use the calendar below to check my availability and schedule your appointment!</p>
         </div>
       </div>
     </section>
 
-    <div class="page-header">
-      <h1 class="page-title">Our Locations</h1>
-      <p class="page-subtitle">
-        We offer pet photography sessions at beautiful Denver parks and custom PopUp locations. Choose from our scenic park settings or bring the session to your pet's favorite hangout spots.
-      </p>
-    </div>
-
-    <div class="locations-section">
-      <!-- Cheesman Park -->
-      <div class="location-box">
-        <div class="location-visual">
-          <div class="location-map">
-            <div class="map-header">
-              <span>📍</span>
-              <span>Cheesman Park</span>
-            </div>
-            <iframe
-              class="map-iframe"
-              loading="lazy"
-              allowfullscreen
-              referrerpolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6134.306478944552!2d-104.9669827235144!3d39.73302870192812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c78d7367d2a0f%3A0x79885f4ae5c9f805!2sCheesman%20Park!5e0!3m2!1sen!2sus!4v1716637911983!5m2!1sen!2sus">
-            </iframe>
-            <div class="map-footer">E 8th Ave & Franklin St, Denver, CO 80206</div>
-          </div>
-        </div>
-        <div class="location-info">
-          <h3>Cheesman Park</h3>
-          <p class="location-type">Traditional Park Session</p>
-          <p class="location-description">Located in the heart of Denver, Cheesman Park offers a stunning backdrop with its historic pavilion, open fields, and tree-lined paths, perfect for capturing your pet's playful moments.</p>
-          <ul class="location-features">
-            <li>Historic pavilion and gardens</li>
-            <li>Wide open fields for play</li>
-            <li>Tree-lined paths for shade</li>
-            <li>Central Denver location</li>
-          </ul>
-          <div class="location-highlights">
-            <h4>Perfect For:</h4>
-            <p>Classic outdoor portraits, action shots in open fields, romantic couples sessions with pets, and family portraits with beautiful natural backgrounds.</p>
-          </div>
-          <a href="/cheesmanpark" class="location-guide-link">Learn More About Cheesman Park →</a>
-        </div>
+    <!-- Availability Section -->
+    <section class="availability-section">
+      <h2 class="section-title">Schedule Your Appointment</h2>
+      <p class="section-subtitle">Select a date and time that works best for you and your pet, and book directly below.</p>
+      <div class="availability-embed">
+        <iframe src="https://app.acuityscheduling.com/schedule.php?owner=35886698&calendarID=12186415&ref=embedded_csp" title="Schedule Appointment" width="100%" height="800" frameBorder="0"></iframe>
+        <script src="https://embed.acuityscheduling.com/js/embed.js" type="text/javascript"></script>
       </div>
+    </section>
 
-      <!-- City Park -->
-      <div class="location-box">
-        <div class="location-visual">
-          <div class="location-map">
-            <div class="map-header">
-              <span>📍</span>
-              <span>City Park</span>
-            </div>
-            <iframe
-              class="map-iframe"
-              loading="lazy"
-              allowfullscreen
-              referrerpolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6133.803357172409!2d-104.95465562351398!3d39.74747399157158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c79527dc2f88f%3A0x409292cfbe1667d0!2sCity%20Park!5e0!3m2!1sen!2sus!4v1716638100000!5m2!1sen!2sus">
-            </iframe>
-            <div class="map-footer">E 17th Ave to E 23rd Ave, York St to Colorado Blvd, Denver, CO</div>
-          </div>
-        </div>
-        <div class="location-info">
-          <h3>City Park</h3>
-          <p class="location-type">Traditional Park Session</p>
-          <p class="location-description">City Park provides a scenic setting with views of the Denver skyline, lakes, and lush greenery, ideal for a vibrant and dynamic pet photography session.</p>
-          <ul class="location-features">
-            <li>Denver skyline views</li>
-            <li>Lakes and water features</li>
-            <li>Lush greenery and trees</li>
-            <li>Easy access and parking</li>
-          </ul>
-          <div class="location-highlights">
-            <h4>Perfect For:</h4>
-            <p>Urban skyline backdrops, lakeside portraits, dogs who love water, adventure sessions with varied landscapes, and capturing Denver's iconic mountain views.</p>
-          </div>
-          <a href="/citypark" class="location-guide-link">Learn More About City Park →</a>
-        </div>
+    <!-- Google Calendar Section -->
+    <section class="calendar-section">
+      <h2 class="section-title">View My Availability</h2>
+      <p class="section-subtitle">Check my Google Calendar to see available dates and times for your pet photography session.</p>
+      <div class="calendar-embed">
+        <iframe src="https://calendar.google.com/calendar/embed?src=cd42508bf949d68a615df8c843a09f2a33691da922b0b2ed66af6dc2c32b0216%40group.calendar.google.com&ctz=America%2FDenver" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
       </div>
-
-      <!-- PopUp Sessions -->
-      <div class="location-box popup-box">
-        <div class="location-visual">
-          <div class="popup-image">
-            <div class="popup-image-header">
-              <span>🐾</span>
-              <span>PopUp Sessions</span>
-            </div>
-            <div class="popup-image-placeholder">
-              <img src="assets/images/popup-placeholder.jpg" alt="PopUp Sessions at dog-friendly locations" />
-            </div>
-            <div class="popup-image-footer">Custom Locations Around Denver</div>
-          </div>
-        </div>
-        <div class="location-info">
-          <h3>PopUp Sessions</h3>
-          <p class="location-type">Mobile & Custom Locations</p>
-          <p class="location-description">Looking to snag a shot at your favorite dog bar, local dog park, or other special places where dogs love to hang out? We'll bring our mobile studio setup to capture your pet in their element!</p>
-          <ul class="location-features">
-            <li>Dog-friendly breweries & bars</li>
-            <li>Neighborhood dog parks</li>
-            <li>Pet-friendly cafes & restaurants</li>
-            <li>Custom location coordination</li>
-          </ul>
-          <div class="location-highlights">
-            <h4>How PopUps Work:</h4>
-            <p>Simply suggest your ideal location and we'll handle the logistics. Whether it's that cozy dog-friendly cafe where your pup gets treats, the dog park where they have their best zoomies, or any other meaningful spot, we'll make it happen!</p>
-          </div>
-          <a href="/popups" class="location-guide-link">Learn More About PopUp Sessions →</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="action-container">
-      <div class="action-section">
-        <h3 class="action-title">Ready to Book Your Session?</h3>
-        <p class="action-subtitle">
-          Choose your preferred location and start booking your pet photography session today, or contact us for more details.
-        </p>
-        <a href="/" class="book-now-btn">Book Now</a>
-        <a href="/contact" class="contact-btn">Contact Us</a>
-      </div>
-    </div>
+    </section>
   </main>
 
   <footer>
@@ -1019,7 +908,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:45 PM MST, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: #e07b00; text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:33 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -1028,6 +917,10 @@
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Availability page loaded');
+    });
   </script>
 </body>
 </html>
