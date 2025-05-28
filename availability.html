@@ -243,7 +243,7 @@
       width: 0;
       height: 2px;
       background: var(--gradient-primary);
-      transition: all 0.3s ease;
+      transition: width 0.3s ease;
       transform: translateX(-50%);
     }
 
@@ -351,7 +351,7 @@
       justify-content: space-between;
       align-items: center;
       position: absolute;
-      top: -3rem; /* Moved further up */
+      top: -3rem;
       left: 3rem;
       right: 3rem;
       z-index: 1;
@@ -873,7 +873,7 @@
       </div>
       <div class="calendar-embed-wrapper">
         <div class="calendar-embed">
-          <iframe id="calendarIframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=MThiZWI4YTBmODcxNGMwNjI1YWNlYmZmY2JhZjM4YWQ0NTM5YjhiYmRmMGEzOTc0MGZlODFkMDVjYjg5MWVkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29m&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDNjZmZjMTRjMzhjMzA1YmNlZDQ4ODZmNjIxYjkxMjY5NDY5MTZjY2NmOGViNWNlN2Y3MWI3YmFmMzMxOTY0N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%237CB342&color=%23D50000&color=%23E4C441" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+          <iframe id="calendarIframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=MThiZWI4YTBmODcxNGMwNjI1YWNlYmZmY2JhZjM4YWQ0NTM5YjhiYmRmMGEzOTc0MGZlODFkMDVjYjg5MWVkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDNjZmZjMTRjMzhjMzA1YmNlZDQ4ODZmNjIxYjkxMjY5NDY5MTZjY2NmOGViNWNlN2Y3MWI3YmFmMzMxOTY0N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%237cb342&color=%23ff2968&color=%23e4c441" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
         </div>
       </div>
     </section>
@@ -912,7 +912,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 11:59 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 12:35 PM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -960,7 +960,7 @@
         // Fallback: Reload iframe with updated month
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth() + 1; // 1-based for URL
-        const newSrc = `https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=MThiZWI4YTBmODcxNGMwNjI1YWNlYmZmY2JhZjM4YWQ0NTM5YjhiYmRmMGEzOTc0MGZlODFkMDVjYjg5MWVkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29m&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDNjZmZjMTRjMzhjMzA1YmNlZDQ4ODZmNjIxYjkxMjY5NDY5MTZjY2NmOGViNWNlN2Y3MWI3YmFmMzMxOTY0N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%237CB342&color=%23D50000&color=%23E4C441&date=${year}${month.toString().padStart(2, '0')}01`;
+        const newSrc = `https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=MThiZWI4YTBmODcxNGMwNjI1YWNlYmZmY2JhZjM4YWQ0NTM5YjhiYmRmMGEzOTc0MGZlODFkMDVjYjg5MWVkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDNjZmZjMTRjMzhjMzA1YmNlZDQ4ODZmNjIxYjkxMjY5NDY5MTZjY2NmOGViNWNlN2Y3MWI3YmFmMzMxOTY0N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%237cb342&color=%23ff2968&color=%23e4c441&date=${year}${month.toString().padStart(2, '0')}01`;
         iframe.src = newSrc;
       }
     }
