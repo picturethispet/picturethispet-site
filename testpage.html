@@ -581,14 +581,15 @@
       .promo-banner {
         font-size: 0.85rem;
         padding: 0.4rem 0.8rem;
-        top: 60px;
+        top: 70px;
       }
 
       .promo-banner-content {
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        flex-direction: column;
+        gap: 0.2rem;
         justify-content: center;
         text-align: center;
+        line-height: 1.2;
       }
 
       .promo-text {
@@ -602,7 +603,7 @@
       }
 
       header {
-        height: 60px;
+        height: 70px;
         padding: 0.5rem 1rem;
       }
 
@@ -623,7 +624,7 @@
         flex-direction: column;
         background: #ffffff;
         position: absolute;
-        top: 60px;
+        top: 70px;
         right: 0;
         width: 100%;
         text-align: right;
@@ -680,7 +681,7 @@
       }
 
       main {
-        margin-top: 100px;
+        margin-top: 110px;
         padding: 2rem 1rem;
       }
 
@@ -845,7 +846,8 @@
   <!-- Promotional Banner -->
   <div class="promo-banner">
     <div class="promo-banner-content">
-      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸 Flexible Payment Plans Available 📸</span>
+      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+      <span class="promo-text">Flexible Payment Plans Available 📸</span>
       <a href="/pricing">View Pricing ✨</a>
     </div>
   </div>
@@ -861,7 +863,7 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToSessionBuilder(event)">Book Now</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
@@ -873,7 +875,7 @@
       <div class="hero-content">
         <h1>Timeless Pet Photography</h1>
         <p>Capture the magic of your furry friend with PictureThisPet.</p>
-        <a href="#start-journey" class="hero-btn" onclick="scrollToSection(event)">Book Now</a>
+        <a href="/cart.html" class="hero-btn">Book Now</a>
       </div>
     </section>
 
@@ -961,7 +963,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 09:05 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 09:11 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -969,28 +971,6 @@
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
-    }
-
-    function scrollToSection(e) {
-      e.preventDefault();
-      const section = document.querySelector('#start-journey');
-      const offset = 130;
-      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: sectionPosition - offset,
-        behavior: 'smooth'
-      });
-    }
-
-    function scrollToSessionBuilder(e) {
-      e.preventDefault();
-      const section = document.querySelector('#start-journey');
-      const offset = 130;
-      const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: sectionPosition - offset,
-        behavior: 'smooth'
-      });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
