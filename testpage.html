@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Schedule Your Session | Picture This Pet</title>
-  <meta name="description" content="Schedule your pet photography session with Picture This Pet.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Locations | Picture This Pet</title>
+  <meta name="description" content="Explore our pet photography session locations in Denver parks.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -110,43 +110,6 @@
     @keyframes float {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
       50% { transform: translateY(-20px) rotate(180deg); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes progressFill {
-      0% { width: 0%; }
-      100% { width: 100%; }
-    }
-
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Promotional Banner */
@@ -322,338 +285,389 @@
       transform: scale(1.1);
     }
 
-    /* Main Content */
+    /* ORIGINAL LOCATIONS PAGE STYLES */
+    :root {
+      --orange: #F47C2C;
+      --gold: #FDB75E;
+      --dark-brown: #4B2E1E;
+    }
+    
+    body {
+      background-image: url("assets/images/main_background_allsystem.png");
+      background-size: 100% 100%;
+      background-position: center;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* HEADER */
+    header {
+      background-image: url("assets/images/ani_bkgd_cool.png");
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      height: 110px;
+    }
+    
+    .desktop-logo {
+      height: 100px;
+    }
+
+    /* MAIN CONTENT */
     main {
       margin-top: 146px;
-      flex: 1;
-      padding: 2rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: calc(100vh - 96px);
+      padding: 4rem 1rem;
+      animation: moveBackground 30s ease-in-out infinite;
     }
 
-    .booking-container {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
+    .hero-section {
+      max-width: 1000px;
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+
+    .hero-box {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
       border-radius: 24px;
-      border: 1px solid rgba(255,255,255, 0.1);
-      padding: 3rem;
-      animation: fadeInUp 0.8s ease-out;
-      min-height: auto;
-      position: relative;
-      overflow: visible;
-      transition: all 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .booking-container:hover {
-      border-color: rgba(255,255,255,0.2);
+    .hero-box img {
+      width: 100%;
+      height: auto;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-text p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
     }
 
     .page-header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 4rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .page-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 2.8rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
-      letter-spacing: -0.025em;
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .page-subtitle {
-      font-size: 1.2rem;
-      color: var(--text-secondary);
-      font-weight: 500;
-      line-height: 1;
-    }
-
-    .booking-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      position: relative;
-      width: 100%;
-      min-height: auto;
-      padding: 0;
-      gap: 0;
-    }
-
-    .loading-area {
-      text-align: center;
-      transition: all 0.8s ease;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    .loading-area.hidden {
-      opacity: 0;
-      transform: translateY(-30px);
-      pointer-events: none;
-      height: 0;
-      margin: 0;
-    }
-
-    .confirmation-message {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
-      border: 1px solid var(--available-green);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .confirmation-message:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
-    }
-
-    .confirmation-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      animation: pulse 2s infinite;
-    }
-
-    .confirmation-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--available-green);
-      margin-bottom: 0.8rem;
-      letter-spacing: -0.02em;
-    }
-
-    .confirmation-description {
-      font-size: 1rem;
-      color: var(--text-secondary);
+      color: rgba(255, 255, 255, 0.9);
       line-height: 1.6;
     }
 
-    .loading-animation {
-      margin: 1rem 0;
-    }
-
-    .loading-spinner {
-      width: 70px;
-      height: 70px;
-      border: 5px solid rgba(255,255,255, 0.3);
-      border-top: 5px solid var(--orange);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
-    }
-
-    .paw-prints {
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      margin: 1rem 0;
-    }
-
-    .paw {
-      font-size: 1.8rem;
-      animation: bounce 1.5s infinite;
-    }
-
-    .paw:nth-child(1) { animation-delay: 0s; }
-    .paw:nth-child(2) { animation-delay: 0.3s; }
-    .paw:nth-child(3) { animation-delay: 0.6s; }
-    .paw:nth-child(4) { animation-delay: 0.9s; }
-
-    .loading-text {
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-      margin: 1rem 0;
-      background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, var(--orange) 50%, rgba(255,255,255,0.6) 100%);
-      background-size: 200% 100%;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 2s ease-in-out infinite;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 6px;
-      background: rgba(255,255,255, 0.2);
-      border-radius: 3px;
-      overflow: hidden;
-      margin: 1rem 0;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--gradient-primary);
-      border-radius: 3px;
-      animation: progressFill 3s ease-out forwards;
-    }
-
-    .acuity-container {
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all 0.8s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      margin-top: 0;
-    }
-
-    .acuity-container.show {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .acuity-iframe {
-      border: none;
-      border-radius: 16px;
-      background: white;
-      box-shadow: 0 10px 30px rgba(0,0,0, 0.3);
-      width: 100%;
-      max-width: 900px;
-      height: auto;
-      transition: all 0.3s ease;
-    }
-
-    .acuity-iframe:hover {
-      box-shadow: 0 15px 40px rgba(0,0,0, 0.4);
-    }
-
-    /* Footer */
-    footer {
-      background: #ffffff;
-      border-top: 1px solid rgba(0,0,0,0.1);
-      padding: 2rem 1.5rem;
-      color: #666666;
-      font-size: 0.9rem;
-    }
-
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
+    /* LOCATION BOXES */
+    .locations-section {
       max-width: 1200px;
       margin: 0 auto;
-      margin-bottom: 1.5rem;
-      justify-items: center;
-    }
-
-    .footer-section {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      gap: 3rem;
     }
 
-    .footer-section h4 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.02em;
-    }
-
-    .footer-section a {
-      color: #555555;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s ease;
-    }
-
-    .footer-section a:hover {
-      color: #333333;
-    }
-
-    .payment-methods {
+    .location-box {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(2, auto);
-      gap: 0.5rem;
-      justify-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
     }
 
-    .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
-    .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
-    .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
-    .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
-    .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
-    .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
-    .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
-    .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
-    .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
-    .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
-    .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
-    .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
-    .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
-    .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
-
-    .payment-icon {
-      width: 40px;
-      height: 25px;
-      object-fit: contain;
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      border-radius: 4px;
+    .popup-box {
+      border-color: rgba(244, 124, 44, 0.2);
+      background-color: rgba(244, 124, 44, 0.05);
     }
 
-    .payment-icon:hover {
-      opacity: 1;
-      transform: scale(1.1);
+    .location-map {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
     }
 
-    .payment-placeholder {
-      width: 40px;
-      height: 25px;
-      background: rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(0, 0, 0, 0.3);
-      border-radius: 4px;
+    .popup-image {
+      width: 100%;
+      background: rgba(244, 124, 44, 0.08);
+      border: 1px solid rgba(244, 124, 44, 0.2);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .map-header, .popup-image-header {
+      padding: 1.2rem 1.6rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 8px;
+      gap: 0.5rem;
+    }
+
+    .popup-image-header {
+      background: rgba(244, 124, 44, 0.1);
+      border-bottom: 1px solid rgba(244, 124, 44, 0.2);
+    }
+
+    .map-iframe {
+      width: 100%;
+      height: 280px;
+      border: none;
+      filter: contrast(1.1) brightness(0.9);
+    }
+
+    .popup-image-placeholder {
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+    }
+
+    .popup-image-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+
+    .map-footer, .popup-image-footer {
+      padding: 1rem 1.6rem;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .popup-image-footer {
+      background: rgba(244, 124, 44, 0.05);
+    }
+
+    .location-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .location-type {
+      font-size: 1rem;
+      color: var(--gold);
       font-weight: 600;
-      color: #555555;
-      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .location-description {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .location-features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 2rem;
+    }
+
+    .location-features li {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .location-features li::before {
+      content: "✔";
+      color: var(--available-green);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .popup-box .location-features li::before {
+      content: "🐾";
+      font-size: 1.2rem;
+    }
+
+    .location-highlights {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .popup-box .location-highlights {
+      background: rgba(244, 124, 44, 0.08);
+      border-color: rgba(244, 124, 44, 0.2);
+    }
+
+    .location-highlights h4 {
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+
+    .location-highlights p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+    }
+
+    .location-guide-link {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
       transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .location-guide-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* ACTION SECTION */
+    .action-container {
+      background-image: url('assets/images/ani_bkgd_cool.png');
+      background-size: 100% 100%;
+      background-position: center;
+      animation: moveBackground 30s ease-in-out infinite;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 4rem;
+    }
+
+    .action-section {
       text-align: center;
-      line-height: 1.1;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2.5rem;
     }
 
-    .payment-placeholder:hover {
-      opacity: 1;
-      transform: scale(1.1);
+    .action-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
     }
 
-    .footer-bottom {
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    .action-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+      line-height: 1.6;
     }
 
-    .footer-bottom a {
-      color: #e07b00;
-      text-decoration: underline;
+    .book-now-btn {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: white;
+      border: none;
+      padding: 1.2rem 3rem;
+      border-radius: 16px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 1rem;
     }
 
-    .footer-bottom a:hover {
-      color: #333333;
+    .book-now-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(244, 124, 44, 0.4);
     }
 
-    /* Responsive */
+    .contact-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 1.2rem 3rem;
+      border-radius: 16px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .contact-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MOBILE */
     @media (max-width: 768px) {
       .promo-banner {
         font-size: 0.85rem;
@@ -687,7 +701,7 @@
       .desktop-logo {
         height: 80px;
       }
-      
+
       .logo-text {
         font-size: 1.2rem;
       }
@@ -759,122 +773,17 @@
 
       main {
         margin-top: 124px;
-        padding: 0;
-        min-height: auto;
-      }
-
-      .booking-container {
-        padding: 0;
-        min-height: auto;
-        border-radius: 0;
-        border: none;
-      }
-
-      .page-header {
-        margin-bottom: 0;
-        padding: 0;
+        padding: 2rem 1rem;
       }
 
       .page-title {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
       }
 
-      .page-subtitle {
-        margin-bottom: 0;
-        padding-bottom: 0;
-        line-height: 0.8;
-      }
-
-      .confirmation-message {
-        padding: 0.5rem;
-        margin-bottom: 0;
-      }
-
-      .loading-animation {
-        margin: 0;
-      }
-
-      .loading-spinner {
-        margin-bottom: 0.5rem;
-      }
-
-      .paw-prints {
-        margin: 0.5rem 0;
-      }
-
-      .loading-text {
-        margin: 0.5rem 0;
-      }
-
-      .progress-bar {
-        margin: 0.5rem 0;
-      }
-
-      .acuity-container {
-        margin-top: 1rem;
-        padding: 0;
-        margin-bottom: 0;
-      }
-
-      .acuity-iframe {
-        height: auto;
-        border-radius: 0;
-        box-shadow: none;
-      }
-
-      .footer-container {
-        grid-template-areas: 
-          "contact-us connect"
-          "we-accept we-accept";
-        gap: 0.5rem;
-        justify-items: center;
-      }
-
-      .footer-section:nth-child(1) {
-        grid-area: contact-us;
-        justify-self: start;
-        align-items: flex-start;
-        text-align: left;
-      }
-
-      .footer-section:nth-child(2) {
-        grid-area: connect;
-        justify-self: end;
-        align-items: flex-end;
-        text-align: right;
-      }
-
-      .footer-section:nth-child(3) {
-        grid-area: we-accept;
-        justify-self: center;
-        align-items: center;
-        text-align: center;
-      }
-
-      footer {
-        padding: 1rem 1rem;
-        font-size: 0.8rem;
-      }
-
-      .footer-section h4 {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .footer-section a {
-        margin-bottom: 0.2rem;
-        font-size: 0.8rem;
-      }
-
-      .footer-bottom {
-        padding-top: 1rem;
-      }
-
-      .payment-methods {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
+      .location-box {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
       }
     }
 
@@ -893,46 +802,17 @@
         padding: 0.15rem 0.4rem;
         font-size: 0.65rem;
       }
+    }
 
-      .booking-container {
-        padding: 0;
-        margin: 0;
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
       }
-
-      .page-title {
-        font-size: 2rem;
-      }
-
-      .confirmation-message {
-        padding: 0.3rem;
-      }
-
-      .acuity-iframe {
-        height: auto;
-      }
-
-      .footer-container {
-        grid-template-areas: 
-          "contact-us connect"
-          "we-accept we-accept";
-      }
-
-      .footer-section:nth-child(1) {
-        justify-self: start;
-        align-items: flex-start;
-        text-align: left;
-      }
-
-      .footer-section:nth-child(2) {
-        justify-self: end;
-        align-items: flex-end;
-        text-align: right;
-      }
-
-      .footer-section:nth-child(3) {
-        justify-self: center;
-        align-items: center;
-        text-align: center;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   </style>
@@ -971,43 +851,137 @@
   </header>
 
   <main>
-    <div class="booking-container">
-      <div class="page-header">
-        <h1 class="page-title">📅 Schedule Your Session</h1>
-        <p class="page-subtitle">Book a time slot for your pet photography session</p>
+    <section class="hero-section">
+      <div class="hero-box">
+        <img src="assets/images/parkphoto.jpg" alt="Denver Park Landscape" />
+        <div class="hero-text">
+          <h1>Explore Our Locations</h1>
+          <p>Capture your pet's joy in the perfect setting at one of our scenic locations or custom venues.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-header">
+      <h1 class="page-title">Our Locations</h1>
+      <p class="page-subtitle">
+        We offer pet photography sessions at beautiful Denver parks and custom PopUp locations. Choose from our scenic park settings or bring the session to your pet's favorite hangout spots.
+      </p>
+    </div>
+
+    <div class="locations-section">
+      <!-- Cheesman Park -->
+      <div class="location-box">
+        <div class="location-visual">
+          <div class="location-map">
+            <div class="map-header">
+              <span>📍</span>
+              <span>Cheesman Park</span>
+            </div>
+            <iframe
+              class="map-iframe"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6134.306478944552!2d-104.9669827235144!3d39.73302870192812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c78d7367d2a0f%3A0x79885f4ae5c9f805!2sCheesman%20Park!5e0!3m2!1sen!2sus!4v1716637911983!5m2!1sen!2sus">
+            </iframe>
+            <div class="map-footer">E 8th Ave & Franklin St, Denver, CO 80206</div>
+          </div>
+        </div>
+        <div class="location-info">
+          <h3>Cheesman Park</h3>
+          <p class="location-type">Traditional Park Session</p>
+          <p class="location-description">Located in the heart of Denver, Cheesman Park offers a stunning backdrop with its historic pavilion, open fields, and tree-lined paths, perfect for capturing your pet's playful moments.</p>
+          <ul class="location-features">
+            <li>Historic pavilion and gardens</li>
+            <li>Wide open fields for play</li>
+            <li>Tree-lined paths for shade</li>
+            <li>Central Denver location</li>
+          </ul>
+          <div class="location-highlights">
+            <h4>Perfect For:</h4>
+            <p>Classic outdoor portraits, action shots in open fields, romantic couples sessions with pets, and family portraits with beautiful natural backgrounds.</p>
+          </div>
+          <a href="/cheesmanpark" class="location-guide-link">Learn More About Cheesman Park →</a>
+        </div>
       </div>
 
-      <div class="booking-section">
-        <!-- Loading Area -->
-        <div class="loading-area" id="loadingArea">
-          <div class="confirmation-message">
-            <div class="confirmation-icon">✅✨</div>
-            <h3 class="confirmation-title">Payment Confirmed!</h3>
-            <p class="confirmation-description">Your payment has been successfully processed. Let's schedule your session with Picture This Pet! 🐾</p>
-          </div>
-
-          <div class="loading-animation">
-            <div class="loading-spinner"></div>
-            
-            <div class="paw-prints">
-              <span class="paw">🐾</span>
-              <span class="paw">🐾</span>
-              <span class="paw">🐾</span>
-              <span class="paw">🐾</span>
+      <!-- City Park -->
+      <div class="location-box">
+        <div class="location-visual">
+          <div class="location-map">
+            <div class="map-header">
+              <span>📍</span>
+              <span>City Park</span>
             </div>
-
-            <div class="loading-text" id="loadingText">📅 Loading scheduling portal...</div>
-
-            <div class="progress-bar">
-              <div class="progress-fill"></div>
-            </div>
+            <iframe
+              class="map-iframe"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6133.803357172409!2d-104.95465562351398!3d39.74747399157158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c79527dc2f88f%3A0x409292cfbe1667d0!2sCity%20Park!5e0!3m2!1sen!2sus!4v1716638100000!5m2!1sen!2sus">
+            </iframe>
+            <div class="map-footer">E 17th Ave to E 23rd Ave, York St to Colorado Blvd, Denver, CO</div>
           </div>
         </div>
-
-        <!-- Acuity Container -->
-        <div class="acuity-container" id="acuityContainer">
-          <iframe class="acuity-iframe" id="acuityIframe" src="" title="Acuity Scheduling" scrolling="no"></iframe>
+        <div class="location-info">
+          <h3>City Park</h3>
+          <p class="location-type">Traditional Park Session</p>
+          <p class="location-description">City Park provides a scenic setting with views of the Denver skyline, lakes, and lush greenery, ideal for a vibrant and dynamic pet photography session.</p>
+          <ul class="location-features">
+            <li>Denver skyline views</li>
+            <li>Lakes and water features</li>
+            <li>Lush greenery and trees</li>
+            <li>Easy access and parking</li>
+          </ul>
+          <div class="location-highlights">
+            <h4>Perfect For:</h4>
+            <p>Urban skyline backdrops, lakeside portraits, dogs who love water, adventure sessions with varied landscapes, and capturing Denver's iconic mountain views.</p>
+          </div>
+          <a href="/citypark" class="location-guide-link">Learn More About City Park →</a>
         </div>
+      </div>
+
+      <!-- PopUp Sessions -->
+      <div class="location-box popup-box">
+        <div class="location-visual">
+          <div class="popup-image">
+            <div class="popup-image-header">
+              <span>🐾</span>
+              <span>PopUp Sessions</span>
+            </div>
+            <div class="popup-image-placeholder">
+              <img src="assets/images/popup-placeholder.jpg" alt="PopUp Sessions at dog-friendly locations" />
+            </div>
+            <div class="popup-image-footer">Custom Locations Around Denver</div>
+          </div>
+        </div>
+        <div class="location-info">
+          <h3>PopUp Sessions</h3>
+          <p class="location-type">Mobile & Custom Locations</p>
+          <p class="location-description">Looking to snag a shot at your favorite dog bar, local dog park, or other special places where dogs love to hang out? We'll bring our mobile studio setup to capture your pet in their element!</p>
+          <ul class="location-features">
+            <li>Dog-friendly breweries & bars</li>
+            <li>Neighborhood dog parks</li>
+            <li>Pet-friendly cafes & restaurants</li>
+            <li>Custom location coordination</li>
+          </ul>
+          <div class="location-highlights">
+            <h4>How PopUps Work:</h4>
+            <p>Simply suggest your ideal location and we'll handle the logistics. Whether it's that cozy dog-friendly cafe where your pup gets treats, the dog park where they have their best zoomies, or any other meaningful spot, we'll make it happen!</p>
+          </div>
+          <a href="/popups" class="location-guide-link">Learn More About PopUp Sessions →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-container">
+      <div class="action-section">
+        <h3 class="action-title">Ready to Book Your Session?</h3>
+        <p class="action-subtitle">
+          Choose your preferred location and start booking your pet photography session today, or contact us for more details.
+        </p>
+        <a href="/" class="book-now-btn">Book Now</a>
+        <a href="/contact" class="contact-btn">Contact Us</a>
       </div>
     </div>
   </main>
@@ -1045,163 +1019,15 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 09:24 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:45 PM MST, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: #e07b00; text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
-    let sessionData = null;
-    let loadingMessages = [
-      "📅 Loading scheduling portal...",
-      "🐾 Preparing your session booking...",
-      "✨ Connecting to Acuity Scheduling...",
-      "🎉 Almost ready to book your slot...",
-      "📆 Finalizing booking portal..."
-    ];
-    let messageIndex = 0;
-
-    // Acuity URL mapping with corrected pluralization
-    const acuityLinks = {
-      "Full at Cheesman (1 person, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498",
-      "Full at Cheesman (1 person, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444",
-      "Full at Cheesman (2 people, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428",
-      "Full at Cheesman (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419",
-      "Full at City (1 person, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425",
-      "Full at City (1 person, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441",
-      "Full at City (2 people, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431",
-      "Full at City (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621",
-      "Mini at Cheesman (1 person, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731",
-      "Mini at Cheesman (1 person, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816464",
-      "Mini at Cheesman (2 people, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816457",
-      "Mini at Cheesman (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816469",
-      "Mini at City (1 person, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816452",
-      "Mini at City (1 person, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816463",
-      "Mini at City (2 people, 1 pet)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816458",
-      "Mini at City (2 people, 2 pets)": "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816472"
-    };
-
-    function updateLoadingText() {
-      const loadingTextElement = document.getElementById('loadingText');
-      loadingTextElement.textContent = loadingMessages[messageIndex];
-      messageIndex = (messageIndex + 1) % loadingMessages.length;
-    }
-
-    function loadSessionData() {
-      try {
-        const storedData = localStorage.getItem('sessionData');
-        if (storedData) {
-          sessionData = JSON.parse(storedData);
-          console.log('Loaded session data:', sessionData);
-          return true;
-        }
-      } catch (e) {
-        console.error('Error loading session data:', e);
-      }
-      return false;
-    }
-
-    function getAcuityUrl() {
-      if (!sessionData || !sessionData.sessionType || !sessionData.location || 
-          sessionData.numberOfPets === null || sessionData.numberOfPeople === null) {
-        console.error('Missing session data fields:', {
-          sessionType: sessionData?.sessionType,
-          location: sessionData?.location,
-          numberOfPets: sessionData?.numberOfPets,
-          numberOfPeople: sessionData?.numberOfPeople
-        });
-        return null;
-      }
-
-      let normalizedLocation = sessionData.location;
-      if (sessionData.location === "City Park") {
-        normalizedLocation = "City";
-      } else if (sessionData.location === "Cheesman Park") {
-        normalizedLocation = "Cheesman";
-      }
-
-      const peopleLabel = sessionData.numberOfPeople === 1 ? "person" : "people";
-      const petsLabel = sessionData.numberOfPets === 1 ? "pet" : "pets";
-      const sessionIdentifier = `${sessionData.sessionType} at ${normalizedLocation} (${sessionData.numberOfPeople} ${peopleLabel}, ${sessionData.numberOfPets} ${petsLabel})`;
-      
-      console.log('Raw session data:', {
-        sessionType: sessionData.sessionType,
-        location: sessionData.location,
-        normalizedLocation: normalizedLocation,
-        numberOfPeople: sessionData.numberOfPeople,
-        numberOfPets: sessionData.numberOfPets
-      });
-      console.log('Constructed session identifier:', sessionIdentifier);
-
-      const acuityUrl = acuityLinks[sessionIdentifier];
-      
-      if (!acuityUrl) {
-        console.error('No Acuity URL found for session identifier:', sessionIdentifier);
-        console.log('Available keys in acuityLinks:', Object.keys(acuityLinks));
-        return "https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621";
-      }
-      
-      return acuityUrl;
-    }
-
-    function adjustIframeHeight() {
-      const iframe = document.getElementById('acuityIframe');
-      if (!iframe) return;
-
-      try {
-        const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-        iframe.style.height = `${contentHeight}px`;
-        console.log('Iframe height set to:', contentHeight);
-      } catch (e) {
-        console.error('Error accessing iframe content height:', e);
-        iframe.style.height = '6000px';
-      }
-    }
-
-    function showAcuityIframe() {
-      const acuityUrl = getAcuityUrl();
-      if (!acuityUrl) {
-        console.error('No Acuity URL available');
-        alert('⚠️ Scheduling URL not found. Please try booking again.');
-        window.location.href = '/cart.html';
-        return;
-      }
-
-      console.log('Loading Acuity URL:', acuityUrl);
-
-      const loadingArea = document.getElementById('loadingArea');
-      const acuityContainer = document.getElementById('acuityContainer');
-      const acuityIframe = document.getElementById('acuityIframe');
-
-      loadingArea.classList.add('hidden');
-
-      acuityIframe.src = acuityUrl;
-      
-      setTimeout(() => {
-        acuityContainer.classList.add('show');
-        acuityIframe.onload = adjustIframeHeight;
-      }, 500);
-    }
-
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Stripe-inspired Booking page loaded - v4.0.1');
-      
-      if (loadSessionData()) {
-        const textInterval = setInterval(updateLoadingText, 1000);
-        
-        setTimeout(() => {
-          clearInterval(textInterval);
-          showAcuityIframe();
-        }, 3000);
-      } else {
-        alert('⚠️ No session data found. Redirecting to session builder...');
-        window.location.href = '/cart.html';
-      }
-    });
   </script>
 </body>
 </html>
