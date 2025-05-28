@@ -7,15 +7,18 @@
   <meta name="description" content="Book your pet photography session with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --orange: #F47C2C;
-      --gold: #FDB75E;
-      --dark-brown: #4B2E1E;
-      --available-green: #10b981;
-      --booked-red: #ef4444;
-      --soft-hold-yellow: #f59e0b;
+      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
+      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      --pink: #ff1493;
+      --purple: #8a2be2;
+      --orange: #ff8c00;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255,255,255,0.8);
+      --text-muted: rgba(255,255,255,0.6);
     }
 
     * {
@@ -25,67 +28,153 @@
     }
 
     html {
-      overflow-x: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
       scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--pink) transparent;
     }
 
     html::-webkit-scrollbar {
-      width: 0;
-      height: 0;
+      width: 6px;
+    }
+
+    html::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+    }
+
+    html::-webkit-scrollbar-thumb {
+      background: var(--gradient-primary);
+      border-radius: 3px;
     }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: white;
-      background: linear-gradient(135deg, #5b86e5 0%, #36d1dc 100%);
-      overflow-x: hidden;
+      background: var(--gradient-primary);
+      background-attachment: fixed;
+      color: var(--text-primary);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
+      overflow-x: hidden;
     }
 
-    /* Grain Effect */
-    body::before {
-      content: '';
+    /* Floating background elements */
+    .bg-orbs {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-      opacity: 0.1;
-      z-index: -1;
       pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: float 20s infinite linear;
     }
 
-    /* === HEADER STYLES === */
-    header {
+    .orb:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+      top: 10%;
+      left: 80%;
+      animation-delay: 0s;
+    }
+
+    .orb:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      top: 60%;
+      left: 10%;
+      animation-delay: -7s;
+    }
+
+    .orb:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: 30%;
+      left: 20%;
+      animation-delay: -14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Promotional Banner */
+    .promo-banner {
+      position: fixed;
+      top: 80px;
+      left: 0;
       width: 100%;
+      background: var(--gradient-primary);
+      color: white;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      z-index: 999;
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .promo-banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 0.01rem 1.5rem;
-      background: linear-gradient(135deg, rgba(249, 77, 106, 0.8) 0%, rgba(249, 165, 77, 0.8) 100%);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .promo-text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      overflow-wrap: break-word;
+    }
+
+    .promo-banner a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      padding: 0.2rem 0.8rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      overflow-wrap: break-word;
+    }
+
+    .promo-banner a:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Header */
+    header {
       position: fixed;
       top: 0;
       left: 0;
+      width: 100%;
       z-index: 1000;
-      height: 110px;
-    }
-
-    .desktop-logo {
-      height: 100px;
+      padding: 1rem 1.5rem;
+      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo-link {
@@ -100,47 +189,64 @@
       transform: scale(1.02);
     }
 
+    .desktop-logo {
+      height: 50px;
+    }
+
     .site-nav {
       display: flex;
       align-items: center;
-      margin-left: auto;
+      gap: 1.5rem;
     }
 
     .site-nav a:not(.book-btn) {
-      margin-left: 1rem;
+      color: var(--text-secondary);
       text-decoration: none;
-      font-weight: 600;
-      color: white;
+      font-weight: 500;
       transition: all 0.3s ease;
       padding: 0.5rem 1rem;
       border-radius: 8px;
+      position: relative;
     }
 
     .site-nav a:not(.book-btn):hover {
+      color: var(--text-primary);
       background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-1px);
+    }
+
+    .site-nav a:not(.book-btn)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .site-nav a:not(.book-btn):hover::after {
+      width: 80%;
     }
 
     .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      background: var(--gradient-primary);
       color: white;
       padding: 0.8rem 2rem;
       border: none;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
       text-decoration: none;
-      margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
 
     .mobile-menu-btn {
@@ -157,45 +263,52 @@
       transform: scale(1.1);
     }
 
-    /* === MAIN CONTENT === */
+    /* Main Content */
     main {
-      margin-top: 110px;
+      margin-top: 130px;
       flex: 1;
-      padding: 4rem 1rem;
+      padding: 2rem 1rem;
     }
 
-    /* === SECTION STYLES === */
+    /* Glass Card Sections */
     section {
       max-width: 1200px;
-      margin: 0 auto 5rem;
-      background: linear-gradient(135deg, rgba(249, 77, 106, 0.8) 0%, rgba(249, 165, 77, 0.8) 100%);
+      margin: 0 auto 3rem;
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0,0,0, 0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
       padding: 3rem;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255, 0.1);
-      animation: fadeInUp 1s ease-out;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    section:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.2);
     }
 
     section h2 {
-      font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
-      font-weight: 700;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      font-weight: 800;
       margin-bottom: 1.5rem;
       text-align: center;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     section p {
       font-size: 1.2rem;
       line-height: 1.6;
-      color: rgba(255,255,255, 0.9);
+      color: var(--text-secondary);
       margin-bottom: 1.5rem;
       text-align: center;
     }
 
-    /* === HERO SECTION === */
+    /* Hero Section */
     .hero-section {
       position: relative;
       height: 80vh;
@@ -206,7 +319,7 @@
       text-align: center;
       padding: 3rem;
       overflow: hidden;
-      background: linear-gradient(135deg, rgba(249, 77, 106, 0.8) 0%, rgba(249, 165, 77, 0.8) 100%);
+      background: var(--gradient-card);
     }
 
     .hero-image {
@@ -217,52 +330,54 @@
       height: 100%;
       object-fit: cover;
       z-index: -1;
-      opacity: 1;
+      opacity: 0.7;
+      border-radius: 24px;
     }
 
     .hero-content {
       position: relative;
       z-index: 1;
       max-width: 800px;
-      background: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay for readability */
-      padding: 1rem;
-      border-radius: 12px;
     }
 
     .hero-content h1 {
-      font-family: 'Playfair Display', serif;
       font-size: 4rem;
-      font-weight: 700;
+      font-weight: 900;
       margin-bottom: 1rem;
       text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero-content p {
       font-size: 1.5rem;
       margin-bottom: 2rem;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      color: var(--text-primary);
     }
 
     .hero-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
+      background: var(--gradient-primary);
       color: white;
       padding: 1rem 2.5rem;
       border: none;
-      border-radius: 999px;
-      font-weight: 900;
+      border-radius: 50px;
+      font-weight: 700;
       font-size: 1.5rem;
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
     }
 
     .hero-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
 
-    /* === START YOUR JOURNEY === */
+    /* Start Your Journey */
     #start-journey {
       display: flex;
       flex-direction: column;
@@ -279,25 +394,31 @@
     }
 
     .start-journey-button a {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
+      background: var(--gradient-primary);
       color: white;
       padding: 1rem 2.5rem;
       border: none;
-      border-radius: 999px;
-      font-weight: 900;
+      border-radius: 50px;
+      font-weight: 700;
       font-size: 1.2rem;
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
     }
 
     .start-journey-button a:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
 
-    /* === TESTIMONIALS === */
+    /* Instagram Feed */
+    .lightwidget-widget {
+      border-radius: 16px;
+      margin: 2rem 0;
+    }
+
+    /* Testimonials */
     .testimonials-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -305,39 +426,41 @@
     }
 
     .testimonial-card {
-      background: linear-gradient(135deg, rgba(249, 77, 106, 0.8) 0%, rgba(249, 165, 77, 0.8) 100%);
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       padding: 2.5rem;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
       text-align: center;
+      transition: all 0.3s ease;
     }
 
     .testimonial-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .testimonial-card p {
       font-size: 1rem;
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
+      color: var(--text-secondary);
       margin-bottom: 1rem;
     }
 
     .testimonial-card cite {
       font-size: 0.9rem;
-      color: var(--gold);
+      color: var(--orange);
       font-style: italic;
+      font-weight: 600;
     }
 
-    /* === FOOTER STYLES === */
+    /* Footer */
     footer {
-      background: linear-gradient(135deg, rgba(249, 77, 106, 0.8) 0%, rgba(249, 165, 77, 0.8) 100%);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255,255,255,0.1);
       padding: 2rem 1.5rem;
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--text-muted);
       font-size: 0.9rem;
     }
 
@@ -357,15 +480,18 @@
     }
 
     .footer-section h4 {
-      font-family: 'Playfair Display', serif;
       font-weight: 700;
       font-size: 1.2rem;
-      color: white;
+      color: var(--text-primary);
       margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .footer-section a {
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--text-secondary);
       text-decoration: none;
       display: block;
       margin-bottom: 0.5rem;
@@ -373,7 +499,7 @@
     }
 
     .footer-section a:hover {
-      color: var(--gold);
+      color: var(--text-primary);
     }
 
     .payment-methods {
@@ -387,7 +513,8 @@
       height: 25px;
       object-fit: contain;
       opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
+      border-radius: 4px;
     }
 
     .payment-icon:hover {
@@ -406,9 +533,9 @@
       justify-content: center;
       font-size: 8px;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--text-secondary);
       opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       text-align: center;
       line-height: 1.1;
     }
@@ -424,30 +551,63 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* === RESPONSIVE === */
+    .footer-bottom a {
+      color: var(--orange);
+      text-decoration: underline;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
+      .promo-banner {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        top: 60px;
+      }
+
+      .promo-banner-content {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .promo-text {
+        font-size: 0.8rem;
+        line-height: 1.2;
+      }
+
+      .promo-banner a {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
       header {
-        height: 80px;
+        height: 60px;
         padding: 0.5rem 1rem;
       }
 
       .desktop-logo {
-        height: 48px;
+        height: 40px;
       }
 
       .site-nav {
         display: none;
         flex-direction: column;
-        background: linear-gradient(135deg, rgba(249, 77, 106, 0.8) 0%, rgba(249, 165, 77, 0.8) 100%);
+        background: var(--gradient-card);
+        backdrop-filter: blur(20px);
         position: absolute;
-        top: 80px;
+        top: 60px;
         right: 0;
         width: 100%;
         text-align: right;
         padding: 1rem;
         z-index: 999;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
+        border-radius: 0 0 16px 16px;
       }
 
       .site-nav.active {
@@ -478,7 +638,7 @@
       }
 
       main {
-        margin-top: 80px;
+        margin-top: 100px;
         padding: 2rem 1rem;
       }
 
@@ -539,9 +699,53 @@
         text-align: center;
       }
     }
+
+    @media (max-width: 480px) {
+      .promo-banner {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+      }
+
+      .promo-text {
+        font-size: 0.7rem;
+        line-height: 1.2;
+      }
+
+      .promo-banner a {
+        padding: 0.15rem 0.4rem;
+        font-size: 0.65rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <!-- Promotional Banner -->
+  <div class="promo-banner">
+    <div class="promo-banner-content">
+      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸 Flexible Payment Plans Available 📸</span>
+      <a href="/pricing">View Pricing ✨</a>
+    </div>
+  </div>
+
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
@@ -571,17 +775,17 @@
     <!-- Welcome Section -->
     <section id="welcome">
       <h2>Welcome to PictureThisPet</h2>
-      <p>We specialize in creating stunning, timeless photographs of your pets. Whether it’s a playful pup or a curious kitten, we’ll capture their unique personality in beautiful settings across Denver.</p>
+      <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we'll capture their unique personality in beautiful settings across Denver.</p>
     </section>
 
     <!-- Instagram Section -->
     <section id="instagram-feed">
       <h2>Follow Us on Instagram</h2>
       <p>Check out our latest pet photography sessions on Instagram!</p>
-      <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
-      <script src="https://static.elfsight.com/platform/platform.js" async></script>
-      <div class="elfsight-app-b3e09cb0-e001-49ce-885d-a02c8dec8281" data-elfsight-app-lazy></div>
-      <p><a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" style="color: var(--gold); text-decoration: underline;">Follow @picturethispet</a></p>
+      <!-- LightWidget WIDGET -->
+      <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
+      <iframe src="https://cdn.lightwidget.com/widgets/cd509cbecbd855848f446ce9c1596639.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width:100%;border:0;overflow:hidden;"></iframe>
+      <p><a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" style="color: var(--orange); text-decoration: underline;">Follow @picturethispet</a></p>
     </section>
 
     <!-- Pop Up Event Section -->
@@ -593,7 +797,7 @@
     <!-- Start Your Journey Section -->
     <section id="start-journey">
       <h2>Start Your Journey</h2>
-      <p>Ready to capture your pet’s best moments? Begin your journey now!</p>
+      <p>Ready to capture your pet's best moments? Begin your journey now!</p>
       <div class="start-journey-button">
         <a href="/cart.html">Begin Journey</a>
       </div>
@@ -604,15 +808,15 @@
       <h2>Testimonials</h2>
       <div class="testimonials-grid">
         <div class="testimonial-card">
-          <p>“Amazing experience! The photos of my dog are absolutely perfect.”</p>
+          <p>"Amazing experience! The photos of my dog are absolutely perfect."</p>
           <cite>- Jane D.</cite>
         </div>
         <div class="testimonial-card">
-          <p>“PictureThisPet captured my cat’s personality so well. Highly recommend!”</p>
+          <p>"PictureThisPet captured my cat's personality so well. Highly recommend!"</p>
           <cite>- Mark S.</cite>
         </div>
         <div class="testimonial-card">
-          <p>“The session was so fun, and the photos are stunning!”</p>
+          <p>"The session was so fun, and the photos are stunning!"</p>
           <cite>- Emily R.</cite>
         </div>
       </div>
@@ -652,7 +856,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 04:22 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 04:27 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--orange); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -665,7 +869,7 @@
     function scrollToSection(e) {
       e.preventDefault();
       const section = document.querySelector('#start-journey');
-      const offset = 100;
+      const offset = 130;
       const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
         top: sectionPosition - offset,
@@ -676,7 +880,7 @@
     function scrollToSessionBuilder(e) {
       e.preventDefault();
       const section = document.querySelector('#start-journey');
-      const offset = 100;
+      const offset = 130;
       const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
         top: sectionPosition - offset,
@@ -685,7 +889,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Index page loaded - v1.0.17');
+      console.log('✅ Stripe-inspired PictureThisPet loaded - v4.0.1');
     });
   </script>
 </body>
