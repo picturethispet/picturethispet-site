@@ -270,6 +270,10 @@
       z-index: 10;
       box-sizing: border-box;
       transition: all 0.3s ease;
+      position: sticky;
+      top: 100px;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
     }
 
     .summary-panel:hover {
@@ -587,11 +591,10 @@
 
     /* Footer */
     footer {
-      background: rgba(0,0,0,0.2);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(255,255,255,0.1);
+      background: #ffffff;
+      border-top: 1px solid rgba(0,0,0,0.1);
       padding: 2rem 1.5rem;
-      color: var(--text-muted);
+      color: #666666;
       font-size: 0.9rem;
     }
 
@@ -602,6 +605,7 @@
       max-width: 1200px;
       margin: 0 auto;
       margin-bottom: 1.5rem;
+      justify-items: center;
     }
 
     .footer-section {
@@ -614,13 +618,16 @@
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-weight: 700;
       font-size: 1.2rem;
-      color: var(--text-primary);
       margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       letter-spacing: -0.02em;
     }
 
     .footer-section a {
-      color: var(--text-secondary);
+      color: #555555;
       text-decoration: none;
       display: block;
       margin-bottom: 0.5rem;
@@ -628,7 +635,7 @@
     }
 
     .footer-section a:hover {
-      color: var(--text-primary);
+      color: #333333;
     }
 
     .payment-methods {
@@ -654,15 +661,15 @@
     .payment-placeholder {
       width: 40px;
       height: 25px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.3);
       border-radius: 4px;
       display: flex;
-      align-items: centers;
+      align-items: center;
       justify-content: center;
       font-size: 8px;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: #555555;
       opacity: 0.7;
       transition: all 0.3s ease;
       text-align: center;
@@ -677,16 +684,16 @@
     .footer-bottom {
       text-align: center;
       padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .footer-bottom a {
-      color: var(--orange);
+      color: #e07b00;
       text-decoration: underline;
     }
 
     .footer-bottom a:hover {
-      color: var(--text-primary);
+      color: #333333;
     }
 
     /* Responsive */
@@ -701,6 +708,7 @@
         order: 2;
         max-height: none;
         overflow-y: visible;
+        top: auto;
       }
 
       .configuration-panel {
@@ -787,12 +795,31 @@
 
       .footer-container {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1rem;
+        justify-items: center;
       }
 
       .footer-section {
         align-items: center;
         text-align: center;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-section a {
+        margin-bottom: 0.3rem;
+      }
+
+      .footer-bottom {
+        padding-top: 1rem;
       }
 
       .payment-methods {
@@ -1078,7 +1105,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 05:15 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--orange); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:15 PM MST, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: #e07b00; text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -1116,6 +1143,51 @@
       }
       
       updateSummary();
+      
+      // Auto-scroll to next question after a brief delay
+      setTimeout(() => {
+        scrollToNextQuestion(category);
+      }, 300);
+    }
+
+    function scrollToNextQuestion(currentCategory) {
+      // Define the order of questions
+      const questionOrder = ['sessionType', 'location', 'pets', 'people'];
+      const currentIndex = questionOrder.indexOf(currentCategory);
+      
+      // If there's a next question, scroll to it
+      if (currentIndex < questionOrder.length - 1) {
+        const nextCategory = questionOrder[currentIndex + 1];
+        const nextSection = document.querySelector(`.config-section:nth-child(${currentIndex + 3})`);
+        
+        if (nextSection) {
+          const offset = 100; // Account for sticky header
+          const sectionPosition = nextSection.getBoundingClientRect().top + window.pageYOffset;
+          
+          window.scrollTo({
+            top: sectionPosition - offset,
+            behavior: 'smooth'
+          });
+        }
+      } else {
+        // If it's the last question, scroll to the summary or continue button
+        const summaryPanel = document.querySelector('.summary-panel');
+        if (window.innerWidth <= 1024 && summaryPanel) {
+          const offset = 100;
+          const panelPosition = summaryPanel.getBoundingClientRect().top + window.pageYOffset;
+          
+          window.scrollTo({
+            top: panelPosition - offset,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }') {
+        sessionConfig.people = value;
+        sessionConfig.extraPersonCost = price;
+      }
+      
+      updateSummary();
     }
 
     function updateSummary() {
@@ -1137,7 +1209,7 @@
       
       // Update pricing
       document.getElementById('baseSessionLabel').textContent = sessionConfig.sessionType ? `📸 ${sessionConfig.sessionType} Session` : '📸 Session';
-      document.getElementById('baseSessionPrice').textContent = `$${sessionConfig.sessionPrice}`;
+      document.getElementById('baseSessionPrice').textContent = `${sessionConfig.sessionPrice}`;
       
       // Show/hide extra costs
       const extraPetLine = document.getElementById('extraPetLine');
@@ -1157,7 +1229,7 @@
       
       // Update total
       const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
-      document.getElementById('totalPrice').textContent = `$${total}`;
+      document.getElementById('totalPrice').textContent = `${total}`;
       
       // Enable/disable continue button
       const continueBtn = document.getElementById('continueBtn');
