@@ -7,12 +7,16 @@
   <meta name="description" content="Review and agree to our On The Spot shoot terms and policies before completing your booking with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --orange: #F47C2C;
-      --gold: #FDB75E;
-      --dark-brown: #4B2E1E;
+      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
+      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
+      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      --pink: #ff1493;
+      --purple: #8a2be2;
+      --orange: #ff8c00;
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
@@ -26,53 +30,90 @@
     }
 
     html {
-      overflow-x: hidden;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
       scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--pink) transparent;
     }
 
     html::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
     }
 
     html::-webkit-scrollbar-track {
-      background: transparent;
+      background: rgba(255,255,255,0.1);
     }
 
     html::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: white;
-      background-image: url('assets/images/main_background_allsystem.png');
-      background-size: cover;
-      background-position: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #ffffff;
+      background: var(--gradient-primary);
       background-attachment: fixed;
-      overflow-x: hidden;
       min-height: 100vh;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
     }
 
-    @keyframes moveBackground {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Floating background elements */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: float 20s infinite linear;
+    }
+
+    .orb:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+      top: 10%;
+      left: 80%;
+      animation-delay: 0s;
+    }
+
+    .orb:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      top: 60%;
+      left: 10%;
+      animation-delay: -7s;
+    }
+
+    .orb:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: 30%;
+      left: 20%;
+      animation-delay: -14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes pulse {
@@ -96,34 +137,81 @@
       100% { width: 100%; }
     }
 
-    /* === HEADER STYLES === */
-    header {
+    /* Promotional Banner */
+    .promo-banner {
+      position: fixed;
+      top: 96px;
+      left: 0;
       width: 100%;
+      background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      z-index: 999;
+      box-shadow: 0 8px 32px rgba(255,140,0,0.3);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .promo-banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 0.01rem 1.5rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255,255,255, 0.1);
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .promo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-weight: 600;
+      overflow-wrap: break-word;
+      color: #ffffff;
+    }
+
+    .promo-banner a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      padding: 0.2rem 0.8rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      overflow-wrap: break-word;
+    }
+
+    .promo-banner a:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Header */
+    header {
       position: fixed;
       top: 0;
       left: 0;
+      width: 100%;
       z-index: 1000;
-      height: 110px;
-    }
-
-    .desktop-logo {
-      height: 100px;
+      padding: 1rem 1.5rem;
+      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      height: 96px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo-link {
       display: flex;
       align-items: center;
+      gap: 0.5rem;
       transition: all 0.3s ease;
       text-decoration: none;
     }
@@ -133,52 +221,87 @@
       transform: scale(1.02);
     }
 
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text sup {
+      font-size: 0.8rem;
+      vertical-align: super;
+      margin-left: 2px;
+    }
+
     .site-nav {
       display: flex;
       align-items: center;
-      margin-left: auto;
+      gap: 1.5rem;
     }
 
     .site-nav a:not(.book-btn) {
-      margin-left: 1rem;
+      color: #ffffff;
       text-decoration: none;
-      font-weight: 600;
-      color: white;
+      font-weight: 500;
       transition: all 0.3s ease;
       padding: 0.5rem 1rem;
       border-radius: 8px;
+      position: relative;
     }
 
     .site-nav a:not(.book-btn):hover {
-      background: rgba(255,255,255, 0.1);
-      transform: translateY(-1px);
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .site-nav a:not(.book-btn)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .site-nav a:not(.book-btn):hover::after {
+      width: 80%;
     }
 
     .book-btn {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
+      background: var(--gradient-primary);
+      color: #ffffff;
       padding: 0.8rem 2rem;
       border: none;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
       text-decoration: none;
-      margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244,124,44, 0.4);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
 
     .mobile-menu-btn {
       display: none;
       background: none;
       border: none;
-      color: white;
+      color: #ffffff;
       font-size: 2rem;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -188,26 +311,28 @@
       transform: scale(1.1);
     }
 
-    /* === MAIN CONTENT === */
+    /* Main Content */
     main {
-      margin-top: 110px;
+      margin-top: 146px;
       flex: 1;
       padding: 3rem 1rem;
       max-width: 1000px;
       margin-left: auto;
       margin-right: auto;
       width: 100%;
+      color: #ffffff;
     }
 
-    /* === AGREEMENT SECTION === */
+    /* Agreement Section */
     .agreement-container {
-      background: rgba(255,255,255, 0.05);
+      background: var(--gradient-card);
       backdrop-filter: blur(20px);
       border-radius: 24px;
       border: 1px solid rgba(255,255,255, 0.1);
       padding: 3rem;
       animation: fadeInUp 0.8s ease-out;
       margin-bottom: 2rem;
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
     }
 
     .agreement-header {
@@ -216,18 +341,22 @@
     }
 
     .agreement-header h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 2.8rem;
-      font-weight: 700;
-      color: white;
+      font-weight: 800;
+      color: #ffffff;
       margin-bottom: 0.5rem;
       text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .agreement-header .event-badge {
       display: inline-block;
       background: linear-gradient(135deg, var(--popup-event-purple), #8b5cf6);
-      color: white;
+      color: #ffffff;
       padding: 0.5rem 1.5rem;
       border-radius: 25px;
       font-size: 0.9rem;
@@ -236,35 +365,45 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       animation: pulse 3s ease-in-out infinite;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .agreement-header p {
       font-size: 1.1rem;
-      color: rgba(255,255,255, 0.8);
+      color: #ffffff;
       line-height: 1.6;
     }
 
-    /* === AGREEMENT SECTIONS === */
+    /* Agreement Sections */
     .agreement-section {
       background: rgba(255,255,255, 0.03);
       border-radius: 16px;
       padding: 2rem;
       margin-bottom: 2rem;
       border: 1px solid rgba(255,255,255, 0.08);
+      backdrop-filter: blur(10px);
     }
 
     .agreement-section h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 1.6rem;
-      font-weight: 600;
-      color: var(--gold);
+      font-weight: 700;
       margin-bottom: 1rem;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: #ffffff;
     }
 
     .agreement-section h3 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 1.2rem;
       font-weight: 600;
-      color: white;
+      color: #ffffff;
       margin-bottom: 0.8rem;
       margin-top: 1.5rem;
     }
@@ -272,7 +411,7 @@
     .agreement-section p {
       font-size: 1rem;
       line-height: 1.6;
-      color: rgba(255,255,255, 0.9);
+      color: #ffffff;
       margin-bottom: 1rem;
     }
 
@@ -284,17 +423,28 @@
     .agreement-section li {
       font-size: 1rem;
       line-height: 1.6;
-      color: rgba(255,255,255, 0.9);
+      color: #ffffff;
       margin-bottom: 0.5rem;
     }
 
-    /* === CHECKBOX SECTION === */
+    /* Checkbox Section */
     .checkbox-container {
       background: rgba(255,255,255, 0.08);
       border-radius: 16px;
       padding: 2rem;
       margin-bottom: 2rem;
-      border: 2px solid rgba(253,183,94, 0.3);
+      border: 2px solid rgba(255, 20, 147, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .checkbox-container h2 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      margin-bottom: 1.5rem;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: #ffffff;
     }
 
     .checkbox-item {
@@ -316,14 +466,15 @@
       width: 20px;
       height: 20px;
       margin-top: 2px;
-      accent-color: var(--gold);
+      accent-color: var(--orange);
       cursor: pointer;
     }
 
     .checkbox-item label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 1rem;
       line-height: 1.5;
-      color: rgba(255,255,255, 0.9);
+      color: #ffffff;
       cursor: pointer;
       flex: 1;
     }
@@ -334,7 +485,7 @@
       font-weight: bold;
     }
 
-    /* === ACTION BUTTONS === */
+    /* Action Buttons */
     .action-buttons {
       display: flex;
       gap: 1rem;
@@ -345,16 +496,17 @@
 
     .back-button {
       background: rgba(255,255,255, 0.1);
-      color: white;
+      color: #ffffff;
       padding: 1rem 2rem;
       border: 1px solid rgba(255,255,255, 0.3);
-      border-radius: 999px;
+      border-radius: 50px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
+      backdrop-filter: blur(10px);
     }
 
     .back-button:hover {
@@ -363,16 +515,16 @@
     }
 
     .continue-button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
+      background: var(--gradient-primary);
+      color: #ffffff;
       padding: 1rem 3rem;
       border: none;
-      border-radius: 999px;
+      border-radius: 50px;
       font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(244,124,44, 0.3);
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
       opacity: 0.5;
       pointer-events: none;
     }
@@ -384,10 +536,10 @@
 
     .continue-button.enabled:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(244,124,44, 0.4);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
 
-    /* === LOADING SCREEN === */
+    /* Loading Screen */
     .loading-screen {
       position: fixed;
       top: 0;
@@ -413,23 +565,28 @@
       width: 80px;
       height: 80px;
       border: 6px solid rgba(255,255,255, 0.3);
-      border-top: 6px solid var(--gold);
+      border-top: 6px solid var(--orange);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 0 auto 2rem;
     }
 
     .loading-title {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 2rem;
       font-weight: 700;
-      color: white;
+      color: #ffffff;
       margin-bottom: 1rem;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .loading-message {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 1.2rem;
-      color: rgba(255,255,255, 0.8);
+      color: #ffffff;
       margin-bottom: 2rem;
     }
 
@@ -462,21 +619,25 @@
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--orange), var(--gold));
+      background: var(--gradient-primary);
       border-radius: 3px;
       width: 0%;
       animation: progressFill 10s ease-out forwards;
     }
 
-    /* === FOOTER STYLES === */
+    .loading-content p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(255,255,255, 0.6);
+      margin-top: 1rem;
+    }
+
+    /* Footer */
     footer {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: #ffffff;
+      border-top: 1px solid rgba(0,0,0,0.1);
       padding: 2rem 1.5rem;
-      color: rgba(255, 255, 255, 0.5);
+      color: #000000;
       font-size: 0.9rem;
     }
 
@@ -487,24 +648,31 @@
       max-width: 1200px;
       margin: 0 auto;
       margin-bottom: 1.5rem;
+      justify-items: center;
     }
 
     .footer-section {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
     }
 
     .footer-section h4 {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-weight: 700;
       font-size: 1.2rem;
-      color: white;
       margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+      color: #ffffff;
     }
 
     .footer-section a {
-      color: rgba(255, 255, 255, 0.7);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #000000;
       text-decoration: none;
       display: block;
       margin-bottom: 0.5rem;
@@ -512,21 +680,39 @@
     }
 
     .footer-section a:hover {
-      color: var(--gold);
+      color: #333333;
     }
 
     .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(2, auto);
       gap: 0.5rem;
+      justify-items: center;
     }
+
+    .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
+    .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
+    .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
+    .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
+    .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
+    .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
+    .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
+    .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
+    .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
+    .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
+    .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
+    .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
+    .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
+    .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
 
     .payment-icon {
       width: 40px;
       height: 25px;
       object-fit: contain;
       opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
+      border-radius: 4px;
     }
 
     .payment-icon:hover {
@@ -535,19 +721,20 @@
     }
 
     .payment-placeholder {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       width: 40px;
       height: 25px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.3);
       border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 8px;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.7);
+      color: #000000;
       opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       text-align: center;
       line-height: 1.1;
     }
@@ -560,35 +747,81 @@
     .footer-bottom {
       text-align: center;
       padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    /* === RESPONSIVE === */
+    .footer-bottom p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #000000;
+    }
+
+    .footer-bottom a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #000000;
+      text-decoration: underline;
+    }
+
+    .footer-bottom a:hover {
+      color: #333333;
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
+      .promo-banner {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        top: 84px;
+      }
+
+      .promo-banner-content {
+        flex-direction: column;
+        gap: 0.2rem;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.2;
+      }
+
+      .promo-text {
+        font-size: 0.8rem;
+        line-height: 1.2;
+      }
+
+      .promo-banner a {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
       header {
-        height: 80px;
+        height: 84px;
         padding: 0.5rem 1rem;
       }
 
       .desktop-logo {
-        height: 48px;
+        height: 80px;
+      }
+
+      .logo-text {
+        font-size: 1.2rem;
+      }
+
+      .logo-text sup {
+        font-size: 0.6rem;
       }
 
       .site-nav {
         display: none;
         flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: 100% 100%;
-        background-position: center;
+        background: #ffffff;
         position: absolute;
-        top: 80px;
+        top: 84px;
         right: 0;
         width: 100%;
         text-align: right;
         padding: 1rem;
         z-index: 999;
-        border-top: 1px solid rgba(255,255,255, 0.1);
-        backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
       }
 
       .site-nav.active {
@@ -599,6 +832,24 @@
         margin: 0.5rem 0;
         font-size: 1.2rem;
         padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a:not(.book-btn) {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .site-nav.active a:not(.book-btn):hover {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .site-nav.active a:not(.book-btn)::after {
+        background: var(--gradient-primary);
       }
 
       .site-nav.active a[href="/"] { order: 1; }
@@ -619,7 +870,7 @@
       }
 
       main {
-        margin-top: 80px;
+        margin-top: 124px;
         padding: 2rem 1rem;
       }
 
@@ -659,21 +910,77 @@
       }
 
       .footer-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+        gap: 0.5rem;
+        justify-items: center;
       }
 
-      .footer-section {
+      .footer-section:nth-child(1) {
+        grid-area: contact-us;
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        grid-area: connect;
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        grid-area: we-accept;
+        justify-self: center;
         align-items: center;
         text-align: center;
       }
 
+      footer {
+        padding: 1rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        margin-bottom: 0.2rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-bottom {
+        padding-top: 1rem;
+      }
+
       .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
         justify-content: center;
       }
     }
 
     @media (max-width: 480px) {
+      .promo-banner {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+      }
+
+      .promo-text {
+        font-size: 0.7rem;
+        line-height: 1.2;
+      }
+
+      .promo-banner a {
+        padding: 0.15rem 0.4rem;
+        font-size: 0.65rem;
+      }
+
       .agreement-container {
         padding: 1.5rem;
         margin: 0.5rem;
@@ -686,13 +993,54 @@
       .checkbox-item {
         padding: 0.8rem;
       }
+
+      .footer-container {
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+      }
+
+      .footer-section:nth-child(1) {
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        justify-self: center;
+        align-items: center;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <!-- Promotional Banner -->
+  <div class="promo-banner">
+    <div class="promo-banner-content">
+      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
+      <a href="/pricing">View Pricing ✨</a>
+    </div>
+  </div>
+
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <span class="logo-text">PictureThisPet<sup>®</sup></span>
     </a>
     <nav class="site-nav">
       <a href="/" aria-label="Home page">Home</a>
@@ -787,7 +1135,7 @@
 
       <!-- Agreement Checkboxes -->
       <div class="checkbox-container">
-        <h2 style="margin-bottom: 1.5rem; color: var(--gold);">✅ Required Agreements</h2>
+        <h2>✅ Required Agreements</h2>
         
         <div class="checkbox-item required">
           <input type="checkbox" id="service-terms" name="service-terms" required>
@@ -882,12 +1230,12 @@
           <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
           <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
           <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <div class="payment-placeholder" title="Tap to Pay accepted">TAP TO PAY</div>
+          <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 01:00 PM MDT, May 27, 2025 | <a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 10:05 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
