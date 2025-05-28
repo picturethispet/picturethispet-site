@@ -1157,7 +1157,6 @@
       
       // If there's a next question, scroll to it
       if (currentIndex < questionOrder.length - 1) {
-        const nextCategory = questionOrder[currentIndex + 1];
         const nextSection = document.querySelector(`.config-section:nth-child(${currentIndex + 3})`);
         
         if (nextSection) {
@@ -1170,16 +1169,18 @@
           });
         }
       } else {
-        // If it's the last question, scroll to the summary or continue button
-        const summaryPanel = document.querySelector('.summary-panel');
-        if (window.innerWidth <= 1024 && summaryPanel) {
-          const offset = 100;
-          const panelPosition = summaryPanel.getBoundingClientRect().top + window.pageYOffset;
-          
-          window.scrollTo({
-            top: panelPosition - offset,
-            behavior: 'smooth'
-          });
+        // If it's the last question, scroll to the summary or continue button on mobile
+        if (window.innerWidth <= 1024) {
+          const summaryPanel = document.querySelector('.summary-panel');
+          if (summaryPanel) {
+            const offset = 100;
+            const panelPosition = summaryPanel.getBoundingClientRect().top + window.pageYOffset;
+            
+            window.scrollTo({
+              top: panelPosition - offset,
+              behavior: 'smooth'
+            });
+          }
         }
       }
     }') {
