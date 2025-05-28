@@ -7,13 +7,17 @@
   <meta name="description" content="Discover how Picture This Pet was built from scratch using AI collaboration - from Squarespace limitations to custom features.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --orange: #F47C2C;
-      --gold: #FDB75E;
-      --dark-brown: #4B2E1E;
+      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
+      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
+      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      --pink: #ff1493;
+      --purple: #8a2be2;
+      --orange: #ff8c00;
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
@@ -26,41 +30,92 @@
       margin: 0;
       padding: 0;
     }
-    
+
     html {
-      overflow-x: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
       scroll-behavior: smooth;
-    }
-    
-    html::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-    }
-    
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: white;
-      background: none;
-      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: var(--pink) transparent;
     }
 
-    @keyframes moveBackground {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    html::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    html::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+    }
+
+    html::-webkit-scrollbar-thumb {
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #ffffff;
+      background: var(--gradient-primary);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Floating background elements */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: float 20s infinite linear;
+    }
+
+    .orb:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+      top: 10%;
+      left: 80%;
+      animation-delay: 0s;
+    }
+
+    .orb:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      top: 60%;
+      left: 10%;
+      animation-delay: -7s;
+    }
+
+    .orb:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: 30%;
+      left: 20%;
+      animation-delay: -14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes aiPulse {
@@ -68,34 +123,81 @@
       50% { opacity: 1; transform: scale(1.05); }
     }
 
-    /* === HEADER STYLES === */
-    header {
+    /* Promotional Banner */
+    .promo-banner {
+      position: fixed;
+      top: 96px;
+      left: 0;
       width: 100%;
+      background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      z-index: 999;
+      box-shadow: 0 8px 32px rgba(255,140,0,0.3);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .promo-banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 0.01rem 1.5rem;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .promo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-weight: 600;
+      overflow-wrap: break-word;
+      color: #ffffff;
+    }
+
+    .promo-banner a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      padding: 0.2rem 0.8rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      overflow-wrap: break-word;
+    }
+
+    .promo-banner a:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Header */
+    header {
       position: fixed;
       top: 0;
       left: 0;
+      width: 100%;
       z-index: 1000;
-      height: 110px;
-    }
-    
-    .desktop-logo {
-      height: 100px;
+      padding: 1rem 1.5rem;
+      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      height: 96px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo-link {
       display: flex;
       align-items: center;
+      gap: 0.5rem;
       transition: all 0.3s ease;
       text-decoration: none;
     }
@@ -104,55 +206,88 @@
       opacity: 0.8;
       transform: scale(1.02);
     }
-    
+
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text sup {
+      font-size: 0.8rem;
+      vertical-align: super;
+      margin-left: 2px;
+    }
+
     .site-nav {
       display: flex;
       align-items: center;
-      margin-left: auto;
+      gap: 1.5rem;
     }
-    
+
     .site-nav a:not(.book-btn) {
-      margin-left: 1rem;
+      color: #ffffff;
       text-decoration: none;
-      font-weight: 600;
-      color: white;
+      font-weight: 500;
       transition: all 0.3s ease;
       padding: 0.5rem 1rem;
       border-radius: 8px;
+      position: relative;
     }
 
     .site-nav a:not(.book-btn):hover {
+      color: #ffffff;
       background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-1px);
     }
-    
+
+    .site-nav a:not(.book-btn)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .site-nav a:not(.book-btn):hover::after {
+      width: 80%;
+    }
+
     .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
-      color: white;
+      background: var(--gradient-primary);
+      color: #ffffff;
       padding: 0.8rem 2rem;
       border: none;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
       text-decoration: none;
-      margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
-    
+
     .mobile-menu-btn {
       display: none;
       background: none;
       border: none;
-      color: white;
+      color: #ffffff;
       font-size: 2rem;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -162,17 +297,13 @@
       transform: scale(1.1);
     }
 
-    /* === MAIN CONTENT === */
+    /* Main Content */
     main {
-      margin-top: 110px;
-      min-height: calc(100vh - 110px);
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
+      margin-top: 146px;
+      min-height: calc(100vh - 146px);
     }
 
-    /* === HERO SECTION === */
+    /* Hero Section */
     .hero-section {
       padding: 5rem 1rem;
       text-align: center;
@@ -188,7 +319,7 @@
     .ai-badge {
       display: inline-block;
       background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue));
-      color: white;
+      color: #ffffff;
       padding: 0.8rem 2rem;
       border-radius: 25px;
       font-size: 1rem;
@@ -197,27 +328,35 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       animation: aiPulse 3s ease-in-out infinite;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero-content h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 4rem;
-      font-weight: 700;
+      font-weight: 800;
       line-height: 1.2;
       margin-bottom: 1.5rem;
-      color: white;
+      color: #ffffff;
       text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero-content p {
       font-size: 1.3rem;
       line-height: 1.6;
       margin-bottom: 3rem;
-      color: rgba(255, 255, 255, 0.9);
+      color: #ffffff;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
-    /* === STORY SECTION === */
+    /* Story Section */
     .story-section {
       padding: 4rem 1rem;
       max-width: 1200px;
@@ -225,14 +364,11 @@
     }
 
     .story-card {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
+      background: var(--gradient-card);
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
       padding: 3rem;
-      color: white;
+      color: #ffffff;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       margin-bottom: 3rem;
@@ -245,19 +381,23 @@
     }
 
     .story-card h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 2.5rem;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 2rem;
-      color: white;
+      color: #ffffff;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       text-align: center;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .story-content {
       font-size: 1.2rem;
       line-height: 1.8;
-      color: rgba(255, 255, 255, 0.95);
+      color: #ffffff;
       text-align: left;
     }
 
@@ -266,13 +406,11 @@
     }
 
     .story-content strong {
-      color: var(--gold);
+      color: #ff8c00;
       font-weight: 600;
     }
 
-
-
-    /* === FEATURES SECTION === */
+    /* Features Section */
     .features-section {
       padding: 4rem 1rem;
       max-width: 1200px;
@@ -280,13 +418,17 @@
     }
 
     .features-title {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 3rem;
-      font-weight: 700;
+      font-weight: 800;
       text-align: center;
       margin-bottom: 3rem;
-      color: white;
+      color: #ffffff;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .features-grid {
@@ -296,10 +438,7 @@
     }
 
     .feature-card {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
+      background: var(--gradient-card);
       border-radius: 20px;
       padding: 2.5rem;
       backdrop-filter: blur(10px);
@@ -320,20 +459,151 @@
     }
 
     .feature-card h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 1.5rem;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 1rem;
-      color: white;
+      color: #ffffff;
     }
 
     .feature-card p {
       font-size: 1rem;
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
+      color: #ffffff;
     }
 
-    /* === CTA SECTION === */
+    /* Consulting Section */
+    .consulting-section {
+      padding: 4rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .consulting-card {
+      background: var(--gradient-card);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      color: #ffffff;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .consulting-card .consulting-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue));
+      color: #ffffff;
+      padding: 0.6rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .consulting-card h2 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .consulting-card p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: #ffffff;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .consulting-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .consulting-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .consulting-item h4 {
+      color: #ff8c00;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .consulting-item p {
+      color: #ffffff;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    .consulting-buttons {
+      margin: 2rem 0;
+    }
+
+    .consulting-buttons a {
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .consulting-buttons .primary-btn {
+      background: var(--gradient-primary);
+      color: #ffffff;
+      margin-right: 1rem;
+      box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+    }
+
+    .consulting-buttons .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 20, 147, 0.5);
+    }
+
+    .consulting-buttons .secondary-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .consulting-buttons .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .consulting-card .disclaimer {
+      font-size: 0.95rem;
+      color: #ffffff;
+      font-style: italic;
+      margin-top: 1rem;
+      opacity: 0.7;
+    }
+
+    /* CTA Section */
     .cta-section {
       padding: 5rem 1rem;
       text-align: center;
@@ -342,10 +612,7 @@
     .cta-content {
       max-width: 800px;
       margin: 0 auto;
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
+      background: var(--gradient-card);
       border-radius: 24px;
       padding: 3rem;
       backdrop-filter: blur(10px);
@@ -353,48 +620,49 @@
     }
 
     .cta-content h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 2.5rem;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 1.5rem;
-      color: white;
+      color: #ffffff;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .cta-content p {
       font-size: 1.2rem;
       line-height: 1.6;
       margin-bottom: 2rem;
-      color: rgba(255, 255, 255, 0.9);
+      color: #ffffff;
     }
 
     .cta-button {
-      background: linear-gradient(135deg, var(--orange), var(--gold));
-      color: white;
+      background: var(--gradient-primary);
+      color: #ffffff;
       padding: 1rem 3rem;
-      border-radius: 999px;
+      border-radius: 50px;
       font-size: 1.3rem;
-      font-weight: 900;
+      font-weight: 700;
       text-decoration: none;
       display: inline-block;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
     }
 
     .cta-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(244, 124, 44, 0.5);
+      box-shadow: 0 10px 30px rgba(255, 20, 147, 0.5);
     }
 
-    /* === FOOTER STYLES === */
+    /* Footer */
     footer {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: #ffffff;
+      border-top: 1px solid rgba(0,0,0,0.1);
       padding: 2rem 1.5rem;
-      color: rgba(255, 255, 255, 0.5);
+      color: #000000;
       font-size: 0.9rem;
     }
 
@@ -405,18 +673,31 @@
       max-width: 1200px;
       margin: 0 auto;
       margin-bottom: 1.5rem;
+      justify-items: center;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .footer-section h4 {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-weight: 700;
       font-size: 1.2rem;
-      color: white;
       margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+      color: #ffffff;
     }
 
     .footer-section a {
-      color: rgba(255, 255, 255, 0.7);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #000000;
       text-decoration: none;
       display: block;
       margin-bottom: 0.5rem;
@@ -424,21 +705,39 @@
     }
 
     .footer-section a:hover {
-      color: var(--gold);
+      color: #333333;
     }
 
     .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(2, auto);
       gap: 0.5rem;
+      justify-items: center;
     }
+
+    .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
+    .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
+    .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
+    .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
+    .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
+    .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
+    .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
+    .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
+    .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
+    .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
+    .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
+    .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
+    .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
+    .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
 
     .payment-icon {
       width: 40px;
       height: 25px;
       object-fit: contain;
       opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
+      border-radius: 4px;
     }
 
     .payment-icon:hover {
@@ -446,50 +745,136 @@
       transform: scale(1.1);
     }
 
+    .payment-placeholder {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      width: 40px;
+      height: 25px;
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 600;
+      color: #000000;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .payment-placeholder:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
     .footer-bottom {
       text-align: center;
       padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    /* === RESPONSIVE === */
+    .footer-bottom p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #000000;
+    }
+
+    .footer-bottom a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #000000;
+      text-decoration: underline;
+    }
+
+    .footer-bottom a:hover {
+      color: #333333;
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
+      .promo-banner {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        top: 84px;
+      }
+
+      .promo-banner-content {
+        flex-direction: column;
+        gap: 0.2rem;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.2;
+      }
+
+      .promo-text {
+        font-size: 0.8rem;
+        line-height: 1.2;
+      }
+
+      .promo-banner a {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
       header {
-        height: 80px;
+        height: 84px;
         padding: 0.5rem 1rem;
       }
-      
-      .desktop-logo { 
-        height: 48px; 
+
+      .desktop-logo {
+        height: 80px;
       }
-      
+
+      .logo-text {
+        font-size: 1.2rem;
+      }
+
+      .logo-text sup {
+        font-size: 0.6rem;
+      }
+
       .site-nav {
         display: none;
         flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_cool.png');
-        background-size: 100% 100%;
-        background-position: center;
+        background: #ffffff;
         position: absolute;
-        top: 80px;
+        top: 84px;
         right: 0;
         width: 100%;
         text-align: right;
         padding: 1rem;
         z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
       }
-      
+
       .site-nav.active {
         display: flex;
       }
-      
+
       .site-nav.active a {
-        display: block;
         margin: 0.5rem 0;
         font-size: 1.2rem;
-        color: white;
         padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a:not(.book-btn) {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .site-nav.active a:not(.book-btn):hover {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .site-nav.active a:not(.book-btn)::after {
+        background: var(--gradient-primary);
       }
 
       .site-nav.active a[href="/"] { order: 1; }
@@ -498,26 +883,19 @@
       .site-nav.active a[href="/pricing"] { order: 4; }
       .site-nav.active a[href="/contact"] { order: 5; }
       .site-nav.active .book-btn { order: 6; }
-      
+
       .book-btn {
-        background: linear-gradient(135deg, #F47C2C, #FDB75E);
-        color: white;
         padding: 0.6rem 1.5rem;
-        border: none;
-        border-radius: 999px;
-        font-weight: 900;
         font-size: 1rem;
         margin-left: 0;
-        display: inline-block;
-        box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
       }
-      
+
       .mobile-menu-btn {
         display: block;
       }
-      
+
       main {
-        margin-top: 80px;
+        margin-top: 124px;
       }
 
       .hero-content h1 {
@@ -529,55 +907,117 @@
       }
 
       .story-card,
-      .timeline-item,
       .feature-card,
       .cta-content {
         padding: 2rem;
       }
 
       .story-card h2,
-      .timeline-title,
       .features-title {
         font-size: 2rem;
-      }
-
-      .timeline-item:hover {
-        transform: translateY(-5px);
-      }
-
-      .timeline-number {
-        position: relative;
-        left: 0;
-        top: 0;
-        transform: none;
-        margin-bottom: 1rem;
-        align-self: flex-start;
-      }
-
-      .timeline-item h3,
-      .timeline-item p {
-        margin-left: 0;
       }
 
       .features-grid {
         grid-template-columns: 1fr;
       }
 
+      .consulting-card {
+        padding: 2rem;
+      }
+
+      .consulting-card h2 {
+        font-size: 2rem;
+      }
+
+      .consulting-buttons a {
+        display: block;
+        margin: 0.5rem 0;
+        width: 100%;
+        text-align: center;
+      }
+
+      .consulting-buttons .primary-btn {
+        margin-right: 0;
+      }
+
       .footer-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+        gap: 0.5rem;
+        justify-items: center;
+      }
+
+      .footer-section:nth-child(1) {
+        grid-area: contact-us;
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        grid-area: connect;
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        grid-area: we-accept;
+        justify-self: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      footer {
+        padding: 1rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        margin-bottom: 0.2rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-bottom {
+        padding-top: 1rem;
       }
 
       .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
         justify-content: center;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <!-- Promotional Banner -->
+  <div class="promo-banner">
+    <div class="promo-banner-content">
+      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
+      <a href="/pricing">View Pricing ✨</a>
+    </div>
+  </div>
+
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <span class="logo-text">PictureThisPet<sup>®</sup></span>
     </a>
     <nav class="site-nav">
       <a href="/" aria-label="Home page">Home</a>
@@ -585,7 +1025,7 @@
       <a href="/locations.html" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
       <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="#" class="book-btn" aria-label="Book a session" onclick="scrollToBooking(event)">Book Now</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session" onclick="scrollToBooking(event)">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
@@ -605,18 +1045,16 @@
       <div class="story-card">
         <h2>The Journey from Template to Custom</h2>
         <div class="story-content">
-          <p>This site began with a simple idea and a **Squarespace template**. While that platform got things off the ground, it didn't take long to hit its limits — both in design flexibility and the custom workflows I needed to support a growing creative business. I wanted more control, better automation, and a seamless experience that could scale with my vision.</p>
+          <p>This site began with a simple idea and a <strong>Squarespace template</strong>. While that platform got things off the ground, it didn't take long to hit its limits — both in design flexibility and the custom workflows I needed to support a growing creative business. I wanted more control, better automation, and a seamless experience that could scale with my vision.</p>
           
-          <p>So I made the jump. With **no formal background in web development**, I turned to AI for help — specifically **ChatGPT, Claude.ai, and Grok**. Over time, we built every part of this site together: the custom photo session builder, the dynamic intake forms, the Stripe-powered checkout, and even the client galleries. Every page you see here was shaped through conversation, iteration, and problem-solving — not with a drag-and-drop tool, but with **code and logic written collaboratively, line by line**.</p>
+          <p>So I made the jump. With <strong>no formal background in web development</strong>, I turned to AI for help — specifically <strong>ChatGPT, Claude.ai, and Grok</strong>. Over time, we built every part of this site together: the custom photo session builder, the dynamic intake forms, the Stripe-powered checkout, and even the client galleries. Every page you see here was shaped through conversation, iteration, and problem-solving — not with a drag-and-drop tool, but with <strong>code and logic written collaboratively, line by line</strong>.</p>
           
-          <p>I purchased my domain, routed it through **Cloudflare**, and set up the site infrastructure on **GitHub**. What started as a workaround turned into a full-on digital rebuild, powered by AI and a drive to do it better. This isn't just a site — **it's proof of what's possible when creativity and technology work side by side**.</p>
+          <p>I purchased my domain, routed it through <strong>Cloudflare</strong>, and set up the site infrastructure on <strong>GitHub</strong>. What started as a workaround turned into a full-on digital rebuild, powered by AI and a drive to do it better. This isn't just a site — <strong>it's proof of what's possible when creativity and technology work side by side</strong>.</p>
           
-          <p>This platform now reflects not just the brand I envisioned, but **the process it took to get here**. Built from scratch, owned fully, and designed intentionally — by me and the AIs that helped along the way.</p>
+          <p>This platform now reflects not just the brand I envisioned, but <strong>the process it took to get here</strong>. Built from scratch, owned fully, and designed intentionally — by me and the AIs that helped along the way.</p>
         </div>
       </div>
     </section>
-
-
 
     <!-- Features Section -->
     <section class="features-section">
@@ -661,49 +1099,37 @@
     </section>
 
     <!-- Consulting Section -->
-    <section class="consulting-section" style="padding: 4rem 1rem; max-width: 1200px; margin: 0 auto;">
-      <div class="consulting-card" style="background-image: url('assets/images/ani_bkgd_cool.png'); background-size: 100% 100%; background-position: center; animation: moveBackground 30s ease-in-out infinite; border-radius: 24px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); padding: 3rem; color: white; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
-        <div style="display: inline-block; background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue)); color: white; padding: 0.6rem 1.5rem; border-radius: 25px; font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.5px;">
-          💡 Consulting Available
-        </div>
+    <section class="consulting-section">
+      <div class="consulting-card">
+        <div class="consulting-badge">💡 Consulting Available</div>
         
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; color: white; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">
-          Want Your Own AI-Built Site?
-        </h2>
+        <h2>Want Your Own AI-Built Site?</h2>
         
-        <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 2rem; color: rgba(255, 255, 255, 0.9); max-width: 800px; margin-left: auto; margin-right: auto; margin-bottom: 2rem;">
-          I've learned what works (and what doesn't) when collaborating with AI to build custom websites. From session builders to payment processing, I can guide you through creating your own professional platform without the traditional development costs.
-        </p>
+        <p>I've learned what works (and what doesn't) when collaborating with AI to build custom websites. From session builders to payment processing, I can guide you through creating your own professional platform without the traditional development costs.</p>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0; text-align: left;">
-          <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-            <h4 style="color: var(--gold); font-weight: 600; margin-bottom: 0.5rem;">🎯 Strategy Sessions</h4>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; line-height: 1.5;">AI collaboration planning, feature prioritization, and development roadmaps tailored to your business needs.</p>
+        <div class="consulting-grid">
+          <div class="consulting-item">
+            <h4>🎯 Strategy Sessions</h4>
+            <p>AI collaboration planning, feature prioritization, and development roadmaps tailored to your business needs.</p>
           </div>
           
-          <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-            <h4 style="color: var(--gold); font-weight: 600; margin-bottom: 0.5rem;">🤖 AI Prompt Engineering</h4>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; line-height: 1.5;">Learn the exact prompting techniques I use to get production-ready code from ChatGPT, Claude, and other AI tools.</p>
+          <div class="consulting-item">
+            <h4>🤖 AI Prompt Engineering</h4>
+            <p>Learn the exact prompting techniques I use to get production-ready code from ChatGPT, Claude, and other AI tools.</p>
           </div>
           
-          <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-            <h4 style="color: var(--gold); font-weight: 600; margin-bottom: 0.5rem;">⚡ Implementation Support</h4>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; line-height: 1.5;">Hands-on guidance for complex integrations like payments, APIs, and automated workflows that scale with your business.</p>
+          <div class="consulting-item">
+            <h4>⚡ Implementation Support</h4>
+            <p>Hands-on guidance for complex integrations like payments, APIs, and automated workflows that scale with your business.</p>
           </div>
         </div>
         
-        <div style="margin: 2rem 0;">
-          <a href="/contact" style="background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue)); color: white; padding: 1rem 2.5rem; border-radius: 999px; font-size: 1.2rem; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4); margin-right: 1rem;">
-            Schedule a Consultation
-          </a>
-          <a href="mailto:info@picturethispet.co?subject=AI Site Development Consultation" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 255, 255, 0.3); padding: 1rem 2.5rem; border-radius: 999px; font-size: 1.2rem; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.3s ease;">
-            Email Directly
-          </a>
+        <div class="consulting-buttons">
+          <a href="/contact" class="primary-btn">Schedule a Consultation</a>
+          <a href="mailto:info@picturethispet.co?subject=AI Site Development Consultation" class="secondary-btn">Email Directly</a>
         </div>
         
-        <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); font-style: italic; margin-top: 1rem;">
-          From creative professionals to small businesses — let's build something amazing together.
-        </p>
+        <p class="disclaimer">From creative professionals to small businesses — let's build something amazing together.</p>
       </div>
     </section>
 
@@ -712,7 +1138,7 @@
       <div class="cta-content">
         <h2>Ready to Experience the Difference?</h2>
         <p>This isn't just a website — it's a testament to what's possible when human creativity meets AI capability. Every feature was thoughtfully designed to make booking your pet photography session as smooth as possible.</p>
-        <a href="/" class="cta-button">Book Your Session</a>
+        <a href="/cart.html" class="cta-button">Book Your Session</a>
       </div>
     </section>
   </main>
@@ -721,7 +1147,8 @@
     <div class="footer-container">
       <div class="footer-section">
         <h4>Contact Us</h4>
-        <a href="/contact" aria-label="Contact us page">Contact Us</a>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -744,11 +1171,12 @@
           <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
           <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
           <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+          <div class="payment-placeholder" title="Tap to Pay accepted">TAP TO PAY</div>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 05:35 PM MST, May 23, 2025 | Built with AI collaboration ❤️</p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 11:05 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;">Built with AI collaboration ❤️</span></p>
     </div>
   </footer>
 
@@ -762,7 +1190,7 @@
     // Smooth scroll to booking
     function scrollToBooking(e) {
       e.preventDefault();
-      window.location.href = '/#session-builder-section';
+      window.location.href = '/cart.html';
     }
 
     // Add some interactive elements
@@ -776,11 +1204,11 @@
         });
       }, { threshold: 0.1 });
 
-      document.querySelectorAll('.timeline-item').forEach(item => {
+      document.querySelectorAll('.feature-card').forEach(item => {
         observer.observe(item);
       });
 
-      document.querySelectorAll('.feature-card').forEach(item => {
+      document.querySelectorAll('.consulting-item').forEach(item => {
         observer.observe(item);
       });
     });
