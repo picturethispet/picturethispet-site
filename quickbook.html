@@ -1,1 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Book POS | Picture This Pet</title>
+  <meta name="description" content="POS interface for quick booking of pet photography sessions with QR code payment links.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
+      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
+      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      --pink: #ff1493;
+      --purple: #8a2be2;
+      --orange: #ff8c00;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--pink) transparent;
+    }
+
+    html::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    html::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+    }
+
+    html::-webkit-scrollbar-thumb {
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #ffffff;
+      background: var(--gradient-primary);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Floating background elements */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: float 20s infinite linear;
+    }
+
+    .orb:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+      top: 10%;
+      left: 80%;
+      animation-delay: 0s;
+    }
+
+    .orb:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      top: 60%;
+      left: 10%;
+      animation-delay: -7s;
+    }
+
+    .orb:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: 30%;
+      left: 20%;
+      animation-delay: -14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Promotional Banner */
+    .promo-banner {
+      position: fixed;
+      top: 96px;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      z-index: 999;
+      box-shadow: 0 8px 32px rgba(255,140,0,0.3);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .promo-banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .promo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-weight: 600;
+      overflow-wrap: break-word;
+      color: #ffffff;
+    }
+
+    .promo-banner a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      padding: 0.2rem 0.8rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      overflow-wrap: break-word;
+    }
+
+    .promo-banner a:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1rem 1.5rem;
+      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      height: 96px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text sup {
+      font-size: 0.8rem;
+      vertical-align: super;
+      margin-left: 2px;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .site-nav a:not(.book-btn) {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .site-nav a:not(.book-btn):hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .site-nav a:not(.book-btn)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .site-nav a:not(.book-btn):hover::after {
+      width: 80%;
+    }
+
+    .book-btn {
+      background: var(--gradient-primary);
+      color: #ffffff;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+    }
+
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Main Content */
+    main {
+      margin-top: 146px;
+      flex: 1;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100vh - 146px);
+    }
+
+    /* Quick Book POS Section */
+    .quickbook-pos-section {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      background: var(--gradient-card);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0, 0.2);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255, 0.1);
+      animation: fadeInUp 1s ease-out;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quickbook-pos-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .quickbook-pos-header h1 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      margin-bottom: 0.5rem;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .quickbook-pos-header p {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      color: #ffffff;
+    }
+
+    /* Session Categories */
+    .session-categories {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .category {
+      margin-bottom: 2rem;
+    }
+
+    .category-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .session-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .session-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      background: rgba(255,255,255, 0.05);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .session-item:hover {
+      background: rgba(255,255,255, 0.1);
+      border-color: rgba(255,255,255, 0.2);
+    }
+
+    .session-details {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .session-icon {
+      font-size: 1.5rem;
+    }
+
+    .session-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .session-action {
+      font-size: 0.9rem;
+      color: var(--available-green);
+      font-weight: 600;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5000;
+      animation: fadeIn 0.3s ease;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s linear 0.3s, opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0s linear 0s, opacity 0.3s ease;
+    }
+
+    .modal-content {
+      background: var(--gradient-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .modal-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .modal-subtitle {
+      font-size: 1rem;
+      color: #ffffff;
+      line-height: 1.6;
+      opacity: 0.7;
+    }
+
+    .modal-qr-code img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-close-btn {
+      background: var(--gradient-primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+    }
+
+    .modal-close-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
+    }
+
+    /* Footer */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding: 2rem 1.5rem;
+      color: #000000;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+      justify-items: center;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-section h4 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+    }
+
+    .footer-section a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #000000;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #333333;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 0.5rem;
+      justify-items: center;
+    }
+
+    .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
+    .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
+    .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
+    .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
+    .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
+    .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
+    .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
+    .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
+    .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
+    .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
+    .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
+    .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
+    .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
+    .payment-methods div:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .payment-placeholder {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      width: 40px;
+      height: 25px;
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 600;
+      color: #000000;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .payment-placeholder:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .footer-bottom p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #000000;
+    }
+
+    .footer-bottom a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #000000;
+      text-decoration: underline;
+    }
+
+    .footer-bottom a:hover {
+      color: #333333;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .promo-banner {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        top: 84px;
+      }
+
+      .promo-banner-content {
+        flex-direction: column;
+        gap: 0.2rem;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.2;
+      }
+
+      .promo-text {
+        font-size: 0.8rem;
+        line-height: 1.2;
+      }
+
+      .promo-banner a {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
+      header {
+        height: 84px;
+        padding: 0.5rem 1rem;
+      }
+
+      .desktop-logo {
+        height: 80px;
+      }
+
+      .logo-text {
+        font-size: 1.2rem;
+      }
+
+      .logo-text sup {
+        font-size: 0.6rem;
+      }
+
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        background: #ffffff;
+        position: absolute;
+        top: 84px;
+        right: 0;
+        width: 100%;
+        text-align: right;
+        padding: 1rem;
+        z-index: 999;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      }
+
+      .site-nav.active {
+        display: flex;
+      }
+
+      .site-nav.active a {
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a:not(.book-btn) {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .site-nav.active a:not(.book-btn):hover {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .site-nav.active a:not(.book-btn)::after {
+        background: var(--gradient-primary);
+      }
+
+      .site-nav.active a[href="/"] { order: 1; }
+      .site-nav.active a[href="/availability.html"] { order: 2; }
+      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/pricing"] { order: 4; }
+      .site-nav.active a[href="/contact"] { order: 5; }
+      .site-nav.active .book-btn { order: 6; }
+
+      .book-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        margin-left: 0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      main {
+        margin-top: 124px;
+        padding: 1.5rem 1rem;
+      }
+
+      .quickbook-pos-section {
+        padding: 1.5rem;
+      }
+
+      .quickbook-pos-header h1 {
+        font-size: 2.4rem;
+      }
+
+      .quickbook-pos-header p {
+        font-size: 1.1rem;
+      }
+
+      .category-title {
+        font-size: 1.8rem;
+      }
+
+      .session-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .session-action {
+        align-self: flex-end;
+      }
+
+      .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+      }
+
+      .footer-container {
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+        gap: 0.5rem;
+        justify-items: center;
+      }
+
+      .footer-section:nth-child(1) {
+        grid-area: contact-us;
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        grid-area: connect;
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        grid-area: we-accept;
+        justify-self: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      footer {
+        padding: 1rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        margin-bottom: 0.2rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-bottom {
+        padding-top: 1rem;
+      }
+
+      .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .promo-banner {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+      }
+
+      .promo-text {
+        font-size: 0.7rem;
+        line-height: 1.2;
+      }
+
+      .promo-banner a {
+        padding: 0.15rem 0.4rem;
+        font-size: 0.65rem;
+      }
+
+      .quickbook-pos-section {
+        padding: 1rem;
+      }
+
+      .quickbook-pos-header h1 {
+        font-size: 2rem;
+      }
+
+      .category-title {
+        font-size: 1.5rem;
+      }
+
+      .session-item {
+        padding: 0.8rem;
+      }
+
+      .footer-container {
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+      }
+
+      .footer-section:nth-child(1) {
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        justify-self: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <!-- Promotional Banner -->
+  <div class="promo-banner">
+    <div class="promo-banner-content">
+      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
+      <a href="/pricing">View Pricing ✨</a>
+    </div>
+  </div>
+
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <span class="logo-text">PictureThisPet<sup>®</sup></span>
+    </a>
+    <nav class="site-nav">
+      <a href="/" aria-label="Home page">Home</a>
+      <a href="/availability.html" aria-label="Availability page">Availability</a>
+      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/pricing" aria-label="Pricing page">Pricing</a>
+      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <div class="quickbook-pos-section">
+      <div class="quickbook-pos-header">
+        <h1>📸 Quick Book POS</h1>
+        <p>Select a session to display the QR code for quick payment via Stripe.</p>
+      </div>
+
+      <div class="session-categories">
+        <!-- Full Sessions - Cheesman -->
+        <div class="category">
+          <h2 class="category-title">Full Sessions - Cheesman</h2>
+          <div class="session-grid">
+            <div class="session-item" onclick="openQRModal('Full - 1 Pet, 1 Person - $100', 'assets/images/https---buy.stripe.com-00gg28eNp9Mx9Lq9AE.png', 'https://buy.stripe.com/4gw6ry0Wz0bXe1G147')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Full - 1 Pet, 1 Person - $100</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Full - 2 Pets, 1 Person - $140', 'assets/images/https---buy.stripe.com-14A14peBpfZSgQx3Kl9bO0c.png', 'https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Full - 2 Pets, 1 Person - $140</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Full - 1 Pet, 2 People - $160', 'assets/images/https---buy.stripe.com-14A8wR8d12921VD80B9bO0e.png', 'https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Full - 1 Pet, 2 People - $160</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Full - 2 Pets, 2 People - $160', 'assets/images/https---buy.stripe.com-14A9AV8d15le6bTbcN9bO07.png', 'https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Full - 2 Pets, 2 People - $160</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Full Sessions - City -->
+        <div class="category">
+          <h2 class="category-title">Full Sessions - City</h2>
+          <div class="session-grid">
+            <div class="session-item" onclick="openQRModal('Full - 1 Pet, 1 Person - $100', 'assets/images/https---buy.stripe.com-3cI3cxgJx8xqgQxdkV9bO0a.png', 'https://buy.stripe.com/00gg28eNp9Mx9Lq9AE')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Full - 1 Pet, 1 Person - $100</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Full - 2 Pets, 1 Person - $140', 'assets/images/https---buy.stripe.com-4gw6ry0Wz0bXe1G147.png', 'https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Full - 2 Pets, 1 Person - $140</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Full - 1 Pet, 2 People - $120', 'assets/images/https---buy.stripe.com-5kQ6oJ50PaFy43L4Op9bO06.png', 'https://buy.stripe.com/14A8wR8d12921VD80B9bO0e')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Full - 1 Pet, 2 People - $120</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Full - 2 Pets, 2 People - $160', 'assets/images/https---buy.stripe.com-5kQaEZ8d18xq7fX1Cd9bO0g.png', 'https://buy.stripe.com/6oU28tdxl29243Lft39bO0f')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Full - 2 Pets, 2 People - $160</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini Sessions - Cheesman -->
+        <div class="category">
+          <h2 class="category-title">Mini Sessions - Cheesman</h2>
+          <div class="session-grid">
+            <div class="session-item" onclick="openQRModal('Mini - 1 Pet, 1 Person - $50', 'assets/images/https---buy.stripe.com-5kQbJ33WL14Y9o5gx79bO0d.png', 'https://buy.stripe.com/eVag28fRtgaVe1GcMN')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Mini - 1 Pet, 1 Person - $50</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Mini - 2 Pets, 1 Person - $90', 'assets/images/https---buy.stripe.com-5kQcN70KzbJCfMt94F9bO05.png', 'https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Mini - 2 Pets, 1 Person - $90</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Mini - 1 Pet, 2 People - $70', 'assets/images/https---buy.stripe.com-6oU28tdxl29243Lft39bO0f.png', 'https://buy.stripe.com/8x24gB64T292eIpbcN9bO09')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Mini - 1 Pet, 2 People - $70</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Mini - 2 Pets, 2 People - $110', 'assets/images/https---buy.stripe.com-8x200lgJx3d69o5dkV9bO08.png', 'https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Mini - 2 Pets, 2 People - $110</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini Sessions - City -->
+        <div class="category">
+          <h2 class="category-title">Mini Sessions - City</h2>
+          <div class="session-grid">
+            <div class="session-item" onclick="openQRModal('Mini - 1 Pet, 1 Person - $50', 'assets/images/https---buy.stripe.com-9AQ6ry7kX8It3n28wy.png', 'https://buy.stripe.com/9AQ6ry7kX8It3n28wy')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Mini - 1 Pet, 1 Person - $50</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Mini - 2 Pets, 1 Person - $90', 'assets/images/https---buy.stripe.com-9AQ6ry7kX8It3n28wy.png', 'https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Mini - 2 Pets, 1 Person - $90</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Mini - 1 Pet, 2 People - $70', 'assets/images/https---buy.stripe.com-cNieVfeBp8xqeIp6Wx9bO0b.png', 'https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Mini - 1 Pet, 2 People - $70</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+            <div class="session-item" onclick="openQRModal('Mini - 2 Pets, 2 People - $110', 'assets/images/https---buy.stripe.com-eVag28fRtgaVe1GcMN.png', 'https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a')">
+              <div class="session-details">
+                <span class="session-icon">📷</span>
+                <div class="session-name">Mini - 2 Pets, 2 People - $110</div>
+              </div>
+              <div class="session-action">View QR Code →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- QR Code Modal -->
+  <div class="modal-overlay" id="qrModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Session QR Code 🔲</h2>
+        <p class="modal-subtitle">Scan this QR code with a device to proceed with payment via Stripe.</p>
+      </div>
+      <div class="modal-qr-code">
+        <img id="modalQRImage" src="" alt="Session QR Code" />
+      </div>
+      <button class="modal-close-btn" onclick="closeQRModal()">Close</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+          <div class="payment-placeholder" title="Tap to Pay accepted">TAP TO PAY</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 11:48 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector('.site-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Modal functions
+    function openQRModal(sessionName, qrImagePath, stripeLink) {
+      const modal = document.getElementById('qrModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalQRImage = document.getElementById('modalQRImage');
+
+      modalTitle.textContent = sessionName + " 🔲";
+      modalQRImage.src = qrImagePath;
+      modalQRImage.alt = sessionName + " QR Code";
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+
+    function closeQRModal() {
+      const modal = document.getElementById('qrModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto'; // Restore scrolling
+    }
+
+    // Page initialization
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Quick Book POS page loaded');
+    });
+
+    // Log errors for debugging
+    window.addEventListener('error', function(e) {
+      console.error('Quick Book POS error:', e.error);
+    });
+  </script>
+</body>
+</html>
