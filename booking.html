@@ -7,12 +7,18 @@
   <meta name="description" content="Schedule your pet photography session with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --orange: #F47C2C;
-      --gold: #FDB75E;
-      --dark-brown: #4B2E1E;
+      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
+      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      --pink: #ff1493;
+      --purple: #8a2be2;
+      --orange: #ff8c00;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255,255,255,0.8);
+      --text-muted: rgba(255,255,255,0.6);
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
@@ -25,25 +31,85 @@
     }
 
     html {
-      overflow-x: hidden;
       scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--pink) transparent;
+    }
+
+    html::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    html::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+    }
+
+    html::-webkit-scrollbar-thumb {
+      background: var(--gradient-primary);
+      border-radius: 3px;
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      color: white;
-      background-image: url('assets/images/main_background_allsystem.png');
-      background-size: 100% 100%;
-      background-position: center;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--gradient-primary);
+      background-attachment: fixed;
+      color: var(--text-primary);
       min-height: 100vh;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
     }
 
-    @keyframes moveBackground {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Floating background elements */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: float 20s infinite linear;
+    }
+
+    .orb:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+      top: 10%;
+      left: 80%;
+      animation-delay: 0s;
+    }
+
+    .orb:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      top: 60%;
+      left: 10%;
+      animation-delay: -7s;
+    }
+
+    .orb:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: 30%;
+      left: 20%;
+      animation-delay: -14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
     }
 
     @keyframes fadeInUp {
@@ -83,29 +149,21 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* HEADER */
+    /* Header */
     header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.01rem 1.5rem;
-      background-image: url("assets/images/ani_bkgd_cool.png");
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: fixed;
       top: 0;
       left: 0;
+      width: 100%;
       z-index: 1000;
-      height: 110px;
-    }
-
-    .desktop-logo {
-      height: 100px;
+      padding: 1rem 1.5rem;
+      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo-link {
@@ -120,47 +178,64 @@
       transform: scale(1.02);
     }
 
+    .desktop-logo {
+      height: 50px;
+    }
+
     .site-nav {
       display: flex;
       align-items: center;
-      margin-left: auto;
+      gap: 1.5rem;
     }
 
     .site-nav a:not(.book-btn) {
-      margin-left: 1rem;
+      color: var(--text-secondary);
       text-decoration: none;
-      font-weight: 600;
-      color: white;
+      font-weight: 500;
       transition: all 0.3s ease;
       padding: 0.5rem 1rem;
       border-radius: 8px;
+      position: relative;
     }
 
     .site-nav a:not(.book-btn):hover {
+      color: var(--text-primary);
       background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-1px);
+    }
+
+    .site-nav a:not(.book-btn)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .site-nav a:not(.book-btn):hover::after {
+      width: 80%;
     }
 
     .book-btn {
-      background: linear-gradient(135deg, #F47C2C, #FDB75E);
+      background: var(--gradient-primary);
       color: white;
       padding: 0.8rem 2rem;
       border: none;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 1.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
       text-decoration: none;
-      margin-left: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
-      box-shadow: 0 4px 15px rgba(244, 124, 44, 0.3);
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
     }
 
     .book-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 124, 44, 0.4);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
 
     .mobile-menu-btn {
@@ -177,21 +252,22 @@
       transform: scale(1.1);
     }
 
+    /* Main Content */
     main {
-      margin-top: 110px;
+      margin-top: 80px;
       flex: 1;
       padding: 2rem 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: calc(100vh - 110px);
+      min-height: calc(100vh - 80px);
     }
 
     .booking-container {
       max-width: 1200px;
       width: 100%;
       margin: 0 auto;
-      background: rgba(255,255,255, 0.05);
+      background: var(--gradient-card);
       backdrop-filter: blur(20px);
       border-radius: 24px;
       border: 1px solid rgba(255,255,255, 0.1);
@@ -200,6 +276,11 @@
       min-height: auto;
       position: relative;
       overflow: visible;
+      transition: all 0.3s ease;
+    }
+
+    .booking-container:hover {
+      border-color: rgba(255,255,255,0.2);
     }
 
     .page-header {
@@ -208,17 +289,18 @@
     }
 
     .page-title {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 2.8rem;
-      font-weight: 700;
-      color: white;
+      font-weight: 800;
+      color: var(--text-primary);
       margin-bottom: 0.5rem;
       text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
+      letter-spacing: -0.025em;
     }
 
     .page-subtitle {
       font-size: 1.2rem;
-      color: rgba(255,255,255, 0.7);
+      color: var(--text-secondary);
       font-weight: 500;
       line-height: 1;
     }
@@ -257,6 +339,12 @@
       padding: 2rem;
       margin-bottom: 2rem;
       text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .confirmation-message:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
     }
 
     .confirmation-icon {
@@ -266,15 +354,17 @@
     }
 
     .confirmation-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 1.3rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--available-green);
       margin-bottom: 0.8rem;
+      letter-spacing: -0.02em;
     }
 
     .confirmation-description {
       font-size: 1rem;
-      color: rgba(255,255,255, 0.8);
+      color: var(--text-secondary);
       line-height: 1.6;
     }
 
@@ -286,7 +376,7 @@
       width: 70px;
       height: 70px;
       border: 5px solid rgba(255,255,255, 0.3);
-      border-top: 5px solid var(--gold);
+      border-top: 5px solid var(--orange);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 0 auto 1rem;
@@ -311,9 +401,9 @@
 
     .loading-text {
       font-size: 1.3rem;
-      color: rgba(255,255,255, 0.8);
+      color: var(--text-secondary);
       margin: 1rem 0;
-      background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(253,183,94,1) 50%, rgba(255,255,255,0.6) 100%);
+      background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, var(--orange) 50%, rgba(255,255,255,0.6) 100%);
       background-size: 200% 100%;
       background-clip: text;
       -webkit-background-clip: text;
@@ -332,7 +422,7 @@
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--orange), var(--gold));
+      background: var(--gradient-primary);
       border-radius: 3px;
       animation: progressFill 3s ease-out forwards;
     }
@@ -358,21 +448,23 @@
       border: none;
       border-radius: 16px;
       background: white;
-      box-shadow: 0 5px 15px rgba(0,0,0, 0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0, 0.3);
       width: 100%;
       max-width: 900px;
       height: auto;
+      transition: all 0.3s ease;
     }
 
-    /* FOOTER */
+    .acuity-iframe:hover {
+      box-shadow: 0 15px 40px rgba(0,0,0, 0.4);
+    }
+
+    /* Footer */
     footer {
-      background-image: url('assets/images/ani_bkgd_cool.png');
-      background-size: 100% 100%;
-      background-position: center;
-      animation: moveBackground 30s ease-in-out infinite;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: #ffffff;
+      border-top: 1px solid rgba(0,0,0,0.1);
       padding: 2rem 1.5rem;
-      color: rgba(255, 255, 255, 0.5);
+      color: #666666;
       font-size: 0.9rem;
     }
 
@@ -383,6 +475,7 @@
       max-width: 1200px;
       margin: 0 auto;
       margin-bottom: 1.5rem;
+      justify-items: center;
     }
 
     .footer-section {
@@ -392,15 +485,19 @@
     }
 
     .footer-section h4 {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-weight: 700;
       font-size: 1.2rem;
-      color: white;
       margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
     }
 
     .footer-section a {
-      color: rgba(255, 255, 255, 0.7);
+      color: #555555;
       text-decoration: none;
       display: block;
       margin-bottom: 0.5rem;
@@ -408,7 +505,7 @@
     }
 
     .footer-section a:hover {
-      color: var(--gold);
+      color: #333333;
     }
 
     .payment-methods {
@@ -422,7 +519,8 @@
       height: 25px;
       object-fit: contain;
       opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
+      border-radius: 4px;
     }
 
     .payment-icon:hover {
@@ -433,17 +531,17 @@
     .payment-placeholder {
       width: 40px;
       height: 25px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.3);
       border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 8px;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.7);
+      color: #555555;
       opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       text-align: center;
       line-height: 1.1;
     }
@@ -456,33 +554,43 @@
     .footer-bottom {
       text-align: center;
       padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
+    .footer-bottom a {
+      color: #e07b00;
+      text-decoration: underline;
+    }
+
+    .footer-bottom a:hover {
+      color: #333333;
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
       header {
-        height: 80px;
+        height: 60px;
         padding: 0.5rem 1rem;
-        height: calc(80px + env(safe-area-inset-top));
       }
       
       .desktop-logo {
-        height: 48px;
+        height: 40px;
       }
       
       .site-nav {
         display: none;
         flex-direction: column;
-        background-image: url('assets/images/ani_bkgd_cool.png');
+        background: var(--gradient-card);
+        backdrop-filter: blur(20px);
         position: absolute;
-        top: 80px;
+        top: 60px;
         right: 0;
         width: 100%;
         text-align: right;
         padding: 1rem;
         z-index: 999;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
+        border-radius: 0 0 16px 16px;
       }
       
       .site-nav.active {
@@ -513,7 +621,7 @@
       }
 
       main {
-        margin-top: calc(80px + env(safe-area-inset-top));
+        margin-top: 60px;
         padding: 0;
         min-height: auto;
       }
@@ -579,16 +687,31 @@
 
       .footer-container {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        gap: 1rem;
+        justify-items: center;
       }
 
       .footer-section {
         align-items: center;
         text-align: center;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-section a {
+        margin-bottom: 0.3rem;
+      }
+
+      .footer-bottom {
+        padding-top: 1rem;
       }
 
       .payment-methods {
@@ -617,6 +740,13 @@
   </style>
 </head>
 <body>
+  <!-- Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
@@ -645,7 +775,7 @@
           <div class="confirmation-message">
             <div class="confirmation-icon">✅✨</div>
             <h3 class="confirmation-title">Payment Confirmed!</h3>
-            <p class="confirmation-description">Your payment has been successfully processed. Let’s schedule your session with Picture This Pet! 🐾</p>
+            <p class="confirmation-description">Your payment has been successfully processed. Let's schedule your session with Picture This Pet! 🐾</p>
           </div>
 
           <div class="loading-animation">
@@ -702,12 +832,12 @@
           <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
           <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
           <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <img src="assets/images/taptopay.jpg" alt="PayPal payment accepted" class="payment-icon" />
+          <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 10:51 AM MDT, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: var(--gold); text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:35 PM MST, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: #e07b00; text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -849,8 +979,13 @@
       nav.classList.toggle('active');
     }
 
+    function scrollToSessionBuilder(e) {
+      e.preventDefault();
+      window.location.href = '/cart.html';
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Booking page loaded');
+      console.log('✅ Stripe-inspired Booking page loaded - v4.0.1');
       
       if (loadSessionData()) {
         const textInterval = setInterval(updateLoadingText, 1000);
