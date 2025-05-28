@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Build Your Session | Picture This Pet</title>
-  <meta name="description" content="Configure your perfect pet photography session with Picture This Pet.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>On The Spot Shoot Agreement | Picture This Pet</title>
+  <meta name="description" content="Review and agree to our On The Spot shoot terms and policies before completing your booking with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
@@ -22,6 +22,7 @@
       --available-green: #10b981;
       --booked-red: #ef4444;
       --soft-hold-yellow: #f59e0b;
+      --popup-event-purple: #a78bfa;
     }
 
     * {
@@ -50,10 +51,10 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: var(--text-primary);
       background: var(--gradient-primary);
       background-attachment: fixed;
-      color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
       display: flex;
@@ -117,9 +118,79 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-10px); }
-      to { opacity: 1; transform: translateX(0); }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    @keyframes progressFill {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* Promotional Banner */
+    .promo-banner {
+      position: fixed;
+      top: 96px;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%);
+      color: var(--text-primary);
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      z-index: 999;
+      box-shadow: 0 8px 32px rgba(255,140,0,0.3);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .promo-banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .promo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-weight: 600;
+      overflow-wrap: break-word;
+      color: var(--text-primary);
+    }
+
+    .promo-banner a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      padding: 0.2rem 0.8rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      overflow-wrap: break-word;
+    }
+
+    .promo-banner a:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     /* Header */
@@ -133,7 +204,7 @@
       backdrop-filter: blur(20px);
       background: rgba(255,255,255,0.1);
       border-bottom: 1px solid rgba(255,255,255,0.1);
-      height: 80px;
+      height: 96px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -142,6 +213,7 @@
     .logo-link {
       display: flex;
       align-items: center;
+      gap: 0.5rem;
       transition: all 0.3s ease;
       text-decoration: none;
     }
@@ -152,7 +224,23 @@
     }
 
     .desktop-logo {
-      height: 50px;
+      height: 100px;
+    }
+
+    .logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text sup {
+      font-size: 0.8rem;
+      vertical-align: super;
+      margin-left: 2px;
     }
 
     .site-nav {
@@ -162,7 +250,7 @@
     }
 
     .site-nav a:not(.book-btn) {
-      color: var(--text-secondary);
+      color: var(--text-primary);
       text-decoration: none;
       font-weight: 500;
       transition: all 0.3s ease;
@@ -194,7 +282,7 @@
 
     .book-btn {
       background: var(--gradient-primary);
-      color: white;
+      color: var(--text-primary);
       padding: 0.8rem 2rem;
       border: none;
       border-radius: 50px;
@@ -215,7 +303,7 @@
       display: none;
       background: none;
       border: none;
-      color: white;
+      color: var(--text-primary);
       font-size: 2rem;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -227,366 +315,312 @@
 
     /* Main Content */
     main {
-      margin-top: 80px;
+      margin-top: 146px;
       flex: 1;
-      padding: 3rem 1rem 6rem 1rem;
-      max-width: 1400px;
+      padding: 3rem 1rem;
+      max-width: 1000px;
       margin-left: auto;
       margin-right: auto;
       width: 100%;
     }
 
-    .session-builder {
-      display: grid;
-      grid-template-columns: 1fr 400px;
-      gap: 3rem;
-      min-height: calc(100vh - 200px);
-      align-items: start;
-    }
-
-    .configuration-panel {
+    /* Agreement Section */
+    .agreement-container {
       background: var(--gradient-card);
       backdrop-filter: blur(20px);
       border-radius: 24px;
       border: 1px solid rgba(255,255,255, 0.1);
-      padding: 2.5rem;
+      padding: 3rem;
       animation: fadeInUp 0.8s ease-out;
-      min-height: calc(100vh - 200px);
-      transition: all 0.3s ease;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
     }
 
-    .configuration-panel:hover {
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    .summary-panel {
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 2rem;
-      height: fit-content;
-      animation: fadeInUp 0.8s ease-out 0.2s both;
-      z-index: 10;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
-      position: sticky;
-      top: 100px;
-      max-height: calc(100vh - 120px);
-      overflow-y: auto;
-    }
-
-    .summary-panel:hover {
-      border-color: rgba(255,255,255,0.25);
-    }
-
-    .panel-header {
-      margin-bottom: 2.5rem;
+    .agreement-header {
       text-align: center;
+      margin-bottom: 3rem;
     }
 
-    .panel-header h1 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    .agreement-header h1 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 2.8rem;
       font-weight: 800;
       color: var(--text-primary);
       margin-bottom: 0.5rem;
       text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
-      letter-spacing: -0.025em;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .panel-header p {
+    .agreement-header .event-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--popup-event-purple), #8b5cf6);
+      color: var(--text-primary);
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .agreement-header p {
       font-size: 1.1rem;
-      color: var(--text-secondary);
-      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.6;
     }
 
-    .config-section {
-      margin-bottom: 3rem;
-      opacity: 0;
-      animation: slideIn 0.6s ease-out forwards;
+    /* Agreement Sections */
+    .agreement-section {
+      background: rgba(255,255,255, 0.03);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255,255,255, 0.08);
+      backdrop-filter: blur(10px);
     }
 
-    .config-section:nth-child(2) { animation-delay: 0.1s; }
-    .config-section:nth-child(3) { animation-delay: 0.2s; }
-    .config-section:nth-child(4) { animation-delay: 0.3s; }
-    .config-section:nth-child(5) { animation-delay: 0.4s; }
-
-    .section-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 1.3rem;
+    .agreement-section h2 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.6rem;
       font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: var(--text-primary);
+    }
+
+    .agreement-section h3 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.8rem;
+      margin-top: 1.5rem;
+    }
+
+    .agreement-section p {
+      font-size: 1rem;
+      line-height: 1.6;
       color: var(--text-primary);
       margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      letter-spacing: -0.02em;
     }
 
-    .section-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
+    .agreement-section ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
     }
 
-    .option-grid {
-      display: grid;
-      gap: 1rem;
+    .agreement-section li {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
     }
 
-    .option-card {
-      background: rgba(0,0,0, 0.3);
-      backdrop-filter: blur(20px);
-      border: 2px solid rgba(255,255,255, 0.15);
+    /* Checkbox Section */
+    .checkbox-container {
+      background: rgba(255,255,255, 0.08);
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 2px solid rgba(255, 20, 147, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .checkbox-container h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(255,255,255, 0.03);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-item:hover {
+      background: rgba(255,255,255, 0.06);
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--orange);
+      cursor: pointer;
+    }
+
+    .checkbox-item label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--text-primary);
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .checkbox-item.required label::after {
+      content: " *";
+      color: var(--booked-red);
+      font-weight: bold;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .back-button {
+      background: rgba(255,255,255, 0.1);
+      color: var(--text-primary);
+      padding: 1rem 2rem;
+      border: 1px solid rgba(255,255,255, 0.3);
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      text-decoration: none;
+      display: inline-block;
+      backdrop-filter: blur(10px);
     }
 
-    .option-card:hover {
-      border-color: rgba(255,140,0, 0.4);
-      background: rgba(0,0,0, 0.4);
+    .back-button:hover {
+      background: rgba(255,255,255, 0.2);
       transform: translateY(-2px);
     }
 
-    .option-card.selected {
-      border-color: var(--orange);
-      background: linear-gradient(135deg, rgba(255,140,0, 0.15), rgba(138,43,226, 0.1));
-      box-shadow: 0 8px 25px rgba(255,140,0, 0.2);
-    }
-
-    .option-card.selected::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
+    .continue-button {
       background: var(--gradient-primary);
-    }
-
-    .option-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.8rem;
-    }
-
-    .option-title {
-      font-size: 1.1rem;
-      font-weight: 600;
       color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .option-price-container {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .option-price-original {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.4);
-      text-decoration: line-through;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-    }
-
-    .option-price-special {
-      font-size: 2.2rem;
-      font-weight: 700;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-      position: relative;
-    }
-
-    .option-price-special::after {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: -4px;
-      right: -4px;
-      bottom: -1px;
-      background: var(--gradient-primary);
-      border-radius: 8px;
-      opacity: 0.1;
-      z-index: -1;
-    }
-
-    .option-price-included {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--available-green);
-      margin-left: auto;
-    }
-
-    .option-price-additional {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--orange);
-      margin-left: auto;
-    }
-
-    .option-description {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.4;
-      margin-bottom: 0.8rem;
-    }
-
-    .option-features {
-      list-style: none;
-      padding: 0;
-    }
-
-    .option-features li {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 0.3rem;
-      padding-left: 1rem;
-      position: relative;
-    }
-
-    .option-features li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--available-green);
-      font-weight: 600;
-    }
-
-    .summary-header {
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .summary-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
-    }
-
-    .summary-subtitle {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .session-preview {
-      background: rgba(255,255,255, 0.06);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255,255,255, 0.1);
-    }
-
-    .preview-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem 0;
-      border-bottom: 1px solid rgba(255,255,255, 0.08);
-    }
-
-    .preview-item:last-child {
-      border-bottom: none;
-    }
-
-    .preview-label {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .preview-value {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text-primary);
-      text-align: right;
-    }
-
-    .pricing-breakdown {
-      background: rgba(255,255,255, 0.04);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .price-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 0;
-      font-size: 0.9rem;
-    }
-
-    .price-label {
-      color: var(--text-secondary);
-    }
-
-    .price-value {
-      color: var(--text-primary);
-      font-weight: 500;
-    }
-
-    .price-total {
-      border-top: 1px solid rgba(255,255,255, 0.1);
-      padding-top: 1rem;
-      margin-top: 1rem;
-    }
-
-    .price-total .price-label {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .price-total .price-value {
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .continue-btn {
-      width: 100%;
-      background: var(--gradient-primary);
-      color: white;
+      padding: 1rem 3rem;
       border: none;
-      border-radius: 12px;
-      padding: 1.2rem;
+      border-radius: 50px;
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
-      text-transform: none;
-      letter-spacing: 0.5px;
       box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+      opacity: 0.5;
+      pointer-events: none;
     }
 
-    .continue-btn:hover {
+    .continue-button.enabled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .continue-button.enabled:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
 
-    .continue-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loading-content {
+      text-align: center;
+      max-width: 500px;
+      padding: 2rem;
+    }
+
+    .loading-spinner {
+      width: 80px;
+      height: 80px;
+      border: 6px solid rgba(255,255,255, 0.3);
+      border-top: 6px solid var(--orange);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 2rem;
+    }
+
+    .loading-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .loading-message {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+    }
+
+    .paw-prints {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .paw {
+      font-size: 1.5rem;
+      animation: bounce 1.5s infinite;
+    }
+
+    .paw:nth-child(1) { animation-delay: 0s; }
+    .paw:nth-child(2) { animation-delay: 0.3s; }
+    .paw:nth-child(3) { animation-delay: 0.6s; }
+    .paw:nth-child(4) { animation-delay: 0.9s; }
+
+    .progress-bar {
+      width: 100%;
+      max-width: 300px;
+      height: 6px;
+      background: rgba(255,255,255, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 2rem auto;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+      width: 0%;
+      animation: progressFill 10s ease-out forwards;
+    }
+
+    .loading-content p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      margin-top: 1rem;
     }
 
     /* Footer */
@@ -594,7 +628,7 @@
       background: #ffffff;
       border-top: 1px solid rgba(0,0,0,0.1);
       padding: 2rem 1.5rem;
-      color: #666666;
+      color: var(--text-primary);
       font-size: 0.9rem;
     }
 
@@ -611,11 +645,11 @@
     .footer-section {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
     }
 
     .footer-section h4 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-weight: 700;
       font-size: 1.2rem;
       margin-bottom: 1rem;
@@ -624,10 +658,12 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       letter-spacing: -0.02em;
+      color: var(--text-primary);
     }
 
     .footer-section a {
-      color: #555555;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: var(--text-primary);
       text-decoration: none;
       display: block;
       margin-bottom: 0.5rem;
@@ -635,14 +671,31 @@
     }
 
     .footer-section a:hover {
-      color: #333333;
+      color: var(--text-secondary);
     }
 
     .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(2, auto);
       gap: 0.5rem;
+      justify-items: center;
     }
+
+    .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
+    .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
+    .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
+    .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
+    .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
+    .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
+    .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
+    .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
+    .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
+    .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
+    .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
+    .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
+    .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
+    .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
 
     .payment-icon {
       width: 40px;
@@ -659,6 +712,7 @@
     }
 
     .payment-placeholder {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       width: 40px;
       height: 25px;
       background: rgba(0, 0, 0, 0.1);
@@ -669,7 +723,7 @@
       justify-content: center;
       font-size: 8px;
       font-weight: 600;
-      color: #555555;
+      color: var(--text-primary);
       opacity: 0.7;
       transition: all 0.3s ease;
       text-align: center;
@@ -687,59 +741,78 @@
       border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
+    .footer-bottom p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: var(--text-primary);
+    }
+
     .footer-bottom a {
-      color: #e07b00;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: var(--text-primary);
       text-decoration: underline;
     }
 
     .footer-bottom a:hover {
-      color: #333333;
+      color: var(--text-secondary);
     }
 
     /* Responsive */
-    @media (max-width: 1024px) {
-      .session-builder {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .summary-panel {
-        position: static;
-        order: 2;
-        max-height: none;
-        overflow-y: visible;
-        top: auto;
-      }
-
-      .configuration-panel {
-        order: 1;
-      }
-    }
-
     @media (max-width: 768px) {
+      .promo-banner {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        top: 84px;
+      }
+
+      .promo-banner-content {
+        flex-direction: column;
+        gap: 0.2rem;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.2;
+      }
+
+      .promo-text {
+        font-size: 0.8rem;
+        line-height: 1.2;
+      }
+
+      .promo-banner a {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
       header {
-        height: 60px;
+        height: 84px;
         padding: 0.5rem 1rem;
       }
 
       .desktop-logo {
-        height: 40px;
+        height: 80px;
+      }
+
+      .logo-text {
+        font-size: 1.2rem;
+      }
+
+      .logo-text sup {
+        font-size: 0.6rem;
       }
 
       .site-nav {
         display: none;
         flex-direction: column;
-        background: var(--gradient-card);
-        backdrop-filter: blur(20px);
+        background: #ffffff;
         position: absolute;
-        top: 60px;
+        top: 84px;
         right: 0;
         width: 100%;
         text-align: right;
         padding: 1rem;
         z-index: 999;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 0 0 16px 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
       }
 
       .site-nav.active {
@@ -750,6 +823,24 @@
         margin: 0.5rem 0;
         font-size: 1.2rem;
         padding: 0.5rem 1rem;
+      }
+
+      .site-nav.active a:not(.book-btn) {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .site-nav.active a:not(.book-btn):hover {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .site-nav.active a:not(.book-btn)::after {
+        background: var(--gradient-primary);
       }
 
       .site-nav.active a[href="/"] { order: 1; }
@@ -770,52 +861,87 @@
       }
 
       main {
-        margin-top: 60px;
+        margin-top: 124px;
         padding: 2rem 1rem;
       }
 
-      .configuration-panel,
-      .summary-panel {
-        padding: 1.5rem;
+      .agreement-container {
+        padding: 2rem;
       }
 
-      .panel-header h1 {
+      .agreement-header h1 {
         font-size: 2.2rem;
       }
 
-      .session-builder {
-        gap: 1.5rem;
+      .agreement-section {
+        padding: 1.5rem;
       }
 
-      .option-price-container {
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
+      .checkbox-container {
+        padding: 1.5rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .action-buttons a,
+      .action-buttons button {
+        width: 100%;
+        text-align: center;
+      }
+
+      .loading-title {
+        font-size: 1.6rem;
+      }
+
+      .loading-message {
+        font-size: 1rem;
       }
 
       .footer-container {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+        gap: 0.5rem;
         justify-items: center;
       }
 
-      .footer-section {
+      .footer-section:nth-child(1) {
+        grid-area: contact-us;
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        grid-area: connect;
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        grid-area: we-accept;
+        justify-self: center;
         align-items: center;
         text-align: center;
       }
 
       footer {
-        padding: 1.5rem 1rem;
+        padding: 1rem 1rem;
         font-size: 0.8rem;
       }
 
       .footer-section h4 {
         font-size: 1rem;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
       }
 
       .footer-section a {
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.2rem;
+        font-size: 0.8rem;
       }
 
       .footer-bottom {
@@ -823,42 +949,64 @@
       }
 
       .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
         justify-content: center;
       }
     }
 
     @media (max-width: 480px) {
-      main {
-        margin-top: 60px;
-        padding: 1.5rem 0.5rem;
+      .promo-banner {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
       }
 
-      .configuration-panel,
-      .summary-panel {
-        padding: 1.2rem;
-        border-radius: 20px;
+      .promo-text {
+        font-size: 0.7rem;
+        line-height: 1.2;
       }
 
-      .panel-header h1 {
+      .promo-banner a {
+        padding: 0.15rem 0.4rem;
+        font-size: 0.65rem;
+      }
+
+      .agreement-container {
+        padding: 1.5rem;
+        margin: 0.5rem;
+      }
+
+      .agreement-header h1 {
         font-size: 1.8rem;
       }
 
-      .option-card {
-        padding: 1.2rem;
+      .checkbox-item {
+        padding: 0.8rem;
       }
 
-      .option-price-container {
-        flex-direction: column;
+      .footer-container {
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+      }
+
+      .footer-section:nth-child(1) {
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        justify-self: end;
         align-items: flex-end;
-        gap: 0.3rem;
+        text-align: right;
       }
 
-      .option-price-original {
-        font-size: 1.4rem;
-      }
-
-      .option-price-special {
-        font-size: 1.8rem;
+      .footer-section:nth-child(3) {
+        justify-self: center;
+        align-items: center;
+        text-align: center;
       }
     }
   </style>
@@ -871,9 +1019,19 @@
     <div class="orb"></div>
   </div>
 
+  <!-- Promotional Banner -->
+  <div class="promo-banner">
+    <div class="promo-banner-content">
+      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
+      <a href="/pricing">View Pricing ✨</a>
+    </div>
+  </div>
+
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/headerlogowarm.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <span class="logo-text">PictureThisPet<sup>®</sup></span>
     </a>
     <nav class="site-nav">
       <a href="/" aria-label="Home page">Home</a>
@@ -887,190 +1045,153 @@
   </header>
 
   <main>
-    <div class="session-builder">
-      <!-- Configuration Panel -->
-      <div class="configuration-panel">
-        <div class="panel-header">
-          <h1>🐾 Build Your Session</h1>
-          <p>Configure your perfect pet photography experience ✨</p>
+    <div class="agreement-container">
+      <div class="agreement-header">
+        <div class="event-badge">📸 On The Spot Shoot</div>
+        <h1>Service Agreement & Policies</h1>
+        <p>Please review and agree to the following terms before completing your On The Spot photography session booking.</p>
+      </div>
+
+      <!-- Service Terms -->
+      <div class="agreement-section">
+        <h2>📝 On The Spot Photography Service Terms</h2>
+        <h3>Service Overview</h3>
+        <p>On The Spot photography sessions are informal, on-location photo sessions that may take place at various venues including but not limited to: veterinary offices, dog parks, dog bars, boarding facilities, pet stores, or other pet-friendly locations.</p>
+        
+        <h3>Session Details</h3>
+        <ul>
+          <li>Sessions are typically 10-20 minutes in duration</li>
+          <li>Location and timing may vary based on venue availability</li>
+          <li>Sessions are first-come, first-served unless pre-booked</li>
+          <li>Weather and venue conditions may affect session availability</li>
+        </ul>
+
+        <h3>Photo Delivery</h3>
+        <p>You will receive 3-5 professionally edited digital photos within 2-3 weeks of your session date. Photos will be delivered via email or private online gallery with download access.</p>
+      </div>
+
+      <!-- Photo Service Agreement -->
+      <div class="agreement-section">
+        <h2>📸 Photo Usage & Licensing Agreement</h2>
+        <p><strong>Client Usage:</strong> You receive personal use rights to your photos for printing, sharing, and social media posting.</p>
+        
+        <p><strong>Picture This Pet Usage Rights:</strong> By booking this service, you grant Picture This Pet unlimited, perpetual, royalty-free rights to use, modify, reproduce, and distribute any photographs taken during your session for any purpose including but not limited to:</p>
+        <ul>
+          <li>Marketing and advertising materials</li>
+          <li>Social media content and campaigns</li>
+          <li>Website galleries and portfolios</li>
+          <li>Print and digital promotional materials</li>
+          <li>Contest submissions and professional displays</li>
+          <li>Commercial licensing to third parties</li>
+        </ul>
+        
+        <p><strong>No Compensation:</strong> You acknowledge that no compensation will be provided for the use of your photos in any capacity.</p>
+      </div>
+
+      <!-- Cancellation Policy -->
+      <div class="agreement-section">
+        <h2>🔄 Cancellation Policy</h2>
+        <p><strong>24-Hour Notice Required:</strong> Cancellations must be made at least 24 hours prior to your scheduled session time to receive a full refund.</p>
+        
+        <p><strong>Less Than 24 Hours:</strong> Cancellations made with less than 24 hours notice are non-refundable and non-transferable.</p>
+        
+        <p><strong>No-Shows:</strong> Failure to appear for your scheduled session will result in forfeiture of all fees paid.</p>
+        
+        <p><strong>Venue Cancellations:</strong> If the venue or Picture This Pet must cancel due to unforeseen circumstances, you will receive a full refund or credit toward a future session.</p>
+      </div>
+
+      <!-- Behavior Agreement -->
+      <div class="agreement-section">
+        <h2>🐾 Behavior & Safety Agreement</h2>
+        <p><strong>Pet Behavior:</strong> You certify that your pet is well-socialized, up-to-date on vaccinations, and poses no threat to people or other animals. You agree to maintain control of your pet at all times.</p>
+        
+        <p><strong>Human Behavior:</strong> All participants agree to conduct themselves in a respectful, professional manner and follow all venue rules and photographer instructions.</p>
+        
+        <p><strong>Safety Responsibility:</strong> You acknowledge that you are solely responsible for the safety and behavior of yourself, your pet, and any accompanying parties during the session.</p>
+        
+        <p><strong>Venue Compliance:</strong> All participants must comply with venue-specific rules, regulations, and policies during the session.</p>
+      </div>
+
+      <!-- Liability Waiver -->
+      <div class="agreement-section">
+        <h2>⚖️ Complete Liability Waiver</h2>
+        <p><strong>ASSUMPTION OF ALL RISK:</strong> You acknowledge and agree that you participate in this photography session entirely at your own risk, regardless of location or circumstances.</p>
+        
+        <p><strong>COMPLETE WAIVER OF LIABILITY:</strong> You hereby release, waive, discharge, and covenant not to sue Picture This Pet, its owners, employees, contractors, and any venue or location where services are provided from any and all liability, claims, demands, actions, and causes of action whatsoever arising out of or related to any loss, damage, or injury, including death, that may be sustained by you, your pet, or any other party, whether caused by negligence or otherwise.</p>
+        
+        <p><strong>INDEMNIFICATION:</strong> You agree to indemnify and hold harmless Picture This Pet from any claims, damages, or expenses arising from your participation or your pet's behavior during any session.</p>
+        
+        <p><strong>NO LIABILITY FOR ANYTHING:</strong> Picture This Pet assumes no responsibility or liability for any injuries, damages, losses, or incidents that may occur before, during, or after any photography session, regardless of cause, location, or circumstances.</p>
+      </div>
+
+      <!-- Agreement Checkboxes -->
+      <div class="checkbox-container">
+        <h2>✅ Required Agreements</h2>
+        
+        <div class="checkbox-item required">
+          <input type="checkbox" id="service-terms" name="service-terms" required>
+          <label for="service-terms">I have read and agree to the On The Spot Photography Service Terms</label>
         </div>
 
-        <!-- Pet Information -->
-        <div class="config-section">
-          <h3 class="section-title">📸 Choose Your Session</h3>
-          <p class="section-subtitle">Select the perfect session length and photo package for your needs ✨</p>
-          
-          <div class="option-grid">
-            <div class="option-card" onclick="selectOption('sessionType', 'Mini', 50)" data-option="Mini">
-              <div class="option-header">
-                <div class="option-title">🐾 Mini Session</div>
-              </div>
-              <div class="option-price-container">
-                <span class="option-price-original">$200</span>
-                <span class="option-price-special">$50</span>
-              </div>
-              <div class="option-description">Perfect for a quick photo session with your pet 💕</div>
-              <ul class="option-features">
-                <li>⏰ 60 minutes of photography</li>
-                <li>📷 5 professionally edited photos</li>
-                <li>📱 Digital gallery delivery</li>
-              </ul>
-            </div>
-
-            <div class="option-card" onclick="selectOption('sessionType', 'Full', 100)" data-option="Full">
-              <div class="option-header">
-                <div class="option-title">📸 Full Session</div>
-              </div>
-              <div class="option-price-container">
-                <span class="option-price-original">$400</span>
-                <span class="option-price-special">$100</span>
-              </div>
-              <div class="option-description">Our signature comprehensive photo experience 🎉</div>
-              <ul class="option-features">
-                <li>⏰ 90 minutes of photography</li>
-                <li>📷 10 professionally edited photos</li>
-                <li>📱 Digital gallery delivery</li>
-              </ul>
-            </div>
-          </div>
+        <div class="checkbox-item required">
+          <input type="checkbox" id="photo-rights" name="photo-rights" required>
+          <label for="photo-rights">I grant Picture This Pet unlimited usage rights to all photos as described above</label>
         </div>
 
-        <!-- Session Type -->
-        <div class="config-section">
-          <h3 class="section-title">📍 Select Location</h3>
-          <p class="section-subtitle">Choose your preferred photography location 🌳</p>
-          
-          <div class="option-grid">
-            <div class="option-card" onclick="selectOption('location', 'Cheesman Park', 0)" data-option="Cheesman Park">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">🌳 Cheesman Park</div>
-                  <div class="option-price-included">Included ✨</div>
-                </div>
-              </div>
-              <div class="option-description">Beautiful trees, open spaces, and natural lighting 🌿</div>
-            </div>
-
-            <div class="option-card" onclick="selectOption('location', 'City Park', 0)" data-option="City Park">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">🏞️ City Park</div>
-                  <div class="option-price-included">Included ✨</div>
-                </div>
-              </div>
-              <div class="option-description">Urban vibes with stunning city backdrops 🌆</div>
-            </div>
-          </div>
+        <div class="checkbox-item required">
+          <input type="checkbox" id="cancellation-policy" name="cancellation-policy" required>
+          <label for="cancellation-policy">I understand and agree to the 24-hour Cancellation Policy</label>
         </div>
 
-        <!-- Location -->
-        <div class="config-section">
-          <h3 class="section-title">🐕 How many pets?</h3>
-          <p class="section-subtitle">Additional pets require extra time and attention 💕</p>
-          
-          <div class="option-grid">
-            <div class="option-card" onclick="selectOption('pets', 1, 0)" data-option="1">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">🐶 1 Pet</div>
-                  <div class="option-price-included">Included ✨</div>
-                </div>
-              </div>
-              <div class="option-description">Perfect for focusing on one adorable companion 💖</div>
-            </div>
-
-            <div class="option-card" onclick="selectOption('pets', 2, 40)" data-option="2">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">🐶🐱 2 Pets</div>
-                  <div class="option-price-additional">+$40</div>
-                </div>
-              </div>
-              <div class="option-description">Double the cuteness! Extra time needed for multiple pets 🎊</div>
-            </div>
-          </div>
+        <div class="checkbox-item required">
+          <input type="checkbox" id="behavior-agreement" name="behavior-agreement" required>
+          <label for="behavior-agreement">I agree to the Behavior & Safety Agreement for all participants</label>
         </div>
 
-        <!-- Number of Pets -->
-        <div class="config-section">
-          <h3 class="section-title">👥 How many people?</h3>
-          <p class="section-subtitle">Include family members in your precious memories 📸</p>
-          
-          <div class="option-grid">
-            <div class="option-card" onclick="selectOption('people', 1, 0)" data-option="1">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">👤 1 Person</div>
-                  <div class="option-price-included">Included ✨</div>
-                </div>
-              </div>
-              <div class="option-description">Just you and your beloved pet 💕</div>
-            </div>
+        <div class="checkbox-item required">
+          <input type="checkbox" id="liability-waiver" name="liability-waiver" required>
+          <label for="liability-waiver">I acknowledge and agree to the Complete Liability Waiver</label>
+        </div>
 
-            <div class="option-card" onclick="selectOption('people', 2, 20)" data-option="2">
-              <div class="option-header">
-                <div>
-                  <div class="option-title">👥 2 People</div>
-                  <div class="option-price-additional">+$20</div>
-                </div>
-              </div>
-              <div class="option-description">Perfect for couples or you and a family member 💑</div>
-            </div>
-          </div>
+        <div class="checkbox-item required">
+          <input type="checkbox" id="final-consent" name="final-consent" required>
+          <label for="final-consent">I have authority to agree to these terms on behalf of all participants and pets</label>
         </div>
       </div>
 
-      <!-- Summary Panel -->
-      <div class="summary-panel">
-        <div class="summary-header">
-          <h2 class="summary-title">📋 Session Summary</h2>
-          <p class="summary-subtitle">Review your configuration ✨</p>
-        </div>
-
-        <div class="session-preview">
-          <div class="preview-item">
-            <span class="preview-label">📸 Session Type</span>
-            <span class="preview-value" id="summarySessionType">Select session type</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">📍 Location</span>
-            <span class="preview-value" id="summaryLocation">Select location</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">🐾 Pets</span>
-            <span class="preview-value" id="summaryPets">Select number</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">👥 People</span>
-            <span class="preview-value" id="summaryPeople">Select number</span>
-          </div>
-        </div>
-
-        <div class="pricing-breakdown">
-          <div class="price-line">
-            <span class="price-label" id="baseSessionLabel">📸 Session</span>
-            <span class="price-value" id="baseSessionPrice">$0</span>
-          </div>
-          <div class="price-line" id="extraPetLine" style="display: none;">
-            <span class="price-label">🐾 Additional Pet</span>
-            <span class="price-value">+$40</span>
-          </div>
-          <div class="price-line" id="extraPersonLine" style="display: none;">
-            <span class="price-label">👥 Additional Person</span>
-            <span class="price-value">+$20</span>
-          </div>
-          <div class="price-line price-total">
-            <span class="price-label">💰 Total</span>
-            <span class="price-value" id="totalPrice">$0</span>
-          </div>
-        </div>
-
-        <button class="continue-btn" id="continueBtn" onclick="proceedToPayment()" disabled>
-          🚀 Complete Your Booking
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <a href="/cart.html" class="back-button">← Back to Session Builder</a>
+        <button class="continue-button" id="continueButton" onclick="proceedToPayment()">
+          Continue to Secure Payment 🔒
         </button>
       </div>
     </div>
   </main>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <h2 class="loading-title">🔒 Processing Your Agreement</h2>
+      <p class="loading-message">Redirecting to secure payment portal...</p>
+      
+      <div class="paw-prints">
+        <span class="paw">🐾</span>
+        <span class="paw">🐾</span>
+        <span class="paw">🐾</span>
+        <span class="paw">🐾</span>
+      </div>
+      
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      
+      <p style="font-size: 0.9rem; color: rgba(255,255,255, 0.6); margin-top: 1rem;">
+        Please do not close this window...
+      </p>
+    </div>
+  </div>
 
   <footer>
     <div class="footer-container">
@@ -1105,174 +1226,92 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:15 PM MST, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" style="color: #e07b00; text-decoration: underline;" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 09:52 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
-    let sessionConfig = {
-      sessionType: null,
-      sessionPrice: 0,
-      location: null,
-      pets: null,
-      extraPetCost: 0,
-      people: null,
-      extraPersonCost: 0
-    };
-
-    function selectOption(category, value, price) {
-      // Remove selected class from all cards in this category
-      const categoryCards = document.querySelectorAll(`[onclick*="${category}"]`);
-      categoryCards.forEach(card => card.classList.remove('selected'));
-      
-      // Add selected class to clicked card
-      event.currentTarget.classList.add('selected');
-      
-      // Update configuration
-      if (category === 'sessionType') {
-        sessionConfig.sessionType = value;
-        sessionConfig.sessionPrice = price;
-      } else if (category === 'location') {
-        sessionConfig.location = value;
-      } else if (category === 'pets') {
-        sessionConfig.pets = value;
-        sessionConfig.extraPetCost = price;
-      } else if (category === 'people') {
-        sessionConfig.people = value;
-        sessionConfig.extraPersonCost = price;
-      }
-      
-      updateSummary();
-      
-      // Auto-scroll to next question after a brief delay
-      setTimeout(() => {
-        scrollToNextQuestion(category);
-      }, 300);
-    }
-
-    function scrollToNextQuestion(currentCategory) {
-      // Define the order of questions
-      const questionOrder = ['sessionType', 'location', 'pets', 'people'];
-      const currentIndex = questionOrder.indexOf(currentCategory);
-      
-      // If there's a next question, scroll to it
-      if (currentIndex < questionOrder.length - 1) {
-        const nextSection = document.querySelector(`.config-section:nth-child(${currentIndex + 3})`);
-        
-        if (nextSection) {
-          const offset = 100; // Account for sticky header
-          const sectionPosition = nextSection.getBoundingClientRect().top + window.pageYOffset;
-          
-          window.scrollTo({
-            top: sectionPosition - offset,
-            behavior: 'smooth'
-          });
-        }
-      } else {
-        // If it's the last question, scroll to the summary or continue button on mobile
-        if (window.innerWidth <= 1024) {
-          const summaryPanel = document.querySelector('.summary-panel');
-          if (summaryPanel) {
-            const offset = 100;
-            const panelPosition = summaryPanel.getBoundingClientRect().top + window.pageYOffset;
-            
-            window.scrollTo({
-              top: panelPosition - offset,
-              behavior: 'smooth'
-            });
-          }
-        }
-      }
-    }') {
-        sessionConfig.people = value;
-        sessionConfig.extraPersonCost = price;
-      }
-      
-      updateSummary();
-    }
-
-    function updateSummary() {
-      // Update session type
-      const sessionTypeText = sessionConfig.sessionType || 'Select session type';
-      document.getElementById('summarySessionType').textContent = sessionTypeText;
-      
-      // Update location
-      const locationText = sessionConfig.location || 'Select location';
-      document.getElementById('summaryLocation').textContent = locationText;
-      
-      // Update pets
-      const petsText = sessionConfig.pets ? `${sessionConfig.pets} ${sessionConfig.pets === 1 ? 'pet' : 'pets'}` : 'Select number';
-      document.getElementById('summaryPets').textContent = petsText;
-      
-      // Update people
-      const peopleText = sessionConfig.people ? `${sessionConfig.people} ${sessionConfig.people === 1 ? 'person' : 'people'}` : 'Select number';
-      document.getElementById('summaryPeople').textContent = peopleText;
-      
-      // Update pricing
-      document.getElementById('baseSessionLabel').textContent = sessionConfig.sessionType ? `📸 ${sessionConfig.sessionType} Session` : '📸 Session';
-      document.getElementById('baseSessionPrice').textContent = `${sessionConfig.sessionPrice}`;
-      
-      // Show/hide extra costs
-      const extraPetLine = document.getElementById('extraPetLine');
-      const extraPersonLine = document.getElementById('extraPersonLine');
-      
-      if (sessionConfig.extraPetCost > 0) {
-        extraPetLine.style.display = 'flex';
-      } else {
-        extraPetLine.style.display = 'none';
-      }
-      
-      if (sessionConfig.extraPersonCost > 0) {
-        extraPersonLine.style.display = 'flex';
-      } else {
-        extraPersonLine.style.display = 'none';
-      }
-      
-      // Update total
-      const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
-      document.getElementById('totalPrice').textContent = `${total}`;
-      
-      // Enable/disable continue button
-      const continueBtn = document.getElementById('continueBtn');
-      const isComplete = sessionConfig.sessionType && 
-                        sessionConfig.location && 
-                        sessionConfig.pets !== null && 
-                        sessionConfig.people !== null;
-      
-      continueBtn.disabled = !isComplete;
-    }
-
-    function proceedToPayment() {
-      // Calculate total
-      const total = sessionConfig.sessionPrice + sessionConfig.extraPetCost + sessionConfig.extraPersonCost;
-      
-      // Prepare session data for payment page
-      const sessionData = {
-        sessionType: sessionConfig.sessionType,
-        location: sessionConfig.location,
-        numberOfPets: sessionConfig.pets,
-        numberOfPeople: sessionConfig.people,
-        totalPrice: total,
-        timestamp: Date.now()
-      };
-      
-      // Store in localStorage for payment page
-      localStorage.setItem('sessionData', JSON.stringify(sessionData));
-      
-      // Redirect to payments page
-      window.location.href = '/payment.html';
-    }
+    const STRIPE_URL = 'https://buy.stripe.com/00weVf64T5le9o5cgR9bO0h';
 
     function toggleMenu() {
-      // Mobile menu toggle functionality
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
 
-    // Initialize page
+    // Track checkbox states and enable/disable continue button
+    function updateContinueButton() {
+      const requiredCheckboxes = document.querySelectorAll('input[type="checkbox"][required]');
+      const continueButton = document.getElementById('continueButton');
+      
+      let allChecked = true;
+      requiredCheckboxes.forEach(checkbox => {
+        if (!checkbox.checked) {
+          allChecked = false;
+        }
+      });
+      
+      if (allChecked) {
+        continueButton.classList.add('enabled');
+      } else {
+        continueButton.classList.remove('enabled');
+      }
+    }
+
+    // Add event listeners to all checkboxes
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Stripe-inspired Session Builder loaded - v4.0.1');
-      updateSummary();
+      console.log('✅ On The Spot Agreement page loaded');
+      
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateContinueButton);
+      });
+      
+      // Initial button state check
+      updateContinueButton();
+    });
+
+    // Proceed to payment with agreement data and loading screen
+    function proceedToPayment() {
+      const continueButton = document.getElementById('continueButton');
+      
+      // Check if button is enabled
+      if (!continueButton.classList.contains('enabled')) {
+        alert('⚠️ Please agree to all required terms before continuing.');
+        return;
+      }
+      
+      // Collect agreement data
+      const agreementData = {
+        serviceTermsAccepted: document.getElementById('service-terms').checked,
+        photoRightsGranted: document.getElementById('photo-rights').checked,
+        cancellationPolicyAccepted: document.getElementById('cancellation-policy').checked,
+        behaviorAgreementAccepted: document.getElementById('behavior-agreement').checked,
+        liabilityWaiverAccepted: document.getElementById('liability-waiver').checked,
+        finalConsentGiven: document.getElementById('final-consent').checked,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        stripeUrl: STRIPE_URL
+      };
+      
+      // Save agreement data
+      localStorage.setItem('otsAgreementData', JSON.stringify(agreementData));
+      
+      console.log('✅ On The Spot agreements accepted:', agreementData);
+      
+      // Show loading screen
+      const loadingScreen = document.getElementById('loadingScreen');
+      loadingScreen.style.display = 'flex';
+      
+      // Redirect to Stripe after 10 seconds
+      setTimeout(() => {
+        console.log('🚀 Redirecting to Stripe:', STRIPE_URL);
+        window.location.href = STRIPE_URL;
+      }, 10000); // 10 seconds
+    }
+
+    // Log errors for debugging
+    window.addEventListener('error', function(e) {
+      console.error('Page error:', e.error);
     });
   </script>
 </body>
