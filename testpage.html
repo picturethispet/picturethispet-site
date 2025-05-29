@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Availability | PictureThisPet</title>
-  <meta name="description" content="Check availability for your pet photography session with PictureThisPet in Denver.">
+  <title>Contact Us | Picture This Pet</title>
+  <meta name="description" content="Get in touch for pet photography sessions or business partnerships.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
-      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
       --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
       --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
       --pink: #ff1493;
@@ -20,7 +19,9 @@
       --text-primary: #ffffff;
       --text-secondary: rgba(255,255,255,0.8);
       --text-muted: rgba(255,255,255,0.6);
-      --gold: #FDB75E;
+      --available-green: #10b981;
+      --error-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
     }
 
     * {
@@ -50,9 +51,9 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: white;
       background: var(--gradient-primary);
       background-attachment: fixed;
-      color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
       display: flex;
@@ -109,6 +110,26 @@
     @keyframes float {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
       50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Promotional Banner */
@@ -199,7 +220,7 @@
     }
 
     .logo-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       font-size: 1.5rem;
       font-weight: 700;
       color: white;
@@ -251,6 +272,14 @@
       width: 80%;
     }
 
+    .site-nav a.active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .site-nav a.active::after {
+      width: 80%;
+    }
+
     .book-btn {
       background: var(--gradient-primary);
       color: white;
@@ -287,147 +316,396 @@
     /* Main Content */
     main {
       margin-top: 146px;
-      flex: 1;
-      padding: 4rem 1rem;
-    }
-
-    /* Hero Section */
-    .hero-section {
-      max-width: 1200px;
-      margin: 0 auto 4rem;
-      text-align: center;
-    }
-
-    .hero-box {
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
-      padding: 3rem;
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease-out;
-    }
-
-    .hero-box:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    .hero-content h1 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      margin-bottom: 1rem;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-content p {
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    /* Google Calendar Section */
-    .calendar-section {
-      max-width: 1200px;
-      margin: 0 auto 4rem;
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
-      padding: 3rem;
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease-out;
-      text-align: center;
+      min-height: calc(100vh - 146px);
+      padding: 4rem 1rem 2rem;
       position: relative;
+      width: 100%;
     }
 
-    .calendar-section:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,255,255,0.2);
+    /* Contact Section */
+    .contact-section {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 0.8s ease-out;
     }
 
-    .calendar-header {
+    .contact-card {
       background: var(--gradient-card);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 16px;
-      padding: 1rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      padding: 3rem;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: scale(0.9);
+      display: none;
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto 2rem;
+      min-height: 600px;
+    }
+
+    .contact-card.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .contact-card.exiting {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    .contact-card-logo {
+      display: block;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .contact-card-body {
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+      padding-bottom: 3rem;
+    }
+
+    .contact-card-body.form-content {
+      justify-content: flex-start;
+      text-align: left;
+      padding-top: 1rem;
+      padding-bottom: 2rem;
+    }
+
+    .contact-card-body.centered-content {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .contact-card-body h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 3.5rem;
+      line-height: 1.1;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      animation: slideInLeft 0.8s ease-out;
+      color: var(--text-primary);
+    }
+
+    .contact-card-body h2 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-card-body p {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      opacity: 0.9;
       margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 2rem;
+      text-align: left;
+      width: 100%;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: white;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 1.2rem;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      min-height: 50px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"] {
+      text-transform: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .form-group.required label::after {
+      content: " *";
+      color: var(--error-red);
+    }
+
+    .form-error {
+      color: var(--error-red);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .form-group.error input,
+    .form-group.error select,
+    .form-group.error textarea {
+      border-color: var(--error-red);
+    }
+
+    .form-group.error .form-error {
+      display: block;
+    }
+
+    /* Choice Buttons */
+    .choice-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .choice-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      padding: 1.5rem 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .choice-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .choice-btn.selected {
+      background: var(--gradient-primary);
+      border-color: var(--orange);
+      color: white;
+      box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+    }
+
+    .choice-btn.business {
+      border-color: rgba(16, 185, 129, 0.5);
+      color: rgba(16, 185, 129, 0.9);
+    }
+
+    .choice-btn.business:hover {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.7);
+    }
+
+    .choice-btn.business.selected {
+      background: linear-gradient(135deg, var(--available-green), #059669);
+      border-color: var(--available-green);
+      color: white;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Contact Info Display */
+    .contact-info {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      text-align: center;
+    }
+
+    .contact-info h3 {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .contact-info p {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .contact-info a {
+      color: var(--orange);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    /* Button Styles */
+    .contact-card-footer {
+      margin-top: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: absolute;
-      top: 0;
-      left: 3rem;
-      right: 3rem;
-      z-index: 1;
-    }
-
-    .calendar-header h3 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--gold);
-    }
-
-    .calendar-header .nav-arrows {
-      display: flex;
       gap: 1rem;
+      width: 100%;
+      flex-shrink: 0;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .calendar-header .nav-arrow {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+    .button-group-left {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .submit-btn {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      padding: 1.2rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
     }
 
-    .calendar-header .nav-arrow:hover {
-      background: rgba(255,255,255,0.3);
-      transform: scale(1.1);
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(255, 20, 147, 0.4);
     }
 
-    .calendar-header .nav-arrow span {
-      font-size: 1.2rem;
-      color: var(--text-primary);
+    .submit-btn.business {
+      background: linear-gradient(135deg, var(--available-green), #059669);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
     }
 
-    .calendar-embed-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      height: 600px;
-      overflow: hidden;
+    .submit-btn.business:hover {
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+    }
+
+    .submit-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Success Message */
+    .success-message {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
       border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.05);
-      padding: 1rem;
+      padding: 2rem;
+      text-align: center;
+      margin: 2rem 0;
+      backdrop-filter: blur(10px);
     }
 
-    .calendar-embed {
-      position: absolute;
-      top: -50px; /* Adjust to hide the Google Calendar header */
-      left: 0;
-      width: 100%;
-      height: 700px; /* Extra height to ensure the date grid fits */
-      overflow: hidden;
+    .success-message h3 {
+      color: var(--available-green);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
-    .calendar-embed iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    .success-message p {
+      color: white;
+      opacity: 0.9;
+      margin-bottom: 0;
     }
 
     /* Footer */
@@ -456,7 +734,7 @@
     }
 
     .footer-section h4 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 700;
       font-size: 1.2rem;
       margin-bottom: 1rem;
@@ -516,29 +794,6 @@
       transform: scale(1.1);
     }
 
-    .payment-placeholder {
-      width: 40px;
-      height: 25px;
-      background: rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(0, 0, 0, 0.3);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8px;
-      font-weight: 600;
-      color: #555555;
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      text-align: center;
-      line-height: 1.1;
-    }
-
-    .payment-placeholder:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
     .footer-bottom {
       text-align: center;
       padding-top: 1.5rem;
@@ -552,18 +807,6 @@
 
     .footer-bottom a:hover {
       color: #333333;
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     /* Responsive */
@@ -655,7 +898,7 @@
 
       .site-nav.active a[href="/"] { order: 1; }
       .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/locations.html"] { order: 3; }
+      .site-nav.active a[href="/locations"] { order: 3; }
       .site-nav.active a[href="/pricing"] { order: 4; }
       .site-nav.active a[href="/contact"] { order: 5; }
       .site-nav.active .book-btn { order: 6; }
@@ -672,46 +915,98 @@
 
       main {
         margin-top: 124px;
-        padding: 2rem 1rem;
+        padding: 2rem 1rem 6rem;
       }
 
-      .hero-box {
+      .contact-section {
+        max-width: 100%;
+      }
+
+      .contact-card {
+        max-width: 100%;
         padding: 2rem;
+        margin-bottom: 2rem;
+        min-height: auto;
       }
 
-      .hero-content h1 {
+      .contact-card-logo {
+        max-width: 400px;
+        margin-bottom: 1.5rem;
+      }
+
+      .contact-card-body h1 {
         font-size: 2.5rem;
       }
 
-      .hero-content p {
+      .contact-card-body h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .contact-card-body p {
         font-size: 1.1rem;
+        margin-bottom: 1.5rem;
       }
 
-      .calendar-section {
-        padding: 2rem;
+      .form-row {
+        flex-direction: column;
+        gap: 0;
       }
 
-      .calendar-header {
-        left: 2rem;
-        right: 2rem;
+      .form-row .form-group {
+        margin-bottom: 2rem;
       }
 
-      .calendar-header h3 {
-        font-size: 1.3rem;
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 1.2rem;
+        font-size: 1.1rem;
+        min-height: 60px;
       }
 
-      .calendar-header .nav-arrow {
-        width: 35px;
-        height: 35px;
+      .form-group textarea {
+        min-height: 140px;
       }
 
-      .calendar-embed-wrapper {
-        height: 500px;
+      .choice-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin: 2rem 0;
       }
 
-      .calendar-embed {
-        top: -40px;
-        height: 600px;
+      .choice-btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 1.2rem;
+      }
+
+      .contact-card-footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding-top: 2rem;
+        margin-top: 2rem;
+      }
+
+      .button-group-left {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .submit-btn {
+        order: 1;
+        width: 100%;
+        max-width: 280px;
+        padding: 1.2rem 2rem;
+      }
+
+      .back-btn {
+        width: 100%;
+        max-width: 150px;
+        padding: 1rem;
+        text-align: center;
       }
 
       .footer-container {
@@ -743,6 +1038,11 @@
         text-align: center;
       }
 
+      footer {
+        padding: 1rem 1rem;
+        font-size: 0.8rem;
+      }
+
       .footer-section h4 {
         font-size: 1rem;
         margin-bottom: 0.5rem;
@@ -761,6 +1061,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
+        justify-content: center;
       }
     }
 
@@ -778,24 +1079,6 @@
       .promo-banner a {
         padding: 0.15rem 0.4rem;
         font-size: 0.65rem;
-      }
-
-      .calendar-embed-wrapper {
-        height: 400px;
-      }
-
-      .calendar-embed {
-        top: -30px;
-        height: 500px;
-      }
-
-      .calendar-header h3 {
-        font-size: 1.1rem;
-      }
-
-      .calendar-header .nav-arrow {
-        width: 30px;
-        height: 30px;
       }
 
       .footer-container {
@@ -820,6 +1103,12 @@
         justify-self: center;
         align-items: center;
         text-align: center;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-menu-btn { 
+        display: none !important; 
       }
     }
   </style>
@@ -849,40 +1138,19 @@
     <nav class="site-nav">
       <a href="/" aria-label="Home page">Home</a>
       <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations.html" aria-label="Locations page">Locations</a>
+      <a href="/locations" aria-label="Locations page">Locations</a>
       <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" aria-label="Contact page">Contact</a>
+      <a href="/contact" class="active" aria-label="Contact page">Contact</a>
       <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-box">
-        <div class="hero-content">
-          <h1>Check My Availability</h1>
-          <p>View my schedule for pet photography sessions with PictureThisPet in Denver. Contact me to book your appointment once you find a suitable time!</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Google Calendar Section -->
-    <section class="calendar-section">
-      <div class="calendar-header">
-        <div class="nav-arrows">
-          <div class="nav-arrow" aria-label="Previous month"><span>←</span></div>
-        </div>
-        <h3>May 2025</h3>
-        <div class="nav-arrows">
-          <div class="nav-arrow" aria-label="Next month"><span>→</span></div>
-        </div>
-      </div>
-      <div class="calendar-embed-wrapper">
-        <div class="calendar-embed">
-          <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23E4C441" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-        </div>
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="contact-card-stack" id="contactCardStack">
+        <!-- Cards will be dynamically generated -->
       </div>
     </section>
   </main>
@@ -891,8 +1159,7 @@
     <div class="footer-container">
       <div class="footer-section">
         <h4>Contact Us</h4>
-        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+        <a href="/contact" aria-label="Contact us page">Contact Us</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -920,19 +1187,444 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:43 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:12 PM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
+    // Contact form state
+    let contactData = {};
+    let currentCard = 0;
+    let totalCards = 0;
+    let contactType = '';
+
+    // Email Configuration
+    const RECIPIENT_EMAIL = 'info@picturethispet.co';
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      generateContactCards();
+      setupFormValidation();
+      setupKeyboardNavigation();
+    });
+
+    // Mobile menu toggle
     function toggleMenu() {
       const nav = document.querySelector('.site-nav');
       nav.classList.toggle('active');
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Availability page loaded');
-    });
+    // Setup keyboard navigation
+    function setupKeyboardNavigation() {
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && e.target.matches('input, textarea, select')) {
+          e.preventDefault();
+          const activeCard = document.querySelector('.contact-card.active');
+          const submitBtn = activeCard.querySelector('.submit-btn');
+          if (submitBtn && !submitBtn.classList.contains('disabled')) {
+            submitBtn.click();
+          }
+        }
+      });
+    }
+
+    // Setup form validation
+    function setupFormValidation() {
+      document.addEventListener('input', function(e) {
+        if (e.target.matches('input, select, textarea')) {
+          setTimeout(validateCurrentCard, 100);
+        }
+      });
+    }
+
+    // Phone number formatting
+    function formatPhoneNumber(input) {
+      const value = input.value.replace(/\D/g, '');
+      let formattedValue = '';
+      
+      if (value.length > 0) {
+        if (value.length <= 3) {
+          formattedValue = value;
+        } else if (value.length <= 6) {
+          formattedValue = `${value.slice(0, 3)}-${value.slice(3)}`;
+        } else {
+          formattedValue = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
+        }
+      }
+      
+      input.value = formattedValue;
+    }
+
+    // Create card element
+    function createCard(content, isActive = false) {
+      const card = document.createElement("div");
+      card.className = `contact-card${isActive ? ' active' : ''}`;
+      card.innerHTML = content;
+      return card;
+    }
+
+    // Show specific card
+    function showCard(index) {
+      const cards = document.querySelectorAll('.contact-card');
+      cards.forEach((card, i) => {
+        if (i === index) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+      currentCard = index;
+    }
+
+    // Advance to next card
+    function advanceCard() {
+      if (currentCard < totalCards - 1) {
+        const currentCardEl = document.querySelector('.contact-card.active');
+        if (currentCardEl) {
+          currentCardEl.classList.add('exiting');
+          setTimeout(() => {
+            currentCardEl.classList.remove('active', 'exiting');
+            showCard(currentCard + 1);
+          }, 400);
+        } else {
+          showCard(currentCard + 1);
+        }
+      }
+    }
+
+    // Go back to previous card
+    function goBack() {
+      if (currentCard > 0) {
+        showCard(currentCard - 1);
+      }
+    }
+
+    // Handle contact type selection
+    function selectContactType(button, type) {
+      const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
+      choiceButtons.forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
+      
+      contactType = type;
+      contactData.contactType = type;
+      
+      // Auto-advance after selection
+      setTimeout(() => {
+        generateContactCards(); // Regenerate with appropriate form
+        showCard(1); // Show the form card
+      }, 800);
+    }
+
+    // Validate current card
+    function validateCurrentCard() {
+      const activeCard = document.querySelector('.contact-card.active');
+      const requiredInputs = activeCard.querySelectorAll('input[required], select[required], textarea[required]');
+      let isValid = true;
+
+      requiredInputs.forEach(input => {
+        const formGroup = input.closest('.form-group');
+        if (!input.value.trim()) {
+          formGroup.classList.add('error');
+          isValid = false;
+        } else {
+          formGroup.classList.remove('error');
+          
+          // Email validation
+          if (input.type === 'email' && input.value.trim()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(input.value.trim())) {
+              formGroup.classList.add('error');
+              isValid = false;
+            }
+          }
+        }
+      });
+
+      // Update submit button state
+      const submitBtn = activeCard.querySelector('.submit-btn');
+      if (submitBtn) {
+        if (isValid) {
+          submitBtn.classList.remove('disabled');
+        } else {
+          submitBtn.classList.add('disabled');
+        }
+      }
+
+      return isValid;
+    }
+
+    // Submit form
+    function submitContactForm() {
+      if (validateCurrentCard()) {
+        // Save form data
+        const activeCard = document.querySelector('.contact-card.active');
+        const inputs = activeCard.querySelectorAll('input, select, textarea');
+        
+        inputs.forEach(input => {
+          if (input.name && input.value) {
+            contactData[input.name] = input.value;
+          }
+        });
+
+        // Add metadata
+        contactData.submissionTime = new Date().toISOString();
+        contactData.userAgent = navigator.userAgent;
+        contactData.recipientEmail = RECIPIENT_EMAIL;
+
+        // Construct email subject and body
+        const subject = contactType === 'client' 
+          ? `Client Inquiry: ${contactData.inquiryType || 'General'}`
+          : `Business Partnership Inquiry: ${contactData.partnershipType || 'Other'}`;
+
+        let body = `Submission Type: ${contactType === 'client' ? 'Client Inquiry' : 'Business Partnership'}\n`;
+        body += `Submission Time: ${contactData.submissionTime}\n`;
+        body += `User Agent: ${contactData.userAgent}\n\n`;
+
+        if (contactType === 'client') {
+          body += `Name: ${contactData.clientName || 'N/A'}\n`;
+          body += `Email: ${contactData.clientEmail || 'N/A'}\n`;
+          body += `Phone: ${contactData.clientPhone || 'N/A'}\n`;
+          body += `Inquiry Type: ${contactData.inquiryType || 'N/A'}\n`;
+          body += `Pet Info: ${contactData.petInfo || 'N/A'}\n`;
+          body += `Message: ${contactData.clientMessage || 'N/A'}\n`;
+        } else {
+          body += `Contact Person: ${contactData.contactName || 'N/A'}\n`;
+          body += `Business Email: ${contactData.businessEmail || 'N/A'}\n`;
+          body += `Company/Organization: ${contactData.companyName || 'N/A'}\n`;
+          body += `Phone: ${contactData.businessPhone || 'N/A'}\n`;
+          body += `Partnership Type: ${contactData.partnershipType || 'N/A'}\n`;
+          body += `Company Size: ${contactData.companySize || 'N/A'}\n`;
+          body += `Website/Social Media: ${contactData.website || 'N/A'}\n`;
+          body += `Partnership Details: ${contactData.businessMessage || 'N/A'}\n`;
+        }
+
+        // Encode subject and body for mailto URL
+        const encodedSubject = encodeURIComponent(subject);
+        const encodedBody = encodeURIComponent(body);
+
+        // Open email client with pre-filled email
+        const mailtoLink = `mailto:${RECIPIENT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
+        window.location.href = mailtoLink;
+
+        // Show success message
+        showSuccessCard();
+      }
+    }
+
+    // Show success card
+    function showSuccessCard() {
+      const container = document.getElementById('contactCardStack');
+      const successCard = createCard(`
+        <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
+        <div class="contact-card-body centered-content">
+          <div>
+            <h2>Message Sent!</h2>
+            <div class="success-message">
+              <h3>✨ Thank You!</h3>
+              <p>We've received your ${contactType === 'client' ? 'inquiry' : 'partnership request'} and will get back to you from info@picturethispet.co within 24 hours.</p>
+            </div>
+            <div class="contact-info">
+              <h3>Get In Touch Directly</h3>
+              <p>📧 <a href="mailto:info@picturethispet.co">info@picturethispet.co</a></p>
+              <p>📱 <a href="tel:+1234567890">(123) 456-7890</a></p>
+              <p>📍 Denver, Colorado</p>
+            </div>
+          </div>
+        </div>
+        <div class="contact-card-footer">
+          <div class="button-group-left">
+            <button class="back-btn" onclick="window.location.href='/'">← Back to Home</button>
+          </div>
+          <button class="submit-btn" onclick="window.location.href='/'">Book a Session →</button>
+        </div>
+      `, true);
+      
+      container.appendChild(successCard);
+      showCard(container.children.length - 1);
+    }
+
+    // Generate contact cards
+    function generateContactCards() {
+      const container = document.getElementById('contactCardStack');
+      container.innerHTML = '';
+      let cardIndex = 0;
+
+      // Card 0 - Contact Type Selection
+      const typeCard = createCard(`
+        <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
+        <div class="contact-card-body centered-content">
+          <div>
+            <h1>Get In Touch</h1>
+            <p>Whether you're looking to book a session or explore partnership opportunities, we'd love to hear from you!</p>
+            <div class="choice-buttons">
+              <button class="choice-btn ${contactType === 'client' ? 'selected' : ''}" onclick="selectContactType(this, 'client')">
+                🐾 Pet Photography<br><small style="opacity: 0.8;">Sessions & General Inquiries</small>
+              </button>
+              <button class="choice-btn business ${contactType === 'business' ? 'selected' : ''}" onclick="selectContactType(this, 'business')">
+                🤝 Business Partnership<br><small style="opacity: 0.8;">Organizations & Collaborations</small>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="contact-card-footer">
+          <div class="button-group-left"></div>
+          <div></div>
+        </div>
+      `, true);
+      container.appendChild(typeCard);
+      cardIndex++;
+
+      // Card 1 - Form based on contact type
+      if (contactType === 'client') {
+        const clientFormCard = createCard(`
+          <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
+          <div class="contact-card-body form-content">
+            <h2>Tell Us About Your Inquiry</h2>
+            
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="clientName">Your Name</label>
+                <input type="text" id="clientName" name="clientName" required placeholder="Enter your full name" value="${contactData.clientName || ''}">
+                <div class="form-error">Please enter your name</div>
+              </div>
+              <div class="form-group required">
+                <label for="clientEmail">Email Address</label>
+                <input type="email" id="clientEmail" name="clientEmail" required placeholder="your@email.com" value="${contactData.clientEmail || ''}">
+                <div class="form-error">Please enter a valid email address</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="clientPhone">Phone Number</label>
+                <input type="tel" id="clientPhone" name="clientPhone" required placeholder="(555) 555-5555" value="${contactData.clientPhone || ''}" oninput="formatPhoneNumber(this)" maxlength="12">
+                <div class="form-error">Please enter your phone number</div>
+              </div>
+              <div class="form-group required">
+                <label for="inquiryType">Type of Inquiry</label>
+                <select id="inquiryType" name="inquiryType" required>
+                  <option value="">Select inquiry type...</option>
+                  <option value="session-booking" ${contactData.inquiryType === 'session-booking' ? 'selected' : ''}>Session Booking</option>
+                  <option value="pricing-info" ${contactData.inquiryType === 'pricing-info' ? 'selected' : ''}>Pricing Information</option>
+                  <option value="availability" ${contactData.inquiryType === 'availability' ? 'selected' : ''}>Availability</option>
+                  <option value="gift-certificate" ${contactData.inquiryType === 'gift-certificate' ? 'selected' : ''}>Gift Certificate</option>
+                  <option value="general-question" ${contactData.inquiryType === 'general-question' ? 'selected' : ''}>General Question</option>
+                  <option value="other" ${contactData.inquiryType === 'other' ? 'selected' : ''}>Other</option>
+                </select>
+                <div class="form-error">Please select inquiry type</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="petInfo">Tell us about your pet(s)</label>
+              <input type="text" id="petInfo" name="petInfo" placeholder="e.g., Golden Retriever named Max, 3 years old" value="${contactData.petInfo || ''}">
+            </div>
+
+            <div class="form-group required">
+              <label for="clientMessage">Your Message</label>
+              <textarea id="clientMessage" name="clientMessage" required placeholder="Tell us about what you're looking for, preferred dates, any special requests, etc.">${contactData.clientMessage || ''}</textarea>
+              <div class="form-error">Please enter your message</div>
+            </div>
+          </div>
+          <div class="contact-card-footer">
+            <div class="button-group-left">
+              <button class="back-btn" onclick="goBack()">← Back</button>
+            </div>
+            <button class="submit-btn" onclick="submitContactForm()">Send Message →</button>
+          </div>
+        `);
+        container.appendChild(clientFormCard);
+        cardIndex++;
+
+      } else if (contactType === 'business') {
+        const businessFormCard = createCard(`
+          <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
+          <div class="contact-card-body form-content">
+            <h2>Partnership Inquiry</h2>
+            
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="contactName">Contact Person</label>
+                <input type="text" id="contactName" name="contactName" required placeholder="Your full name" value="${contactData.contactName || ''}">
+                <div class="form-error">Please enter contact person name</div>
+              </div>
+              <div class="form-group required">
+                <label for="businessEmail">Business Email</label>
+                <input type="email" id="businessEmail" name="businessEmail" required placeholder="contact@company.com" value="${contactData.businessEmail || ''}">
+                <div class="form-error">Please enter a valid business email</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="companyName">Company/Organization</label>
+                <input type="text" id="companyName" name="companyName" required placeholder="Company name" value="${contactData.companyName || ''}">
+                <div class="form-error">Please enter company name</div>
+              </div>
+              <div class="form-group required">
+                <label for="businessPhone">Phone Number</label>
+                <input type="tel" id="businessPhone" name="businessPhone" required placeholder="(555) 555-5555" value="${contactData.businessPhone || ''}" oninput="formatPhoneNumber(this)" maxlength="12">
+                <div class="form-error">Please enter phone number</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="partnershipType">Partnership Type</label>
+                <select id="partnershipType" name="partnershipType" required>
+                  <option value="">Select partnership type...</option>
+                  <option value="pet-business" ${contactData.partnershipType === 'pet-business' ? 'selected' : ''}>Pet Business Collaboration</option>
+                  <option value="veterinary" ${contactData.partnershipType === 'veterinary' ? 'selected' : ''}>Veterinary Clinic</option>
+                  <option value="rescue-shelter" ${contactData.partnershipType === 'rescue-shelter' ? 'selected' : ''}>Animal Rescue/Shelter</option>
+                  <option value="event-venue" ${contactData.partnershipType === 'event-venue' ? 'selected' : ''}>Event Venue</option>
+                  <option value="corporate" ${contactData.partnershipType === 'corporate' ? 'selected' : ''}>Corporate Photography</option>
+                  <option value="media-content" ${contactData.partnershipType === 'media-content' ? 'selected' : ''}>Media/Content Creation</option>
+                  <option value="other" ${contactData.partnershipType === 'other' ? 'selected' : ''}>Other Partnership</option>
+                </select>
+                <div class="form-error">Please select partnership type</div>
+              </div>
+              <div class="form-group">
+                <label for="companySize">Company Size</label>
+                <select id="companySize" name="companySize">
+                  <option value="">Select size...</option>
+                  <option value="1-10" ${contactData.companySize === '1-10' ? 'selected' : ''}>1-10 employees</option>
+                  <option value="11-50" ${contactData.companySize === '11-50' ? 'selected' : ''}>11-50 employees</option>
+                  <option value="51-200" ${contactData.companySize === '51-200' ? 'selected' : ''}>51-200 employees</option>
+                  <option value="200+" ${contactData.companySize === '200+' ? 'selected' : ''}>200+ employees</option>
+                  <option value="nonprofit" ${contactData.companySize === 'nonprofit' ? 'selected' : ''}>Non-profit</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="website">Website/Social Media</label>
+              <input type="text" id="website" name="website" placeholder="www.yourcompany.com or @instagram" value="${contactData.website || ''}">
+            </div>
+
+            <div class="form-group required">
+              <label for="businessMessage">Partnership Details</label>
+              <textarea id="businessMessage" name="businessMessage" required placeholder="Describe your partnership idea, goals, timeline, budget considerations, and how you envision working together...">${contactData.businessMessage || ''}</textarea>
+              <div class="form-error">Please describe your partnership proposal</div>
+            </div>
+          </div>
+          <div class="contact-card-footer">
+            <div class="button-group-left">
+              <button class="back-btn" onclick="goBack()">← Back</button>
+            </div>
+            <button class="submit-btn business" onclick="submitContactForm()">Submit Partnership Inquiry →</button>
+          </div>
+        `);
+        container.appendChild(businessFormCard);
+        cardIndex++;
+      }
+
+      totalCards = cardIndex;
+      
+      // Setup validation after cards are created
+      setTimeout(validateCurrentCard, 100);
+    }
+
+    console.log('✨ Contact page initialized successfully');
   </script>
 </body>
 </html>
