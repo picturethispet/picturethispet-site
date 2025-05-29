@@ -765,20 +765,20 @@
       justify-items: center;
     }
 
-    .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
-    .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
-    .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
-    .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
-    .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
-    .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
-    .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
-    .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
-    .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
-    .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
-    .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
-    .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
-    .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
-    .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
+    .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
+    .payment-methods img:nth-child(2) { grid-area: 1 / 2; }
+    .payment-methods img:nth-child(3) { grid-area: 1 / 3; }
+    .payment-methods img:nth-child(4) { grid-area: 1 / 4; }
+    .payment-methods img:nth-child(5) { grid-area: 1 / 5; }
+    .payment-methods img:nth-child(6) { grid-area: 1 / 6; }
+    .payment-methods img:nth-child(7) { grid-area: 1 / 7; }
+    .payment-methods img:nth-child(8) { grid-area: 2 / 7; }
+    .payment-methods img:nth-child(9) { grid-area: 2 / 6; }
+    .payment-methods img:nth-child(10) { grid-area: 2 / 5; }
+    .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
+    .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
+    .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
+    .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
 
     .payment-icon {
       width: 40px;
@@ -1187,7 +1187,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 11:16 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:12 PM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -1199,7 +1199,7 @@
     let contactType = '';
 
     // Email Configuration
-    const RECIPIENT_EMAIL = 'info@picturethispet.com';
+    const RECIPIENT_EMAIL = 'info@picturethispet.co';
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
@@ -1369,9 +1369,42 @@
         // Add metadata
         contactData.submissionTime = new Date().toISOString();
         contactData.userAgent = navigator.userAgent;
-        contactData.recipientEmail = '@picturethispet.com';
+        contactData.recipientEmail = RECIPIENT_EMAIL;
 
-        console.log('Contact form submitted to info@picturethispet.co:', contactData);
+        // Construct email subject and body
+        const subject = contactType === 'client' 
+          ? `Client Inquiry: ${contactData.inquiryType || 'General'}`
+          : `Business Partnership Inquiry: ${contactData.partnershipType || 'Other'}`;
+
+        let body = `Submission Type: ${contactType === 'client' ? 'Client Inquiry' : 'Business Partnership'}\n`;
+        body += `Submission Time: ${contactData.submissionTime}\n`;
+        body += `User Agent: ${contactData.userAgent}\n\n`;
+
+        if (contactType === 'client') {
+          body += `Name: ${contactData.clientName || 'N/A'}\n`;
+          body += `Email: ${contactData.clientEmail || 'N/A'}\n`;
+          body += `Phone: ${contactData.clientPhone || 'N/A'}\n`;
+          body += `Inquiry Type: ${contactData.inquiryType || 'N/A'}\n`;
+          body += `Pet Info: ${contactData.petInfo || 'N/A'}\n`;
+          body += `Message: ${contactData.clientMessage || 'N/A'}\n`;
+        } else {
+          body += `Contact Person: ${contactData.contactName || 'N/A'}\n`;
+          body += `Business Email: ${contactData.businessEmail || 'N/A'}\n`;
+          body += `Company/Organization: ${contactData.companyName || 'N/A'}\n`;
+          body += `Phone: ${contactData.businessPhone || 'N/A'}\n`;
+          body += `Partnership Type: ${contactData.partnershipType || 'N/A'}\n`;
+          body += `Company Size: ${contactData.companySize || 'N/A'}\n`;
+          body += `Website/Social Media: ${contactData.website || 'N/A'}\n`;
+          body += `Partnership Details: ${contactData.businessMessage || 'N/A'}\n`;
+        }
+
+        // Encode subject and body for mailto URL
+        const encodedSubject = encodeURIComponent(subject);
+        const encodedBody = encodeURIComponent(body);
+
+        // Open email client with pre-filled email
+        const mailtoLink = `mailto:${RECIPIENT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
+        window.location.href = mailtoLink;
 
         // Show success message
         showSuccessCard();
