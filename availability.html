@@ -270,6 +270,16 @@
       box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
 
+    .book-btn.pulse {
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -294,7 +304,7 @@
     /* Hero Section */
     .hero-section {
       max-width: 1200px;
-      margin: 0 auto 4rem;
+      margin: 0 auto 2rem;
       text-align: center;
     }
 
@@ -304,7 +314,7 @@
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 24px;
       box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
-      padding: 3rem;
+      padding: 2rem;
       transition: all 0.3s ease;
       animation: fadeInUp 0.6s ease-out;
     }
@@ -328,7 +338,7 @@
       font-size: 1.3rem;
       color: var(--text-secondary);
       line-height: 1.6;
-      margin-bottom: 2rem;
+      margin-bottom: 0;
     }
 
     /* Google Calendar Section */
@@ -346,78 +356,27 @@
       transform: translateY(-5px);
     }
 
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: absolute;
-      top: -3rem;
-      left: 3rem;
-      right: 3rem;
-      z-index: 1;
-    }
-
-    .calendar-header h3 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .calendar-header .nav-arrows {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .calendar-header .nav-arrow {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .calendar-header .nav-arrow:hover {
-      background: rgba(255,255,255,0.3);
-      transform: scale(1.1);
-    }
-
-    .calendar-header .nav-arrow span {
-      font-size: 1.2rem;
-      color: var(--text-primary);
-    }
-
     .calendar-embed-wrapper {
       position: relative;
       width: 100%;
       max-width: 100%;
       height: 600px;
       overflow: hidden;
-      border-radius: 16px;
+      border-radius: 24px;
       border: 1px solid rgba(255,255,255,0.2);
       background: rgba(255,255,255,0.05);
       padding: 1rem;
-      margin-top: 3rem;
     }
 
-    .calendar-embed {
-      position: absolute;
-      top: -50px; /* Adjust to hide the Google Calendar header */
-      left: 0;
-      width: 100%;
-      height: 700px; /* Extra height to ensure the date grid fits */
-      overflow: hidden;
-    }
-
-    .calendar-embed iframe {
+    .calendar-embed-wrapper iframe {
       width: 100%;
       height: 100%;
       border: none;
+    }
+
+    .calendar-section .book-btn {
+      display: inline-block;
+      margin-top: 1rem;
     }
 
     /* Footer */
@@ -666,7 +625,7 @@
       }
 
       .hero-box {
-        padding: 2rem;
+        padding: 1.5rem;
       }
 
       .hero-content h1 {
@@ -681,28 +640,8 @@
         padding: 0;
       }
 
-      .calendar-header {
-        left: 2rem;
-        right: 2rem;
-      }
-
-      .calendar-header h3 {
-        font-size: 1.8rem;
-      }
-
-      .calendar-header .nav-arrow {
-        width: 35px;
-        height: 35px;
-      }
-
       .calendar-embed-wrapper {
         height: 500px;
-        margin-top: 2rem; /* Adjusted for responsiveness */
-      }
-
-      .calendar-embed {
-        top: -40px;
-        height: 600px;
       }
 
       .footer-container {
@@ -773,21 +712,6 @@
 
       .calendar-embed-wrapper {
         height: 400px;
-        margin-top: 1.5rem; /* Adjusted for responsiveness */
-      }
-
-      .calendar-embed {
-        top: -30px;
-        height: 500px;
-      }
-
-      .calendar-header h3 {
-        font-size: 1.5rem;
-      }
-
-      .calendar-header .nav-arrow {
-        width: 30px;
-        height: 30px;
       }
 
       .footer-container {
@@ -862,20 +786,10 @@
 
     <!-- Google Calendar Section -->
     <section class="calendar-section">
-      <div class="calendar-header" id="calendarHeader">
-        <div class="nav-arrows">
-          <div class="nav-arrow" id="prevMonth" onclick="navigateMonth(-1)" aria-label="Previous month"><span>←</span></div>
-        </div>
-        <h3 id="monthDisplay">May 2025</h3>
-        <div class="nav-arrows">
-          <div class="nav-arrow" id="nextMonth" onclick="navigateMonth(1)" aria-label="Next month"><span>→</span></div>
-        </div>
-      </div>
       <div class="calendar-embed-wrapper">
-        <div class="calendar-embed">
-          <iframe id="calendarIframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=MThiZWI4YTBmODcxNGMwNjI1YWNlYmZmY2JhZjM4YWQ0NTM5YjhiYmRmMGEzOTc0MGZlODFkMDVjYjg5MWVkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDNjZmZjMTRjMzhjMzA1YmNlZDQ4ODZmNjIxYjkxMjY5NDY5MTZjY2NmOGViNWNlN2Y3MWI3YmFmMzMxOTY0N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%237cb342&color=%23ff2968&color=%23e4c441" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-        </div>
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&mode=MONTH&src=MThiZWI4YTBmODcxNGMwNjI1YWNlYmZmY2JhZjM4YWQ0NTM5YjhiYmRmMGEzOTc0MGZlODFkMDVjYjg5MWVkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDNjZmZjMTRjMzhjMzA1YmNlZDQ4ODZmNjIxYjkxMjY5NDY5MTZjY2NmOGViNWNlN2Y3MWI3YmFmMzMxOTY0N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%237cb342&color=%23ff2968&color=%23e4c441" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
       </div>
+      <a href="/cart" class="book-btn pulse" aria-label="Ready to book your session">Ready to Book</a>
     </section>
   </main>
 
@@ -912,7 +826,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 12:35 PM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:05 PM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -922,52 +836,8 @@
       nav.classList.toggle('active');
     }
 
-    // Initialize current date for the custom header
-    let currentDate = new Date(2025, 4, 28); // May 2025 (month is 0-based in JS)
-
-    const monthDisplay = document.getElementById('monthDisplay');
-    const iframe = document.getElementById('calendarIframe');
-
-    function updateMonthDisplay() {
-      const options = { month: 'long', year: 'numeric' };
-      monthDisplay.textContent = currentDate.toLocaleDateString('en-US', options);
-    }
-
-    function navigateMonth(direction) {
-      // Update the local date
-      currentDate.setMonth(currentDate.getMonth() + direction);
-      updateMonthDisplay();
-
-      // Simulate click on Google Calendar's navigation arrows
-      try {
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        const arrows = iframeDoc.querySelectorAll('button[aria-label]');
-        let targetArrow;
-
-        if (direction === -1) {
-          targetArrow = Array.from(arrows).find(btn => btn.getAttribute('aria-label').includes('Previous'));
-        } else {
-          targetArrow = Array.from(arrows).find(btn => btn.getAttribute('aria-label').includes('Next'));
-        }
-
-        if (targetArrow) {
-          targetArrow.click();
-        } else {
-          console.warn('Navigation arrow not found in iframe');
-        }
-      } catch (e) {
-        console.error('Error accessing iframe content:', e);
-        // Fallback: Reload iframe with updated month
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth() + 1; // 1-based for URL
-        const newSrc = `https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=MThiZWI4YTBmODcxNGMwNjI1YWNlYmZmY2JhZjM4YWQ0NTM5YjhiYmRmMGEzOTc0MGZlODFkMDVjYjg5MWVkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDNjZmZjMTRjMzhjMzA1YmNlZDQ4ODZmNjIxYjkxMjY5NDY5MTZjY2NmOGViNWNlN2Y3MWI3YmFmMzMxOTY0N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%237cb342&color=%23ff2968&color=%23e4c441&date=${year}${month.toString().padStart(2, '0')}01`;
-        iframe.src = newSrc;
-      }
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Availability page loaded');
-      updateMonthDisplay();
     });
   </script>
 </body>
