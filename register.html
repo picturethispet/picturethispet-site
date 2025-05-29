@@ -275,14 +275,80 @@
       font-size: 1.8rem;
       font-weight: 600;
       color: var(--text-primary);
+      margin-bottom: 0;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .modal-content {
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.2);
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .modal-content h3 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-primary);
       margin-bottom: 1rem;
     }
 
-    .popup-card p {
+    .modal-content p {
       font-size: 1.1rem;
       color: var(--text-secondary);
       line-height: 1.6;
-      margin-bottom: 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .register-btn {
+      background: var(--gradient-primary);
+      color: var(--text-primary);
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+      display: inline-block;
+    }
+
+    .register-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     /* Footer */
@@ -452,8 +518,20 @@
         font-size: 1.6rem;
       }
 
-      .popup-card p {
+      .modal-content {
+        padding: 1.5rem;
+      }
+
+      .modal-content h3 {
+        font-size: 1.8rem;
+      }
+
+      .modal-content p {
         font-size: 1rem;
+      }
+
+      .register-btn {
+        padding: 0.6rem 1.5rem;
       }
 
       .footer-container {
@@ -515,6 +593,10 @@
         font-size: 1.4rem;
       }
 
+      .modal-content h3 {
+        font-size: 1.6rem;
+      }
+
       .footer-container {
         grid-template-areas: 
           "contact-us connect"
@@ -562,29 +644,36 @@
     <section class="register-section">
       <div class="register-box">
         <div class="register-content">
-          <h1>Great, let's get you paid and in the queue!</h1>
+          <h1>🎉 Great, let's get you paid and in the queue!</h1>
           <p>Select your pop-up event to proceed to payment.</p>
           <div class="popup-grid">
-            <!-- Cheesman Pop-Up -->
-            <div class="popup-card" onclick="proceedToPayment('cheesman')">
-              <h3>Cheesman Pop-Up</h3>
-              <p>Pet photography at Cheesman Park. $25 per session.</p>
+            <!-- Cheesman Park Pop-Up -->
+            <div class="popup-card" onclick="showModal('cheesman')">
+              <h3>Cheesman Park Pop-Up 📸</h3>
             </div>
-            <!-- City Pop-Up -->
-            <div class="popup-card" onclick="proceedToPayment('city')">
-              <h3>City Pop-Up</h3>
-              <p>Pet photography at City Park. $25 per session.</p>
+            <!-- City Park Pop-Up -->
+            <div class="popup-card" onclick="showModal('city')">
+              <h3>City Park Pop-Up 📸</h3>
             </div>
             <!-- Other Pop-Up (Placeholder) -->
             <div class="popup-card disabled">
-              <h3>Other Pop-Up</h3>
-              <p>Stay tuned for more pop-up events!</p>
+              <h3>Other Pop-Up 📸</h3>
             </div>
           </div>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Modal -->
+  <div id="popupModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modalTitle"></h3>
+      <p id="modalPrice"></p>
+      <p id="modalDetails"></p>
+      <a id="registerButton" href="#" class="register-btn">Register</a>
+    </div>
+  </div>
 
   <footer>
     <div class="footer-container">
@@ -619,20 +708,49 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:03 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:12 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
     const stripeLinks = {
-      cheesman: "https://checkout.stripe.com/pay/your-cheesman-checkout-session-link",
+      cheesman: "https://buy.stripe.com/28EbJ33WLfZS8k15St9bO0m",
       city: "https://checkout.stripe.com/pay/your-city-checkout-session-link"
     };
 
-    function proceedToPayment(popup) {
-      if (stripeLinks[popup]) {
-        window.location.href = stripeLinks[popup];
+    const popupDetails = {
+      cheesman: {
+        title: "Cheesman Park Pop-Up 📸",
+        price: "💰 $30",
+        details: "Includes three photos and access to online gallery."
+      },
+      city: {
+        title: "City Park Pop-Up 📸",
+        price: "💰 $30",
+        details: "Includes three photos and access to online gallery."
       }
+    };
+
+    function showModal(popup) {
+      const modal = document.getElementById("popupModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalPrice = document.getElementById("modalPrice");
+      const modalDetails = document.getElementById("modalDetails");
+      const registerButton = document.getElementById("registerButton");
+
+      modalTitle.textContent = popupDetails[popup].title;
+      modalPrice.textContent = popupDetails[popup].price;
+      modalDetails.textContent = popupDetails[popup].details;
+      registerButton.href = stripeLinks[popup];
+
+      modal.style.display = "flex";
+
+      // Close modal when clicking outside
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
