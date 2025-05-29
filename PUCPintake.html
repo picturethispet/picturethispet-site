@@ -1,0 +1,1032 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cheesman Park Pop-Up Intake | PictureThisPet</title>
+  <meta name="description" content="Complete your registration for the Cheesman Park pet photography pop-up event with PictureThisPet in Denver.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
+      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
+      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      --pink: #ff1493;
+      --purple: #8a2be2;
+      --orange: #ff8c00;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255,255,255,0.8);
+      --text-muted: rgba(255,255,255,0.6);
+      --gold: #FDB75E;
+      --error-red: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--pink) transparent;
+    }
+
+    html::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    html::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+    }
+
+    html::-webkit-scrollbar-thumb {
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--gradient-primary);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Floating background elements */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: float 20s infinite linear;
+    }
+
+    .orb:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+      top: 10%;
+      left: 80%;
+      animation-delay: 0s;
+    }
+
+    .orb:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      top: 60%;
+      left: 10%;
+      animation-delay: -7s;
+    }
+
+    .orb:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: 30%;
+      left: 20%;
+      animation-delay: -14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1rem 1.5rem;
+      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      height: 96px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+
+    .desktop-logo {
+      height: 100px;
+    }
+
+    .logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text sup {
+      font-size: 0.8rem;
+      vertical-align: super;
+      margin-left: 2px;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Main Content */
+    main {
+      margin-top: 96px;
+      flex: 1;
+      padding: 4rem 1rem;
+    }
+
+    /* Intake Section */
+    .intake-section {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .intake-card {
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      padding: 3rem;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto 2rem;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .intake-card-logo {
+      display: block;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .intake-card-body {
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+      padding-bottom: 3rem;
+    }
+
+    .intake-card-body.form-content {
+      justify-content: flex-start;
+      text-align: left;
+      padding-top: 1rem;
+      padding-bottom: 2rem;
+    }
+
+    .intake-card-body h1 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .intake-card-body p {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 2rem;
+      text-align: left;
+      width: 100%;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: white;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1.2rem;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      min-height: 50px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"] {
+      text-transform: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .form-group.required label::after {
+      content: " *";
+      color: var(--error-red);
+    }
+
+    .form-error {
+      color: var(--error-red);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: var(--error-red);
+    }
+
+    .form-group.error .form-error {
+      display: block;
+    }
+
+    /* Button Styles */
+    .intake-card-footer {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      flex-shrink: 0;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .submit-btn {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      padding: 1.2rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(255, 20, 147, 0.4);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Loading Animation */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid var(--text-muted);
+      border-top: 5px solid var(--orange);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .modal-content {
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.2);
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .modal-content h3 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .modal-content p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Footer */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding: 2rem 1.5rem;
+      color: #666666;
+      font-size: 0.9rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+      justify-items: center;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-section h4 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-section a {
+      color: #555555;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #333333;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 0.5rem;
+      justify-items: center;
+    }
+
+    .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
+    .payment-methods img:nth-child(2) { grid-area: 1 / 2; }
+    .payment-methods img:nth-child(3) { grid-area: 1 / 3; }
+    .payment-methods img:nth-child(4) { grid-area: 1 / 4; }
+    .payment-methods img:nth-child(5) { grid-area: 1 / 5; }
+    .payment-methods img:nth-child(6) { grid-area: 1 / 6; }
+    .payment-methods img:nth-child(7) { grid-area: 1 / 7; }
+    .payment-methods img:nth-child(8) { grid-area: 2 / 7; }
+    .payment-methods img:nth-child(9) { grid-area: 2 / 6; }
+    .payment-methods img:nth-child(10) { grid-area: 2 / 5; }
+    .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
+    .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
+    .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
+    .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
+
+    .payment-icon {
+      width: 40px;
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .payment-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .footer-bottom a {
+      color: #e07b00;
+      text-decoration: underline;
+    }
+
+    .footer-bottom a:hover {
+      color: #333333;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        height: 84px;
+        padding: 0.5rem 1rem;
+      }
+
+      .desktop-logo {
+        height: 80px;
+      }
+
+      .logo-text {
+        font-size: 1.2rem;
+      }
+
+      .logo-text sup {
+        font-size: 0.6rem;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      main {
+        margin-top: 84px;
+        padding: 2rem 1rem;
+      }
+
+      .intake-section {
+        max-width: 100%;
+      }
+
+      .intake-card {
+        max-width: 100%;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        min-height: auto;
+      }
+
+      .intake-card-logo {
+        max-width: 400px;
+        margin-bottom: 1.5rem;
+      }
+
+      .intake-card-body h1 {
+        font-size: 2.5rem;
+      }
+
+      .intake-card-body p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .form-row .form-group {
+        margin-bottom: 2rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 1.2rem;
+        font-size: 1.1rem;
+        min-height: 60px;
+      }
+
+      .form-group textarea {
+        min-height: 140px;
+      }
+
+      .intake-card-footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding-top: 2rem;
+        margin-top: 2rem;
+      }
+
+      .submit-btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 1.2rem 2rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+      }
+
+      .modal-content h3 {
+        font-size: 1.8rem;
+      }
+
+      .modal-content p {
+        font-size: 1rem;
+      }
+
+      .footer-container {
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+        gap: 0.5rem;
+        justify-items: center;
+      }
+
+      .footer-section:nth-child(1) {
+        grid-area: contact-us;
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        grid-area: connect;
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        grid-area: we-accept;
+        justify-self: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      footer {
+        padding: 1rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        margin-bottom: 0.2rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-bottom {
+        padding-top: 1rem;
+      }
+
+      .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .intake-card-body h1 {
+        font-size: 2rem;
+      }
+
+      .modal-content h3 {
+        font-size: 1.6rem;
+      }
+
+      .footer-container {
+        grid-template-areas: 
+          "contact-us connect"
+          "we-accept we-accept";
+      }
+
+      .footer-section:nth-child(1) {
+        justify-self: start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-section:nth-child(2) {
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .footer-section:nth-child(3) {
+        justify-self: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <header>
+    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+      <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+      <span class="logo-text">PictureThisPet<sup>®</sup></span>
+    </a>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <main>
+    <!-- Intake Section -->
+    <section class="intake-section">
+      <div class="intake-card">
+        <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="intake-card-logo" />
+        <div class="intake-card-body form-content">
+          <h1>Cheesman Park Pop-Up Intake</h1>
+          
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
+              <div class="form-error">Please enter your first name</div>
+            </div>
+            <div class="form-group required">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name">
+              <div class="form-error">Please enter your last name</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" required placeholder="8881234567" oninput="formatPhoneNumber(this)" maxlength="10">
+              <div class="form-error">Please enter a valid phone number (e.g., 8881234567)</div>
+            </div>
+            <div class="form-group required">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" required placeholder="your@email.com">
+              <div class="form-error">Please enter a valid email address</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="zip">Zip Code</label>
+              <input type="text" id="zip" name="zip" required placeholder="80203" maxlength="5">
+              <div class="form-error">Please enter a valid 5-digit zip code</div>
+            </div>
+            <div class="form-group required">
+              <label for="petName">Pet Name</label>
+              <input type="text" id="petName" name="petName" required placeholder="e.g., Max">
+              <div class="form-error">Please enter your pet's name</div>
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label for="petAge">Pet Age</label>
+            <input type="text" id="petAge" name="petAge" required placeholder="e.g., 3 years">
+            <div class="form-error">Please enter your pet's age</div>
+          </div>
+        </div>
+        <div class="intake-card-footer">
+          <button class="submit-btn" onclick="submitIntakeForm()">Register & Add to Queue</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <h3>Great!</h3>
+      <p>We will notify you when we are ready. Feel free to enjoy the park or visit the Secret Garden Cafe on the north side of the park off of 13th with dog friendly patio.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+      </div>
+      <div class="footer-section socials">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+      </div>
+      <div class="footer-section">
+        <h4>We Accept</h4>
+        <div class="payment-methods">
+          <img src="/assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="/assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="/assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+          <img src="/assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="/assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="/assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="/assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="/assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+          <img src="/assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:21 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+    </div>
+  </footer>
+
+  <script>
+    // Phone number formatting (remove non-digits, ensure 10 digits)
+    function formatPhoneNumber(input) {
+      const value = input.value.replace(/\D/g, '');
+      input.value = value;
+    }
+
+    // Validate the form
+    function validateForm() {
+      const requiredInputs = document.querySelectorAll('input[required]');
+      let isValid = true;
+
+      requiredInputs.forEach(input => {
+        const formGroup = input.closest('.form-group');
+        if (!input.value.trim()) {
+          formGroup.classList.add('error');
+          isValid = false;
+        } else {
+          formGroup.classList.remove('error');
+
+          // Email validation
+          if (input.type === 'email' && input.value.trim()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(input.value.trim())) {
+              formGroup.classList.add('error');
+              isValid = false;
+            }
+          }
+
+          // Phone validation (must be 10 digits)
+          if (input.type === 'tel' && input.value.trim()) {
+            const phoneRegex = /^\d{10}$/;
+            if (!phoneRegex.test(input.value.trim())) {
+              formGroup.classList.add('error');
+              isValid = false;
+            }
+          }
+
+          // Zip validation (must be 5 digits)
+          if (input.id === 'zip' && input.value.trim()) {
+            const zipRegex = /^\d{5}$/;
+            if (!zipRegex.test(input.value.trim())) {
+              formGroup.classList.add('error');
+              isValid = false;
+            }
+          }
+        }
+      });
+
+      const submitBtn = document.querySelector('.submit-btn');
+      if (submitBtn) {
+        if (isValid) {
+          submitBtn.removeAttribute('disabled');
+        } else {
+          submitBtn.setAttribute('disabled', 'disabled');
+        }
+      }
+
+      return isValid;
+    }
+
+    // Submit the intake form
+    async function submitIntakeForm() {
+      if (!validateForm()) return;
+
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const successModal = document.getElementById('successModal');
+      const submitBtn = document.querySelector('.submit-btn');
+
+      submitBtn.setAttribute('disabled', 'disabled');
+      loadingOverlay.style.display = 'flex';
+
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const zip = document.getElementById('zip').value;
+      const petName = document.getElementById('petName').value;
+      const petAge = document.getElementById('petAge').value;
+
+      const formData = {
+        popUpLocation: "Cheesman",
+        name: `${firstName} ${lastName}`,
+        phone: phone,
+        email: email,
+        zip: zip,
+        petInfo: `${petName}, ${petAge}`,
+        notes: `Zip: ${zip}`
+      };
+
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbyStdh9WkRTuH9-KKiTwqYxjD1q9S7piyY5_hf1j0dv0LFVRNTh7YOHQOJH3W9argzoKg/exec', {
+          method: 'POST',
+          body: JSON.stringify(formData),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const result = await response.json();
+        if (result.status === 'success') {
+          loadingOverlay.style.display = 'none';
+          successModal.style.display = 'flex';
+
+          // Close modal when clicking outside
+          successModal.addEventListener('click', function(e) {
+            if (e.target === successModal) {
+              successModal.style.display = 'none';
+            }
+          });
+        } else {
+          throw new Error('Failed to save data');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while saving your data. Please try again.');
+        loadingOverlay.style.display = 'none';
+        submitBtn.removeAttribute('disabled');
+      }
+    }
+
+    // Setup form validation
+    document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('input', function(e) {
+        if (e.target.matches('input')) {
+          setTimeout(validateForm, 100);
+        }
+      });
+
+      console.log('Cheesman Park Pop-Up Intake page loaded');
+    });
+  </script>
+</body>
+</html>
