@@ -373,13 +373,42 @@
       animation: fadeIn 0.3s ease-out;
     }
 
+    .loading-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .loading-content p {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
     .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid var(--text-muted);
+      border-top: 6px solid var(--orange);
+      border-radius: 50%;
+      animation: spin 1.5s ease-in-out infinite;
+      position: relative;
+    }
+
+    .loading-spinner::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
       width: 40px;
       height: 40px;
-      border: 4px solid var(--text-muted);
-      border-top: 4px solid var(--orange);
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      transform: translate(-50%, -50%);
+      animation: pulse 2s ease-in-out infinite;
     }
 
     @keyframes spin {
@@ -387,57 +416,15 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.3s ease-out;
-    }
-
-    .modal-content {
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0, 0.2);
-      padding: 2rem;
-      max-width: 500px;
-      width: 90%;
-      text-align: center;
-      animation: slideIn 0.3s ease-out;
-    }
-
-    .modal-content h3 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-    }
-
-    .modal-content p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
     }
 
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
-    }
-
-    @keyframes slideIn {
-      from { transform: translateY(-20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
     }
 
     /* Footer */
@@ -626,16 +613,13 @@
         padding: 0.9rem 1.5rem;
       }
 
-      .modal-content {
-        padding: 1.5rem;
+      .loading-content p {
+        font-size: 1.2rem;
       }
 
-      .modal-content h3 {
-        font-size: 1.8rem;
-      }
-
-      .modal-content p {
-        font-size: 1rem;
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
       }
 
       .footer-container {
@@ -697,10 +681,6 @@
     @media (max-width: 480px) {
       .intake-card-body h1 {
         font-size: 2rem;
-      }
-
-      .modal-content h3 {
-        font-size: 1.6rem;
       }
 
       .footer-container {
@@ -818,14 +798,9 @@
 
   <!-- Loading Overlay -->
   <div id="loadingOverlay" class="loading-overlay">
-    <div class="loading-spinner"></div>
-  </div>
-
-  <!-- Modal -->
-  <div id="successModal" class="modal">
-    <div class="modal-content">
-      <h3>Great!</h3>
-      <p>We will notify you when we are ready. Feel free to enjoy the park or visit the Secret Garden Cafe on the north side of the park off of 13th with dog friendly patio.</p>
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p>Securing your place in line…</p>
     </div>
   </div>
 
@@ -862,7 +837,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:10 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:27 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -932,7 +907,6 @@
       if (!validateForm()) return;
 
       const loadingOverlay = document.getElementById('loadingOverlay');
-      const successModal = document.getElementById('successModal');
       const submitBtn = document.querySelector('.submit-btn');
 
       submitBtn.setAttribute('disabled', 'disabled');
@@ -958,18 +932,10 @@
       const form = document.getElementById('hiddenForm');
       form.submit();
 
-      // Show success modal after a short delay (simulating submission)
+      // Redirect to /PUCPsuccess after 6 seconds
       setTimeout(() => {
-        loadingOverlay.style.display = 'none';
-        successModal.style.display = 'flex';
-
-        // Close modal when clicking outside
-        successModal.addEventListener('click', function(e) {
-          if (e.target === successModal) {
-            successModal.style.display = 'none';
-          }
-        });
-      }, 2000);
+        window.location.href = '/PUCPsuccess';
+      }, 6000);
     }
 
     // Setup form validation
