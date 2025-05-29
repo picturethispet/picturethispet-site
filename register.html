@@ -182,14 +182,14 @@
       padding: 4rem 1rem;
     }
 
-    /* Hero Section */
-    .hero-section {
+    /* Register Section */
+    .register-section {
       max-width: 1200px;
       margin: 0 auto 4rem;
       text-align: center;
     }
 
-    .hero-box {
+    .register-box {
       background: var(--gradient-card);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255,255,255,0.1);
@@ -200,12 +200,12 @@
       animation: fadeInUp 0.6s ease-out;
     }
 
-    .hero-box:hover {
+    .register-box:hover {
       transform: translateY(-5px);
       border-color: rgba(255,255,255,0.2);
     }
 
-    .hero-content h1 {
+    .register-content h1 {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 3rem;
       font-weight: 700;
@@ -215,28 +215,14 @@
       letter-spacing: -0.02em;
     }
 
-    .hero-content p {
+    .register-content p {
       font-size: 1.3rem;
       color: var(--text-secondary);
       line-height: 1.6;
       margin-bottom: 2rem;
     }
 
-    /* Pop-Up Selection Section */
-    .popup-section {
-      max-width: 1200px;
-      margin: 0 auto 4rem;
-      padding: 0;
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease-out;
-      text-align: center;
-      position: relative;
-    }
-
-    .popup-section:hover {
-      transform: translateY(-5px);
-    }
-
+    /* Pop-Up Selection Cards */
     .popup-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -255,11 +241,13 @@
       animation: fadeInUp 0.6s ease-out;
       text-align: center;
       position: relative;
+      cursor: pointer;
     }
 
     .popup-card:hover {
-      transform: translateY(-5px);
+      transform: scale(1.05);
       border-color: rgba(255,255,255,0.2);
+      box-shadow: 0 25px 70px rgba(0,0,0, 0.15);
     }
 
     .popup-card.disabled {
@@ -294,27 +282,7 @@
       font-size: 1.1rem;
       color: var(--text-secondary);
       line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-
-    .popup-card .join-btn {
-      background: var(--gradient-primary);
-      color: var(--text-primary);
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 1rem;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
-      display: inline-block;
-    }
-
-    .popup-card .join-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
+      margin-bottom: 0;
     }
 
     /* Footer */
@@ -458,20 +426,16 @@
         padding: 2rem 1rem;
       }
 
-      .hero-box {
+      .register-box {
         padding: 2rem;
       }
 
-      .hero-content h1 {
+      .register-content h1 {
         font-size: 2.5rem;
       }
 
-      .hero-content p {
+      .register-content p {
         font-size: 1.1rem;
-      }
-
-      .popup-section {
-        padding: 0;
       }
 
       .popup-grid {
@@ -543,7 +507,7 @@
     }
 
     @media (max-width: 480px) {
-      .hero-content h1 {
+      .register-content h1 {
         font-size: 2rem;
       }
 
@@ -594,36 +558,29 @@
   </header>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-box">
-        <div class="hero-content">
-          <h1>Select a Pop-Up Event</h1>
-          <p>Join one of our pet photography pop-up events in Denver. Select an event below to register and pay.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pop-Up Selection Section -->
-    <section class="popup-section">
-      <div class="popup-grid">
-        <!-- Cheesman Pop-Up -->
-        <div class="popup-card">
-          <h3>Cheesman Pop-Up</h3>
-          <p>Pet photography at Cheesman Park. $25 per session.</p>
-          <a href="/popups/cheesman/intake" class="join-btn">Join</a>
-        </div>
-        <!-- City Pop-Up -->
-        <div class="popup-card">
-          <h3>City Pop-Up</h3>
-          <p>Pet photography at City Park. $25 per session.</p>
-          <a href="/popups/city/intake" class="join-btn">Join</a>
-        </div>
-        <!-- Other Pop-Up (Placeholder) -->
-        <div class="popup-card disabled">
-          <h3>Other Pop-Up</h3>
-          <p>Stay tuned for more pop-up events!</p>
-          <a href="/popups/other/intake" class="join-btn">Join</a>
+    <!-- Register Section -->
+    <section class="register-section">
+      <div class="register-box">
+        <div class="register-content">
+          <h1>Great, let's get you paid and in the queue!</h1>
+          <p>Select your pop-up event to proceed to payment.</p>
+          <div class="popup-grid">
+            <!-- Cheesman Pop-Up -->
+            <div class="popup-card" onclick="proceedToPayment('cheesman')">
+              <h3>Cheesman Pop-Up</h3>
+              <p>Pet photography at Cheesman Park. $25 per session.</p>
+            </div>
+            <!-- City Pop-Up -->
+            <div class="popup-card" onclick="proceedToPayment('city')">
+              <h3>City Pop-Up</h3>
+              <p>Pet photography at City Park. $25 per session.</p>
+            </div>
+            <!-- Other Pop-Up (Placeholder) -->
+            <div class="popup-card disabled">
+              <h3>Other Pop-Up</h3>
+              <p>Stay tuned for more pop-up events!</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -662,14 +619,20 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:19 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:03 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
-    // Mobile menu toggle (if needed in future)
-    function toggleMenu() {
-      // Placeholder for mobile menu functionality
+    const stripeLinks = {
+      cheesman: "https://checkout.stripe.com/pay/your-cheesman-checkout-session-link",
+      city: "https://checkout.stripe.com/pay/your-city-checkout-session-link"
+    };
+
+    function proceedToPayment(popup) {
+      if (stripeLinks[popup]) {
+        window.location.href = stripeLinks[popup];
+      }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
