@@ -1187,7 +1187,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:12 PM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:22 PM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -1366,19 +1366,17 @@
           }
         });
 
-        // Add metadata
+        // Add metadata (not included in email body)
         contactData.submissionTime = new Date().toISOString();
         contactData.userAgent = navigator.userAgent;
         contactData.recipientEmail = RECIPIENT_EMAIL;
 
-        // Construct email subject and body
+        // Construct email subject and body (excluding submissionTime and userAgent)
         const subject = contactType === 'client' 
           ? `Client Inquiry: ${contactData.inquiryType || 'General'}`
           : `Business Partnership Inquiry: ${contactData.partnershipType || 'Other'}`;
 
-        let body = `Submission Type: ${contactType === 'client' ? 'Client Inquiry' : 'Business Partnership'}\n`;
-        body += `Submission Time: ${contactData.submissionTime}\n`;
-        body += `User Agent: ${contactData.userAgent}\n\n`;
+        let body = `Submission Type: ${contactType === 'client' ? 'Client Inquiry' : 'Business Partnership'}\n\n`;
 
         if (contactType === 'client') {
           body += `Name: ${contactData.clientName || 'N/A'}\n`;
