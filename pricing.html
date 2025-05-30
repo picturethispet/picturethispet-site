@@ -246,16 +246,10 @@
             top: var(--header-height-desktop);
             left: 0;
             width: 100%;
-            background: var(--gradient-button);
-            color: white;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.05) 50%, rgba(255, 140, 0, 0.05) 100%);
             text-align: center;
-            padding: 1.2rem 1rem;
-            font-weight: 600;
-            font-size: 0.95rem;
+            padding: 1rem;
             z-index: 999;
-            box-shadow: 0 8px 32px rgba(255,140,0,0.3);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
             transition: top 0.3s ease;
             margin: 0;
             border-radius: 0;
@@ -277,39 +271,23 @@
             flex-wrap: wrap;
         }
 
-        #promo-banner-section .promo-text {
+        #promo-banner-section .promo-text,
+        #promo-banner-section .promo-text a {
             font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
             font-weight: 600;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             overflow-wrap: break-word;
-            color: white;
-            margin-bottom: 0;
-            animation: pulse 1.5s infinite alternate;
+            transition: transform 0.3s ease;
+            display: inline-block;
         }
 
-        #promo-banner-section .book-btn {
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            padding: 0.4rem 1rem;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            overflow-wrap: break-word;
-            box-shadow: none;
-            transform: none;
-        }
-
-        #promo-banner-section .book-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.9; }
-            100% { transform: scale(1.03); opacity: 1; }
+        #promo-banner-section .promo-text:hover,
+        #promo-banner-section .promo-text a:hover {
+            transform: scale(1.05);
         }
 
         main {
@@ -724,12 +702,16 @@
             #promo-banner-section {
                 padding: 0.6rem 1rem;
             }
+            #promo-banner-section .promo-text,
+            #promo-banner-section .promo-text a {
+                font-size: 0.85rem;
+            }
         }
 
         @media (max-width: 768px) {
             #promo-banner-section {
                 font-size: 0.85rem;
-                padding: 1rem 0.8rem;
+                padding: 0.8rem 0.8rem;
                 top: var(--header-height-mobile);
                 height: var(--promo-banner-height-mobile);
             }
@@ -742,14 +724,10 @@
                 line-height: 1.4;
             }
 
-            #promo-banner-section .promo-text {
+            #promo-banner-section .promo-text,
+            #promo-banner-section .promo-text a {
                 font-size: 0.8rem;
                 line-height: 1.4;
-            }
-
-            #promo-banner-section .book-btn {
-                padding: 0.3rem 0.8rem;
-                font-size: 0.75rem;
             }
 
             header {
@@ -820,18 +798,13 @@
 
         @media (max-width: 480px) {
             #promo-banner-section {
-                font-size: 0.75rem;
-                padding: 1rem 0.5rem;
+                padding: 0.6rem 0.5rem;
             }
 
-            #promo-banner-section .promo-text {
+            #promo-banner-section .promo-text,
+            #promo-banner-section .promo-text a {
                 font-size: 0.7rem;
                 line-height: 1.3;
-            }
-
-            #promo-banner-section .book-btn {
-                padding: 0.15rem 0.4rem;
-                font-size: 0.65rem;
             }
 
             header {
@@ -893,7 +866,7 @@
         <div class="promo-banner-content">
             <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
             <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
-            <a href="/pricing" class="book-btn">View Pricing ✨</a>
+            <span class="promo-text"><a href="/pricing">View Pricing ✨</a></span>
         </div>
     </div>
 
@@ -1035,7 +1008,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:53 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:02 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
         </div>
     </footer>
 
