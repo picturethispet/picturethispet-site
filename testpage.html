@@ -19,7 +19,7 @@
             --color-accent-pink: #ff1493;
             --color-accent-purple: #8a2be2;
             --color-accent-orange: #ff8c00;
-            --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.2) 100%); /* Re-added a very subtle overlay for text contrast */
+            --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%); /* Very subtle overlay */
             --gradient-button: linear-gradient(45deg, var(--color-accent-pink), var(--color-accent-purple), var(--color-accent-orange));
             --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
             --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -268,10 +268,7 @@
             padding-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop));
         }
 
-        /* Hero Section (Removed as requested) */
-        /* .hero-section { ... } */
-
-        /* General Section Styling - No more "card boxes" */
+        /* General Section Styling */
         section {
             max-width: 1000px;
             margin: 6rem auto;
@@ -297,6 +294,17 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -0.03em;
+        }
+
+        /* Welcome Section Specific Animation */
+        #welcome h2.animate-welcome {
+            animation: welcomeTitlePulse 1.5s ease-out forwards;
+        }
+
+        @keyframes welcomeTitlePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         section p {
@@ -379,187 +387,118 @@
             100% { transform: scale(1.03); opacity: 1; }
         }
 
-        /* Portfolio Grid */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+        /* Instagram Posts Showcase Section */
+        #instagram-posts-showcase {
+            text-align: center;
         }
 
-        .portfolio-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: var(--shadow-light);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .portfolio-item img {
-            width: 100%;
-            height: 250px; /* Fixed height for consistency */
-            object-fit: cover;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .portfolio-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .portfolio-item .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+        .instagram-cards-stack {
             display: flex;
-            flex-direction: column; /* Allow title and optional description */
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            padding: 1rem;
+            flex-direction: row; /* Horizontal stacking */
+            overflow-x: scroll; /* Enable horizontal scrolling */
+            scroll-snap-type: x mandatory; /* Snap to cards */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            gap: 1.5rem; /* Space between cards */
+            padding: 1rem 2rem; /* Padding for scrollbar and card edges */
+            margin: 2rem auto; /* Center the scrollable area */
+            max-width: 100%; /* Allow it to take full width */
+            align-items: stretch; /* Ensure cards have consistent height if content varies */
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: var(--color-accent-pink) transparent; /* Firefox */
         }
 
-        .portfolio-item:hover .overlay {
-            opacity: 1;
+        .instagram-cards-stack::-webkit-scrollbar {
+            height: 8px;
         }
 
-        .portfolio-item .overlay h3 {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 0.5rem;
+        .instagram-cards-stack::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
         }
 
-        .portfolio-item .overlay p {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
-            text-align: center;
-            margin-bottom: 0;
+        .instagram-cards-stack::-webkit-scrollbar-thumb {
+            background: var(--gradient-button);
+            border-radius: 10px;
         }
 
 
-        /* Lightbox */
-        #lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .instagram-post-card {
+            flex-shrink: 0; /* Prevent cards from shrinking */
+            width: 300px; /* Fixed width for card */
+            height: 450px; /* Fixed height for card */
+            scroll-snap-align: start; /* Snap to the start of each card */
+            background-color: var(--color-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            flex-direction: column; /* Stack image and content vertically within card */
+        }
+
+        .instagram-post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-strong);
+            background-color: #3a3a3a; /* Slightly lighter on hover */
+        }
+
+        .instagram-post-card img {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95); /* Darker overlay for lightbox */
+            height: calc(2/3 * 450px); /* Image takes top 2/3 of card height */
+            object-fit: cover; /* Crop to fit, maintaining aspect ratio */
+            display: block;
+        }
+
+        .instagram-post-card .card-content {
+            height: calc(1/3 * 450px); /* Content takes bottom 1/3 of card height */
+            padding: 1.2rem;
+            text-align: left;
             display: flex;
             flex-direction: column;
+            justify-content: space-between; /* Push likes to bottom */
+            flex-grow: 1; /* Allow content to grow if needed */
+        }
+
+        .instagram-post-card .caption {
+            font-size: 0.95rem;
+            color: var(--color-text-light);
+            margin-bottom: 0.6rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limit caption to 3 lines */
+            -webkit-box-orient: vertical;
+        }
+
+        .instagram-post-card .likes {
+            font-size: 0.85rem;
+            color: var(--color-accent-pink);
+            font-weight: 600;
+            display: block;
+            white-space: nowrap; /* Prevent likes from wrapping */
+        }
+
+        .instagram-post-card .hover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 3000; /* Higher than mobile nav */
+            font-size: 1.5rem;
+            font-weight: 700;
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            padding: 2rem;
+            transition: opacity 0.3s ease;
+            pointer-events: none; /* Allow clicks to pass through to the card link */
         }
 
-        #lightbox.lightbox-visible {
+        .instagram-post-card:hover .hover-overlay {
             opacity: 1;
-            visibility: visible;
         }
 
-        #lightbox-img {
-            max-width: 90%;
-            max-height: 80%;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: var(--shadow-strong);
-        }
-
-        #lightbox-title {
-            color: white;
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            text-align: center;
-        }
-
-        .lightbox-close-btn {
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2.5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .lightbox-close-btn:hover {
-            transform: rotate(90deg);
-        }
-
-        .lightbox-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            font-size: 2rem;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .lightbox-nav-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-50%) scale(1.05);
-        }
-
-        #prev-btn {
-            left: 1rem;
-        }
-
-        #next-btn {
-            right: 1rem;
-        }
-
-
-        /* Instagram Feed Section */
-        #instagram-feed {
-            text-align: center;
-        }
-
-        #instagram-feed iframe {
-            border-radius: 16px;
-            box-shadow: var(--shadow-medium);
-            width: 100% !important; /* Override Lightwidget inline styles */
-            height: 500px; /* Adjust height as needed */
-            margin-top: 2rem;
-            transition: transform 0.3s ease;
-        }
-
-        #instagram-feed iframe:hover {
-            transform: scale(1.01);
-        }
-
-        #instagram-feed p a {
-            color: var(--color-accent-orange);
-            text-decoration: underline;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        #instagram-feed p a:hover {
-            color: var(--color-accent-pink);
-        }
 
         /* Pop Up Event Section */
         #pop-up-event {
@@ -745,7 +684,6 @@
             .site-nav {
                 gap: 1.5rem;
             }
-            /* Hero section is removed, so no need for hero-content adjustments here */
             section {
                 margin: 4rem auto;
                 padding: 2.5rem 3rem;
@@ -769,7 +707,6 @@
             .mobile-menu-btn {
                 display: block;
             }
-            /* Hero section is removed, so no need for hero-section adjustments here */
             section {
                 margin: 3rem auto;
                 padding: 2rem;
@@ -840,7 +777,6 @@
             .mobile-nav-overlay nav a {
                 font-size: 1.5rem;
             }
-            /* Hero section is removed, so no need for hero-content adjustments here */
             section {
                 padding: 1.5rem;
             }
@@ -850,8 +786,26 @@
             section p {
                 font-size: 0.9rem;
             }
-            #instagram-feed iframe {
-                height: 400px;
+            .instagram-cards-stack {
+                max-width: 100%; /* Allow full width on small screens */
+                padding: 0 1rem; /* Add some horizontal padding */
+            }
+            .instagram-post-card {
+                width: 280px; /* Adjust card width for very small screens */
+                height: 420px; /* Adjust card height */
+            }
+            .instagram-post-card img {
+                height: calc(2/3 * 420px); /* Adjust image height based on new card height */
+            }
+            .instagram-post-card .card-content {
+                height: calc(1/3 * 420px); /* Adjust content height */
+                padding: 1rem;
+            }
+            .instagram-post-card .caption {
+                font-size: 0.85rem;
+            }
+            .instagram-post-card .likes {
+                font-size: 0.75rem;
             }
             .footer-section h4 {
                 font-size: 1rem;
@@ -878,7 +832,7 @@
 
     <header>
         <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-            <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
+            <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" />
             <span class="logo-text">PictureThisPet<sup>®</sup></span>
         </a>
         <nav class="site-nav">
@@ -914,86 +868,87 @@
 
     <main>
         <section id="welcome">
-            <h2>Welcome to PictureThisPet</h2>
+            <h2 id="welcome-title">Welcome to PictureThisPet</h2>
             <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we'll capture their unique personality in beautiful settings across Denver.</p>
         </section>
 
-        <section id="portfolio-showcase">
-            <h2>Our Pet Photography Portfolio</h2>
-            <p>A glimpse into the joy and personality we capture in every session.</p>
-            <div class="portfolio-grid">
-                <div class="portfolio-item" data-title="Happy Golden Retriever" data-src="https://placehold.co/600x400/FFDDC1/8A2BE2?text=Golden+Retriever">
-                    <img src="https://placehold.co/600x400/FFDDC1/8A2BE2?text=Golden+Retriever" alt="Golden Retriever" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="overlay">
-                        <h3>Happy Golden Retriever</h3>
-                        <p>Joyful moments captured.</p>
+        <section id="instagram-posts-showcase">
+            <h2>Our Latest Instagram Moments</h2>
+            <p>Check out some of the recent furry friends we've captured!</p>
+            <div class="instagram-cards-stack">
+                <a href="https://www.instagram.com/p/C_1QyZgxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://placehold.co/600x600/FFDDC1/8A2BE2?text=Post+1" alt="Instagram Post of a happy dog" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Sunshine and smiles with this golden retriever! Pure joy in every frame."</p>
+                        <span class="likes">❤️ 285 likes</span>
                     </div>
-                </div>
-                <div class="portfolio-item" data-title="Curious Kitten" data-src="https://placehold.co/400x600/C1FFDD/FF1493?text=Curious+Kitten">
-                    <img src="https://placehold.co/400x600/C1FFDD/FF1493?text=Curious+Kitten" alt="Curious Kitten" onerror="this.onerror=null;this.src='https://placehold.co/400x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="overlay">
-                        <h3>Curious Kitten</h3>
-                        <p>Exploring the world.</p>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_0W_5gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://placehold.co/600x600/C1FFDD/FF1493?text=Post+2" alt="Instagram Post of a playful kitten" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Tiny paws, big adventures! This kitten melted our hearts during its session."</p>
+                        <span class="likes">❤️ 192 likes</span>
                     </div>
-                </div>
-                <div class="portfolio-item" data-title="Majestic German Shepherd" data-src="https://placehold.co/600x400/DDC1FF/FF8C00?text=German+Shepherd">
-                    <img src="https://placehold.co/600x400/DDC1FF/FF8C00?text=German+Shepherd" alt="German Shepherd" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="overlay">
-                        <h3>Majestic German Shepherd</h3>
-                        <p>Loyalty in every gaze.</p>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_yR_4gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://placehold.co/600x600/DDC1FF/FF8C00?text=Post+3" alt="Instagram Post of a curious cat" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"The majestic gaze of a truly regal feline. Every detail captured beautifully."</p>
+                        <span class="likes">❤️ 310 likes</span>
                     </div>
-                </div>
-                <div class="portfolio-item" data-title="Playful Pug" data-src="https://placehold.co/400x600/FFC1DD/8A2BE2?text=Playful+Pug">
-                    <img src="https://placehold.co/400x600/FFC1DD/8A2BE2?text=Playful+Pug" alt="Playful Pug" onerror="this.onerror=null;this.src='https://placehold.co/400x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="overlay">
-                        <h3>Playful Pug</h3>
-                        <p>Full of character.</p>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_xO_3gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://placehold.co/600x600/FFC1DD/8A2BE2?text=Post+4" alt="Instagram Post of a dog in nature" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Adventure doggo! Exploring the trails with boundless energy."</p>
+                        <span class="likes">❤️ 250 likes</span>
                     </div>
-                </div>
-                <div class="portfolio-item" data-title="Elegant Siamese Cat" data-src="https://placehold.co/600x400/DDEEFF/FF1493?text=Siamese+Cat">
-                    <img src="https://placehold.co/600x400/DDEEFF/FF1493?text=Siamese+Cat" alt="Siamese Cat" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="overlay">
-                        <h3>Elegant Siamese Cat</h3>
-                        <p>Grace and beauty.</p>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_wC_2gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://placehold.co/600x600/DDEEFF/FF1493?text=Post+5" alt="Instagram Post of a puppy playing" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Puppy playtime is the best playtime! Those innocent eyes and fluffy fur."</p>
+                        <span class="likes">❤️ 345 likes</span>
                     </div>
-                </div>
-                <div class="portfolio-item" data-title="Energetic Border Collie" data-src="https://placehold.co/400x600/FFF0C1/FF8C00?text=Border+Collie">
-                    <img src="https://placehold.co/400x600/FFF0C1/FF8C00?text=Border+Collie" alt="Energetic Border Collie" onerror="this.onerror=null;this.src='https://placehold.co/400x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="overlay">
-                        <h3>Energetic Border Collie</h3>
-                        <p>Ready for action.</p>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_vB_1gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://placehold.co/600x600/FFF0C1/FF8C00?text=Post+6" alt="Instagram Post of a cat napping" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Dreaming of chasing mice? Or maybe just more naps. So peaceful."</p>
+                        <span class="likes">❤️ 170 likes</span>
                     </div>
-                </div>
-                <div class="portfolio-item" data-title="Sweet French Bulldog" data-src="https://placehold.co/600x400/C1FFE0/8A2BE2?text=French+Bulldog">
-                    <img src="https://placehold.co/600x400/C1FFE0/8A2BE2?text=French+Bulldog" alt="French Bulldog" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="overlay">
-                        <h3>Sweet French Bulldog</h3>
-                        <p>Irresistibly cute.</p>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_uA_0gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://placehold.co/600x600/C1FFE0/8A2BE2?text=Post+7" alt="Instagram Post of a unique pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Every pet has a story. Honored to capture this unique bond."</p>
+                        <span class="likes">❤️ 299 likes</span>
                     </div>
-                </div>
-                <div class="portfolio-item" data-title="Playful Tabby Cat" data-src="https://placehold.co/400x600/FFE0C1/FF1493?text=Tabby+Cat">
-                    <img src="https://placehold.co/400x600/FFE0C1/FF1493?text=Tabby+Cat" alt="Tabby Cat" onerror="this.onerror=null;this.src='https://placehold.co/400x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="overlay">
-                        <h3>Playful Tabby Cat</h3>
-                        <p>A classic companion.</p>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_t__zgxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://placehold.co/600x600/FFE0C1/FF1493?text=Post+8" alt="Instagram Post of a dog's portrait" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"A portrait of pure elegance. Such a photogenic furry friend!"</p>
+                        <span class="likes">❤️ 320 likes</span>
                     </div>
-                </div>
-                <div class="portfolio-item" data-title="Loyal Labrador" data-src="https://placehold.co/600x400/E0C1FF/FF8C00?text=Labrador">
-                    <img src="https://placehold.co/600x400/E0C1FF/FF8C00?text=Labrador" alt="Labrador" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="overlay">
-                        <h3>Loyal Labrador</h3>
-                        <p>Man's best friend.</p>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_s_y_gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://placehold.co/600x600/E0C1FF/FF8C00?text=Post+9" alt="Instagram Post of a pet and owner" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"The inseparable duo! Capturing the love between a pet and their human."</p>
+                        <span class="likes">❤️ 412 likes</span>
                     </div>
-                </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
             </div>
-        </section>
-
-        <section id="instagram-feed">
-            <h2>Follow Us on Instagram</h2>
-            <p>Check out our latest pet photography sessions on Instagram!</p>
-            <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
-            <iframe src="https://cdn.lightwidget.com/widgets/cd509cbecbd855848f446ce9c1596639.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width:100%;border:0;overflow:hidden;"></iframe>
-            <p><a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer">Follow @picturethispet</a></p>
         </section>
 
         <section id="pop-up-event">
@@ -1047,20 +1002,20 @@
             <div class="footer-section">
                 <h4>We Accept</h4>
                 <div class="payment-methods">
-                    <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
-                    <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
-                    <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
-                    <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
-                    <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
-                    <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
-                    <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-                    <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
-                    <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
-                    <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
-                    <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-                    <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
-                    <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-                    <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
+                    <img src="assets/images/visa.png" alt="Visa payment accepted" />
+                    <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" />
+                    <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" />
+                    <img src="assets/images/discover.png" alt="Discover payment accepted" />
+                    <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" />
+                    <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" />
+                    <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" />
+                    <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" />
+                    <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" />
+                    <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" />
+                    <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" />
+                    <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" />
+                    <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" />
+                    <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" />
                 </div>
             </div>
         </div>
@@ -1121,6 +1076,17 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
+                        // Specific animation for Welcome title
+                        if (entry.target.id === 'welcome') {
+                            const welcomeTitle = document.getElementById('welcome-title');
+                            if (welcomeTitle && !welcomeTitle.classList.contains('animate-welcome')) {
+                                welcomeTitle.classList.add('animate-welcome');
+                                // Remove animation class after it finishes to allow re-triggering if needed (e.g., on re-scroll)
+                                welcomeTitle.addEventListener('animationend', () => {
+                                    welcomeTitle.classList.remove('animate-welcome');
+                                }, { once: true });
+                            }
+                        }
                         observer.unobserve(entry.target); // Stop observing once it's visible
                     }
                 });
@@ -1130,63 +1096,22 @@
                 sectionObserver.observe(section);
             });
 
-            // Lightbox functionality
+            // Lightbox functionality (kept for potential future use, not used by Instagram cards)
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             const lightboxTitle = document.getElementById('lightbox-title');
             const lightboxCloseBtn = document.querySelector('.lightbox-close-btn');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
-            const portfolioItems = document.querySelectorAll('.portfolio-item');
-            let currentImageIndex = 0;
-            let imagesData = [];
+            // Removed portfolioItems and imagesData logic as the main portfolio section is now Instagram cards
 
-            // Populate imagesData array
-            portfolioItems.forEach((item, index) => {
-                imagesData.push({
-                    src: item.dataset.src,
-                    title: item.dataset.title
-                });
-                item.addEventListener('click', () => openLightbox(index));
-            });
+            // Placeholder for lightbox functions if you decide to re-introduce a separate image portfolio
+            function openLightbox(index) { /* ... */ }
+            function closeLightbox() { /* ... */ }
+            function updateLightboxContent() { /* ... */ }
 
-            function openLightbox(index) {
-                currentImageIndex = index;
-                updateLightboxContent();
-                lightbox.classList.add('lightbox-visible');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
-            }
 
-            function closeLightbox() {
-                lightbox.classList.remove('lightbox-visible');
-                document.body.style.overflow = ''; // Restore scrolling
-            }
-
-            function updateLightboxContent() {
-                const imageData = imagesData[currentImageIndex];
-                lightboxImg.src = imageData.src;
-                lightboxImg.alt = imageData.title;
-                lightboxTitle.textContent = imageData.title;
-            }
-
-            prevBtn.addEventListener('click', () => {
-                currentImageIndex = (currentImageIndex - 1 + imagesData.length) % imagesData.length;
-                updateLightboxContent();
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentImageIndex = (currentImageIndex + 1) % imagesData.length;
-                updateLightboxContent();
-            });
-
-            lightboxCloseBtn.addEventListener('click', closeLightbox);
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) { // Close only if clicking on the overlay, not the image/buttons
-                    closeLightbox();
-                }
-            });
-
-            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v9.0');
+            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v11.0');
         });
     </script>
 </body>
