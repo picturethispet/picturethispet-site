@@ -328,7 +328,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.04em; /* Slightly tighter letter spacing to help fit on one line */
         }
 
         #welcome h2.animate-welcome {
@@ -342,7 +342,8 @@
         }
 
         #welcome-title {
-            font-size: 4.5rem; /* Increased text size */
+            font-size: 6rem; /* Increased text size */
+            white-space: nowrap; /* Ensure text stays on one line */
         }
 
         section p {
@@ -452,6 +453,29 @@
 
         .instagram-post-card:hover .hover-overlay {
             opacity: 1;
+        }
+
+        .ig-follow-cta {
+            margin: 1.5rem auto;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.05) 50%, rgba(255, 140, 0, 0.05) 100%);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .ig-follow-cta a {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .ig-follow-cta a:hover {
+            transform: scale(1.05);
         }
 
         #pop-up-event {
@@ -649,7 +673,10 @@
                 max-width: 1000px;
             }
             #welcome-title {
-                font-size: 3.5rem; /* Adjusted for smaller screens */
+                font-size: 4.5rem; /* Adjusted for smaller screens */
+            }
+            .ig-follow-cta a {
+                font-size: 1rem; /* Slightly smaller for smaller screens */
             }
         }
 
@@ -758,7 +785,11 @@
             }
 
             #welcome-title {
-                font-size: 3rem; /* Adjusted for smaller screens */
+                font-size: 3.5rem; /* Adjusted for smaller screens */
+            }
+
+            .ig-follow-cta a {
+                font-size: 0.9rem; /* Adjusted for smaller screens */
             }
         }
 
@@ -841,7 +872,11 @@
             }
 
             #welcome-title {
-                font-size: 2.5rem; /* Adjusted for smaller screens */
+                font-size: 3rem; /* Adjusted for smaller screens */
+            }
+
+            .ig-follow-cta a {
+                font-size: 0.8rem; /* Adjusted for smaller screens */
             }
         }
     </style>
@@ -1040,6 +1075,9 @@
                     <div class="hover-overlay">View Post</div>
                 </a>
             </div>
+            <div class="ig-follow-cta">
+                <a href="https://www.instagram.com/picturethispet/" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram for a chance to win a Full Session">Follow us on Instagram for your chance to win a Full Session! 🎉</a>
+            </div>
         </section>
 
         <section id="pop-up-event">
@@ -1111,7 +1149,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:31 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:51 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
         </div>
     </footer>
 
