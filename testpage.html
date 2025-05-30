@@ -616,6 +616,7 @@
             justify-items: center; /* Center items in their grid cells */
             align-items: center; /* Vertically align items */
             margin-top: 1rem; /* Reduced margin */
+            /* Removed max-width and auto margins that were forcing wrap */
         }
 
         .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
@@ -634,9 +635,9 @@
         .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
 
         .payment-icon {
-            width: 45px; /* Slightly larger icons */
-            height: 28px; /* Fixed height for consistency */
-            object-fit: contain; /* Maintain aspect ratio */
+            width: 45px; /* Fixed width */
+            height: 28px; /* Fixed height */
+            object-fit: contain; /* Ensure images fit within dimensions */
             opacity: 1; /* Made vibrant and bright */
             transition: transform 0.3s ease;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Subtle shadow for vibrancy */
@@ -728,10 +729,13 @@
             }
             .payment-methods {
                 /* On mobile, switch to flexbox to allow wrapping */
-                display: flex;
+                display: flex; /* Use flexbox for mobile */
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 0.8rem; /* Adjusted gap for mobile */
+                max-width: 350px; /* Constrain width to force wrapping */
+                margin-left: auto;
+                margin-right: auto;
             }
             .payment-icon {
                 width: 40px; /* Slightly smaller on mobile */
@@ -1107,7 +1111,7 @@
             function updateLightboxContent() { /* ... */ }
 
 
-            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v12.0');
+            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v13.0');
         });
     </script>
 </body>
