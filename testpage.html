@@ -19,7 +19,7 @@
             --color-accent-pink: #ff1493;
             --color-accent-purple: #8a2be2;
             --color-accent-orange: #ff8c00;
-            --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%);
+            --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.7) 100%); /* Adjusted for more image visibility */
             --gradient-button: linear-gradient(45deg, var(--color-accent-pink), var(--color-accent-purple), var(--color-accent-orange));
             --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
             --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -256,7 +256,8 @@
 
         /* Main Content */
         main {
-            padding-top: 0; /* Header is sticky, so no top padding needed here */
+            /* Adjust padding-top to account for header and fixed banner */
+            padding-top: calc(38px + 40px); /* Header height + banner height (approx) */
         }
 
         /* Hero Section */
@@ -324,15 +325,13 @@
             box-shadow: var(--shadow-strong);
         }
 
-        /* General Section Styling */
+        /* General Section Styling - No more "card boxes" */
         section {
             max-width: 1000px;
             margin: 6rem auto;
             padding: 3rem 4rem;
-            background-color: var(--color-secondary);
-            border-radius: 20px;
-            border: var(--border-subtle);
-            box-shadow: var(--shadow-medium);
+            /* Removed background-color, border, and box-shadow */
+            border-radius: 0; /* No explicit border-radius for sections */
             opacity: 0;
             transform: translateY(40px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -362,6 +361,69 @@
             margin-bottom: 1.5rem;
             text-align: center;
         }
+
+        /* Promotional Banner Section - Now fixed at the top */
+        #promo-banner-section {
+            position: fixed; /* Fixed position */
+            top: 64px; /* Adjust based on header height (approx 64px) */
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%); /* Original gradient */
+            color: white;
+            text-align: center;
+            padding: 0.6rem 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 999; /* Below header, above main content */
+            box-shadow: 0 8px 32px rgba(255,140,0,0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: top 0.3s ease; /* Smooth transition if header changes size */
+            margin: 0; /* Remove margin from section style */
+            border-radius: 0; /* Remove border-radius from section style */
+            opacity: 1; /* Always visible */
+            transform: translateY(0); /* Always visible */
+        }
+
+        #promo-banner-section .promo-banner-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        #promo-banner-section .promo-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            overflow-wrap: break-word;
+            color: white; /* Ensure text is white */
+            margin-bottom: 0;
+        }
+
+        #promo-banner-section .book-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            padding: 0.2rem 0.8rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow-wrap: break-word;
+            box-shadow: none; /* Remove extra shadow */
+            transform: none; /* Remove extra transform */
+        }
+
+        #promo-banner-section .book-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
 
         /* Instagram Feed Section */
         #instagram-feed {
@@ -468,17 +530,17 @@
         footer {
             background-color: #0d0d0d; /* Even darker footer */
             color: var(--color-text-muted);
-            padding: 4rem 2rem;
+            padding: 2rem 2rem; /* Reduced padding */
             border-top: var(--border-subtle);
             text-align: center;
         }
 
         .footer-container {
             max-width: 1000px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 1.5rem; /* Reduced margin */
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2.5rem;
+            gap: 2rem; /* Reduced gap */
             text-align: left;
         }
 
@@ -492,12 +554,12 @@
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--color-text-light);
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem; /* Reduced margin */
         }
 
         .footer-section a {
             color: var(--color-text-muted);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem; /* Reduced margin */
             transition: color 0.3s ease;
         }
 
@@ -506,27 +568,30 @@
         }
 
         .payment-methods {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-top: 1.5rem;
-            justify-content: flex-start; /* Align left in footer */
+            display: grid; /* Use grid for desktop */
+            grid-template-columns: repeat(7, 1fr); /* 7 columns as requested */
+            grid-template-rows: repeat(2, auto); /* 2 rows as requested */
+            gap: 0.5rem; /* Reduced gap */
+            justify-items: center; /* Center items in their grid cells */
+            align-items: center; /* Vertically align items */
+            margin-top: 1rem; /* Reduced margin */
         }
 
         .payment-icon {
             width: 45px; /* Slightly larger icons */
-            height: auto;
-            opacity: 0.6;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            height: 28px; /* Fixed height for consistency */
+            object-fit: contain; /* Maintain aspect ratio */
+            opacity: 1; /* Made vibrant and bright */
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Subtle shadow for vibrancy */
         }
 
         .payment-icon:hover {
-            opacity: 1;
-            transform: scale(1.05);
+            transform: scale(1.1); /* Slightly larger on hover */
         }
 
         .footer-bottom {
-            padding-top: 2rem;
+            padding-top: 1.5rem; /* Reduced padding */
             border-top: var(--border-subtle);
             font-size: 0.85rem;
             color: var(--color-text-muted);
@@ -621,7 +686,32 @@
                 align-items: center;
             }
             .payment-methods {
+                /* On mobile, switch to flexbox to allow wrapping */
+                display: flex;
+                flex-wrap: wrap;
                 justify-content: center;
+                gap: 0.8rem; /* Adjusted gap for mobile */
+            }
+            .payment-icon {
+                width: 40px; /* Slightly smaller on mobile */
+                height: 25px;
+            }
+
+            /* Adjust main content padding for mobile */
+            main {
+                padding-top: calc(58px + 35px); /* Header height + banner height (approx) */
+            }
+            #promo-banner-section {
+                top: 58px; /* Adjust based on mobile header height */
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            #promo-banner-section .promo-text {
+                font-size: 0.8rem;
+            }
+            #promo-banner-section .book-btn {
+                padding: 0.2rem 0.6rem;
+                font-size: 0.75rem;
             }
         }
 
@@ -693,6 +783,14 @@
         <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
     </header>
 
+    <div id="promo-banner-section">
+        <div class="promo-banner-content">
+            <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+            <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
+            <a href="/pricing" class="book-btn">View Pricing ✨</a>
+        </div>
+    </div>
+
     <div class="mobile-nav-overlay">
         <button class="close-btn" aria-label="Close mobile menu">×</button>
         <nav>
@@ -712,14 +810,6 @@
                 <h1>Timeless Pet Photography</h1>
                 <p>Capture the magic of your furry friend with PictureThisPet.</p>
                 <a href="/cart.html" class="hero-btn">Book Now</a>
-            </div>
-        </section>
-
-        <section id="promo-banner-section">
-            <div class="promo-banner-content">
-                <p class="promo-text">🎉 Early Career Special - Save up to 75% 💸</p>
-                <p class="promo-text">💳 Flexible Payment Plans Available 📸</p>
-                <a href="/pricing" class="book-btn">View Pricing ✨</a>
             </div>
         </section>
 
@@ -858,7 +948,7 @@
                 sectionObserver.observe(section);
             });
 
-            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v1.0');
+            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v3.0');
         });
     </script>
 </body>
