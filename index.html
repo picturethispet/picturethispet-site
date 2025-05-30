@@ -234,16 +234,10 @@
             top: var(--header-height-desktop);
             left: 0;
             width: 100%;
-            background: var(--gradient-button);
-            color: white;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.05) 50%, rgba(255, 140, 0, 0.05) 100%);
             text-align: center;
-            padding: 1.2rem 1rem;
-            font-weight: 600;
-            font-size: 0.95rem;
+            padding: 1rem;
             z-index: 999;
-            box-shadow: 0 8px 32px rgba(255,140,0,0.3);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
             transition: top 0.3s ease;
             margin: 0;
             border-radius: 0;
@@ -265,39 +259,23 @@
             flex-wrap: wrap;
         }
 
-        #promo-banner-section .promo-text {
+        #promo-banner-section .promo-text,
+        #promo-banner-section .promo-text a {
             font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
             font-weight: 600;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             overflow-wrap: break-word;
-            color: white;
-            margin-bottom: 0;
-            animation: pulse 1.5s infinite alternate;
+            transition: transform 0.3s ease;
+            display: inline-block;
         }
 
-        #promo-banner-section .book-btn {
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            padding: 0.4rem 1rem;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            overflow-wrap: break-word;
-            box-shadow: none;
-            transform: none;
-        }
-
-        #promo-banner-section .book-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.9; }
-            100% { transform: scale(1.03); opacity: 1; }
+        #promo-banner-section .promo-text:hover,
+        #promo-banner-section .promo-text a:hover {
+            transform: scale(1.05);
         }
 
         main {
@@ -645,6 +623,10 @@
             #promo-banner-section {
                 padding: 0.6rem 1rem;
             }
+            #promo-banner-section .promo-text,
+            #promo-banner-section .promo-text a {
+                font-size: 0.85rem; /* Adjusted for smaller screens */
+            }
             #instagram-posts-showcase {
                 max-width: 1000px; /* Adjusted for smaller screens */
             }
@@ -662,7 +644,7 @@
         @media (max-width: 768px) {
             #promo-banner-section {
                 font-size: 0.85rem;
-                padding: 1rem 0.8rem;
+                padding: 0.8rem 0.8rem;
                 top: var(--header-height-mobile);
                 height: var(--promo-banner-height-mobile);
             }
@@ -675,14 +657,10 @@
                 line-height: 1.4;
             }
 
-            #promo-banner-section .promo-text {
-                font-size: 0.8rem;
+            #promo-banner-section .promo-text,
+            #promo-banner-section .promo-text a {
+                font-size: 0.8rem; /* Adjusted for smaller screens */
                 line-height: 1.4;
-            }
-
-            #promo-banner-section .book-btn {
-                padding: 0.3rem 0.8rem;
-                font-size: 0.75rem;
             }
 
             header {
@@ -776,18 +754,13 @@
 
         @media (max-width: 480px) {
             #promo-banner-section {
-                font-size: 0.75rem;
-                padding: 1rem 0.5rem;
+                padding: 0.6rem 0.5rem;
             }
 
-            #promo-banner-section .promo-text {
-                font-size: 0.7rem;
+            #promo-banner-section .promo-text,
+            #promo-banner-section .promo-text a {
+                font-size: 0.7rem; /* Adjusted for smaller screens */
                 line-height: 1.3;
-            }
-
-            #promo-banner-section .book-btn {
-                padding: 0.15rem 0.4rem;
-                font-size: 0.65rem;
             }
 
             header {
@@ -883,7 +856,7 @@
         <div class="promo-banner-content">
             <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
             <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
-            <a href="/pricing" class="book-btn">View Pricing ✨</a>
+            <span class="promo-text"><a href="/pricing">View Pricing ✨</a></span>
         </div>
     </div>
 
@@ -910,70 +883,6 @@
             <p>Check out some of the recent furry friends we've captured!</p>
             <div class="instagram-cards-stack">
                 <!-- Original set of cards -->
-                <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
-                    <img src="assets/images/2I4A8155.JPG" alt="Instagram Post of a happy pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="card-content">
-                        <p class="caption">"I thought it was a kind of a fun thing to do." – Pam Beesly</p>
-                        <span class="likes">"Playful Sprinter" 🐶💨</span>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
-                    <img src="assets/images/IMG_1093.JPG" alt="Instagram Post of a curious pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="card-content">
-                        <p class="caption">"I’m not superstitious, but I am a little stitious." – Michael Scott</p>
-                        <span class="likes">"Curious Explorer" 🐾🔍</span>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
-                    <img src="assets/images/2I4A6126-3.JPEG" alt="Instagram Post of a playful pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="card-content">
-                        <p class="caption">"Sometimes I’ll start a sentence and I don’t even know where it’s going." – Michael Scott</p>
-                        <span class="likes">"Sassy Diva" 🐕‍🦺💃</span>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
-                    <img src="assets/images/2I4A4365.jpg" alt="Instagram Post of a pet in nature" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="card-content">
-                        <p class="caption">"I am fast. To give you a reference point, I am somewhere between a snake and a mongoose." – Dwight Schrute</p>
-                        <span class="likes">"Water Lover" 🐾🌊</span>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
-                    <img src="assets/images/2I4A3720.JPG" alt="Instagram Post of a pet portrait" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="card-content">
-                        <p class="caption">"I have a lot of questions. Number one: how dare you?" – Kelly Kapoor</p>
-                        <span class="likes">"Cozy Napper" 🐶💤</span>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
-                    <img src="assets/images/IMG_0770.JPG" alt="Instagram Post of a pet napping" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="card-content">
-                        <p class="caption">"Bears, beets, Battlestar Galactica." – Jim Halpert</p>
-                        <span class="likes">"Bouncy Trickster" 🐕🎾</span>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
-                    <img src="assets/images/2I4A9811.JPG" alt="Instagram Post of a unique pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="card-content">
-                        <p class="caption">"I’m always thinking one step ahead, like a carpenter that makes stairs." – Andy Bernard</p>
-                        <span class="likes">"Loyal Guardian" 🐾🛡️</span>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
-                    <img src="assets/images/2I4A9743.JPG" alt="Instagram Post of a pet playing" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="card-content">
-                        <p class="caption">"I don’t care, but I hope it was worth it." – Angela Martin</p>
-                        <span class="likes">"Cheeky Chomper" 🐶🍖</span>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
-                    <img src="assets/images/2I4A9021.JPG" alt="Instagram Post of a pet and owner" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
-                    <div class="card-content">
-                        <p class="caption">"I’ve been involved in a number of cults, both as a leader and a follower." – Creed Bratton</p>
-                        <span class="likes">"Charming Poser" 🐕📸</span>
-                    </div>
-                </a>
-                <!-- Duplicated set of cards for seamless looping -->
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A8155.JPG" alt="Instagram Post of a happy pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
@@ -1112,7 +1021,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:07 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:11 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
         </div>
     </footer>
 
