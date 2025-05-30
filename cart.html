@@ -1326,7 +1326,7 @@
         </div>
 
         <button class="continue-btn" id="continueBtn" onclick="proceedToPayment()" disabled>
-          💳 Move to Payment
+          📅 Schedule Your Session
         </button>
       </div>
     </div>
@@ -1545,30 +1545,22 @@
       // Start the loading text rotation
       const textInterval = setInterval(updateLoadingText, 800);
       
-      // Simulate payment processing time then redirect to Stripe
+      // Save session data and redirect to booking page
       setTimeout(async () => {
         clearInterval(textInterval);
         
         try {
-          // Get the correct Stripe link based on the exact configuration
-          const stripeUrl = getStripeLink(
-            sessionData.sessionType,
-            sessionData.location,
-            sessionData.numberOfPets,
-            sessionData.numberOfPeople
-          );
+          // Save session data to localStorage for the booking page
+          localStorage.setItem('sessionData', JSON.stringify(sessionData));
           
-          if (stripeUrl) {
-            // Redirect directly to the correct Stripe link
-            window.location.href = stripeUrl;
-          } else {
-            alert('⚠️ Configuration not found. Please try again or contact support.');
-            overlay.classList.remove('show');
-          }
+          console.log('✅ Session data saved:', sessionData);
+          
+          // Redirect to booking page
+          window.location.href = '/booking.html';
           
         } catch (error) {
-          console.error('Payment error:', error);
-          alert('⚠️ Payment processing failed. Please try again.');
+          console.error('Booking error:', error);
+          alert('⚠️ Booking processing failed. Please try again.');
           overlay.classList.remove('show');
         }
       }, 4000);
