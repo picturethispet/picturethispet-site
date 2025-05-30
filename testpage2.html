@@ -1,971 +1,1203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Availability | PictureThisPet</title>
-  <meta name="description" content="Check availability for your pet photography session with PictureThisPet in Denver.">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
-      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
-      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
-      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-      --pink: #ff1493;
-      --purple: #8a2be2;
-      --orange: #ff8c00;
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255,255,255,0.8);
-      --text-muted: rgba(255,255,255,0.6);
-      --gold: #FDB75E;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scrollbar-width: thin;
-      scrollbar-color: var(--pink) transparent;
-    }
-
-    html::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    html::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.1);
-    }
-
-    html::-webkit-scrollbar-thumb {
-      background: var(--gradient-primary);
-      border-radius: 3px;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--gradient-primary);
-      background-attachment: fixed;
-      color: var(--text-primary);
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Floating background elements */
-    .bg-orbs {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.3;
-      animation: float 20s infinite linear;
-    }
-
-    .orb:nth-child(1) {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
-      top: 10%;
-      left: 80%;
-      animation-delay: 0s;
-    }
-
-    .orb:nth-child(2) {
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
-      top: 60%;
-      left: 10%;
-      animation-delay: -7s;
-    }
-
-    .orb:nth-child(3) {
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
-      top: 30%;
-      left: 20%;
-      animation-delay: -14s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
-    }
-
-    /* Promotional Banner */
-    .promo-banner {
-      position: fixed;
-      top: 96px;
-      left: 0;
-      width: 100%;
-      background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%);
-      color: white;
-      text-align: center;
-      padding: 0.6rem 1rem;
-      font-weight: 600;
-      font-size: 0.95rem;
-      z-index: 999;
-      box-shadow: 0 8px 32px rgba(255,140,0,0.3);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .promo-banner-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .promo-text {
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      overflow-wrap: break-word;
-    }
-
-    .promo-banner a {
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      padding: 0.2rem 0.8rem;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      overflow-wrap: break-word;
-    }
-
-    .promo-banner a:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 1rem 1.5rem;
-      backdrop-filter: blur(20px);
-      background: rgba(255,255,255,0.1);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      height: 96px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo-link {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .logo-link:hover {
-      opacity: 0.8;
-      transform: scale(1.02);
-    }
-
-    .desktop-logo {
-      height: 100px;
-    }
-
-    .logo-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: white;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-    }
-
-    .logo-text sup {
-      font-size: 0.8rem;
-      vertical-align: super;
-      margin-left: 2px;
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .site-nav a:not(.book-btn) {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      position: relative;
-    }
-
-    .site-nav a:not(.book-btn):hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .site-nav a:not(.book-btn)::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--gradient-primary);
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    .site-nav a:not(.book-btn):hover::after {
-      width: 80%;
-    }
-
-    .book-btn {
-      background: var(--gradient-primary);
-      color: white;
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 1rem;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
-    }
-
-    .book-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu-btn:hover {
-      transform: scale(1.1);
-    }
-
-    /* Main Content */
-    main {
-      margin-top: 146px;
-      flex: 1;
-      padding: 4rem 1rem;
-    }
-
-    /* Hero Section */
-    .hero-section {
-      max-width: 1200px;
-      margin: 0 auto 4rem;
-      text-align: center;
-    }
-
-    .hero-box {
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
-      padding: 3rem;
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease-out;
-    }
-
-    .hero-box:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    .hero-content h1 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      margin-bottom: 1rem;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-content p {
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    /* Google Calendar Section */
-    .calendar-section {
-      max-width: 1200px;
-      margin: 0 auto 4rem;
-      padding: 0; /* Removed outer box styling */
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease-out;
-      text-align: center;
-      position: relative;
-    }
-
-    .calendar-section:hover {
-      transform: translateY(-5px);
-    }
-
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: absolute;
-      top: -1rem; /* Moved up */
-      left: 3rem;
-      right: 3rem;
-      z-index: 1;
-    }
-
-    .calendar-header h3 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; /* Apple font */
-      font-size: 2rem; /* Bigger font */
-      font-weight: 600;
-      color: var(--text-primary); /* White */
-    }
-
-    .calendar-header .nav-arrows {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .calendar-header .nav-arrow {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .calendar-header .nav-arrow:hover {
-      background: rgba(255,255,255,0.3);
-      transform: scale(1.1);
-    }
-
-    .calendar-header .nav-arrow span {
-      font-size: 1.2rem;
-      color: var(--text-primary);
-    }
-
-    .calendar-embed-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      height: 600px;
-      overflow: hidden;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.05);
-      padding: 1rem;
-    }
-
-    .calendar-embed {
-      position: absolute;
-      top: -50px; /* Adjust to hide the Google Calendar header */
-      left: 0;
-      width: 100%;
-      height: 700px; /* Extra height to ensure the date grid fits */
-      overflow: hidden;
-    }
-
-    .calendar-embed iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* Footer */
-    footer {
-      background: #ffffff;
-      border-top: 1px solid rgba(0,0,0,0.1);
-      padding: 2rem 1.5rem;
-      color: #666666;
-      font-size: 0.9rem;
-    }
-
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
-      justify-items: center;
-    }
-
-    .footer-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .footer-section h4 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.02em;
-    }
-
-    .footer-section a {
-      color: #555555;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s ease;
-    }
-
-    .footer-section a:hover {
-      color: #333333;
-    }
-
-    .payment-methods {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(2, auto);
-      gap: 0.5rem;
-      justify-items: center;
-    }
-
-    .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
-    .payment-methods img:nth-child(2) { grid-area: 1 / 2; }
-    .payment-methods img:nth-child(3) { grid-area: 1 / 3; }
-    .payment-methods img:nth-child(4) { grid-area: 1 / 4; }
-    .payment-methods img:nth-child(5) { grid-area: 1 / 5; }
-    .payment-methods img:nth-child(6) { grid-area: 1 / 6; }
-    .payment-methods img:nth-child(7) { grid-area: 1 / 7; }
-    .payment-methods img:nth-child(8) { grid-area: 2 / 7; }
-    .payment-methods img:nth-child(9) { grid-area: 2 / 6; }
-    .payment-methods img:nth-child(10) { grid-area: 2 / 5; }
-    .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
-    .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
-    .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
-    .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
-
-    .payment-icon {
-      width: 40px;
-      height: 25px;
-      object-fit: contain;
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      border-radius: 4px;
-    }
-
-    .payment-icon:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    .payment-placeholder {
-      width: 40px;
-      height: 25px;
-      background: rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(0, 0, 0, 0.3);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8px;
-      font-weight: 600;
-      color: #555555;
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      text-align: center;
-      line-height: 1.1;
-    }
-
-    .payment-placeholder:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    .footer-bottom {
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .footer-bottom a {
-      color: #e07b00;
-      text-decoration: underline;
-    }
-
-    .footer-bottom a:hover {
-      color: #333333;
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .promo-banner {
-        font-size: 0.85rem;
-        padding: 0.4rem 0.8rem;
-        top: 84px;
-      }
-
-      .promo-banner-content {
-        flex-direction: column;
-        gap: 0.2rem;
-        justify-content: center;
-        text-align: center;
-        line-height: 1.2;
-      }
-
-      .promo-text {
-        font-size: 0.8rem;
-        line-height: 1.2;
-      }
-
-      .promo-banner a {
-        padding: 0.2rem 0.6rem;
-        font-size: 0.75rem;
-      }
-
-      header {
-        height: 84px;
-        padding: 0.5rem 1rem;
-      }
-
-      .desktop-logo {
-        height: 80px;
-      }
-
-      .logo-text {
-        font-size: 1.2rem;
-      }
-
-      .logo-text sup {
-        font-size: 0.6rem;
-      }
-
-      .site-nav {
-        display: none;
-        flex-direction: column;
-        background: #ffffff;
-        position: absolute;
-        top: 84px;
-        right: 0;
-        width: 100%;
-        text-align: right;
-        padding: 1rem;
-        z-index: 999;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 0 0 16px 16px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-      }
-
-      .site-nav.active {
-        display: flex;
-      }
-
-      .site-nav.active a {
-        margin: 0.5rem 0;
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
-      }
-
-      .site-nav.active a:not(.book-btn) {
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .site-nav.active a:not(.book-btn):hover {
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .site-nav.active a:not(.book-btn)::after {
-        background: var(--gradient-primary);
-      }
-
-      .site-nav.active a[href="/"] { order: 1; }
-      .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/locations.html"] { order: 3; }
-      .site-nav.active a[href="/pricing"] { order: 4; }
-      .site-nav.active a[href="/contact"] { order: 5; }
-      .site-nav.active .book-btn { order: 6; }
-
-      .book-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
-        margin-left: 0;
-      }
-
-      .mobile-menu-btn {
-        display: block;
-      }
-
-      main {
-        margin-top: 124px;
-        padding: 2rem 1rem;
-      }
-
-      .hero-box {
-        padding: 2rem;
-      }
-
-      .hero-content h1 {
-        font-size: 2.5rem;
-      }
-
-      .hero-content p {
-        font-size: 1.1rem;
-      }
-
-      .calendar-section {
-        padding: 0;
-      }
-
-      .calendar-header {
-        left: 2rem;
-        right: 2rem;
-      }
-
-      .calendar-header h3 {
-        font-size: 1.8rem; /* Adjusted for responsiveness */
-      }
-
-      .calendar-header .nav-arrow {
-        width: 35px;
-        height: 35px;
-      }
-
-      .calendar-embed-wrapper {
-        height: 500px;
-      }
-
-      .calendar-embed {
-        top: -40px;
-        height: 600px;
-      }
-
-      .footer-container {
-        grid-template-areas: 
-          "contact-us connect"
-          "we-accept we-accept";
-        gap: 0.5rem;
-        justify-items: center;
-      }
-
-      .footer-section:nth-child(1) {
-        grid-area: contact-us;
-        justify-self: start;
-        align-items: flex-start;
-        text-align: left;
-      }
-
-      .footer-section:nth-child(2) {
-        grid-area: connect;
-        justify-self: end;
-        align-items: flex-end;
-        text-align: right;
-      }
-
-      .footer-section:nth-child(3) {
-        grid-area: we-accept;
-        justify-self: center;
-        align-items: center;
-        text-align: center;
-      }
-
-      .footer-section h4 {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .footer-section a {
-        margin-bottom: 0.2rem;
-        font-size: 0.8rem;
-      }
-
-      .footer-bottom {
-        padding-top: 1rem;
-      }
-
-      .payment-methods {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .promo-banner {
-        font-size: 0.75rem;
-        padding: 0.3rem 0.5rem;
-      }
-
-      .promo-text {
-        font-size: 0.7rem;
-        line-height: 1.2;
-      }
-
-      .promo-banner a {
-        padding: 0.15rem 0.4rem;
-        font-size: 0.65rem;
-      }
-
-      .calendar-embed-wrapper {
-        height: 400px;
-      }
-
-      .calendar-embed {
-        top: -30px;
-        height: 500px;
-      }
-
-      .calendar-header h3 {
-        font-size: 1.5rem; /* Adjusted for smaller screens */
-      }
-
-      .calendar-header .nav-arrow {
-        width: 30px;
-        height: 30px;
-      }
-
-      .footer-container {
-        grid-template-areas: 
-          "contact-us connect"
-          "we-accept we-accept";
-      }
-
-      .footer-section:nth-child(1) {
-        justify-self: start;
-        align-items: flex-start;
-        text-align: left;
-      }
-
-      .footer-section:nth-child(2) {
-        justify-self: end;
-        align-items: flex-end;
-        text-align: right;
-      }
-
-      .footer-section:nth-child(3) {
-        justify-self: center;
-        align-items: center;
-        text-align: center;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picture This Pet - Pet Photography</title>
+    <meta name="description" content="Book your pet photography session with Picture This Pet.">
+    <link rel="icon" type="image/png" href="assets/images/NEW_LOGO_NOTITLE-2.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        /* Custom Properties for Theming */
+        :root {
+            --color-primary: #1a1a1a; /* Dark background */
+            --color-secondary: #2a2a2a; /* Slightly lighter dark for cards */
+            --color-text-light: #f0f0f0; /* Light text on dark background */
+            --color-text-muted: #b0b0b0; /* Muted text */
+            --color-accent-pink: #ff1493;
+            --color-accent-purple: #8a2be2;
+            --color-accent-orange: #ff8c00;
+            --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.3) 100%); /* Semi-transparent overlay */
+            --gradient-button: linear-gradient(45deg, var(--color-accent-pink), var(--color-accent-purple), var(--color-accent-orange));
+            --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
+            --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
+
+            /* New variables for header and banner heights */
+            --header-height-desktop: 64px; /* Approx height of header on desktop */
+            --promo-banner-height-desktop: 40px; /* Approx height of promo banner on desktop */
+            --header-height-mobile: 58px; /* Approx height of header on mobile */
+            --promo-banner-height-mobile: 35px; /* Approx height of promo banner on mobile */
+        }
+
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .preloader-inner {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 6px solid var(--color-accent-pink);
+            border-top-color: var(--color-accent-purple);
+            animation: spin 1.2s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2.5rem; /* 16px top/bottom padding */
+            background: rgba(26, 26, 26, 0.9); /* Slightly transparent dark */
+            backdrop-filter: blur(15px);
+            border-bottom: var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+            height: var(--header-height-desktop); /* Fixed height for consistent main padding */
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.7;
+        }
+
+        .desktop-logo {
+            height: 38px; /* Slightly smaller for sleekness */
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--color-text-light);
+        }
+
+        .logo-text sup {
+            font-size: 0.6em;
+            vertical-align: super;
+            margin-left: 2px;
+            color: var(--color-accent-orange);
+        }
+
+        .site-nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .site-nav a {
+            color: var(--color-text-muted);
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+
+        .site-nav a:hover {
+            color: var(--color-text-light);
+            transform: translateY(-2px);
+        }
+
+        .site-nav a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-button);
+            transition: width 0.3s ease, left 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .site-nav a:hover::after {
+            width: 100%;
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .book-btn {
+            background: var(--gradient-button);
+            color: white;
+            padding: 0.75rem 1.75rem;
+            border-radius: 50px; /* Pill shape */
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-light);
+            white-space: nowrap;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-text-light);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile Navigation Overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8); /* Darker overlay */
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%); /* Start off-screen */
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .mobile-nav-overlay.open {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-overlay .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: var(--color-text-light);
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav-overlay .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .mobile-nav-overlay nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .mobile-nav-overlay nav a {
+            color: var(--color-text-light);
+            font-size: 1.8rem;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .mobile-nav-overlay nav a:hover {
+            color: var(--color-accent-pink);
+            transform: translateX(10px);
+        }
+
+        .mobile-nav-overlay .book-btn {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
+        }
+
+        /* Main Content */
+        main {
+            /* Adjust padding-top to account for header and fixed banner */
+            padding-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop));
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            overflow: hidden;
+            
+            /* FIXED: Using a reliable pet photography image */
+            background: url('https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center center / cover no-repeat fixed;
+            
+            background-color: var(--color-secondary); /* Fallback if image fails to load */
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-hero); /* Semi-transparent overlay for better text readability */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            opacity: 0; /* For animation */
+            transform: translateY(30px); /* For animation */
+            animation: fadeInSlideUp 1s ease-out forwards 0.5s; /* Delay animation */
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.05em;
+        }
+
+        .hero-content p {
+            font-size: 1.7rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background: var(--gradient-button);
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        /* General Section Styling */
+        section {
+            max-width: 1000px;
+            margin: 6rem auto;
+            padding: 3rem 4rem;
+            border-radius: 0; /* No explicit border-radius for sections */
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        /* Welcome Section Specific Animation */
+        #welcome h2.animate-welcome {
+            animation: welcomeTitlePulse 1.5s ease-out forwards;
+        }
+
+        @keyframes welcomeTitlePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        section p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Promotional Banner Section - Fixed at the top with vertical centering and animation */
+        #promo-banner-section {
+            position: fixed; /* Fixed position */
+            top: var(--header-height-desktop); /* Position right below the header */
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%); /* Original gradient */
+            color: white;
+            text-align: center;
+            padding: 0.8rem 1rem; /* Increased padding for better vertical centering */
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 999; /* Below header, above main content */
+            box-shadow: 0 8px 32px rgba(255,140,0,0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: top 0.3s ease; /* Smooth transition if header changes size */
+            margin: 0; /* Remove margin from section style */
+            border-radius: 0; /* Remove border-radius from section style */
+            opacity: 1; /* Always visible */
+            transform: translateY(0); /* Always visible */
+            height: var(--promo-banner-height-desktop); /* Fixed height for consistent main padding */
+            display: flex; /* Use flexbox for vertical centering */
+            justify-content: center; /* Center items horizontally */
+            align-items: center; /* Center items vertically */
+        }
+
+        #promo-banner-section .promo-banner-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        #promo-banner-section .promo-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            overflow-wrap: break-word;
+            color: white; /* Ensure text is white */
+            margin-bottom: 0;
+            animation: pulse 1.5s infinite alternate; /* Subtle pulse animation */
+        }
+
+        #promo-banner-section .book-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            padding: 0.4rem 1rem; /* Adjusted padding */
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow-wrap: break-word;
+            box-shadow: none;
+            transform: none;
+        }
+
+        #promo-banner-section .book-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.03); opacity: 1; }
+        }
+
+        /* Instagram Posts Showcase Section */
+        #instagram-posts-showcase {
+            text-align: center;
+        }
+
+        .instagram-cards-stack {
+            display: flex;
+            flex-direction: row; /* Horizontal stacking */
+            overflow-x: scroll; /* Enable horizontal scrolling */
+            scroll-snap-type: x mandatory; /* Snap to cards */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            gap: 1.5rem; /* Space between cards */
+            padding: 1rem 2rem; /* Padding for scrollbar and card edges */
+            margin: 2rem auto; /* Center the scrollable area */
+            max-width: 100%; /* Allow it to take full width */
+            align-items: stretch; /* Ensure cards have consistent height if content varies */
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: var(--color-accent-pink) transparent; /* Firefox */
+        }
+
+        .instagram-cards-stack::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .instagram-cards-stack::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .instagram-cards-stack::-webkit-scrollbar-thumb {
+            background: var(--gradient-button);
+            border-radius: 10px;
+        }
+
+        .instagram-post-card {
+            flex-shrink: 0; /* Prevent cards from shrinking */
+            width: 300px; /* Fixed width for card */
+            height: 450px; /* Fixed height for card */
+            scroll-snap-align: start; /* Snap to the start of each card */
+            background-color: var(--color-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            flex-direction: column; /* Stack image and content vertically within card */
+            position: relative;
+        }
+
+        .instagram-post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-strong);
+            background-color: #3a3a3a; /* Slightly lighter on hover */
+        }
+
+        .instagram-post-card img {
+            width: 100%;
+            height: calc(2/3 * 450px); /* Image takes top 2/3 of card height */
+            object-fit: cover; /* Crop to fit, maintaining aspect ratio */
+            display: block;
+        }
+
+        .instagram-post-card .card-content {
+            height: calc(1/3 * 450px); /* Content takes bottom 1/3 of card height */
+            padding: 1.2rem;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Push likes to bottom */
+            flex-grow: 1; /* Allow content to grow if needed */
+        }
+
+        .instagram-post-card .caption {
+            font-size: 0.95rem;
+            color: var(--color-text-light);
+            margin-bottom: 0.6rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limit caption to 3 lines */
+            -webkit-box-orient: vertical;
+        }
+
+        .instagram-post-card .likes {
+            font-size: 0.85rem;
+            color: var(--color-accent-pink);
+            font-weight: 600;
+            display: block;
+            white-space: nowrap; /* Prevent likes from wrapping */
+        }
+
+        .instagram-post-card .hover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none; /* Allow clicks to pass through to the card link */
+        }
+
+        .instagram-post-card:hover .hover-overlay {
+            opacity: 1;
+        }
+
+        /* Pop Up Event Section */
+        #pop-up-event {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.05) 50%, rgba(255, 140, 0, 0.05) 100%);
+            border: 1px dashed rgba(138, 43, 226, 0.3);
+            text-align: center;
+        }
+
+        #pop-up-event h2 {
+            color: var(--color-accent-purple); /* Specific color for this section's heading */
+            -webkit-text-fill-color: var(--color-accent-purple);
+        }
+
+        /* Start Your Journey Section */
+        #start-journey .start-journey-button {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        #start-journey .start-journey-button a {
+            display: inline-block;
+            background: var(--gradient-button);
+            color: white;
+            padding: 1rem 2.8rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-medium);
+        }
+
+        #start-journey .start-journey-button a:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        /* Testimonials Section */
+        #testimonials .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        #testimonials .testimonial-card {
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        #testimonials .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+
+        #testimonials .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--color-text-light);
+            font-size: 1rem;
+        }
+
+        #testimonials .testimonial-card cite {
+            font-weight: 600;
+            color: var(--color-accent-orange);
+            font-style: normal;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0d0d0d; /* Even darker footer */
+            color: var(--color-text-muted);
+            padding: 2rem 2rem; /* Reduced padding */
+            border-top: var(--border-subtle);
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto 1.5rem; /* Reduced margin */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem; /* Reduced gap */
+            text-align: left;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-text-light);
+            margin-bottom: 1rem; /* Reduced margin */
+        }
+
+        .footer-section a {
+            color: var(--color-text-muted);
+            margin-bottom: 0.6rem; /* Reduced margin */
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--color-text-light);
+        }
+
+        .payment-methods {
+            display: grid; /* Use grid for desktop */
+            grid-template-columns: repeat(7, 1fr); /* 7 columns as requested */
+            grid-template-rows: repeat(2, auto); /* 2 rows as requested */
+            gap: 0.5rem; /* Reduced gap */
+            justify-items: center; /* Center items in their grid cells */
+            align-items: center; /* Vertically align items */
+            margin-top: 1rem; /* Reduced margin */
+        }
+
+        .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
+        .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
+        .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
+        .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
+        .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
+        .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
+        .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
+        .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
+        .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
+        .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
+        .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
+        .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
+        .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
+        .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
+
+        .payment-icon {
+            width: 45px; /* Slightly larger icons */
+            height: 28px; /* Fixed height for consistency */
+            object-fit: contain; /* Maintain aspect ratio */
+            opacity: 1; /* Made vibrant and bright */
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Subtle shadow for vibrancy */
+        }
+
+        .payment-icon:hover {
+            transform: scale(1.1); /* Slightly larger on hover */
+        }
+
+        .footer-bottom {
+            padding-top: 1.5rem; /* Reduced padding */
+            border-top: var(--border-subtle);
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .footer-bottom a {
+            color: var(--color-accent-pink);
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--color-accent-orange);
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+            .site-nav {
+                gap: 1.5rem;
+            }
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+            .hero-content p {
+                font-size: 1.4rem;
+            }
+            section {
+                margin: 4rem auto;
+                padding: 2.5rem 3rem;
+            }
+            section h2 {
+                font-size: 2.5rem;
+            }
+            section p {
+                font-size: 1rem;
+            }
+            /* Adjust promo banner padding on smaller desktops */
+            #promo-banner-section {
+                padding: 0.6rem 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .site-nav {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .hero-section {
+                height: 80vh;
+                background-attachment: scroll; /* Fallback for mobile */
+            }
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            .hero-btn {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+            section {
+                margin: 3rem auto;
+                padding: 2rem;
+            }
+            section h2 {
+                font-size: 2rem;
+            }
+            section p {
+                font-size: 0.95rem;
+            }
+            #testimonials .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-section {
+                align-items: center;
+            }
+            .payment-methods {
+                /* On mobile, switch to flexbox to allow wrapping */
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem; /* Adjusted gap for mobile */
+            }
+            .payment-icon {
+                width: 40px; /* Slightly smaller on mobile */
+                height: 25px;
+            }
+
+            /* Adjust main content padding for mobile */
+            main {
+                padding-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile));
+            }
+            header {
+                height: var(--header-height-mobile);
+            }
+            #promo-banner-section {
+                top: var(--header-height-mobile); /* Adjust based on mobile header height */
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+                height: var(--promo-banner-height-mobile);
+            }
+            #promo-banner-section .promo-text {
+                font-size: 0.8rem;
+            }
+            #promo-banner-section .book-btn {
+                padding: 0.2rem 0.6rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0.8rem 1rem;
+            }
+            .desktop-logo {
+                height: 35px;
+            }
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            .mobile-menu-btn {
+                font-size: 1.8rem;
+            }
+            .mobile-nav-overlay nav a {
+                font-size: 1.5rem;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .hero-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            section {
+                padding: 1.5rem;
+            }
+            section h2 {
+                font-size: 1.8rem;
+            }
+            section p {
+                font-size: 0.9rem;
+            }
+            .instagram-cards-stack {
+                max-width: 100%; /* Allow full width on small screens */
+                padding: 0 1rem; /* Add some horizontal padding */
+            }
+            .instagram-post-card {
+                width: 280px; /* Adjust card width for very small screens */
+                height: 420px; /* Adjust card height */
+            }
+            .instagram-post-card img {
+                height: calc(2/3 * 420px); /* Adjust image height based on new card height */
+            }
+            .instagram-post-card .card-content {
+                height: calc(1/3 * 420px); /* Adjust content height */
+                padding: 1rem;
+            }
+            .instagram-post-card .caption {
+                font-size: 0.85rem;
+            }
+            .instagram-post-card .likes {
+                font-size: 0.75rem;
+            }
+            .footer-section h4 {
+                font-size: 1rem;
+            }
+            .footer-section a {
+                font-size: 0.85rem;
+            }
+            #promo-banner-section {
+                padding: 0.6rem 0.8rem;
+            }
+            #promo-banner-section .promo-text {
+                font-size: 0.75rem;
+            }
+            #promo-banner-section .book-btn {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Background Orbs -->
-  <div class="bg-orbs">
-    <div class="orb"></div>
-    <div class="orb"></div>
-    <div class="orb"></div>
-  </div>
-
-  <!-- Promotional Banner -->
-  <div class="promo-banner">
-    <div class="promo-banner-content">
-      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
-      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
-      <a href="/pricing">View Pricing ✨</a>
+    <div class="preloader">
+        <div class="preloader-inner"></div>
     </div>
-  </div>
 
-  <header>
-    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
-      <span class="logo-text">PictureThisPet<sup>®</sup></span>
-    </a>
-    <nav class="site-nav">
-      <a href="/" aria-label="Home page">Home</a>
-      <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations.html" aria-label="Locations page">Locations</a>
-      <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
-    </nav>
-    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
-  </header>
+    <header>
+        <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+            <img src="https://via.placeholder.com/38x38/ff8c00/white?text=PTP" alt="PictureThisPet Logo" class="desktop-logo" />
+            <span class="logo-text">PictureThisPet<sup>®</sup></span>
+        </a>
+        <nav class="site-nav">
+            <a href="/" aria-label="Home page">Home</a>
+            <a href="/availability.html" aria-label="Availability page">Availability</a>
+            <a href="/locations.html" aria-label="Locations page">Locations</a>
+            <a href="/pricing" aria-label="Pricing page">Pricing</a>
+            <a href="/contact" aria-label="Contact page">Contact</a>
+            <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
+        </nav>
+        <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+    </header>
 
-  <main>
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-box">
-        <div class="hero-content">
-          <h1>Check My Availability</h1>
-          <p>View my schedule for pet photography sessions with PictureThisPet in Denver. Contact me to book your appointment once you find a suitable time!</p>
+    <div id="promo-banner-section">
+        <div class="promo-banner-content">
+            <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+            <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
+            <a href="/pricing" class="book-btn">View Pricing ✨</a>
         </div>
-      </div>
-    </section>
-
-    <!-- Google Calendar Section -->
-    <section class="calendar-section">
-      <div class="calendar-header" id="calendarHeader">
-        <div class="nav-arrows">
-          <div class="nav-arrow" id="prevMonth" onclick="navigateMonth(-1)" aria-label="Previous month"><span>←</span></div>
-        </div>
-        <h3 id="monthDisplay">May 2025</h3>
-        <div class="nav-arrows">
-          <div class="nav-arrow" id="nextMonth" onclick="navigateMonth(1)" aria-label="Next month"><span>→</span></div>
-        </div>
-      </div>
-      <div class="calendar-embed-wrapper">
-        <div class="calendar-embed">
-          <iframe id="calendarIframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=MThiZWI4YTBmODcxNGMwNjI1YWNlYmZmY2JhZjM4YWQ0NTM5YjhiYmRmMGEzOTc0MGZlODFkMDVjYjg5MWVkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29m&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29m&src=ZDNjZmZjMTRjMzhjMzA1YmNlZDQ4ODZmNjIxYjkxMjY5NDY5MTZjY2NmOGViNWNlN2Y3MWI3YmFmMzMxOTY0N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29m&color=%237CB342&color=%23D50000&color=%23E4C441" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Contact Us</h4>
-        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
-      </div>
-      <div class="footer-section socials">
-        <h4>Connect</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-      </div>
-      <div class="footer-section">
-        <h4>We Accept</h4>
-        <div class="payment-methods">
-          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
-        </div>
-      </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:38 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+
+    <div class="mobile-nav-overlay">
+        <button class="close-btn" aria-label="Close mobile menu">×</button>
+        <nav>
+            <a href="/" aria-label="Home page">Home</a>
+            <a href="/availability.html" aria-label="Availability page">Availability</a>
+            <a href="/locations.html" aria-label="Locations page">Locations</a>
+            <a href="/pricing" aria-label="Pricing page">Pricing</a>
+            <a href="/contact" aria-label="Contact page">Contact</a>
+            <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
+        </nav>
     </div>
-  </footer>
 
-  <script>
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('active');
-    }
+    <main>
+        <section class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Timeless Pet Photography</h1>
+                <p>Capture the magic of your furry friend with PictureThisPet.</p>
+                <a href="/cart.html" class="hero-btn">Book Now</a>
+            </div>
+        </section>
 
-    // Initialize current date for the custom header
-    let currentDate = new Date(2025, 4, 28); // May 2025 (month is 0-based in JS)
+        <section id="welcome">
+            <h2 id="welcome-title">Welcome to PictureThisPet</h2>
+            <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we'll capture their unique personality in beautiful settings across Denver.</p>
+        </section>
 
-    const monthDisplay = document.getElementById('monthDisplay');
-    const iframe = document.getElementById('calendarIframe');
+        <section id="instagram-posts-showcase">
+            <h2>Our Latest Instagram Moments</h2>
+            <p>Check out some of the recent furry friends we've captured!</p>
+            <div class="instagram-cards-stack">
+                <a href="https://www.instagram.com/p/C_1QyZgxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a happy dog" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Sunshine and smiles with this golden retriever! Pure joy in every frame."</p>
+                        <span class="likes">❤️ 285 likes</span>
+                    </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_0W_5gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a playful kitten" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Tiny paws, big adventures! This kitten melted our hearts during its session."</p>
+                        <span class="likes">❤️ 192 likes</span>
+                    </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_yR_4gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a curious cat" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"The majestic gaze of a truly regal feline. Every detail captured beautifully."</p>
+                        <span class="likes">❤️ 310 likes</span>
+                    </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_xO_3gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a dog in nature" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Adventure doggo! Exploring the trails with boundless energy."</p>
+                        <span class="likes">❤️ 250 likes</span>
+                    </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_wC_2gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a puppy playing" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Puppy playtime is the best playtime! Those innocent eyes and fluffy fur."</p>
+                        <span class="likes">❤️ 345 likes</span>
+                    </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_vB_1gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://images.unsplash.com/photo-1571566882372-1598d88abd90?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a cat napping" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Dreaming of chasing mice? Or maybe just more naps. So peaceful."</p>
+                        <span class="likes">❤️ 170 likes</span>
+                    </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_uA_0gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a unique pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"Every pet has a story. Honored to capture this unique bond."</p>
+                        <span class="likes">❤️ 299 likes</span>
+                    </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_t__zgxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a dog's portrait" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"A portrait of pure elegance. Such a photogenic furry friend!"</p>
+                        <span class="likes">❤️ 320 likes</span>
+                    </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+                <a href="https://www.instagram.com/p/C_s_y_gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
+                    <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a pet and owner" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="card-content">
+                        <p class="caption">"The inseparable duo! Capturing the love between a pet and their human."</p>
+                        <span class="likes">❤️ 412 likes</span>
+                    </div>
+                    <div class="hover-overlay">View Post</div>
+                </a>
+            </div>
+        </section>
 
-    function updateMonthDisplay() {
-      const options = { month: 'long', year: 'numeric' };
-      monthDisplay.textContent = currentDate.toLocaleDateString('en-US', options);
-    }
+        <section id="pop-up-event">
+            <h2>Upcoming Pop Up Event</h2>
+            <p>Join us at our next pop-up event at Cheesman Park! Bring your pets for a fun day of photography.</p>
+        </section>
 
-    function navigateMonth(direction) {
-      // Update the local date
-      currentDate.setMonth(currentDate.getMonth() + direction);
-      updateMonthDisplay();
+        <section id="start-journey">
+            <h2>Start Your Journey</h2>
+            <p>Ready to capture your pet's best moments? Begin your journey now!</p>
+            <div class="start-journey-button">
+                <a href="/cart.html">Begin Journey</a>
+            </div>
+        </section>
 
-      // Simulate click on Google Calendar's navigation arrows
-      try {
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        const arrows = iframeDoc.querySelectorAll('button[aria-label]');
-        let targetArrow;
+        <section id="testimonials">
+            <h2>Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>"PictureThisPet captured my beloved dog's playful spirit perfectly. Every photo is a treasure!"</p>
+                    <cite>- Mark S.</cite>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Absolutely thrilled with the results! My cat looks like a supermodel. Highly recommend PictureThisPet."</p>
+                    <cite>- Helly R.</cite>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Professional, patient, and truly talented. They made my pet feel comfortable and the photos are stunning."</p>
+                    <cite>- Irving B.</cite>
+                </div>
+                <div class="testimonial-card">
+                    <p>"The team at PictureThisPet has an incredible eye. They caught the unique personality of my ferret in every shot!"</p>
+                    <cite>- Dylan G.</cite>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        if (direction === -1) {
-          targetArrow = Array.from(arrows).find(btn => btn.getAttribute('aria-label').includes('Previous'));
-        } else {
-          targetArrow = Array.from(arrows).find(btn => btn.getAttribute('aria-label').includes('Next'));
-        }
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+                <a href="https://picturethispet.co" target="_blank" rel="noopener noreferrer" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+            </div>
+            <div class="footer-section socials">
+                <h4>Connect</h4>
+                <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+                <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+            </div>
+            <div class="footer-section">
+                <h4>We Accept</h4>
+                <div class="payment-methods">
+                    <!-- Using placeholder images for payment icons that will definitely work -->
+                    <img src="https://via.placeholder.com/45x28/1a1a2e/ffffff?text=VISA" alt="Visa payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/eb001b/ffffff?text=MC" alt="MasterCard payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/006fcf/ffffff?text=AMEX" alt="American Express payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/ff6000/ffffff?text=DISC" alt="Discover payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/000000/ffffff?text=PAY" alt="Apple Pay payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/4285f4/ffffff?text=GPAY" alt="Google Pay payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/1428a0/ffffff?text=SPAY" alt="Samsung Pay payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/ff9900/ffffff?text=AMZN" alt="Amazon Pay payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/ffb3c7/ffffff?text=KLRN" alt="Klarna payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/0fa9e6/ffffff?text=AFRM" alt="Affirm payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/b2fce4/ffffff?text=AFTR" alt="Afterpay payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/00d632/ffffff?text=CASH" alt="Cash App payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/003087/ffffff?text=PPAL" alt="PayPal payment accepted" class="payment-icon" />
+                    <img src="https://via.placeholder.com/45x28/007aff/ffffff?text=TAP" alt="Tap to Pay accepted" class="payment-icon" />
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 12:06 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+        </div>
+    </footer>
 
-        if (targetArrow) {
-          targetArrow.click();
-        } else {
-          console.warn('Navigation arrow not found in iframe');
-        }
-      } catch (e) {
-        console.error('Error accessing iframe content:', e);
-        // Fallback: Reload iframe with updated month
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth() + 1; // 1-based for URL
-        const newSrc = `https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FDenver&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=MThiZWI4YTBmODcxNGMwNjI1YWNlYmZmY2JhZjM4YWQ0NTM5YjhiYmRmMGEzOTc0MGZlODFkMDVjYjg5MWVkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29m&src=Y2Q0MjUwOGJmOTQ5ZDY4YTYxNWRmOGM4NDNhMDlmMmEzMzY5MWRhOTIyYjBiMmVkNjZhZjZkYzJjMzJiMDIxNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29m&src=ZDNjZmZjMTRjMzhjMzA1YmNlZDQ4ODZmNjIxYjkxMjY5NDY5MTZjY2NmOGViNWNlN2Y3MWI3YmFmMzMxOTY0N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29m&color=%237CB342&color=%23D50000&color=%23E4C441&date=${year}${month.toString().padStart(2, '0')}01`;
-        iframe.src = newSrc;
-      }
-    }
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Preloader animation
+            const preloader = document.querySelector('.preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 500);
+            }, 1500); // Adjust duration as needed
 
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Availability page loaded');
-      updateMonthDisplay();
-    });
-  </script>
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
+            const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNavOverlay.classList.add('open');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+            });
+
+            closeBtn.addEventListener('click', () => {
+                mobileNavOverlay.classList.remove('open');
+                document.body.style.overflow = ''; // Restore scrolling
+            });
+
+            // Close mobile menu when a link is clicked
+            mobileNavOverlay.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNavOverlay.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Intersection Observer for scroll animations (sections fade in and slide up)
+            const sections = document.querySelectorAll('section:not(.hero-section)'); // Exclude hero as it has its own animation
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Trigger when 15% of the section is visible
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Specific animation for Welcome title
+                        if (entry.target.id === 'welcome') {
+                            const welcomeTitle = document.getElementById('welcome-title');
+                            if (welcomeTitle && !welcomeTitle.classList.contains('animate-welcome')) {
+                                welcomeTitle.classList.add('animate-welcome');
+                                // Remove animation class after it finishes to allow re-triggering if needed (e.g., on re-scroll)
+                                welcomeTitle.addEventListener('animationend', () => {
+                                    welcomeTitle.classList.remove('animate-welcome');
+                                }, { once: true });
+                            }
+                        }
+                        observer.unobserve(entry.target); // Stop observing once it's visible
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            console.log('✅ PictureThisPet UI Overhaul - FULLY FIXED - v12.0');
+        });
+    </script>
 </body>
 </html>
