@@ -1,1217 +1,1221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Built My Site | Picture This Pet</title>
-  <meta name="description" content="Discover how Picture This Pet was built from scratch using AI collaboration - from Squarespace limitations to custom features.">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-
-  <style>
-    :root {
-      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
-      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
-      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
-      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-      --pink: #ff1493;
-      --purple: #8a2be2;
-      --orange: #ff8c00;
-      --available-green: #10b981;
-      --booked-red: #ef4444;
-      --soft-hold-yellow: #f59e0b;
-      --ai-purple: #8b5cf6;
-      --ai-blue: #3b82f6;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scrollbar-width: thin;
-      scrollbar-color: var(--pink) transparent;
-    }
-
-    html::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    html::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.1);
-    }
-
-    html::-webkit-scrollbar-thumb {
-      background: var(--gradient-primary);
-      border-radius: 3px;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      color: #ffffff;
-      background: var(--gradient-primary);
-      background-attachment: fixed;
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Floating background elements */
-    .bg-orbs {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.3;
-      animation: float 20s infinite linear;
-    }
-
-    .orb:nth-child(1) {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
-      top: 10%;
-      left: 80%;
-      animation-delay: 0s;
-    }
-
-    .orb:nth-child(2) {
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
-      top: 60%;
-      left: 10%;
-      animation-delay: -7s;
-    }
-
-    .orb:nth-child(3) {
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
-      top: 30%;
-      left: 20%;
-      animation-delay: -14s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes aiPulse {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.05); }
-    }
-
-    /* Promotional Banner */
-    .promo-banner {
-      position: fixed;
-      top: 96px;
-      left: 0;
-      width: 100%;
-      background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%);
-      color: #ffffff;
-      text-align: center;
-      padding: 0.6rem 1rem;
-      font-weight: 600;
-      font-size: 0.95rem;
-      z-index: 999;
-      box-shadow: 0 8px 32px rgba(255,140,0,0.3);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .promo-banner-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .promo-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-weight: 600;
-      overflow-wrap: break-word;
-      color: #ffffff;
-    }
-
-    .promo-banner a {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      padding: 0.2rem 0.8rem;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      overflow-wrap: break-word;
-    }
-
-    .promo-banner a:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 1rem 1.5rem;
-      backdrop-filter: blur(20px);
-      background: rgba(255,255,255,0.1);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      height: 96px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo-link {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .logo-link:hover {
-      opacity: 0.8;
-      transform: scale(1.02);
-    }
-
-    .desktop-logo {
-      height: 100px;
-    }
-
-    .logo-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-    }
-
-    .logo-text sup {
-      font-size: 0.8rem;
-      vertical-align: super;
-      margin-left: 2px;
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .site-nav a:not(.book-btn) {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      position: relative;
-    }
-
-    .site-nav a:not(.book-btn):hover {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .site-nav a:not(.book-btn)::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--gradient-primary);
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    .site-nav a:not(.book-btn):hover::after {
-      width: 80%;
-    }
-
-    .book-btn {
-      background: var(--gradient-primary);
-      color: #ffffff;
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 1rem;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
-    }
-
-    .book-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: #ffffff;
-      font-size: 2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu-btn:hover {
-      transform: scale(1.1);
-    }
-
-    /* Main Content */
-    main {
-      margin-top: 146px;
-      min-height: calc(100vh - 146px);
-    }
-
-    /* Hero Section */
-    .hero-section {
-      padding: 5rem 1rem;
-      text-align: center;
-      position: relative;
-    }
-
-    .hero-content {
-      max-width: 1000px;
-      margin: 0 auto;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .ai-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue));
-      color: #ffffff;
-      padding: 0.8rem 2rem;
-      border-radius: 25px;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      animation: aiPulse 3s ease-in-out infinite;
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-content h1 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 4rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-      color: #ffffff;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-content p {
-      font-size: 1.3rem;
-      line-height: 1.6;
-      margin-bottom: 3rem;
-      color: #ffffff;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Story Section */
-    .story-section {
-      padding: 4rem 1rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .story-card {
-      background: var(--gradient-card);
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      color: #ffffff;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 3rem;
-      transition: all 0.3s ease;
-    }
-
-    .story-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-    }
-
-    .story-card h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 2rem;
-      color: #ffffff;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      text-align: center;
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .story-content {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      color: #ffffff;
-      text-align: left;
-    }
-
-    .story-content p {
-      margin-bottom: 1.5rem;
-    }
-
-    .story-content strong {
-      color: #ff8c00;
-      font-weight: 600;
-    }
-
-    /* Features Section */
-    .features-section {
-      padding: 4rem 1rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .features-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 3rem;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 3rem;
-      color: #ffffff;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-    }
-
-    .feature-card {
-      background: var(--gradient-card);
-      border-radius: 20px;
-      padding: 2.5rem;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    }
-
-    .feature-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .feature-card h3 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: #ffffff;
-    }
-
-    .feature-card p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #ffffff;
-    }
-
-    /* Consulting Section */
-    .consulting-section {
-      padding: 4rem 1rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .consulting-card {
-      background: var(--gradient-card);
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      padding: 3rem;
-      color: #ffffff;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-    }
-
-    .consulting-card .consulting-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--ai-purple), var(--ai-blue));
-      color: #ffffff;
-      padding: 0.6rem 1.5rem;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .consulting-card h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 1.5rem;
-      color: #ffffff;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .consulting-card p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      color: #ffffff;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .consulting-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin: 2rem 0;
-      text-align: left;
-    }
-
-    .consulting-item {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .consulting-item h4 {
-      color: #ff8c00;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .consulting-item p {
-      color: #ffffff;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 0;
-    }
-
-    .consulting-buttons {
-      margin: 2rem 0;
-    }
-
-    .consulting-buttons a {
-      padding: 1rem 2.5rem;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s ease;
-    }
-
-    .consulting-buttons .primary-btn {
-      background: var(--gradient-primary);
-      color: #ffffff;
-      margin-right: 1rem;
-      box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
-    }
-
-    .consulting-buttons .primary-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(255, 20, 147, 0.5);
-    }
-
-    .consulting-buttons .secondary-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .consulting-buttons .secondary-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-    }
-
-    .consulting-card .disclaimer {
-      font-size: 0.95rem;
-      color: #ffffff;
-      font-style: italic;
-      margin-top: 1rem;
-      opacity: 0.7;
-    }
-
-    /* CTA Section */
-    .cta-section {
-      padding: 5rem 1rem;
-      text-align: center;
-    }
-
-    .cta-content {
-      max-width: 800px;
-      margin: 0 auto;
-      background: var(--gradient-card);
-      border-radius: 24px;
-      padding: 3rem;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .cta-content h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 1.5rem;
-      color: #ffffff;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .cta-content p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      color: #ffffff;
-    }
-
-    .cta-button {
-      background: var(--gradient-primary);
-      color: #ffffff;
-      padding: 1rem 3rem;
-      border-radius: 50px;
-      font-size: 1.3rem;
-      font-weight: 700;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
-    }
-
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(255, 20, 147, 0.5);
-    }
-
-    /* Footer */
-    footer {
-      background: #ffffff;
-      border-top: 1px solid rgba(0,0,0,0.1);
-      padding: 2rem 1.5rem;
-      color: #000000;
-      font-size: 0.9rem;
-    }
-
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
-      justify-items: center;
-    }
-
-    .footer-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .footer-section h4 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-    }
-
-    .footer-section a {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      color: #000000;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s ease;
-    }
-
-    .footer-section a:hover {
-      color: #333333;
-    }
-
-    .payment-methods {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(2, auto);
-      gap: 0.5rem;
-      justify-items: center;
-    }
-
-    .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
-    .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
-    .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
-    .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
-    .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
-    .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
-    .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
-    .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
-    .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
-    .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
-    .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
-    .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
-    .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
-    .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
-
-    .payment-icon {
-      width: 40px;
-      height: 25px;
-      object-fit: contain;
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      border-radius: 4px;
-    }
-
-    .payment-icon:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    .payment-placeholder {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      width: 40px;
-      height: 25px;
-      background: rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(0, 0, 0, 0.3);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8px;
-      font-weight: 600;
-      color: #000000;
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      text-align: center;
-      line-height: 1.1;
-    }
-
-    .payment-placeholder:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    .footer-bottom {
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .footer-bottom p {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      color: #000000;
-    }
-
-    .footer-bottom a {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      color: #000000;
-      text-decoration: underline;
-    }
-
-    .footer-bottom a:hover {
-      color: #333333;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .promo-banner {
-        font-size: 0.85rem;
-        padding: 0.4rem 0.8rem;
-        top: 84px;
-      }
-
-      .promo-banner-content {
-        flex-direction: column;
-        gap: 0.2rem;
-        justify-content: center;
-        text-align: center;
-        line-height: 1.2;
-      }
-
-      .promo-text {
-        font-size: 0.8rem;
-        line-height: 1.2;
-      }
-
-      .promo-banner a {
-        padding: 0.2rem 0.6rem;
-        font-size: 0.75rem;
-      }
-
-      header {
-        height: 84px;
-        padding: 0.5rem 1rem;
-      }
-
-      .desktop-logo {
-        height: 80px;
-      }
-
-      .logo-text {
-        font-size: 1.2rem;
-      }
-
-      .logo-text sup {
-        font-size: 0.6rem;
-      }
-
-      .site-nav {
-        display: none;
-        flex-direction: column;
-        background: #ffffff;
-        position: absolute;
-        top: 84px;
-        right: 0;
-        width: 100%;
-        text-align: right;
-        padding: 1rem;
-        z-index: 999;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 0 0 16px 16px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-      }
-
-      .site-nav.active {
-        display: flex;
-      }
-
-      .site-nav.active a {
-        margin: 0.5rem 0;
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
-      }
-
-      .site-nav.active a:not(.book-btn) {
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .site-nav.active a:not(.book-btn):hover {
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .site-nav.active a:not(.book-btn)::after {
-        background: var(--gradient-primary);
-      }
-
-      .site-nav.active a[href="/"] { order: 1; }
-      .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/locations.html"] { order: 3; }
-      .site-nav.active a[href="/pricing"] { order: 4; }
-      .site-nav.active a[href="/contact"] { order: 5; }
-      .site-nav.active .book-btn { order: 6; }
-
-      .book-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
-        margin-left: 0;
-      }
-
-      .mobile-menu-btn {
-        display: block;
-      }
-
-      main {
-        margin-top: 124px;
-      }
-
-      .hero-content h1 {
-        font-size: 2.5rem;
-      }
-
-      .hero-content p {
-        font-size: 1.1rem;
-      }
-
-      .story-card,
-      .feature-card,
-      .cta-content {
-        padding: 2rem;
-      }
-
-      .story-card h2,
-      .features-title {
-        font-size: 2rem;
-      }
-
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .consulting-card {
-        padding: 2rem;
-      }
-
-      .consulting-card h2 {
-        font-size: 2rem;
-      }
-
-      .consulting-buttons a {
-        display: block;
-        margin: 0.5rem 0;
-        width: 100%;
-        text-align: center;
-      }
-
-      .consulting-buttons .primary-btn {
-        margin-right: 0;
-      }
-
-      .footer-container {
-        grid-template-areas: 
-          "contact-us connect"
-          "we-accept we-accept";
-        gap: 0.5rem;
-        justify-items: center;
-      }
-
-      .footer-section:nth-child(1) {
-        grid-area: contact-us;
-        justify-self: start;
-        align-items: flex-start;
-        text-align: left;
-      }
-
-      .footer-section:nth-child(2) {
-        grid-area: connect;
-        justify-self: end;
-        align-items: flex-end;
-        text-align: right;
-      }
-
-      .footer-section:nth-child(3) {
-        grid-area: we-accept;
-        justify-self: center;
-        align-items: center;
-        text-align: center;
-      }
-
-      footer {
-        padding: 1rem 1rem;
-        font-size: 0.8rem;
-      }
-
-      .footer-section h4 {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .footer-section a {
-        margin-bottom: 0.2rem;
-        font-size: 0.8rem;
-      }
-
-      .footer-bottom {
-        padding-top: 1rem;
-      }
-
-      .payment-methods {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Built My Site | PictureThisPet</title>
+    <meta name="description" content="Discover how PictureThisPet was built from scratch using AI collaboration - from Squarespace limitations to custom features.">
+    <link rel="icon" type="image/png" href="assets/images/NEW_LOGO_NOTITLE-2.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --color-primary: #1a1a1a;
+            --color-secondary: #2a2a2a;
+            --color-text-light: #f0f0f0;
+            --color-text-muted: #b0b0b0;
+            --color-accent-pink: #ff1493;
+            --color-accent-purple: #8a2be2;
+            --color-accent-orange: #ff8c00;
+            --gradient-button: linear-gradient(45deg, var(--color-accent-pink), var(--color-accent-purple), var(--color-accent-orange));
+            --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
+            --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
+            --header-height-desktop: 64px;
+            --promo-banner-height-desktop: 40px;
+            --header-height-mobile: 58px;
+            --promo-banner-height-mobile: 70px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2.5rem;
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(15px);
+            border-bottom: var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+            height: var(--header-height-desktop);
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.7;
+        }
+
+        .desktop-logo {
+            height: 38px;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--color-text-light);
+        }
+
+        .logo-text sup {
+            font-size: 0.6em;
+            vertical-align: super;
+            margin-left: 2px;
+            color: var(--color-accent-orange);
+        }
+
+        .site-nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .site-nav a {
+            color: var(--color-text-muted);
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+
+        .site-nav a:hover {
+            color: var(--color-text-light);
+            transform: translateY(-2px);
+        }
+
+        .site-nav a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-button);
+            transition: width 0.3s ease, left 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .site-nav a:hover::after {
+            width: 100%;
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .book-btn {
+            background: var(--gradient-button);
+            color: white;
+            padding: 0.75rem 1.75rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-light);
+            white-space: nowrap;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-text-light);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .mobile-nav-overlay.open {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-overlay .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: var(--color-text-light);
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav-overlay .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .mobile-nav-overlay nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .mobile-nav-overlay nav a {
+            color: var(--color-text-light);
+            font-size: 1.8rem;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .mobile-nav-overlay nav a:hover {
+            color: var(--color-accent-pink);
+            transform: translateX(10px);
+        }
+
+        .mobile-nav-overlay .book-btn {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
+        }
+
+        #promo-banner-section {
+            position: fixed;
+            top: var(--header-height-desktop);
+            left: 0;
+            width: 100%;
+            background: var(--gradient-button);
+            color: white;
+            text-align: center;
+            padding: 1.2rem 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 999;
+            box-shadow: 0 8px 32px rgba(255,140,0,0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: top 0.3s ease;
+            margin: 0;
+            border-radius: 0;
+            opacity: 1;
+            transform: translateY(0);
+            height: var(--promo-banner-height-desktop);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #promo-banner-section .promo-banner-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        #promo-banner-section .promo-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            overflow-wrap: break-word;
+            color: white;
+            margin-bottom: 0;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        #promo-banner-section .book-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            padding: 0.4rem 1rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow-wrap: break-word;
+            box-shadow: none;
+            transform: none;
+        }
+
+        #promo-banner-section .book-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.03); opacity: 1; }
+        }
+
+        @keyframes aiPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        main {
+            padding-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop));
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 6rem auto;
+            padding: 3rem 4rem;
+            border-radius: 0;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 5rem 4rem;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            color: var(--color-accent-orange);
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: aiPulse 3s ease-in-out infinite;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Story Section */
+        .story-section {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.03) 0%, rgba(138, 43, 226, 0.03) 50%, rgba(255, 140, 0, 0.03) 100%);
+            border: 1px solid rgba(138, 43, 226, 0.1);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .story-card {
+            padding: 0;
+            margin: 0;
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        .story-card h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .story-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--color-text-muted);
+            text-align: left;
+        }
+
+        .story-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content strong {
+            color: var(--color-accent-orange);
+            font-weight: 600;
+        }
+
+        /* Features Section */
+        .features-section h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--color-accent-orange);
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--color-text-muted);
+            text-align: left;
+        }
+
+        /* Consulting Section */
+        .consulting-section {
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.05) 0%, rgba(255, 20, 147, 0.03) 50%, rgba(138, 43, 226, 0.03) 100%);
+            border: 1px solid rgba(255, 140, 0, 0.2);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            text-align: center;
+        }
+
+        .consulting-card {
+            padding: 0;
+            margin: 0;
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        .consulting-badge {
+            display: inline-block;
+            background: rgba(255,140,0,0.2);
+            color: var(--color-accent-orange);
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,140,0,0.3);
+        }
+
+        .consulting-card h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .consulting-card p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: var(--color-text-muted);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .consulting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .consulting-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .consulting-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .consulting-item h4 {
+            color: var(--color-accent-orange);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .consulting-item p {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        .consulting-buttons {
+            margin: 2rem 0;
+        }
+
+        .consulting-buttons a {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .consulting-buttons .primary-btn {
+            background: var(--gradient-button);
+            color: white;
+            margin-right: 1rem;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .consulting-buttons .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .consulting-buttons .secondary-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text-light);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .consulting-buttons .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .consulting-card .disclaimer {
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            font-style: italic;
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .cta-content {
+            padding: 0;
+            margin: 0;
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: var(--color-text-muted);
+        }
+
+        .cta-button {
+            background: var(--gradient-button);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        footer {
+            background-color: var(--color-primary);
+            color: var(--color-text-muted);
+            padding: 2rem 2rem;
+            border-top: var(--border-subtle);
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-text-light);
+            margin-bottom: 1rem;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-section a {
+            color: var(--color-text-muted);
+            margin-bottom: 0.6rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--color-text-light);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 0.5rem;
+            justify-items: center;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
+        .payment-methods img:nth-child(2) { grid-area: 1 / 2; }
+        .payment-methods img:nth-child(3) { grid-area: 1 / 3; }
+        .payment-methods img:nth-child(4) { grid-area: 1 / 4; }
+        .payment-methods img:nth-child(5) { grid-area: 1 / 5; }
+        .payment-methods img:nth-child(6) { grid-area: 1 / 6; }
+        .payment-methods img:nth-child(7) { grid-area: 1 / 7; }
+        .payment-methods img:nth-child(8) { grid-area: 2 / 7; }
+        .payment-methods img:nth-child(9) { grid-area: 2 / 6; }
+        .payment-methods img:nth-child(10) { grid-area: 2 / 5; }
+        .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
+        .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
+        .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
+        .payment-methods .payment-placeholder { grid-area: 2 / 2; }
+
+        .payment-icon {
+            width: 45px;
+            height: 28px;
+            object-fit: contain;
+            opacity: 1;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .payment-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .payment-placeholder {
+            width: 45px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .payment-placeholder:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            padding-top: 1.5rem;
+            border-top: var(--border-subtle);
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .footer-bottom a {
+            color: var(--color-accent-pink);
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--color-accent-orange);
+        }
+
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+            .site-nav {
+                gap: 1.5rem;
+            }
+            section {
+                margin: 4rem auto;
+                padding: 2.5rem 3rem;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            #promo-banner-section {
+                padding: 0.6rem 1rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #promo-banner-section {
+                font-size: 0.85rem;
+                padding: 1rem 0.8rem;
+                top: var(--header-height-mobile);
+                height: var(--promo-banner-height-mobile);
+            }
+
+            #promo-banner-section .promo-banner-content {
+                flex-direction: column;
+                gap: 0.5rem;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.4;
+            }
+
+            #promo-banner-section .promo-text {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+
+            #promo-banner-section .book-btn {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.75rem;
+            }
+
+            header {
+                height: var(--header-height-mobile);
+                padding: 0.5rem 1rem;
+            }
+
+            .desktop-logo {
+                height: 35px;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .logo-text sup {
+                font-size: 0.6rem;
+            }
+
+            .site-nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            main {
+                padding-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile));
+            }
+
+            section {
+                margin: 3rem auto;
+                padding: 2rem;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-section {
+                align-items: center;
+            }
+            .payment-methods {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                grid-template-rows: repeat(2, auto);
+                gap: 0.5rem;
+                justify-items: center;
+                align-items: center;
+            }
+            .payment-icon {
+                width: 35px;
+                height: 22px;
+            }
+            .consulting-buttons a {
+                display: block;
+                margin: 0.5rem 0;
+                width: 100%;
+                text-align: center;
+            }
+            .consulting-buttons .primary-btn {
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #promo-banner-section {
+                font-size: 0.75rem;
+                padding: 1rem 0.5rem;
+            }
+
+            #promo-banner-section .promo-text {
+                font-size: 0.7rem;
+                line-height: 1.3;
+            }
+
+            #promo-banner-section .book-btn {
+                padding: 0.15rem 0.4rem;
+                font-size: 0.65rem;
+            }
+
+            header {
+                padding: 0.8rem 1rem;
+            }
+
+            .desktop-logo {
+                height: 35px;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .mobile-menu-btn {
+                font-size: 1.8rem;
+            }
+
+            .mobile-nav-overlay nav a {
+                font-size: 1.5rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            .hero-content p {
+                font-size: 0.9rem;
+            }
+            .footer-section h4 {
+                font-size: 1rem;
+            }
+            .footer-section a {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Background Orbs -->
-  <div class="bg-orbs">
-    <div class="orb"></div>
-    <div class="orb"></div>
-    <div class="orb"></div>
-  </div>
+    <header>
+        <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+            <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
+            <span class="logo-text">PictureThisPet<sup>®</sup></span>
+        </a>
+        <nav class="site-nav">
+            <a href="/" aria-label="Home page">Home</a>
+            <a href="/availability.html" aria-label="Availability page">Availability</a>
+            <a href="/locations.html" aria-label="Locations page">Locations</a>
+            <a href="/pricing" aria-label="Pricing page">Pricing</a>
+            <a href="/contact" aria-label="Contact page">Contact</a>
+            <a href="/cart.html" class="book-btn" aria-label="Book a session" onclick="scrollToBooking(event)">Book Now</a>
+        </nav>
+        <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+    </header>
 
-  <!-- Promotional Banner -->
-  <div class="promo-banner">
-    <div class="promo-banner-content">
-      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
-      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
-      <a href="/pricing">View Pricing ✨</a>
+    <div id="promo-banner-section">
+        <div class="promo-banner-content">
+            <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+            <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
+            <a href="/pricing" class="book-btn">View Pricing ✨</a>
+        </div>
     </div>
-  </div>
 
-  <header>
-    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
-      <span class="logo-text">PictureThisPet<sup>®</sup></span>
-    </a>
-    <nav class="site-nav">
-      <a href="/" aria-label="Home page">Home</a>
-      <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations.html" aria-label="Locations page">Locations</a>
-      <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/cart.html" class="book-btn" aria-label="Book a session" onclick="scrollToBooking(event)">Book Now</a>
-    </nav>
-    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
-  </header>
-
-  <main>
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <div class="ai-badge">🤖 AI-Powered Development</div>
-        <h1>Built by AI, Owned by Me</h1>
-        <p>From Squarespace limitations to custom features, discover how AI collaboration transformed a simple idea into a fully-featured photography business platform.</p>
-      </div>
-    </section>
-
-    <!-- Story Section -->
-    <section class="story-section">
-      <div class="story-card">
-        <h2>The Journey from Template to Custom</h2>
-        <div class="story-content">
-          <p>This site began with a simple idea and a <strong>Squarespace template</strong>. While that platform got things off the ground, it didn't take long to hit its limits — both in design flexibility and the custom workflows I needed to support a growing creative business. I wanted more control, better automation, and a seamless experience that could scale with my vision.</p>
-          
-          <p>So I made the jump. With <strong>no formal background in web development</strong>, I turned to AI for help — specifically <strong>ChatGPT, Claude.ai, and Grok</strong>. Over time, we built every part of this site together: the custom photo session builder, the dynamic intake forms, the Stripe-powered checkout, and even the client galleries. Every page you see here was shaped through conversation, iteration, and problem-solving — not with a drag-and-drop tool, but with <strong>code and logic written collaboratively, line by line</strong>.</p>
-          
-          <p>I purchased my domain, routed it through <strong>Cloudflare</strong>, and set up the site infrastructure on <strong>GitHub</strong>. What started as a workaround turned into a full-on digital rebuild, powered by AI and a drive to do it better. This isn't just a site — <strong>it's proof of what's possible when creativity and technology work side by side</strong>.</p>
-          
-          <p>This platform now reflects not just the brand I envisioned, but <strong>the process it took to get here</strong>. Built from scratch, owned fully, and designed intentionally — by me and the AIs that helped along the way.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section">
-      <h2 class="features-title">What We Built Together</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <span class="feature-icon">🎯</span>
-          <h3>Smart Session Builder</h3>
-          <p>Multi-step booking flow with intelligent pricing, location selection, and custom validation that prevents booking conflicts.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">💳</span>
-          <h3>Secure Payments</h3>
-          <p>Full Stripe integration with support for cards, digital wallets, and BNPL options. PCI compliant and mobile-optimized checkout.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">📅</span>
-          <h3>Live Calendar Sync</h3>
-          <p>Real-time availability powered by Google Calendar API. Bookings sync instantly, preventing conflicts and automating schedule management.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">📱</span>
-          <h3>Mobile-First Design</h3>
-          <p>Responsive design that works perfectly on every device. Over 70% of bookings come from mobile, so we optimized every interaction.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">🖼️</span>
-          <h3>Client Galleries</h3>
-          <p>Password-protected photo galleries for each client. Download tracking, watermark removal, and personalized sharing experiences.</p>
-        </div>
-        
-        <div class="feature-card">
-          <span class="feature-icon">⚡</span>
-          <h3>Performance Optimized</h3>
-          <p>Cloudflare CDN, image optimization, and lazy loading ensure lightning-fast page loads and perfect mobile experience.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Consulting Section -->
-    <section class="consulting-section">
-      <div class="consulting-card">
-        <div class="consulting-badge">💡 Consulting Available</div>
-        
-        <h2>Want Your Own AI-Built Site?</h2>
-        
-        <p>I've learned what works (and what doesn't) when collaborating with AI to build custom websites. From session builders to payment processing, I can guide you through creating your own professional platform without the traditional development costs.</p>
-        
-        <div class="consulting-grid">
-          <div class="consulting-item">
-            <h4>🎯 Strategy Sessions</h4>
-            <p>AI collaboration planning, feature prioritization, and development roadmaps tailored to your business needs.</p>
-          </div>
-          
-          <div class="consulting-item">
-            <h4>🤖 AI Prompt Engineering</h4>
-            <p>Learn the exact prompting techniques I use to get production-ready code from ChatGPT, Claude, and other AI tools.</p>
-          </div>
-          
-          <div class="consulting-item">
-            <h4>⚡ Implementation Support</h4>
-            <p>Hands-on guidance for complex integrations like payments, APIs, and automated workflows that scale with your business.</p>
-          </div>
-        </div>
-        
-        <div class="consulting-buttons">
-          <a href="/contact" class="primary-btn">Schedule a Consultation</a>
-          <a href="mailto:info@picturethispet.co?subject=AI Site Development Consultation" class="secondary-btn">Email Directly</a>
-        </div>
-        
-        <p class="disclaimer">From creative professionals to small businesses — let's build something amazing together.</p>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="cta-content">
-        <h2>Ready to Experience the Difference?</h2>
-        <p>This isn't just a website — it's a testament to what's possible when human creativity meets AI capability. Every feature was thoughtfully designed to make booking your pet photography session as smooth as possible.</p>
-        <a href="/cart.html" class="cta-button">Book Your Session</a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Contact Us</h4>
-        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
-      </div>
-      <div class="footer-section socials">
-        <h4>Connect</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-      </div>
-      <div class="footer-section">
-        <h4>We Accept</h4>
-        <div class="payment-methods">
-          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <div class="payment-placeholder" title="Tap to Pay accepted">TAP TO PAY</div>
-        </div>
-      </div>
+    <div class="mobile-nav-overlay">
+        <button class="close-btn" aria-label="Close mobile menu">×</button>
+        <nav>
+            <a href="/" aria-label="Home page">Home</a>
+            <a href="/availability.html" aria-label="Availability page">Availability</a>
+            <a href="/locations.html" aria-label="Locations page">Locations</a>
+            <a href="/pricing" aria-label="Pricing page">Pricing</a>
+            <a href="/contact" aria-label="Contact page">Contact</a>
+            <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
+        </nav>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 11:05 PM MDT, Tuesday, May 27, 2025 | <span style="white-space: nowrap;">Built with AI collaboration ❤️</span></p>
-    </div>
-  </footer>
 
-  <script>
-    // Mobile menu toggle
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('active');
-    }
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="ai-badge">🤖 AI-Powered Development</div>
+                <h1>Built by AI, Owned by Me</h1>
+                <p>From Squarespace limitations to custom features, discover how AI collaboration transformed a simple idea into a fully-featured photography business platform.</p>
+            </div>
+        </section>
 
-    // Smooth scroll to booking
-    function scrollToBooking(e) {
-      e.preventDefault();
-      window.location.href = '/cart.html';
-    }
+        <!-- Story Section -->
+        <section class="story-section">
+            <div class="story-card">
+                <h2>The Journey from Template to Custom</h2>
+                <div class="story-content">
+                    <p>This site began with a simple idea and a <strong>Squarespace template</strong>. While that platform got things off the ground, it didn't take long to hit its limits — both in design flexibility and the custom workflows I needed to support a growing creative business. I wanted more control, better automation, and a seamless experience that could scale with my vision.</p>
+                    
+                    <p>So I made the jump. With <strong>no formal background in web development</strong>, I turned to AI for help — specifically <strong>ChatGPT, Claude.ai, and Grok</strong>. Over time, we built every part of this site together: the custom photo session builder, the dynamic intake forms, the Stripe-powered checkout, and even the client galleries. Every page you see here was shaped through conversation, iteration, and problem-solving — not with a drag-and-drop tool, but with <strong>code and logic written collaboratively, line by line</strong>.</p>
+                    
+                    <p>I purchased my domain, routed it through <strong>Cloudflare</strong>, and set up the site infrastructure on <strong>GitHub</strong>. What started as a workaround turned into a full-on digital rebuild, powered by AI and a drive to do it better. This isn't just a site — <strong>it's proof of what's possible when creativity and technology work side by side</strong>.</p>
+                    
+                    <p>This platform now reflects not just the brand I envisioned, but <strong>the process it took to get here</strong>. Built from scratch, owned fully, and designed intentionally — by me and the AIs that helped along the way.</p>
+                </div>
+            </div>
+        </section>
 
-    // Add some interactive elements
-    document.addEventListener('DOMContentLoaded', function() {
-      // Animate timeline items on scroll
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
-          }
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2>What We Built Together</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3>Smart Session Builder</h3>
+                    <p>Multi-step booking flow with intelligent pricing, location selection, and custom validation that prevents booking conflicts.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">💳</span>
+                    <h3>Secure Payments</h3>
+                    <p>Full Stripe integration with support for cards, digital wallets, and BNPL options. PCI compliant and mobile-optimized checkout.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">📅</span>
+                    <h3>Live Calendar Sync</h3>
+                    <p>Real-time availability powered by Google Calendar API. Bookings sync instantly, preventing conflicts and automating schedule management.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">📱</span>
+                    <h3>Mobile-First Design</h3>
+                    <p>Responsive design that works perfectly on every device. Over 70% of bookings come from mobile, so we optimized every interaction.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🖼️</span>
+                    <h3>Client Galleries</h3>
+                    <p>Password-protected photo galleries for each client. Download tracking, watermark removal, and personalized sharing experiences.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Performance Optimized</h3>
+                    <p>Cloudflare CDN, image optimization, and lazy loading ensure lightning-fast page loads and perfect mobile experience.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consulting Section -->
+        <section class="consulting-section">
+            <div class="consulting-card">
+                <div class="consulting-badge">💡 Consulting Available</div>
+                
+                <h2>Want Your Own AI-Built Site?</h2>
+                
+                <p>I've learned what works (and what doesn't) when collaborating with AI to build custom websites. From session builders to payment processing, I can guide you through creating your own professional platform without the traditional development costs.</p>
+                
+                <div class="consulting-grid">
+                    <div class="consulting-item">
+                        <h4>🎯 Strategy Sessions</h4>
+                        <p>AI collaboration planning, feature prioritization, and development roadmaps tailored to your business needs.</p>
+                    </div>
+                    
+                    <div class="consulting-item">
+                        <h4>🤖 AI Prompt Engineering</h4>
+                        <p>Learn the exact prompting techniques I use to get production-ready code from ChatGPT, Claude, and other AI tools.</p>
+                    </div>
+                    
+                    <div class="consulting-item">
+                        <h4>⚡ Implementation Support</h4>
+                        <p>Hands-on guidance for complex integrations like payments, APIs, and automated workflows that scale with your business.</p>
+                    </div>
+                </div>
+                
+                <div class="consulting-buttons">
+                    <a href="/contact" class="primary-btn">Schedule a Consultation</a>
+                    <a href="mailto:info@picturethispet.co?subject=AI Site Development Consultation" class="secondary-btn">Email Directly</a>
+                </div>
+                
+                <p class="disclaimer">From creative professionals to small businesses — let's build something amazing together.</p>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Experience the Difference?</h2>
+                <p>This isn't just a website — it's a testament to what's possible when human creativity meets AI capability. Every feature was thoughtfully designed to make booking your pet photography session as smooth as possible.</p>
+                <a href="/cart.html" class="cta-button">Book Your Session</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+                <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+            </div>
+            <div class="footer-section socials">
+                <h4>Connect</h4>
+                <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+                <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+            </div>
+            <div class="footer-section">
+                <h4>We Accept</h4>
+                <div class="payment-methods">
+                    <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+                    <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+                    <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+                    <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+                    <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+                    <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+                    <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+                    <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+                    <div class="payment-placeholder" title="Tap to Pay accepted">TAP TO PAY</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:53 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;">Built with AI collaboration ❤️</span></p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
+            const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNavOverlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeBtn.addEventListener('click', () => {
+                mobileNavOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+
+            mobileNavOverlay.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNavOverlay.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            const sections = document.querySelectorAll('section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // Animate feature cards on scroll
+            const featureObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInSlideUp 0.8s ease-out forwards';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.feature-card').forEach(item => {
+                featureObserver.observe(item);
+            });
+
+            document.querySelectorAll('.consulting-item').forEach(item => {
+                featureObserver.observe(item);
+            });
+
+            console.log('✅ PictureThisPet AI Site Page - Redesigned with Standard Template - v2.0');
         });
-      }, { threshold: 0.1 });
 
-      document.querySelectorAll('.feature-card').forEach(item => {
-        observer.observe(item);
-      });
+        function toggleMenu() {
+            const nav = document.querySelector('.site-nav');
+            nav.classList.toggle('open');
+            document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+        }
 
-      document.querySelectorAll('.consulting-item').forEach(item => {
-        observer.observe(item);
-      });
-    });
-  </script>
+        // Smooth scroll to booking
+        function scrollToBooking(e) {
+            e.preventDefault();
+            window.location.href = '/cart.html';
+        }
+    </script>
 </body>
 </html>
