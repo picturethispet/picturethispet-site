@@ -21,7 +21,7 @@
       --text-secondary: rgba(255,255,255,0.8);
       --text-muted: rgba(255,255,255,0.6);
       --gold: #FDB75E;
-      --error-red: #ff5555;
+      --success-green: #00cc00;
     }
 
     * {
@@ -185,11 +185,19 @@
 
     /* Intake Section */
     .intake-section {
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
       position: relative;
       z-index: 2;
       animation: fadeInUp 0.8s ease-out;
+    }
+
+    .small-logo {
+      display: block;
+      max-width: 200px;
+      margin: 0 auto 1.5rem;
+      height: auto;
+      animation: zoomIn 0.5s ease-out;
     }
 
     .intake-card {
@@ -214,14 +222,6 @@
       transform: scale(1);
     }
 
-    .intake-card-logo {
-      display: block;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      height: auto;
-      flex-shrink: 0;
-    }
-
     .intake-card-body {
       text-align: center;
       flex: 1;
@@ -230,108 +230,63 @@
       justify-content: center;
       width: 100%;
       min-height: 0;
-      padding-bottom: 3rem;
-    }
-
-    .intake-card-body.form-content {
-      justify-content: flex-start;
-      text-align: left;
-      padding-top: 1rem;
-      padding-bottom: 2rem;
+      padding-bottom: 1rem;
     }
 
     .intake-card-body h1 {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 700;
       color: var(--text-primary);
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       letter-spacing: -0.02em;
     }
 
-    /* Form Styles */
-    .form-group {
-      margin-bottom: 1.5rem;
-      text-align: left;
+    .intake-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 500px;
       width: 100%;
-      position: relative;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: left;
     }
 
     .form-group label {
-      display: block;
-      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-primary);
       font-size: 1rem;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      color: var(--text-primary);
     }
 
-    .form-group input::placeholder {
-      color: var(--text-muted);
-      font-style: italic;
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--orange);
-      box-shadow: 0 0 8px rgba(255, 140, 0, 0.3);
+    .form-group input,
+    .form-group textarea {
       background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-1px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 0.8rem;
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
     }
 
-    .form-group:focus-within label {
-      color: var(--orange);
-      transform: translateY(-2px);
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--pink);
+      background: rgba(255, 255, 255, 0.15);
     }
 
-    .form-group.required label::after {
-      content: " *";
-      color: var(--error-red);
-    }
-
-    .form-error {
-      color: var(--error-red);
-      font-size: 0.85rem;
-      margin-top: 0.3rem;
-      display: none;
-      background: rgba(255, 85, 85, 0.1);
-      padding: 0.3rem 0.5rem;
-      border-radius: 4px;
-    }
-
-    .form-group.error input {
-      border-color: var(--error-red);
-      box-shadow: 0 0 8px rgba(255, 85, 85, 0.3);
-    }
-
-    .form-group.error .form-error {
-      display: block;
-    }
-
-    /* Button Styles */
-    .intake-card-footer {
-      margin-top: 1.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      flex-shrink: 0;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
     }
 
     .submit-btn {
@@ -339,17 +294,18 @@
       color: var(--text-primary);
       border: none;
       border-radius: 12px;
-      padding: 1rem 2rem;
+      padding: 0.8rem 1.5rem;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+      box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+      margin-top: 1rem;
     }
 
     .submit-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(255, 20, 147, 0.4);
+      box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
     }
 
     .submit-btn:disabled {
@@ -358,7 +314,7 @@
       pointer-events: none;
     }
 
-    /* Loading Animation */
+    /* Loading Overlay */
     .loading-overlay {
       display: none;
       position: fixed;
@@ -420,11 +376,6 @@
       0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
       50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
       100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
 
     /* Footer */
@@ -540,6 +491,16 @@
       }
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       header {
@@ -579,38 +540,28 @@
         min-height: auto;
       }
 
-      .intake-card-logo {
-        max-width: 400px;
-        margin-bottom: 1.5rem;
+      .small-logo {
+        max-width: 150px;
+        margin-bottom: 1rem;
       }
 
       .intake-card-body h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
       }
 
-      .intake-card-body p {
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
+      .form-group label {
+        font-size: 0.9rem;
       }
 
-      .form-group {
-        margin-bottom: 1.2rem;
-      }
-
-      .form-group input {
-        padding: 0.8rem;
-        font-size: 1rem;
-      }
-
-      .intake-card-footer {
-        padding-top: 1.2rem;
-        margin-top: 1.2rem;
+      .form-group input,
+      .form-group textarea {
+        padding: 0.6rem;
+        font-size: 0.9rem;
       }
 
       .submit-btn {
-        width: 100%;
-        max-width: 280px;
-        padding: 0.9rem 1.5rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
       }
 
       .loading-content p {
@@ -680,7 +631,21 @@
 
     @media (max-width: 480px) {
       .intake-card-body h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+      }
+
+      .form-group label {
+        font-size: 0.85rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        font-size: 0.85rem;
+      }
+
+      .submit-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
       }
 
       .footer-container {
@@ -728,79 +693,52 @@
   <main>
     <!-- Intake Section -->
     <section class="intake-section">
+      <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="small-logo" />
       <div class="intake-card">
-        <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="intake-card-logo" />
-        <div class="intake-card-body form-content">
-          <h1>Cheesman Park Pop-Up Intake</h1>
-          
-          <div class="form-group required">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
-            <div class="form-error">Please enter your first name</div>
-          </div>
-
-          <div class="form-group required">
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name">
-            <div class="form-error">Please enter your last name</div>
-          </div>
-
-          <div class="form-group required">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" required placeholder="8881234567" oninput="formatPhoneNumber(this)" maxlength="10">
-            <div class="form-error">Please enter a valid phone number (e.g., 8881234567)</div>
-          </div>
-
-          <div class="form-group required">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" required placeholder="your@email.com">
-            <div class="form-error">Please enter a valid email address</div>
-          </div>
-
-          <div class="form-group required">
-            <label for="zip">Zip Code</label>
-            <input type="text" id="zip" name="zip" required placeholder="80203" maxlength="5">
-            <div class="form-error">Please enter a valid 5-digit zip code</div>
-          </div>
-
-          <div class="form-group required">
-            <label for="petName">Pet Name</label>
-            <input type="text" id="petName" name="petName" required placeholder="e.g., Max">
-            <div class="form-error">Please enter your pet's name</div>
-          </div>
-
-          <div class="form-group required">
-            <label for="petAge">Pet Age</label>
-            <input type="text" id="petAge" name="petAge" required placeholder="e.g., 3 years">
-            <div class="form-error">Please enter your pet's age</div>
-          </div>
-        </div>
-        <div class="intake-card-footer">
-          <button class="submit-btn" onclick="submitIntakeForm()">Register & Add to Queue</button>
+        <div class="intake-card-body">
+          <h1>Cheesman Park Pop-Up Intake 📸</h1>
+          <form id="intakeForm" class="intake-form" action="https://script.google.com/macros/s/AKfycbxYOA9wWOGBsrEXcLUYgMU1qZFnxf84WzATt7vYxcLP88b04TLs-ssJvpW_-o73Dzl8lQ/exec" method="POST">
+            <input type="hidden" name="popUpLocation" value="Cheesman" />
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" name="firstName" placeholder="Your first name" required />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Your last name" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" placeholder="8881234567" pattern="[0-9]{10}" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
+            <div class="form-group">
+              <label for="zip">Zip Code *</label>
+              <input type="text" id="zip" name="zip" placeholder="80203" pattern="[0-9]{5}" required />
+            </div>
+            <div class="form-group">
+              <label for="petInfo">Pet Info *</label>
+              <input type="text" id="petInfo" name="petInfo" placeholder="Pet name, age (e.g., Max, 3 years)" required />
+            </div>
+            <div class="form-group">
+              <label for="notes">Notes</label>
+              <textarea id="notes" name="notes" placeholder="Any additional notes (e.g., Zip: 80203)"></textarea>
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+          </form>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Hidden Form for Submission -->
-  <form id="hiddenForm" method="POST" action="https://script.google.com/macros/s/AKfycbytH50BY_lYjIUOjHH8kxCrot5QVHL9GFNlVLMKv_bBN3UEXlYoFGdBrGFLeDAbkuBfoA/exec" style="display: none;" target="hiddenFrame">
-    <input type="hidden" name="popUpLocation" value="Cheesman">
-    <input type="hidden" name="name" id="hiddenName">
-    <input type="hidden" name="phone" id="hiddenPhone">
-    <input type="hidden" name="email" id="hiddenEmail">
-    <input type="hidden" name="zip" id="hiddenZip">
-    <input type="hidden" name="petInfo" id="hiddenPetInfo">
-    <input type="hidden" name="notes" id="hiddenNotes">
-  </form>
-
-  <!-- Hidden iframe to handle form submission response -->
-  <iframe name="hiddenFrame" style="display: none;"></iframe>
-
   <!-- Loading Overlay -->
   <div id="loadingOverlay" class="loading-overlay">
     <div class="loading-content">
       <div class="loading-spinner"></div>
-      <p>Securing your place in line…</p>
+      <p>Submitting...</p>
     </div>
   </div>
 
@@ -837,116 +775,47 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:27 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:15 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
-    // Phone number formatting (remove non-digits, ensure 10 digits)
-    function formatPhoneNumber(input) {
-      const value = input.value.replace(/\D/g, '');
-      input.value = value;
-    }
-
-    // Validate the form
-    function validateForm() {
-      const requiredInputs = document.querySelectorAll('input[required]');
-      let isValid = true;
-
-      requiredInputs.forEach(input => {
-        const formGroup = input.closest('.form-group');
-        if (!input.value.trim()) {
-          formGroup.classList.add('error');
-          isValid = false;
-        } else {
-          formGroup.classList.remove('error');
-
-          // Email validation
-          if (input.type === 'email' && input.value.trim()) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(input.value.trim())) {
-              formGroup.classList.add('error');
-              isValid = false;
-            }
-          }
-
-          // Phone validation (must be 10 digits)
-          if (input.type === 'tel' && input.value.trim()) {
-            const phoneRegex = /^\d{10}$/;
-            if (!phoneRegex.test(input.value.trim())) {
-              formGroup.classList.add('error');
-              isValid = false;
-            }
-          }
-
-          // Zip validation (must be 5 digits)
-          if (input.id === 'zip' && input.value.trim()) {
-            const zipRegex = /^\d{5}$/;
-            if (!zipRegex.test(input.value.trim())) {
-              formGroup.classList.add('error');
-              isValid = false;
-            }
-          }
-        }
-      });
-
-      const submitBtn = document.querySelector('.submit-btn');
-      if (submitBtn) {
-        if (isValid) {
-          submitBtn.removeAttribute('disabled');
-        } else {
-          submitBtn.setAttribute('disabled', 'disabled');
-        }
-      }
-
-      return isValid;
-    }
-
-    // Submit the intake form using a hidden form to avoid CORS
-    function submitIntakeForm() {
-      if (!validateForm()) return;
-
+    document.getElementById('intakeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
       const loadingOverlay = document.getElementById('loadingOverlay');
-      const submitBtn = document.querySelector('.submit-btn');
 
-      submitBtn.setAttribute('disabled', 'disabled');
+      submitBtn.disabled = true;
       loadingOverlay.style.display = 'flex';
 
-      const firstName = document.getElementById('firstName').value;
-      const lastName = document.getElementById('lastName').value;
-      const phone = document.getElementById('phone').value;
-      const email = document.getElementById('email').value;
-      const zip = document.getElementById('zip').value;
-      const petName = document.getElementById('petName').value;
-      const petAge = document.getElementById('petAge').value;
+      const formData = new FormData(this);
+      const name = `${formData.get('firstName')} ${formData.get('lastName')}`.trim();
+      formData.set('name', name);
 
-      // Populate hidden form fields
-      document.getElementById('hiddenName').value = `${firstName} ${lastName}`;
-      document.getElementById('hiddenPhone').value = phone;
-      document.getElementById('hiddenEmail').value = email;
-      document.getElementById('hiddenZip').value = zip;
-      document.getElementById('hiddenPetInfo').value = `${petName}, ${petAge}`;
-      document.getElementById('hiddenNotes').value = `Zip: ${zip}`;
-
-      // Submit the hidden form
-      const form = document.getElementById('hiddenForm');
-      form.submit();
-
-      // Redirect to /PUCPsuccess after 6 seconds
-      setTimeout(() => {
-        window.location.href = '/PUCPsuccess';
-      }, 6000);
-    }
-
-    // Setup form validation
-    document.addEventListener('DOMContentLoaded', function() {
-      document.addEventListener('input', function(e) {
-        if (e.target.matches('input')) {
-          setTimeout(validateForm, 100);
+      fetch(this.action, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          setTimeout(() => {
+            window.location.href = '/PUCPsuccess';
+          }, 6000); // 6-second delay to show loading animation
+        } else {
+          throw new Error(data.message || 'Submission failed');
         }
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+        alert('Failed to submit form: ' + error.message);
+        submitBtn.disabled = false;
+        loadingOverlay.style.display = 'none';
       });
+    });
 
-      console.log('Cheesman Park Pop-Up Intake page loaded');
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Intake page loaded');
     });
   </script>
 </body>
