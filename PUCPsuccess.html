@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Success | Cheesman Park Pop-Up | PictureThisPet</title>
-  <meta name="description" content="Registration successful for Cheesman Park pet photography pop-up event with PictureThisPet in Denver.">
+  <title>Registration Success | PictureThisPet</title>
+  <meta name="description" content="Confirmation of your registration for the Cheesman Park pet photography pop-up event with PictureThisPet in Denver.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -21,7 +21,7 @@
       --text-secondary: rgba(255,255,255,0.8);
       --text-muted: rgba(255,255,255,0.6);
       --gold: #FDB75E;
-      --success-green: #00cc00; /* Green for confirmation message */
+      --success-green: #00cc00;
     }
 
     * {
@@ -185,11 +185,19 @@
 
     /* Success Section */
     .success-section {
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
       position: relative;
       z-index: 2;
       animation: fadeInUp 0.8s ease-out;
+    }
+
+    .small-logo {
+      display: block;
+      max-width: 200px;
+      margin: 0 auto 1.5rem;
+      height: auto;
+      animation: zoomIn 0.5s ease-out;
     }
 
     .success-card {
@@ -214,15 +222,6 @@
       transform: scale(1);
     }
 
-    .success-card-logo {
-      display: block;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      height: auto;
-      flex-shrink: 0;
-      animation: zoomIn 0.5s ease-out;
-    }
-
     .success-card-body {
       text-align: center;
       flex: 1;
@@ -234,46 +233,31 @@
       padding-bottom: 1rem;
     }
 
-    /* Success Message Section */
-    .success-message {
-      background: rgba(0, 204, 0, 0.1); /* Light green background */
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      animation: slideIn 0.5s ease-out;
-    }
-
-    .success-message h1 {
+    .success-card-body h1 {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 2.5rem;
       font-weight: 700;
-      color: var(--success-green);
-      text-shadow: 0 2px 8px rgba(0, 204, 0, 0.3);
+      color: var(--text-primary);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       margin-bottom: 1rem;
       letter-spacing: -0.02em;
     }
 
-    /* Cafe Blurb Section */
-    .cafe-blurb {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 2rem;
-      animation: slideIn 0.7s ease-out;
-    }
-
-    .cafe-blurb h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-    }
-
-    .cafe-blurb p {
+    .success-card-body p {
       font-size: 1.2rem;
-      line-height: 1.6;
       color: var(--text-secondary);
-      margin-bottom: 0;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .success-card-body a {
+      color: var(--pink);
+      text-decoration: underline;
+      transition: color 0.3s ease;
+    }
+
+    .success-card-body a:hover {
+      color: var(--orange);
     }
 
     /* Footer */
@@ -389,11 +373,6 @@
       }
     }
 
-    @keyframes slideIn {
-      from { transform: translateY(-20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
     @keyframes zoomIn {
       from { transform: scale(0.8); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
@@ -438,21 +417,17 @@
         min-height: auto;
       }
 
-      .success-card-logo {
-        max-width: 400px;
-        margin-bottom: 1.5rem;
+      .small-logo {
+        max-width: 150px;
+        margin-bottom: 1rem;
       }
 
-      .success-message h1 {
+      .success-card-body h1 {
         font-size: 2rem;
       }
 
-      .cafe-blurb h2 {
-        font-size: 1.8rem;
-      }
-
-      .cafe-blurb p {
-        font-size: 1rem;
+      .success-card-body p {
+        font-size: 1.1rem;
       }
 
       .footer-container {
@@ -512,12 +487,12 @@
     }
 
     @media (max-width: 480px) {
-      .success-message h1 {
+      .success-card-body h1 {
         font-size: 1.8rem;
       }
 
-      .cafe-blurb h2 {
-        font-size: 1.6rem;
+      .success-card-body p {
+        font-size: 1rem;
       }
 
       .footer-container {
@@ -565,18 +540,11 @@
   <main>
     <!-- Success Section -->
     <section class="success-section">
+      <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="small-logo" />
       <div class="success-card">
-        <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="success-card-logo" />
         <div class="success-card-body">
-          <!-- Top Section: Confirmation Message -->
-          <div class="success-message">
-            <h1>Confirmed! You're all set for the Cheesman Park Pop-Up! ✅</h1>
-          </div>
-          <!-- Bottom Section: Secret Garden Cafe Blurb -->
-          <div class="cafe-blurb">
-            <h2>While You Wait... ☕</h2>
-            <p>Grab a treat at the Secret Garden Cafe 🌸 right on the edge of Cheesman Park at 1290 N. Williams St., Denver, CO 80218! 🍵 Their dog-friendly patio is perfect for you and your pup 🐶 to relax with a refreshing drink or a tasty bite. Open daily from 7am to 7pm, it’s a paws-itively delightful spot to unwind while we prep your photo session! 📷</p>
-          </div>
+          <h1>Confirmed! You're all set for the Cheesman Park Pop-Up! ✅</h1>
+          <p>While you wait, why not grab a coffee at the <a href="https://www.google.com/maps/dir/?api=1&destination=1234+Secret+Garden+St,+Denver,+CO+80203" target="_blank" rel="noopener noreferrer">Secret Garden Cafe</a>? They offer a cozy atmosphere with pet-friendly outdoor seating, delicious artisanal coffee, and freshly baked pastries—perfect for you and your furry friend! We’ll text you when it’s your turn!</p>
         </div>
       </div>
     </section>
@@ -615,13 +583,13 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:27 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:22 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Cheesman Park Pop-Up Success page loaded');
+      console.log('Success page loaded');
     });
   </script>
 </body>
