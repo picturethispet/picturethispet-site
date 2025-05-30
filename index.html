@@ -343,7 +343,7 @@
 
         #welcome-title {
             font-size: 6rem; /* Increased text size */
-            white-space: nowrap; /* Ensure text stays on one line */
+            white-space: nowrap; /* Ensure text stays on one line on desktop */
         }
 
         section p {
@@ -365,6 +365,7 @@
             overflow-x: scroll;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
+            touch-action: pan-x; /* Explicitly allow horizontal scrolling on touch devices */
             gap: 1.5rem;
             padding: 1rem 2rem;
             margin: 2rem auto;
@@ -431,28 +432,6 @@
             font-weight: 600;
             display: block;
             white-space: nowrap;
-        }
-
-        .instagram-post-card .hover-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .instagram-post-card:hover .hover-overlay {
-            opacity: 1;
         }
 
         .ig-follow-cta {
@@ -786,6 +765,8 @@
 
             #welcome-title {
                 font-size: 3.5rem; /* Adjusted for smaller screens */
+                white-space: normal; /* Allow wrapping on mobile */
+                line-height: 1.2; /* Improve readability for two lines */
             }
 
             .ig-follow-cta a {
@@ -872,7 +853,7 @@
             }
 
             #welcome-title {
-                font-size: 3rem; /* Adjusted for smaller screens */
+                font-size: 2.5rem; /* Adjusted for smaller screens */
             }
 
             .ig-follow-cta a {
@@ -920,7 +901,7 @@
 
     <main>
         <section id="welcome">
-            <h2 id="welcome-title">Welcome to PictureThisPet</h2>
+            <h2 id="welcome-title">Welcome to<br class="mobile-break">PictureThisPet</h2>
             <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we'll capture their unique personality in beautiful settings across Denver.</p>
         </section>
 
@@ -935,7 +916,6 @@
                         <p class="caption">"I thought it was a kind of a fun thing to do." – Pam Beesly</p>
                         <span class="likes">"Playful Sprinter" 🐶💨</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/IMG_1093.JPG" alt="Instagram Post of a curious pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -943,7 +923,6 @@
                         <p class="caption">"I’m not superstitious, but I am a little stitious." – Michael Scott</p>
                         <span class="likes">"Curious Explorer" 🐾🔍</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A6126-3.JPEG" alt="Instagram Post of a playful pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -951,7 +930,6 @@
                         <p class="caption">"Sometimes I’ll start a sentence and I don’t even know where it’s going." – Michael Scott</p>
                         <span class="likes">"Sassy Diva" 🐕‍🦺💃</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A4365.jpg" alt="Instagram Post of a pet in nature" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -959,7 +937,6 @@
                         <p class="caption">"I am fast. To give you a reference point, I am somewhere between a snake and a mongoose." – Dwight Schrute</p>
                         <span class="likes">"Water Lover" 🐾🌊</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A3720.JPG" alt="Instagram Post of a pet portrait" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -967,7 +944,6 @@
                         <p class="caption">"I have a lot of questions. Number one: how dare you?" – Kelly Kapoor</p>
                         <span class="likes">"Cozy Napper" 🐶💤</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/IMG_0770.JPG" alt="Instagram Post of a pet napping" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -975,7 +951,6 @@
                         <p class="caption">"Bears, beets, Battlestar Galactica." – Jim Halpert</p>
                         <span class="likes">"Bouncy Trickster" 🐕🎾</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A9811.JPG" alt="Instagram Post of a unique pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -983,7 +958,6 @@
                         <p class="caption">"I’m always thinking one step ahead, like a carpenter that makes stairs." – Andy Bernard</p>
                         <span class="likes">"Loyal Guardian" 🐾🛡️</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A9743.JPG" alt="Instagram Post of a pet playing" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -991,7 +965,6 @@
                         <p class="caption">"I don’t care, but I hope it was worth it." – Angela Martin</p>
                         <span class="likes">"Cheeky Chomper" 🐶🍖</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A9021.JPG" alt="Instagram Post of a pet and owner" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -999,7 +972,6 @@
                         <p class="caption">"I’ve been involved in a number of cults, both as a leader and a follower." – Creed Bratton</p>
                         <span class="likes">"Charming Poser" 🐕📸</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <!-- Duplicated set of cards for seamless looping -->
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
@@ -1008,7 +980,6 @@
                         <p class="caption">"I thought it was a kind of a fun thing to do." – Pam Beesly</p>
                         <span class="likes">"Playful Sprinter" 🐶💨</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/IMG_1093.JPG" alt="Instagram Post of a curious pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -1016,7 +987,6 @@
                         <p class="caption">"I’m not superstitious, but I am a little stitious." – Michael Scott</p>
                         <span class="likes">"Curious Explorer" 🐾🔍</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A6126-3.JPEG" alt="Instagram Post of a playful pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -1024,7 +994,6 @@
                         <p class="caption">"Sometimes I’ll start a sentence and I don’t even know where it’s going." – Michael Scott</p>
                         <span class="likes">"Sassy Diva" 🐕‍🦺💃</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A4365.jpg" alt="Instagram Post of a pet in nature" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -1032,7 +1001,6 @@
                         <p class="caption">"I am fast. To give you a reference point, I am somewhere between a snake and a mongoose." – Dwight Schrute</p>
                         <span class="likes">"Water Lover" 🐾🌊</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A3720.JPG" alt="Instagram Post of a pet portrait" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -1040,7 +1008,6 @@
                         <p class="caption">"I have a lot of questions. Number one: how dare you?" – Kelly Kapoor</p>
                         <span class="likes">"Cozy Napper" 🐶💤</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/IMG_0770.JPG" alt="Instagram Post of a pet napping" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -1048,7 +1015,6 @@
                         <p class="caption">"Bears, beets, Battlestar Galactica." – Jim Halpert</p>
                         <span class="likes">"Bouncy Trickster" 🐕🎾</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A9811.JPG" alt="Instagram Post of a unique pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -1056,7 +1022,6 @@
                         <p class="caption">"I’m always thinking one step ahead, like a carpenter that makes stairs." – Andy Bernard</p>
                         <span class="likes">"Loyal Guardian" 🐾🛡️</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A9743.JPG" alt="Instagram Post of a pet playing" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -1064,7 +1029,6 @@
                         <p class="caption">"I don’t care, but I hope it was worth it." – Angela Martin</p>
                         <span class="likes">"Cheeky Chomper" 🐶🍖</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/picturethispet/" target="_blank" class="instagram-post-card">
                     <img src="assets/images/2I4A9021.JPG" alt="Instagram Post of a pet and owner" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
@@ -1072,7 +1036,6 @@
                         <p class="caption">"I’ve been involved in a number of cults, both as a leader and a follower." – Creed Bratton</p>
                         <span class="likes">"Charming Poser" 🐕📸</span>
                     </div>
-                    <div class="hover-overlay">View Post</div>
                 </a>
             </div>
             <div class="ig-follow-cta">
@@ -1149,7 +1112,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:51 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:07 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
         </div>
     </footer>
 
@@ -1181,18 +1144,21 @@
 
             // Auto-scrolling for Instagram cards with seamless looping
             let autoScrollInterval;
+            let isTouching = false; // Flag to track touch interaction
             const originalCards = 9; // Number of original cards
             const cardWidth = 300 + 24; // Card width (300px) + gap (1.5rem ≈ 24px)
             const loopPoint = originalCards * cardWidth; // Scroll position where the first set ends
 
             function startAutoScroll() {
-                autoScrollInterval = setInterval(() => {
-                    if (cardsStack.scrollLeft >= loopPoint) {
-                        cardsStack.scrollLeft = 0; // Reset to the start of the first set for seamless looping
-                    } else {
-                        cardsStack.scrollBy({ left: 1, behavior: 'smooth' }); // Slow scroll
-                    }
-                }, 50); // Adjust speed by changing the interval (50ms = slow scroll)
+                if (!isTouching) { // Only start auto-scrolling if not touching
+                    autoScrollInterval = setInterval(() => {
+                        if (cardsStack.scrollLeft >= loopPoint) {
+                            cardsStack.scrollLeft = 0; // Reset to the start of the first set for seamless looping
+                        } else {
+                            cardsStack.scrollBy({ left: 1, behavior: 'smooth' }); // Slow scroll
+                        }
+                    }, 50); // Adjust speed by changing the interval (50ms = slow scroll)
+                }
             }
 
             function stopAutoScroll() {
@@ -1201,9 +1167,17 @@
 
             // Pause auto-scroll on hover (desktop) and touch (mobile)
             cardsStack.addEventListener('mouseover', stopAutoScroll);
-            cardsStack.addEventListener('mouseout', startAutoScroll);
-            cardsStack.addEventListener('touchstart', stopAutoScroll);
-            cardsStack.addEventListener('touchend', startAutoScroll);
+            cardsStack.addEventListener('mouseout', () => {
+                if (!isTouching) startAutoScroll();
+            });
+            cardsStack.addEventListener('touchstart', () => {
+                isTouching = true;
+                stopAutoScroll();
+            });
+            cardsStack.addEventListener('touchend', () => {
+                isTouching = false;
+                startAutoScroll();
+            });
 
             // Start auto-scrolling initially
             startAutoScroll();
