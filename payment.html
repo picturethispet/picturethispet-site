@@ -467,7 +467,7 @@
         height: 100%;
         background: var(--gradient-button);
         border-radius: 3px;
-        animation: progressFill 3s ease-out forwards;
+        animation: progressFill 5s ease-out forwards;
     }
 
     @keyframes progressFill {
@@ -779,7 +779,7 @@
         <div class="loading-area" id="loadingArea">
           <div class="confirmation-message">
             <div class="confirmation-icon">💳✨</div>
-            <h3 class="confirmation-title">Payment Processing...</h3>
+            <h3 class="confirmation-title">Loading to secure payment...</h3>
             <p class="confirmation-description">We're securely processing your payment for your Picture This Pet session. Please wait a moment! 🐾</p>
           </div>
 
@@ -793,7 +793,7 @@
               <span class="paw">🐾</span>
             </div>
 
-            <div class="loading-text" id="loadingText">💳 Processing payment...</div>
+            <div class="loading-text" id="loadingText">💳 Loading to secure payment...</div>
 
             <div class="progress-bar">
               <div class="progress-fill"></div>
@@ -837,14 +837,14 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 02:51 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:22 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
     let sessionData = null;
     let loadingMessages = [
-      "💳 Processing payment...",
+      "💳 Loading to secure payment...",
       "🐾 Securing your transaction...",
       "✨ Verifying payment details...",
       "🎉 Almost there...",
@@ -872,10 +872,31 @@
       return false;
     }
 
-    function simulatePaymentProcessing() {
-      const loadingArea = document.getElementById('loadingArea');
-      loadingArea.classList.add('hidden');
-      window.location.href = '/booking.html';
+    async function redirectToStripe() {
+      try {
+        // Call the server to create a Stripe Checkout Session
+        const response = await fetch('https://yourdomain.com/create-checkout-session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(sessionData),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        // Redirect to Stripe Checkout
+        window.location.href = data.url;
+      } catch (error) {
+        console.error('Error redirecting to Stripe:', error);
+        alert('⚠️ Failed to redirect to payment page. Please try again.');
+        window.location.href = '/cart.html';
+      }
     }
 
     function toggleMenu() {
@@ -892,8 +913,8 @@
         
         setTimeout(() => {
           clearInterval(textInterval);
-          simulatePaymentProcessing();
-        }, 3000);
+          redirectToStripe();
+        }, 5000);
       } else {
         alert('⚠️ No session data found. Redirecting to session builder...');
         window.location.href = '/cart.html';
