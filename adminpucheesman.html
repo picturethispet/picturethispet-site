@@ -248,7 +248,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(255, 85, 85, 0.3);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .wipe-queue-btn:hover {
@@ -256,57 +256,57 @@
       box-shadow: 0 6px 20px rgba(255, 85, 85, 0.4);
     }
 
-    /* Queue Table */
-    .table-wrapper {
+    /* Queue Cards */
+    .queue-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
       width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
     }
 
-    .queue-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
+    .queue-card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
-      overflow: hidden;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .queue-table th,
-    .queue-table td {
-      padding: 0.8rem;
-      text-align: left;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      white-space: nowrap; /* Prevent text wrapping in cells */
+    .queue-card-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .queue-table th {
-      background: rgba(255, 255, 255, 0.1);
-      font-weight: 600;
-      color: var(--text-primary);
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-
-    .queue-table td {
-      color: var(--text-secondary);
-    }
-
-    .queue-table tr:last-child td {
+    .queue-card-field:last-child {
       border-bottom: none;
     }
 
-    .actions-cell {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 0.3rem;
-      justify-content: flex-start;
-      align-items: center;
-      width: 200px; /* Fixed width for Actions column */
+    .queue-card-field label {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.9rem;
     }
 
-    .queue-table .action-btn {
+    .queue-card-field span {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      text-align: right;
+      max-width: 60%;
+      word-break: break-word;
+    }
+
+    .queue-card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .queue-card .action-btn {
       background: var(--gradient-primary);
       color: var(--text-primary);
       border: none;
@@ -318,16 +318,16 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
       flex: 1;
-      min-width: 60px;
+      min-width: 80px;
       text-align: center;
     }
 
-    .queue-table .action-btn:hover {
+    .queue-card .action-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
     }
 
-    .queue-table .action-btn:disabled {
+    .queue-card .action-btn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
       pointer-events: none;
@@ -516,33 +516,6 @@
     }
 
     /* Responsive */
-    @media (min-width: 769px) {
-      .table-wrapper {
-        overflow-x: visible; /* No scrolling on desktop */
-      }
-
-      .queue-table {
-        min-width: 0; /* Allow table to fit within viewport */
-        width: 100%;
-      }
-
-      .queue-table th,
-      .queue-table td {
-        padding: 0.8rem;
-        font-size: 0.9rem;
-      }
-
-      .queue-table .action-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.85rem;
-        min-width: 60px;
-      }
-
-      .actions-cell {
-        width: 200px; /* Ensure Actions column fits buttons */
-      }
-    }
-
     @media (max-width: 768px) {
       header {
         height: 60px;
@@ -591,25 +564,19 @@
         font-size: 0.9rem;
       }
 
-      .queue-table {
-        min-width: 1000px; /* Ensure table is wide enough on mobile */
+      .queue-card {
+        padding: 0.8rem;
       }
 
-      .queue-table th,
-      .queue-table td {
-        padding: 0.6rem;
-        font-size: 0.8rem;
+      .queue-card-field label,
+      .queue-card-field span {
+        font-size: 0.85rem;
       }
 
-      .queue-table .action-btn {
+      .queue-card .action-btn {
         padding: 0.3rem 0.6rem;
         font-size: 0.75rem;
-        min-width: 50px;
-      }
-
-      .actions-cell {
-        flex-wrap: wrap;
-        width: 180px;
+        min-width: 70px;
       }
 
       .loading-content p {
@@ -687,20 +654,15 @@
         font-size: 0.85rem;
       }
 
-      .queue-table th,
-      .queue-table td {
-        padding: 0.5rem;
-        font-size: 0.75rem;
+      .queue-card-field label,
+      .queue-card-field span {
+        font-size: 0.8rem;
       }
 
-      .queue-table .action-btn {
+      .queue-card .action-btn {
         padding: 0.2rem 0.5rem;
         font-size: 0.7rem;
-        min-width: 45px;
-      }
-
-      .actions-cell {
-        width: 160px;
+        min-width: 60px;
       }
 
       .footer-container {
@@ -753,69 +715,120 @@
           <h1>Cheesman Park Queue 🐾</h1>
           <!-- Wipe Queue Button -->
           <button class="wipe-queue-btn" onclick="wipeQueue()">Wipe Queue</button>
-          <!-- Cheesman Park Queue Table -->
-          <div class="table-wrapper">
-            <table id="cheesmanQueue" class="queue-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Location</th>
-                  <th>Name</th>
-                  <th>Phone</th>
-                  <th>Zip</th>
-                  <th>Email</th>
-                  <th>Pet Info</th>
-                  <th>Notes</th>
-                  <th>Payment Status</th>
-                  <th>Queue Position</th>
-                  <th>Status</th>
-                  <th>Notified At</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="cheesmanQueueBody">
-                <!-- Manually copy Cheesman Park queue data here from Google Sheet -->
-                <!-- Example row: -->
-                <tr data-id="20250529-001" data-position="1">
-                  <td>20250529-001</td>
-                  <td>Cheesman</td>
-                  <td>John Doe</td>
-                  <td>8881234567</td>
-                  <td>80203</td>
-                  <td>john@doe.com</td>
-                  <td>Max, 3 years</td>
-                  <td>Zip: 80203</td>
-                  <td>Paid</td>
-                  <td>1</td>
-                  <td>Waiting</td>
-                  <td>-</td>
-                  <td class="actions-cell">
-                    <button class="action-btn move-up" onclick="moveUp('20250529-001')">Move Up</button>
-                    <button class="action-btn move-down" onclick="moveDown('20250529-001')">Move Down</button>
-                    <button class="action-btn ping" onclick="sendSMS('8881234567')">Ping</button>
-                  </td>
-                </tr>
-                <tr data-id="20250529-003" data-position="2">
-                  <td>20250529-003</td>
-                  <td>Cheesman</td>
-                  <td>Alice Brown</td>
-                  <td>8885551234</td>
-                  <td>80204</td>
-                  <td>alice@brown.com</td>
-                  <td>Luna, 2 years</td>
-                  <td>Zip: 80204</td>
-                  <td>Paid</td>
-                  <td>2</td>
-                  <td>Waiting</td>
-                  <td>-</td>
-                  <td class="actions-cell">
-                    <button class="action-btn move-up" onclick="moveUp('20250529-003')">Move Up</button>
-                    <button class="action-btn move-down" onclick="moveDown('20250529-003')">Move Down</button>
-                    <button class="action-btn ping" onclick="sendSMS('8885551234')">Ping</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <!-- Cheesman Park Queue Cards -->
+          <div class="queue-cards" id="cheesmanQueueBody">
+            <!-- Example Card -->
+            <div class="queue-card" data-id="20250529-001" data-position="1">
+              <div class="queue-card-field">
+                <label>ID:</label>
+                <span>20250529-001</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Location:</label>
+                <span>Cheesman</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Name:</label>
+                <span>John Doe</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Phone:</label>
+                <span>8881234567</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Zip:</label>
+                <span>80203</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Email:</label>
+                <span>john@doe.com</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Pet Info:</label>
+                <span>Max, 3 years</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Notes:</label>
+                <span>Zip: 80203</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Payment Status:</label>
+                <span>Paid</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Queue Position:</label>
+                <span>1</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Status:</label>
+                <span>Waiting</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Notified At:</label>
+                <span>-</span>
+              </div>
+              <div class="queue-card-actions">
+                <button class="action-btn move-up" onclick="moveUp('20250529-001')">Move Up</button>
+                <button class="action-btn move-down" onclick="moveDown('20250529-001')">Move Down</button>
+                <button class="action-btn ping" onclick="sendSMS('8881234567')">Ping</button>
+              </div>
+            </div>
+            <!-- Example Card -->
+            <div class="queue-card" data-id="20250529-003" data-position="2">
+              <div class="queue-card-field">
+                <label>ID:</label>
+                <span>20250529-003</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Location:</label>
+                <span>Cheesman</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Name:</label>
+                <span>Alice Brown</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Phone:</label>
+                <span>8885551234</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Zip:</label>
+                <span>80204</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Email:</label>
+                <span>alice@brown.com</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Pet Info:</label>
+                <span>Luna, 2 years</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Notes:</label>
+                <span>Zip: 80204</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Payment Status:</label>
+                <span>Paid</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Queue Position:</label>
+                <span>2</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Status:</label>
+                <span>Waiting</span>
+              </div>
+              <div class="queue-card-field">
+                <label>Notified At:</label>
+                <span>-</span>
+              </div>
+              <div class="queue-card-actions">
+                <button class="action-btn move-up" onclick="moveUp('20250529-003')">Move Up</button>
+                <button class="action-btn move-down" onclick="moveDown('20250529-003')">Move Down</button>
+                <button class="action-btn ping" onclick="sendSMS('8885551234')">Ping</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -863,7 +876,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 04:58 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:44 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -873,13 +886,13 @@
       loadingOverlay.style.display = 'flex';
 
       try {
-        const url = `https://script.google.com/macros/s/AKfycbxEYJfGJj08R9_QPn6jARfZcykEo7P65_M2GVDxKhazNC_wwJ-aXb6s6Es2E-8wJDj3MQ/exec?action=sendSMS&phone=${phone}`;
+        const url = `https://script.google.com/macros/s/AKfycbxYOA9wWOGBsrEXcLUYgMU1qZFnxf84WzATt7vYxcLP88b04TLs-ssJvpW_-o73Dzl8lQ/exec?action=sendSMS&phone=${phone}`;
         const response = await fetch(url);
         const result = await response.json();
 
         if (result.status === 'success') {
           alert('SMS sent successfully! Message ID: ' + result.messageId);
-          location.reload(); // Refresh to update the table
+          location.reload(); // Refresh to update the cards
         } else {
           throw new Error(result.message);
         }
@@ -895,31 +908,31 @@
       const loadingOverlay = document.getElementById('loadingOverlay');
       loadingOverlay.style.display = 'flex';
 
-      const tableBody = document.getElementById('cheesmanQueueBody');
-      const rows = Array.from(tableBody.querySelectorAll('tr'));
-      const row = rows.find(r => r.dataset.id === id);
-      const position = parseInt(row.dataset.position);
+      const cardsContainer = document.getElementById('cheesmanQueueBody');
+      const cards = Array.from(cardsContainer.querySelectorAll('.queue-card'));
+      const card = cards.find(c => c.dataset.id === id);
+      const position = parseInt(card.dataset.position);
       if (position <= 1) {
         loadingOverlay.style.display = 'none';
         return; // Already at the top
       }
 
-      const prevRow = rows.find(r => parseInt(r.dataset.position) === position - 1);
-      if (prevRow) {
-        const prevId = prevRow.dataset.id;
+      const prevCard = cards.find(c => parseInt(c.dataset.position) === position - 1);
+      if (prevCard) {
+        const prevId = prevCard.dataset.id;
         // Call the Google Apps Script to swap positions
-        fetch(`https://script.google.com/macros/s/AKfycbxEYJfGJj08R9_QPn6jARfZcykEo7P65_M2GVDxKhazNC_wwJ-aXb6s6Es2E-8wJDj3MQ/exec?action=reorder&id1=${id}&id2=${prevId}`)
+        fetch(`https://script.google.com/macros/s/AKfycbxYOA9wWOGBsrEXcLUYgMU1qZFnxf84WzATt7vYxcLP88b04TLs-ssJvpW_-o73Dzl8lQ/exec?action=reorder&id1=${id}&id2=${prevId}`)
           .then(response => response.json())
           .then(result => {
             if (result.status === 'success') {
-              // Swap positions in the table
-              row.dataset.position = position - 1;
-              prevRow.dataset.position = position;
-              row.querySelector('td:nth-child(10)').textContent = position - 1;
-              prevRow.querySelector('td:nth-child(10)').textContent = position;
+              // Swap positions in the cards
+              card.dataset.position = position - 1;
+              prevCard.dataset.position = position;
+              card.querySelector('.queue-card-field:nth-child(10) span').textContent = position - 1;
+              prevCard.querySelector('.queue-card-field:nth-child(10) span').textContent = position;
 
-              // Reorder rows in the DOM
-              tableBody.insertBefore(row, prevRow);
+              // Reorder cards in the DOM
+              cardsContainer.insertBefore(card, prevCard);
             } else {
               throw new Error(result.message);
             }
@@ -938,31 +951,31 @@
       const loadingOverlay = document.getElementById('loadingOverlay');
       loadingOverlay.style.display = 'flex';
 
-      const tableBody = document.getElementById('cheesmanQueueBody');
-      const rows = Array.from(tableBody.querySelectorAll('tr'));
-      const row = rows.find(r => r.dataset.id === id);
-      const position = parseInt(row.dataset.position);
-      if (position >= rows.length) {
+      const cardsContainer = document.getElementById('cheesmanQueueBody');
+      const cards = Array.from(cardsContainer.querySelectorAll('.queue-card'));
+      const card = cards.find(c => c.dataset.id === id);
+      const position = parseInt(card.dataset.position);
+      if (position >= cards.length) {
         loadingOverlay.style.display = 'none';
         return; // Already at the bottom
       }
 
-      const nextRow = rows.find(r => parseInt(r.dataset.position) === position + 1);
-      if (nextRow) {
-        const nextId = nextRow.dataset.id;
+      const nextCard = cards.find(c => parseInt(c.dataset.position) === position + 1);
+      if (nextCard) {
+        const nextId = nextCard.dataset.id;
         // Call the Google Apps Script to swap positions
-        fetch(`https://script.google.com/macros/s/AKfycbxEYJfGJj08R9_QPn6jARfZcykEo7P65_M2GVDxKhazNC_wwJ-aXb6s6Es2E-8wJDj3MQ/exec?action=reorder&id1=${id}&id2=${nextId}`)
+        fetch(`https://script.google.com/macros/s/AKfycbxYOA9wWOGBsrEXcLUYgMU1qZFnxf84WzATt7vYxcLP88b04TLs-ssJvpW_-o73Dzl8lQ/exec?action=reorder&id1=${id}&id2=${nextId}`)
           .then(response => response.json())
           .then(result => {
             if (result.status === 'success') {
-              // Swap positions in the table
-              row.dataset.position = position + 1;
-              nextRow.dataset.position = position;
-              row.querySelector('td:nth-child(10)').textContent = position + 1;
-              nextRow.querySelector('td:nth-child(10)').textContent = position;
+              // Swap positions in the cards
+              card.dataset.position = position + 1;
+              nextCard.dataset.position = position;
+              card.querySelector('.queue-card-field:nth-child(10) span').textContent = position + 1;
+              nextCard.querySelector('.queue-card-field:nth-child(10) span').textContent = position;
 
-              // Reorder rows in the DOM
-              tableBody.insertBefore(nextRow, row);
+              // Reorder cards in the DOM
+              cardsContainer.insertBefore(nextCard, card);
             } else {
               throw new Error(result.message);
             }
@@ -985,13 +998,13 @@
       loadingOverlay.style.display = 'flex';
 
       try {
-        const url = `https://script.google.com/macros/s/AKfycbxEYJfGJj08R9_QPn6jARfZcykEo7P65_M2GVDxKhazNC_wwJ-aXb6s6Es2E-8wJDj3MQ/exec?action=wipeQueue&location=Cheesman`;
+        const url = `https://script.google.com/macros/s/AKfycbxYOA9wWOGBsrEXcLUYgMU1qZFnxf84WzATt7vYxcLP88b04TLs-ssJvpW_-o73Dzl8lQ/exec?action=wipeQueue&location=Cheesman`;
         const response = await fetch(url);
         const result = await response.json();
 
         if (result.status === 'success') {
           alert('Cheesman Park queue wiped successfully!');
-          location.reload(); // Refresh to update the table
+          location.reload(); // Refresh to update the cards
         } else {
           throw new Error(result.message);
         }
@@ -1005,7 +1018,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Cheesman Park Admin Queue page loaded');
-      // Note: Queue data should be manually copied into the table from the Google Sheet
+      // Note: Queue data should be manually copied into the cards from the Google Sheet
       // For automation, enable the Google Sheets API in your Google Cloud Project, create credentials, and use JavaScript to fetch data dynamically (~2-3 hours setup).
     });
   </script>
