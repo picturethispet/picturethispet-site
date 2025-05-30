@@ -379,6 +379,159 @@
             100% { transform: scale(1.03); opacity: 1; }
         }
 
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 250px; /* Fixed height for consistency */
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column; /* Allow title and optional description */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+
+        .portfolio-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .portfolio-item .overlay h3 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-item .overlay p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95); /* Darker overlay for lightbox */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000; /* Higher than mobile nav */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 2rem;
+        }
+
+        #lightbox.lightbox-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #lightbox-img {
+            max-width: 90%;
+            max-height: 80%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: var(--shadow-strong);
+        }
+
+        #lightbox-title {
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .lightbox-close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .lightbox-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        #prev-btn {
+            left: 1rem;
+        }
+
+        #next-btn {
+            right: 1rem;
+        }
+
+
         /* Instagram Feed Section */
         #instagram-feed {
             text-align: center;
@@ -765,6 +918,76 @@
             <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we'll capture their unique personality in beautiful settings across Denver.</p>
         </section>
 
+        <section id="portfolio-showcase">
+            <h2>Our Pet Photography Portfolio</h2>
+            <p>A glimpse into the joy and personality we capture in every session.</p>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-title="Happy Golden Retriever" data-src="https://placehold.co/600x400/FFDDC1/8A2BE2?text=Golden+Retriever">
+                    <img src="https://placehold.co/600x400/FFDDC1/8A2BE2?text=Golden+Retriever" alt="Golden Retriever" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="overlay">
+                        <h3>Happy Golden Retriever</h3>
+                        <p>Joyful moments captured.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-title="Curious Kitten" data-src="https://placehold.co/400x600/C1FFDD/FF1493?text=Curious+Kitten">
+                    <img src="https://placehold.co/400x600/C1FFDD/FF1493?text=Curious+Kitten" alt="Curious Kitten" onerror="this.onerror=null;this.src='https://placehold.co/400x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="overlay">
+                        <h3>Curious Kitten</h3>
+                        <p>Exploring the world.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-title="Majestic German Shepherd" data-src="https://placehold.co/600x400/DDC1FF/FF8C00?text=German+Shepherd">
+                    <img src="https://placehold.co/600x400/DDC1FF/FF8C00?text=German+Shepherd" alt="German Shepherd" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="overlay">
+                        <h3>Majestic German Shepherd</h3>
+                        <p>Loyalty in every gaze.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-title="Playful Pug" data-src="https://placehold.co/400x600/FFC1DD/8A2BE2?text=Playful+Pug">
+                    <img src="https://placehold.co/400x600/FFC1DD/8A2BE2?text=Playful+Pug" alt="Playful Pug" onerror="this.onerror=null;this.src='https://placehold.co/400x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="overlay">
+                        <h3>Playful Pug</h3>
+                        <p>Full of character.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-title="Elegant Siamese Cat" data-src="https://placehold.co/600x400/DDEEFF/FF1493?text=Siamese+Cat">
+                    <img src="https://placehold.co/600x400/DDEEFF/FF1493?text=Siamese+Cat" alt="Siamese Cat" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="overlay">
+                        <h3>Elegant Siamese Cat</h3>
+                        <p>Grace and beauty.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-title="Energetic Border Collie" data-src="https://placehold.co/400x600/FFF0C1/FF8C00?text=Border+Collie">
+                    <img src="https://placehold.co/400x600/FFF0C1/FF8C00?text=Border+Collie" alt="Energetic Border Collie" onerror="this.onerror=null;this.src='https://placehold.co/400x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="overlay">
+                        <h3>Energetic Border Collie</h3>
+                        <p>Ready for action.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-title="Sweet French Bulldog" data-src="https://placehold.co/600x400/C1FFE0/8A2BE2?text=French+Bulldog">
+                    <img src="https://placehold.co/600x400/C1FFE0/8A2BE2?text=French+Bulldog" alt="French Bulldog" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="overlay">
+                        <h3>Sweet French Bulldog</h3>
+                        <p>Irresistibly cute.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-title="Playful Tabby Cat" data-src="https://placehold.co/400x600/FFE0C1/FF1493?text=Tabby+Cat">
+                    <img src="https://placehold.co/400x600/FFE0C1/FF1493?text=Tabby+Cat" alt="Tabby Cat" onerror="this.onerror=null;this.src='https://placehold.co/400x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="overlay">
+                        <h3>Playful Tabby Cat</h3>
+                        <p>A classic companion.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-title="Loyal Labrador" data-src="https://placehold.co/600x400/E0C1FF/FF8C00?text=Labrador">
+                    <img src="https://placehold.co/600x400/E0C1FF/FF8C00?text=Labrador" alt="Labrador" onerror="this.onerror=null;this.src='https://placehold.co/600x400/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <div class="overlay">
+                        <h3>Loyal Labrador</h3>
+                        <p>Man's best friend.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="instagram-feed">
             <h2>Follow Us on Instagram</h2>
             <p>Check out our latest pet photography sessions on Instagram!</p>
@@ -846,6 +1069,14 @@
         </div>
     </footer>
 
+    <div id="lightbox">
+        <button class="lightbox-close-btn">×</button>
+        <img id="lightbox-img" src="" alt="Portfolio Image" />
+        <h3 id="lightbox-title"></h3>
+        <button id="prev-btn" class="lightbox-nav-btn">‹</button>
+        <button id="next-btn" class="lightbox-nav-btn">›</button>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Preloader animation
@@ -899,7 +1130,63 @@
                 sectionObserver.observe(section);
             });
 
-            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v8.0');
+            // Lightbox functionality
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxCloseBtn = document.querySelector('.lightbox-close-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            let currentImageIndex = 0;
+            let imagesData = [];
+
+            // Populate imagesData array
+            portfolioItems.forEach((item, index) => {
+                imagesData.push({
+                    src: item.dataset.src,
+                    title: item.dataset.title
+                });
+                item.addEventListener('click', () => openLightbox(index));
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                updateLightboxContent();
+                lightbox.classList.add('lightbox-visible');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('lightbox-visible');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+
+            function updateLightboxContent() {
+                const imageData = imagesData[currentImageIndex];
+                lightboxImg.src = imageData.src;
+                lightboxImg.alt = imageData.title;
+                lightboxTitle.textContent = imageData.title;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex - 1 + imagesData.length) % imagesData.length;
+                updateLightboxContent();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex + 1) % imagesData.length;
+                updateLightboxContent();
+            });
+
+            lightboxCloseBtn.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) { // Close only if clicking on the overlay, not the image/buttons
+                    closeLightbox();
+                }
+            });
+
+            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v9.0');
         });
     </script>
 </body>
