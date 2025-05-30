@@ -10,12 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* Custom Properties for Theming (Consistent with Homepage) */
         :root {
-            --color-primary: #1a1a1a; /* Dark background */
-            --color-secondary: #2a2a2a; /* Slightly lighter dark for cards */
-            --color-text-light: #f0f0f0; /* Light text on dark background */
-            --color-text-muted: #b0b0b0; /* Muted text */
+            --color-primary: #1a1a1a;
+            --color-secondary: #2a2a2a;
+            --color-text-light: #f0f0f0;
+            --color-text-muted: #b0b0b0;
             --color-accent-pink: #ff1493;
             --color-accent-purple: #8a2be2;
             --color-accent-orange: #ff8c00;
@@ -24,20 +23,15 @@
             --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
             --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
             --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
-
-            /* Specific colors for contact page elements */
             --available-green: #10b981;
             --error-red: #ef4444;
             --soft-hold-yellow: #f59e0b;
-
-            /* Header and Banner Heights (Consistent with Homepage) */
             --header-height-desktop: 64px;
             --promo-banner-height-desktop: 40px;
             --header-height-mobile: 58px;
-            --promo-banner-height-mobile: 35px;
+            --promo-banner-height-mobile: 70px;
         }
 
-        /* Base Styles */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -54,7 +48,7 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
-            display: flex; /* Ensure body uses flex to push footer down */
+            display: flex;
             flex-direction: column;
         }
 
@@ -63,7 +57,6 @@
             color: inherit;
         }
 
-        /* Floating background elements (Consistent with Homepage) */
         .bg-orbs {
             position: fixed;
             top: 0;
@@ -115,37 +108,8 @@
             50% { transform: translateY(-20px) rotate(180deg); }
         }
 
-        /* Preloader (Consistent with Homepage) */
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--color-primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-out;
-        }
-
-        .preloader-inner {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 6px solid var(--color-accent-pink);
-            border-top-color: var(--color-accent-purple);
-            animation: spin 1.2s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Header (Consistent with Homepage) */
         header {
-            position: sticky; /* Changed from fixed to sticky for better flow with promo banner */
+            position: sticky;
             top: 0;
             left: 0;
             width: 100%;
@@ -173,7 +137,7 @@
         }
 
         .desktop-logo {
-            height: 38px; /* Corrected size */
+            height: 38px;
         }
 
         .logo-text {
@@ -221,7 +185,7 @@
         }
 
         .site-nav a:hover::after,
-        .site-nav a.active::after { /* Active state for current page */
+        .site-nav a.active::after {
             width: 100%;
             left: 0;
             transform: translateX(0);
@@ -261,10 +225,9 @@
             transform: scale(1.1);
         }
 
-        /* Promotional Banner (Consistent with Homepage) */
         #promo-banner-section {
-            position: sticky; /* Changed from fixed to sticky to stack below header */
-            top: var(--header-height-desktop); /* Position right below the header */
+            position: sticky;
+            top: var(--header-height-desktop);
             left: 0;
             width: 100%;
             background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%);
@@ -329,7 +292,6 @@
             100% { transform: scale(1.03); opacity: 1; }
         }
 
-        /* Mobile Navigation Overlay (Consistent with Homepage) */
         .mobile-nav-overlay {
             position: fixed;
             top: 0;
@@ -392,24 +354,19 @@
             padding: 1rem 2.5rem;
         }
 
-        /* Main Content */
         main {
-            flex: 1; /* Allow main to grow and push footer down */
-            padding-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop) + 4rem); /* Adjust for header, banner, and initial section spacing */
-            padding-bottom: 4rem; /* Padding before footer */
+            flex: 1;
+            padding-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop) + 4rem);
+            padding-bottom: 4rem;
             width: 100%;
             position: relative;
-            z-index: 1; /* Ensure main content is above orbs */
+            z-index: 1;
         }
 
-        /* Contact Section */
         .contact-section {
             max-width: 900px;
-            margin: 0 auto; /* Center the section */
-            /* Removed opacity/transform/transition here as it's now handled by JS for .contact-card */
+            margin: 0 auto;
         }
-
-        /* Removed .contact-section.is-visible as it's no longer needed for the section itself */
 
         .contact-card-stack {
             display: flex;
@@ -418,7 +375,7 @@
         }
 
         .contact-card {
-            background: rgba(42, 42, 42, 0.8); /* Use color-secondary with opacity */
+            background: rgba(42, 42, 42, 0.8);
             backdrop-filter: blur(20px);
             border: var(--border-subtle);
             border-radius: 24px;
@@ -427,14 +384,14 @@
             color: var(--color-text-light);
             font-family: 'Inter', sans-serif;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0; /* For card transition */
-            transform: scale(0.9); /* For card transition */
-            display: none; /* Hidden by default, shown by JS */
+            opacity: 0;
+            transform: scale(0.9);
+            display: none;
             position: relative;
             overflow: hidden;
-            width: 100%; /* Take full width of parent */
-            margin-bottom: 2rem; /* Space between cards in stack */
-            min-height: 600px; /* Ensure sufficient height for content */
+            width: 100%;
+            margin-bottom: 2rem;
+            min-height: 600px;
         }
 
         .contact-card.active {
@@ -453,7 +410,7 @@
 
         .contact-card-logo {
             display: block;
-            max-width: 200px; /* Adjusted logo size within card */
+            max-width: 200px;
             height: auto;
             margin: 0 auto 2rem;
             flex-shrink: 0;
@@ -488,13 +445,13 @@
             font-weight: 800;
             font-size: 3.5rem;
             line-height: 1.1;
-            background: var(--gradient-button); /* Use new gradient variable */
+            background: var(--gradient-button);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 1.5rem;
             animation: slideInLeft 0.8s ease-out;
-            color: var(--color-text-light); /* Fallback color */
+            color: var(--color-text-light);
         }
 
         .contact-card-body h2 {
@@ -518,7 +475,6 @@
             color: var(--color-text-muted);
         }
 
-        /* Form Styles */
         .form-group {
             margin-bottom: 2rem;
             text-align: left;
@@ -606,7 +562,6 @@
             display: block;
         }
 
-        /* Choice Buttons */
         .choice-buttons {
             display: flex;
             gap: 1.5rem;
@@ -638,8 +593,8 @@
         }
 
         .choice-btn.selected {
-            background: var(--gradient-button); /* Use new gradient variable */
-            border-color: var(--color-accent-orange); /* Use accent color */
+            background: var(--gradient-button);
+            border-color: var(--color-accent-orange);
             color: white;
             box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
         }
@@ -661,7 +616,6 @@
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
         }
 
-        /* Contact Info Display */
         .contact-info {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
@@ -673,7 +627,7 @@
         }
 
         .contact-info h3 {
-            background: var(--gradient-button); /* Use new gradient variable */
+            background: var(--gradient-button);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -691,7 +645,7 @@
         }
 
         .contact-info a {
-            color: var(--color-accent-orange); /* Use accent color */
+            color: var(--color-accent-orange);
             text-decoration: none;
             transition: all 0.3s ease;
         }
@@ -701,7 +655,6 @@
             transform: translateY(-1px);
         }
 
-        /* Button Styles */
         .contact-card-footer {
             margin-top: 2rem;
             display: flex;
@@ -720,7 +673,7 @@
         }
 
         .submit-btn {
-            background: var(--gradient-button); /* Use new gradient variable */
+            background: var(--gradient-button);
             color: white;
             border: none;
             border-radius: 16px;
@@ -774,7 +727,6 @@
             transform: translateY(-2px);
         }
 
-        /* Success Message */
         .success-message {
             background: rgba(16, 185, 129, 0.15);
             border: 1px solid rgba(16, 185, 129, 0.3);
@@ -797,7 +749,6 @@
             margin-bottom: 0;
         }
 
-        /* Footer (Consistent with Homepage) */
         footer {
             background-color: #0d0d0d;
             color: var(--color-text-muted);
@@ -846,37 +797,37 @@
             justify-items: center;
             align-items: center;
             margin-top: 1rem;
-            max-width: 400px; /* Constrain width to force wrapping on desktop */
+            max-width: 400px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
-        .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
-        .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
-        .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
-        .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
-        .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
-        .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
-        .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
-        .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
-        .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
-        .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
-        .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
-        .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
-        .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
+        .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
+        .payment-methods img:nth-child(2) { grid-area: 1 / 2; }
+        .payment-methods img:nth-child(3) { grid-area: 1 / 3; }
+        .payment-methods img:nth-child(4) { grid-area: 1 / 4; }
+        .payment-methods img:nth-child(5) { grid-area: 1 / 5; }
+        .payment-methods img:nth-child(6) { grid-area: 1 / 6; }
+        .payment-methods img:nth-child(7) { grid-area: 1 / 7; }
+        .payment-methods img:nth-child(8) { grid-area: 2 / 7; }
+        .payment-methods img:nth-child(9) { grid-area: 2 / 6; }
+        .payment-methods img:nth-child(10) { grid-area: 2 / 5; }
+        .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
+        .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
+        .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
+        .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
 
         .payment-icon {
-            width: 45px; /* Fixed width */
-            height: 28px; /* Fixed height */
-            object-fit: contain; /* Ensure images fit within dimensions */
-            opacity: 1; /* Made vibrant and bright */
+            width: 45px;
+            height: 28px;
+            object-fit: contain;
+            opacity: 1;
             transition: transform 0.3s ease;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Subtle shadow for vibrancy */
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         .payment-icon:hover {
-            transform: scale(1.1); /* Slightly larger on hover */
+            transform: scale(1.1);
         }
 
         .footer-bottom {
@@ -896,7 +847,6 @@
             color: var(--color-accent-orange);
         }
 
-        /* Keyframe Animations */
         @keyframes fadeInSlideUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -914,8 +864,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-
-        /* Responsive Design */
         @media (max-width: 1024px) {
             header { padding: 1rem 1.5rem; }
             .site-nav { gap: 1.5rem; }
@@ -932,7 +880,7 @@
 
         @media (max-width: 768px) {
             .mobile-menu-btn { display: block; }
-            .site-nav { display: none; } /* Hide desktop nav on mobile */
+            .site-nav { display: none; }
 
             header { height: var(--header-height-mobile); padding: 0.8rem 1.5rem; }
             .desktop-logo { height: 35px; }
@@ -940,12 +888,30 @@
             .logo-text sup { font-size: 0.5em; }
 
             #promo-banner-section {
-                top: var(--header-height-mobile); /* Corrected top position for mobile */
-                height: var(--promo-banner-height-mobile); /* Corrected height for mobile */
-                padding: 0.4rem 0.8rem; /* Adjusted padding for mobile */
+                top: var(--header-height-mobile);
+                height: var(--promo-banner-height-mobile);
+                padding: 1rem 0.8rem;
+                font-size: 0.85rem;
             }
-            #promo-banner-section .promo-text { font-size: 0.8rem; }
-            #promo-banner-section .book-btn { padding: 0.2rem 0.6rem; font-size: 0.75rem; }
+            #promo-banner-section .promo-banner-content {
+                flex-direction: column;
+                gap: 0.5rem;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.4;
+            }
+            #promo-banner-section .promo-text {
+                font-size: 0.8rem;
+                line-height: 1.4;
+                min-width: 0;
+                white-space: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            #promo-banner-section .book-btn {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.75rem;
+            }
 
             main {
                 padding-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile) + 2rem);
@@ -975,10 +941,16 @@
 
             .contact-info { padding: 1.5rem; margin: 1.5rem 0; }
             .contact-info h3 { font-size: 1.2rem; margin-bottom: 0.8rem; }
-            .contact-info p { font-size: 0.95rem; margin-bottom: 0.3rem; }
+            .contact-info p {
+                font-size: 0.95rem;
+                margin-bottom: 0.3rem;
+                display: inline-block;
+                max-width: 100%;
+                text-align: center;
+            }
 
             .footer-container {
-                grid-template-columns: 1fr; /* Stack sections vertically on mobile */
+                grid-template-columns: 1fr;
                 text-align: center;
                 gap: 1.5rem;
             }
@@ -986,11 +958,11 @@
             .footer-section h4 { font-size: 1rem; margin-bottom: 0.8rem; }
             .footer-section a { font-size: 0.85rem; margin-bottom: 0.3rem; }
             .payment-methods {
-                display: flex; /* Switch to flex for wrapping */
+                display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 0.5rem;
-                max-width: 300px; /* Constrain width to force wrapping */
+                max-width: 300px;
                 margin-left: auto;
                 margin-right: auto;
             }
@@ -1005,7 +977,8 @@
             .logo-text { font-size: 1rem; }
             .mobile-menu-btn { font-size: 1.5rem; }
 
-            #promo-banner-section { padding: 0.3rem 0.5rem; font-size: 0.7rem; }
+            #promo-banner-section { padding: 0.5rem; font-size: 0.75rem; }
+            #promo-banner-section .promo-text { font-size: 0.7rem; line-height: 1.3; }
             #promo-banner-section .book-btn { padding: 0.15rem 0.4rem; font-size: 0.65rem; }
 
             main { padding-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile) + 1rem); }
@@ -1024,10 +997,6 @@
         <div class="orb"></div>
         <div class="orb"></div>
         <div class="orb"></div>
-    </div>
-
-    <div class="preloader">
-        <div class="preloader-inner"></div>
     </div>
 
     <header>
@@ -1069,7 +1038,7 @@
     <main>
         <section class="contact-section">
             <div class="contact-card-stack" id="contactCardStack">
-                </div>
+            </div>
         </section>
     </main>
 
@@ -1106,37 +1075,26 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 12:06 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 11:26 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
         </div>
     </footer>
 
     <script>
-        // Contact form state
         let contactData = {};
         let currentCard = 0;
         let totalCards = 0;
         let contactType = '';
-
-        // Email Configuration
         const RECIPIENT_EMAIL = 'info@picturethispet.co';
 
-        // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM Content Loaded for Contact Page');
             generateContactCards();
             setupFormValidation();
             setupKeyboardNavigation();
-            setupMobileMenu(); // Setup mobile menu listener
-            setupSectionAnimations(); // Setup IntersectionObserver for sections
-            // Hide preloader after everything is set up
-            const preloader = document.querySelector('.preloader');
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 500);
-            }, 1500); // Adjust duration as needed
+            setupMobileMenu();
+            setupSectionAnimations();
         });
 
-        // Setup mobile menu toggle
         function setupMobileMenu() {
             const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
             const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
@@ -1144,15 +1102,14 @@
 
             mobileMenuBtn.addEventListener('click', () => {
                 mobileNavOverlay.classList.add('open');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+                document.body.style.overflow = 'hidden';
             });
 
             closeBtn.addEventListener('click', () => {
                 mobileNavOverlay.classList.remove('open');
-                document.body.style.overflow = ''; // Restore scrolling
+                document.body.style.overflow = '';
             });
 
-            // Close mobile menu when a link is clicked
             mobileNavOverlay.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     mobileNavOverlay.classList.remove('open');
@@ -1161,7 +1118,6 @@
             });
         }
 
-        // Setup keyboard navigation
         function setupKeyboardNavigation() {
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' && e.target.matches('input, textarea, select')) {
@@ -1175,7 +1131,6 @@
             });
         }
 
-        // Setup form validation
         function setupFormValidation() {
             document.addEventListener('input', function(e) {
                 if (e.target.matches('input, select, textarea')) {
@@ -1184,7 +1139,6 @@
             });
         }
 
-        // Phone number formatting
         function formatPhoneNumber(input) {
             const value = input.value.replace(/\D/g, '');
             let formattedValue = '';
@@ -1202,7 +1156,6 @@
             input.value = formattedValue;
         }
 
-        // Create card element
         function createCard(content, isActive = false) {
             const card = document.createElement("div");
             card.className = `contact-card${isActive ? ' active' : ''}`;
@@ -1210,7 +1163,6 @@
             return card;
         }
 
-        // Show specific card
         function showCard(index) {
             const cards = document.querySelectorAll('.contact-card');
             cards.forEach((card, i) => {
@@ -1224,7 +1176,6 @@
             console.log(`Showing card: ${index}`);
         }
 
-        // Advance to next card
         function advanceCard() {
             if (currentCard < totalCards - 1) {
                 const currentCardEl = document.querySelector('.contact-card.active');
@@ -1240,14 +1191,12 @@
             }
         }
 
-        // Go back to previous card
         function goBack() {
             if (currentCard > 0) {
                 showCard(currentCard - 1);
             }
         }
 
-        // Handle contact type selection
         function selectContactType(button, type) {
             const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
             choiceButtons.forEach(btn => btn.classList.remove('selected'));
@@ -1256,14 +1205,12 @@
             contactType = type;
             contactData.contactType = type;
             
-            // Auto-advance after selection
             setTimeout(() => {
-                generateContactCards(); // Regenerate with appropriate form
-                showCard(1); // Show the form card
+                generateContactCards();
+                showCard(1);
             }, 800);
         }
 
-        // Validate current card
         function validateCurrentCard() {
             const activeCard = document.querySelector('.contact-card.active');
             if (!activeCard) {
@@ -1281,7 +1228,6 @@
                 } else {
                     formGroup.classList.remove('error');
                     
-                    // Email validation
                     if (input.type === 'email' && input.value.trim()) {
                         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                         if (!emailRegex.test(input.value.trim())) {
@@ -1292,7 +1238,6 @@
                 }
             });
 
-            // Update submit button state
             const submitBtn = activeCard.querySelector('.submit-btn');
             if (submitBtn) {
                 if (isValid) {
@@ -1305,10 +1250,8 @@
             return isValid;
         }
 
-        // Submit form
         function submitContactForm() {
             if (validateCurrentCard()) {
-                // Save form data
                 const activeCard = document.querySelector('.contact-card.active');
                 const inputs = activeCard.querySelectorAll('input, select, textarea');
                 
@@ -1318,12 +1261,10 @@
                     }
                 });
 
-                // Add metadata (not included in email body)
                 contactData.submissionTime = new Date().toISOString();
                 contactData.userAgent = navigator.userAgent;
                 contactData.recipientEmail = RECIPIENT_EMAIL;
 
-                // Construct email subject and body (excluding submissionTime and userAgent)
                 const subject = contactType === 'client' 
                     ? `Client Inquiry: ${contactData.inquiryType || 'General'}`
                     : `Business Partnership Inquiry: ${contactData.partnershipType || 'Other'}`;
@@ -1348,20 +1289,16 @@
                     body += `Partnership Details: ${contactData.businessMessage || 'N/A'}\n`;
                 }
 
-                // Encode subject and body for mailto URL
                 const encodedSubject = encodeURIComponent(subject);
                 const encodedBody = encodeURIComponent(body);
 
-                // Open email client with pre-filled email
                 const mailtoLink = `mailto:${RECIPIENT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
                 window.location.href = mailtoLink;
 
-                // Show success message
                 showSuccessCard();
             }
         }
 
-        // Show success card
         function showSuccessCard() {
             const container = document.getElementById('contactCardStack');
             const successCard = createCard(`
@@ -1393,14 +1330,12 @@
             showCard(container.children.length - 1);
         }
 
-        // Generate contact cards
         function generateContactCards() {
             console.log("Generating contact cards...");
             const container = document.getElementById('contactCardStack');
             container.innerHTML = '';
             let cardIndex = 0;
 
-            // Card 0 - Contact Type Selection
             const typeCard = createCard(`
                 <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
                 <div class="contact-card-body centered-content">
@@ -1421,11 +1356,10 @@
                     <div class="button-group-left"></div>
                     <div></div>
                 </div>
-            `, true); // Set as active initially
+            `, true);
             container.appendChild(typeCard);
             cardIndex++;
 
-            // Card 1 - Form based on contact type
             if (contactType === 'client') {
                 const clientFormCard = createCard(`
                     <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
@@ -1486,7 +1420,6 @@
                 `);
                 container.appendChild(clientFormCard);
                 cardIndex++;
-
             } else if (contactType === 'business') {
                 const businessFormCard = createCard(`
                     <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
@@ -1571,11 +1504,9 @@
 
             totalCards = cardIndex;
             console.log(`Total cards generated: ${totalCards}`);
-            // showCard(0); // This is implicitly handled by the initial active class on typeCard
-            setTimeout(validateCurrentCard, 100); // Validate after cards are rendered
+            setTimeout(validateCurrentCard, 100);
         }
 
-        // Setup IntersectionObserver for section animations
         function setupSectionAnimations() {
             const sections = document.querySelectorAll('section');
             const observerOptions = {
