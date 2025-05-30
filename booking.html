@@ -35,6 +35,9 @@
       --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
       --header-height-desktop: 64px;
       --header-height-mobile: 58px;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255,255,255,0.85);
+      --text-muted: rgba(255,255,255,0.65);
     }
 
     * {
@@ -64,7 +67,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      color: #ffffff;
+      color: var(--text-primary);
       background: var(--gradient-secondary);
       background-attachment: fixed;
       min-height: 100vh;
@@ -324,12 +327,12 @@
     main {
       margin-top: var(--header-height-desktop);
       flex: 1;
-      padding: 2rem 1rem;
+      padding: 4rem 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: calc(100vh - var(--header-height-desktop));
-      color: #ffffff;
+      color: var(--text-primary);
     }
 
     .booking-container {
@@ -352,13 +355,14 @@
     .booking-container:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+      border-color: rgba(255,255,255,0.25);
     }
 
     .booking-message {
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 2.5rem;
       font-weight: 800;
-      color: #ffffff;
+      color: var(--text-primary);
       margin-bottom: 1rem;
       text-shadow: 0 2px 8px rgba(0,0,0,0.3);
       background: var(--gradient-orange-pink);
@@ -400,6 +404,12 @@
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .acuity-iframe-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
     }
 
     .acuity-iframe {
@@ -411,11 +421,11 @@
     .redirect-button {
       background: var(--gradient-primary);
       color: var(--text-primary);
-      padding: 1rem 2rem;
+      padding: 0.8rem 2rem;
       border: none;
       border-radius: 30px;
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
@@ -597,7 +607,7 @@
 
       main {
         margin-top: var(--header-height-mobile);
-        padding: 1.5rem 1rem;
+        padding: 2rem 1rem;
       }
 
       .booking-container {
@@ -744,7 +754,7 @@
       </div>
       <div id="acuityIframeContainer" style="display: none;">
         <h1 class="booking-message">Schedule Your Session</h1>
-        <p class="booking-description">Please select a time slot for your City Park Mini session.</p>
+        <p class="booking-description" id="bookingDescription">Please select a time slot for your session.</p>
         <div class="acuity-iframe-container">
           <iframe id="acuityIframe" class="acuity-iframe" src=""></iframe>
         </div>
@@ -785,7 +795,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:19 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:29 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -797,24 +807,31 @@
 
       // Map session types to Acuity iframe URLs
       const acuityIframeUrls = {
-        'city_park_mini': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CityParkMini',
-        'cheesman_park_mini': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CheesmanParkMini'
-        // Add more session types as needed
+        'Mini-Cheesman Park': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CheesmanParkMini',
+        'Mini-City Park': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CityParkMini',
+        'Full-Cheesman Park': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CheesmanParkFull',
+        'Full-City Park': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CityParkFull'
       };
 
       // Check if session data exists
-      if (sessionData && sessionData.sessionType && sessionId) {
-        const iframeUrl = acuityIframeUrls[sessionData.sessionType];
+      if (sessionData && sessionData.sessionType && sessionData.location && sessionId) {
+        // Create the key by combining sessionType and location
+        const sessionKey = `${sessionData.sessionType}-${sessionData.location}`;
+        const iframeUrl = acuityIframeUrls[sessionKey];
         if (iframeUrl) {
+          // Update the description dynamically
+          const bookingDescription = document.getElementById('bookingDescription');
+          bookingDescription.textContent = `Please select a time slot for your ${sessionData.sessionType} session at ${sessionData.location}.`;
+
           // Hide loading message, show iframe
           document.getElementById('loadingMessage').style.display = 'none';
           document.getElementById('acuityIframeContainer').style.display = 'block';
           document.getElementById('acuityIframe').src = iframeUrl;
 
-          // Optionally clear session data after successful load
+          // Clear session data after successful load
           localStorage.removeItem('sessionBuilderData');
         } else {
-          // Invalid session type
+          // Invalid session type or location
           showError();
         }
       } else {
