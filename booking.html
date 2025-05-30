@@ -324,112 +324,79 @@
     main {
       margin-top: var(--header-height-desktop);
       flex: 1;
-      padding: 2rem 1rem;
+      background: #2a2a2a;
+      min-height: calc(100vh - var(--header-height-desktop));
+      padding: 0;
+      overflow: visible;
+    }
+
+    .iframe-container {
+      width: 100%;
+      background: #2a2a2a;
+      min-height: calc(100vh - var(--header-height-desktop));
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .acuity-iframe {
+      width: 100%;
+      min-height: calc(100vh - var(--header-height-desktop));
+      height: auto;
+      border: none;
+      background: #2a2a2a;
+      flex: 1;
+    }
+
+    .loading-container {
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: calc(100vh - var(--header-height-desktop));
+      background: #2a2a2a;
       color: #ffffff;
     }
 
-    .booking-container {
-      max-width: 900px;
-      width: 100%;
-      margin: 0 auto;
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 3rem;
-      animation: fadeInUp 0.8s ease-out;
-      position: relative;
-      overflow: hidden;
+    .loading-content {
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-      transition: all 0.3s ease;
+      padding: 2rem;
     }
 
-    .booking-container:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
-    }
-
-    .booking-message {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 800;
+    .loading-message {
+      font-size: 1.5rem;
+      font-weight: 600;
       color: #ffffff;
       margin-bottom: 1rem;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
       background: var(--gradient-orange-pink);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .booking-description {
-      font-size: 1.2rem;
-      color: var(--color-text-muted);
-      line-height: 1.6;
-      margin-bottom: 2rem;
+    .error-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - var(--header-height-desktop));
+      background: #2a2a2a;
+      padding: 2rem;
     }
 
-    .session-details {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-      border-radius: 20px;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .session-details h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .session-details p {
-      font-size: 1rem;
-      color: var(--color-text-light);
-      margin-bottom: 0.5rem;
-    }
-
-    .error-message {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+    .error-content {
+      text-align: center;
+      max-width: 500px;
+      background: rgba(239, 68, 68, 0.1);
       border: 1px solid var(--booked-red);
       border-radius: 20px;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
+      padding: 2rem;
       backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
     }
 
-    .error-message:hover {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.15));
-      transform: translateY(-2px);
-    }
-
-    .error-message p {
-      font-size: 1.1rem;
-      color: var(--color-text-light);
+    .error-message-text {
+      font-size: 1.2rem;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
       line-height: 1.6;
-    }
-
-    .acuity-iframe-container {
-      margin: 2rem 0;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-    }
-
-    .acuity-iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
     }
 
     .redirect-button {
@@ -438,13 +405,12 @@
       padding: 1rem 2rem;
       border: none;
       border-radius: 30px;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
-      margin-top: 1rem;
       box-shadow: 0 8px 32px rgba(255,20,147,0.3);
     }
 
@@ -597,31 +563,20 @@
 
       main {
         margin-top: var(--header-height-mobile);
-        padding: 1.5rem 1rem;
+        min-height: calc(100vh - var(--header-height-mobile));
       }
 
-      .booking-container {
-        padding: 2rem;
-      }
-
-      .booking-message {
-        font-size: 2.2rem;
-      }
-
-      .booking-description {
-        font-size: 1.1rem;
-      }
-
-      .error-message {
-        padding: 1.5rem;
-      }
-
-      .error-message p {
-        font-size: 1rem;
+      .iframe-container {
+        min-height: calc(100vh - var(--header-height-mobile));
       }
 
       .acuity-iframe {
-        height: 500px;
+        min-height: calc(100vh - var(--header-height-mobile));
+      }
+
+      .loading-container,
+      .error-container {
+        min-height: calc(100vh - var(--header-height-mobile));
       }
 
       .footer-container {
@@ -678,17 +633,13 @@
         margin-top: var(--header-height-mobile);
       }
 
-      .booking-container {
+      .loading-content {
         padding: 1.5rem;
-        margin: 0.5rem;
       }
 
-      .booking-message {
-        font-size: 2rem;
-      }
-
-      .acuity-iframe {
-        height: 400px;
+      .error-content {
+        padding: 1.5rem;
+        margin: 1rem;
       }
     }
   </style>
@@ -730,30 +681,25 @@
   </div>
 
   <main>
-    <div class="booking-container" id="bookingContainer">
-      <div id="loadingMessage">
-        <h1 class="booking-message">Processing Your Booking...</h1>
-        <p class="booking-description">Please wait while we confirm your session details.</p>
+    <!-- Loading State -->
+    <div id="loadingContainer" class="loading-container">
+      <div class="loading-content">
+        <div class="loading-message">Loading your booking...</div>
+        <p style="color: #b0b0b0;">Please wait while we prepare your session details.</p>
       </div>
-      
-      <div id="errorMessage" style="display: none;">
-        <h1 class="booking-message">Oops! Something went wrong</h1>
-        <div class="error-message">
-          <p>We couldn't find your session details. This usually happens if you navigated directly to this page.</p>
-        </div>
+    </div>
+    
+    <!-- Error State -->
+    <div id="errorContainer" class="error-container" style="display: none;">
+      <div class="error-content">
+        <div class="error-message-text">We couldn't find your session details. This usually happens if you navigated directly to this page.</div>
         <a href="/cart.html" class="redirect-button">Return to Session Builder</a>
       </div>
-      
-      <div id="successContent" style="display: none;">
-        <h1 class="booking-message">Schedule Your Session</h1>
-        <div class="session-details" id="sessionDetails">
-          <!-- Session details will be populated here -->
-        </div>
-        <p class="booking-description">Please select your preferred time slot using the calendar below.</p>
-        <div class="acuity-iframe-container">
-          <iframe id="acuityIframe" class="acuity-iframe" src=""></iframe>
-        </div>
-      </div>
+    </div>
+    
+    <!-- Success State - Iframe -->
+    <div id="iframeContainer" class="iframe-container" style="display: none;">
+      <iframe id="acuityIframe" class="acuity-iframe"></iframe>
     </div>
   </main>
 
@@ -836,31 +782,15 @@
         return `${sessionData.sessionType}-${sessionData.location}-${sessionData.numberOfPets}-${sessionData.numberOfPeople}`;
       }
 
-      // Function to show session details
-      function displaySessionDetails(sessionData) {
-        const sessionDetails = document.getElementById('sessionDetails');
-        sessionDetails.innerHTML = `
-          <h3>Your Session Details</h3>
-          <p><strong>Session Type:</strong> ${sessionData.sessionType} Session</p>
-          <p><strong>Location:</strong> ${sessionData.location}</p>
-          <p><strong>Number of Pets:</strong> ${sessionData.numberOfPets}</p>
-          <p><strong>Number of People:</strong> ${sessionData.numberOfPeople}</p>
-          <p><strong>Total Price:</strong> $${sessionData.totalPrice}</p>
-        `;
-      }
-
       // Check if session data exists and is valid
       if (sessionData) {
         const sessionKey = getSessionKey(sessionData);
         console.log('Generated session key:', sessionKey);
         
         if (sessionKey && acuityIframeUrls[sessionKey]) {
-          // Valid session data found, show the booking interface
-          document.getElementById('loadingMessage').style.display = 'none';
-          document.getElementById('successContent').style.display = 'block';
-          
-          // Display session details
-          displaySessionDetails(sessionData);
+          // Valid session data found, show the iframe
+          document.getElementById('loadingContainer').style.display = 'none';
+          document.getElementById('iframeContainer').style.display = 'flex';
           
           // Load the appropriate Acuity iframe
           document.getElementById('acuityIframe').src = acuityIframeUrls[sessionKey];
@@ -883,8 +813,8 @@
       }
 
       function showError() {
-        document.getElementById('loadingMessage').style.display = 'none';
-        document.getElementById('errorMessage').style.display = 'block';
+        document.getElementById('loadingContainer').style.display = 'none';
+        document.getElementById('errorContainer').style.display = 'flex';
         
         // Auto-redirect after 5 seconds
         setTimeout(() => {
