@@ -181,6 +181,59 @@
       color: var(--color-accent-orange);
     }
 
+    .site-nav {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .site-nav a {
+      color: var(--color-text-muted);
+      font-weight: 500;
+      transition: color 0.3s ease, transform 0.2s ease;
+      position: relative;
+    }
+
+    .site-nav a:hover {
+      color: var(--color-text-light);
+      transform: translateY(-2px);
+    }
+
+    .site-nav a::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-button);
+      transition: width 0.3s ease, left 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .site-nav a:hover::after {
+      width: 100%;
+      left: 0;
+      transform: translateX(0);
+    }
+
+    .book-btn {
+      background: var(--gradient-button);
+      color: white;
+      padding: 0.75rem 1.75rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: var(--shadow-light);
+      white-space: nowrap;
+    }
+
+    .book-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-medium);
+    }
+
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -255,23 +308,6 @@
       margin-top: 2rem;
       font-size: 1.2rem;
       padding: 1rem 2.5rem;
-    }
-
-    .book-btn {
-      background: var(--gradient-button);
-      color: white;
-      padding: 0.75rem 1.75rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: var(--shadow-light);
-      white-space: nowrap;
-    }
-
-    .book-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-medium);
     }
 
     /* Main Content */
@@ -479,11 +515,10 @@
       font-weight: 600;
       color: var(--color-text-light);
       margin-bottom: 1rem;
-      background: var(--gradient-primary);
+      background: var(--gradient-button);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -0.02em;
     }
 
     .footer-section a {
@@ -586,6 +621,9 @@
       header {
         padding: 1rem 1.5rem;
       }
+      .site-nav {
+        gap: 1.5rem;
+      }
     }
 
     @media (max-width: 768px) {
@@ -604,6 +642,10 @@
 
       .logo-text sup {
         font-size: 0.5em;
+      }
+
+      .site-nav {
+        display: none;
       }
 
       .mobile-menu-btn {
@@ -841,8 +883,8 @@
   </footer>
 
   <script>
-    const stripeLinks = {
-      cheesman: "https://buy.stripe.com/28EbJ33WLfZS8k15St9bO0m",
+    const popupLinks = {
+      cheesman: "/popupagreementcheesman.html",
       city: "https://checkout.stripe.com/pay/your-city-checkout-session-link"
     };
 
@@ -859,25 +901,6 @@
       }
     };
 
-    function toggleMenu() {
-      const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
-      mobileNavOverlay.classList.toggle('open');
-      document.body.style.overflow = mobileNavOverlay.classList.contains('open') ? 'hidden' : '';
-      
-      const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
-      closeBtn.addEventListener('click', () => {
-        mobileNavOverlay.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-
-      mobileNavOverlay.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileNavOverlay.classList.remove('open');
-          document.body.style.overflow = '';
-        });
-      });
-    }
-
     function showModal(popup) {
       const modal = document.getElementById("popupModal");
       const modalTitle = document.getElementById("modalTitle");
@@ -888,7 +911,7 @@
       modalTitle.textContent = popupDetails[popup].title;
       modalPrice.textContent = popupDetails[popup].price;
       modalDetails.textContent = popupDetails[popup].details;
-      registerButton.href = stripeLinks[popup];
+      registerButton.href = popupLinks[popup];
 
       modal.style.display = "flex";
 
