@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pop-up Event Agreement | Picture This Pet</title>
-  <meta name="description" content="Review and agree to our pop-up event terms and policies before completing your booking with Picture This Pet.">
+  <title>Register for Pop-Up | PictureThisPet</title>
+  <meta name="description" content="Join a pet photography pop-up event with PictureThisPet in Denver.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
@@ -17,10 +17,10 @@
       --pink: #ff1493;
       --purple: #8a2be2;
       --orange: #ff8c00;
-      --available-green: #10b981;
-      --booked-red: #ef4444;
-      --soft-hold-yellow: #f59e0b;
-      --popup-event-purple: #a78bfa;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255,255,255,0.8);
+      --text-muted: rgba(255,255,255,0.6);
+      --gold: #FDB75E;
       --color-primary: #1a1a1a;
       --color-secondary: #2a2a2a;
       --color-text-light: #f0f0f0;
@@ -63,10 +63,10 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      color: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--gradient-primary);
       background-attachment: fixed;
+      color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
       display: flex;
@@ -130,32 +130,6 @@
       50% { transform: translateY(-20px) rotate(180deg); }
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
-    }
-
-    @keyframes progressFill {
-      0% { width: 0%; }
-      100% { width: 100%; }
-    }
-
     /* Header */
     header {
       position: fixed;
@@ -191,7 +165,7 @@
     }
 
     .logo-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 1.4rem;
       font-weight: 700;
       color: var(--color-text-light);
@@ -340,321 +314,174 @@
     main {
       margin-top: var(--header-height-desktop);
       flex: 1;
-      padding: 3rem 1rem;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
-      width: 100%;
-      color: #ffffff;
+      padding: 4rem 1rem;
     }
 
-    /* Agreement Section */
-    .agreement-container {
+    /* Register Section */
+    .register-section {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+
+    .small-logo {
+      display: block;
+      max-width: 200px;
+      margin: 0 auto 1.5rem;
+      height: auto;
+      animation: zoomIn 0.5s ease-out;
+    }
+
+    .register-box {
       background: var(--gradient-card);
       backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 24px;
-      border: 1px solid rgba(255,255,255, 0.1);
-      padding: 3rem;
-      animation: fadeInUp 0.8s ease-out;
-      margin-bottom: 2rem;
       box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
+      padding: 3rem;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease-out;
     }
 
-    .agreement-header {
+    .register-box:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .register-content h1 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .register-content p {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    /* Pop-Up Selection Cards */
+    .popup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .popup-card {
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.1);
+      padding: 2rem;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease-out;
       text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .agreement-header h1 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 2.8rem;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 2px 8px rgba(0,0,0, 0.3);
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .agreement-header .event-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--popup-event-purple), #8b5cf6);
-      color: #ffffff;
-      padding: 0.5rem 1.5rem;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      animation: pulse 3s ease-in-out infinite;
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .agreement-header p {
-      font-size: 1.1rem;
-      color: #ffffff;
-      line-height: 1.6;
-    }
-
-    /* Agreement Sections */
-    .agreement-section {
-      background: rgba(255,255,255, 0.03);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255,255,255, 0.08);
-      backdrop-filter: blur(10px);
-    }
-
-    .agreement-section h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: #ffffff;
-    }
-
-    .agreement-section h3 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 0.8rem;
-      margin-top: 1.5rem;
-    }
-
-    .agreement-section p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #ffffff;
-      margin-bottom: 1rem;
-    }
-
-    .agreement-section ul {
-      margin-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .agreement-section li {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
-    }
-
-    /* Checkbox Section */
-    .checkbox-container {
-      background: rgba(255,255,255, 0.08);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border: 2px solid rgba(255, 20, 147, 0.3);
-      backdrop-filter: blur(10px);
-    }
-
-    .checkbox-container h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      margin-bottom: 1.5rem;
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: #ffffff;
-    }
-
-    .checkbox-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      background: rgba(255,255,255, 0.03);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .checkbox-item:hover {
-      background: rgba(255,255,255, 0.06);
-    }
-
-    .checkbox-item input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      margin-top: 2px;
-      accent-color: var(--orange);
+      position: relative;
       cursor: pointer;
     }
 
-    .checkbox-item label {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1rem;
-      line-height: 1.5;
-      color: #ffffff;
-      cursor: pointer;
-      flex: 1;
+    .popup-card:hover {
+      transform: scale(1.05);
+      border-color: rgba(255,255,255,0.2);
+      box-shadow: 0 25px 70px rgba(0,0,0, 0.15);
     }
 
-    .checkbox-item.required label::after {
-      content: " *";
-      color: var(--booked-red);
-      font-weight: bold;
-    }
-
-    /* Action Buttons */
-    .action-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      align-items: center;
-      margin-top: 2rem;
-    }
-
-    .back-button {
-      background: rgba(255,255,255, 0.1);
-      color: #ffffff;
-      padding: 1rem 2rem;
-      border: 1px solid rgba(255,255,255, 0.3);
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      backdrop-filter: blur(10px);
-    }
-
-    .back-button:hover {
-      background: rgba(255,255,255, 0.2);
-      transform: translateY(-2px);
-    }
-
-    .continue-button {
-      background: var(--gradient-primary);
-      color: #ffffff;
-      padding: 1rem 3rem;
-      border: none;
-      border-radius: 50px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+    .popup-card.disabled {
       opacity: 0.5;
       pointer-events: none;
     }
 
-    .continue-button.enabled {
-      opacity: 1;
-      pointer-events: auto;
+    .popup-card.disabled::after {
+      content: 'Coming Soon';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--text-primary);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      border: 1px solid rgba(255,255,255,0.3);
     }
 
-    .continue-button.enabled:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
+    .popup-card h3 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0;
     }
 
-    /* Loading Screen */
-    .loading-screen {
+    /* Modal Styles */
+    .modal {
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(10px);
-      display: none;
-      flex-direction: column;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      animation: fadeIn 0.3s ease-out;
     }
 
-    .loading-content {
-      text-align: center;
-      max-width: 500px;
+    .modal-content {
+      background: var(--gradient-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0, 0.2);
       padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      animation: slideIn 0.3s ease-out;
     }
 
-    .loading-spinner {
-      width: 80px;
-      height: 80px;
-      border: 6px solid rgba(255,255,255, 0.3);
-      border-top: 6px solid var(--orange);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 2rem;
-    }
-
-    .loading-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    .modal-content h3 {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 2rem;
-      font-weight: 700;
-      color: #ffffff;
+      font-weight: 600;
+      color: var(--text-primary);
       margin-bottom: 1rem;
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
-    .loading-message {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1.2rem;
-      color: #ffffff;
-      margin-bottom: 2rem;
+    .modal-content p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
     }
 
-    .paw-prints {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-
-    .paw {
-      font-size: 1.5rem;
-      animation: bounce 1.5s infinite;
-    }
-
-    .paw:nth-child(1) { animation-delay: 0s; }
-    .paw:nth-child(2) { animation-delay: 0.3s; }
-    .paw:nth-child(3) { animation-delay: 0.6s; }
-    .paw:nth-child(4) { animation-delay: 0.9s; }
-
-    .progress-bar {
-      width: 100%;
-      max-width: 300px;
-      height: 6px;
-      background: rgba(255,255,255, 0.2);
-      border-radius: 3px;
-      overflow: hidden;
-      margin: 2rem auto;
-    }
-
-    .progress-fill {
-      height: 100%;
+    .register-btn {
       background: var(--gradient-primary);
-      border-radius: 3px;
-      width: 0%;
-      animation: progressFill 10s ease-out forwards;
+      color: var(--text-primary);
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+      display: inline-block;
     }
 
-    .loading-content p {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 0.9rem;
-      color: #ffffff;
-      margin-top: 1rem;
+    .register-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
     }
 
     /* Footer */
@@ -683,12 +510,12 @@
     }
 
     .footer-section h4 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 1.1rem;
       font-weight: 600;
       color: var(--color-text-light);
       margin-bottom: 1rem;
-      background: var(--gradient-primary);
+      background: var(--gradient-button);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -730,7 +557,7 @@
     .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
     .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
     .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
-    .payment-methods div:nth-child(14) { grid-area: 2 / 2; }
+    .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
 
     .payment-icon {
       width: 45px;
@@ -742,30 +569,6 @@
     }
 
     .payment-icon:hover {
-      transform: scale(1.1);
-    }
-
-    .payment-placeholder {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      width: 45px;
-      height: 28px;
-      background: rgba(255, 255, 255, 0.1);
-      border: var(--border-subtle);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8px;
-      font-weight: 600;
-      color: var(--color-text-muted);
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      text-align: center;
-      line-height: 1.1;
-    }
-
-    .payment-placeholder:hover {
-      opacity: 1;
       transform: scale(1.1);
     }
 
@@ -784,6 +587,33 @@
 
     .footer-bottom a:hover {
       color: var(--color-accent-orange);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Responsive */
@@ -827,39 +657,51 @@
         padding: 2rem 1rem;
       }
 
-      .agreement-container {
+      .register-box {
         padding: 2rem;
       }
 
-      .agreement-header h1 {
-        font-size: 2.2rem;
+      .small-logo {
+        max-width: 150px;
+        margin-bottom: 1rem;
       }
 
-      .agreement-section {
+      .register-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .register-content p {
+        font-size: 1.1rem;
+      }
+
+      .popup-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .popup-card {
         padding: 1.5rem;
       }
 
-      .checkbox-container {
-        padding: 1.5rem;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .action-buttons a,
-      .action-buttons button {
-        width: 100%;
-        text-align: center;
-      }
-
-      .loading-title {
+      .popup-card h3 {
         font-size: 1.6rem;
       }
 
-      .loading-message {
+      .modal-content {
+        padding: 1.5rem;
+      }
+
+      .modal-content h3 {
+        font-size: 1.8rem;
+      }
+
+      .modal-content p {
         font-size: 1rem;
+      }
+
+      .register-btn {
+        padding: 0.6rem 1.5rem;
       }
 
       .footer-container {
@@ -892,8 +734,7 @@
         margin-right: auto;
       }
 
-      .payment-icon,
-      .payment-placeholder {
+      .payment-icon {
         width: 35px;
         height: 22px;
       }
@@ -917,17 +758,16 @@
         margin-top: var(--header-height-mobile);
       }
 
-      .agreement-container {
-        padding: 1.5rem;
-        margin: 0.5rem;
+      .register-content h1 {
+        font-size: 2rem;
       }
 
-      .agreement-header h1 {
-        font-size: 1.8rem;
+      .popup-card h3 {
+        font-size: 1.4rem;
       }
 
-      .checkbox-item {
-        padding: 0.8rem;
+      .modal-content h3 {
+        font-size: 1.6rem;
       }
     }
   </style>
@@ -942,7 +782,7 @@
 
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
       <span class="logo-text">PictureThisPet<sup>®</sup></span>
     </a>
     <nav class="site-nav">
@@ -969,149 +809,39 @@
   </div>
 
   <main>
-    <div class="agreement-container">
-      <div class="agreement-header">
-        <div class="event-badge">🎉 Pop-up Event</div>
-        <h1>Service Agreement & Policies</h1>
-        <p>Please review and agree to the following terms before completing your pop-up photography session booking.</p>
-      </div>
-
-      <!-- Service Terms -->
-      <div class="agreement-section">
-        <h2>📝 Pop-up Photography Service Terms</h2>
-        <h3>Service Overview</h3>
-        <p>Pop-up photography sessions are informal, on-location photo sessions that may take place at various venues including but not limited to: veterinary offices, dog parks, dog bars, boarding facilities, pet stores, or other pet-friendly locations.</p>
-        
-        <h3>Session Details</h3>
-        <ul>
-          <li>Sessions are typically 10-20 minutes in duration</li>
-          <li>Location and timing may vary based on venue availability</li>
-          <li>Sessions are first-come, first-served unless pre-booked</li>
-          <li>Weather and venue conditions may affect session availability</li>
-        </ul>
-
-        <h3>Photo Delivery</h3>
-        <p>You will receive 3-5 professionally edited digital photos within 2-3 weeks of your session date. Photos will be delivered via email or private online gallery with download access.</p>
-      </div>
-
-      <!-- Photo Service Agreement -->
-      <div class="agreement-section">
-        <h2>📸 Photo Usage & Licensing Agreement</h2>
-        <p><strong>Client Usage:</strong> You receive personal use rights to your photos for printing, sharing, and social media posting.</p>
-        
-        <p><strong>Picture This Pet Usage Rights:</strong> By booking this service, you grant Picture This Pet unlimited, perpetual, royalty-free rights to use, modify, reproduce, and distribute any photographs taken during your session for any purpose including but not limited to:</p>
-        <ul>
-          <li>Marketing and advertising materials</li>
-          <li>Social media content and campaigns</li>
-          <li>Website galleries and portfolios</li>
-          <li>Print and digital promotional materials</li>
-          <li>Contest submissions and professional displays</li>
-          <li>Commercial licensing to third parties</li>
-        </ul>
-        
-        <p><strong>No Compensation:</strong> You acknowledge that no compensation will be provided for the use of your photos in any capacity.</p>
-      </div>
-
-      <!-- Cancellation Policy -->
-      <div class="agreement-section">
-        <h2>🔄 Cancellation Policy</h2>
-        <p><strong>24-Hour Notice Required:</strong> Cancellations must be made at least 24 hours prior to your scheduled session time to receive a full refund.</p>
-        
-        <p><strong>Less Than 24 Hours:</strong> Cancellations made with less than 24 hours notice are non-refundable and non-transferable.</p>
-        
-        <p><strong>No-Shows:</strong> Failure to appear for your scheduled session will result in forfeiture of all fees paid.</p>
-        
-        <p><strong>Venue Cancellations:</strong> If the venue or Picture This Pet must cancel due to unforeseen circumstances, you will receive a full refund or credit toward a future session.</p>
-      </div>
-
-      <!-- Behavior Agreement -->
-      <div class="agreement-section">
-        <h2>🐾 Behavior & Safety Agreement</h2>
-        <p><strong>Pet Behavior:</strong> You certify that your pet is well-socialized, up-to-date on vaccinations, and poses no threat to people or other animals. You agree to maintain control of your pet at all times.</p>
-        
-        <p><strong>Human Behavior:</strong> All participants agree to conduct themselves in a respectful, professional manner and follow all venue rules and photographer instructions.</p>
-        
-        <p><strong>Safety Responsibility:</strong> You acknowledge that you are solely responsible for the safety and behavior of yourself, your pet, and any accompanying parties during the session.</p>
-        
-        <p><strong>Venue Compliance:</strong> All participants must comply with venue-specific rules, regulations, and policies during the session.</p>
-      </div>
-
-      <!-- Liability Waiver -->
-      <div class="agreement-section">
-        <h2>⚖️ Complete Liability Waiver</h2>
-        <p><strong>ASSUMPTION OF ALL RISK:</strong> You acknowledge and agree that you participate in this photography session entirely at your own risk, regardless of location or circumstances.</p>
-        
-        <p><strong>COMPLETE WAIVER OF LIABILITY:</strong> You hereby release, waive, discharge, and covenant not to sue Picture This Pet, its owners, employees, contractors, and any venue or location where services are provided from any and all liability, claims, demands, actions, and causes of action whatsoever arising out of or related to any loss, damage, or injury, including death, that may be sustained by you, your pet, or any other party, whether caused by negligence or otherwise.</p>
-        
-        <p><strong>INDEMNIFICATION:</strong> You agree to indemnify and hold harmless Picture This Pet from any claims, damages, or expenses arising from your participation or your pet's behavior during any session.</p>
-        
-        <p><strong>NO LIABILITY FOR ANYTHING:</strong> Picture This Pet assumes no responsibility or liability for any injuries, damages, losses, or incidents that may occur before, during, or after any photography session, regardless of cause, location, or circumstances.</p>
-      </div>
-
-      <!-- Agreement Checkboxes -->
-      <div class="checkbox-container">
-        <h2>✅ Required Agreements</h2>
-        
-        <div class="checkbox-item required">
-          <input type="checkbox" id="service-terms" name="service-terms" required>
-          <label for="service-terms">I have read and agree to the Pop-up Photography Service Terms</label>
-        </div>
-
-        <div class="checkbox-item required">
-          <input type="checkbox" id="photo-rights" name="photo-rights" required>
-          <label for="photo-rights">I grant Picture This Pet unlimited usage rights to all photos as described above</label>
-        </div>
-
-        <div class="checkbox-item required">
-          <input type="checkbox" id="cancellation-policy" name="cancellation-policy" required>
-          <label for="cancellation-policy">I understand and agree to the 24-hour Cancellation Policy</label>
-        </div>
-
-        <div class="checkbox-item required">
-          <input type="checkbox" id="behavior-agreement" name="behavior-agreement" required>
-          <label for="behavior-agreement">I agree to the Behavior & Safety Agreement for all participants</label>
-        </div>
-
-        <div class="checkbox-item required">
-          <input type="checkbox" id="liability-waiver" name="liability-waiver" required>
-          <label for="liability-waiver">I acknowledge and agree to the Complete Liability Waiver</label>
-        </div>
-
-        <div class="checkbox-item required">
-          <input type="checkbox" id="final-consent" name="final-consent" required>
-          <label for="final-consent">I have authority to agree to these terms on behalf of all participants and pets</label>
+    <!-- Register Section -->
+    <section class="register-section">
+      <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="small-logo" />
+      <div class="register-box">
+        <div class="register-content">
+          <h1>🎉 Great, let's get you paid and in the queue!</h1>
+          <p>Select your pop-up event to proceed to payment.</p>
+          <div class="popup-grid">
+            <!-- Cheesman Park Pop-Up -->
+            <div class="popup-card" onclick="showModal('cheesman')">
+              <h3>Cheesman Park Pop-Up 📸</h3>
+            </div>
+            <!-- City Park Pop-Up -->
+            <div class="popup-card" onclick="showModal('city')">
+              <h3>City Park Pop-Up 📸</h3>
+            </div>
+            <!-- Other Pop-Up (Placeholder) -->
+            <div class="popup-card disabled">
+              <h3>Other Pop-Up 📸</h3>
+            </div>
+          </div>
         </div>
       </div>
-
-      <!-- Action Buttons -->
-      <div class="action-buttons">
-        <a href="/cart.html" class="back-button">← Back to Session Builder</a>
-        <button class="continue-button" id="continueButton" onclick="proceedToPayment()">
-          Continue to Secure Payment 🔒
-        </button>
-      </div>
-    </div>
+    </section>
   </main>
 
-  <!-- Loading Screen -->
-  <div class="loading-screen" id="loadingScreen">
-    <div class="loading-content">
-      <div class="loading-spinner"></div>
-      <h2 class="loading-title">🔒 Processing Your Agreement</h2>
-      <p class="loading-message">Redirecting to secure payment portal...</p>
-      
-      <div class="paw-prints">
-        <span class="paw">🐾</span>
-        <span class="paw">🐾</span>
-        <span class="paw">🐾</span>
-        <span class="paw">🐾</span>
-      </div>
-      
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-      </div>
-      
-      <p>Please do not close this window...</p>
+  <!-- Modal -->
+  <div id="popupModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modalTitle"></h3>
+      <p id="modalPrice"></p>
+      <p id="modalDetails"></p>
+      <a id="registerButton" href="#" class="register-btn">Register</a>
     </div>
   </div>
 
@@ -1130,124 +860,71 @@
       <div class="footer-section">
         <h4>We Accept</h4>
         <div class="payment-methods">
-          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <div class="payment-placeholder" title="Tap to Pay accepted">TAP TO PAY</div>
+          <img src="/assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="/assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="/assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+          <img src="/assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="/assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="/assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="/assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="/assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="/assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+          <img src="/assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 12:51 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 12:47 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
-    const STRIPE_URL = 'https://book.stripe.com/28EbJ33WLfZS8k15St9bO0m';
+    const popupLinks = {
+      cheesman: "/popupagreementcheesman.html",
+      city: "https://checkout.stripe.com/pay/your-city-checkout-session-link"
+    };
 
-    function toggleMenu() {
-      const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
-      mobileNavOverlay.classList.toggle('open');
-      document.body.style.overflow = mobileNavOverlay.classList.contains('open') ? 'hidden' : '';
-      
-      const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
-      closeBtn.addEventListener('click', () => {
-        mobileNavOverlay.classList.remove('open');
-        document.body.style.overflow = '';
-      });
+    const popupDetails = {
+      cheesman: {
+        title: "Cheesman Park Pop-Up 📸",
+        price: "💰 $30",
+        details: "Includes three photos and access to online gallery."
+      },
+      city: {
+        title: "City Park Pop-Up 📸",
+        price: "💰 $30",
+        details: "Includes three photos and access to online gallery."
+      }
+    };
 
-      mobileNavOverlay.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileNavOverlay.classList.remove('open');
-          document.body.style.overflow = '';
-        });
-      });
-    }
+    function showModal(popup) {
+      const modal = document.getElementById("popupModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalPrice = document.getElementById("modalPrice");
+      const modalDetails = document.getElementById("modalDetails");
+      const registerButton = document.getElementById("registerButton");
 
-    // Track checkbox states and enable/disable continue button
-    function updateContinueButton() {
-      const requiredCheckboxes = document.querySelectorAll('input[type="checkbox"][required]');
-      const continueButton = document.getElementById('continueButton');
-      
-      let allChecked = true;
-      requiredCheckboxes.forEach(checkbox => {
-        if (!checkbox.checked) {
-          allChecked = false;
+      modalTitle.textContent = popupDetails[popup].title;
+      modalPrice.textContent = popupDetails[popup].price;
+      modalDetails.textContent = popupDetails[popup].details;
+      registerButton.href = popupLinks[popup];
+
+      modal.style.display = "flex";
+
+      // Close modal when clicking outside
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.style.display = "none";
         }
       });
-      
-      if (allChecked) {
-        continueButton.classList.add('enabled');
-      } else {
-        continueButton.classList.remove('enabled');
-      }
     }
 
-    // Add event listeners to all checkboxes
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Pop-up Agreement page loaded');
-      
-      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateContinueButton);
-      });
-      
-      // Initial button state check
-      updateContinueButton();
-    });
-
-    // Proceed to payment with agreement data and loading screen
-    function proceedToPayment() {
-      const continueButton = document.getElementById('continueButton');
-      
-      // Check if button is enabled
-      if (!continueButton.classList.contains('enabled')) {
-        alert('⚠️ Please agree to all required terms before continuing.');
-        return;
-      }
-      
-      // Collect agreement data
-      const agreementData = {
-        serviceTermsAccepted: document.getElementById('service-terms').checked,
-        photoRightsGranted: document.getElementById('photo-rights').checked,
-        cancellationPolicyAccepted: document.getElementById('cancellation-policy').checked,
-        behaviorAgreementAccepted: document.getElementById('behavior-agreement').checked,
-        liabilityWaiverAccepted: document.getElementById('liability-waiver').checked,
-        finalConsentGiven: document.getElementById('final-consent').checked,
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent,
-        stripeUrl: STRIPE_URL
-      };
-      
-      // Save agreement data
-      localStorage.setItem('popupAgreementData', JSON.stringify(agreementData));
-      
-      console.log('✅ Pop-up agreements accepted:', agreementData);
-      
-      // Show loading screen
-      const loadingScreen = document.getElementById('loadingScreen');
-      loadingScreen.style.display = 'flex';
-      
-      // Redirect to Stripe after 10 seconds
-      setTimeout(() => {
-        console.log('🚀 Redirecting to Stripe:', STRIPE_URL);
-        window.location.href = STRIPE_URL;
-      }, 10000); // 10 seconds
-    }
-
-    // Log errors for debugging
-    window.addEventListener('error', function(e) {
-      console.error('Page error:', e.error);
+      console.log('Register page loaded');
     });
   </script>
 </body>
