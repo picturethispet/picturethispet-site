@@ -876,7 +876,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:02 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:07 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -886,7 +886,7 @@
       loadingOverlay.style.display = 'flex';
 
       try {
-        const url = `<NEW_SCRIPT_URL>?action=sendSMS&phone=${phone}`;
+        const url = `https://script.google.com/macros/s/AKfycbwdctBAdyLYOpWuxwHtIuoxqb0oqdVQiiQ_hPJLRTNPeI6PnkQpIYXDaUG5Fir8RQfQLQ/exec?action=sendSMS&phone=${phone}`;
         const response = await fetch(url);
         const result = await response.json();
 
@@ -921,7 +921,7 @@
       if (prevCard) {
         const prevId = prevCard.dataset.id;
         // Call the Google Apps Script to swap positions
-        fetch(`<NEW_SCRIPT_URL>?action=reorder&id1=${id}&id2=${prevId}`)
+        fetch(`https://script.google.com/macros/s/AKfycbwdctBAdyLYOpWuxwHtIuoxqb0oqdVQiiQ_hPJLRTNPeI6PnkQpIYXDaUG5Fir8RQfQLQ/exec?action=reorder&id1=${id}&id2=${prevId}`)
           .then(response => response.json())
           .then(result => {
             if (result.status === 'success') {
@@ -964,7 +964,7 @@
       if (nextCard) {
         const nextId = nextCard.dataset.id;
         // Call the Google Apps Script to swap positions
-        fetch(`<NEW_SCRIPT_URL>?action=reorder&id1=${id}&id2=${nextId}`)
+        fetch(`https://script.google.com/macros/s/AKfycbwdctBAdyLYOpWuxwHtIuoxqb0oqdVQiiQ_hPJLRTNPeI6PnkQpIYXDaUG5Fir8RQfQLQ/exec?action=reorder&id1=${id}&id2=${nextId}`)
           .then(response => response.json())
           .then(result => {
             if (result.status === 'success') {
@@ -998,7 +998,7 @@
       loadingOverlay.style.display = 'flex';
 
       try {
-        const url = `<NEW_SCRIPT_URL>?action=wipeQueue&location=Cheesman`;
+        const url = `https://script.google.com/macros/s/AKfycbwdctBAdyLYOpWuxwHtIuoxqb0oqdVQiiQ_hPJLRTNPeI6PnkQpIYXDaUG5Fir8RQfQLQ/exec?action=wipeQueue&location=Cheesman`;
         const response = await fetch(url);
         const result = await response.json();
 
