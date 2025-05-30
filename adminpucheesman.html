@@ -22,6 +22,7 @@
       --text-muted: rgba(255,255,255,0.6);
       --gold: #FDB75E;
       --success-green: #00cc00;
+      --error-red: #ff5555;
     }
 
     * {
@@ -180,7 +181,7 @@
     main {
       margin-top: 70px;
       flex: 1;
-      padding: 4rem 1rem;
+      padding: 2rem 1rem;
     }
 
     /* Admin Section */
@@ -198,29 +199,20 @@
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      padding: 3rem;
+      padding: 2rem;
       color: white;
       font-family: 'Inter', sans-serif;
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
       margin: 0 auto 2rem;
-      min-height: 600px;
+      min-height: 400px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       opacity: 1;
       transform: scale(1);
-    }
-
-    .admin-card-logo {
-      display: block;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      height: auto;
-      flex-shrink: 0;
-      animation: zoomIn 0.5s ease-out;
     }
 
     .admin-card-body {
@@ -228,7 +220,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       width: 100%;
       min-height: 0;
       padding-bottom: 1rem;
@@ -240,11 +232,37 @@
       font-weight: 700;
       color: var(--text-primary);
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       letter-spacing: -0.02em;
     }
 
+    /* Wipe Queue Button */
+    .wipe-queue-btn {
+      background: linear-gradient(135deg, var(--error-red) 0%, #ff3333 100%);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 85, 85, 0.3);
+      margin-bottom: 1rem;
+    }
+
+    .wipe-queue-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 85, 85, 0.4);
+    }
+
     /* Queue Table */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .queue-table {
       width: 100%;
       border-collapse: collapse;
@@ -256,15 +274,19 @@
 
     .queue-table th,
     .queue-table td {
-      padding: 1rem;
+      padding: 0.8rem;
       text-align: left;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap; /* Prevent text wrapping in cells */
     }
 
     .queue-table th {
       background: rgba(255, 255, 255, 0.1);
       font-weight: 600;
       color: var(--text-primary);
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
     .queue-table td {
@@ -275,18 +297,29 @@
       border-bottom: none;
     }
 
+    .actions-cell {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.3rem;
+      justify-content: flex-start;
+      align-items: center;
+      width: 200px; /* Fixed width for Actions column */
+    }
+
     .queue-table .action-btn {
       background: var(--gradient-primary);
       color: var(--text-primary);
       border: none;
       border-radius: 8px;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
-      margin: 0 0.2rem;
+      flex: 1;
+      min-width: 60px;
+      text-align: center;
     }
 
     .queue-table .action-btn:hover {
@@ -482,12 +515,34 @@
       to { opacity: 1; }
     }
 
-    @keyframes zoomIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    /* Responsive */
+    @media (min-width: 769px) {
+      .table-wrapper {
+        overflow-x: visible; /* No scrolling on desktop */
+      }
+
+      .queue-table {
+        min-width: 0; /* Allow table to fit within viewport */
+        width: 100%;
+      }
+
+      .queue-table th,
+      .queue-table td {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .queue-table .action-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        min-width: 60px;
+      }
+
+      .actions-cell {
+        width: 200px; /* Ensure Actions column fits buttons */
+      }
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       header {
         height: 60px;
@@ -512,7 +567,7 @@
 
       main {
         margin-top: 60px;
-        padding: 2rem 1rem;
+        padding: 1.5rem 0.5rem;
       }
 
       .admin-section {
@@ -521,29 +576,40 @@
 
       .admin-card {
         max-width: 100%;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        min-height: auto;
-      }
-
-      .admin-card-logo {
-        max-width: 400px;
+        padding: 1.5rem;
         margin-bottom: 1.5rem;
+        min-height: auto;
       }
 
       .admin-card-body h1 {
         font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .wipe-queue-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .queue-table {
+        min-width: 1000px; /* Ensure table is wide enough on mobile */
       }
 
       .queue-table th,
       .queue-table td {
-        padding: 0.8rem;
-        font-size: 0.9rem;
+        padding: 0.6rem;
+        font-size: 0.8rem;
       }
 
       .queue-table .action-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+        min-width: 50px;
+      }
+
+      .actions-cell {
+        flex-wrap: wrap;
+        width: 180px;
       }
 
       .loading-content p {
@@ -616,14 +682,25 @@
         font-size: 1.8rem;
       }
 
-      .queue-table th,
-      .queue-table td {
-        padding: 0.6rem;
+      .wipe-queue-btn {
+        padding: 0.4rem 0.8rem;
         font-size: 0.85rem;
       }
 
+      .queue-table th,
+      .queue-table td {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+      }
+
       .queue-table .action-btn {
-        padding: 0.3rem 0.6rem;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.7rem;
+        min-width: 45px;
+      }
+
+      .actions-cell {
+        width: 160px;
       }
 
       .footer-container {
@@ -672,71 +749,74 @@
     <!-- Admin Section -->
     <section class="admin-section">
       <div class="admin-card">
-        <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="admin-card-logo" />
         <div class="admin-card-body">
           <h1>Cheesman Park Queue 🐾</h1>
+          <!-- Wipe Queue Button -->
+          <button class="wipe-queue-btn" onclick="wipeQueue()">Wipe Queue</button>
           <!-- Cheesman Park Queue Table -->
-          <table id="cheesmanQueue" class="queue-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Location</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Zip</th>
-                <th>Email</th>
-                <th>Pet Info</th>
-                <th>Notes</th>
-                <th>Payment Status</th>
-                <th>Queue Position</th>
-                <th>Status</th>
-                <th>Notified At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="cheesmanQueueBody">
-              <!-- Manually copy Cheesman Park queue data here from Google Sheet -->
-              <!-- Example row: -->
-              <tr data-id="20250529-001" data-position="1">
-                <td>20250529-001</td>
-                <td>Cheesman</td>
-                <td>John Doe</td>
-                <td>8881234567</td>
-                <td>80203</td>
-                <td>john@doe.com</td>
-                <td>Max, 3 years</td>
-                <td>Zip: 80203</td>
-                <td>Paid</td>
-                <td>1</td>
-                <td>Waiting</td>
-                <td>-</td>
-                <td>
-                  <button class="action-btn move-up" onclick="moveUp('20250529-001')">Move Up</button>
-                  <button class="action-btn move-down" onclick="moveDown('20250529-001')">Move Down</button>
-                  <button class="action-btn ping" onclick="sendSMS('8881234567')">Ping</button>
-                </td>
-              </tr>
-              <tr data-id="20250529-003" data-position="2">
-                <td>20250529-003</td>
-                <td>Cheesman</td>
-                <td>Alice Brown</td>
-                <td>8885551234</td>
-                <td>80204</td>
-                <td>alice@brown.com</td>
-                <td>Luna, 2 years</td>
-                <td>Zip: 80204</td>
-                <td>Paid</td>
-                <td>2</td>
-                <td>Waiting</td>
-                <td>-</td>
-                <td>
-                  <button class="action-btn move-up" onclick="moveUp('20250529-003')">Move Up</button>
-                  <button class="action-btn move-down" onclick="moveDown('20250529-003')">Move Down</button>
-                  <button class="action-btn ping" onclick="sendSMS('8885551234')">Ping</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-wrapper">
+            <table id="cheesmanQueue" class="queue-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Location</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Zip</th>
+                  <th>Email</th>
+                  <th>Pet Info</th>
+                  <th>Notes</th>
+                  <th>Payment Status</th>
+                  <th>Queue Position</th>
+                  <th>Status</th>
+                  <th>Notified At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="cheesmanQueueBody">
+                <!-- Manually copy Cheesman Park queue data here from Google Sheet -->
+                <!-- Example row: -->
+                <tr data-id="20250529-001" data-position="1">
+                  <td>20250529-001</td>
+                  <td>Cheesman</td>
+                  <td>John Doe</td>
+                  <td>8881234567</td>
+                  <td>80203</td>
+                  <td>john@doe.com</td>
+                  <td>Max, 3 years</td>
+                  <td>Zip: 80203</td>
+                  <td>Paid</td>
+                  <td>1</td>
+                  <td>Waiting</td>
+                  <td>-</td>
+                  <td class="actions-cell">
+                    <button class="action-btn move-up" onclick="moveUp('20250529-001')">Move Up</button>
+                    <button class="action-btn move-down" onclick="moveDown('20250529-001')">Move Down</button>
+                    <button class="action-btn ping" onclick="sendSMS('8881234567')">Ping</button>
+                  </td>
+                </tr>
+                <tr data-id="20250529-003" data-position="2">
+                  <td>20250529-003</td>
+                  <td>Cheesman</td>
+                  <td>Alice Brown</td>
+                  <td>8885551234</td>
+                  <td>80204</td>
+                  <td>alice@brown.com</td>
+                  <td>Luna, 2 years</td>
+                  <td>Zip: 80204</td>
+                  <td>Paid</td>
+                  <td>2</td>
+                  <td>Waiting</td>
+                  <td>-</td>
+                  <td class="actions-cell">
+                    <button class="action-btn move-up" onclick="moveUp('20250529-003')">Move Up</button>
+                    <button class="action-btn move-down" onclick="moveDown('20250529-003')">Move Down</button>
+                    <button class="action-btn ping" onclick="sendSMS('8885551234')">Ping</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -783,7 +863,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:43 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 04:58 PM MDT, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -894,6 +974,32 @@
           .finally(() => {
             loadingOverlay.style.display = 'none';
           });
+      }
+    }
+
+    async function wipeQueue() {
+      const confirmed = confirm("Are you sure you want to wipe the Cheesman Park queue? This action cannot be undone.");
+      if (!confirmed) return;
+
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      loadingOverlay.style.display = 'flex';
+
+      try {
+        const url = `https://script.google.com/macros/s/AKfycbxEYJfGJj08R9_QPn6jARfZcykEo7P65_M2GVDxKhazNC_wwJ-aXb6s6Es2E-8wJDj3MQ/exec?action=wipeQueue&location=Cheesman`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.status === 'success') {
+          alert('Cheesman Park queue wiped successfully!');
+          location.reload(); // Refresh to update the table
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('Error wiping queue:', error);
+        alert('Failed to wipe queue: ' + error.message);
+      } finally {
+        loadingOverlay.style.display = 'none';
       }
     }
 
