@@ -19,7 +19,6 @@
             --color-accent-pink: #ff1493;
             --color-accent-purple: #8a2be2;
             --color-accent-orange: #ff8c00;
-            --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.3) 100%); /* Semi-transparent overlay */
             --gradient-button: linear-gradient(45deg, var(--color-accent-pink), var(--color-accent-purple), var(--color-accent-orange));
             --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
             --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -115,7 +114,7 @@
         }
 
         .desktop-logo {
-            height: 38px; /* Slightly smaller for sleekness */
+            height: 38px; /* Corrected size for sleekness */
         }
 
         .logo-text {
@@ -268,8 +267,6 @@
             padding-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop));
         }
 
-
-
         /* General Section Styling */
         section {
             max-width: 1000px;
@@ -300,13 +297,13 @@
 
         /* Welcome Section Specific Animation */
         #welcome h2.animate-welcome {
-            animation: welcomeTitleScale 2s ease-in-out forwards;
+            animation: welcomeTitlePulse 1.5s ease-out forwards;
         }
 
-        @keyframes welcomeTitleScale {
-            0% { transform: scale(0.3); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes welcomeTitlePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         section p {
@@ -435,7 +432,6 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             display: flex;
             flex-direction: column; /* Stack image and content vertically within card */
-            position: relative;
         }
 
         .instagram-post-card:hover {
@@ -636,9 +632,9 @@
         .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
 
         .payment-icon {
-            width: 45px; /* Slightly larger icons */
-            height: 28px; /* Fixed height for consistency */
-            object-fit: contain; /* Maintain aspect ratio */
+            width: 45px; /* Fixed width */
+            height: 28px; /* Fixed height */
+            object-fit: contain; /* Ensure images fit within dimensions */
             opacity: 1; /* Made vibrant and bright */
             transition: transform 0.3s ease;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Subtle shadow for vibrancy */
@@ -730,7 +726,7 @@
             }
             .payment-methods {
                 /* On mobile, switch to flexbox to allow wrapping */
-                display: flex;
+                display: flex; /* Use flexbox for mobile */
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 0.8rem; /* Adjusted gap for mobile */
@@ -820,9 +816,6 @@
             #promo-banner-section .promo-text {
                 font-size: 0.75rem;
             }
-            #promo-banner-section .book-btn {
-                font-size: 0.7rem;
-            }
         }
     </style>
 </head>
@@ -833,7 +826,7 @@
 
     <header>
         <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-            <img src="https://via.placeholder.com/38x38/ff8c00/white?text=PTP" alt="PictureThisPet Logo" class="desktop-logo" />
+            <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
             <span class="logo-text">PictureThisPet<sup>®</sup></span>
         </a>
         <nav class="site-nav">
@@ -878,7 +871,7 @@
             <p>Check out some of the recent furry friends we've captured!</p>
             <div class="instagram-cards-stack">
                 <a href="https://www.instagram.com/p/C_1QyZgxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
-                    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a happy dog" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <img src="https://placehold.co/600x600/FFDDC1/8A2BE2?text=Post+1" alt="Instagram Post of a happy dog" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
                         <p class="caption">"Sunshine and smiles with this golden retriever! Pure joy in every frame."</p>
                         <span class="likes">❤️ 285 likes</span>
@@ -886,7 +879,7 @@
                     <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/p/C_0W_5gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
-                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a playful kitten" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <img src="https://placehold.co/600x600/C1FFDD/FF1493?text=Post+2" alt="Instagram Post of a playful kitten" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
                         <p class="caption">"Tiny paws, big adventures! This kitten melted our hearts during its session."</p>
                         <span class="likes">❤️ 192 likes</span>
@@ -894,7 +887,7 @@
                     <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/p/C_yR_4gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
-                    <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a curious cat" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <img src="https://placehold.co/600x600/DDC1FF/FF8C00?text=Post+3" alt="Instagram Post of a curious cat" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
                         <p class="caption">"The majestic gaze of a truly regal feline. Every detail captured beautifully."</p>
                         <span class="likes">❤️ 310 likes</span>
@@ -902,7 +895,7 @@
                     <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/p/C_xO_3gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
-                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a dog in nature" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <img src="https://placehold.co/600x600/FFC1DD/8A2BE2?text=Post+4" alt="Instagram Post of a dog in nature" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
                         <p class="caption">"Adventure doggo! Exploring the trails with boundless energy."</p>
                         <span class="likes">❤️ 250 likes</span>
@@ -910,7 +903,7 @@
                     <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/p/C_wC_2gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
-                    <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a puppy playing" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <img src="https://placehold.co/600x600/DDEEFF/FF1493?text=Post+5" alt="Instagram Post of a puppy playing" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
                         <p class="caption">"Puppy playtime is the best playtime! Those innocent eyes and fluffy fur."</p>
                         <span class="likes">❤️ 345 likes</span>
@@ -918,7 +911,7 @@
                     <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/p/C_vB_1gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
-                    <img src="https://images.unsplash.com/photo-1571566882372-1598d88abd90?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a cat napping" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <img src="https://placehold.co/600x600/FFF0C1/FF8C00?text=Post+6" alt="Instagram Post of a cat napping" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
                         <p class="caption">"Dreaming of chasing mice? Or maybe just more naps. So peaceful."</p>
                         <span class="likes">❤️ 170 likes</span>
@@ -926,7 +919,7 @@
                     <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/p/C_uA_0gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
-                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a unique pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <img src="https://placehold.co/600x600/C1FFE0/8A2BE2?text=Post+7" alt="Instagram Post of a unique pet" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
                         <p class="caption">"Every pet has a story. Honored to capture this unique bond."</p>
                         <span class="likes">❤️ 299 likes</span>
@@ -934,7 +927,7 @@
                     <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/p/C_t__zgxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
-                    <img src="https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a dog's portrait" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <img src="https://placehold.co/600x600/FFE0C1/FF1493?text=Post+8" alt="Instagram Post of a dog's portrait" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
                         <p class="caption">"A portrait of pure elegance. Such a photogenic furry friend!"</p>
                         <span class="likes">❤️ 320 likes</span>
@@ -942,7 +935,7 @@
                     <div class="hover-overlay">View Post</div>
                 </a>
                 <a href="https://www.instagram.com/p/C_s_y_gxyD_/?utm_source=ig_web_copy_link" target="_blank" class="instagram-post-card">
-                    <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Instagram Post of a pet and owner" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
+                    <img src="https://placehold.co/600x600/E0C1FF/FF8C00?text=Post+9" alt="Instagram Post of a pet and owner" onerror="this.onerror=null;this.src='https://placehold.co/600x600/2a2a2a/f0f0f0?text=Image+Not+Found';" />
                     <div class="card-content">
                         <p class="caption">"The inseparable duo! Capturing the love between a pet and their human."</p>
                         <span class="likes">❤️ 412 likes</span>
@@ -1003,28 +996,35 @@
             <div class="footer-section">
                 <h4>We Accept</h4>
                 <div class="payment-methods">
-                    <!-- Using placeholder images for payment icons that will definitely work -->
-                    <img src="https://via.placeholder.com/45x28/1a1a2e/ffffff?text=VISA" alt="Visa payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/eb001b/ffffff?text=MC" alt="MasterCard payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/006fcf/ffffff?text=AMEX" alt="American Express payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/ff6000/ffffff?text=DISC" alt="Discover payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/000000/ffffff?text=PAY" alt="Apple Pay payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/4285f4/ffffff?text=GPAY" alt="Google Pay payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/1428a0/ffffff?text=SPAY" alt="Samsung Pay payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/ff9900/ffffff?text=AMZN" alt="Amazon Pay payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/ffb3c7/ffffff?text=KLRN" alt="Klarna payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/0fa9e6/ffffff?text=AFRM" alt="Affirm payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/b2fce4/ffffff?text=AFTR" alt="Afterpay payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/00d632/ffffff?text=CASH" alt="Cash App payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/003087/ffffff?text=PPAL" alt="PayPal payment accepted" class="payment-icon" />
-                    <img src="https://via.placeholder.com/45x28/007aff/ffffff?text=TAP" alt="Tap to Pay accepted" class="payment-icon" />
+                    <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Visa';" />
+                    <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=MasterCard';" />
+                    <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Amex';" />
+                    <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Discover';" />
+                    <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Apple+Pay';" />
+                    <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Google+Pay';" />
+                    <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Samsung+Pay';" />
+                    <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Amazon+Pay';" />
+                    <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Klarna';" />
+                    <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Affirm';" />
+                    <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Afterpay';" />
+                    <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Cash+App';" />
+                    <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=PayPal';" />
+                    <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Tap+to+Pay';" />
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 12:06 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:16 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
         </div>
     </footer>
+
+    <div id="lightbox">
+        <button class="lightbox-close-btn">×</button>
+        <img id="lightbox-img" src="" alt="Portfolio Image" />
+        <h3 id="lightbox-title"></h3>
+        <button id="prev-btn" class="lightbox-nav-btn">‹</button>
+        <button id="next-btn" class="lightbox-nav-btn">›</button>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1059,7 +1059,7 @@
             });
 
             // Intersection Observer for scroll animations (sections fade in and slide up)
-            const sections = document.querySelectorAll('section:not(.hero-section)'); // Exclude hero as it has its own animation
+            const sections = document.querySelectorAll('section'); // Observe all sections
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
@@ -1090,7 +1090,21 @@
                 sectionObserver.observe(section);
             });
 
-            console.log('✅ PictureThisPet UI Overhaul - FULLY FIXED - v12.0');
+            // Lightbox functionality (kept for potential future use, not used by Instagram cards)
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxCloseBtn = document.querySelector('.lightbox-close-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            // Removed portfolioItems and imagesData logic as the main portfolio section is now Instagram cards
+
+            // Placeholder for lightbox functions if you decide to re-introduce a separate image portfolio
+            function openLightbox(index) { /* ... */ }
+            function closeLightbox() { /* ... */ }
+            function updateLightboxContent() { /* ... */ }
+
+            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v13.0');
         });
     </script>
 </body>
