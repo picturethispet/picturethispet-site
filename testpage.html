@@ -1,1630 +1,674 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us | Picture This Pet</title>
-  <meta name="description" content="Get in touch for pet photography sessions or business partnerships.">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
-      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
-      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-      --pink: #ff1493;
-      --purple: #8a2be2;
-      --orange: #ff8c00;
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255,255,255,0.8);
-      --text-muted: rgba(255,255,255,0.6);
-      --available-green: #10b981;
-      --error-red: #ef4444;
-      --soft-hold-yellow: #f59e0b;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scrollbar-width: thin;
-      scrollbar-color: var(--pink) transparent;
-    }
-
-    html::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    html::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.1);
-    }
-
-    html::-webkit-scrollbar-thumb {
-      background: var(--gradient-primary);
-      border-radius: 3px;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: white;
-      background: var(--gradient-primary);
-      background-attachment: fixed;
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Floating background elements */
-    .bg-orbs {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.3;
-      animation: float 20s infinite linear;
-    }
-
-    .orb:nth-child(1) {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
-      top: 10%;
-      left: 80%;
-      animation-delay: 0s;
-    }
-
-    .orb:nth-child(2) {
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
-      top: 60%;
-      left: 10%;
-      animation-delay: -7s;
-    }
-
-    .orb:nth-child(3) {
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
-      top: 30%;
-      left: 20%;
-      animation-delay: -14s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-50px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(50px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Promotional Banner */
-    .promo-banner {
-      position: fixed;
-      top: 96px;
-      left: 0;
-      width: 100%;
-      background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%);
-      color: white;
-      text-align: center;
-      padding: 0.6rem 1rem;
-      font-weight: 600;
-      font-size: 0.95rem;
-      z-index: 999;
-      box-shadow: 0 8px 32px rgba(255,140,0,0.3);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .promo-banner-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .promo-text {
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      overflow-wrap: break-word;
-    }
-
-    .promo-banner a {
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      padding: 0.2rem 0.8rem;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      overflow-wrap: break-word;
-    }
-
-    .promo-banner a:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 1rem 1.5rem;
-      backdrop-filter: blur(20px);
-      background: rgba(255,255,255,0.1);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      height: 96px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo-link {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .logo-link:hover {
-      opacity: 0.8;
-      transform: scale(1.02);
-    }
-
-    .desktop-logo {
-      height: 100px;
-    }
-
-    .logo-text {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: white;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-    }
-
-    .logo-text sup {
-      font-size: 0.8rem;
-      vertical-align: super;
-      margin-left: 2px;
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .site-nav a:not(.book-btn) {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      position: relative;
-    }
-
-    .site-nav a:not(.book-btn):hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .site-nav a:not(.book-btn)::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--gradient-primary);
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    .site-nav a:not(.book-btn):hover::after {
-      width: 80%;
-    }
-
-    .site-nav a.active {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .site-nav a.active::after {
-      width: 80%;
-    }
-
-    .book-btn {
-      background: var(--gradient-primary);
-      color: white;
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 1rem;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
-    }
-
-    .book-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(255,20,147,0.4);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu-btn:hover {
-      transform: scale(1.1);
-    }
-
-    /* Main Content */
-    main {
-      margin-top: 146px;
-      min-height: calc(100vh - 146px);
-      padding: 4rem 1rem 2rem;
-      position: relative;
-      width: 100%;
-    }
-
-    /* Contact Section */
-    .contact-section {
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-      animation: fadeInUp 0.8s ease-out;
-    }
-
-    .contact-card {
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      padding: 3rem;
-      color: white;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 0;
-      transform: scale(0.9);
-      display: none;
-      position: relative;
-      overflow: hidden;
-      margin: 0 auto 2rem;
-      min-height: 600px;
-    }
-
-    .contact-card.active {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .contact-card.exiting {
-      opacity: 0;
-      transform: scale(0.8);
-    }
-
-    .contact-card-logo {
-      display: block;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      height: auto;
-      flex-shrink: 0;
-    }
-
-    .contact-card-body {
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%;
-      min-height: 0;
-      padding-bottom: 3rem;
-    }
-
-    .contact-card-body.form-content {
-      justify-content: flex-start;
-      text-align: left;
-      padding-top: 1rem;
-      padding-bottom: 2rem;
-    }
-
-    .contact-card-body.centered-content {
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .contact-card-body h1 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: 3.5rem;
-      line-height: 1.1;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1.5rem;
-      animation: slideInLeft 0.8s ease-out;
-      color: var(--text-primary);
-    }
-
-    .contact-card-body h2 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: 2.5rem;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .contact-card-body p {
-      font-size: 1.3rem;
-      line-height: 1.6;
-      opacity: 0.9;
-      margin-bottom: 2rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Form Styles */
-    .form-group {
-      margin-bottom: 2rem;
-      text-align: left;
-      width: 100%;
-    }
-
-    .form-row {
-      display: flex;
-      gap: 2rem;
-      align-items: flex-start;
-      margin-bottom: 2rem;
-    }
-
-    .form-row .form-group {
-      flex: 1;
-      margin-bottom: 0;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: white;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 1.2rem;
-      border-radius: 12px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1rem;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-      min-height: 50px;
-    }
-
-    .form-group input[type="text"],
-    .form-group input[type="email"] {
-      text-transform: none;
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--orange);
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-1px);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 140px;
-    }
-
-    .form-group.required label::after {
-      content: " *";
-      color: var(--error-red);
-    }
-
-    .form-error {
-      color: var(--error-red);
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-      display: none;
-    }
-
-    .form-group.error input,
-    .form-group.error select,
-    .form-group.error textarea {
-      border-color: var(--error-red);
-    }
-
-    .form-group.error .form-error {
-      display: block;
-    }
-
-    /* Choice Buttons */
-    .choice-buttons {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      margin: 2rem 0;
-      flex-wrap: wrap;
-    }
-
-    .choice-btn {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 16px;
-      padding: 1.5rem 2.5rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      min-width: 200px;
-      text-align: center;
-    }
-
-    .choice-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    .choice-btn.selected {
-      background: var(--gradient-primary);
-      border-color: var(--orange);
-      color: white;
-      box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
-    }
-
-    .choice-btn.business {
-      border-color: rgba(16, 185, 129, 0.5);
-      color: rgba(16, 185, 129, 0.9);
-    }
-
-    .choice-btn.business:hover {
-      background: rgba(16, 185, 129, 0.1);
-      border-color: rgba(16, 185, 129, 0.7);
-    }
-
-    .choice-btn.business.selected {
-      background: linear-gradient(135deg, var(--available-green), #059669);
-      border-color: var(--available-green);
-      color: white;
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-    }
-
-    /* Contact Info Display */
-    .contact-info {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 2rem;
-      margin: 2rem 0;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      text-align: center;
-    }
-
-    .contact-info h3 {
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .contact-info p {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      opacity: 0.9;
-    }
-
-    .contact-info a {
-      color: var(--orange);
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .contact-info a:hover {
-      color: white;
-      transform: translateY(-1px);
-    }
-
-    /* Button Styles */
-    .contact-card-footer {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      width: 100%;
-      flex-shrink: 0;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .button-group-left {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .submit-btn {
-      background: var(--gradient-primary);
-      color: white;
-      border: none;
-      border-radius: 16px;
-      padding: 1.2rem 2.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
-      box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(255, 20, 147, 0.4);
-    }
-
-    .submit-btn.business {
-      background: linear-gradient(135deg, var(--available-green), #059669);
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-    }
-
-    .submit-btn.business:hover {
-      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
-    }
-
-    .submit-btn.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    .back-btn {
-      background: rgba(255, 255, 255, 0.08);
-      color: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .back-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      border-color: rgba(255, 255, 255, 0.4);
-      transform: translateY(-2px);
-    }
-
-    /* Success Message */
-    .success-message {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      margin: 2rem 0;
-      backdrop-filter: blur(10px);
-    }
-
-    .success-message h3 {
-      color: var(--available-green);
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .success-message p {
-      color: white;
-      opacity: 0.9;
-      margin-bottom: 0;
-    }
-
-    /* Footer */
-    footer {
-      background: #ffffff;
-      border-top: 1px solid rgba(0,0,0,0.1);
-      padding: 2rem 1.5rem;
-      color: #666666;
-      font-size: 0.9rem;
-    }
-
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
-      justify-items: center;
-    }
-
-    .footer-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .footer-section h4 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.02em;
-    }
-
-    .footer-section a {
-      color: #555555;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s ease;
-    }
-
-    .footer-section a:hover {
-      color: #333333;
-    }
-
-    .payment-methods {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(2, auto);
-      gap: 0.5rem;
-      justify-items: center;
-    }
-
-    .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
-    .payment-methods img:nth-child(2) { grid-area: 1 / 2; }
-    .payment-methods img:nth-child(3) { grid-area: 1 / 3; }
-    .payment-methods img:nth-child(4) { grid-area: 1 / 4; }
-    .payment-methods img:nth-child(5) { grid-area: 1 / 5; }
-    .payment-methods img:nth-child(6) { grid-area: 1 / 6; }
-    .payment-methods img:nth-child(7) { grid-area: 1 / 7; }
-    .payment-methods img:nth-child(8) { grid-area: 2 / 7; }
-    .payment-methods img:nth-child(9) { grid-area: 2 / 6; }
-    .payment-methods img:nth-child(10) { grid-area: 2 / 5; }
-    .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
-    .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
-    .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
-    .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
-
-    .payment-icon {
-      width: 40px;
-      height: 25px;
-      object-fit: contain;
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      border-radius: 4px;
-    }
-
-    .payment-icon:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    .footer-bottom {
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .footer-bottom a {
-      color: #e07b00;
-      text-decoration: underline;
-    }
-
-    .footer-bottom a:hover {
-      color: #333333;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .promo-banner {
-        font-size: 0.85rem;
-        padding: 0.4rem 0.8rem;
-        top: 84px;
-      }
-
-      .promo-banner-content {
-        flex-direction: column;
-        gap: 0.2rem;
-        justify-content: center;
-        text-align: center;
-        line-height: 1.2;
-      }
-
-      .promo-text {
-        font-size: 0.8rem;
-        line-height: 1.2;
-      }
-
-      .promo-banner a {
-        padding: 0.2rem 0.6rem;
-        font-size: 0.75rem;
-      }
-
-      header {
-        height: 84px;
-        padding: 0.5rem 1rem;
-      }
-
-      .desktop-logo {
-        height: 80px;
-      }
-
-      .logo-text {
-        font-size: 1.2rem;
-      }
-
-      .logo-text sup {
-        font-size: 0.6rem;
-      }
-
-      .site-nav {
-        display: none;
-        flex-direction: column;
-        background: #ffffff;
-        position: absolute;
-        top: 84px;
-        right: 0;
-        width: 100%;
-        text-align: right;
-        padding: 1rem;
-        z-index: 999;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 0 0 16px 16px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-      }
-
-      .site-nav.active {
-        display: flex;
-      }
-
-      .site-nav.active a {
-        margin: 0.5rem 0;
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
-      }
-
-      .site-nav.active a:not(.book-btn) {
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .site-nav.active a:not(.book-btn):hover {
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .site-nav.active a:not(.book-btn)::after {
-        background: var(--gradient-primary);
-      }
-
-      .site-nav.active a[href="/"] { order: 1; }
-      .site-nav.active a[href="/availability.html"] { order: 2; }
-      .site-nav.active a[href="/locations"] { order: 3; }
-      .site-nav.active a[href="/pricing"] { order: 4; }
-      .site-nav.active a[href="/contact"] { order: 5; }
-      .site-nav.active .book-btn { order: 6; }
-
-      .book-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
-        margin-left: 0;
-      }
-
-      .mobile-menu-btn {
-        display: block;
-      }
-
-      main {
-        margin-top: 124px;
-        padding: 2rem 1rem 6rem;
-      }
-
-      .contact-section {
-        max-width: 100%;
-      }
-
-      .contact-card {
-        max-width: 100%;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        min-height: auto;
-      }
-
-      .contact-card-logo {
-        max-width: 400px;
-        margin-bottom: 1.5rem;
-      }
-
-      .contact-card-body h1 {
-        font-size: 2.5rem;
-      }
-
-      .contact-card-body h2 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-
-      .contact-card-body p {
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .form-row {
-        flex-direction: column;
-        gap: 0;
-      }
-
-      .form-row .form-group {
-        margin-bottom: 2rem;
-      }
-
-      .form-group input,
-      .form-group select,
-      .form-group textarea {
-        padding: 1.2rem;
-        font-size: 1.1rem;
-        min-height: 60px;
-      }
-
-      .form-group textarea {
-        min-height: 140px;
-      }
-
-      .choice-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        margin: 2rem 0;
-      }
-
-      .choice-btn {
-        width: 100%;
-        max-width: 280px;
-        padding: 1.2rem;
-      }
-
-      .contact-card-footer {
-        flex-direction: column;
-        gap: 1.5rem;
-        padding-top: 2rem;
-        margin-top: 2rem;
-      }
-
-      .button-group-left {
-        order: 2;
-        width: 100%;
-        justify-content: center;
-      }
-
-      .submit-btn {
-        order: 1;
-        width: 100%;
-        max-width: 280px;
-        padding: 1.2rem 2rem;
-      }
-
-      .back-btn {
-        width: 100%;
-        max-width: 150px;
-        padding: 1rem;
-        text-align: center;
-      }
-
-      .footer-container {
-        grid-template-areas: 
-          "contact-us connect"
-          "we-accept we-accept";
-        gap: 0.5rem;
-        justify-items: center;
-      }
-
-      .footer-section:nth-child(1) {
-        grid-area: contact-us;
-        justify-self: start;
-        align-items: flex-start;
-        text-align: left;
-      }
-
-      .footer-section:nth-child(2) {
-        grid-area: connect;
-        justify-self: end;
-        align-items: flex-end;
-        text-align: right;
-      }
-
-      .footer-section:nth-child(3) {
-        grid-area: we-accept;
-        justify-self: center;
-        align-items: center;
-        text-align: center;
-      }
-
-      footer {
-        padding: 1rem 1rem;
-        font-size: 0.8rem;
-      }
-
-      .footer-section h4 {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .footer-section a {
-        margin-bottom: 0.2rem;
-        font-size: 0.8rem;
-      }
-
-      .footer-bottom {
-        padding-top: 1rem;
-      }
-
-      .payment-methods {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .promo-banner {
-        font-size: 0.75rem;
-        padding: 0.3rem 0.5rem;
-      }
-
-      .promo-text {
-        font-size: 0.7rem;
-        line-height: 1.2;
-      }
-
-      .promo-banner a {
-        padding: 0.15rem 0.4rem;
-        font-size: 0.65rem;
-      }
-
-      .footer-container {
-        grid-template-areas: 
-          "contact-us connect"
-          "we-accept we-accept";
-      }
-
-      .footer-section:nth-child(1) {
-        justify-self: start;
-        align-items: flex-start;
-        text-align: left;
-      }
-
-      .footer-section:nth-child(2) {
-        justify-self: end;
-        align-items: flex-end;
-        text-align: right;
-      }
-
-      .footer-section:nth-child(3) {
-        justify-self: center;
-        align-items: center;
-        text-align: center;
-      }
-    }
-
-    @media (min-width: 769px) {
-      .mobile-menu-btn { 
-        display: none !important; 
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picture This Pet - Pet Photography</title>
+    <meta name="description" content="Book your pet photography session with Picture This Pet.">
+    <link rel="icon" type="image/png" href="assets/images/NEW_LOGO_NOTITLE-2.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+            --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.1) 0%, rgba(138,43,226,0.1) 50%, rgba(255,140,0,0.1) 100%);
+            --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            --pink: #ff1493;
+            --purple: #8a2be2;
+            --orange: #ff8c00;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-muted: #b0b0b0;
+            --bg-body: #121212;
+            --bg-card: rgba(30, 30, 30, 0.8);
+            --bg-card-hover: rgba(40, 40, 40, 0.9);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --accent-color: var(--pink);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Preloader (Example - you'll need to implement the actual logic) */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-body);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .preloader-inner {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.8;
+        }
+
+        .desktop-logo {
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text sup {
+            font-size: 0.7rem;
+            vertical-align: top;
+            margin-left: 2px;
+        }
+
+        .site-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .site-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .site-nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .book-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 20, 147, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-body);
+            z-index: 999;
+            padding: 2rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-nav.open {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .mobile-nav .book-btn {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 80px; /* Adjust based on header height */
+            padding-bottom: 4rem;
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--box-shadow);
+            transition: background 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        section.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-5px);
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        section p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            overflow: hidden;
+            border-radius: 0;
+            border: none;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/images/2I4A4374 copy.jpg') center/cover no-repeat;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: -0.03em;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.5);
+        }
+
+        /* Instagram Feed */
+        #instagram-feed iframe {
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+            width: 100% !important; /* Override Lightwidget inline styles */
+        }
+
+        #instagram-feed p a {
+            color: var(--pink);
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        #instagram-feed p a:hover {
+            color: var(--orange);
+        }
+
+        /* Pop Up Event */
+        #pop-up-event {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, rgba(138, 43, 226, 0.1) 50%, rgba(255, 140, 0, 0.1) 100%);
+            border: 1px dashed var(--purple);
+        }
+
+        /* Start Your Journey */
+        #start-journey {
+            text-align: center;
+        }
+
+        .start-journey-button a {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+
+        .start-journey-button a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.5);
+        }
+
+        /* Testimonials */
+        #testimonials .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        #testimonials .testimonial-card {
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        #testimonials .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        #testimonials .testimonial-card cite {
+            font-weight: 600;
+            color: var(--orange);
+            font-style: normal;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e1e1e;
+            color: var(--text-muted);
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--text-secondary);
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: auto;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .payment-icon:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--pink);
+            text-decoration: underline;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--orange);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 960px) {
+            .site-nav {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            main {
+                padding-top: 60px;
+            }
+            .hero-section {
+                height: calc(100vh - 60px);
+            }
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            .hero-content p {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section h2 {
+                font-size: 2rem;
+            }
+            section p {
+                font-size: 1rem;
+            }
+            #testimonials .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-section {
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            .hero-btn {
+                font-size: 1rem;
+                padding: 0.8rem 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Background Orbs -->
-  <div class="bg-orbs">
-    <div class="orb"></div>
-    <div class="orb"></div>
-    <div class="orb"></div>
-  </div>
-
-  <!-- Promotional Banner -->
-  <div class="promo-banner">
-    <div class="promo-banner-content">
-      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
-      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
-      <a href="/pricing">View Pricing ✨</a>
+    <div class="preloader">
+        <div class="preloader-inner"></div>
     </div>
-  </div>
 
-  <header>
-    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
-      <span class="logo-text">PictureThisPet<sup>®</sup></span>
-    </a>
-    <nav class="site-nav">
-      <a href="/" aria-label="Home page">Home</a>
-      <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations" aria-label="Locations page">Locations</a>
-      <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" class="active" aria-label="Contact page">Contact</a>
-      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
-    </nav>
-    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
-  </header>
+    <header>
+        <a href="/" class="logo-link" aria-label="PictureThisPet Home">
+            <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
+            <span class="logo-text">PictureThisPet<sup>®</sup></span>
+        </a>
+        <nav class="site-nav">
+            <a href="/" aria-label="Home page">Home</a>
+            <a href="/availability.html" aria-label="Availability page">Availability</a>
+            <a href="/locations.html" aria-label="Locations page">Locations</a>
+            <a href="/pricing" aria-label="Pricing page">Pricing</a>
+            <a href="/contact" aria-label="Contact page">Contact</a>
+            <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
+        </nav>
+        <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+    </header>
 
-  <main>
-    <!-- Contact Section -->
-    <section class="contact-section">
-      <div class="contact-card-stack" id="contactCardStack">
-        <!-- Cards will be dynamically generated -->
-      </div>
-    </section>
-  </main>
+    <div class="mobile-nav">
+        <button class="close-btn" aria-label="Close mobile menu">×</button>
+        <a href="/" aria-label="Home page">Home</a>
+        <a href="/availability.html" aria-label="Availability page">Availability</a>
+        <a href="/locations.html" aria-label="Locations page">Locations</a>
+        <a href="/pricing" aria-label="Pricing page">Pricing</a>
+        <a href="/contact" aria-label="Contact page">Contact</a>
+        <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
+    </div>
 
-  <footer>
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Contact Us</h4>
-        <a href="/contact" aria-label="Contact us page">Contact Us</a>
-      </div>
-      <div class="footer-section socials">
-        <h4>Connect</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-      </div>
-      <div class="footer-section">
-        <h4>We Accept</h4>
-        <div class="payment-methods">
-          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Timeless Pet Photography</h1>
+                <p>Capture the magic of your furry friend with PictureThisPet.</p>
+                <a href="/cart.html" class="hero-btn">Book Now</a>
+            </div>
+        </section>
+
+        <section id="welcome">
+            <h2>Welcome to PictureThisPet</h2>
+            <p>We specialize in creating stunning, timeless photographs of your pets. Whether it's a playful pup or a curious kitten, we'll capture their unique personality in beautiful settings across Denver.</p>
+        </section>
+
+        <section id="instagram-feed">
+            <h2>Follow Us on Instagram</h2>
+            <p>Check out our latest pet photography sessions on Instagram!</p>
+            <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
+            <iframe src="https://cdn.lightwidget.com/widgets/cd509cbecbd855848f446ce9c1596639.html" scrolling="no" allowtransparency="true" style="width:100%;border:0;overflow:hidden;"></iframe>
+            <p><a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer">Follow @picturethispet</a></p>
+        </section>
+
+        <section id="pop-up-event">
+            <h2>Upcoming Pop Up Event</h2>
+            <p>Join us at our next pop-up event at Cheesman Park! Bring your pets for a fun day of photography.</p>
+        </section>
+
+        <section id="start-journey">
+            <h2>Start Your Journey</h2>
+            <p>Ready to capture your pet's best moments? Begin your journey now!</p>
+            <div class="start-journey-button">
+                <a href="/cart.html">Begin Journey</a>
+            </div>
+        </section>
+
+        <section id="testimonials">
+            <h2>Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>"Amazing experience! The photos of my dog are absolutely perfect."</p>
+                    <cite>- Jane D.</cite>
+                </div>
+                <div class="testimonial-card">
+                    <p>"PictureThisPet captured my cat's personality so well. Highly recommend!"</p>
+                    <cite>- Mark S.</cite>
+                </div>
+                <div class="testimonial-card">
+                    <p>"The session was so fun, and the photos are stunning!"</p>
+                    <cite>- Emily R.</cite>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
+                <a href="https://picturethispet.co" target="_blank" rel="noopener noreferrer" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
+                <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
+            </div>
+            <div class="footer-section">
+                <h4>We Accept</h4>
+                <div class="payment-methods">
+                    <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+                    <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+                    <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+                    <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+                    <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+                    <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+                    <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+                    <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+                    <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 06:12 PM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
-    </div>
-  </footer>
+        <div class="footer-bottom">
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 12:06 AM MDT, Wednesday, May 28, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+        </div>
+    </footer>
 
-  <script>
-    // Contact form state
-    let contactData = {};
-    let currentCard = 0;
-    let totalCards = 0;
-    let contactType = '';
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate preloader duration
+            setTimeout(function() {
+                document.querySelector('.preloader').style.display = 'none';
+            }, 1000); // Adjust as needed
 
-    // Email Configuration
-    const RECIPIENT_EMAIL = 'info@picturethispet.co';
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const closeBtn = document.querySelector('.close-btn');
 
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', function() {
-      generateContactCards();
-      setupFormValidation();
-      setupKeyboardNavigation();
-    });
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.add('open');
+            });
 
-    // Mobile menu toggle
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('active');
-    }
+            closeBtn.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+            });
 
-    // Setup keyboard navigation
-    function setupKeyboardNavigation() {
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && e.target.matches('input, textarea, select')) {
-          e.preventDefault();
-          const activeCard = document.querySelector('.contact-card.active');
-          const submitBtn = activeCard.querySelector('.submit-btn');
-          if (submitBtn && !submitBtn.classList.contains('disabled')) {
-            submitBtn.click();
-          }
-        }
-      });
-    }
+            // Intersection Observer for scroll animations
+            const sections = document.querySelectorAll('section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, {
+                threshold: 0.15 // Adjust as needed to trigger animation earlier or later
+            });
 
-    // Setup form validation
-    function setupFormValidation() {
-      document.addEventListener('input', function(e) {
-        if (e.target.matches('input, select, textarea')) {
-          setTimeout(validateCurrentCard, 100);
-        }
-      });
-    }
+            sections.forEach(section => {
+                observer.observe(section);
+            });
 
-    // Phone number formatting
-    function formatPhoneNumber(input) {
-      const value = input.value.replace(/\D/g, '');
-      let formattedValue = '';
-      
-      if (value.length > 0) {
-        if (value.length <= 3) {
-          formattedValue = value;
-        } else if (value.length <= 6) {
-          formattedValue = `${value.slice(0, 3)}-${value.slice(3)}`;
-        } else {
-          formattedValue = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
-        }
-      }
-      
-      input.value = formattedValue;
-    }
-
-    // Create card element
-    function createCard(content, isActive = false) {
-      const card = document.createElement("div");
-      card.className = `contact-card${isActive ? ' active' : ''}`;
-      card.innerHTML = content;
-      return card;
-    }
-
-    // Show specific card
-    function showCard(index) {
-      const cards = document.querySelectorAll('.contact-card');
-      cards.forEach((card, i) => {
-        if (i === index) {
-          card.classList.add('active');
-        } else {
-          card.classList.remove('active');
-        }
-      });
-      currentCard = index;
-    }
-
-    // Advance to next card
-    function advanceCard() {
-      if (currentCard < totalCards - 1) {
-        const currentCardEl = document.querySelector('.contact-card.active');
-        if (currentCardEl) {
-          currentCardEl.classList.add('exiting');
-          setTimeout(() => {
-            currentCardEl.classList.remove('active', 'exiting');
-            showCard(currentCard + 1);
-          }, 400);
-        } else {
-          showCard(currentCard + 1);
-        }
-      }
-    }
-
-    // Go back to previous card
-    function goBack() {
-      if (currentCard > 0) {
-        showCard(currentCard - 1);
-      }
-    }
-
-    // Handle contact type selection
-    function selectContactType(button, type) {
-      const choiceButtons = button.parentElement.querySelectorAll('.choice-btn');
-      choiceButtons.forEach(btn => btn.classList.remove('selected'));
-      button.classList.add('selected');
-      
-      contactType = type;
-      contactData.contactType = type;
-      
-      // Auto-advance after selection
-      setTimeout(() => {
-        generateContactCards(); // Regenerate with appropriate form
-        showCard(1); // Show the form card
-      }, 800);
-    }
-
-    // Validate current card
-    function validateCurrentCard() {
-      const activeCard = document.querySelector('.contact-card.active');
-      const requiredInputs = activeCard.querySelectorAll('input[required], select[required], textarea[required]');
-      let isValid = true;
-
-      requiredInputs.forEach(input => {
-        const formGroup = input.closest('.form-group');
-        if (!input.value.trim()) {
-          formGroup.classList.add('error');
-          isValid = false;
-        } else {
-          formGroup.classList.remove('error');
-          
-          // Email validation
-          if (input.type === 'email' && input.value.trim()) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(input.value.trim())) {
-              formGroup.classList.add('error');
-              isValid = false;
-            }
-          }
-        }
-      });
-
-      // Update submit button state
-      const submitBtn = activeCard.querySelector('.submit-btn');
-      if (submitBtn) {
-        if (isValid) {
-          submitBtn.classList.remove('disabled');
-        } else {
-          submitBtn.classList.add('disabled');
-        }
-      }
-
-      return isValid;
-    }
-
-    // Submit form
-    function submitContactForm() {
-      if (validateCurrentCard()) {
-        // Save form data
-        const activeCard = document.querySelector('.contact-card.active');
-        const inputs = activeCard.querySelectorAll('input, select, textarea');
-        
-        inputs.forEach(input => {
-          if (input.name && input.value) {
-            contactData[input.name] = input.value;
-          }
+            console.log('✅ Modern PictureThisPet UI loaded - v1.0');
         });
-
-        // Add metadata
-        contactData.submissionTime = new Date().toISOString();
-        contactData.userAgent = navigator.userAgent;
-        contactData.recipientEmail = RECIPIENT_EMAIL;
-
-        // Construct email subject and body
-        const subject = contactType === 'client' 
-          ? `Client Inquiry: ${contactData.inquiryType || 'General'}`
-          : `Business Partnership Inquiry: ${contactData.partnershipType || 'Other'}`;
-
-        let body = `Submission Type: ${contactType === 'client' ? 'Client Inquiry' : 'Business Partnership'}\n`;
-        body += `Submission Time: ${contactData.submissionTime}\n`;
-        body += `User Agent: ${contactData.userAgent}\n\n`;
-
-        if (contactType === 'client') {
-          body += `Name: ${contactData.clientName || 'N/A'}\n`;
-          body += `Email: ${contactData.clientEmail || 'N/A'}\n`;
-          body += `Phone: ${contactData.clientPhone || 'N/A'}\n`;
-          body += `Inquiry Type: ${contactData.inquiryType || 'N/A'}\n`;
-          body += `Pet Info: ${contactData.petInfo || 'N/A'}\n`;
-          body += `Message: ${contactData.clientMessage || 'N/A'}\n`;
-        } else {
-          body += `Contact Person: ${contactData.contactName || 'N/A'}\n`;
-          body += `Business Email: ${contactData.businessEmail || 'N/A'}\n`;
-          body += `Company/Organization: ${contactData.companyName || 'N/A'}\n`;
-          body += `Phone: ${contactData.businessPhone || 'N/A'}\n`;
-          body += `Partnership Type: ${contactData.partnershipType || 'N/A'}\n`;
-          body += `Company Size: ${contactData.companySize || 'N/A'}\n`;
-          body += `Website/Social Media: ${contactData.website || 'N/A'}\n`;
-          body += `Partnership Details: ${contactData.businessMessage || 'N/A'}\n`;
-        }
-
-        // Encode subject and body for mailto URL
-        const encodedSubject = encodeURIComponent(subject);
-        const encodedBody = encodeURIComponent(body);
-
-        // Open email client with pre-filled email
-        const mailtoLink = `mailto:${RECIPIENT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
-        window.location.href = mailtoLink;
-
-        // Show success message
-        showSuccessCard();
-      }
-    }
-
-    // Show success card
-    function showSuccessCard() {
-      const container = document.getElementById('contactCardStack');
-      const successCard = createCard(`
-        <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
-        <div class="contact-card-body centered-content">
-          <div>
-            <h2>Message Sent!</h2>
-            <div class="success-message">
-              <h3>✨ Thank You!</h3>
-              <p>We've received your ${contactType === 'client' ? 'inquiry' : 'partnership request'} and will get back to you from info@picturethispet.co within 24 hours.</p>
-            </div>
-            <div class="contact-info">
-              <h3>Get In Touch Directly</h3>
-              <p>📧 <a href="mailto:info@picturethispet.co">info@picturethispet.co</a></p>
-              <p>📱 <a href="tel:+1234567890">(123) 456-7890</a></p>
-              <p>📍 Denver, Colorado</p>
-            </div>
-          </div>
-        </div>
-        <div class="contact-card-footer">
-          <div class="button-group-left">
-            <button class="back-btn" onclick="window.location.href='/'">← Back to Home</button>
-          </div>
-          <button class="submit-btn" onclick="window.location.href='/'">Book a Session →</button>
-        </div>
-      `, true);
-      
-      container.appendChild(successCard);
-      showCard(container.children.length - 1);
-    }
-
-    // Generate contact cards
-    function generateContactCards() {
-      const container = document.getElementById('contactCardStack');
-      container.innerHTML = '';
-      let cardIndex = 0;
-
-      // Card 0 - Contact Type Selection
-      const typeCard = createCard(`
-        <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
-        <div class="contact-card-body centered-content">
-          <div>
-            <h1>Get In Touch</h1>
-            <p>Whether you're looking to book a session or explore partnership opportunities, we'd love to hear from you!</p>
-            <div class="choice-buttons">
-              <button class="choice-btn ${contactType === 'client' ? 'selected' : ''}" onclick="selectContactType(this, 'client')">
-                🐾 Pet Photography<br><small style="opacity: 0.8;">Sessions & General Inquiries</small>
-              </button>
-              <button class="choice-btn business ${contactType === 'business' ? 'selected' : ''}" onclick="selectContactType(this, 'business')">
-                🤝 Business Partnership<br><small style="opacity: 0.8;">Organizations & Collaborations</small>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="contact-card-footer">
-          <div class="button-group-left"></div>
-          <div></div>
-        </div>
-      `, true);
-      container.appendChild(typeCard);
-      cardIndex++;
-
-      // Card 1 - Form based on contact type
-      if (contactType === 'client') {
-        const clientFormCard = createCard(`
-          <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
-          <div class="contact-card-body form-content">
-            <h2>Tell Us About Your Inquiry</h2>
-            
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="clientName">Your Name</label>
-                <input type="text" id="clientName" name="clientName" required placeholder="Enter your full name" value="${contactData.clientName || ''}">
-                <div class="form-error">Please enter your name</div>
-              </div>
-              <div class="form-group required">
-                <label for="clientEmail">Email Address</label>
-                <input type="email" id="clientEmail" name="clientEmail" required placeholder="your@email.com" value="${contactData.clientEmail || ''}">
-                <div class="form-error">Please enter a valid email address</div>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="clientPhone">Phone Number</label>
-                <input type="tel" id="clientPhone" name="clientPhone" required placeholder="(555) 555-5555" value="${contactData.clientPhone || ''}" oninput="formatPhoneNumber(this)" maxlength="12">
-                <div class="form-error">Please enter your phone number</div>
-              </div>
-              <div class="form-group required">
-                <label for="inquiryType">Type of Inquiry</label>
-                <select id="inquiryType" name="inquiryType" required>
-                  <option value="">Select inquiry type...</option>
-                  <option value="session-booking" ${contactData.inquiryType === 'session-booking' ? 'selected' : ''}>Session Booking</option>
-                  <option value="pricing-info" ${contactData.inquiryType === 'pricing-info' ? 'selected' : ''}>Pricing Information</option>
-                  <option value="availability" ${contactData.inquiryType === 'availability' ? 'selected' : ''}>Availability</option>
-                  <option value="gift-certificate" ${contactData.inquiryType === 'gift-certificate' ? 'selected' : ''}>Gift Certificate</option>
-                  <option value="general-question" ${contactData.inquiryType === 'general-question' ? 'selected' : ''}>General Question</option>
-                  <option value="other" ${contactData.inquiryType === 'other' ? 'selected' : ''}>Other</option>
-                </select>
-                <div class="form-error">Please select inquiry type</div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="petInfo">Tell us about your pet(s)</label>
-              <input type="text" id="petInfo" name="petInfo" placeholder="e.g., Golden Retriever named Max, 3 years old" value="${contactData.petInfo || ''}">
-            </div>
-
-            <div class="form-group required">
-              <label for="clientMessage">Your Message</label>
-              <textarea id="clientMessage" name="clientMessage" required placeholder="Tell us about what you're looking for, preferred dates, any special requests, etc.">${contactData.clientMessage || ''}</textarea>
-              <div class="form-error">Please enter your message</div>
-            </div>
-          </div>
-          <div class="contact-card-footer">
-            <div class="button-group-left">
-              <button class="back-btn" onclick="goBack()">← Back</button>
-            </div>
-            <button class="submit-btn" onclick="submitContactForm()">Send Message →</button>
-          </div>
-        `);
-        container.appendChild(clientFormCard);
-        cardIndex++;
-
-      } else if (contactType === 'business') {
-        const businessFormCard = createCard(`
-          <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="contact-card-logo" />
-          <div class="contact-card-body form-content">
-            <h2>Partnership Inquiry</h2>
-            
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="contactName">Contact Person</label>
-                <input type="text" id="contactName" name="contactName" required placeholder="Your full name" value="${contactData.contactName || ''}">
-                <div class="form-error">Please enter contact person name</div>
-              </div>
-              <div class="form-group required">
-                <label for="businessEmail">Business Email</label>
-                <input type="email" id="businessEmail" name="businessEmail" required placeholder="contact@company.com" value="${contactData.businessEmail || ''}">
-                <div class="form-error">Please enter a valid business email</div>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="companyName">Company/Organization</label>
-                <input type="text" id="companyName" name="companyName" required placeholder="Company name" value="${contactData.companyName || ''}">
-                <div class="form-error">Please enter company name</div>
-              </div>
-              <div class="form-group required">
-                <label for="businessPhone">Phone Number</label>
-                <input type="tel" id="businessPhone" name="businessPhone" required placeholder="(555) 555-5555" value="${contactData.businessPhone || ''}" oninput="formatPhoneNumber(this)" maxlength="12">
-                <div class="form-error">Please enter phone number</div>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group required">
-                <label for="partnershipType">Partnership Type</label>
-                <select id="partnershipType" name="partnershipType" required>
-                  <option value="">Select partnership type...</option>
-                  <option value="pet-business" ${contactData.partnershipType === 'pet-business' ? 'selected' : ''}>Pet Business Collaboration</option>
-                  <option value="veterinary" ${contactData.partnershipType === 'veterinary' ? 'selected' : ''}>Veterinary Clinic</option>
-                  <option value="rescue-shelter" ${contactData.partnershipType === 'rescue-shelter' ? 'selected' : ''}>Animal Rescue/Shelter</option>
-                  <option value="event-venue" ${contactData.partnershipType === 'event-venue' ? 'selected' : ''}>Event Venue</option>
-                  <option value="corporate" ${contactData.partnershipType === 'corporate' ? 'selected' : ''}>Corporate Photography</option>
-                  <option value="media-content" ${contactData.partnershipType === 'media-content' ? 'selected' : ''}>Media/Content Creation</option>
-                  <option value="other" ${contactData.partnershipType === 'other' ? 'selected' : ''}>Other Partnership</option>
-                </select>
-                <div class="form-error">Please select partnership type</div>
-              </div>
-              <div class="form-group">
-                <label for="companySize">Company Size</label>
-                <select id="companySize" name="companySize">
-                  <option value="">Select size...</option>
-                  <option value="1-10" ${contactData.companySize === '1-10' ? 'selected' : ''}>1-10 employees</option>
-                  <option value="11-50" ${contactData.companySize === '11-50' ? 'selected' : ''}>11-50 employees</option>
-                  <option value="51-200" ${contactData.companySize === '51-200' ? 'selected' : ''}>51-200 employees</option>
-                  <option value="200+" ${contactData.companySize === '200+' ? 'selected' : ''}>200+ employees</option>
-                  <option value="nonprofit" ${contactData.companySize === 'nonprofit' ? 'selected' : ''}>Non-profit</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="website">Website/Social Media</label>
-              <input type="text" id="website" name="website" placeholder="www.yourcompany.com or @instagram" value="${contactData.website || ''}">
-            </div>
-
-            <div class="form-group required">
-              <label for="businessMessage">Partnership Details</label>
-              <textarea id="businessMessage" name="businessMessage" required placeholder="Describe your partnership idea, goals, timeline, budget considerations, and how you envision working together...">${contactData.businessMessage || ''}</textarea>
-              <div class="form-error">Please describe your partnership proposal</div>
-            </div>
-          </div>
-          <div class="contact-card-footer">
-            <div class="button-group-left">
-              <button class="back-btn" onclick="goBack()">← Back</button>
-            </div>
-            <button class="submit-btn business" onclick="submitContactForm()">Submit Partnership Inquiry →</button>
-          </div>
-        `);
-        container.appendChild(businessFormCard);
-        cardIndex++;
-      }
-
-      totalCards = cardIndex;
-      
-      // Setup validation after cards are created
-      setTimeout(validateCurrentCard, 100);
-    }
-
-    console.log('✨ Contact page initialized successfully');
-  </script>
+    </script>
 </body>
 </html>
