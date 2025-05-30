@@ -35,6 +35,9 @@
       --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
       --header-height-desktop: 64px;
       --header-height-mobile: 58px;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255,255,255,0.85);
+      --text-muted: rgba(255,255,255,0.65);
     }
 
     * {
@@ -64,7 +67,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      color: #ffffff;
+      color: var(--text-primary);
       background: var(--gradient-secondary);
       background-attachment: fixed;
       min-height: 100vh;
@@ -324,16 +327,16 @@
     main {
       margin-top: var(--header-height-desktop);
       flex: 1;
-      padding: 2rem 1rem;
+      padding: 4rem 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: calc(100vh - var(--header-height-desktop));
-      color: #ffffff;
+      color: var(--text-primary);
     }
 
     .booking-container {
-      max-width: 900px;
+      max-width: 800px;
       width: 100%;
       margin: 0 auto;
       background: var(--gradient-card);
@@ -352,13 +355,14 @@
     .booking-container:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+      border-color: rgba(255,255,255,0.25);
     }
 
     .booking-message {
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 2.5rem;
       font-weight: 800;
-      color: #ffffff;
+      color: var(--text-primary);
       margin-bottom: 1rem;
       text-shadow: 0 2px 8px rgba(0,0,0,0.3);
       background: var(--gradient-orange-pink);
@@ -369,33 +373,9 @@
 
     .booking-description {
       font-size: 1.2rem;
-      color: var(--color-text-muted);
+      color: var(--text-secondary);
       line-height: 1.6;
       margin-bottom: 2rem;
-    }
-
-    .session-details {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-      border-radius: 20px;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .session-details h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .session-details p {
-      font-size: 1rem;
-      color: var(--color-text-light);
-      margin-bottom: 0.5rem;
     }
 
     .error-message {
@@ -415,7 +395,7 @@
 
     .error-message p {
       font-size: 1.1rem;
-      color: var(--color-text-light);
+      color: var(--text-secondary);
       line-height: 1.6;
     }
 
@@ -424,6 +404,12 @@
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .acuity-iframe-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
     }
 
     .acuity-iframe {
@@ -434,12 +420,12 @@
 
     .redirect-button {
       background: var(--gradient-primary);
-      color: var(--color-text-light);
-      padding: 1rem 2rem;
+      color: var(--text-primary);
+      padding: 0.8rem 2rem;
       border: none;
       border-radius: 30px;
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
@@ -542,6 +528,30 @@
       transform: scale(1.1);
     }
 
+    .payment-placeholder {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      width: 45px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.1);
+      border: var(--border-subtle);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .payment-placeholder:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
     .footer-bottom {
       padding-top: 1.5rem;
       border-top: var(--border-subtle);
@@ -597,7 +607,7 @@
 
       main {
         margin-top: var(--header-height-mobile);
-        padding: 1.5rem 1rem;
+        padding: 2rem 1rem;
       }
 
       .booking-container {
@@ -654,7 +664,8 @@
         margin-right: auto;
       }
 
-      .payment-icon {
+      .payment-icon,
+      .payment-placeholder {
         width: 35px;
         height: 22px;
       }
@@ -735,21 +746,15 @@
         <h1 class="booking-message">Processing Your Booking...</h1>
         <p class="booking-description">Please wait while we confirm your session details.</p>
       </div>
-      
       <div id="errorMessage" style="display: none;">
-        <h1 class="booking-message">Oops! Something went wrong</h1>
         <div class="error-message">
-          <p>We couldn't find your session details. This usually happens if you navigated directly to this page.</p>
+          <p id="errorDetail">No session data found. Redirecting to session builder...</p>
         </div>
         <a href="/cart.html" class="redirect-button">Return to Session Builder</a>
       </div>
-      
-      <div id="successContent" style="display: none;">
+      <div id="acuityIframeContainer" style="display: none;">
         <h1 class="booking-message">Schedule Your Session</h1>
-        <div class="session-details" id="sessionDetails">
-          <!-- Session details will be populated here -->
-        </div>
-        <p class="booking-description">Please select your preferred time slot using the calendar below.</p>
+        <p class="booking-description" id="bookingDescription">Please select a time slot for your session.</p>
         <div class="acuity-iframe-container">
           <iframe id="acuityIframe" class="acuity-iframe" src=""></iframe>
         </div>
@@ -790,131 +795,97 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:19 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:32 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Get session data from localStorage (matches the session builder key)
-      const sessionData = JSON.parse(localStorage.getItem('sessionData'));
+      // Retrieve session data from localStorage
+      const sessionData = JSON.parse(localStorage.getItem('sessionBuilderData'));
       const urlParams = new URLSearchParams(window.location.search);
       const sessionId = urlParams.get('session_id');
 
-      console.log('Session data found:', sessionData);
+      // Log the retrieved data for debugging
+      console.log('Session Data:', sessionData);
+      console.log('Session ID from URL:', sessionId);
 
-      // Map session configurations to Acuity iframe URLs based on your Excel data
+      // Map session types to Acuity iframe URLs
       const acuityIframeUrls = {
-        // Full Sessions
-        'Full-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498',
-        'Full-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444',
-        'Full-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428',
-        'Full-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419',
-        'Full-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425',
-        'Full-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441',
-        'Full-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431',
-        'Full-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621',
-        
-        // Mini Sessions
-        'Mini-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731',
-        'Mini-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805719',
-        'Mini-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805725',
-        'Mini-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805734',
-        'Mini-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805722',
-        'Mini-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805716',
-        'Mini-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805728',
-        'Mini-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805713'
+        'Mini-Cheesman Park': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CheesmanParkMini',
+        'Mini-City Park': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CityParkMini',
+        'Full-Cheesman Park': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CheesmanParkFull',
+        'Full-City Park': 'https://app.acuityscheduling.com/schedule.php?owner=123456&appointmentType=CityParkFull'
       };
 
-      // Function to generate session key from session data
-      function getSessionKey(sessionData) {
-        if (!sessionData || !sessionData.sessionType || !sessionData.location || 
-            !sessionData.numberOfPets || !sessionData.numberOfPeople) {
-          return null;
-        }
-        
-        return `${sessionData.sessionType}-${sessionData.location}-${sessionData.numberOfPets}-${sessionData.numberOfPeople}`;
-      }
+      // Check if session data exists
+      if (sessionData && sessionData.sessionType && sessionData.location && sessionId) {
+        // Create the key by combining sessionType and location
+        const sessionKey = `${sessionData.sessionType}-${sessionData.location}`;
+        console.log('Session Key:', sessionKey);
 
-      // Function to show session details
-      function displaySessionDetails(sessionData) {
-        const sessionDetails = document.getElementById('sessionDetails');
-        sessionDetails.innerHTML = `
-          <h3>Your Session Details</h3>
-          <p><strong>Session Type:</strong> ${sessionData.sessionType} Session</p>
-          <p><strong>Location:</strong> ${sessionData.location}</p>
-          <p><strong>Number of Pets:</strong> ${sessionData.numberOfPets}</p>
-          <p><strong>Number of People:</strong> ${sessionData.numberOfPeople}</p>
-          <p><strong>Total Price:</strong> $${sessionData.totalPrice}</p>
-        `;
-      }
+        const iframeUrl = acuityIframeUrls[sessionKey];
+        if (iframeUrl) {
+          // Update the description dynamically
+          const bookingDescription = document.getElementById('bookingDescription');
+          bookingDescription.textContent = `Please select a time slot for your ${sessionData.sessionType} session at ${sessionData.location}.`;
 
-      // Check if session data exists and is valid
-      if (sessionData) {
-        const sessionKey = getSessionKey(sessionData);
-        console.log('Generated session key:', sessionKey);
-        
-        if (sessionKey && acuityIframeUrls[sessionKey]) {
-          // Valid session data found, show the booking interface
+          // Hide loading message, show iframe
           document.getElementById('loadingMessage').style.display = 'none';
-          document.getElementById('successContent').style.display = 'block';
-          
-          // Display session details
-          displaySessionDetails(sessionData);
-          
-          // Load the appropriate Acuity iframe
-          document.getElementById('acuityIframe').src = acuityIframeUrls[sessionKey];
-          
-          console.log('✅ Loading Acuity iframe:', acuityIframeUrls[sessionKey]);
-          
-          // Clear session data after successful load to prevent reuse
-          setTimeout(() => {
-            localStorage.removeItem('sessionData');
-          }, 1000);
+          document.getElementById('acuityIframeContainer').style.display = 'block';
+          document.getElementById('acuityIframe').src = iframeUrl;
+
+          // Clear session data after successful load
+          localStorage.removeItem('sessionBuilderData');
         } else {
-          // Invalid session configuration
-          console.error('❌ Invalid session configuration:', sessionKey);
+          // Invalid session type or location
+          console.error('Invalid session key. Available keys:', Object.keys(acuityIframeUrls));
+          document.getElementById('errorDetail').textContent = 'Invalid session type or location. Redirecting to session builder...';
           showError();
         }
       } else {
-        // No session data found
-        console.error('❌ No session data found in localStorage');
+        // Log specific reason for failure
+        let errorMessage = 'No session data found. Redirecting to session builder...';
+        if (!sessionData) {
+          errorMessage = 'Session data not found in localStorage. Redirecting to session builder...';
+        } else if (!sessionData.sessionType || !sessionData.location) {
+          errorMessage = 'Session type or location missing in session data. Redirecting to session builder...';
+        } else if (!sessionId) {
+          errorMessage = 'Session ID missing in URL. Redirecting to session builder...';
+        }
+        document.getElementById('errorDetail').textContent = errorMessage;
         showError();
       }
 
       function showError() {
         document.getElementById('loadingMessage').style.display = 'none';
         document.getElementById('errorMessage').style.display = 'block';
-        
-        // Auto-redirect after 5 seconds
         setTimeout(() => {
           window.location.href = '/cart.html';
-        }, 5000);
+        }, 3000); // Redirect after 3 seconds
       }
 
       // Mobile menu functionality
-      window.toggleMenu = function() {
+      function toggleMenu() {
         const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
         mobileNavOverlay.classList.toggle('open');
         document.body.style.overflow = mobileNavOverlay.classList.contains('open') ? 'hidden' : '';
-      };
-      
-      const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
-      if (closeBtn) {
+        
+        const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
         closeBtn.addEventListener('click', () => {
-          document.querySelector('.mobile-nav-overlay').classList.remove('open');
+          mobileNavOverlay.classList.remove('open');
           document.body.style.overflow = '';
+        });
+
+        mobileNavOverlay.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileNavOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+          });
         });
       }
 
-      document.querySelectorAll('.mobile-nav-overlay a').forEach(link => {
-        link.addEventListener('click', () => {
-          document.querySelector('.mobile-nav-overlay').classList.remove('open');
-          document.body.style.overflow = '';
-        });
-      });
-
-      console.log('✅ Booking page loaded - Fixed version');
+      console.log('✅ Booking page loaded with Refresh 3.0 UI');
     });
   </script>
 </body>
