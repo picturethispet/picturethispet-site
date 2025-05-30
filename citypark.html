@@ -1437,33 +1437,12 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:53 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:59 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
-            const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
-
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileNavOverlay.classList.add('open');
-                document.body.style.overflow = 'hidden';
-            });
-
-            closeBtn.addEventListener('click', () => {
-                mobileNavOverlay.classList.remove('open');
-                document.body.style.overflow = '';
-            });
-
-            mobileNavOverlay.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileNavOverlay.classList.remove('open');
-                    document.body.style.overflow = '';
-                });
-            });
-
             const sections = document.querySelectorAll('section');
             const observerOptions = {
                 root: null,
@@ -1497,9 +1476,22 @@
         });
 
         function toggleMenu() {
-            const nav = document.querySelector('.site-nav');
-            nav.classList.toggle('open');
-            document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+            const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
+            mobileNavOverlay.classList.toggle('open');
+            document.body.style.overflow = mobileNavOverlay.classList.contains('open') ? 'hidden' : '';
+            
+            const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
+            closeBtn.addEventListener('click', () => {
+                mobileNavOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+
+            mobileNavOverlay.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNavOverlay.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
         }
     </script>
 </body>
