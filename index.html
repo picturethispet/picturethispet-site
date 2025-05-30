@@ -10,12 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* Custom Properties for Theming */
         :root {
-            --color-primary: #1a1a1a; /* Dark background */
-            --color-secondary: #2a2a2a; /* Slightly lighter dark for cards */
-            --color-text-light: #f0f0f0; /* Light text on dark background */
-            --color-text-muted: #b0b0b0; /* Muted text */
+            --color-primary: #1a1a1a;
+            --color-secondary: #2a2a2a;
+            --color-text-light: #f0f0f0;
+            --color-text-muted: #b0b0b0;
             --color-accent-pink: #ff1493;
             --color-accent-purple: #8a2be2;
             --color-accent-orange: #ff8c00;
@@ -24,15 +23,12 @@
             --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
             --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
             --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
-
-            /* New variables for header and banner heights */
-            --header-height-desktop: 64px; /* Approx height of header on desktop */
-            --promo-banner-height-desktop: 40px; /* Approx height of promo banner on desktop */
-            --header-height-mobile: 58px; /* Approx height of header on mobile */
-            --promo-banner-height-mobile: 35px; /* Approx height of promo banner on mobile */
+            --header-height-desktop: 64px;
+            --promo-banner-height-desktop: 40px;
+            --header-height-mobile: 58px;
+            --promo-banner-height-mobile: 60px;
         }
 
-        /* Base Styles */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -48,7 +44,9 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh; /* Ensure body takes full viewport height */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         a {
@@ -56,50 +54,21 @@
             color: inherit;
         }
 
-        /* Preloader */
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--color-primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-out;
-        }
-
-        .preloader-inner {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 6px solid var(--color-accent-pink);
-            border-top-color: var(--color-accent-purple);
-            animation: spin 1.2s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Header */
         header {
             position: sticky;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 1rem 2.5rem; /* 16px top/bottom padding */
-            background: rgba(26, 26, 26, 0.9); /* Slightly transparent dark */
+            padding: 1rem 2.5rem;
+            background: rgba(26, 26, 26, 0.9);
             backdrop-filter: blur(15px);
             border-bottom: var(--border-subtle);
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: background 0.3s ease;
-            height: var(--header-height-desktop); /* Fixed height for consistent main padding */
+            height: var(--header-height-desktop);
         }
 
         .logo-link {
@@ -114,7 +83,7 @@
         }
 
         .desktop-logo {
-            height: 38px; /* Corrected size for sleekness */
+            height: 38px;
         }
 
         .logo-text {
@@ -171,7 +140,7 @@
             background: var(--gradient-button);
             color: white;
             padding: 0.75rem 1.75rem;
-            border-radius: 50px; /* Pill shape */
+            border-radius: 50px;
             font-weight: 600;
             font-size: 0.95rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -198,21 +167,20 @@
             transform: scale(1.1);
         }
 
-        /* Mobile Navigation Overlay */
         .mobile-nav-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8); /* Darker overlay */
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px);
             z-index: 2000;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transform: translateX(100%); /* Start off-screen */
+            transform: translateX(100%);
             transition: transform 0.4s ease-in-out;
         }
 
@@ -261,18 +229,86 @@
             padding: 1rem 2.5rem;
         }
 
-        /* Main Content */
+        #promo-banner-section {
+            position: fixed;
+            top: var(--header-height-desktop);
+            left: 0;
+            width: 100%;
+            background: var(--gradient-button);
+            color: white;
+            text-align: center;
+            padding: 0.8rem 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 999;
+            box-shadow: 0 8px 32px rgba(255,140,0,0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: top 0.3s ease;
+            margin: 0;
+            border-radius: 0;
+            opacity: 1;
+            transform: translateY(0);
+            height: var(--promo-banner-height-desktop);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #promo-banner-section .promo-banner-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        #promo-banner-section .promo-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            overflow-wrap: break-word;
+            color: white;
+            margin-bottom: 0;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        #promo-banner-section .book-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            padding: 0.4rem 1rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow-wrap: break-word;
+            box-shadow: none;
+            transform: none;
+        }
+
+        #promo-banner-section .book-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.03); opacity: 1; }
+        }
+
         main {
-            /* Adjust padding-top to account for header and fixed banner */
             padding-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop));
         }
 
-        /* General Section Styling */
         section {
             max-width: 1000px;
             margin: 6rem auto;
             padding: 3rem 4rem;
-            border-radius: 0; /* No explicit border-radius for sections */
+            border-radius: 0;
             opacity: 0;
             transform: translateY(40px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -295,7 +331,6 @@
             letter-spacing: -0.03em;
         }
 
-        /* Welcome Section Specific Animation */
         #welcome h2.animate-welcome {
             animation: welcomeTitlePulse 1.5s ease-out forwards;
         }
@@ -314,96 +349,23 @@
             text-align: center;
         }
 
-        /* Promotional Banner Section - Fixed at the top with vertical centering and animation */
-        #promo-banner-section {
-            position: fixed; /* Fixed position */
-            top: var(--header-height-desktop); /* Position right below the header */
-            left: 0;
-            width: 100%;
-            background: linear-gradient(135deg, #ff8c00 0%, #8a2be2 50%, #ff1493 100%); /* Original gradient */
-            color: white;
-            text-align: center;
-            padding: 0.8rem 1rem; /* Increased padding for better vertical centering */
-            font-weight: 600;
-            font-size: 0.95rem;
-            z-index: 999; /* Below header, above main content */
-            box-shadow: 0 8px 32px rgba(255,140,0,0.3);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            transition: top 0.3s ease; /* Smooth transition if header changes size */
-            margin: 0; /* Remove margin from section style */
-            border-radius: 0; /* Remove border-radius from section style */
-            opacity: 1; /* Always visible */
-            transform: translateY(0); /* Always visible */
-            height: var(--promo-banner-height-desktop); /* Fixed height for consistent main padding */
-            display: flex; /* Use flexbox for vertical centering */
-            justify-content: center; /* Center items horizontally */
-            align-items: center; /* Center items vertically */
-        }
-
-        #promo-banner-section .promo-banner-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        #promo-banner-section .promo-text {
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            overflow-wrap: break-word;
-            color: white; /* Ensure text is white */
-            margin-bottom: 0;
-            animation: pulse 1.5s infinite alternate; /* Subtle pulse animation */
-        }
-
-        #promo-banner-section .book-btn {
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            padding: 0.4rem 1rem; /* Adjusted padding */
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            overflow-wrap: break-word;
-            box-shadow: none;
-            transform: none;
-        }
-
-        #promo-banner-section .book-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.9; }
-            100% { transform: scale(1.03); opacity: 1; }
-        }
-
-        /* Instagram Posts Showcase Section */
         #instagram-posts-showcase {
             text-align: center;
         }
 
         .instagram-cards-stack {
             display: flex;
-            flex-direction: row; /* Horizontal stacking */
-            overflow-x: scroll; /* Enable horizontal scrolling */
-            scroll-snap-type: x mandatory; /* Snap to cards */
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-            gap: 1.5rem; /* Space between cards */
-            padding: 1rem 2rem; /* Padding for scrollbar and card edges */
-            margin: 2rem auto; /* Center the scrollable area */
-            max-width: 100%; /* Allow it to take full width */
-            align-items: stretch; /* Ensure cards have consistent height if content varies */
-            scrollbar-width: thin; /* Firefox */
-            scrollbar-color: var(--color-accent-pink) transparent; /* Firefox */
+            flex-direction: row;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            margin: 2rem auto;
+            max-width: 100%;
+            align-items: stretch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-accent-pink) transparent;
         }
 
         .instagram-cards-stack::-webkit-scrollbar {
@@ -421,40 +383,40 @@
         }
 
         .instagram-post-card {
-            flex-shrink: 0; /* Prevent cards from shrinking */
-            width: 300px; /* Fixed width for card */
-            height: 450px; /* Fixed height for card */
-            scroll-snap-align: start; /* Snap to the start of each card */
+            flex-shrink: 0;
+            width: 300px;
+            height: 450px;
+            scroll-snap-align: start;
             background-color: var(--color-secondary);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow-medium);
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             display: flex;
-            flex-direction: column; /* Stack image and content vertically within card */
+            flex-direction: column;
         }
 
         .instagram-post-card:hover {
             transform: translateY(-8px);
             box-shadow: var(--shadow-strong);
-            background-color: #3a3a3a; /* Slightly lighter on hover */
+            background-color: #3a3a3a;
         }
 
         .instagram-post-card img {
             width: 100%;
-            height: calc(2/3 * 450px); /* Image takes top 2/3 of card height */
-            object-fit: cover; /* Crop to fit, maintaining aspect ratio */
+            height: calc(2/3 * 450px);
+            object-fit: cover;
             display: block;
         }
 
         .instagram-post-card .card-content {
-            height: calc(1/3 * 450px); /* Content takes bottom 1/3 of card height */
+            height: calc(1/3 * 450px);
             padding: 1.2rem;
             text-align: left;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Push likes to bottom */
-            flex-grow: 1; /* Allow content to grow if needed */
+            justify-content: space-between;
+            flex-grow: 1;
         }
 
         .instagram-post-card .caption {
@@ -463,7 +425,7 @@
             margin-bottom: 0.6rem;
             overflow: hidden;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* Limit caption to 3 lines */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
         }
 
@@ -472,7 +434,7 @@
             color: var(--color-accent-pink);
             font-weight: 600;
             display: block;
-            white-space: nowrap; /* Prevent likes from wrapping */
+            white-space: nowrap;
         }
 
         .instagram-post-card .hover-overlay {
@@ -490,14 +452,13 @@
             font-weight: 700;
             opacity: 0;
             transition: opacity 0.3s ease;
-            pointer-events: none; /* Allow clicks to pass through to the card link */
+            pointer-events: none;
         }
 
         .instagram-post-card:hover .hover-overlay {
             opacity: 1;
         }
 
-        /* Pop Up Event Section */
         #pop-up-event {
             background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.05) 50%, rgba(255, 140, 0, 0.05) 100%);
             border: 1px dashed rgba(138, 43, 226, 0.3);
@@ -505,11 +466,10 @@
         }
 
         #pop-up-event h2 {
-            color: var(--color-accent-purple); /* Specific color for this section's heading */
+            color: var(--color-accent-purple);
             -webkit-text-fill-color: var(--color-accent-purple);
         }
 
-        /* Start Your Journey Section */
         #start-journey .start-journey-button {
             text-align: center;
             margin-top: 2rem;
@@ -532,7 +492,6 @@
             box-shadow: var(--shadow-strong);
         }
 
-        /* Testimonials Section */
         #testimonials .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -565,21 +524,20 @@
             font-size: 0.9rem;
         }
 
-        /* Footer */
         footer {
-            background-color: #0d0d0d; /* Even darker footer */
+            background-color: var(--color-primary);
             color: var(--color-text-muted);
-            padding: 2rem 2rem; /* Reduced padding */
+            padding: 2rem 2rem;
             border-top: var(--border-subtle);
             text-align: center;
         }
 
         .footer-container {
             max-width: 1000px;
-            margin: 0 auto 1.5rem; /* Reduced margin */
+            margin: 0 auto 1.5rem;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem; /* Reduced gap */
+            gap: 2rem;
             text-align: left;
         }
 
@@ -593,12 +551,16 @@
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--color-text-light);
-            margin-bottom: 1rem; /* Reduced margin */
+            margin-bottom: 1rem;
+            background: var(--gradient-button);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .footer-section a {
             color: var(--color-text-muted);
-            margin-bottom: 0.6rem; /* Reduced margin */
+            margin-bottom: 0.6rem;
             transition: color 0.3s ease;
         }
 
@@ -607,45 +569,45 @@
         }
 
         .payment-methods {
-            display: grid; /* Use grid for desktop */
-            grid-template-columns: repeat(7, 1fr); /* 7 columns as requested */
-            grid-template-rows: repeat(2, auto); /* 2 rows as requested */
-            gap: 0.5rem; /* Reduced gap */
-            justify-items: center; /* Center items in their grid cells */
-            align-items: center; /* Vertically align items */
-            margin-top: 1rem; /* Reduced margin */
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 0.5rem;
+            justify-items: center;
+            align-items: center;
+            margin-top: 1rem;
         }
 
-        .payment-methods img:nth-child(1) { grid-area: 1 / 1; } /* Visa */
-        .payment-methods img:nth-child(2) { grid-area: 1 / 2; } /* MasterCard */
-        .payment-methods img:nth-child(3) { grid-area: 1 / 3; } /* American Express */
-        .payment-methods img:nth-child(4) { grid-area: 1 / 4; } /* Discover */
-        .payment-methods img:nth-child(5) { grid-area: 1 / 5; } /* Apple Pay */
-        .payment-methods img:nth-child(6) { grid-area: 1 / 6; } /* Google Pay */
-        .payment-methods img:nth-child(7) { grid-area: 1 / 7; } /* Samsung Pay */
-        .payment-methods img:nth-child(8) { grid-area: 2 / 7; } /* Amazon Pay */
-        .payment-methods img:nth-child(9) { grid-area: 2 / 6; } /* Klarna */
-        .payment-methods img:nth-child(10) { grid-area: 2 / 5; } /* Affirm */
-        .payment-methods img:nth-child(11) { grid-area: 2 / 4; } /* Afterpay */
-        .payment-methods img:nth-child(12) { grid-area: 2 / 3; } /* Cash App */
-        .payment-methods img:nth-child(13) { grid-area: 2 / 1; } /* PayPal */
-        .payment-methods img:nth-child(14) { grid-area: 2 / 2; } /* Tap to Pay */
+        .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
+        .payment-methods img:nth-child(2) { grid-area: 1 / 2; }
+        .payment-methods img:nth-child(3) { grid-area: 1 / 3; }
+        .payment-methods img:nth-child(4) { grid-area: 1 / 4; }
+        .payment-methods img:nth-child(5) { grid-area: 1 / 5; }
+        .payment-methods img:nth-child(6) { grid-area: 1 / 6; }
+        .payment-methods img:nth-child(7) { grid-area: 1 / 7; }
+        .payment-methods img:nth-child(8) { grid-area: 2 / 7; }
+        .payment-methods img:nth-child(9) { grid-area: 2 / 6; }
+        .payment-methods img:nth-child(10) { grid-area: 2 / 5; }
+        .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
+        .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
+        .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
+        .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
 
         .payment-icon {
-            width: 45px; /* Fixed width */
-            height: 28px; /* Fixed height */
-            object-fit: contain; /* Ensure images fit within dimensions */
-            opacity: 1; /* Made vibrant and bright */
+            width: 45px;
+            height: 28px;
+            object-fit: contain;
+            opacity: 1;
             transition: transform 0.3s ease;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Subtle shadow for vibrancy */
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         .payment-icon:hover {
-            transform: scale(1.1); /* Slightly larger on hover */
+            transform: scale(1.1);
         }
 
         .footer-bottom {
-            padding-top: 1.5rem; /* Reduced padding */
+            padding-top: 1.5rem;
             border-top: var(--border-subtle);
             font-size: 0.85rem;
             color: var(--color-text-muted);
@@ -661,7 +623,6 @@
             color: var(--color-accent-orange);
         }
 
-        /* Keyframe Animations */
         @keyframes fadeInSlideUp {
             from {
                 opacity: 0;
@@ -673,7 +634,6 @@
             }
         }
 
-        /* Responsive Design */
         @media (max-width: 1024px) {
             header {
                 padding: 1rem 1.5rem;
@@ -691,139 +651,191 @@
             section p {
                 font-size: 1rem;
             }
-            /* Adjust promo banner padding on smaller desktops */
             #promo-banner-section {
                 padding: 0.6rem 1rem;
             }
         }
 
         @media (max-width: 768px) {
+            #promo-banner-section {
+                font-size: 0.85rem;
+                padding: 0.5rem 0.8rem;
+                top: var(--header-height-mobile);
+                height: var(--promo-banner-height-mobile);
+            }
+
+            #promo-banner-section .promo-banner-content {
+                flex-direction: column;
+                gap: 0.5rem;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.4;
+            }
+
+            #promo-banner-section .promo-text {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+
+            #promo-banner-section .book-btn {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.75rem;
+            }
+
+            header {
+                height: var(--header-height-mobile);
+                padding: 0.5rem 1rem;
+            }
+
+            .desktop-logo {
+                height: 35px;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .logo-text sup {
+                font-size: 0.6rem;
+            }
+
             .site-nav {
                 display: none;
             }
+
             .mobile-menu-btn {
                 display: block;
             }
+
+            main {
+                padding-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile));
+            }
+
             section {
                 margin: 3rem auto;
                 padding: 2rem;
             }
+
             section h2 {
                 font-size: 2rem;
             }
+
             section p {
                 font-size: 0.95rem;
             }
+
             #testimonials .testimonials-grid {
                 grid-template-columns: 1fr;
             }
+
             .footer-container {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
+
             .footer-section {
                 align-items: center;
             }
+
             .payment-methods {
-                /* On mobile, switch to flexbox to allow wrapping */
-                display: flex; /* Use flexbox for mobile */
+                display: flex;
                 flex-wrap: wrap;
+                gap: 0.8rem;
                 justify-content: center;
-                gap: 0.8rem; /* Adjusted gap for mobile */
-            }
-            .payment-icon {
-                width: 40px; /* Slightly smaller on mobile */
-                height: 25px;
             }
 
-            /* Adjust main content padding for mobile */
-            main {
-                padding-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile));
-            }
-            header {
-                height: var(--header-height-mobile);
-            }
-            #promo-banner-section {
-                top: var(--header-height-mobile); /* Adjust based on mobile header height */
-                padding: 0.4rem 0.8rem;
-                font-size: 0.85rem;
-                height: var(--promo-banner-height-mobile);
-            }
-            #promo-banner-section .promo-text {
-                font-size: 0.8rem;
-            }
-            #promo-banner-section .book-btn {
-                padding: 0.2rem 0.6rem;
-                font-size: 0.75rem;
+            .payment-icon {
+                width: 40px;
+                height: 25px;
             }
         }
 
         @media (max-width: 480px) {
+            #promo-banner-section {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.5rem;
+            }
+
+            #promo-banner-section .promo-text {
+                font-size: 0.7rem;
+                line-height: 1.3;
+            }
+
+            #promo-banner-section .book-btn {
+                padding: 0.15rem 0.4rem;
+                font-size: 0.65rem;
+            }
+
             header {
                 padding: 0.8rem 1rem;
             }
+
             .desktop-logo {
                 height: 35px;
             }
+
             .logo-text {
                 font-size: 1.2rem;
             }
+
             .mobile-menu-btn {
                 font-size: 1.8rem;
             }
+
             .mobile-nav-overlay nav a {
                 font-size: 1.5rem;
             }
+
             section {
                 padding: 1.5rem;
             }
+
             section h2 {
                 font-size: 1.8rem;
             }
+
             section p {
                 font-size: 0.9rem;
             }
+
             .instagram-cards-stack {
-                max-width: 100%; /* Allow full width on small screens */
-                padding: 0 1rem; /* Add some horizontal padding */
+                max-width: 100%;
+                padding: 0 1rem;
             }
+
             .instagram-post-card {
-                width: 280px; /* Adjust card width for very small screens */
-                height: 420px; /* Adjust card height */
+                width: 280px;
+                height: 420px;
             }
+
             .instagram-post-card img {
-                height: calc(2/3 * 420px); /* Adjust image height based on new card height */
+                height: calc(2/3 * 420px);
             }
+
             .instagram-post-card .card-content {
-                height: calc(1/3 * 420px); /* Adjust content height */
+                height: calc(1/3 * 420px);
                 padding: 1rem;
             }
+
             .instagram-post-card .caption {
                 font-size: 0.85rem;
             }
+
             .instagram-post-card .likes {
                 font-size: 0.75rem;
             }
+
             .footer-section h4 {
                 font-size: 1rem;
             }
+
             .footer-section a {
                 font-size: 0.85rem;
-            }
-            #promo-banner-section {
-                padding: 0.6rem 0.8rem;
-            }
-            #promo-banner-section .promo-text {
-                font-size: 0.75rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="preloader">
-        <div class="preloader-inner"></div>
-    </div>
-
     <header>
         <a href="/" class="logo-link" aria-label="PictureThisPet Home">
             <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
@@ -837,7 +849,7 @@
             <a href="/contact" aria-label="Contact page">Contact</a>
             <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
         </nav>
-        <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+        <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
     </header>
 
     <div id="promo-banner-section">
@@ -962,20 +974,16 @@
             <h2>Testimonials</h2>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <p>"PictureThisPet captured my beloved dog's playful spirit perfectly. Every photo is a treasure!"</p>
+                    <p>"Amazing experience! The photos of my dog are absolutely perfect."</p>
+                    <cite>- Jane D.</cite>
+                </div>
+                <div class="testimonial-card">
+                    <p>"PictureThisPet captured my cat's personality so well. Highly recommend!"</p>
                     <cite>- Mark S.</cite>
                 </div>
                 <div class="testimonial-card">
-                    <p>"Absolutely thrilled with the results! My cat looks like a supermodel. Highly recommend PictureThisPet."</p>
-                    <cite>- Helly R.</cite>
-                </div>
-                <div class="testimonial-card">
-                    <p>"Professional, patient, and truly talented. They made my pet feel comfortable and the photos are stunning."</p>
-                    <cite>- Irving B.</cite>
-                </div>
-                <div class="testimonial-card">
-                    <p>"The team at PictureThisPet has an incredible eye. They caught the unique personality of my ferret in every shot!"</p>
-                    <cite>- Dylan G.</cite>
+                    <p>"The session was so fun, and the photos are stunning!"</p>
+                    <cite>- Emily R.</cite>
                 </div>
             </div>
         </section>
@@ -996,61 +1004,44 @@
             <div class="footer-section">
                 <h4>We Accept</h4>
                 <div class="payment-methods">
-                    <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Visa';" />
-                    <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=MasterCard';" />
-                    <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Amex';" />
-                    <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Discover';" />
-                    <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Apple+Pay';" />
-                    <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Google+Pay';" />
-                    <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Samsung+Pay';" />
-                    <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Amazon+Pay';" />
-                    <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Klarna';" />
-                    <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Affirm';" />
-                    <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Afterpay';" />
-                    <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Cash+App';" />
-                    <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=PayPal';" />
-                    <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" onerror="this.onerror=null;this.src='https://placehold.co/45x28/2a2a2a/f0f0f0?text=Tap+to+Pay';" />
+                    <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+                    <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+                    <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+                    <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+                    <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+                    <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+                    <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+                    <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+                    <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+                    <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:16 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+            <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 07:38 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
         </div>
     </footer>
 
-    <div id="lightbox">
-        <button class="lightbox-close-btn">×</button>
-        <img id="lightbox-img" src="" alt="Portfolio Image" />
-        <h3 id="lightbox-title"></h3>
-        <button id="prev-btn" class="lightbox-nav-btn">‹</button>
-        <button id="next-btn" class="lightbox-nav-btn">›</button>
-    </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Preloader animation
-            const preloader = document.querySelector('.preloader');
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 500);
-            }, 1500); // Adjust duration as needed
-
-            // Mobile menu toggle
             const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
             const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
             const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
 
             mobileMenuBtn.addEventListener('click', () => {
                 mobileNavOverlay.classList.add('open');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+                document.body.style.overflow = 'hidden';
             });
 
             closeBtn.addEventListener('click', () => {
                 mobileNavOverlay.classList.remove('open');
-                document.body.style.overflow = ''; // Restore scrolling
+                document.body.style.overflow = '';
             });
 
-            // Close mobile menu when a link is clicked
             mobileNavOverlay.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     mobileNavOverlay.classList.remove('open');
@@ -1058,30 +1049,27 @@
                 });
             });
 
-            // Intersection Observer for scroll animations (sections fade in and slide up)
-            const sections = document.querySelectorAll('section'); // Observe all sections
+            const sections = document.querySelectorAll('section');
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.15 // Trigger when 15% of the section is visible
+                threshold: 0.15
             };
 
             const sectionObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        // Specific animation for Welcome title
                         if (entry.target.id === 'welcome') {
                             const welcomeTitle = document.getElementById('welcome-title');
                             if (welcomeTitle && !welcomeTitle.classList.contains('animate-welcome')) {
                                 welcomeTitle.classList.add('animate-welcome');
-                                // Remove animation class after it finishes to allow re-triggering if needed (e.g., on re-scroll)
                                 welcomeTitle.addEventListener('animationend', () => {
                                     welcomeTitle.classList.remove('animate-welcome');
                                 }, { once: true });
                             }
                         }
-                        observer.unobserve(entry.target); // Stop observing once it's visible
+                        observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
@@ -1090,22 +1078,14 @@
                 sectionObserver.observe(section);
             });
 
-            // Lightbox functionality (kept for potential future use, not used by Instagram cards)
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxTitle = document.getElementById('lightbox-title');
-            const lightboxCloseBtn = document.querySelector('.lightbox-close-btn');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            // Removed portfolioItems and imagesData logic as the main portfolio section is now Instagram cards
-
-            // Placeholder for lightbox functions if you decide to re-introduce a separate image portfolio
-            function openLightbox(index) { /* ... */ }
-            function closeLightbox() { /* ... */ }
-            function updateLightboxContent() { /* ... */ }
-
-            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v13.0');
+            console.log('✅ PictureThisPet UI Overhaul - Inspired by Apple - v6.0');
         });
+
+        function toggleMenu() {
+            const nav = document.querySelector('.site-nav');
+            nav.classList.toggle('open');
+            document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+        }
     </script>
 </body>
 </html>
