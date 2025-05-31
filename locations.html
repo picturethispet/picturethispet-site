@@ -11,6 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         :root {
+            --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+            --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
+            --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.08) 0%, rgba(138,43,226,0.08) 50%, rgba(255,140,0,0.08) 100%);
+            --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
+            --pink: #ff1493;
+            --purple: #8a2be2;
+            --orange: #ff8c00;
             --color-primary: #1a1a1a;
             --color-secondary: #2a2a2a;
             --color-text-light: #f0f0f0;
@@ -24,9 +31,7 @@
             --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
             --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
             --header-height-desktop: 64px;
-            --promo-banner-height-desktop: 40px;
             --header-height-mobile: 58px;
-            --promo-banner-height-mobile: 70px;
         }
 
         * {
@@ -38,7 +43,9 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--color-primary);
+            background: var(--color-primary);
+            background-image: var(--gradient-secondary);
+            background-attachment: fixed;
             color: var(--color-text-light);
             line-height: 1.6;
             overflow-x: hidden;
@@ -52,6 +59,58 @@
         a {
             text-decoration: none;
             color: inherit;
+        }
+
+        /* Floating background elements */
+        .bg-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            animation: float 20s infinite linear;
+        }
+
+        .orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+            top: 10%;
+            left: 80%;
+            animation-delay: 0s;
+        }
+
+        .orb:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+            top: 60%;
+            left: 10%;
+            animation-delay: -7s;
+        }
+
+        .orb:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+            top: 30%;
+            left: 20%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
 
         header {
@@ -241,57 +300,8 @@
             padding: 1rem 2.5rem;
         }
 
-        #promo-banner-section {
-            position: fixed;
-            top: var(--header-height-desktop);
-            left: 0;
-            width: 100%;
-            background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.05) 50%, rgba(255, 140, 0, 0.05) 100%);
-            text-align: center;
-            padding: 1rem;
-            z-index: 999;
-            transition: top 0.3s ease;
-            margin: 0;
-            border-radius: 0;
-            opacity: 1;
-            transform: translateY(0);
-            height: var(--promo-banner-height-desktop);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #promo-banner-section .promo-banner-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        #promo-banner-section .promo-text,
-        #promo-banner-section .promo-text a {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            background: var(--gradient-button);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            overflow-wrap: break-word;
-            transition: transform 0.3s ease;
-            display: inline-block;
-        }
-
-        #promo-banner-section .promo-text:hover,
-        #promo-banner-section .promo-text a:hover {
-            transform: scale(1.05);
-        }
-
         main {
-            padding-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop));
+            padding-top: 0;
         }
 
         section {
@@ -314,7 +324,7 @@
             font-weight: 700;
             margin-bottom: 1.5rem;
             text-align: center;
-            background: var(--gradient-button);
+            background: var(--gradient-orange-pink);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -342,26 +352,33 @@
 
         /* Location Cards */
         .location-card {
-            background: linear-gradient(135deg, rgba(255, 20, 147, 0.03) 0%, rgba(138, 43, 226, 0.03) 50%, rgba(255, 140, 0, 0.03) 100%);
-            border: 1px solid rgba(138, 43, 226, 0.1);
-            border-radius: 20px;
+            background: var(--gradient-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 30px;
             padding: 3rem;
             margin-bottom: 3rem;
-            box-shadow: var(--shadow-medium);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: start;
+            transition: all 0.3s ease;
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
         }
 
         .location-card.popup-location {
-            background: linear-gradient(135deg, rgba(255, 140, 0, 0.05) 0%, rgba(255, 20, 147, 0.03) 50%, rgba(138, 43, 226, 0.03) 100%);
+            background: var(--gradient-card);
             border-color: rgba(255, 140, 0, 0.2);
         }
 
         .location-map-container {
             position: relative;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
@@ -397,7 +414,7 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            background: var(--gradient-button);
+            background: var(--gradient-orange-pink);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -449,9 +466,10 @@
         .location-highlights {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
+            border-radius: 15px;
             padding: 1.5rem;
             margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
         }
 
         .location-highlights h4 {
@@ -474,7 +492,7 @@
             background: rgba(255,255,255,0.1);
             color: var(--color-text-light);
             padding: 0.8rem 1.5rem;
-            border-radius: 12px;
+            border-radius: 15px;
             font-weight: 600;
             transition: all 0.3s ease;
             border: 1px solid rgba(255,255,255,0.2);
@@ -487,10 +505,10 @@
             box-shadow: 0 4px 15px rgba(255,255,255,0.1);
         }
 
-        /* PopUp Image Placeholder */
+        /* PopUp Image Container */
         .popup-image-container {
             position: relative;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
             background: rgba(255,140,0,0.05);
             border: 1px solid rgba(255,140,0,0.2);
@@ -530,11 +548,18 @@
         /* Action Section */
         #action-section {
             text-align: center;
-            background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.05) 50%, rgba(255, 140, 0, 0.05) 100%);
-            border: 1px solid rgba(138, 43, 226, 0.1);
-            border-radius: 20px;
+            background: var(--gradient-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 30px;
             padding: 3rem;
-            box-shadow: var(--shadow-medium);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        #action-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
         }
 
         .action-buttons {
@@ -547,7 +572,7 @@
 
         .action-btn {
             padding: 1rem 2.5rem;
-            border-radius: 50px;
+            border-radius: 30px;
             font-size: 1.1rem;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -556,14 +581,15 @@
         }
 
         .action-btn.primary {
-            background: var(--gradient-button);
+            background: var(--gradient-primary);
             color: white;
-            box-shadow: var(--shadow-medium);
+            box-shadow: 0 8px 32px rgba(255,20,147,0.3);
         }
 
         .action-btn.primary:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-strong);
+            box-shadow: 0 12px 40px rgba(255,20,147,0.5);
+            background: linear-gradient(135deg, #ff4da6 0%, #9b59b6 50%, #ffbf00 100%);
         }
 
         .action-btn.secondary {
@@ -607,7 +633,7 @@
             font-weight: 600;
             color: var(--color-text-light);
             margin-bottom: 1rem;
-            background: var(--gradient-button);
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -706,13 +732,6 @@
             section p {
                 font-size: 1rem;
             }
-            #promo-banner-section {
-                padding: 0.6rem 1rem;
-            }
-            #promo-banner-section .promo-text,
-            #promo-banner-section .promo-text a {
-                font-size: 0.85rem;
-            }
             .location-card {
                 grid-template-columns: 1fr;
                 gap: 2rem;
@@ -724,27 +743,6 @@
         }
 
         @media (max-width: 768px) {
-            #promo-banner-section {
-                font-size: 0.85rem;
-                padding: 0.8rem 0.8rem;
-                top: var(--header-height-mobile);
-                height: var(--promo-banner-height-mobile);
-            }
-
-            #promo-banner-section .promo-banner-content {
-                flex-direction: column;
-                gap: 0.5rem;
-                justify-content: center;
-                text-align: center;
-                line-height: 1.4;
-            }
-
-            #promo-banner-section .promo-text,
-            #promo-banner-section .promo-text a {
-                font-size: 0.8rem;
-                line-height: 1.4;
-            }
-
             header {
                 height: var(--header-height-mobile);
                 padding: 0.5rem 1rem;
@@ -768,10 +766,6 @@
 
             .mobile-menu-btn {
                 display: block;
-            }
-
-            main {
-                padding-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile));
             }
 
             section {
@@ -817,16 +811,6 @@
         }
 
         @media (max-width: 480px) {
-            #promo-banner-section {
-                padding: 0.6rem 0.5rem;
-            }
-
-            #promo-banner-section .promo-text,
-            #promo-banner-section .promo-text a {
-                font-size: 0.7rem;
-                line-height: 1.3;
-            }
-
             header {
                 padding: 0.8rem 1rem;
             }
@@ -869,6 +853,13 @@
     </style>
 </head>
 <body>
+    <!-- Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
     <header>
         <a href="/" class="logo-link" aria-label="PictureThisPet Home">
             <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
@@ -884,14 +875,6 @@
         </nav>
         <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
     </header>
-
-    <div id="promo-banner-section">
-        <div class="promo-banner-content">
-            <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
-            <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
-            <span class="promo-text"><a href="/pricing">View Pricing ✨</a></span>
-        </div>
-    </div>
 
     <div class="mobile-nav-overlay">
         <button class="close-btn" aria-label="Close mobile menu">×</button>
@@ -997,7 +980,7 @@
                         <span>PopUp Sessions</span>
                     </div>
                     <div class="popup-image-placeholder">
-                        <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="PopUp Sessions at dog-friendly locations" />
+                        <img src="assets/images/buffy_5_30_25_cheesman-1.jpg" alt="PopUp Sessions at dog-friendly locations" />
                     </div>
                     <div class="popup-image-footer">Custom Locations Around Denver</div>
                 </div>
@@ -1103,7 +1086,7 @@
                 sectionObserver.observe(section);
             });
 
-            console.log('✅ PictureThisPet Locations Page - Redesigned with Standard Template - v2.0');
+            console.log('✅ PictureThisPet Locations Page - Fixed UI version');
         });
 
         function toggleMenu() {
