@@ -192,6 +192,60 @@
       animation: slideIn 0.5s ease-out;
     }
 
+    /* Booking Instructions */
+    .booking-instructions {
+      display: none;
+      background: var(--color-secondary);
+      padding: 2rem;
+      margin: 2rem;
+      border-radius: 16px;
+      border: 2px solid var(--orange);
+      text-align: center;
+      box-shadow: var(--shadow-medium);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    .instructions-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .instructions-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .instructions-message {
+      font-size: 1.1rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info {
+      font-size: 1.1rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+
+    .contact-info a {
+      color: var(--color-accent-orange);
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: var(--color-accent-pink);
+    }
+
     .warning-icon {
       font-size: 3rem;
       margin-bottom: 1rem;
@@ -413,6 +467,11 @@
         margin: 1rem;
         padding: 1.5rem;
       }
+
+      .booking-instructions {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
     }
 
     /* Hidden elements for ad blocker detection */
@@ -501,6 +560,18 @@
           After disabling, refresh this page and the booking calendar will load normally.
         </p>
       </div>
+    </div>
+    
+    <!-- Booking Instructions -->
+    <div id="bookingInstructions" class="booking-instructions">
+      <div class="instructions-icon">📅</div>
+      <h2 class="instructions-title">Important Booking Information</h2>
+      <p class="instructions-message">
+        Please do not navigate back using your browser during the booking process, as this may disrupt your session.
+      </p>
+      <p class="contact-info">
+        If you encounter any issues with your booking appointment, please email us at <a href="mailto:info@picturethispet.co">info@picturethispet.co</a> or call/text us at <a href="tel:+17206643800">720-664-3800</a>.
+      </p>
     </div>
     
     <!-- Error State -->
@@ -716,6 +787,7 @@
       console.log('✅ No content blocker detected - loading iframe normally');
       
       document.getElementById('loadingContainer').style.display = 'none';
+      document.getElementById('bookingInstructions').style.display = 'block';
       document.getElementById('iframeContainer').style.display = 'flex';
       
       const iframe = document.getElementById('acuityIframe');
