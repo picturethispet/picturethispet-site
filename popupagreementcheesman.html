@@ -7,20 +7,9 @@
   <meta name="description" content="Review and agree to our pop-up event terms and policies before completing your booking with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
-      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
-      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.08) 0%, rgba(138,43,226,0.08) 50%, rgba(255,140,0,0.08) 100%);
-      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
-      --pink: #ff1493;
-      --purple: #8a2be2;
-      --orange: #ff8c00;
-      --available-green: #10b981;
-      --booked-red: #ef4444;
-      --soft-hold-yellow: #f59e0b;
-      --popup-event-purple: #a78bfa;
       --color-primary: #1a1a1a;
       --color-secondary: #2a2a2a;
       --color-text-light: #f0f0f0;
@@ -33,42 +22,30 @@
       --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
       --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
       --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
+      --available-green: #10b981;
+      --booked-red: #ef4444;
       --header-height-desktop: 64px;
+      --promo-banner-height-desktop: 40px;
       --header-height-mobile: 58px;
+      --promo-banner-height-mobile: 70px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }
-
-    html {
       scroll-behavior: smooth;
-      scrollbar-width: thin;
-      scrollbar-color: var(--pink) transparent;
-    }
-
-    html::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    html::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.1);
-    }
-
-    html::-webkit-scrollbar-thumb {
-      background: var(--gradient-primary);
-      border-radius: 3px;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      color: #ffffff;
-      background: var(--gradient-secondary);
-      background-attachment: fixed;
-      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--color-primary);
+      color: var(--color-text-light);
+      line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
@@ -78,87 +55,8 @@
       color: inherit;
     }
 
-    /* Floating background elements */
-    .bg-orbs {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.3;
-      animation: float 20s infinite linear;
-    }
-
-    .orb:nth-child(1) {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
-      top: 10%;
-      left: 80%;
-      animation-delay: 0s;
-    }
-
-    .orb:nth-child(2) {
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
-      top: 60%;
-      left: 10%;
-      animation-delay: -7s;
-    }
-
-    .orb:nth-child(3) {
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
-      top: 30%;
-      left: 20%;
-      animation-delay: -14s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
-    }
-
-    @keyframes progressFill {
-      0% { width: 0%; }
-      100% { width: 100%; }
-    }
-
-    /* Header */
     header {
-      position: fixed;
+      position: sticky;
       top: 0;
       left: 0;
       width: 100%;
@@ -179,7 +77,6 @@
       align-items: center;
       gap: 0.75rem;
       transition: opacity 0.3s ease;
-      text-decoration: none;
     }
 
     .logo-link:hover {
@@ -191,13 +88,10 @@
     }
 
     .logo-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 1.4rem;
       font-weight: 700;
-      color: var(--color-text-light);
       letter-spacing: -0.03em;
-      display: flex;
-      align-items: center;
+      color: var(--color-text-light);
     }
 
     .logo-text sup {
@@ -247,7 +141,7 @@
       background: var(--gradient-button);
       color: white;
       padding: 0.75rem 1.75rem;
-      border-radius: 30px;
+      border-radius: 50px;
       font-weight: 600;
       font-size: 0.95rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -336,34 +230,76 @@
       padding: 1rem 2.5rem;
     }
 
-    /* Main Content */
+    #promo-banner-section {
+      position: fixed;
+      top: var(--header-height-desktop);
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.05) 50%, rgba(255, 140, 0, 0.05) 100%);
+      text-align: center;
+      padding: 1rem;
+      z-index: 999;
+      transition: top 0.3s ease;
+      margin: 0;
+      border-radius: 0;
+      opacity: 1;
+      transform: translateY(0);
+      height: var(--promo-banner-height-desktop);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #promo-banner-section .promo-banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    #promo-banner-section .promo-text,
+    #promo-banner-section .promo-text a {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: var(--gradient-button);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      overflow-wrap: break-word;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    #promo-banner-section .promo-text:hover,
+    #promo-banner-section .promo-text a:hover {
+      transform: scale(1.05);
+    }
+
     main {
-      margin-top: var(--header-height-desktop);
+      margin-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop));
       flex: 1;
-      padding: 3rem 1rem;
+      padding: 3rem 1rem 6rem 1rem;
       max-width: 1000px;
       margin-left: auto;
       margin-right: auto;
       width: 100%;
-      color: #ffffff;
     }
 
-    /* Agreement Section */
     .agreement-container {
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.15);
+      background: var(--color-secondary);
+      border-radius: 16px;
       padding: 3rem;
       animation: fadeInUp 0.8s ease-out;
-      margin-bottom: 2rem;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
       transition: all 0.3s ease;
+      box-shadow: var(--shadow-light);
     }
 
     .agreement-container:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+      box-shadow: var(--shadow-medium);
     }
 
     .agreement-header {
@@ -371,23 +307,10 @@
       margin-bottom: 3rem;
     }
 
-    .agreement-header h1 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .agreement-header .event-badge {
+    .event-badge {
       display: inline-block;
-      background: linear-gradient(135deg, var(--popup-event-purple), #8b5cf6);
-      color: #ffffff;
+      background: var(--gradient-button);
+      color: white;
       padding: 0.5rem 1.5rem;
       border-radius: 25px;
       font-size: 0.9rem;
@@ -395,52 +318,57 @@
       margin-bottom: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      animation: pulse 3s ease-in-out infinite;
-      background: var(--gradient-orange-pink);
+      box-shadow: var(--shadow-light);
+    }
+
+    .page-title {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: var(--gradient-button);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      margin-bottom: 1rem;
+      letter-spacing: -0.025em;
     }
 
-    .agreement-header p {
+    .page-subtitle {
       font-size: 1.1rem;
-      color: #ffffff;
+      color: var(--color-text-muted);
+      font-weight: 500;
       line-height: 1.6;
     }
 
-    /* Agreement Sections */
     .agreement-section {
-      background: rgba(255,255,255,0.05);
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
       padding: 2rem;
       margin-bottom: 2rem;
-      border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
       transition: all 0.3s ease;
     }
 
     .agreement-section:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.15);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-light);
     }
 
     .agreement-section h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      background: var(--gradient-orange-pink);
+      background: var(--gradient-button);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      color: #ffffff;
     }
 
     .agreement-section h3 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 1.2rem;
       font-weight: 600;
-      color: #ffffff;
+      color: var(--color-text-light);
       margin-bottom: 0.8rem;
       margin-top: 1.5rem;
     }
@@ -448,7 +376,7 @@
     .agreement-section p {
       font-size: 1rem;
       line-height: 1.6;
-      color: #ffffff;
+      color: var(--color-text-light);
       margin-bottom: 1rem;
     }
 
@@ -460,33 +388,32 @@
     .agreement-section li {
       font-size: 1rem;
       line-height: 1.6;
-      color: #ffffff;
+      color: var(--color-text-light);
       margin-bottom: 0.5rem;
     }
 
-    /* Checkbox Section */
     .checkbox-container {
-      background: rgba(255,255,255,0.08);
-      border-radius: 20px;
+      background: rgba(255, 140, 0, 0.05);
+      border: 2px solid rgba(255, 140, 0, 0.2);
+      border-radius: 12px;
       padding: 2rem;
       margin-bottom: 2rem;
-      border: 2px solid rgba(255,20,147,0.25);
-      backdrop-filter: blur(10px);
       transition: all 0.3s ease;
     }
 
     .checkbox-container:hover {
-      border-color: rgba(255,20,147,0.35);
+      border-color: rgba(255, 140, 0, 0.3);
+      box-shadow: 0 8px 25px rgba(255, 140, 0, 0.1);
     }
 
     .checkbox-container h2 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
       margin-bottom: 1.5rem;
-      background: var(--gradient-orange-pink);
+      background: var(--gradient-button);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      color: #ffffff;
     }
 
     .checkbox-item {
@@ -495,30 +422,31 @@
       gap: 1rem;
       margin-bottom: 1.5rem;
       padding: 1rem;
-      background: rgba(255,255,255,0.03);
-      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
       transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .checkbox-item:hover {
-      background: rgba(255,255,255,0.06);
+      background: rgba(255, 255, 255, 0.06);
       transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.1);
     }
 
     .checkbox-item input[type="checkbox"] {
       width: 20px;
       height: 20px;
       margin-top: 2px;
-      accent-color: var(--orange);
+      accent-color: var(--color-accent-orange);
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 4px;
     }
 
     .checkbox-item label {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 1rem;
       line-height: 1.5;
-      color: #ffffff;
+      color: var(--color-text-light);
       cursor: pointer;
       flex: 1;
     }
@@ -529,47 +457,46 @@
       font-weight: bold;
     }
 
-    /* Action Buttons */
     .action-buttons {
       display: flex;
       gap: 1rem;
       justify-content: center;
       align-items: center;
       margin-top: 2rem;
+      flex-wrap: wrap;
     }
 
     .back-button {
-      background: rgba(255,255,255,0.1);
-      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--color-text-light);
       padding: 1rem 2rem;
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
-      backdrop-filter: blur(10px);
     }
 
     .back-button:hover {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.2);
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: var(--shadow-light);
     }
 
     .continue-button {
-      background: var(--gradient-primary);
-      color: #ffffff;
-      padding: 1rem 3rem;
+      background: var(--gradient-button);
+      color: white;
+      padding: 1rem 2.5rem;
       border: none;
-      border-radius: 30px;
+      border-radius: 50px;
       font-size: 1.1rem;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+      box-shadow: var(--shadow-light);
       opacity: 0.5;
       pointer-events: none;
     }
@@ -581,59 +508,64 @@
 
     .continue-button.enabled:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(255,20,147,0.5);
-      background: linear-gradient(135deg, #ff4da6 0%, #9b59b6 50%, #ffbf00 100%);
+      box-shadow: var(--shadow-medium);
     }
 
-    /* Loading Screen */
-    .loading-screen {
+    .loading-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(26, 26, 26, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 10000;
       display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
-      animation: fadeIn 0.4s ease-out;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .loading-overlay.show {
+      display: flex;
+      opacity: 1;
     }
 
     .loading-content {
       text-align: center;
       max-width: 500px;
       padding: 2rem;
+      background: var(--color-secondary);
+      border-radius: 20px;
+      animation: slideInUp 0.6s ease-out;
+      box-shadow: var(--shadow-strong);
     }
 
     .loading-spinner {
-      width: 80px;
-      height: 80px;
-      border: 6px solid rgba(255,255,255,0.3);
-      border-top: 6px solid var(--orange);
+      width: 70px;
+      height: 70px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-top: 5px solid var(--color-accent-orange);
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin: 0 auto 2rem;
+      margin: 0 auto 1.5rem;
     }
 
     .loading-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 1rem;
-      background: var(--gradient-orange-pink);
+      background: var(--gradient-button);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      margin-bottom: 1rem;
     }
 
     .loading-message {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1.2rem;
-      color: #ffffff;
+      font-size: 1.1rem;
+      color: var(--color-text-muted);
       margin-bottom: 2rem;
     }
 
@@ -641,7 +573,7 @@
       display: flex;
       justify-content: center;
       gap: 1rem;
-      margin: 2rem 0;
+      margin: 1.5rem 0;
     }
 
     .paw {
@@ -658,28 +590,20 @@
       width: 100%;
       max-width: 300px;
       height: 6px;
-      background: rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 3px;
       overflow: hidden;
-      margin: 2rem auto;
+      margin: 1.5rem auto;
     }
 
     .progress-fill {
       height: 100%;
-      background: var(--gradient-primary);
+      background: var(--gradient-button);
       border-radius: 3px;
       width: 0%;
-      animation: progressFill 10s ease-out forwards;
+      animation: progressFill 8s ease-out forwards;
     }
 
-    .loading-content p {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 0.9rem;
-      color: #ffffff;
-      margin-top: 1rem;
-    }
-
-    /* Footer */
     footer {
       background-color: var(--color-primary);
       color: var(--color-text-muted);
@@ -689,12 +613,11 @@
     }
 
     .footer-container {
+      max-width: 1000px;
+      margin: 0 auto 1.5rem;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
       text-align: left;
     }
 
@@ -705,12 +628,11 @@
     }
 
     .footer-section h4 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       font-size: 1.1rem;
       font-weight: 600;
       color: var(--color-text-light);
       margin-bottom: 1rem;
-      background: var(--gradient-primary);
+      background: var(--gradient-button);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -734,9 +656,6 @@
       justify-items: center;
       align-items: center;
       margin-top: 1rem;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
@@ -752,7 +671,7 @@
     .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
     .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
     .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
-    .payment-methods div:nth-child(14) { grid-area: 2 / 2; }
+    .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
 
     .payment-icon {
       width: 45px;
@@ -764,30 +683,6 @@
     }
 
     .payment-icon:hover {
-      transform: scale(1.1);
-    }
-
-    .payment-placeholder {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      width: 45px;
-      height: 28px;
-      background: rgba(255, 255, 255, 0.1);
-      border: var(--border-subtle);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8px;
-      font-weight: 600;
-      color: var(--color-text-muted);
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      text-align: center;
-      line-height: 1.1;
-    }
-
-    .payment-placeholder:hover {
-      opacity: 1;
       transform: scale(1.1);
     }
 
@@ -808,7 +703,32 @@
       color: var(--color-accent-orange);
     }
 
-    /* Responsive */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    @keyframes progressFill {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
     @media (max-width: 1024px) {
       header {
         padding: 1rem 1.5rem;
@@ -816,12 +736,39 @@
       .site-nav {
         gap: 1.5rem;
       }
+      .agreement-container {
+        padding: 2.5rem;
+      }
+      .page-title {
+        font-size: 2.5rem;
+      }
     }
 
     @media (max-width: 768px) {
+      #promo-banner-section {
+        font-size: 0.85rem;
+        padding: 0.8rem 0.8rem;
+        top: var(--header-height-mobile);
+        height: var(--promo-banner-height-mobile);
+      }
+
+      #promo-banner-section .promo-banner-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.4;
+      }
+
+      #promo-banner-section .promo-text,
+      #promo-banner-section .promo-text a {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+
       header {
         height: var(--header-height-mobile);
-        padding: 0.8rem 1.5rem;
+        padding: 0.5rem 1rem;
       }
 
       .desktop-logo {
@@ -833,7 +780,7 @@
       }
 
       .logo-text sup {
-        font-size: 0.5em;
+        font-size: 0.6rem;
       }
 
       .site-nav {
@@ -845,7 +792,7 @@
       }
 
       main {
-        margin-top: var(--header-height-mobile);
+        margin-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile));
         padding: 2rem 1rem;
       }
 
@@ -853,7 +800,7 @@
         padding: 2rem;
       }
 
-      .agreement-header h1 {
+      .page-title {
         font-size: 2.2rem;
       }
 
@@ -876,6 +823,11 @@
         text-align: center;
       }
 
+      .loading-content {
+        padding: 2rem;
+        margin: 1rem;
+      }
+
       .loading-title {
         font-size: 1.6rem;
       }
@@ -887,81 +839,70 @@
       .footer-container {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 1.5rem;
       }
 
       .footer-section {
         align-items: center;
       }
 
-      .footer-section h4 {
-        font-size: 1rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .footer-section a {
-        font-size: 0.85rem;
-        margin-bottom: 0.3rem;
-      }
-
       .payment-methods {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(2, auto);
         gap: 0.5rem;
-        max-width: 300px;
-        margin-left: auto;
-        margin-right: auto;
+        justify-items: center;
+        align-items: center;
       }
 
-      .payment-icon,
-      .payment-placeholder {
+      .payment-icon {
         width: 35px;
         height: 22px;
-      }
-
-      footer {
-        padding: 1.5rem 1rem;
-      }
-
-      .footer-bottom {
-        padding-top: 1rem;
-        font-size: 0.75rem;
       }
     }
 
     @media (max-width: 480px) {
-      header {
-        padding: 0.5rem 0.8rem;
+      #promo-banner-section {
+        padding: 0.6rem 0.5rem;
+      }
+
+      #promo-banner-section .promo-text,
+      #promo-banner-section .promo-text a {
+        font-size: 0.7rem;
+        line-height: 1.3;
       }
 
       main {
-        margin-top: var(--header-height-mobile);
+        padding: 1.5rem 0.5rem;
       }
 
       .agreement-container {
         padding: 1.5rem;
-        margin: 0.5rem;
+        border-radius: 12px;
       }
 
-      .agreement-header h1 {
+      .page-title {
         font-size: 1.8rem;
+      }
+
+      .agreement-section {
+        padding: 1.2rem;
+      }
+
+      .checkbox-container {
+        padding: 1.2rem;
       }
 
       .checkbox-item {
         padding: 0.8rem;
       }
+
+      .loading-content {
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Background Orbs -->
-  <div class="bg-orbs">
-    <div class="orb"></div>
-    <div class="orb"></div>
-    <div class="orb"></div>
-  </div>
-
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
@@ -977,6 +918,14 @@
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
+
+  <div id="promo-banner-section">
+    <div class="promo-banner-content">
+      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
+      <span class="promo-text"><a href="/pricing">View Pricing ✨</a></span>
+    </div>
+  </div>
 
   <div class="mobile-nav-overlay">
     <button class="close-btn" aria-label="Close mobile menu">×</button>
@@ -994,8 +943,8 @@
     <div class="agreement-container">
       <div class="agreement-header">
         <div class="event-badge">🎉 Pop-up Event</div>
-        <h1>Service Agreement & Policies</h1>
-        <p>Please review and agree to the following terms before completing your pop-up photography session booking.</p>
+        <h1 class="page-title">Service Agreement & Policies</h1>
+        <p class="page-subtitle">Please review and agree to the following terms before completing your pop-up photography session booking.</p>
       </div>
 
       <!-- Service Terms -->
@@ -1107,7 +1056,7 @@
 
       <!-- Action Buttons -->
       <div class="action-buttons">
-        <a href="/cart.html" class="back-button">← Back to Session Builder</a>
+        <a href="/register-popup.html" class="back-button">← Back to Registration</a>
         <button class="continue-button" id="continueButton" onclick="proceedToPayment()">
           Continue to Secure Payment 🔒
         </button>
@@ -1115,8 +1064,8 @@
     </div>
   </main>
 
-  <!-- Loading Screen -->
-  <div class="loading-screen" id="loadingScreen">
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
     <div class="loading-content">
       <div class="loading-spinner"></div>
       <h2 class="loading-title">🔒 Processing Your Agreement</h2>
@@ -1133,7 +1082,7 @@
         <div class="progress-fill"></div>
       </div>
       
-      <p>Please do not close this window...</p>
+      <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 1rem;">Please do not close this window...</p>
     </div>
   </div>
 
@@ -1142,7 +1091,7 @@
       <div class="footer-section">
         <h4>Contact Us</h4>
         <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+        <a href="https://picturethispet.co" target="_blank" rel="noopener noreferrer" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -1165,38 +1114,18 @@
           <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
           <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
           <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <div class="payment-placeholder" title="Tap to Pay accepted">TAP TO PAY</div>
+          <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v1.0.17 | Last updated: 01:08 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:30 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
     const STRIPE_URL = 'https://book.stripe.com/28EbJ33WLfZS8k15St9bO0m';
 
-    function toggleMenu() {
-      const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
-      mobileNavOverlay.classList.toggle('open');
-      document.body.style.overflow = mobileNavOverlay.classList.contains('open') ? 'hidden' : '';
-      
-      const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
-      closeBtn.addEventListener('click', () => {
-        mobileNavOverlay.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-
-      mobileNavOverlay.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileNavOverlay.classList.remove('open');
-          document.body.style.overflow = '';
-        });
-      });
-    }
-
-    // Track checkbox states and enable/disable continue button
     function updateContinueButton() {
       const requiredCheckboxes = document.querySelectorAll('input[type="checkbox"][required]');
       const continueButton = document.getElementById('continueButton');
@@ -1215,30 +1144,14 @@
       }
     }
 
-    // Add event listeners to all checkboxes
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Pop-up Agreement page loaded with Refresh 3.0 UI');
-      
-      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateContinueButton);
-      });
-      
-      // Initial button state check
-      updateContinueButton();
-    });
-
-    // Proceed to payment with agreement data and loading screen
     function proceedToPayment() {
       const continueButton = document.getElementById('continueButton');
       
-      // Check if button is enabled
       if (!continueButton.classList.contains('enabled')) {
         alert('⚠️ Please agree to all required terms before continuing.');
         return;
       }
       
-      // Collect agreement data
       const agreementData = {
         serviceTermsAccepted: document.getElementById('service-terms').checked,
         photoRightsGranted: document.getElementById('photo-rights').checked,
@@ -1251,25 +1164,37 @@
         stripeUrl: STRIPE_URL
       };
       
-      // Save agreement data
       localStorage.setItem('popupAgreementData', JSON.stringify(agreementData));
-      
       console.log('✅ Pop-up agreements accepted:', agreementData);
       
-      // Show loading screen
-      const loadingScreen = document.getElementById('loadingScreen');
-      loadingScreen.style.display = 'flex';
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      loadingOverlay.classList.add('show');
       
-      // Redirect to Stripe after 10 seconds
       setTimeout(() => {
         console.log('🚀 Redirecting to Stripe:', STRIPE_URL);
         window.location.href = STRIPE_URL;
-      }, 10000); // 10 seconds
+      }, 8000);
     }
 
-    // Log errors for debugging
-    window.addEventListener('error', function(e) {
-      console.error('Page error:', e.error);
+    function toggleMenu() {
+      const overlay = document.querySelector('.mobile-nav-overlay');
+      overlay.classList.toggle('open');
+      document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
+    }
+
+    document.querySelector('.mobile-nav-overlay .close-btn').addEventListener('click', () => {
+      toggleMenu();
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Pop-up Agreement page loaded - Fixed UI version');
+      
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateContinueButton);
+      });
+      
+      updateContinueButton();
     });
   </script>
 </body>
