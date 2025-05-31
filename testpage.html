@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acuity Appointment Type Tester | Picture This Pet</title>
+  <title>Stripe URL Changes & Complete Test | Picture This Pet</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -11,38 +11,87 @@
       color: #f0f0f0;
       padding: 2rem;
       line-height: 1.6;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
     
     .title {
       font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       text-align: center;
       background: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     
+    .section {
+      background: #2a2a2a;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ff8c00;
+      margin-bottom: 1rem;
+    }
+    
+    .change-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+    }
+    
+    .change-table th,
+    .change-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .change-table th {
+      color: #ff8c00;
+      font-weight: 600;
+      background: rgba(255, 140, 0, 0.1);
+      position: sticky;
+      top: 0;
+    }
+    
+    .url-before {
+      color: #ef4444;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+    }
+    
+    .url-after {
+      color: #10b981;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+    }
+    
     .test-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
     
     .test-card {
       background: #2a2a2a;
       border-radius: 12px;
       padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.1);
       transition: all 0.3s ease;
     }
     
-    .test-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    .test-card.testing {
+      border-color: #ff8c00;
+      background: rgba(255, 140, 0, 0.05);
     }
     
     .test-card.working {
@@ -55,11 +104,6 @@
       background: rgba(239, 68, 68, 0.05);
     }
     
-    .test-card.testing {
-      border-color: #ff8c00;
-      background: rgba(255, 140, 0, 0.05);
-    }
-    
     .card-header {
       display: flex;
       justify-content: space-between;
@@ -68,7 +112,7 @@
     }
     
     .card-title {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
       color: #ff8c00;
     }
@@ -81,6 +125,11 @@
       text-transform: uppercase;
     }
     
+    .status-badge.testing {
+      background: #ff8c00;
+      color: white;
+    }
+    
     .status-badge.working {
       background: #10b981;
       color: white;
@@ -91,28 +140,38 @@
       color: white;
     }
     
-    .status-badge.testing {
-      background: #ff8c00;
-      color: white;
-    }
-    
     .status-badge.pending {
       background: rgba(255, 255, 255, 0.2);
       color: #b0b0b0;
     }
     
-    .card-details {
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
+    .appointment-details {
+      font-size: 0.85rem;
       color: #b0b0b0;
+      margin-bottom: 1rem;
     }
     
     .appointment-id {
       font-family: 'Courier New', monospace;
       background: rgba(0, 0, 0, 0.3);
-      padding: 0.2rem 0.5rem;
+      padding: 0.2rem 0.4rem;
       border-radius: 4px;
       color: #ff1493;
+    }
+    
+    .iframe-container {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 250px;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
     
     .test-buttons {
@@ -130,7 +189,7 @@
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease;
       flex: 1;
     }
     
@@ -138,60 +197,23 @@
       transform: translateY(-2px);
     }
     
-    .test-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-    
-    .iframe-container {
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      height: 200px;
-      position: relative;
-      margin-top: 1rem;
-      display: none;
-    }
-    
-    .iframe-container.show {
-      display: block;
-    }
-    
-    .iframe-container iframe {
-      width: 100%;
-      height: 100%;
+    .test-all-btn {
+      background: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      color: white;
+      padding: 1rem 2rem;
       border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 2rem;
+      width: 100%;
     }
     
-    .error-message {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid #ef4444;
-      border-radius: 6px;
-      padding: 0.8rem;
-      margin-top: 1rem;
-      color: #ef4444;
-      font-size: 0.9rem;
-      display: none;
-    }
-    
-    .error-message.show {
-      display: block;
-    }
-    
-    .summary {
-      background: #2a2a2a;
-      border-radius: 12px;
-      padding: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-    }
-    
-    .summary-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #ff8c00;
-      margin-bottom: 1rem;
+    .test-all-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 20, 147, 0.3);
     }
     
     .summary-stats {
@@ -199,9 +221,6 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       margin: 2rem 0;
-    }
-    
-    .stat {
       text-align: center;
     }
     
@@ -228,28 +247,18 @@
       font-size: 0.9rem;
     }
     
-    .test-all-btn {
-      background: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
-      color: white;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-bottom: 2rem;
-      width: 100%;
-    }
-    
-    .test-all-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(255, 20, 147, 0.3);
-    }
-    
     @media (max-width: 768px) {
       .test-grid {
         grid-template-columns: 1fr;
+      }
+      
+      .change-table {
+        font-size: 0.75rem;
+      }
+      
+      .change-table th,
+      .change-table td {
+        padding: 0.5rem 0.3rem;
       }
       
       .summary-stats {
@@ -260,133 +269,178 @@
   </style>
 </head>
 <body>
-  <h1 class="title">🧪 Acuity Appointment Type Tester</h1>
+  <h1 class="title">🔧 Stripe URL Changes & Complete Test</h1>
   
-  <button class="test-all-btn" onclick="testAllAppointments()">
-    🚀 Test All Appointment Types
-  </button>
-  
-  <div class="test-grid" id="testGrid"></div>
-  
-  <div class="summary">
-    <div class="summary-title">📊 Test Results Summary</div>
-    <div class="summary-stats">
-      <div class="stat">
-        <div class="stat-number working" id="workingCount">0</div>
-        <div class="stat-label">Working</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number broken" id="brokenCount">0</div>
-        <div class="stat-label">Broken</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number pending" id="pendingCount">16</div>
-        <div class="stat-label">Pending</div>
-      </div>
-    </div>
+  <!-- URL Change List -->
+  <div class="section">
+    <h2 class="section-title">📋 Complete List: URLs to Change from "buy" to "book"</h2>
+    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">
+      These 15 URLs need to be changed in your cart.html file. Mini City 2/2 is already correct.
+    </p>
+    
+    <table class="change-table">
+      <thead>
+        <tr>
+          <th>Configuration</th>
+          <th>Current URL (❌ buy.stripe.com)</th>
+          <th>Should Be (✅ book.stripe.com)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mini-Cheesman Park-1-1</td>
+          <td class="url-before">buy.stripe.com/eVag28fRtgaVe1GcMN</td>
+          <td class="url-after">book.stripe.com/eVag28fRtgaVe1GcMN</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Mini-Cheesman Park-2-1</td>
+          <td class="url-before">buy.stripe.com/5kQcN70KzbJCfMt94F9bO05</td>
+          <td class="url-after">book.stripe.com/5kQcN70KzbJCfMt94F9bO05</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Mini-Cheesman Park-1-2</td>
+          <td class="url-before">buy.stripe.com/8x24gB64T292eIpbcN9bO09</td>
+          <td class="url-after">book.stripe.com/8x24gB64T292eIpbcN9bO09</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Mini-Cheesman Park-2-2</td>
+          <td class="url-before">buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g</td>
+          <td class="url-after">book.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Mini-City Park-1-1</td>
+          <td class="url-before">buy.stripe.com/9AQ6ry7kX8It3n28wy</td>
+          <td class="url-after">book.stripe.com/9AQ6ry7kX8It3n28wy</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Mini-City Park-2-1</td>
+          <td class="url-before">buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06</td>
+          <td class="url-after">book.stripe.com/5kQ6oJ50PaFy43L4Op9bO06</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Mini-City Park-1-2</td>
+          <td class="url-before">buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b</td>
+          <td class="url-after">book.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr style="background: rgba(16, 185, 129, 0.1);">
+          <td><strong>Mini-City Park-2-2</strong></td>
+          <td class="url-after">book.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a</td>
+          <td class="url-after">book.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a</td>
+          <td style="color: #10b981;"><strong>✅ Already Correct</strong></td>
+        </tr>
+        <tr>
+          <td>Full-Cheesman Park-1-1</td>
+          <td class="url-before">buy.stripe.com/4gw6ry0Wz0bXe1G147</td>
+          <td class="url-after">book.stripe.com/4gw6ry0Wz0bXe1G147</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Full-Cheesman Park-2-1</td>
+          <td class="url-before">buy.stripe.com/8x200lgJx3d69o5dkV9bO08</td>
+          <td class="url-after">book.stripe.com/8x200lgJx3d69o5dkV9bO08</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Full-Cheesman Park-1-2</td>
+          <td class="url-before">buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c</td>
+          <td class="url-after">book.stripe.com/14A14peBpfZSgQx3Kl9bO0c</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Full-Cheesman Park-2-2</td>
+          <td class="url-before">buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d</td>
+          <td class="url-after">book.stripe.com/5kQbJ33WL14Y9o5gx79bO0d</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Full-City Park-1-1</td>
+          <td class="url-before">buy.stripe.com/00gg28eNp9Mx9Lq9AE</td>
+          <td class="url-after">book.stripe.com/00gg28eNp9Mx9Lq9AE</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Full-City Park-2-1</td>
+          <td class="url-before">buy.stripe.com/14A9AV8d15le6bTbcN9bO07</td>
+          <td class="url-after">book.stripe.com/14A9AV8d15le6bTbcN9bO07</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Full-City Park-1-2</td>
+          <td class="url-before">buy.stripe.com/14A8wR8d12921VD80B9bO0e</td>
+          <td class="url-after">book.stripe.com/14A8wR8d12921VD80B9bO0e</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+        <tr>
+          <td>Full-City Park-2-2</td>
+          <td class="url-before">buy.stripe.com/6oU28tdxl29243Lft39bO0f</td>
+          <td class="url-after">book.stripe.com/6oU28tdxl29243Lft39bO0f</td>
+          <td style="color: #ef4444;">❌ Needs Change</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
+  <!-- Complete Test Section -->
+  <div class="section">
+    <h2 class="section-title">🧪 Complete Appointment Type Test</h2>
+    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">
+      Test ALL 16 appointment types to see which show booking calendars vs error messages.
+    </p>
+    
+    <button class="test-all-btn" onclick="testAllAppointments()">
+      🚀 Test All 16 Appointment Types
+    </button>
+    
+    <div class="summary-stats">
+      <div>
+        <div class="stat-number working" id="workingCount">0</div>
+        <div class="stat-label">✅ Working</div>
+      </div>
+      <div>
+        <div class="stat-number broken" id="brokenCount">0</div>
+        <div class="stat-label">❌ Broken</div>
+      </div>
+      <div>
+        <div class="stat-number pending" id="pendingCount">16</div>
+        <div class="stat-label">⏳ Pending</div>
+      </div>
+    </div>
+    
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+
+  <!-- Load Acuity's Official Embed Script -->
+  <script src="https://embed.acuityscheduling.com/js/embed.js" type="text/javascript"></script>
+  
   <script>
     const appointmentTypes = [
       // Mini Sessions
-      {
-        name: 'Mini - Cheesman Park - 1 Pet, 1 Person',
-        id: '78805731',
-        config: 'Mini-Cheesman Park-1-1',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731'
-      },
-      {
-        name: 'Mini - Cheesman Park - 2 Pets, 1 Person',
-        id: '78805719',
-        config: 'Mini-Cheesman Park-2-1',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805719'
-      },
-      {
-        name: 'Mini - Cheesman Park - 1 Pet, 2 People',
-        id: '78805725',
-        config: 'Mini-Cheesman Park-1-2',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805725'
-      },
-      {
-        name: 'Mini - Cheesman Park - 2 Pets, 2 People',
-        id: '78805734',
-        config: 'Mini-Cheesman Park-2-2',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805734'
-      },
-      {
-        name: 'Mini - City Park - 1 Pet, 1 Person',
-        id: '78805722',
-        config: 'Mini-City Park-1-1',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805722'
-      },
-      {
-        name: 'Mini - City Park - 2 Pets, 1 Person',
-        id: '78805716',
-        config: 'Mini-City Park-2-1',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805716'
-      },
-      {
-        name: 'Mini - City Park - 1 Pet, 2 People',
-        id: '78805728',
-        config: 'Mini-City Park-1-2',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805728'
-      },
-      {
-        name: 'Mini - City Park - 2 Pets, 2 People',
-        id: '78805713',
-        config: 'Mini-City Park-2-2',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805713'
-      },
+      { name: 'Mini - Cheesman Park - 1,1', id: '78805731', config: 'Mini-Cheesman Park-1-1', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731' },
+      { name: 'Mini - Cheesman Park - 2,1', id: '78805719', config: 'Mini-Cheesman Park-2-1', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805719' },
+      { name: 'Mini - Cheesman Park - 1,2', id: '78805725', config: 'Mini-Cheesman Park-1-2', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805725' },
+      { name: 'Mini - Cheesman Park - 2,2', id: '78805734', config: 'Mini-Cheesman Park-2-2', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805734' },
+      { name: 'Mini - City Park - 1,1', id: '78805722', config: 'Mini-City Park-1-1', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805722' },
+      { name: 'Mini - City Park - 2,1', id: '78805716', config: 'Mini-City Park-2-1', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805716' },
+      { name: 'Mini - City Park - 1,2', id: '78805728', config: 'Mini-City Park-1-2', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805728' },
+      { name: 'Mini - City Park - 2,2', id: '78805713', config: 'Mini-City Park-2-2', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805713' },
       
       // Full Sessions
-      {
-        name: 'Full - Cheesman Park - 1 Pet, 1 Person',
-        id: '78805498',
-        config: 'Full-Cheesman Park-1-1',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498'
-      },
-      {
-        name: 'Full - Cheesman Park - 2 Pets, 1 Person',
-        id: '78816444',
-        config: 'Full-Cheesman Park-2-1',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444'
-      },
-      {
-        name: 'Full - Cheesman Park - 1 Pet, 2 People',
-        id: '78816428',
-        config: 'Full-Cheesman Park-1-2',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428'
-      },
-      {
-        name: 'Full - Cheesman Park - 2 Pets, 2 People',
-        id: '78816419',
-        config: 'Full-Cheesman Park-2-2',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419'
-      },
-      {
-        name: 'Full - City Park - 1 Pet, 1 Person',
-        id: '78816425',
-        config: 'Full-City Park-1-1',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425'
-      },
-      {
-        name: 'Full - City Park - 2 Pets, 1 Person',
-        id: '78816441',
-        config: 'Full-City Park-2-1',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441'
-      },
-      {
-        name: 'Full - City Park - 1 Pet, 2 People',
-        id: '78816431',
-        config: 'Full-City Park-1-2',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431'
-      },
-      {
-        name: 'Full - City Park - 2 Pets, 2 People',
-        id: '78802621',
-        config: 'Full-City Park-2-2',
-        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621'
-      }
+      { name: 'Full - Cheesman Park - 1,1', id: '78805498', config: 'Full-Cheesman Park-1-1', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498' },
+      { name: 'Full - Cheesman Park - 2,1', id: '78816444', config: 'Full-Cheesman Park-2-1', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444' },
+      { name: 'Full - Cheesman Park - 1,2', id: '78816428', config: 'Full-Cheesman Park-1-2', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428' },
+      { name: 'Full - Cheesman Park - 2,2', id: '78816419', config: 'Full-Cheesman Park-2-2', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419' },
+      { name: 'Full - City Park - 1,1', id: '78816425', config: 'Full-City Park-1-1', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425' },
+      { name: 'Full - City Park - 2,1', id: '78816441', config: 'Full-City Park-2-1', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441' },
+      { name: 'Full - City Park - 1,2', id: '78816431', config: 'Full-City Park-1-2', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431' },
+      { name: 'Full - City Park - 2,2', id: '78802621', config: 'Full-City Park-2-2', url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621' }
     ];
 
     let testResults = {};
@@ -401,18 +455,20 @@
             <div class="card-title">${appointment.name}</div>
             <div class="status-badge pending" id="status-${index}">Pending</div>
           </div>
-          <div class="card-details">
+          
+          <div class="appointment-details">
             <div>ID: <span class="appointment-id">${appointment.id}</span></div>
             <div>Config: <code>${appointment.config}</code></div>
           </div>
+          
           <div class="test-buttons">
             <button class="test-btn" onclick="testAppointment(${index})">🧪 Test Iframe</button>
             <button class="test-btn" onclick="openDirect(${index})">🔗 Open Direct</button>
           </div>
-          <div class="iframe-container" id="iframe-${index}">
-            <iframe></iframe>
+          
+          <div class="iframe-container">
+            <iframe id="iframe-${index}"></iframe>
           </div>
-          <div class="error-message" id="error-${index}"></div>
         </div>
       `;
     }
@@ -427,67 +483,52 @@
       const appointment = appointmentTypes[index];
       const card = document.getElementById(`card-${index}`);
       const status = document.getElementById(`status-${index}`);
-      const iframeContainer = document.getElementById(`iframe-${index}`);
-      const errorDiv = document.getElementById(`error-${index}`);
-      const iframe = iframeContainer.querySelector('iframe');
+      const iframe = document.getElementById(`iframe-${index}`);
       
-      console.log(`🧪 Testing appointment ${appointment.id}: ${appointment.name}`);
+      console.log(`🧪 Testing: ${appointment.name} (${appointment.id})`);
       
-      // Reset state
+      // Update UI to testing state
       card.className = 'test-card testing';
       status.className = 'status-badge testing';
       status.textContent = 'Testing...';
-      iframeContainer.classList.add('show');
-      errorDiv.classList.remove('show');
+      
+      // Load iframe
+      iframe.src = appointment.url;
+      iframe.width = "100%";
+      iframe.height = "250";
+      iframe.frameBorder = "0";
       
       let resolved = false;
       let startTime = Date.now();
-      
-      // Set up iframe
-      iframe.src = appointment.url;
       
       iframe.onload = function() {
         if (!resolved) {
           resolved = true;
           const loadTime = Date.now() - startTime;
           
-          // Give it a moment to see if it shows an error
           setTimeout(() => {
-            // Check iframe height as a proxy for content loading
-            try {
-              if (iframe.contentWindow) {
-                console.log(`✅ Appointment ${appointment.id} loaded successfully (${loadTime}ms)`);
-                updateTestResult(index, 'working', `Loaded (${loadTime}ms)`);
-              }
-            } catch (e) {
-              // CORS error is expected and means iframe loaded
-              console.log(`✅ Appointment ${appointment.id} loaded with CORS (${loadTime}ms)`);
-              updateTestResult(index, 'working', `Loaded (${loadTime}ms)`);
-            }
-          }, 2000);
+            console.log(`✅ ${appointment.name}: Loaded (${loadTime}ms)`);
+            updateTestResult(index, 'working', `Loaded (${loadTime}ms)`);
+          }, 1000);
         }
       };
       
       iframe.onerror = function() {
         if (!resolved) {
           resolved = true;
-          console.log(`❌ Appointment ${appointment.id} failed to load`);
-          updateTestResult(index, 'broken', 'Failed to load');
-          errorDiv.textContent = 'Iframe failed to load';
-          errorDiv.classList.add('show');
+          console.log(`❌ ${appointment.name}: Failed to load`);
+          updateTestResult(index, 'broken', 'Failed');
         }
       };
       
-      // Timeout after 10 seconds
+      // Timeout
       setTimeout(() => {
         if (!resolved) {
           resolved = true;
-          console.log(`⏱️ Appointment ${appointment.id} timed out`);
+          console.log(`⏱️ ${appointment.name}: Timeout`);
           updateTestResult(index, 'broken', 'Timeout');
-          errorDiv.textContent = 'Loading timed out (may indicate blocking or errors)';
-          errorDiv.classList.add('show');
         }
-      }, 10000);
+      }, 8000);
     }
 
     function updateTestResult(index, result, message) {
@@ -516,11 +557,12 @@
     }
 
     function testAllAppointments() {
-      console.log('🚀 Testing all appointment types...');
-      appointmentTypes.forEach((_, index) => {
+      console.log('🚀 Testing all 16 appointment types...');
+      
+      appointmentTypes.forEach((appointment, index) => {
         setTimeout(() => {
           testAppointment(index);
-        }, index * 1000); // Stagger tests by 1 second each
+        }, index * 500); // Stagger tests by 500ms each
       });
     }
 
@@ -532,8 +574,9 @@
         testGrid.innerHTML += createTestCard(appointment, index);
       });
       
-      console.log('✅ Acuity appointment type tester loaded');
-      console.log(`📊 Ready to test ${appointmentTypes.length} appointment types`);
+      console.log('✅ Complete appointment type tester loaded');
+      console.log('📊 Ready to test all 16 appointment types');
+      console.log('🔧 15 URLs need to be changed from buy.stripe.com to book.stripe.com');
     });
   </script>
 </body>
