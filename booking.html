@@ -664,7 +664,23 @@
           !sessionData.numberOfPets || !sessionData.numberOfPeople) {
         return null;
       }
-      return `${sessionData.sessionType}-${sessionData.location}-${sessionData.numberOfPets}-${sessionData.numberOfPeople}`;
+      
+      // Normalize the data to handle variations
+      const sessionType = String(sessionData.sessionType).trim();
+      let location = String(sessionData.location).trim();
+      const pets = parseInt(sessionData.numberOfPets);
+      const people = parseInt(sessionData.numberOfPeople);
+      
+      // Handle location variations
+      if (location.toLowerCase().includes('city') && location.toLowerCase().includes('park')) {
+        location = 'City Park';
+      } else if (location.toLowerCase().includes('cheesman') && location.toLowerCase().includes('park')) {
+        location = 'Cheesman Park';
+      }
+      
+      const key = `${sessionType}-${location}-${pets}-${people}`;
+      console.log(`🔧 Normalized session key: "${key}"`);
+      return key;
     }
 
     function showBlockerInstructions() {
@@ -745,8 +761,34 @@
       const sessionKey = getSessionKey(sessionData);
       acuityUrl = acuityIframeUrls[sessionKey];
       
+      // 🔍 DEBUG INFO
+      console.log('📊 Session data:', JSON.stringify(sessionData, null, 2));
+      console.log('🔑 Generated session key:', sessionKey);
+      console.log('🗂️ Available keys:', Object.keys(acuityIframeUrls));
+      console.log('🔗 Matched Acuity URL:', acuityUrl);
+      
+      // Show debug info in the page for troubleshooting
       if (!acuityUrl) {
+        const debugInfo = `
+          Session Data: ${JSON.stringify(sessionData, null, 2)}
+          Generated Key: "${sessionKey}"
+          Available Keys: ${Object.keys(acuityIframeUrls).join(', ')}
+        `;
+        
+        // Create debug panel
+        const debugPanel = document.createElement('div');
+        debugPanel.style.cssText = `
+          position: fixed; top: 100px; left: 20px; right: 20px; 
+          background: #000; color: #0f0; padding: 1rem; border-radius: 8px; 
+          font-family: monospace; font-size: 0.8rem; white-space: pre-wrap; 
+          z-index: 9999; max-height: 300px; overflow-y: auto;
+          border: 2px solid #ff8c00;
+        `;
+        debugPanel.textContent = `🔍 DEBUG INFO:\n${debugInfo}`;
+        document.body.appendChild(debugPanel);
+        
         console.error('❌ Invalid session configuration:', sessionKey);
+        console.error('Available configurations:', Object.keys(acuityIframeUrls));
         showError();
         return;
       }
