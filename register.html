@@ -10,17 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
-      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
-      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.08) 0%, rgba(138,43,226,0.08) 50%, rgba(255,140,0,0.08) 100%);
-      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
-      --pink: #ff1493;
-      --purple: #8a2be2;
-      --orange: #ff8c00;
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255,255,255,0.85);
-      --text-muted: rgba(255,255,255,0.65);
-      --gold: #FDB75E;
       --color-primary: #1a1a1a;
       --color-secondary: #2a2a2a;
       --color-text-light: #f0f0f0;
@@ -34,41 +23,27 @@
       --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
       --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
       --header-height-desktop: 64px;
+      --promo-banner-height-desktop: 40px;
       --header-height-mobile: 58px;
+      --promo-banner-height-mobile: 70px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }
-
-    html {
       scroll-behavior: smooth;
-      scrollbar-width: thin;
-      scrollbar-color: var(--pink) transparent;
-    }
-
-    html::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    html::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.1);
-    }
-
-    html::-webkit-scrollbar-thumb {
-      background: var(--gradient-primary);
-      border-radius: 3px;
     }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--gradient-secondary);
-      background-attachment: fixed;
-      color: var(--text-primary);
-      min-height: 100vh;
+      background-color: var(--color-primary);
+      color: var(--color-text-light);
+      line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
@@ -78,61 +53,8 @@
       color: inherit;
     }
 
-    /* Floating background elements */
-    .bg-orbs {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.3;
-      animation: float 20s infinite linear;
-    }
-
-    .orb:nth-child(1) {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
-      top: 10%;
-      left: 80%;
-      animation-delay: 0s;
-    }
-
-    .orb:nth-child(2) {
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
-      top: 60%;
-      left: 10%;
-      animation-delay: -7s;
-    }
-
-    .orb:nth-child(3) {
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
-      top: 30%;
-      left: 20%;
-      animation-delay: -14s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
-    }
-
-    /* Header */
     header {
-      position: fixed;
+      position: sticky;
       top: 0;
       left: 0;
       width: 100%;
@@ -153,7 +75,6 @@
       align-items: center;
       gap: 0.75rem;
       transition: opacity 0.3s ease;
-      text-decoration: none;
     }
 
     .logo-link:hover {
@@ -165,13 +86,10 @@
     }
 
     .logo-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 1.4rem;
       font-weight: 700;
-      color: var(--color-text-light);
       letter-spacing: -0.03em;
-      display: flex;
-      align-items: center;
+      color: var(--color-text-light);
     }
 
     .logo-text sup {
@@ -221,7 +139,7 @@
       background: var(--gradient-button);
       color: white;
       padding: 0.75rem 1.75rem;
-      border-radius: 30px;
+      border-radius: 50px;
       font-weight: 600;
       font-size: 0.95rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -310,97 +228,144 @@
       padding: 1rem 2.5rem;
     }
 
-    /* Main Content */
-    main {
-      margin-top: var(--header-height-desktop);
-      flex: 1;
-      padding: 4rem 1rem;
-    }
-
-    /* Register Section */
-    .register-section {
-      max-width: 1200px;
-      margin: 0 auto 4rem;
+    #promo-banner-section {
+      position: fixed;
+      top: var(--header-height-desktop);
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.05) 50%, rgba(255, 140, 0, 0.05) 100%);
       text-align: center;
+      padding: 1rem;
+      z-index: 999;
+      transition: top 0.3s ease;
+      margin: 0;
+      border-radius: 0;
+      opacity: 1;
+      transform: translateY(0);
+      height: var(--promo-banner-height-desktop);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .small-logo {
-      display: block;
-      max-width: 200px;
-      margin: 0 auto 1.5rem;
-      height: auto;
-      animation: zoomIn 0.8s ease-out;
+    #promo-banner-section .promo-banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    #promo-banner-section .promo-text,
+    #promo-banner-section .promo-text a {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: var(--gradient-button);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      overflow-wrap: break-word;
       transition: transform 0.3s ease;
+      display: inline-block;
     }
 
-    .small-logo:hover {
+    #promo-banner-section .promo-text:hover,
+    #promo-banner-section .promo-text a:hover {
       transform: scale(1.05);
     }
 
-    .register-box {
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    main {
+      margin-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop));
+      flex: 1;
+      padding: 4rem 1rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+
+    .register-container {
+      background: var(--color-secondary);
+      border-radius: 16px;
       padding: 3rem;
+      animation: fadeInUp 0.8s ease-out;
       transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease-out;
+      box-shadow: var(--shadow-light);
+      text-align: center;
     }
 
-    .register-box:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,255,255,0.25);
-      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+    .register-container:hover {
+      box-shadow: var(--shadow-medium);
     }
 
-    .register-content h1 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 2.8rem;
+    .page-header {
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-size: 3rem;
       font-weight: 800;
-      color: var(--text-primary);
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      background: var(--gradient-button);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       margin-bottom: 1rem;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
     }
 
-    .register-content p {
+    .page-subtitle {
       font-size: 1.2rem;
-      color: var(--text-secondary);
+      color: var(--color-text-muted);
+      font-weight: 500;
       line-height: 1.6;
-      margin-bottom: 2rem;
     }
 
-    /* Pop-Up Selection Cards */
     .popup-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
-      margin-top: 3rem;
+      margin-top: 2rem;
     }
 
     .popup-card {
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
       padding: 2rem;
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease-out;
-      text-align: center;
-      position: relative;
       cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .popup-card:hover {
-      transform: scale(1.05);
-      border-color: rgba(255,255,255,0.25);
-      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-light);
+      border-color: var(--color-accent-orange);
+    }
+
+    .popup-card.selected {
+      border-color: var(--color-accent-orange);
+      background: rgba(255, 140, 0, 0.05);
+      box-shadow: 0 8px 25px rgba(255, 140, 0, 0.2);
+    }
+
+    .popup-card.selected::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-button);
     }
 
     .popup-card.disabled {
       opacity: 0.5;
+      cursor: not-allowed;
       pointer-events: none;
     }
 
@@ -411,29 +376,36 @@
       left: 50%;
       transform: translate(-50%, -50%) rotate(-15deg);
       background: rgba(255, 255, 255, 0.2);
-      color: var(--text-primary);
+      color: var(--color-text-light);
       padding: 0.5rem 1rem;
       border-radius: 8px;
       font-weight: 600;
-      font-size: 1.2rem;
-      border: 1px solid rgba(255,255,255,0.3);
+      font-size: 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
     }
 
     .popup-card h3 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0;
-      transition: color 0.3s ease;
+      color: var(--color-text-light);
+      margin-bottom: 0.5rem;
     }
 
-    .popup-card:hover h3 {
-      color: #fff;
+    .popup-card .price {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-accent-orange);
+      margin-bottom: 0.5rem;
     }
 
-    /* Modal Styles */
-    .modal {
+    .popup-card .description {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    .modal-overlay {
       display: none;
       position: fixed;
       top: 0;
@@ -441,68 +413,100 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
-      z-index: 2000;
-      justify-content: center;
+      backdrop-filter: blur(20px);
+      z-index: 10000;
       align-items: center;
-      animation: fadeIn 0.4s ease-out;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+      opacity: 1;
     }
 
     .modal-content {
-      background: var(--gradient-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 30px;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+      background: var(--color-secondary);
+      border-radius: 20px;
       padding: 2.5rem;
       max-width: 500px;
       width: 90%;
       text-align: center;
-      animation: slideIn 0.4s ease-out;
-      transition: transform 0.3s ease;
+      animation: slideInUp 0.4s ease-out;
+      box-shadow: var(--shadow-strong);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .modal-content:hover {
-      transform: scale(1.02);
-    }
-
-    .modal-content h3 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--text-primary);
+    .modal-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: var(--gradient-button);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       margin-bottom: 1rem;
     }
 
-    .modal-content p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
+    .modal-price {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--color-accent-orange);
+      margin-bottom: 1rem;
+    }
+
+    .modal-description {
+      font-size: 1rem;
+      color: var(--color-text-muted);
       line-height: 1.6;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .register-btn {
-      background: var(--gradient-primary);
-      color: var(--text-primary);
-      padding: 0.8rem 2rem;
+      background: var(--gradient-button);
+      color: white;
+      padding: 1rem 2rem;
       border: none;
-      border-radius: 30px;
-      font-weight: 700;
+      border-radius: 50px;
+      font-weight: 600;
       font-size: 1rem;
-      text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+      text-decoration: none;
       display: inline-block;
+      box-shadow: var(--shadow-light);
     }
 
     .register-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(255,20,147,0.5);
-      background: linear-gradient(135deg, #ff4da6 0%, #9b59b6 50%, #ffbf00 100%);
+      box-shadow: var(--shadow-medium);
     }
 
-    /* Footer */
+    .close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--color-text-light);
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
     footer {
       background-color: var(--color-primary);
       color: var(--color-text-muted);
@@ -512,12 +516,11 @@
     }
 
     .footer-container {
+      max-width: 1000px;
+      margin: 0 auto 1.5rem;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
       text-align: left;
     }
 
@@ -528,7 +531,6 @@
     }
 
     .footer-section h4 {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
       font-size: 1.1rem;
       font-weight: 600;
       color: var(--color-text-light);
@@ -557,9 +559,6 @@
       justify-items: center;
       align-items: center;
       margin-top: 1rem;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
@@ -607,34 +606,16 @@
       color: var(--color-accent-orange);
     }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideIn {
-      from { transform: translateY(-30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Responsive */
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 1024px) {
       header {
         padding: 1rem 1.5rem;
@@ -642,12 +623,39 @@
       .site-nav {
         gap: 1.5rem;
       }
+      .register-container {
+        padding: 2.5rem;
+      }
+      .page-title {
+        font-size: 2.5rem;
+      }
     }
 
     @media (max-width: 768px) {
+      #promo-banner-section {
+        font-size: 0.85rem;
+        padding: 0.8rem 0.8rem;
+        top: var(--header-height-mobile);
+        height: var(--promo-banner-height-mobile);
+      }
+
+      #promo-banner-section .promo-banner-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.4;
+      }
+
+      #promo-banner-section .promo-text,
+      #promo-banner-section .promo-text a {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+
       header {
         height: var(--header-height-mobile);
-        padding: 0.8rem 1.5rem;
+        padding: 0.5rem 1rem;
       }
 
       .desktop-logo {
@@ -659,7 +667,7 @@
       }
 
       .logo-text sup {
-        font-size: 0.5em;
+        font-size: 0.6rem;
       }
 
       .site-nav {
@@ -671,136 +679,98 @@
       }
 
       main {
-        margin-top: var(--header-height-mobile);
+        margin-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile));
         padding: 2rem 1rem;
       }
 
-      .register-box {
+      .register-container {
         padding: 2rem;
       }
 
-      .small-logo {
-        max-width: 150px;
-        margin-bottom: 1rem;
-      }
-
-      .register-content h1 {
-        font-size: 2.5rem;
-      }
-
-      .register-content p {
-        font-size: 1.1rem;
+      .page-title {
+        font-size: 2.2rem;
       }
 
       .popup-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-        margin-top: 2rem;
       }
 
       .popup-card {
         padding: 1.5rem;
       }
 
-      .popup-card h3 {
-        font-size: 1.6rem;
-      }
-
       .modal-content {
-        padding: 1.5rem;
+        padding: 2rem;
       }
 
-      .modal-content h3 {
-        font-size: 1.8rem;
-      }
-
-      .modal-content p {
-        font-size: 1rem;
-      }
-
-      .register-btn {
-        padding: 0.6rem 1.5rem;
+      .modal-buttons {
+        flex-direction: column;
+        align-items: center;
       }
 
       .footer-container {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 1.5rem;
       }
 
       .footer-section {
         align-items: center;
       }
 
-      .footer-section h4 {
-        font-size: 1rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .footer-section a {
-        font-size: 0.85rem;
-        margin-bottom: 0.3rem;
-      }
-
       .payment-methods {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(2, auto);
         gap: 0.5rem;
-        max-width: 300px;
-        margin-left: auto;
-        margin-right: auto;
+        justify-items: center;
+        align-items: center;
       }
 
       .payment-icon {
         width: 35px;
         height: 22px;
       }
-
-      footer {
-        padding: 1.5rem 1rem;
-      }
-
-      .footer-bottom {
-        padding-top: 1rem;
-        font-size: 0.75rem;
-      }
     }
 
     @media (max-width: 480px) {
-      header {
-        padding: 0.5rem 0.8rem;
+      #promo-banner-section {
+        padding: 0.6rem 0.5rem;
+      }
+
+      #promo-banner-section .promo-text,
+      #promo-banner-section .promo-text a {
+        font-size: 0.7rem;
+        line-height: 1.3;
       }
 
       main {
-        margin-top: var(--header-height-mobile);
+        padding: 1.5rem 0.5rem;
       }
 
-      .register-content h1 {
-        font-size: 2rem;
+      .register-container {
+        padding: 1.5rem;
+        border-radius: 12px;
       }
 
-      .popup-card h3 {
-        font-size: 1.4rem;
+      .page-title {
+        font-size: 1.8rem;
       }
 
-      .modal-content h3 {
-        font-size: 1.6rem;
+      .popup-card {
+        padding: 1.2rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Background Orbs -->
-  <div class="bg-orbs">
-    <div class="orb"></div>
-    <div class="orb"></div>
-    <div class="orb"></div>
-  </div>
-
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
+      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
       <span class="logo-text">PictureThisPet<sup>®</sup></span>
     </a>
     <nav class="site-nav">
@@ -813,6 +783,14 @@
     </nav>
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
+
+  <div id="promo-banner-section">
+    <div class="promo-banner-content">
+      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
+      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
+      <span class="promo-text"><a href="/pricing">View Pricing ✨</a></span>
+    </div>
+  </div>
 
   <div class="mobile-nav-overlay">
     <button class="close-btn" aria-label="Close mobile menu">×</button>
@@ -827,39 +805,43 @@
   </div>
 
   <main>
-    <!-- Register Section -->
-    <section class="register-section">
-      <img src="/assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="small-logo" />
-      <div class="register-box">
-        <div class="register-content">
-          <h1>🎉 Great, let's get you paid and in the queue!</h1>
-          <p>Select your pop-up event to proceed to payment.</p>
-          <div class="popup-grid">
-            <!-- Cheesman Park Pop-Up -->
-            <div class="popup-card" onclick="showModal('cheesman')">
-              <h3>Cheesman Park Pop-Up 📸</h3>
-            </div>
-            <!-- City Park Pop-Up -->
-            <div class="popup-card" onclick="showModal('city')">
-              <h3>City Park Pop-Up 📸</h3>
-            </div>
-            <!-- Other Pop-Up (Placeholder) -->
-            <div class="popup-card disabled">
-              <h3>Other Pop-Up 📸</h3>
-            </div>
-          </div>
+    <div class="register-container">
+      <div class="page-header">
+        <h1 class="page-title">🎉 Join Our Pop-Up Events!</h1>
+        <p class="page-subtitle">Select your preferred pop-up event to register and proceed to payment</p>
+      </div>
+
+      <div class="popup-grid">
+        <div class="popup-card" onclick="showModal('cheesman')">
+          <h3>🌳 Cheesman Park Pop-Up</h3>
+          <div class="price">$30</div>
+          <div class="description">3 professionally edited photos + online gallery access</div>
+        </div>
+
+        <div class="popup-card" onclick="showModal('city')">
+          <h3>🏞️ City Park Pop-Up</h3>
+          <div class="price">$30</div>
+          <div class="description">3 professionally edited photos + online gallery access</div>
+        </div>
+
+        <div class="popup-card disabled">
+          <h3>📸 Additional Locations</h3>
+          <div class="price">$30</div>
+          <div class="description">More exciting locations coming soon!</div>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 
-  <!-- Modal -->
-  <div id="popupModal" class="modal">
+  <div id="popupModal" class="modal-overlay">
     <div class="modal-content">
-      <h3 id="modalTitle"></h3>
-      <p id="modalPrice"></p>
-      <p id="modalDetails"></p>
-      <a id="registerButton" href="#" class="register-btn">Register</a>
+      <h3 id="modalTitle" class="modal-title"></h3>
+      <div id="modalPrice" class="modal-price"></div>
+      <p id="modalDescription" class="modal-description"></p>
+      <div class="modal-buttons">
+        <a id="registerButton" href="#" class="register-btn">Register Now</a>
+        <button class="close-btn" onclick="closeModal()">Cancel</button>
+      </div>
     </div>
   </div>
 
@@ -868,7 +850,7 @@
       <div class="footer-section">
         <h4>Contact Us</h4>
         <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+        <a href="https://picturethispet.co" target="_blank" rel="noopener noreferrer" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -878,90 +860,86 @@
       <div class="footer-section">
         <h4>We Accept</h4>
         <div class="payment-methods">
-          <img src="/assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="/assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="/assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
-          <img src="/assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="/assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="/assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="/assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="/assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="/assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="/assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="/assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="/assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="/assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <img src="/assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
+          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
+          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
+          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
+          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
+          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
+          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
+          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
+          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
+          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
+          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
+          <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 01:05 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:30 AM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
-    const popupLinks = {
-      cheesman: "/popupagreementcheesman.html",
-      city: "https://checkout.stripe.com/pay/your-city-checkout-session-link"
-    };
-
     const popupDetails = {
       cheesman: {
-        title: "Cheesman Park Pop-Up 📸",
-        price: "💰 $30",
-        details: "Includes three photos and access to online gallery."
+        title: "🌳 Cheesman Park Pop-Up",
+        price: "$30",
+        description: "Join us at beautiful Cheesman Park for a fun pet photography session. Includes 3 professionally edited photos and access to your online gallery.",
+        link: "/popupagreementcheesman.html"
       },
       city: {
-        title: "City Park Pop-Up 📸",
-        price: "💰 $30",
-        details: "Includes three photos and access to online gallery."
+        title: "🏞️ City Park Pop-Up", 
+        price: "$30",
+        description: "Capture amazing photos at the scenic City Park. Includes 3 professionally edited photos and access to your online gallery.",
+        link: "https://checkout.stripe.com/pay/your-city-checkout-session-link"
       }
     };
 
-    function toggleMenu() {
-      const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
-      mobileNavOverlay.classList.toggle('open');
-      document.body.style.overflow = mobileNavOverlay.classList.contains('open') ? 'hidden' : '';
+    function showModal(popupType) {
+      const modal = document.getElementById('popupModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalPrice = document.getElementById('modalPrice');
+      const modalDescription = document.getElementById('modalDescription');
+      const registerButton = document.getElementById('registerButton');
+
+      const popup = popupDetails[popupType];
       
-      const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
-      closeBtn.addEventListener('click', () => {
-        mobileNavOverlay.classList.remove('open');
-        document.body.style.overflow = '';
-      });
+      modalTitle.textContent = popup.title;
+      modalPrice.textContent = popup.price;
+      modalDescription.textContent = popup.description;
+      registerButton.href = popup.link;
 
-      mobileNavOverlay.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileNavOverlay.classList.remove('open');
-          document.body.style.overflow = '';
-        });
-      });
-    }
-
-    function showModal(popup) {
-      const modal = document.getElementById("popupModal");
-      const modalTitle = document.getElementById("modalTitle");
-      const modalPrice = document.getElementById("modalPrice");
-      const modalDetails = document.getElementById("modalDetails");
-      const registerButton = document.getElementById("registerButton");
-
-      modalTitle.textContent = popupDetails[popup].title;
-      modalPrice.textContent = popupDetails[popup].price;
-      modalDetails.textContent = popupDetails[popup].details;
-      registerButton.href = popupLinks[popup];
-
-      modal.style.display = "flex";
+      modal.classList.add('show');
 
       // Close modal when clicking outside
       modal.addEventListener('click', function(e) {
         if (e.target === modal) {
-          modal.style.display = "none";
+          closeModal();
         }
       });
     }
 
+    function closeModal() {
+      const modal = document.getElementById('popupModal');
+      modal.classList.remove('show');
+    }
+
+    function toggleMenu() {
+      const overlay = document.querySelector('.mobile-nav-overlay');
+      overlay.classList.toggle('open');
+      document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
+    }
+
+    // Close mobile menu when clicking close button
+    document.querySelector('.mobile-nav-overlay .close-btn').addEventListener('click', () => {
+      toggleMenu();
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Register page loaded with Refresh 3.0 UI');
+      console.log('✅ Pop-Up Registration page loaded - Fixed UI version');
     });
   </script>
 </body>
