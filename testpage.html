@@ -2,776 +2,538 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Booking Confirmation | Picture This Pet</title>
-  <meta name="description" content="Schedule your pet photography session with Picture This Pet.">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acuity Appointment Type Tester | Picture This Pet</title>
   <style>
-    :root {
-      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
-      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
-      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.08) 0%, rgba(138,43,226,0.08) 50%, rgba(255,140,0,0.08) 100%);
-      --pink: #ff1493;
-      --purple: #8a2be2;
-      --orange: #ff8c00;
-      --available-green: #10b981;
-      --booked-red: #ef4444;
-      --color-primary: #1a1a1a;
-      --color-secondary: #2a2a2a;
-      --color-text-light: #f0f0f0;
-      --color-text-muted: #b0b0b0;
-      --color-accent-pink: #ff1493;
-      --color-accent-purple: #8a2be2;
-      --color-accent-orange: #ff8c00;
-      --gradient-button: linear-gradient(45deg, var(--color-accent-pink), var(--color-accent-purple), var(--color-accent-orange));
-      --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
-      --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
-      --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
-      --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
-      --header-height-desktop: 64px;
-      --header-height-mobile: 58px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      color: #ffffff;
-      background: var(--gradient-secondary);
-      background-attachment: fixed;
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 1rem 2.5rem;
-      background: rgba(26, 26, 26, 0.9);
-      backdrop-filter: blur(15px);
-      border-bottom: var(--border-subtle);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: background 0.3s ease;
-      height: var(--header-height-desktop);
-    }
-
-    .logo-link {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      transition: opacity 0.3s ease;
-      text-decoration: none;
-    }
-
-    .logo-link:hover {
-      opacity: 0.7;
-    }
-
-    .desktop-logo {
-      height: 38px;
-    }
-
-    .logo-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--color-text-light);
-      letter-spacing: -0.03em;
-      display: flex;
-      align-items: center;
-    }
-
-    .logo-text sup {
-      font-size: 0.6em;
-      vertical-align: super;
-      margin-left: 2px;
-      color: var(--color-accent-orange);
-    }
-
-    .site-nav {
-      display: flex;
-      gap: 2.5rem;
-      align-items: center;
-    }
-
-    .site-nav a {
-      color: var(--color-text-muted);
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    .site-nav a:hover {
-      color: var(--color-text-light);
-    }
-
-    .book-btn {
-      background: var(--gradient-button);
-      color: white;
-      padding: 0.75rem 1.75rem;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: var(--shadow-light);
-      white-space: nowrap;
-    }
-
-    .book-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-medium);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--color-text-light);
-      font-size: 2rem;
-      cursor: pointer;
-    }
-
-    /* Main Content */
-    main {
-      margin-top: var(--header-height-desktop);
-      flex: 1;
-      background: #2a2a2a;
-      min-height: calc(100vh - var(--header-height-desktop));
-      padding: 0;
-      overflow: visible;
-    }
-
-    .iframe-container {
-      width: 100%;
-      background: #2a2a2a;
-      min-height: calc(100vh - var(--header-height-desktop));
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .acuity-iframe {
-      width: 100%;
-      min-height: calc(100vh - var(--header-height-desktop));
-      height: auto;
-      border: none;
-      background: #2a2a2a;
-      flex: 1;
-    }
-
-    /* Content Blocker Warning */
-    .content-blocker-warning {
-      display: none;
-      background: var(--color-secondary);
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #1a1a1a;
+      color: #f0f0f0;
       padding: 2rem;
-      margin: 2rem;
-      border-radius: 16px;
-      border: 2px solid var(--orange);
-      text-align: center;
-      box-shadow: var(--shadow-medium);
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      animation: slideIn 0.5s ease-out;
-    }
-
-    .warning-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .warning-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--orange);
-      margin-bottom: 1rem;
-    }
-
-    .warning-message {
-      font-size: 1.1rem;
-      color: var(--color-text-light);
       line-height: 1.6;
-      margin-bottom: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-
-    .solution-options {
+    
+    .title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+      background: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .test-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 2rem;
-      margin-bottom: 2rem;
+      margin-bottom: 3rem;
     }
-
-    .solution-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    .test-card {
+      background: #2a2a2a;
       border-radius: 12px;
       padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.3s ease;
     }
-
-    .solution-card:hover {
+    
+    .test-card:hover {
       transform: translateY(-4px);
-      box-shadow: var(--shadow-light);
-      border-color: var(--orange);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
     }
-
-    .solution-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--orange);
-      margin-bottom: 1rem;
+    
+    .test-card.working {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.05);
+    }
+    
+    .test-card.broken {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+    }
+    
+    .test-card.testing {
+      border-color: #ff8c00;
+      background: rgba(255, 140, 0, 0.05);
+    }
+    
+    .card-header {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
     }
-
-    .solution-description {
-      color: var(--color-text-muted);
-      margin-bottom: 1.5rem;
-      font-size: 0.95rem;
-      line-height: 1.5;
+    
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ff8c00;
     }
-
-    .solution-btn {
-      background: var(--gradient-button);
+    
+    .status-badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .status-badge.working {
+      background: #10b981;
       color: white;
-      padding: 0.8rem 1.5rem;
+    }
+    
+    .status-badge.broken {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .status-badge.testing {
+      background: #ff8c00;
+      color: white;
+    }
+    
+    .status-badge.pending {
+      background: rgba(255, 255, 255, 0.2);
+      color: #b0b0b0;
+    }
+    
+    .card-details {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #b0b0b0;
+    }
+    
+    .appointment-id {
+      font-family: 'Courier New', monospace;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      color: #ff1493;
+    }
+    
+    .test-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .test-btn {
+      background: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      color: white;
+      padding: 0.5rem 1rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 0.95rem;
-      width: 100%;
-      text-align: center;
+      flex: 1;
     }
-
-    .solution-btn:hover {
+    
+    .test-btn:hover {
       transform: translateY(-2px);
-      box-shadow: var(--shadow-light);
     }
-
-    .blocker-instructions {
-      background: rgba(255, 140, 0, 0.1);
-      border: 1px solid var(--orange);
+    
+    .test-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .iframe-container {
+      background: #fff;
       border-radius: 8px;
-      padding: 1rem;
+      overflow: hidden;
+      height: 200px;
+      position: relative;
       margin-top: 1rem;
       display: none;
     }
-
-    .blocker-instructions.show {
+    
+    .iframe-container.show {
       display: block;
-      animation: slideDown 0.3s ease-out;
     }
-
-    .blocker-list {
-      list-style: none;
-      padding: 0;
-      text-align: left;
+    
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
-
-    .blocker-list li {
-      margin: 0.5rem 0;
-      padding: 0.5rem;
-      background: rgba(255, 255, 255, 0.05);
+    
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid #ef4444;
       border-radius: 6px;
+      padding: 0.8rem;
+      margin-top: 1rem;
+      color: #ef4444;
+      font-size: 0.9rem;
+      display: none;
+    }
+    
+    .error-message.show {
+      display: block;
+    }
+    
+    .summary {
+      background: #2a2a2a;
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+    
+    .summary-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ff8c00;
+      margin-bottom: 1rem;
+    }
+    
+    .summary-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-number.working {
+      color: #10b981;
+    }
+    
+    .stat-number.broken {
+      color: #ef4444;
+    }
+    
+    .stat-number.pending {
+      color: #b0b0b0;
+    }
+    
+    .stat-label {
+      color: #b0b0b0;
       font-size: 0.9rem;
     }
-
-    .blocker-name {
-      font-weight: 600;
-      color: var(--orange);
-    }
-
-    /* Loading States */
-    .loading-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: calc(100vh - var(--header-height-desktop));
-      background: #2a2a2a;
-      color: #ffffff;
-    }
-
-    .loading-content {
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .loading-message {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 1rem;
-      background: var(--gradient-orange-pink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .error-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: calc(100vh - var(--header-height-desktop));
-      background: #2a2a2a;
-      padding: 2rem;
-    }
-
-    .error-content {
-      text-align: center;
-      max-width: 500px;
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid var(--booked-red);
-      border-radius: 20px;
-      padding: 2rem;
-      backdrop-filter: blur(10px);
-    }
-
-    .error-message-text {
-      font-size: 1.2rem;
-      color: #ffffff;
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-    }
-
-    .redirect-button {
-      background: var(--gradient-primary);
-      color: var(--color-text-light);
+    
+    .test-all-btn {
+      background: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      color: white;
       padding: 1rem 2rem;
       border: none;
-      border-radius: 30px;
-      font-size: 1rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+      margin-bottom: 2rem;
+      width: 100%;
     }
-
-    .redirect-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(255,20,147,0.5);
+    
+    .test-all-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 20, 147, 0.3);
     }
-
-    /* Animations */
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideDown {
-      from { opacity: 0; height: 0; }
-      to { opacity: 1; height: auto; }
-    }
-
-    /* Responsive */
+    
     @media (max-width: 768px) {
-      header {
-        height: var(--header-height-mobile);
-        padding: 0.8rem 1.5rem;
-      }
-
-      .site-nav {
-        display: none;
-      }
-
-      .mobile-menu-btn {
-        display: block;
-      }
-
-      main {
-        margin-top: var(--header-height-mobile);
-      }
-
-      .solution-options {
+      .test-grid {
         grid-template-columns: 1fr;
       }
-
-      .content-blocker-warning {
-        margin: 1rem;
-        padding: 1.5rem;
+      
+      .summary-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
       }
-    }
-
-    /* Hidden elements for ad blocker detection */
-    .ad-banner,
-    .advertisement,
-    .google-ads,
-    .adsystem {
-      position: absolute;
-      left: -9999px;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
     }
   </style>
 </head>
 <body>
-  <header>
-    <a href="/" class="logo-link" aria-label="PictureThisPet Home">
-      <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
-      <span class="logo-text">PictureThisPet<sup>®</sup></span>
-    </a>
-    <nav class="site-nav">
-      <a href="/" aria-label="Home page">Home</a>
-      <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations.html" aria-label="Locations page">Locations</a>
-      <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
-    </nav>
-    <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
-  </header>
-
-  <main>
-    <!-- Loading State -->
-    <div id="loadingContainer" class="loading-container">
-      <div class="loading-content">
-        <div class="loading-message">Loading your booking...</div>
-        <p style="color: #b0b0b0;">Please wait while we prepare your session details.</p>
+  <h1 class="title">🧪 Acuity Appointment Type Tester</h1>
+  
+  <button class="test-all-btn" onclick="testAllAppointments()">
+    🚀 Test All Appointment Types
+  </button>
+  
+  <div class="test-grid" id="testGrid"></div>
+  
+  <div class="summary">
+    <div class="summary-title">📊 Test Results Summary</div>
+    <div class="summary-stats">
+      <div class="stat">
+        <div class="stat-number working" id="workingCount">0</div>
+        <div class="stat-label">Working</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number broken" id="brokenCount">0</div>
+        <div class="stat-label">Broken</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number pending" id="pendingCount">16</div>
+        <div class="stat-label">Pending</div>
       </div>
     </div>
-    
-    <!-- Content Blocker Warning -->
-    <div id="contentBlockerWarning" class="content-blocker-warning">
-      <div class="warning-icon">🛡️</div>
-      <h2 class="warning-title">Ad Blocker Detected</h2>
-      <p class="warning-message">
-        We've detected that you have an ad blocker or content blocker enabled. This is preventing our booking calendar from loading properly. Please choose one of the options below:
-      </p>
-      
-      <div class="solution-options">
-        <div class="solution-card">
-          <div class="solution-title">
-            🔧 Option 1: Disable Ad Blocker
-          </div>
-          <div class="solution-description">
-            Temporarily disable your ad blocker for this site to use our embedded booking calendar.
-          </div>
-          <button class="solution-btn" onclick="showBlockerInstructions()">
-            Show Instructions
-          </button>
-        </div>
-        
-        <div class="solution-card">
-          <div class="solution-title">
-            🚀 Option 2: Direct Booking
-          </div>
-          <div class="solution-description">
-            Go directly to our booking calendar in a new tab (recommended for ad blocker users).
-          </div>
-          <button class="solution-btn" onclick="redirectToAcuity()" id="directBookingBtn">
-            Book Directly
-          </button>
-        </div>
-      </div>
-      
-      <div id="blockerInstructions" class="blocker-instructions">
-        <h3 style="color: var(--orange); margin-bottom: 1rem;">How to Disable Ad Blockers:</h3>
-        <ul class="blocker-list">
-          <li><span class="blocker-name">uBlock Origin:</span> Click the uBlock icon → Click the power button → Refresh page</li>
-          <li><span class="blocker-name">AdBlock Plus:</span> Click the ABP icon → "Enabled on this site" toggle → Refresh page</li>
-          <li><span class="blocker-name">Adblock:</span> Click the Adblock icon → "Don't run on this domain" → Refresh page</li>
-          <li><span class="blocker-name">Brave Browser:</span> Click the shield icon → Turn off "Block ads and trackers"</li>
-          <li><span class="blocker-name">Safari:</span> Safari menu → Settings → Extensions → Disable ad blockers</li>
-        </ul>
-        <p style="margin-top: 1rem; color: var(--color-text-muted); font-size: 0.9rem;">
-          After disabling, refresh this page and the booking calendar will load normally.
-        </p>
-      </div>
-    </div>
-    
-    <!-- Error State -->
-    <div id="errorContainer" class="error-container" style="display: none;">
-      <div class="error-content">
-        <div class="error-message-text">We couldn't find your session details. This usually happens if you navigated directly to this page.</div>
-        <a href="/cart.html" class="redirect-button">Return to Session Builder</a>
-      </div>
-    </div>
-    
-    <!-- Success State - Iframe -->
-    <div id="iframeContainer" class="iframe-container" style="display: none;">
-      <iframe id="acuityIframe" class="acuity-iframe"></iframe>
-    </div>
-  </main>
-
-  <!-- Hidden elements to detect ad blockers -->
-  <div class="ad-banner" id="adBanner">Advertisement</div>
-  <div class="advertisement" id="advertisement">Ad Content</div>
-  <div class="google-ads" id="googleAds">Google Ads</div>
+  </div>
 
   <script>
-    let contentBlockerDetected = false;
-    let sessionData = null;
-    let acuityUrl = null;
+    const appointmentTypes = [
+      // Mini Sessions
+      {
+        name: 'Mini - Cheesman Park - 1 Pet, 1 Person',
+        id: '78805731',
+        config: 'Mini-Cheesman Park-1-1',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731'
+      },
+      {
+        name: 'Mini - Cheesman Park - 2 Pets, 1 Person',
+        id: '78805719',
+        config: 'Mini-Cheesman Park-2-1',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805719'
+      },
+      {
+        name: 'Mini - Cheesman Park - 1 Pet, 2 People',
+        id: '78805725',
+        config: 'Mini-Cheesman Park-1-2',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805725'
+      },
+      {
+        name: 'Mini - Cheesman Park - 2 Pets, 2 People',
+        id: '78805734',
+        config: 'Mini-Cheesman Park-2-2',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805734'
+      },
+      {
+        name: 'Mini - City Park - 1 Pet, 1 Person',
+        id: '78805722',
+        config: 'Mini-City Park-1-1',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805722'
+      },
+      {
+        name: 'Mini - City Park - 2 Pets, 1 Person',
+        id: '78805716',
+        config: 'Mini-City Park-2-1',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805716'
+      },
+      {
+        name: 'Mini - City Park - 1 Pet, 2 People',
+        id: '78805728',
+        config: 'Mini-City Park-1-2',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805728'
+      },
+      {
+        name: 'Mini - City Park - 2 Pets, 2 People',
+        id: '78805713',
+        config: 'Mini-City Park-2-2',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805713'
+      },
+      
+      // Full Sessions
+      {
+        name: 'Full - Cheesman Park - 1 Pet, 1 Person',
+        id: '78805498',
+        config: 'Full-Cheesman Park-1-1',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498'
+      },
+      {
+        name: 'Full - Cheesman Park - 2 Pets, 1 Person',
+        id: '78816444',
+        config: 'Full-Cheesman Park-2-1',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444'
+      },
+      {
+        name: 'Full - Cheesman Park - 1 Pet, 2 People',
+        id: '78816428',
+        config: 'Full-Cheesman Park-1-2',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428'
+      },
+      {
+        name: 'Full - Cheesman Park - 2 Pets, 2 People',
+        id: '78816419',
+        config: 'Full-Cheesman Park-2-2',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419'
+      },
+      {
+        name: 'Full - City Park - 1 Pet, 1 Person',
+        id: '78816425',
+        config: 'Full-City Park-1-1',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425'
+      },
+      {
+        name: 'Full - City Park - 2 Pets, 1 Person',
+        id: '78816441',
+        config: 'Full-City Park-2-1',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441'
+      },
+      {
+        name: 'Full - City Park - 1 Pet, 2 People',
+        id: '78816431',
+        config: 'Full-City Park-1-2',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431'
+      },
+      {
+        name: 'Full - City Park - 2 Pets, 2 People',
+        id: '78802621',
+        config: 'Full-City Park-2-2',
+        url: 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621'
+      }
+    ];
 
-    // Acuity URL mapping
-    const acuityIframeUrls = {
-      'Full-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498',
-      'Full-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444',
-      'Full-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428',
-      'Full-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419',
-      'Full-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425',
-      'Full-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441',
-      'Full-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431',
-      'Full-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621',
-      'Mini-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731',
-      'Mini-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805719',
-      'Mini-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805725',
-      'Mini-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805734',
-      'Mini-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805722',
-      'Mini-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805716',
-      'Mini-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805728',
-      'Mini-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805713'
-    };
+    let testResults = {};
+    let workingCount = 0;
+    let brokenCount = 0;
+    let pendingCount = 16;
 
-    // Content blocker detection methods
-    function detectContentBlocker() {
-      return new Promise((resolve) => {
-        let detectionMethods = [];
-        
-        // Method 1: Check if ad-like elements are hidden/removed
-        const adElements = document.querySelectorAll('.ad-banner, .advertisement, .google-ads');
-        adElements.forEach(el => {
-          if (el.offsetHeight === 0 || el.offsetWidth === 0 || 
-              window.getComputedStyle(el).display === 'none' ||
-              window.getComputedStyle(el).visibility === 'hidden') {
-            detectionMethods.push('Element hidden');
-          }
-        });
-        
-        // Method 2: Try to load a commonly blocked script
-        const testScript = document.createElement('script');
-        testScript.src = 'https://www.googletagmanager.com/gtag/js?id=test';
-        testScript.onerror = () => {
-          detectionMethods.push('Script blocked');
-        };
-        document.head.appendChild(testScript);
-        
-        // Method 3: Test fetch to analytics domain
-        fetch('https://www.google-analytics.com/collect', { method: 'HEAD', mode: 'no-cors' })
-          .catch(() => {
-            detectionMethods.push('Fetch blocked');
-          });
-        
-        // Method 4: Check for specific ad blocker variables
-        if (typeof window.uBlock !== 'undefined' ||
-            typeof window.adblock !== 'undefined' ||
-            typeof window.AdBlocker !== 'undefined') {
-          detectionMethods.push('Blocker detected');
-        }
-        
-        // Method 5: Try to create elements that look like ads
-        const testDiv = document.createElement('div');
-        testDiv.innerHTML = '&nbsp;';
-        testDiv.className = 'adsbox';
-        document.body.appendChild(testDiv);
-        
-        setTimeout(() => {
-          if (testDiv.offsetHeight === 0) {
-            detectionMethods.push('Ad element blocked');
-          }
-          document.body.removeChild(testDiv);
-          
-          // If any detection method triggered, content blocker is likely present
-          const hasContentBlocker = detectionMethods.length > 0;
-          console.log('🔍 Content blocker detection:', hasContentBlocker ? 'DETECTED' : 'NOT DETECTED');
-          console.log('📊 Detection methods triggered:', detectionMethods);
-          
-          resolve(hasContentBlocker);
-        }, 100);
-      });
+    function createTestCard(appointment, index) {
+      return `
+        <div class="test-card" id="card-${index}">
+          <div class="card-header">
+            <div class="card-title">${appointment.name}</div>
+            <div class="status-badge pending" id="status-${index}">Pending</div>
+          </div>
+          <div class="card-details">
+            <div>ID: <span class="appointment-id">${appointment.id}</span></div>
+            <div>Config: <code>${appointment.config}</code></div>
+          </div>
+          <div class="test-buttons">
+            <button class="test-btn" onclick="testAppointment(${index})">🧪 Test Iframe</button>
+            <button class="test-btn" onclick="openDirect(${index})">🔗 Open Direct</button>
+          </div>
+          <div class="iframe-container" id="iframe-${index}">
+            <iframe></iframe>
+          </div>
+          <div class="error-message" id="error-${index}"></div>
+        </div>
+      `;
     }
 
-    // Test if iframe can load Acuity successfully
-    function testIframeLoading(url) {
-      return new Promise((resolve) => {
-        const testIframe = document.createElement('iframe');
-        testIframe.style.position = 'absolute';
-        testIframe.style.left = '-9999px';
-        testIframe.style.width = '1px';
-        testIframe.style.height = '1px';
-        testIframe.src = url;
-        
-        let resolved = false;
-        
-        testIframe.onload = () => {
-          if (!resolved) {
-            resolved = true;
-            document.body.removeChild(testIframe);
-            
-            // Additional check: try to detect if iframe content is an error page
-            setTimeout(() => {
-              try {
-                // This will fail due to CORS, but that's expected for a working iframe
-                testIframe.contentDocument;
-                resolve(true); // If we get here, iframe loaded but CORS blocked (normal)
-              } catch (e) {
-                resolve(true); // CORS error means iframe loaded successfully
+    function updateCounts() {
+      document.getElementById('workingCount').textContent = workingCount;
+      document.getElementById('brokenCount').textContent = brokenCount;
+      document.getElementById('pendingCount').textContent = pendingCount;
+    }
+
+    function testAppointment(index) {
+      const appointment = appointmentTypes[index];
+      const card = document.getElementById(`card-${index}`);
+      const status = document.getElementById(`status-${index}`);
+      const iframeContainer = document.getElementById(`iframe-${index}`);
+      const errorDiv = document.getElementById(`error-${index}`);
+      const iframe = iframeContainer.querySelector('iframe');
+      
+      console.log(`🧪 Testing appointment ${appointment.id}: ${appointment.name}`);
+      
+      // Reset state
+      card.className = 'test-card testing';
+      status.className = 'status-badge testing';
+      status.textContent = 'Testing...';
+      iframeContainer.classList.add('show');
+      errorDiv.classList.remove('show');
+      
+      let resolved = false;
+      let startTime = Date.now();
+      
+      // Set up iframe
+      iframe.src = appointment.url;
+      
+      iframe.onload = function() {
+        if (!resolved) {
+          resolved = true;
+          const loadTime = Date.now() - startTime;
+          
+          // Give it a moment to see if it shows an error
+          setTimeout(() => {
+            // Check iframe height as a proxy for content loading
+            try {
+              if (iframe.contentWindow) {
+                console.log(`✅ Appointment ${appointment.id} loaded successfully (${loadTime}ms)`);
+                updateTestResult(index, 'working', `Loaded (${loadTime}ms)`);
               }
-            }, 2000);
-          }
-        };
-        
-        testIframe.onerror = () => {
-          if (!resolved) {
-            resolved = true;
-            document.body.removeChild(testIframe);
-            resolve(false);
-          }
-        };
-        
-        // Timeout after 5 seconds
-        setTimeout(() => {
-          if (!resolved) {
-            resolved = true;
-            if (testIframe.parentNode) {
-              document.body.removeChild(testIframe);
+            } catch (e) {
+              // CORS error is expected and means iframe loaded
+              console.log(`✅ Appointment ${appointment.id} loaded with CORS (${loadTime}ms)`);
+              updateTestResult(index, 'working', `Loaded (${loadTime}ms)`);
             }
-            resolve(false);
-          }
-        }, 5000);
-        
-        document.body.appendChild(testIframe);
+          }, 2000);
+        }
+      };
+      
+      iframe.onerror = function() {
+        if (!resolved) {
+          resolved = true;
+          console.log(`❌ Appointment ${appointment.id} failed to load`);
+          updateTestResult(index, 'broken', 'Failed to load');
+          errorDiv.textContent = 'Iframe failed to load';
+          errorDiv.classList.add('show');
+        }
+      };
+      
+      // Timeout after 10 seconds
+      setTimeout(() => {
+        if (!resolved) {
+          resolved = true;
+          console.log(`⏱️ Appointment ${appointment.id} timed out`);
+          updateTestResult(index, 'broken', 'Timeout');
+          errorDiv.textContent = 'Loading timed out (may indicate blocking or errors)';
+          errorDiv.classList.add('show');
+        }
+      }, 10000);
+    }
+
+    function updateTestResult(index, result, message) {
+      const card = document.getElementById(`card-${index}`);
+      const status = document.getElementById(`status-${index}`);
+      
+      if (testResults[index] === undefined) {
+        pendingCount--;
+        if (result === 'working') {
+          workingCount++;
+        } else {
+          brokenCount++;
+        }
+        updateCounts();
+      }
+      
+      testResults[index] = result;
+      card.className = `test-card ${result}`;
+      status.className = `status-badge ${result}`;
+      status.textContent = message;
+    }
+
+    function openDirect(index) {
+      const appointment = appointmentTypes[index];
+      window.open(appointment.url, '_blank');
+    }
+
+    function testAllAppointments() {
+      console.log('🚀 Testing all appointment types...');
+      appointmentTypes.forEach((_, index) => {
+        setTimeout(() => {
+          testAppointment(index);
+        }, index * 1000); // Stagger tests by 1 second each
       });
     }
 
-    function getSessionKey(sessionData) {
-      if (!sessionData || !sessionData.sessionType || !sessionData.location || 
-          !sessionData.numberOfPets || !sessionData.numberOfPeople) {
-        return null;
-      }
-      return `${sessionData.sessionType}-${sessionData.location}-${sessionData.numberOfPets}-${sessionData.numberOfPeople}`;
-    }
-
-    function showBlockerInstructions() {
-      const instructions = document.getElementById('blockerInstructions');
-      instructions.classList.add('show');
-    }
-
-    function redirectToAcuity() {
-      if (acuityUrl) {
-        console.log('🚀 Redirecting to Acuity:', acuityUrl);
-        window.open(acuityUrl, '_blank');
-      } else {
-        alert('⚠️ Session configuration not found. Please try again.');
-      }
-    }
-
-    async function handleContentBlockerDetected() {
-      console.log('🛡️ Content blocker detected - showing warning');
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      const testGrid = document.getElementById('testGrid');
       
-      document.getElementById('loadingContainer').style.display = 'none';
-      document.getElementById('contentBlockerWarning').style.display = 'block';
+      appointmentTypes.forEach((appointment, index) => {
+        testGrid.innerHTML += createTestCard(appointment, index);
+      });
       
-      // Update direct booking button with session info
-      if (sessionData) {
-        const btn = document.getElementById('directBookingBtn');
-        btn.textContent = `Book ${sessionData.sessionType} Session`;
-      }
-    }
-
-    async function loadIframeNormally() {
-      console.log('✅ No content blocker detected - loading iframe normally');
-      
-      document.getElementById('loadingContainer').style.display = 'none';
-      document.getElementById('iframeContainer').style.display = 'flex';
-      
-      const iframe = document.getElementById('acuityIframe');
-      iframe.src = acuityUrl;
-      
-      // Monitor iframe loading
-      iframe.onload = () => {
-        console.log('✅ Iframe loaded successfully');
-        
-        // Clear session data after successful load
-        setTimeout(() => {
-          localStorage.removeItem('sessionData');
-        }, 1000);
-      };
-      
-      iframe.onerror = () => {
-        console.error('❌ Iframe failed to load');
-        // Fallback to content blocker warning
-        handleContentBlockerDetected();
-      };
-    }
-
-    function showError() {
-      document.getElementById('loadingContainer').style.display = 'none';
-      document.getElementById('errorContainer').style.display = 'flex';
-      
-      setTimeout(() => {
-        window.location.href = '/cart.html';
-      }, 5000);
-    }
-
-    // Main initialization
-    document.addEventListener('DOMContentLoaded', async function() {
-      console.log('🔍 Starting smart content blocker detection...');
-      
-      // Get session data
-      sessionData = JSON.parse(localStorage.getItem('sessionData'));
-      
-      if (!sessionData) {
-        console.error('❌ No session data found');
-        showError();
-        return;
-      }
-      
-      const sessionKey = getSessionKey(sessionData);
-      acuityUrl = acuityIframeUrls[sessionKey];
-      
-      if (!acuityUrl) {
-        console.error('❌ Invalid session configuration:', sessionKey);
-        showError();
-        return;
-      }
-      
-      console.log('📊 Session data:', sessionData);
-      console.log('🔗 Acuity URL:', acuityUrl);
-      
-      // Detect content blocker
-      const hasContentBlocker = await detectContentBlocker();
-      
-      if (hasContentBlocker) {
-        // Additional test: try to load iframe and see if it fails
-        const iframeWorks = await testIframeLoading(acuityUrl);
-        
-        if (!iframeWorks) {
-          contentBlockerDetected = true;
-          handleContentBlockerDetected();
-        } else {
-          // Content blocker detected but iframe still works - load normally
-          loadIframeNormally();
-        }
-      } else {
-        // No content blocker detected - load iframe normally
-        loadIframeNormally();
-      }
+      console.log('✅ Acuity appointment type tester loaded');
+      console.log(`📊 Ready to test ${appointmentTypes.length} appointment types`);
     });
   </script>
 </body>
