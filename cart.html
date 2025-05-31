@@ -1365,7 +1365,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 11:57 AM MDT, Saturday, May 31, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 12:54 PM MDT, Saturday, May 31, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
@@ -1498,30 +1498,30 @@
       }
     }
 
-    // Stripe link mapping based on Session_Guide-3.xlsx
+    // Stripe link mapping updated from Session_Guide-4.xlsx with new key format
     function getStripeLink(sessionType, location, pets, people) {
       const linkMap = {
         // Mini Sessions
-        'Mini-Cheesman Park-1-1': 'https://buy.stripe.com/eVag28fRtgaVe1GcMN',
-        'Mini-Cheesman Park-2-1': 'https://buy.stripe.com/5kQcN70KzbJCfMt94F9bO05',
-        'Mini-Cheesman Park-1-2': 'https://buy.stripe.com/8x24gB64T292eIpbcN9bO09',
-        'Mini-Cheesman Park-2-2': 'https://buy.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g',
-        'Mini-City Park-1-1': 'https://buy.stripe.com/9AQ6ry7kX8It3n28wy',
-        'Mini-City Park-2-1': 'https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06',
-        'Mini-City Park-1-2': 'https://buy.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b',
-        'Mini-City Park-2-2': 'https://buy.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a',
+        'Mini-Cheesman Park-1-1': 'https://book.stripe.com/eVag28fRtgaVe1GcMN',
+        'Mini-Cheesman Park-1-2': 'https://book.stripe.com/5kQcN70KzbJCfMt94F9bO05',
+        'Mini-Cheesman Park-2-1': 'https://book.stripe.com/8x24gB64T292eIpbcN9bO09',
+        'Mini-Cheesman Park-2-2': 'https://book.stripe.com/5kQaEZ8d18xq7fX1Cd9bO0g',
+        'Mini-City Park-1-1': 'https://book.stripe.com/9AQ6ry7kX8It3n28wy',
+        'Mini-City Park-1-2': 'https://buy.stripe.com/5kQ6oJ50PaFy43L4Op9bO06',
+        'Mini-City Park-2-1': 'https://book.stripe.com/cNieVfeBp8xqeIp6Wx9bO0b',
+        'Mini-City Park-2-2': 'https://book.stripe.com/3cI3cxgJx8xqgQxdkV9bO0a',
         // Full Sessions
-        'Full-Cheesman Park-1-1': 'https://buy.stripe.com/4gw6ry0Wz0bXe1G147',
-        'Full-Cheesman Park-2-1': 'https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08',
-        'Full-Cheesman Park-1-2': 'https://buy.stripe.com/14A14peBpfZSgQx3Kl9bO0c',
-        'Full-Cheesman Park-2-2': 'https://buy.stripe.com/5kQbJ33WL14Y9o5gx79bO0d',
+        'Full-Cheesman Park-1-1': 'https://book.stripe.com/4gw6ry0Wz0bXe1G147',
+        'Full-Cheesman Park-1-2': 'https://buy.stripe.com/8x200lgJx3d69o5dkV9bO08',
+        'Full-Cheesman Park-2-1': 'https://book.stripe.com/14A14peBpfZSgQx3Kl9bO0c',
+        'Full-Cheesman Park-2-2': 'https://book.stripe.com/5kQbJ33WL14Y9o5gx79bO0d',
         'Full-City Park-1-1': 'https://buy.stripe.com/00gg28eNp9Mx9Lq9AE',
-        'Full-City Park-2-1': 'https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07',
-        'Full-City Park-1-2': 'https://buy.stripe.com/14A8wR8d12921VD80B9bO0e',
-        'Full-City Park-2-2': 'https://buy.stripe.com/6oU28tdxl29243Lft39bO0f'
+        'Full-City Park-1-2': 'https://buy.stripe.com/14A9AV8d15le6bTbcN9bO07',
+        'Full-City Park-2-1': 'https://book.stripe.com/14A8wR8d12921VD80B9bO0e',
+        'Full-City Park-2-2': 'https://book.stripe.com/6oU28tdxl29243Lft39bO0f'
       };
       
-      const key = `${sessionType}-${location}-${pets}-${people}`;
+      const key = `${sessionType}-${location}-${people}-${pets}`; // Updated to match new format: people-pets
       return linkMap[key] || null;
     }
 
