@@ -3,552 +3,481 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <link rel="icon" type="image/png" href="assets/images/NEW_LOGO_NOTITLE-2.png" />
-  <title>Process Your Payment | Picture This Pet</title>
-  <meta name="description" content="Process your payment for your pet photography session with Picture This Pet.">
+  <title>Booking Confirmation | Picture This Pet</title>
+  <meta name="description" content="Schedule your pet photography session with Picture This Pet.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-        --color-primary: #1a1a1a;
-        --color-secondary: #2a2a2a;
-        --color-text-light: #f0f0f0;
-        --color-text-muted: #b0b0b0;
-        --color-accent-pink: #ff1493;
-        --color-accent-purple: #8a2be2;
-        --color-accent-orange: #ff8c00;
-        --gradient-button: linear-gradient(45deg, var(--color-accent-pink), var(--color-accent-purple), var(--color-accent-orange));
-        --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
-        --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
-        --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
-        --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
-        --available-green: #10b981;
-        --booked-red: #ef4444;
-        --soft-hold-yellow: #f59e0b;
-        --header-height-desktop: 64px;
-        --promo-banner-height-desktop: 40px;
-        --header-height-mobile: 58px;
-        --promo-banner-height-mobile: 70px;
+      --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
+      --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
+      --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.08) 0%, rgba(138,43,226,0.08) 50%, rgba(255,140,0,0.08) 100%);
+      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
+      --pink: #ff1493;
+      --purple: #8a2be2;
+      --orange: #ff8c00;
+      --available-green: #10b981;
+      --booked-red: #ef4444;
+      --soft-hold-yellow: #f59e0b;
+      --popup-event-purple: #a78bfa;
+      --color-primary: #1a1a1a;
+      --color-secondary: #2a2a2a;
+      --color-text-light: #f0f0f0;
+      --color-text-muted: #b0b0b0;
+      --color-accent-pink: #ff1493;
+      --color-accent-purple: #8a2be2;
+      --color-accent-orange: #ff8c00;
+      --gradient-button: linear-gradient(45deg, var(--color-accent-pink), var(--color-accent-purple), var(--color-accent-orange));
+      --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+      --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
+      --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
+      --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.6);
+      --header-height-desktop: 64px;
+      --header-height-mobile: 58px;
     }
 
     * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        scroll-behavior: smooth;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--pink) transparent;
+    }
+
+    html::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    html::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+    }
+
+    html::-webkit-scrollbar-thumb {
+      background: var(--gradient-primary);
+      border-radius: 3px;
     }
 
     body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        background-color: var(--color-primary);
-        color: var(--color-text-light);
-        line-height: 1.6;
-        overflow-x: hidden;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      color: #ffffff;
+      background: var(--gradient-secondary);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     a {
-        text-decoration: none;
-        color: inherit;
+      text-decoration: none;
+      color: inherit;
     }
 
-    header {
-        position: sticky;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        padding: 1rem 2.5rem;
-        background: rgba(26, 26, 26, 0.9);
-        backdrop-filter: blur(15px);
-        border-bottom: var(--border-subtle);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: background 0.3s ease;
-        height: var(--header-height-desktop);
+    /* Floating background elements */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
     }
 
-    .logo-link {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        transition: opacity 0.3s ease;
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: float 20s infinite linear;
     }
 
-    .logo-link:hover {
-        opacity: 0.7;
+    .orb:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+      top: 10%;
+      left: 80%;
+      animation-delay: 0s;
     }
 
-    .desktop-logo {
-        height: 38px;
+    .orb:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      top: 60%;
+      left: 10%;
+      animation-delay: -7s;
     }
 
-    .logo-text {
-        font-size: 1.4rem;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        color: var(--color-text-light);
+    .orb:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: 30%;
+      left: 20%;
+      animation-delay: -14s;
     }
 
-    .logo-text sup {
-        font-size: 0.6em;
-        vertical-align: super;
-        margin-left: 2px;
-        color: var(--color-accent-orange);
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
     }
 
-    .site-nav {
-        display: flex;
-        gap: 2.5rem;
-        align-items: center;
-    }
-
-    .site-nav a {
-        color: var(--color-text-muted);
-        font-weight: 500;
-        transition: color 0.3s ease, transform 0.2s ease;
-        position: relative;
-    }
-
-    .site-nav a:hover {
-        color: var(--color-text-light);
-        transform: translateY(-2px);
-    }
-
-    .site-nav a::after {
-        content: '';
-        position: absolute;
-        left: 50%;
-        bottom: -5px;
-        width: 0;
-        height: 2px;
-        background: var(--gradient-button);
-        transition: width 0.3s ease, left 0.3s ease;
-        transform: translateX(-50%);
-    }
-
-    .site-nav a:hover::after {
-        width: 100%;
-        left: 0;
-        transform: translateX(0);
-    }
-
-    .book-btn {
-        background: var(--gradient-button);
-        color: white;
-        padding: 0.75rem 1.75rem;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        box-shadow: var(--shadow-light);
-        white-space: nowrap;
-    }
-
-    .book-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-medium);
-    }
-
-    .mobile-menu-btn {
-        display: none;
-        background: none;
-        border: none;
-        color: var(--color-text-light);
-        font-size: 2rem;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-
-    .mobile-menu-btn:hover {
-        transform: scale(1.1);
-    }
-
-    .mobile-nav-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(20px);
-        z-index: 2000;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transform: translateX(100%);
-        transition: transform 0.4s ease-in-out;
-    }
-
-    .mobile-nav-overlay.open {
-        transform: translateX(0);
-    }
-
-    .mobile-nav-overlay .close-btn {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-        background: none;
-        border: none;
-        color: var(--color-text-light);
-        font-size: 2.5rem;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-
-    .mobile-nav-overlay .close-btn:hover {
-        transform: rotate(90deg);
-    }
-
-    .mobile-nav-overlay nav {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        text-align: center;
-    }
-
-    .mobile-nav-overlay nav a {
-        color: var(--color-text-light);
-        font-size: 1.8rem;
-        font-weight: 600;
-        transition: color 0.3s ease, transform 0.3s ease;
-    }
-
-    .mobile-nav-overlay nav a:hover {
-        color: var(--color-accent-pink);
-        transform: translateX(10px);
-    }
-
-    .mobile-nav-overlay .book-btn {
-        margin-top: 2rem;
-        font-size: 1.2rem;
-        padding: 1rem 2.5rem;
-    }
-
-    #promo-banner-section {
-        position: fixed;
-        top: var(--header-height-desktop);
-        left: 0;
-        width: 100%;
-        background: var(--gradient-button);
-        color: white;
-        text-align: center;
-        padding: 1.2rem 1rem;
-        font-weight: 600;
-        font-size: 0.95rem;
-        z-index: 999;
-        box-shadow: 0 8px 32px rgba(255,140,0,0.3);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-        transition: top 0.3s ease;
-        margin: 0;
-        border-radius: 0;
-        opacity: 1;
-        transform: translateY(0);
-        height: var(--promo-banner-height-desktop);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    #promo-banner-section .promo-banner-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
-
-    #promo-banner-section .promo-text {
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        overflow-wrap: break-word;
-        color: white;
-        margin-bottom: 0;
-        animation: pulse 1.5s infinite alternate;
-    }
-
-    #promo-banner-section .book-btn {
-        color: white;
-        text-decoration: none;
-        font-weight: 700;
-        transition: all 0.3s ease;
-        padding: 0.4rem 1rem;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(4px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        overflow-wrap: break-word;
-        box-shadow: none;
-        transform: none;
-    }
-
-    #promo-banner-section .book-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes pulse {
-        0% { transform: scale(1); opacity: 0.9; }
-        100% { transform: scale(1.03); opacity: 1; }
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
     }
 
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1rem 2.5rem;
+      background: rgba(26, 26, 26, 0.9);
+      backdrop-filter: blur(15px);
+      border-bottom: var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s ease;
+      height: var(--header-height-desktop);
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: opacity 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.7;
+    }
+
+    .desktop-logo {
+      height: 38px;
+    }
+
+    .logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-text-light);
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text sup {
+      font-size: 0.6em;
+      vertical-align: super;
+      margin-left: 2px;
+      color: var(--color-accent-orange);
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .site-nav a {
+      color: var(--color-text-muted);
+      font-weight: 500;
+      transition: color 0.3s ease, transform 0.2s ease;
+      position: relative;
+    }
+
+    .site-nav a:hover {
+      color: var(--color-text-light);
+      transform: translateY(-2px);
+    }
+
+    .site-nav a::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-button);
+      transition: width 0.3s ease, left 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .site-nav a:hover::after {
+      width: 100%;
+      left: 0;
+      transform: translateX(0);
+    }
+
+    .book-btn {
+      background: var(--gradient-button);
+      color: white;
+      padding: 0.75rem 1.75rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: var(--shadow-light);
+      white-space: nowrap;
+    }
+
+    .book-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--color-text-light);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .mobile-nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(100%);
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .mobile-nav-overlay.open {
+      transform: translateX(0);
+    }
+
+    .mobile-nav-overlay .close-btn {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: none;
+      border: none;
+      color: var(--color-text-light);
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-nav-overlay .close-btn:hover {
+      transform: rotate(90deg);
+    }
+
+    .mobile-nav-overlay nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .mobile-nav-overlay nav a {
+      color: var(--color-text-light);
+      font-size: 1.8rem;
+      font-weight: 600;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .mobile-nav-overlay nav a:hover {
+      color: var(--color-accent-pink);
+      transform: translateX(10px);
+    }
+
+    .mobile-nav-overlay .book-btn {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      padding: 1rem 2.5rem;
+    }
+
+    /* Main Content */
     main {
-        margin-top: calc(var(--header-height-desktop) + var(--promo-banner-height-desktop));
-        flex: 1;
-        padding: 2rem 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: calc(100vh - var(--header-height-desktop) - var(--promo-banner-height-desktop));
+      margin-top: var(--header-height-desktop);
+      flex: 1;
+      background: #2a2a2a;
+      min-height: calc(100vh - var(--header-height-desktop));
+      padding: 0;
+      overflow: visible;
     }
 
-    .payment-container {
-        max-width: 1200px;
-        width: 100%;
-        margin: 0 auto;
-        background: var(--color-secondary);
-        border-radius: 16px;
-        padding: 3rem;
-        animation: fadeInUp 0.8s ease-out;
-        min-height: auto;
-        position: relative;
-        overflow: visible;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow-light);
+    .iframe-container {
+      width: 100%;
+      background: #2a2a2a;
+      min-height: calc(100vh - var(--header-height-desktop));
+      padding: 0;
+      display: flex;
+      flex-direction: column;
     }
 
-    .payment-container:hover {
-        box-shadow: var(--shadow-medium);
+    .acuity-iframe {
+      width: 100%;
+      min-height: calc(100vh - var(--header-height-desktop));
+      height: auto;
+      border: none;
+      background: #2a2a2a;
+      flex: 1;
     }
 
-    .page-header {
-        text-align: center;
-        margin-bottom: 2rem;
+    .loading-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - var(--header-height-desktop));
+      background: #2a2a2a;
+      color: #ffffff;
     }
 
-    .page-title {
-        font-size: 2.8rem;
-        font-weight: 800;
-        background: var(--gradient-button);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 0.5rem;
-        letter-spacing: -0.025em;
+    .loading-content {
+      text-align: center;
+      padding: 2rem;
     }
 
-    .page-subtitle {
-        font-size: 1.2rem;
-        color: var(--color-text-muted);
-        font-weight: 500;
-        line-height: 1;
+    .loading-message {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      background: var(--gradient-orange-pink);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .payment-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        position: relative;
-        width: 100%;
-        min-height: auto;
-        padding: 0;
-        gap: 0;
+    .error-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - var(--header-height-desktop));
+      background: #2a2a2a;
+      padding: 2rem;
     }
 
-    .loading-area {
-        text-align: center;
-        transition: all 0.8s ease;
-        width: 100%;
-        overflow: hidden;
+    .error-content {
+      text-align: center;
+      max-width: 500px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid var(--booked-red);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
     }
 
-    .loading-area.hidden {
-        opacity: 0;
-        transform: translateY(-30px);
-        pointer-events: none;
-        height: 0;
-        margin: 0;
+    .error-message-text {
+      font-size: 1.2rem;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
     }
 
-    .confirmation-message {
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid var(--available-green);
-        border-radius: 12px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        text-align: center;
-        transition: all 0.3s ease;
+    .redirect-button {
+      background: var(--gradient-primary);
+      color: var(--color-text-light);
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 8px 32px rgba(255,20,147,0.3);
     }
 
-    .confirmation-message:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
+    .redirect-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(255,20,147,0.5);
+      background: linear-gradient(135deg, #ff4da6 0%, #9b59b6 50%, #ffbf00 100%);
     }
 
-    .confirmation-icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        animation: pulse 2s infinite;
-    }
-
-    .confirmation-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: var(--available-green);
-        margin-bottom: 0.8rem;
-        letter-spacing: -0.02em;
-    }
-
-    .confirmation-description {
-        font-size: 1rem;
-        color: var(--color-text-muted);
-        line-height: 1.6;
-    }
-
-    .loading-animation {
-        margin: 1rem 0;
-    }
-
-    .loading-spinner {
-        width: 70px;
-        height: 70px;
-        border: 5px solid rgba(255, 255, 255, 0.3);
-        border-top: 5px solid var(--color-accent-orange);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 1rem;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    .paw-prints {
-        display: flex;
-        justify-content: center;
-        gap: 1.2rem;
-        margin: 1rem 0;
-    }
-
-    .paw {
-        font-size: 1.8rem;
-        animation: bounce 1.5s infinite;
-    }
-
-    .paw:nth-child(1) { animation-delay: 0s; }
-    .paw:nth-child(2) { animation-delay: 0.3s; }
-    .paw:nth-child(3) { animation-delay: 0.6s; }
-    .paw:nth-child(4) { animation-delay: 0.9s; }
-
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-        40% { transform: translateY(-10px); }
-        60% { transform: translateY(-5px); }
-    }
-
-    .loading-text {
-        font-size: 1.3rem;
-        color: var(--color-text-muted);
-        margin: 1rem 0;
-        background: var(--gradient-button);
-        background-size: 200% 100%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: shimmer 2s ease-in-out infinite;
-    }
-
-    @keyframes shimmer {
-        0% { background-position: -200% 0; }
-        100% { background-position: 200% 0; }
-    }
-
-    .progress-bar {
-        width: 100%;
-        height: 6px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 3px;
-        overflow: hidden;
-        margin: 1rem 0;
-    }
-
-    .progress-fill {
-        height: 100%;
-        background: var(--gradient-button);
-        border-radius: 3px;
-        animation: progressFill 3s ease-out forwards;
-    }
-
-    @keyframes progressFill {
-        0% { width: 0%; }
-        100% { width: 100%; }
-    }
-
+    /* Footer */
     footer {
-        background-color: var(--color-primary);
-        color: var(--color-text-muted);
-        padding: 2rem 2rem;
-        border-top: var(--border-subtle);
-        text-align: center;
+      background-color: var(--color-primary);
+      color: var(--color-text-muted);
+      padding: 2rem 2rem;
+      border-top: var(--border-subtle);
+      text-align: center;
     }
 
     .footer-container {
-        max-width: 1000px;
-        margin: 0 auto 1.5rem;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
-        text-align: left;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-bottom: 1.5rem;
+      text-align: left;
     }
 
     .footer-section {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .footer-section h4 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--color-text-light);
-        margin-bottom: 1rem;
-        background: var(--gradient-button);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-text-light);
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .footer-section a {
-        color: var(--color-text-muted);
-        margin-bottom: 0.6rem;
-        transition: color 0.3s ease;
+      color: var(--color-text-muted);
+      margin-bottom: 0.6rem;
+      transition: color 0.3s ease;
     }
 
     .footer-section a:hover {
-        color: var(--color-text-light);
+      color: var(--color-text-light);
     }
 
     .payment-methods {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        grid-template-rows: repeat(2, auto);
-        gap: 0.5rem;
-        justify-items: center;
-        align-items: center;
-        margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 0.5rem;
+      justify-items: center;
+      align-items: center;
+      margin-top: 1rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
@@ -567,201 +496,162 @@
     .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
 
     .payment-icon {
-        width: 45px;
-        height: 28px;
-        object-fit: contain;
-        opacity: 1;
-        transition: transform 0.3s ease;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      width: 45px;
+      height: 28px;
+      object-fit: contain;
+      opacity: 1;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }
 
     .payment-icon:hover {
-        transform: scale(1.1);
+      transform: scale(1.1);
     }
 
     .footer-bottom {
-        padding-top: 1.5rem;
-        border-top: var(--border-subtle);
-        font-size: 0.85rem;
-        color: var(--color-text-muted);
+      padding-top: 1.5rem;
+      border-top: var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
     }
 
     .footer-bottom a {
-        color: var(--color-accent-pink);
-        text-decoration: underline;
-        transition: color 0.3s ease;
+      color: var(--color-accent-pink);
+      text-decoration: underline;
+      transition: color 0.3s ease;
     }
 
     .footer-bottom a:hover {
-        color: var(--color-accent-orange);
+      color: var(--color-accent-orange);
     }
 
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+    /* Responsive */
+    @media (max-width: 1024px) {
+      header {
+        padding: 1rem 1.5rem;
+      }
+      .site-nav {
+        gap: 1.5rem;
+      }
     }
 
     @media (max-width: 768px) {
-        #promo-banner-section {
-            font-size: 0.85rem;
-            padding: 1rem 0.8rem;
-            top: var(--header-height-mobile);
-            height: var(--promo-banner-height-mobile);
-        }
+      header {
+        height: var(--header-height-mobile);
+        padding: 0.8rem 1.5rem;
+      }
 
-        #promo-banner-section .promo-banner-content {
-            flex-direction: column;
-            gap: 0.5rem;
-            justify-content: center;
-            text-align: center;
-            line-height: 1.4;
-        }
+      .desktop-logo {
+        height: 35px;
+      }
 
-        #promo-banner-section .promo-text {
-            font-size: 0.8rem;
-            line-height: 1.4;
-        }
+      .logo-text {
+        font-size: 1.2rem;
+      }
 
-        #promo-banner-section .book-btn {
-            padding: 0.3rem 0.8rem;
-            font-size: 0.75rem;
-        }
+      .logo-text sup {
+        font-size: 0.5em;
+      }
 
-        header {
-            height: var(--header-height-mobile);
-            padding: 0.5rem 1rem;
-        }
+      .site-nav {
+        display: none;
+      }
 
-        .desktop-logo {
-            height: 35px;
-        }
+      .mobile-menu-btn {
+        display: block;
+      }
 
-        .logo-text {
-            font-size: 1.2rem;
-        }
+      main {
+        margin-top: var(--header-height-mobile);
+        min-height: calc(100vh - var(--header-height-mobile));
+      }
 
-        .logo-text sup {
-            font-size: 0.6rem;
-        }
+      .iframe-container {
+        min-height: calc(100vh - var(--header-height-mobile));
+      }
 
-        .site-nav {
-            display: none;
-        }
+      .acuity-iframe {
+        min-height: calc(100vh - var(--header-height-mobile));
+      }
 
-        .mobile-menu-btn {
-            display: block;
-        }
+      .loading-container,
+      .error-container {
+        min-height: calc(100vh - var(--header-height-mobile));
+      }
 
-        main {
-            margin-top: calc(var(--header-height-mobile) + var(--promo-banner-height-mobile));
-            padding: 0;
-            min-height: auto;
-        }
+      .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1.5rem;
+      }
 
-        .payment-container {
-            padding: 0;
-            min-height: auto;
-            border-radius: 0;
-            border: none;
-            box-shadow: none;
-        }
+      .footer-section {
+        align-items: center;
+      }
 
-        .page-header {
-            margin-bottom: 0;
-            padding: 0;
-        }
+      .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+      }
 
-        .page-title {
-            font-size: 2.2rem;
-        }
+      .footer-section a {
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
+      }
 
-        .page-subtitle {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            line-height: 0.8;
-        }
+      .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+      }
 
-        .confirmation-message {
-            padding: 0.5rem;
-            margin-bottom: 0;
-        }
+      .payment-icon {
+        width: 35px;
+        height: 22px;
+      }
 
-        .loading-animation {
-            margin: 0;
-        }
+      footer {
+        padding: 1.5rem 1rem;
+      }
 
-        .loading-spinner {
-            margin-bottom: 0.5rem;
-        }
-
-        .paw-prints {
-            margin: 0.5rem 0;
-        }
-
-        .loading-text {
-            margin: 0.5rem 0;
-        }
-
-        .progress-bar {
-            margin: 0.5rem 0;
-        }
-
-        .footer-container {
-            grid-template-columns: 1fr;
-            text-align: center;
-        }
-
-        .footer-section {
-            align-items: center;
-        }
-
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-template-rows: repeat(2, auto);
-            gap: 0.5rem;
-            justify-items: center;
-            align-items: center;
-        }
-
-        .payment-icon {
-            width: 35px;
-            height: 22px;
-        }
+      .footer-bottom {
+        padding-top: 1rem;
+        font-size: 0.75rem;
+      }
     }
 
     @media (max-width: 480px) {
-        #promo-banner-section {
-            font-size: 0.75rem;
-            padding: 1rem 0.5rem;
-        }
+      header {
+        padding: 0.5rem 0.8rem;
+      }
 
-        #promo-banner-section .promo-text {
-            font-size: 0.7rem;
-            line-height: 1.3;
-        }
+      main {
+        margin-top: var(--header-height-mobile);
+      }
 
-        #promo-banner-section .book-btn {
-            padding: 0.15rem 0.4rem;
-            font-size: 0.65rem;
-        }
+      .loading-content {
+        padding: 1.5rem;
+      }
 
-        .payment-container {
-            padding: 0;
-            margin: 0;
-        }
-
-        .page-title {
-            font-size: 2rem;
-        }
-
-        .confirmation-message {
-            padding: 0.3rem;
-        }
+      .error-content {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
@@ -778,14 +668,6 @@
     <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
   </header>
 
-  <div id="promo-banner-section">
-    <div class="promo-banner-content">
-      <span class="promo-text">🎉 Early Career Special - Save up to 75% 💸</span>
-      <span class="promo-text">💳 Flexible Payment Plans Available 📸</span>
-      <a href="/pricing" class="book-btn">View Pricing ✨</a>
-    </div>
-  </div>
-
   <div class="mobile-nav-overlay">
     <button class="close-btn" aria-label="Close mobile menu">×</button>
     <nav>
@@ -799,39 +681,25 @@
   </div>
 
   <main>
-    <div class="payment-container">
-      <div class="page-header">
-        <h1 class="page-title">💳 Process Your Payment</h1>
-        <p class="page-subtitle">Finalizing your pet photography session booking</p>
+    <!-- Loading State -->
+    <div id="loadingContainer" class="loading-container">
+      <div class="loading-content">
+        <div class="loading-message">Loading your booking...</div>
+        <p style="color: #b0b0b0;">Please wait while we prepare your session details.</p>
       </div>
-
-      <div class="payment-section">
-        <!-- Loading Area -->
-        <div class="loading-area" id="loadingArea">
-          <div class="confirmation-message">
-            <div class="confirmation-icon">💳✨</div>
-            <h3 class="confirmation-title">Payment Processing...</h3>
-            <p class="confirmation-description">We're securely processing your payment for your Picture This Pet session. Please wait a moment! 🐾</p>
-          </div>
-
-          <div class="loading-animation">
-            <div class="loading-spinner"></div>
-            
-            <div class="paw-prints">
-              <span class="paw">🐾</span>
-              <span class="paw">🐾</span>
-              <span class="paw">🐾</span>
-              <span class="paw">🐾</span>
-            </div>
-
-            <div class="loading-text" id="loadingText">💳 Processing payment...</div>
-
-            <div class="progress-bar">
-              <div class="progress-fill"></div>
-            </div>
-          </div>
-        </div>
+    </div>
+    
+    <!-- Error State -->
+    <div id="errorContainer" class="error-container" style="display: none;">
+      <div class="error-content">
+        <div class="error-message-text">We couldn't find your session details. This usually happens if you navigated directly to this page.</div>
+        <a href="/cart.html" class="redirect-button">Return to Session Builder</a>
       </div>
+    </div>
+    
+    <!-- Success State - Iframe -->
+    <div id="iframeContainer" class="iframe-container" style="display: none;">
+      <iframe id="acuityIframe" class="acuity-iframe"></iframe>
     </div>
   </main>
 
@@ -840,7 +708,7 @@
       <div class="footer-section">
         <h4>Contact Us</h4>
         <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" target="_blank" rel="noopener noreferrer" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
+        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
       </div>
       <div class="footer-section socials">
         <h4>Connect</h4>
@@ -868,67 +736,115 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 08:06 PM MST, Thursday, May 29, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
+      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:19 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
     </div>
   </footer>
 
   <script>
-    let sessionData = null;
-    let loadingMessages = [
-      "💳 Processing payment...",
-      "🐾 Securing your transaction...",
-      "✨ Verifying payment details...",
-      "🎉 Almost there...",
-      "📆 Preparing to schedule your session..."
-    ];
-    let messageIndex = 0;
-
-    function updateLoadingText() {
-      const loadingTextElement = document.getElementById('loadingText');
-      loadingTextElement.textContent = loadingMessages[messageIndex];
-      messageIndex = (messageIndex + 1) % loadingMessages.length;
-    }
-
-    function loadSessionData() {
-      try {
-        const storedData = localStorage.getItem('sessionData');
-        if (storedData) {
-          sessionData = JSON.parse(storedData);
-          console.log('Loaded session data:', sessionData);
-          return true;
-        }
-      } catch (e) {
-        console.error('Error loading session data:', e);
-      }
-      return false;
-    }
-
-    function simulatePaymentProcessing() {
-      const loadingArea = document.getElementById('loadingArea');
-      loadingArea.classList.add('hidden');
-      window.location.href = '/booking.html';
-    }
-
-    function toggleMenu() {
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('open');
-      document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ Updated Payment page loaded - v4.0.1');
-      
-      if (loadSessionData()) {
-        const textInterval = setInterval(updateLoadingText, 1000);
+      // Get session data from localStorage (matches the session builder key)
+      const sessionData = JSON.parse(localStorage.getItem('sessionData'));
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get('session_id');
+
+      console.log('Session data found:', sessionData);
+
+      // Map session configurations to Acuity iframe URLs based on your Excel data
+      const acuityIframeUrls = {
+        // Full Sessions
+        'Full-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498',
+        'Full-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444',
+        'Full-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428',
+        'Full-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419',
+        'Full-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425',
+        'Full-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441',
+        'Full-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431',
+        'Full-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621',
         
-        setTimeout(() => {
-          clearInterval(textInterval);
-          simulatePaymentProcessing();
-        }, 3000);
-      } else {
-        alert('⚠️ No session data found. Redirecting to session builder...');
-        window.location.href = '/cart.html';
+        // Mini Sessions
+        'Mini-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731',
+        'Mini-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805719',
+        'Mini-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805725',
+        'Mini-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805734',
+        'Mini-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805722',
+        'Mini-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805716',
+        'Mini-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805728',
+        'Mini-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805713'
+      };
+
+      // Function to generate session key from session data
+      function getSessionKey(sessionData) {
+        if (!sessionData || !sessionData.sessionType || !sessionData.location || 
+            !sessionData.numberOfPets || !sessionData.numberOfPeople) {
+          return null;
+        }
+        
+        return `${sessionData.sessionType}-${sessionData.location}-${sessionData.numberOfPets}-${sessionData.numberOfPeople}`;
       }
+
+      // Check if session data exists and is valid
+      if (sessionData) {
+        const sessionKey = getSessionKey(sessionData);
+        console.log('Generated session key:', sessionKey);
+        
+        if (sessionKey && acuityIframeUrls[sessionKey]) {
+          // Valid session data found, show the iframe
+          document.getElementById('loadingContainer').style.display = 'none';
+          document.getElementById('iframeContainer').style.display = 'flex';
+          
+          // Load the appropriate Acuity iframe
+          document.getElementById('acuityIframe').src = acuityIframeUrls[sessionKey];
+          
+          console.log('✅ Loading Acuity iframe:', acuityIframeUrls[sessionKey]);
+          
+          // Clear session data after successful load to prevent reuse
+          setTimeout(() => {
+            localStorage.removeItem('sessionData');
+          }, 1000);
+        } else {
+          // Invalid session configuration
+          console.error('❌ Invalid session configuration:', sessionKey);
+          showError();
+        }
+      } else {
+        // No session data found
+        console.error('❌ No session data found in localStorage');
+        showError();
+      }
+
+      function showError() {
+        document.getElementById('loadingContainer').style.display = 'none';
+        document.getElementById('errorContainer').style.display = 'flex';
+        
+        // Auto-redirect after 5 seconds
+        setTimeout(() => {
+          window.location.href = '/cart.html';
+        }, 5000);
+      }
+
+      // Mobile menu functionality
+      window.toggleMenu = function() {
+        const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
+        mobileNavOverlay.classList.toggle('open');
+        document.body.style.overflow = mobileNavOverlay.classList.contains('open') ? 'hidden' : '';
+      };
+      
+      const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          document.querySelector('.mobile-nav-overlay').classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      }
+
+      document.querySelectorAll('.mobile-nav-overlay a').forEach(link => {
+        link.addEventListener('click', () => {
+          document.querySelector('.mobile-nav-overlay').classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      });
+
+      console.log('✅ Booking page loaded - Fixed version');
     });
   </script>
 </body>
