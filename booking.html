@@ -530,7 +530,7 @@
     let sessionData = null;
     let acuityUrl = null;
 
-    // Acuity URL mapping
+    // Acuity URL mapping updated from Session_Guide-3.xlsx
     const acuityIframeUrls = {
       'Full-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498',
       'Full-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444',
@@ -541,13 +541,13 @@
       'Full-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431',
       'Full-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621',
       'Mini-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731',
-      'Mini-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805719',
-      'Mini-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805725',
-      'Mini-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805734',
+      'Mini-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816464',
+      'Mini-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816457',
+      'Mini-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816469',
       'Mini-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805722',
-      'Mini-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805716',
-      'Mini-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805728',
-      'Mini-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805713'
+      'Mini-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816463',
+      'Mini-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816458',
+      'Mini-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816472'
     };
 
     // Content blocker detection methods
@@ -588,7 +588,7 @@
         
         // Method 5: Try to create elements that look like ads
         const testDiv = document.createElement('div');
-        testDiv.innerHTML = '&nbsp;';
+        testDiv.innerHTML = ' ';
         testDiv.className = 'adsbox';
         document.body.appendChild(testDiv);
         
@@ -799,9 +799,6 @@
       }
       
       console.log('✅ Loading iframe with Acuity official embed.js script');
-      console.log('🔧 UPDATED: Mini Cheesman 2/2 now uses appointmentType=78816469 (matches your Acuity setup)');
-      console.log('🔧 FIXED: Mini City 2/2 uses appointmentType=78805713');
-      console.log('🔗 Acuity URL:', acuityUrl);
       
       // Detect content blocker
       const hasContentBlocker = await detectContentBlocker();
