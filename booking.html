@@ -13,14 +13,11 @@
       --gradient-primary: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ff8c00 100%);
       --gradient-orange-pink: linear-gradient(135deg, #ff8c00 0%, #ff1493 100%);
       --gradient-secondary: linear-gradient(135deg, rgba(255,20,147,0.08) 0%, rgba(138,43,226,0.08) 50%, rgba(255,140,0,0.08) 100%);
-      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
       --pink: #ff1493;
       --purple: #8a2be2;
       --orange: #ff8c00;
       --available-green: #10b981;
       --booked-red: #ef4444;
-      --soft-hold-yellow: #f59e0b;
-      --popup-event-purple: #a78bfa;
       --color-primary: #1a1a1a;
       --color-secondary: #2a2a2a;
       --color-text-light: #f0f0f0;
@@ -43,25 +40,6 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
-      scrollbar-width: thin;
-      scrollbar-color: var(--pink) transparent;
-    }
-
-    html::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    html::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.1);
-    }
-
-    html::-webkit-scrollbar-thumb {
-      background: var(--gradient-primary);
-      border-radius: 3px;
-    }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       color: #ffffff;
@@ -76,68 +54,6 @@
     a {
       text-decoration: none;
       color: inherit;
-    }
-
-    /* Floating background elements */
-    .bg-orbs {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.3;
-      animation: float 20s infinite linear;
-    }
-
-    .orb:nth-child(1) {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
-      top: 10%;
-      left: 80%;
-      animation-delay: 0s;
-    }
-
-    .orb:nth-child(2) {
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
-      top: 60%;
-      left: 10%;
-      animation-delay: -7s;
-    }
-
-    .orb:nth-child(3) {
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
-      top: 30%;
-      left: 20%;
-      animation-delay: -14s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
     }
 
     /* Header */
@@ -200,31 +116,11 @@
     .site-nav a {
       color: var(--color-text-muted);
       font-weight: 500;
-      transition: color 0.3s ease, transform 0.2s ease;
-      position: relative;
+      transition: color 0.3s ease;
     }
 
     .site-nav a:hover {
       color: var(--color-text-light);
-      transform: translateY(-2px);
-    }
-
-    .site-nav a::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      bottom: -5px;
-      width: 0;
-      height: 2px;
-      background: var(--gradient-button);
-      transition: width 0.3s ease, left 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    .site-nav a:hover::after {
-      width: 100%;
-      left: 0;
-      transform: translateX(0);
     }
 
     .book-btn {
@@ -251,73 +147,6 @@
       color: var(--color-text-light);
       font-size: 2rem;
       cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .mobile-menu-btn:hover {
-      transform: scale(1.1);
-    }
-
-    .mobile-nav-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(20px);
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transform: translateX(100%);
-      transition: transform 0.4s ease-in-out;
-    }
-
-    .mobile-nav-overlay.open {
-      transform: translateX(0);
-    }
-
-    .mobile-nav-overlay .close-btn {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      background: none;
-      border: none;
-      color: var(--color-text-light);
-      font-size: 2.5rem;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .mobile-nav-overlay .close-btn:hover {
-      transform: rotate(90deg);
-    }
-
-    .mobile-nav-overlay nav {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      text-align: center;
-    }
-
-    .mobile-nav-overlay nav a {
-      color: var(--color-text-light);
-      font-size: 1.8rem;
-      font-weight: 600;
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-
-    .mobile-nav-overlay nav a:hover {
-      color: var(--color-accent-pink);
-      transform: translateX(10px);
-    }
-
-    .mobile-nav-overlay .book-btn {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-      padding: 1rem 2.5rem;
     }
 
     /* Main Content */
@@ -348,6 +177,134 @@
       flex: 1;
     }
 
+    /* Content Blocker Warning */
+    .content-blocker-warning {
+      display: none;
+      background: var(--color-secondary);
+      padding: 2rem;
+      margin: 2rem;
+      border-radius: 16px;
+      border: 2px solid var(--orange);
+      text-align: center;
+      box-shadow: var(--shadow-medium);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    .warning-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .warning-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+
+    .warning-message {
+      font-size: 1.1rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .solution-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .solution-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .solution-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-light);
+      border-color: var(--orange);
+    }
+
+    .solution-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--orange);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .solution-description {
+      color: var(--color-text-muted);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .solution-btn {
+      background: var(--gradient-button);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.95rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    .solution-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-light);
+    }
+
+    .blocker-instructions {
+      background: rgba(255, 140, 0, 0.1);
+      border: 1px solid var(--orange);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .blocker-instructions.show {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .blocker-list {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+
+    .blocker-list li {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .blocker-name {
+      font-weight: 600;
+      color: var(--orange);
+    }
+
+    /* Loading States */
     .loading-container {
       display: flex;
       align-items: center;
@@ -417,140 +374,24 @@
     .redirect-button:hover {
       transform: translateY(-3px);
       box-shadow: 0 12px 40px rgba(255,20,147,0.5);
-      background: linear-gradient(135deg, #ff4da6 0%, #9b59b6 50%, #ffbf00 100%);
     }
 
-    /* Footer */
-    footer {
-      background-color: var(--color-primary);
-      color: var(--color-text-muted);
-      padding: 2rem 2rem;
-      border-top: var(--border-subtle);
-      text-align: center;
+    /* Animations */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
-      text-align: left;
-    }
-
-    .footer-section {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .footer-section h4 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--color-text-light);
-      margin-bottom: 1rem;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .footer-section a {
-      color: var(--color-text-muted);
-      margin-bottom: 0.6rem;
-      transition: color 0.3s ease;
-    }
-
-    .footer-section a:hover {
-      color: var(--color-text-light);
-    }
-
-    .payment-methods {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(2, auto);
-      gap: 0.5rem;
-      justify-items: center;
-      align-items: center;
-      margin-top: 1rem;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .payment-methods img:nth-child(1) { grid-area: 1 / 1; }
-    .payment-methods img:nth-child(2) { grid-area: 1 / 2; }
-    .payment-methods img:nth-child(3) { grid-area: 1 / 3; }
-    .payment-methods img:nth-child(4) { grid-area: 1 / 4; }
-    .payment-methods img:nth-child(5) { grid-area: 1 / 5; }
-    .payment-methods img:nth-child(6) { grid-area: 1 / 6; }
-    .payment-methods img:nth-child(7) { grid-area: 1 / 7; }
-    .payment-methods img:nth-child(8) { grid-area: 2 / 7; }
-    .payment-methods img:nth-child(9) { grid-area: 2 / 6; }
-    .payment-methods img:nth-child(10) { grid-area: 2 / 5; }
-    .payment-methods img:nth-child(11) { grid-area: 2 / 4; }
-    .payment-methods img:nth-child(12) { grid-area: 2 / 3; }
-    .payment-methods img:nth-child(13) { grid-area: 2 / 1; }
-    .payment-methods img:nth-child(14) { grid-area: 2 / 2; }
-
-    .payment-icon {
-      width: 45px;
-      height: 28px;
-      object-fit: contain;
-      opacity: 1;
-      transition: transform 0.3s ease;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-    }
-
-    .payment-icon:hover {
-      transform: scale(1.1);
-    }
-
-    .footer-bottom {
-      padding-top: 1.5rem;
-      border-top: var(--border-subtle);
-      font-size: 0.85rem;
-      color: var(--color-text-muted);
-    }
-
-    .footer-bottom a {
-      color: var(--color-accent-pink);
-      text-decoration: underline;
-      transition: color 0.3s ease;
-    }
-
-    .footer-bottom a:hover {
-      color: var(--color-accent-orange);
+    @keyframes slideDown {
+      from { opacity: 0; height: 0; }
+      to { opacity: 1; height: auto; }
     }
 
     /* Responsive */
-    @media (max-width: 1024px) {
-      header {
-        padding: 1rem 1.5rem;
-      }
-      .site-nav {
-        gap: 1.5rem;
-      }
-    }
-
     @media (max-width: 768px) {
       header {
         height: var(--header-height-mobile);
         padding: 0.8rem 1.5rem;
-      }
-
-      .desktop-logo {
-        height: 35px;
-      }
-
-      .logo-text {
-        font-size: 1.2rem;
-      }
-
-      .logo-text sup {
-        font-size: 0.5em;
       }
 
       .site-nav {
@@ -563,95 +404,32 @@
 
       main {
         margin-top: var(--header-height-mobile);
-        min-height: calc(100vh - var(--header-height-mobile));
       }
 
-      .iframe-container {
-        min-height: calc(100vh - var(--header-height-mobile));
-      }
-
-      .acuity-iframe {
-        min-height: calc(100vh - var(--header-height-mobile));
-      }
-
-      .loading-container,
-      .error-container {
-        min-height: calc(100vh - var(--header-height-mobile));
-      }
-
-      .footer-container {
+      .solution-options {
         grid-template-columns: 1fr;
-        text-align: center;
-        gap: 1.5rem;
       }
 
-      .footer-section {
-        align-items: center;
-      }
-
-      .footer-section h4 {
-        font-size: 1rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .footer-section a {
-        font-size: 0.85rem;
-        margin-bottom: 0.3rem;
-      }
-
-      .payment-methods {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
-        max-width: 300px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .payment-icon {
-        width: 35px;
-        height: 22px;
-      }
-
-      footer {
-        padding: 1.5rem 1rem;
-      }
-
-      .footer-bottom {
-        padding-top: 1rem;
-        font-size: 0.75rem;
+      .content-blocker-warning {
+        margin: 1rem;
+        padding: 1.5rem;
       }
     }
 
-    @media (max-width: 480px) {
-      header {
-        padding: 0.5rem 0.8rem;
-      }
-
-      main {
-        margin-top: var(--header-height-mobile);
-      }
-
-      .loading-content {
-        padding: 1.5rem;
-      }
-
-      .error-content {
-        padding: 1.5rem;
-        margin: 1rem;
-      }
+    /* Hidden elements for ad blocker detection */
+    .ad-banner,
+    .advertisement,
+    .google-ads,
+    .adsystem {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
     }
   </style>
 </head>
 <body>
-  <!-- Background Orbs -->
-  <div class="bg-orbs">
-    <div class="orb"></div>
-    <div class="orb"></div>
-    <div class="orb"></div>
-  </div>
-
   <header>
     <a href="/" class="logo-link" aria-label="PictureThisPet Home">
       <img src="assets/images/NEW_LOGO_NOTITLE.png" alt="PictureThisPet Logo" class="desktop-logo" />
@@ -665,20 +443,8 @@
       <a href="/contact" aria-label="Contact page">Contact</a>
       <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
     </nav>
-    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" onclick="toggleMenu()">☰</button>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
   </header>
-
-  <div class="mobile-nav-overlay">
-    <button class="close-btn" aria-label="Close mobile menu">×</button>
-    <nav>
-      <a href="/" aria-label="Home page">Home</a>
-      <a href="/availability.html" aria-label="Availability page">Availability</a>
-      <a href="/locations.html" aria-label="Locations page">Locations</a>
-      <a href="/pricing" aria-label="Pricing page">Pricing</a>
-      <a href="/contact" aria-label="Contact page">Contact</a>
-      <a href="/cart.html" class="book-btn" aria-label="Book a session">Book Now</a>
-    </nav>
-  </div>
 
   <main>
     <!-- Loading State -->
@@ -686,6 +452,55 @@
       <div class="loading-content">
         <div class="loading-message">Loading your booking...</div>
         <p style="color: #b0b0b0;">Please wait while we prepare your session details.</p>
+      </div>
+    </div>
+    
+    <!-- Content Blocker Warning -->
+    <div id="contentBlockerWarning" class="content-blocker-warning">
+      <div class="warning-icon">🛡️</div>
+      <h2 class="warning-title">Ad Blocker Detected</h2>
+      <p class="warning-message">
+        We've detected that you have an ad blocker or content blocker enabled. This is preventing our booking calendar from loading properly. Please choose one of the options below:
+      </p>
+      
+      <div class="solution-options">
+        <div class="solution-card">
+          <div class="solution-title">
+            🔧 Option 1: Disable Ad Blocker
+          </div>
+          <div class="solution-description">
+            Temporarily disable your ad blocker for this site to use our embedded booking calendar.
+          </div>
+          <button class="solution-btn" onclick="showBlockerInstructions()">
+            Show Instructions
+          </button>
+        </div>
+        
+        <div class="solution-card">
+          <div class="solution-title">
+            🚀 Option 2: Direct Booking
+          </div>
+          <div class="solution-description">
+            Go directly to our booking calendar in a new tab (recommended for ad blocker users).
+          </div>
+          <button class="solution-btn" onclick="redirectToAcuity()" id="directBookingBtn">
+            Book Directly
+          </button>
+        </div>
+      </div>
+      
+      <div id="blockerInstructions" class="blocker-instructions">
+        <h3 style="color: var(--orange); margin-bottom: 1rem;">How to Disable Ad Blockers:</h3>
+        <ul class="blocker-list">
+          <li><span class="blocker-name">uBlock Origin:</span> Click the uBlock icon → Click the power button → Refresh page</li>
+          <li><span class="blocker-name">AdBlock Plus:</span> Click the ABP icon → "Enabled on this site" toggle → Refresh page</li>
+          <li><span class="blocker-name">Adblock:</span> Click the Adblock icon → "Don't run on this domain" → Refresh page</li>
+          <li><span class="blocker-name">Brave Browser:</span> Click the shield icon → Turn off "Block ads and trackers"</li>
+          <li><span class="blocker-name">Safari:</span> Safari menu → Settings → Extensions → Disable ad blockers</li>
+        </ul>
+        <p style="margin-top: 1rem; color: var(--color-text-muted); font-size: 0.9rem;">
+          After disabling, refresh this page and the booking calendar will load normally.
+        </p>
       </div>
     </div>
     
@@ -703,148 +518,260 @@
     </div>
   </main>
 
-  <footer>
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Contact Us</h4>
-        <a href="mailto:info@picturethispet.co" aria-label="Email us at info@picturethispet.co">Email Us</a>
-        <a href="https://picturethispet.co" aria-label="Visit our website picturethispet.co">picturethispet.co</a>
-      </div>
-      <div class="footer-section socials">
-        <h4>Connect</h4>
-        <a href="https://instagram.com/picturethispet" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">Instagram</a>
-        <a href="/subscribe" aria-label="Subscribe to our newsletter">Subscribe</a>
-      </div>
-      <div class="footer-section">
-        <h4>We Accept</h4>
-        <div class="payment-methods">
-          <img src="assets/images/visa.png" alt="Visa payment accepted" class="payment-icon" />
-          <img src="assets/images/Mastercard-Logo.wine.svg" alt="MasterCard payment accepted" class="payment-icon" />
-          <img src="assets/images/American_Express-Logo.wine.svg" alt="American Express payment accepted" class="payment-icon" />
-          <img src="assets/images/discover.png" alt="Discover payment accepted" class="payment-icon" />
-          <img src="assets/images/Apple_Pay-Logo.wine.svg" alt="Apple Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Google_Pay_Logo.svg.png" alt="Google Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Samsung_Pay_icon.svg.png" alt="Samsung Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Amazon_Pay-Logo.wine.svg" alt="Amazon Pay payment accepted" class="payment-icon" />
-          <img src="assets/images/Klarna-Logo.wine.svg" alt="Klarna payment accepted" class="payment-icon" />
-          <img src="assets/images/Affirm-logo-button-payment-method-ui-1.png" alt="Affirm payment accepted" class="payment-icon" />
-          <img src="assets/images/afterpay.png" alt="Afterpay payment accepted" class="payment-icon" />
-          <img src="assets/images/Cash_App-Logo.wine.png" alt="Cash App payment accepted" class="payment-icon" />
-          <img src="assets/images/Paypal_2014_logo.png" alt="PayPal payment accepted" class="payment-icon" />
-          <img src="assets/images/taptopay.jpg" alt="Tap to Pay accepted" class="payment-icon" />
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 PictureThisPet. All rights reserved. | v4.0.1 | Last updated: 03:19 PM MDT, Friday, May 30, 2025 | <span style="white-space: nowrap;"><a href="/site-creation" aria-label="Learn how AI built this site">AI built my site. Find out How!</a></span></p>
-    </div>
-  </footer>
+  <!-- Hidden elements to detect ad blockers -->
+  <div class="ad-banner" id="adBanner">Advertisement</div>
+  <div class="advertisement" id="advertisement">Ad Content</div>
+  <div class="google-ads" id="googleAds">Google Ads</div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Get session data from localStorage (matches the session builder key)
-      const sessionData = JSON.parse(localStorage.getItem('sessionData'));
-      const urlParams = new URLSearchParams(window.location.search);
-      const sessionId = urlParams.get('session_id');
+    let contentBlockerDetected = false;
+    let sessionData = null;
+    let acuityUrl = null;
 
-      console.log('Session data found:', sessionData);
+    // Acuity URL mapping
+    const acuityIframeUrls = {
+      'Full-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498',
+      'Full-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444',
+      'Full-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428',
+      'Full-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419',
+      'Full-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425',
+      'Full-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441',
+      'Full-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431',
+      'Full-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621',
+      'Mini-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731',
+      'Mini-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805719',
+      'Mini-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805725',
+      'Mini-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805734',
+      'Mini-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805722',
+      'Mini-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805716',
+      'Mini-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805728',
+      'Mini-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805713'
+    };
 
-      // Map session configurations to Acuity iframe URLs based on your Excel data
-      const acuityIframeUrls = {
-        // Full Sessions
-        'Full-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805498',
-        'Full-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816444',
-        'Full-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816428',
-        'Full-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816419',
-        'Full-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816425',
-        'Full-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816441',
-        'Full-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78816431',
-        'Full-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78802621',
+    // Content blocker detection methods
+    function detectContentBlocker() {
+      return new Promise((resolve) => {
+        let detectionMethods = [];
         
-        // Mini Sessions
-        'Mini-Cheesman Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805731',
-        'Mini-Cheesman Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805719',
-        'Mini-Cheesman Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805725',
-        'Mini-Cheesman Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805734',
-        'Mini-City Park-1-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805722',
-        'Mini-City Park-2-1': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805716',
-        'Mini-City Park-1-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805728',
-        'Mini-City Park-2-2': 'https://app.acuityscheduling.com/schedule.php?owner=35886698&appointmentType=78805713'
-      };
-
-      // Function to generate session key from session data
-      function getSessionKey(sessionData) {
-        if (!sessionData || !sessionData.sessionType || !sessionData.location || 
-            !sessionData.numberOfPets || !sessionData.numberOfPeople) {
-          return null;
+        // Method 1: Check if ad-like elements are hidden/removed
+        const adElements = document.querySelectorAll('.ad-banner, .advertisement, .google-ads');
+        adElements.forEach(el => {
+          if (el.offsetHeight === 0 || el.offsetWidth === 0 || 
+              window.getComputedStyle(el).display === 'none' ||
+              window.getComputedStyle(el).visibility === 'hidden') {
+            detectionMethods.push('Element hidden');
+          }
+        });
+        
+        // Method 2: Try to load a commonly blocked script
+        const testScript = document.createElement('script');
+        testScript.src = 'https://www.googletagmanager.com/gtag/js?id=test';
+        testScript.onerror = () => {
+          detectionMethods.push('Script blocked');
+        };
+        document.head.appendChild(testScript);
+        
+        // Method 3: Test fetch to analytics domain
+        fetch('https://www.google-analytics.com/collect', { method: 'HEAD', mode: 'no-cors' })
+          .catch(() => {
+            detectionMethods.push('Fetch blocked');
+          });
+        
+        // Method 4: Check for specific ad blocker variables
+        if (typeof window.uBlock !== 'undefined' ||
+            typeof window.adblock !== 'undefined' ||
+            typeof window.AdBlocker !== 'undefined') {
+          detectionMethods.push('Blocker detected');
         }
         
-        return `${sessionData.sessionType}-${sessionData.location}-${sessionData.numberOfPets}-${sessionData.numberOfPeople}`;
-      }
-
-      // Check if session data exists and is valid
-      if (sessionData) {
-        const sessionKey = getSessionKey(sessionData);
-        console.log('Generated session key:', sessionKey);
+        // Method 5: Try to create elements that look like ads
+        const testDiv = document.createElement('div');
+        testDiv.innerHTML = '&nbsp;';
+        testDiv.className = 'adsbox';
+        document.body.appendChild(testDiv);
         
-        if (sessionKey && acuityIframeUrls[sessionKey]) {
-          // Valid session data found, show the iframe
-          document.getElementById('loadingContainer').style.display = 'none';
-          document.getElementById('iframeContainer').style.display = 'flex';
-          
-          // Load the appropriate Acuity iframe
-          document.getElementById('acuityIframe').src = acuityIframeUrls[sessionKey];
-          
-          console.log('✅ Loading Acuity iframe:', acuityIframeUrls[sessionKey]);
-          
-          // Clear session data after successful load to prevent reuse
-          setTimeout(() => {
-            localStorage.removeItem('sessionData');
-          }, 1000);
-        } else {
-          // Invalid session configuration
-          console.error('❌ Invalid session configuration:', sessionKey);
-          showError();
-        }
-      } else {
-        // No session data found
-        console.error('❌ No session data found in localStorage');
-        showError();
-      }
-
-      function showError() {
-        document.getElementById('loadingContainer').style.display = 'none';
-        document.getElementById('errorContainer').style.display = 'flex';
-        
-        // Auto-redirect after 5 seconds
         setTimeout(() => {
-          window.location.href = '/cart.html';
-        }, 5000);
-      }
+          if (testDiv.offsetHeight === 0) {
+            detectionMethods.push('Ad element blocked');
+          }
+          document.body.removeChild(testDiv);
+          
+          // If any detection method triggered, content blocker is likely present
+          const hasContentBlocker = detectionMethods.length > 0;
+          console.log('🔍 Content blocker detection:', hasContentBlocker ? 'DETECTED' : 'NOT DETECTED');
+          console.log('📊 Detection methods triggered:', detectionMethods);
+          
+          resolve(hasContentBlocker);
+        }, 100);
+      });
+    }
 
-      // Mobile menu functionality
-      window.toggleMenu = function() {
-        const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
-        mobileNavOverlay.classList.toggle('open');
-        document.body.style.overflow = mobileNavOverlay.classList.contains('open') ? 'hidden' : '';
+    // Test if iframe can load Acuity successfully
+    function testIframeLoading(url) {
+      return new Promise((resolve) => {
+        const testIframe = document.createElement('iframe');
+        testIframe.style.position = 'absolute';
+        testIframe.style.left = '-9999px';
+        testIframe.style.width = '1px';
+        testIframe.style.height = '1px';
+        testIframe.src = url;
+        
+        let resolved = false;
+        
+        testIframe.onload = () => {
+          if (!resolved) {
+            resolved = true;
+            document.body.removeChild(testIframe);
+            
+            // Additional check: try to detect if iframe content is an error page
+            setTimeout(() => {
+              try {
+                // This will fail due to CORS, but that's expected for a working iframe
+                testIframe.contentDocument;
+                resolve(true); // If we get here, iframe loaded but CORS blocked (normal)
+              } catch (e) {
+                resolve(true); // CORS error means iframe loaded successfully
+              }
+            }, 2000);
+          }
+        };
+        
+        testIframe.onerror = () => {
+          if (!resolved) {
+            resolved = true;
+            document.body.removeChild(testIframe);
+            resolve(false);
+          }
+        };
+        
+        // Timeout after 5 seconds
+        setTimeout(() => {
+          if (!resolved) {
+            resolved = true;
+            if (testIframe.parentNode) {
+              document.body.removeChild(testIframe);
+            }
+            resolve(false);
+          }
+        }, 5000);
+        
+        document.body.appendChild(testIframe);
+      });
+    }
+
+    function getSessionKey(sessionData) {
+      if (!sessionData || !sessionData.sessionType || !sessionData.location || 
+          !sessionData.numberOfPets || !sessionData.numberOfPeople) {
+        return null;
+      }
+      return `${sessionData.sessionType}-${sessionData.location}-${sessionData.numberOfPets}-${sessionData.numberOfPeople}`;
+    }
+
+    function showBlockerInstructions() {
+      const instructions = document.getElementById('blockerInstructions');
+      instructions.classList.add('show');
+    }
+
+    function redirectToAcuity() {
+      if (acuityUrl) {
+        console.log('🚀 Redirecting to Acuity:', acuityUrl);
+        window.open(acuityUrl, '_blank');
+      } else {
+        alert('⚠️ Session configuration not found. Please try again.');
+      }
+    }
+
+    async function handleContentBlockerDetected() {
+      console.log('🛡️ Content blocker detected - showing warning');
+      
+      document.getElementById('loadingContainer').style.display = 'none';
+      document.getElementById('contentBlockerWarning').style.display = 'block';
+      
+      // Update direct booking button with session info
+      if (sessionData) {
+        const btn = document.getElementById('directBookingBtn');
+        btn.textContent = `Book ${sessionData.sessionType} Session`;
+      }
+    }
+
+    async function loadIframeNormally() {
+      console.log('✅ No content blocker detected - loading iframe normally');
+      
+      document.getElementById('loadingContainer').style.display = 'none';
+      document.getElementById('iframeContainer').style.display = 'flex';
+      
+      const iframe = document.getElementById('acuityIframe');
+      iframe.src = acuityUrl;
+      
+      // Monitor iframe loading
+      iframe.onload = () => {
+        console.log('✅ Iframe loaded successfully');
+        
+        // Clear session data after successful load
+        setTimeout(() => {
+          localStorage.removeItem('sessionData');
+        }, 1000);
       };
       
-      const closeBtn = document.querySelector('.mobile-nav-overlay .close-btn');
-      if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-          document.querySelector('.mobile-nav-overlay').classList.remove('open');
-          document.body.style.overflow = '';
-        });
+      iframe.onerror = () => {
+        console.error('❌ Iframe failed to load');
+        // Fallback to content blocker warning
+        handleContentBlockerDetected();
+      };
+    }
+
+    function showError() {
+      document.getElementById('loadingContainer').style.display = 'none';
+      document.getElementById('errorContainer').style.display = 'flex';
+      
+      setTimeout(() => {
+        window.location.href = '/cart.html';
+      }, 5000);
+    }
+
+    // Main initialization
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('🔍 Starting smart content blocker detection...');
+      
+      // Get session data
+      sessionData = JSON.parse(localStorage.getItem('sessionData'));
+      
+      if (!sessionData) {
+        console.error('❌ No session data found');
+        showError();
+        return;
       }
-
-      document.querySelectorAll('.mobile-nav-overlay a').forEach(link => {
-        link.addEventListener('click', () => {
-          document.querySelector('.mobile-nav-overlay').classList.remove('open');
-          document.body.style.overflow = '';
-        });
-      });
-
-      console.log('✅ Booking page loaded - Fixed version');
+      
+      const sessionKey = getSessionKey(sessionData);
+      acuityUrl = acuityIframeUrls[sessionKey];
+      
+      if (!acuityUrl) {
+        console.error('❌ Invalid session configuration:', sessionKey);
+        showError();
+        return;
+      }
+      
+      console.log('📊 Session data:', sessionData);
+      console.log('🔗 Acuity URL:', acuityUrl);
+      
+      // Detect content blocker
+      const hasContentBlocker = await detectContentBlocker();
+      
+      if (hasContentBlocker) {
+        // Additional test: try to load iframe and see if it fails
+        const iframeWorks = await testIframeLoading(acuityUrl);
+        
+        if (!iframeWorks) {
+          contentBlockerDetected = true;
+          handleContentBlockerDetected();
+        } else {
+          // Content blocker detected but iframe still works - load normally
+          loadIframeNormally();
+        }
+      } else {
+        // No content blocker detected - load iframe normally
+        loadIframeNormally();
+      }
     });
   </script>
 </body>
